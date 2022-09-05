@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import "./sections3.css"
-import {Link} from "react-router-dom";
 
 const Actions = {
     "first": [
