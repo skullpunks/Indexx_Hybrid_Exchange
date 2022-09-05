@@ -1,19 +1,14 @@
-.home-container {
+.last-container {
     width: 100vw;
-    height: 700px;
+    height: 611px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-repeat: no-repeat;
     background-size: 100vw 700px;
     flex-direction: column;
-}
-
-
-.center-Image {
-    height: 200px;
-    margin-top: -100px;
-    margin-bottom: -20px;
+    position: relative;
+    overflow: hidden;
 }
 
 .section-heading {
@@ -32,21 +27,6 @@
     padding: 20px;
 }
 
-.section-usp {
-    color: white;
-    font-family: Inter, serif;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 18px;
-    letter-spacing: 0em;
-    padding: 20px;
-}
-
-.font-big {
-    color: white;
-    font-size: 45px;
-}
-
 .actions {
     display: flex;
     align-items: center;
@@ -55,7 +35,12 @@
     padding-top: 20px;
 }
 
-.cut_button {
+.getStarted:hover {
+    box-shadow: #ffffff85 0 5px 7px 0;
+    transform: scale(1.05);
+}
+
+.getStarted {
     width: 200px;
     color: white;
     font-size: 16px;
@@ -63,33 +48,40 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 0;
     cursor: pointer;
+    background: #F66036;
+    padding: 15px;
+    border-radius: 7px;
 }
 
-.cut_button:hover {
-    box-shadow: #ffffff85 0 5px 7px 0;
-    transform: scale(1.05);
+
+.currencies {
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
 }
 
-.login-button {
-    border-bottom: 50px solid #F66036;
-    border-left: 25px solid transparent;
-    margin-right: -20px;
-    margin-bottom: -42px;
+.currencies-content {
+    display: block;
+    width: 100%;
+    transform: translateX(100%);
+    animation: move 30s linear infinite;
 }
 
-.launch-app-button {
-    border-top: 50px solid #006DFF;
-    border-right: 25px solid transparent;
-    margin-bottom: -42px;
-    margin-right: -20px;
+@keyframes move {
+    to { transform: translateX(-100%); }
 }
 
-.launch-app-button-text {
-    margin-bottom: 48px;
+.graphic-image {
+    height: 70px;
+    width: 70px;
 }
 
-.login-button_text {
-    margin-top: 48px;
+.ml-25 {
+    margin-left: 25px;
+}
+
+.mr-25 {
+    margin-right: 25px;
 }
