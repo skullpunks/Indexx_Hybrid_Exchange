@@ -1,34 +1,60 @@
 .main-header {
-    background-color: #ffffff;
-    position: sticky !important;
-    top: 0;
-    z-index: 1020;
-    height: 70px;
-    -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
-    -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
-    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    background-color: transparent;
+    position: absolute;
+    color: white;
+    padding: 20px;
+    height: 50px;
+    width: 100%;
 }
 
-.main-header .indexx-icon {
-    height: 60px;
-    padding-left: 30px;
+.app-link {
+    font-family: Inter, serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 25px;
+    padding: 15px 0 10px;
 }
 
-.main-header .navbar-brand {
-    color: #0179fa !important;
-    font-weight: 600;
+.app-link-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.main-header a.nav-link {
-    margin: 0 6px;
-    color: #2b2b2b;
-    padding: 4px 8px;
-    transition: ease-in-out 0.5s;
+.link-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
 }
 
-.main-header a.nav-link:focus,
-.main-header a.nav-link:hover {
-    background: rgba(0, 82, 204, 0.1);
-    border-radius: 5px;
-    color: #0179fa;
+.td-none {
+    text-decoration: none !important;
+}
+
+.active {
+    border-bottom: 4px solid #F66036;
+}
+
+.header-connect-wallet:hover {
+    box-shadow: #ffffff85 0 5px 7px 0;
+    transform: scale(1.05);
+}
+
+.header-connect-wallet {
+    width: 200px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #F66036;
+    padding: 15px;
+    border-radius: 7px;
 }

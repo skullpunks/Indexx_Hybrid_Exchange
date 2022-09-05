@@ -1,106 +1,53 @@
-.section3-container {
+.section2-container {
     display: flex;
     padding: 20px;
     margin: 20px;
 }
 
-.data-container {
+.section2-table {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.table-row {
     display: flex;
-    flex-direction: column;
-    width:45%;
-    cursor: pointer;
+    align-items: center;
+    margin: 10px 20px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 109, 255, 0.2);
 }
 
-.label-container {
+.table-header-element {
+    color: #939292;
     font-family: Inter, serif;
-    font-size: 40px;
-    font-weight: 600;
-    text-align: right;
-    padding: 20px 0;
-    color:#00000026;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+    width: 30%;
 }
 
-.selected-data {
-    padding: 20px 0 20px 20px;
+.no-border {
+    border: none!important;
 }
 
-.selected-data-header {
+.coinName {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 
-.selected-circle {
-    height: 12px;
-    width: 12px;
-    margin-right: 10px;
-    border: 3px solid hsl(13deg 85% 57%);
-    border-radius: 50%;
+.coin-initials {
+    color:black;
+    padding: 0 4px;
 }
 
-.selected-header {
-    font-family: Inter, serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0;
-    text-align: left;
-    color: #5A5858;
+.price {
+ color: black;
 }
 
-.help-text {
-    color: #5A5858;
-    font-family: Inter, serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0;
-    text-align: left;
-    margin-left: 30px;
-    padding-top: 15px;
-}
-
-.data-right-container {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    padding-left: 50px;
-}
-
-.selected {
-    color: #000000;
-}
-
-.label-container:hover {
-    color: #000000;
-}
-
-.actionLink {
-    font-family: Inter, serif;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    color: #F66036;
-}
-
-.actionButtonContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.actionButton {
-    min-width: 260px;
-    font-size: 20px;
-    font-weight: 400;
-    font-family: Inter, serif;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    border: 1px solid #F66036;
-    border-radius: 10px;
-    color:#5A5858;
-    width: fit-content;
+.hourChange {
+  color: #e33e4e;
 }

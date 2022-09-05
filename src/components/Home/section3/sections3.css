@@ -1,95 +1,106 @@
-.home-container {
-    width: 100vw;
-    height: 700px;
+.section3-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-repeat: no-repeat;
-    background-size: 100vw 700px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.data-container {
+    display: flex;
     flex-direction: column;
+    width:45%;
+    cursor: pointer;
 }
 
-
-.center-Image {
-    height: 200px;
-    margin-top: -100px;
-    margin-bottom: -20px;
-}
-
-.section-heading {
-    color:white;
+.label-container {
     font-family: Inter, serif;
-    font-size: 45px;
-    font-weight: bold;
+    font-size: 40px;
+    font-weight: 600;
+    text-align: right;
+    padding: 20px 0;
+    color:#00000026;
+}
+
+.selected-data {
+    padding: 20px 0 20px 20px;
+}
+
+.selected-data-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.selected-circle {
+    height: 12px;
+    width: 12px;
+    margin-right: 10px;
+    border: 3px solid hsl(13deg 85% 57%);
+    border-radius: 50%;
+}
+
+.selected-header {
+    font-family: Inter, serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+    color: #5A5858;
+}
+
+.help-text {
+    color: #5A5858;
+    font-family: Inter, serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+    margin-left: 30px;
+    padding-top: 15px;
+}
+
+.data-right-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding-left: 50px;
+}
+
+.selected {
+    color: #000000;
+}
+
+.label-container:hover {
+    color: #000000;
+}
+
+.actionLink {
+    font-family: Inter, serif;
+    font-size: 20px;
+    font-weight: 600;
     text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    color: #F66036;
 }
 
-.section-helper-text {
-    font-family: Inter, serif;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    padding: 20px;
-}
-
-.section-usp {
-    color: white;
-    font-family: Inter, serif;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 18px;
-    letter-spacing: 0em;
-    padding: 20px;
-}
-
-.font-big {
-    color: white;
-    font-size: 45px;
-}
-
-.actions {
+.actionButtonContainer {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.actionButton {
+    min-width: 260px;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: Inter, serif;
+    text-align: center;
+    padding: 15px;
     cursor: pointer;
-    padding-top: 20px;
-}
-
-.cut_button {
-    width: 200px;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 0;
-    cursor: pointer;
-}
-
-.cut_button:hover {
-    box-shadow: #ffffff85 0 5px 7px 0;
-    transform: scale(1.05);
-}
-
-.login-button {
-    border-bottom: 50px solid #F66036;
-    border-left: 25px solid transparent;
-    margin-right: -20px;
-    margin-bottom: -42px;
-}
-
-.launch-app-button {
-    border-top: 50px solid #006DFF;
-    border-right: 25px solid transparent;
-    margin-bottom: -42px;
-    margin-right: -20px;
-}
-
-.launch-app-button-text {
-    margin-bottom: 48px;
-}
-
-.login-button_text {
-    margin-top: 48px;
+    border: 1px solid #F66036;
+    border-radius: 10px;
+    color:#5A5858;
+    width: fit-content;
 }
