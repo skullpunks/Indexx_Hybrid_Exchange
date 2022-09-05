@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import "./sections4.css"
 import security from "../../../assets/security.png";
 import PlentifulPairs from "../../../assets/PlentifulPairs.png";

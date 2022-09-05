@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import "./sections2.css"
 import BnbIcon from "../../../assets/bnb-icon.svg";
 import BitCoin from "../../../assets/bitcoin-icon.svg";
