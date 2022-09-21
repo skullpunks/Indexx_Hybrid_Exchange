@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./sections3.css"
 
 const Actions = {
@@ -66,13 +66,13 @@ const Section3 = () => {
             return null
         }
 
-        console.log(actionLink)
+        // console.log(actionLink)
         return (
             <div className="data-right-container">
                 {action[1].map((item, key) => (
-                    <div className="selected-data">
+                    <div className="selected-data" key={key}>
                         <div className="selected-data-header">
-                            <div className="selected-circle"/>
+                            <div className="selected-circle" />
                             <div className="selected-header">{item.heading}</div>
                         </div>
                         <div className="help-text">
@@ -99,17 +99,17 @@ const Section3 = () => {
         <div className="section3-container">
             <div className="data-container">
                 <div onClick={() => setCurrentData("first")}
-                     className={`label-container ${currentData === "first" ? "selected" : ""}`}>
-                    New to <br/>Cryptocurrencies
+                    className={`label-container ${currentData === "first" ? "selected" : ""}`}>
+                    New to <br />Cryptocurrencies
                 </div>
                 <div onClick={() => setCurrentData("second")}
-                     className={`label-container ${currentData === "second" ? "selected" : ""}`}>
-                    Experienced <br/>Traders
+                    className={`label-container ${currentData === "second" ? "selected" : ""}`}>
+                    Experienced <br />Traders
                 </div>
                 <div
                     onClick={() => setCurrentData("third")}
                     className={`label-container ${currentData === "third" ? "selected" : ""}`}>
-                    Institutional <br/>Traders
+                    Institutional <br />Traders
                 </div>
             </div>
             {getActions()}

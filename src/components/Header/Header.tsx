@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css"
 import Dropdown from "../DropDown/DropDown";
-import {NavLink, useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { Button } from 'antd';
+import indexText from "../../assets/arts/indexText.svg";
 
 
 const Header = () => {
@@ -9,54 +11,44 @@ const Header = () => {
     const [isInsideApp, setIsInsideApp] = useState(false)
 
     useEffect(() => {
-            if (location) {
-                setIsInsideApp(location.pathname.includes("/indexx-exchange/"))
-            }
-        },
+        if (location) {
+            setIsInsideApp(location.pathname.includes("/indexx-exchange/"))
+        }
+    },
         [location]
     )
 
     const Links = [
         {
             label: "Swap",
+            value: "swap",
             url: "/indexx-exchange/swap"
         },
         {
             label: "Buy & Sell",
+            value: "buy_sell",
             url: "/indexx-exchange/buy_sell"
-        },
-        {
-            label: "indexxScan",
-            url: "indexx-exchange/indexxscan"
-        },
-        {
-            label: "Chart",
-            url: "indexx-exchange/charts"
-        },
+        }
     ]
 
+    const showText: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.label);
     return (
         <div className="main-header">
             {isInsideApp ?
                 (
                     <div className="link-container">
-                        <div className="app-link-container">
-                            {Links.map(link => (
-                                <NavLink
-                                    to={link.url}
-                                    className={({isActive}) => (isActive ? ' app-link td-none active' : 'app-link td-none')}>
-                                    {link.label}
-                                </NavLink>
-                            ))}
+                        <div>
+                            <h1 className="logo mb-0 d-flex">
+                                <img src={indexText} alt="index logo" />
+                                <span className="logo__text">{showText[0]}</span>
+                            </h1>
                         </div>
-                        <div className="header-connect-wallet">
-                            Connect Wallet
-                        </div>
+                        <Button type="primary" shape="round" size="large" className="btn_xl">Connect Wallet</Button>
                     </div>
                 ) : (
                     <Dropdown label="Products" items={[
-                        {label: "Buy"}, {label: "Sell"}, {label: "Swap"}
-                    ]}/>
+                        { key: 1, label: "Buy" }, { key: 2, label: "Sell" }, { key: 3, label: "Swap" }
+                    ]} />
                 )}
         </div>
     );

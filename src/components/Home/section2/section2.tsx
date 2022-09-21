@@ -3,6 +3,11 @@ import BnbIcon from "../../../assets/bnb-icon.svg";
 import BitCoin from "../../../assets/bitcoin-icon.svg";
 import Etherum from "../../../assets/etherum-icon.svg";
 
+import chart1 from "../../../assets/arts/chart1.svg";
+import chart2 from "../../../assets/arts/chart2.svg";
+import chart3 from "../../../assets/arts/chart3.svg";
+import { Button } from 'antd';
+
 
 const Section2 = () => {
 
@@ -11,13 +16,15 @@ const Section2 = () => {
             <div className="section2-table">
                 <div className="table-row">
                     <div className="table-header-element">
-                        CryptoCurrency
+                        Cryptocurrency
                     </div>
                     <div className="table-header-element">
                         Price
                     </div>
                     <div className="table-header-element">
                         24hr % Change
+                    </div>
+                    <div className="table-header-element">
                     </div>
                 </div>
                 <div className="table-row">
@@ -32,6 +39,9 @@ const Section2 = () => {
                     <div className="table-header-element hourChange">
                         -3.75%
                     </div>
+                    <div className="table-header-element">
+                        <img src={chart1} alt="Chart" className="chart-icon" />
+                    </div>
                 </div>
                 <div className="table-row">
                     <div className="table-header-element coinName">
@@ -44,6 +54,9 @@ const Section2 = () => {
                     </div>
                     <div className="table-header-element hourChange">
                         -1.75%
+                    </div>
+                    <div className="table-header-element">
+                        <img src={chart2} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
                 <div className="table-row no-border">
@@ -58,7 +71,13 @@ const Section2 = () => {
                     <div className="table-header-element hourChange">
                         -12.75%
                     </div>
+                    <div className="table-header-element">
+                        <img src={chart3} alt="Chart" className="chart-icon" />
+                    </div>
                 </div>
+            </div>
+            <div className="all_markets">
+                <Button danger size="large" className="actionButton view_all_btn">View all Markets</Button>
             </div>
         </div>
     );

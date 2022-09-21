@@ -7,6 +7,7 @@ import getInTouch from "../../../assets/getInTouch.png";
 import indexxai from "../../../assets/indexxai.png";
 import community from "../../../assets/community.png";
 import careers from "../../../assets/careers.png";
+import footer_banner from "../../../assets/arts/footer_banner.svg";
 
 const Section4 = () => {
 
@@ -25,7 +26,7 @@ const Section4 = () => {
         },
         {
             icon: lowFees,
-            heading: "Low fees",
+            heading: "Low Fees",
             info: "Low fees empower you to buy, sell, and trade cryptocurrencies"
 
         },
@@ -36,39 +37,39 @@ const Section4 = () => {
             icon: getInTouch,
             heading: "Dedicated Support",
             info: "Our support team is here to keep you trading happily",
-            link : "Get in touch",
+            link: "Get in touch",
 
         },
         {
             icon: indexxai,
             heading: "indexx.ai  Blog",
             info: "Get the latest news and updates or level up your trading skills",
-            link : "Visit the Blog",
+            link: "Visit the Blog",
 
         },
         {
             icon: community,
             heading: "Community",
             info: "Join other Binancians for discussions in our community",
-            link : "Explore the Community",
+            link: "Explore the Community",
 
         },
         {
             icon: careers,
             heading: "Careers",
             info: "Help us to build more opportunities for financial freedom in the United States",
-            link : "See Open Positions",
+            link: "See Open Positions",
 
         },
     ]
 
     return (
         <>
-            <div className="section4-container">
-                <div className="d-flex">
-                    {data.map(item => (
-                        <div className="item-container">
-                            <img className="icon-class" src={item.icon} alt="icon"/>
+            <div className="section4-container section4-container1">
+                <div className="d-flex flex-align-start">
+                    {data.map((item, key) => (
+                        <div className="item-container" key={key}>
+                            <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>
                         </div>
@@ -76,17 +77,19 @@ const Section4 = () => {
                 </div>
             </div>
 
-
+            <div className="section4_banner">
+                <img src={footer_banner} alt="Banner" />
+            </div>
 
             <div className="section4-container">
                 <div className="section4-container-heading">
-                    Get in Touch <br/>
+                    Get in Touch <br />
                     Stay in Touch
                 </div>
-                <div className="d-flex">
-                    {data2.map(item => (
-                        <div className="item-container">
-                            <img className="icon-class" src={item.icon} alt="icon"/>
+                <div className="d-flex stay_in_touch">
+                    {data2.map((item, key) => (
+                        <div className="item-container" key={key}>
+                            <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>
                             <p className="item-link">{item.link}</p>

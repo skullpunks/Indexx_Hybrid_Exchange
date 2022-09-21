@@ -1,15 +1,22 @@
 .section4-container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    margin: 20px;
+    padding: 20px 70px;
 }
+.section4-container1 {
+    padding: 20px 150px;
 
+}
+.section4_banner > img {
+    margin-left: -28px;
+    width: calc(100% + 28px);
+}
 .d-flex {
     display: flex;
 }
 
 .item-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,33 +25,32 @@
 
 .icon-class {
     height: 50px;
-    width: 50px;
     object-fit: contain;
 }
 
 .item-heading {
-    font-family: Inter, serif;
-    font-size: 20px;
-    font-weight: 600;
+    font-family: AvenirHeavy, serif;
+    font-size: 18px;
     line-height: 24px;
     letter-spacing: 0em;
     text-align: center;
+    padding-top: 6px;
 }
 
 .item-info {
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 15px;
     font-weight: 400;
-    line-height: 18px;
+    line-height: 22px;
     letter-spacing: 0em;
     text-align: center;
-    max-width: 40%;
+    max-width: 290px;
     margin-top: 0;
 
 }
 
 .item-link {
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 24px;
@@ -52,17 +58,29 @@
     text-align: left;
     color: #F66036;
     cursor: pointer;
+    padding-top: 30px;
+    padding-bottom: 50px;
 }
 
 .section4-container-heading {
-    font-family: Inter, serif;
+    font-family: AvenirHeavy, serif;
     font-size: 60px;
     font-weight: 600;
     line-height: 73px;
     letter-spacing: 0em;
     padding: 20px 0;
-    margin-left: 50px;
+    /* margin-left: 50px; */
     margin-bottom: 25px;
     text-align: left;
     color: #000000;
 }
+
+
+.stay_in_touch > .item-container {
+    align-items: start;
+}
+
+.stay_in_touch > .item-container .item-info {
+    text-align: left;
+}
+

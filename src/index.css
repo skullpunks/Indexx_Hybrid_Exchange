@@ -1,6 +1,23 @@
+@font-face {
+  font-family: AvenirLight;
+  src: url(./assets/fonts/AvenirLight.ttf) format("truetype");
+}
+@font-face {
+  font-family: AvenirRegular;
+  src: url(./assets/fonts/AvenirRoman.ttf) format("truetype");
+}
+@font-face {
+  font-family: AvenirMedium;
+  src: url(./assets/fonts/AvenirMedium.ttf) format("truetype");
+}
+@font-face {
+  font-family: AvenirHeavy;
+  src: url(./assets/fonts/AvenirBlack.ttf) format("truetype");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: AvenirRegular, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +27,93 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.flex-align-start {
+  align-items: start;
+}
+div.flex-align-center {
+  align-items: center;
+}
+div.flex-justify-center {
+  justify-content: center;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+
+@import '~antd/dist/antd.css';
+
+.card {
+  min-width: 480px;
+  background-color: #fff;
+  border:  1px solid rgba(0, 109, 255, 0.5);
+  min-height: 600px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 620px;
+}
+.card__header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 109, 255, 0.5);
+}
+.card__header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.card__header__inner__left {
+  flex: 1 1;
+}
+.card__header__inner__right {
+  display: flex;
+  flex: 1 1 0px;
+  justify-content: flex-end;
+}
+
+.card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__footer {
+  text-align: center;
+  padding: 20px;
+}
+
+.card__title {
+  color: #5F5F5F;
+  font-size: 60px;
+  margin-bottom: 0;
+  flex: 1 1;
+  line-height: 1.2;
+}
+
+
+.tag {
+  font-size: 1em;
+  font-family: AvenirHeavy;
+  border-radius: 10px;
+  padding: 5px 10px 2px;
+}
+
+.input__field {
+  border: 1px solid rgba(0, 109, 255, 0.5);
+  border-radius: 5px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

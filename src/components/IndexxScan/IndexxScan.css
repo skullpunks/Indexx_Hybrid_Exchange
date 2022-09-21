@@ -1,12 +1,11 @@
 .scan-container {
-    width: 100vw;
-    height: 700px;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    background-repeat: no-repeat;
-    background-size: 100vw 700px;
-    flex-direction: column;
+    justify-content: center;
+    padding-top: 130px;
+    padding-bottom: 30px;
+    background-color: #fff;
 }
 
 .scan-Image {
@@ -16,14 +15,14 @@
 
 .scan-heading {
     color: white;
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 45px;
     font-weight: bold;
     text-align: center;
 }
 
 .helper-text {
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 24px;
     font-weight: bold;
     color: white;
@@ -32,9 +31,8 @@
 
 .section-usp {
     color: white;
-    font-family: Inter, serif;
+    font-family: AvenirMedium, serif;
     font-size: 16px;
-    font-weight: bold;
     line-height: 18px;
     letter-spacing: 0em;
     padding: 20px;
@@ -43,4 +41,39 @@
 .font-big {
     color: white;
     font-size: 45px;
+}
+
+.main-header {
+    background-color: #000;
+    padding: 15px 90px ;
+    height: 90px;
+}
+
+.undo_icon {
+    transform: scaleX(-1);
+    margin-right: 12px;
+}
+
+.setting__icon {
+    width: 25px;
+    margin-right: 12px;
+}
+
+
+.from__icon {
+    margin-bottom: 30px;
+}
+
+.swap__coin__circle {
+    width: 49px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 109, 255, 0.1);
+}
+
+.info__text {
+    display: flex;
+    padding: 20px 0;
+    align-items: center;
+    justify-content: flex-end;
 }

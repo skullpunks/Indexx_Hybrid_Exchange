@@ -2,13 +2,13 @@
     background-color: transparent;
     position: absolute;
     color: white;
-    padding: 20px;
+    padding: 20px 90px 0 90px;
     height: 50px;
     width: 100%;
 }
 
 .app-link {
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 20px;
     font-weight: 700;
     line-height: 24px;
@@ -29,7 +29,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
 }
 
 .td-none {
@@ -41,8 +40,9 @@
 }
 
 .header-connect-wallet:hover {
-    box-shadow: #ffffff85 0 5px 7px 0;
-    transform: scale(1.05);
+    /* box-shadow: #ffffff85 0 5px 7px 0;
+    transform: scale(1.05); */
+    background-color: #d52f01;
 }
 
 .header-connect-wallet {
@@ -57,4 +57,29 @@
     background: #F66036;
     padding: 15px;
     border-radius: 7px;
+}
+
+.logo {
+    color: #fff;
+}
+
+.ant-btn.btn_xl {
+    min-width: 270px;
+    height: 60px;
+    border-radius: 10px;
+    font-size: 28px;
+}
+.ant-btn-primary {
+    background-color: #006DFF;
+    border-color: #006DFF;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #00387d;
+    border-color: #00387d;
+}
+
+.logo__text {
+    font-size: 43px;
+    line-height: 1;
 }

@@ -1,32 +1,35 @@
 .section2-container {
     display: flex;
-    padding: 20px;
-    margin: 20px;
+    padding: 0 120px;
+    margin: 0;
+    margin-top: -100px;
+    flex-direction: column;
 }
 
 .section2-table {
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 109, 255, 0.2);
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 10px;
+    border: 1px solid #E6E8EA;
 }
 
 .table-row {
     display: flex;
     align-items: center;
-    margin: 10px 20px;
-    padding: 15px;
+    margin: 10px;
+    padding: 16px;
     border-bottom: 1px solid rgba(0, 109, 255, 0.2);
 }
 
 .table-header-element {
     color: #939292;
-    font-family: Inter, serif;
+    font-family: AvenirRegular, serif;
     font-size: 16px;
-    font-weight: bold;
     line-height: 24px;
     letter-spacing: 0;
     text-align: left;
-    width: 30%;
+    width: 25%;
 }
 
 .no-border {
@@ -50,4 +53,15 @@
 
 .hourChange {
   color: #e33e4e;
+}
+
+.all_markets{
+    text-align: center;
+    padding: 50px 0;
+}
+
+.view_all_btn {
+
+    height: 60px;
+    border-radius: 0;
 }
