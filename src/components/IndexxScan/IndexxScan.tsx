@@ -13,7 +13,8 @@ import SelectToken from '../SelectToken/SelectToken';
 
 function App() {
     const [showToken, setShowToken] = useState(false);
-    const [tokenType, setTokenType] = useState("from");
+    // const [tokenType, setTokenType] = useState("from");
+    const tokenType = "from";
     const onChange = (value: string) => {
         console.log('changed', value);
     };
