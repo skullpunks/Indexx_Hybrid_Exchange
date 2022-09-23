@@ -29,17 +29,22 @@ import Icon26 from "../../../assets/token-icons/26.png";
 import Icon27 from "../../../assets/token-icons/27.png";
 import Icon28 from "../../../assets/token-icons/28.png";
 import Icon29 from "../../../assets/token-icons/29.png";
+import Icon31 from "../../../assets/token-icons/31.png";
+import Icon32 from "../../../assets/token-icons/32.png";
+import Icon33 from "../../../assets/token-icons/33.png";
+import Icon34 from "../../../assets/token-icons/34.png";
+import Icon35 from "../../../assets/token-icons/35.png";
 
 const Section5 = () => {
     const IconsSet1 = [
         Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15,
-        Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29,
+        Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35,
         Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15, Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8,
-        Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22,
+        Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35, Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22,
         Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15,
-        Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29,
+        Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35,
         Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15, Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8,
-        Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22,
+        Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35, Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8, Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon31, Icon32, Icon33, Icon34, Icon35
     ]
     return (
         <div style={{ backgroundImage: `url(${BackgroundImage})` }} className="last-container">

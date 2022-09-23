@@ -46,9 +46,17 @@ const Header = () => {
                         <Button type="primary" shape="round" size="large" className="btn_xl">Connect Wallet</Button>
                     </div>
                 ) : (
-                    <Dropdown label="Products" items={[
-                        { key: 1, label: "Buy" }, { key: 2, label: "Sell" }, { key: 3, label: "Swap" }
-                    ]} />
+                    <div className="d-flex">
+                        <Dropdown label="Products" items={[
+                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell" }
+                        ]} />
+                        <Dropdown label="Earn" items={[
+                            { key: 3, label: "Trade to earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
+                        ]} />
+                        <Dropdown label="Company" items={[
+                            { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
+                        ]} />
+                    </div>
                 )}
         </div>
     );

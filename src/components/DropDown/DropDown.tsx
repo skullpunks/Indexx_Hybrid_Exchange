@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Dropdown.css"
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 interface DropdownProps {
     label: string;
@@ -11,22 +12,37 @@ interface DropdownProps {
     }[]
 }
 
+
+
 const Dropdown: React.FC<(DropdownProps)> = ({ label, items }) => {
-    const [toggleMenu, setToggleStateMenu] = useState(false)
+    const [toggleMenu, setToggleStateMenu] = useState(false);
+    const random = "openDropdown" + Math.random();
+
+    // document.addEventListener("click", (event) => {
+    //     const concernedElement = document.querySelector(".open,.dropdown-container");
+    //     if (concernedElement && concernedElement.contains(event.target as Element)) {
+    //         console.log("Clicked Inside");
+    //     } else {
+    //         console.log("Clicked Outside / Elsewhere");
+    //         setToggleStateMenu(false);
+    //     }
+    // });
 
     return (
         <div className="dropdown-container">
-            <label htmlFor="openDropdown" className="dropdown">
+            <label htmlFor={random} className="dropdown">
                 {label}
 
                 {!toggleMenu ? <CaretDownOutlined className="icon" /> : <CaretUpOutlined className="icon" />}
             </label>
-            <input type="checkbox" onClick={() => setToggleStateMenu(!toggleMenu)} id="openDropdown" hidden />
-            <div className="dropdown-menu">
-                {items.map(item => (
-                    <span key={item.key}>{item.label}</span>
-                ))}
-            </div>
+            <input type="checkbox" onClick={() => setToggleStateMenu(!toggleMenu)} id={random} hidden />
+            {toggleMenu ?
+                <div className="dropdown-menu open">
+                    {items.map(item => (
+                        <Link key={item.key} to={item.path || ''}>{item.label}</Link>
+                    ))}
+                </div> : <></>
+            }
         </div>
     );
 };

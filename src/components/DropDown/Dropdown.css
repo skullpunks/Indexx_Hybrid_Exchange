@@ -4,6 +4,8 @@
     align-items: flex-start;
     flex-direction: column;
     background: transparent;
+    position: relative;
+    margin-right: 20px;
 }
 
 .dropdown {
@@ -25,31 +27,34 @@
 }
 
 .dropdown-menu {
-    display: none;
+    display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 100px;
+    width: 200px;
     background: #171717;
     color: white;
     transform-origin: top left;
+    position: absolute;
+    top: 40px;
 }
 
-.dropdown-menu span {
+.dropdown-menu a {
     padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: background 0.3s ease;
+    color: #fff;
 }
 
-.dropdown-menu span:hover {
+.dropdown-menu a:hover {
     background: #d3d3d36b;
     /* border-radius: 7px; */
 }
 
-#openDropdown:checked + .dropdown-menu {
+/* #openDropdown:checked + .dropdown-menu {
     display: flex;
     animation: openDropDown 0.4s ease 0s 1 forwards;
-}
+} */
 
 
 @keyframes openDropDown {

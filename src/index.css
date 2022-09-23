@@ -24,6 +24,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+p{
+  margin: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -56,7 +60,6 @@ div.flex-justify-center {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   max-width: 620px;
 }
 .card__header {
@@ -108,12 +111,26 @@ div.flex-justify-center {
 .input__field {
   border: 1px solid rgba(0, 109, 255, 0.5);
   border-radius: 5px;
-  height: 50px;
-  line-height: 50px;
+  height: 82px;
+  line-height: 90px;
+}
+
+.input__field input {
+  text-align: right;
+  font-size: 40px;
+  padding-right: 30px;
 }
 
 .centered {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+iframe{
+  display: none;
+}
+
+.flex-justify-between {
+  justify-content: space-between;
 }
