@@ -65,9 +65,9 @@
 
 .ant-btn.btn_xl {
     min-width: 270px;
-    height: 60px;
+    height: 55px;
     border-radius: 10px;
-    font-size: 28px;
+    font-size: 20px;
 }
 .ant-btn-primary {
     background-color: #006DFF;

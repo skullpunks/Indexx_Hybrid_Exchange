@@ -3,6 +3,8 @@ import "./IndexxSwap.css";
 import IndexxScan from "../IndexxScan/IndexxScan";
 import SelectToken from '../SelectToken/SelectToken';
 import ConfirmSwap from '../ConfirmSwap/ConfirmSwap';
+import WaitForConfirmation from '../WaitForConfirmation/WaitForConfirmation';
+import TransactionSubmit from '../TransactionSubmit/TransactionSubmit';
 
 const IndexxSwap = () => {
     const [status, setStatus] = useState("");
@@ -15,10 +17,10 @@ const IndexxSwap = () => {
                         return <SelectToken setStatus={setStatus} />;
                     case 'ConfirmSwap':
                         return <ConfirmSwap setStatus={setStatus} />;
-                    // case 'WaitForConfirmation':
-                    //     return <WaitForConfirmation setStatus={setStatus} />;
-                    // case 'TransactionSubmit':
-                    //     return <TransactionSubmit setStatus={setStatus} />;
+                    case 'WaitForConfirmation':
+                        return <WaitForConfirmation setStatus={setStatus} />;
+                    case 'TransactionSubmit':
+                        return <TransactionSubmit setStatus={setStatus} />;
                     default:
                         return <IndexxScan setStatus={setStatus} />;
                 }

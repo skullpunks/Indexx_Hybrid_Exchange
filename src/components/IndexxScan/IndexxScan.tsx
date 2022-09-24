@@ -33,7 +33,7 @@ const App: React.FC<(Props)> = ({ setStatus }) => {
         setStatus("SelectToken");
     }
     return (
-        <div className="scan-container">
+        <div className="scan-container flex-align-stretch">
             {toggleChart && <Chart />}
 
             <div className='card'>
@@ -102,7 +102,10 @@ const App: React.FC<(Props)> = ({ setStatus }) => {
                     <div className='info__text'>
                         <Tag color="#006DFF" className='tag' >SCAN RISK</Tag>
                         <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
-
+                    </div>
+                    <div className="d-flex flex-justify-between">
+                        <div>Slippage Tolerance</div>
+                        <div className="helper_text">0.5%</div>
                     </div>
 
                 </div>
