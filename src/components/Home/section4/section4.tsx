@@ -26,8 +26,8 @@ const Section4 = () => {
         },
         {
             icon: lowFees,
-            heading: "Low Fees",
-            info: "Low fees empower you to buy, sell, and trade cryptocurrencies"
+            heading: "0% Fee",
+            info: "0% fee empower you to buy, sell, and trade cryptocurrencies"
 
         },
     ]

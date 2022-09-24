@@ -5,6 +5,7 @@ import SelectToken from '../SelectToken/SelectToken';
 import ConfirmSwap from '../ConfirmSwap/ConfirmSwap';
 import WaitForConfirmation from '../WaitForConfirmation/WaitForConfirmation';
 import TransactionSubmit from '../TransactionSubmit/TransactionSubmit';
+import ConfirmSwapTwo from '../ConfirmSwapTwo/ConfirmSwapTwo';
 
 const IndexxSwap = () => {
     const [status, setStatus] = useState("");
@@ -17,6 +18,8 @@ const IndexxSwap = () => {
                         return <SelectToken setStatus={setStatus} />;
                     case 'ConfirmSwap':
                         return <ConfirmSwap setStatus={setStatus} />;
+                    case 'ConfirmSwapTwo':
+                        return <ConfirmSwapTwo setStatus={setStatus} />;
                     case 'WaitForConfirmation':
                         return <WaitForConfirmation setStatus={setStatus} />;
                     case 'TransactionSubmit':

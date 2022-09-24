@@ -64,7 +64,6 @@
 }
 
 .ant-btn.btn_xl {
-    min-width: 270px;
     height: 55px;
     border-radius: 10px;
     font-size: 20px;
@@ -83,3 +82,31 @@
     font-size: 43px;
     line-height: 1;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
+.padding-t-0 {
+    padding-top: 0;
+}
+
+.padding-2x {
+    padding: 20px;
+}
+.padding-l-1x {
+    padding-left: 10px;
+}
+.padding-l-3x {
+    padding-left: 30px;
+}
+.padding-b-2x {
+    padding-bottom: 20px;
+}
+.primary_color {
+    color:#006DFF;
+
+}
+.header_connect_wallet.ant-btn {
+    font-size: 15px;
+    height: 40px;
+}
+

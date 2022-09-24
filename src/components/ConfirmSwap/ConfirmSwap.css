@@ -1,6 +1,7 @@
 h1 {
     margin-bottom:0;
     font-size:30px;
+    color:#5f5f5f;
 }
 .card_title {
    
@@ -21,7 +22,7 @@ h1 {
 }
 
 .swap__coin {
-    padding:23px 0 13px 0;
+    padding:23px 0 23px 0;
 }
 
 .footer {
