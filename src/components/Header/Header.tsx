@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"
 import Dropdown from "../DropDown/DropDown";
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from 'antd';
 import indexText from "../../assets/arts/indexText.svg";
 
@@ -39,7 +39,7 @@ const Header = () => {
                     <div className="link-container">
                         <div>
                             <h1 className="logo mb-0 d-flex">
-                                <img src={indexText} alt="index logo" />
+                                <Link to="/"><img src={indexText} alt="index logo" /></Link>
                                 <span className="logo__text">{showText[0]}</span>
                             </h1>
                         </div>

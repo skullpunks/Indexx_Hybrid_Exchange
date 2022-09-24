@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
-import IndexxScan from "./components/IndexxScan/IndexxScan";
+import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
 import BuySell from "./components/BuySell/BuySell";
 
 function App() {
@@ -12,9 +12,9 @@ function App() {
                 <Header />
                 <Routes>
                     <Route path="/*" element={<Home />} />
-                    <Route path="/indexx-exchange/swap" element={<IndexxScan />} />
+                    <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/buy_sell" element={<BuySell />} />
-                    <Route path="/indexx-exchange/indexxscan" element={<IndexxScan />} />
+                    {/* <Route path="/indexx-exchange/indexxscan" element={<IndexxScan />} /> */}
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                 </Routes>
             </BrowserRouter>

@@ -53,14 +53,14 @@ div.flex-justify-center {
 @import '~antd/dist/antd.css';
 
 .card {
-  min-width: 480px;
+  min-width: 420px;
   background-color: #fff;
   border:  1px solid rgba(0, 109, 255, 0.5);
   min-height: 600px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  max-width: 620px;
+  max-width: 420px;
 }
 .card__header {
   padding: 20px;
@@ -94,7 +94,7 @@ div.flex-justify-center {
 
 .card__title {
   color: #5F5F5F;
-  font-size: 60px;
+  font-size: 40px;
   margin-bottom: 0;
   flex: 1 1;
   line-height: 1.2;

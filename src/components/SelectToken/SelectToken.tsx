@@ -100,12 +100,16 @@ const initialTokens = [
 
 ];
 
-interface TokenProps {
-    tokenType: string;
-    setShowToken: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// interface TokenProps {
+//     tokenType: string;
+//     setShowToken: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
+
+interface Props {
+    setStatus: (value: string | ((prevVar: string) => string)) => void;
 }
 
-const SelectToken: React.FC<(TokenProps)> = ({ tokenType, setShowToken }) => {
+const SelectToken: React.FC<(Props)> = ({ setStatus }) => {
 
     const [tokens, setTokens] = useState(initialTokens);
 
@@ -120,14 +124,13 @@ const SelectToken: React.FC<(TokenProps)> = ({ tokenType, setShowToken }) => {
         setTokens(tempArr);
     }
 
-    console.log(tokenType);
     return (
-        <div>
+        <div className="scan-container">
             <div className='card'>
                 <div className='card__header'>
                     <div className='card__header__inner'>
                         <h1 style={{ marginBottom: 0 }}>Select a Token</h1>
-                        <CloseOutlined style={{ fontSize: 20 }} onClick={() => setShowToken(false)} />
+                        <CloseOutlined style={{ fontSize: 20 }} onClick={() => setStatus("")} />
                     </div>
                 </div>
 

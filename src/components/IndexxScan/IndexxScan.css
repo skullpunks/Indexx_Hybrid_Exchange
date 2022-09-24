@@ -53,6 +53,11 @@
     transform: scaleX(-1);
     margin-right: 12px;
 }
+/* style={{ fontSize: "24px", color: "#5f5f5f" }} */
+.swap_icons {
+    font-size: 20px;
+    color: #5f5f5f;
+}
 
 .setting__icon {
     width: 25px;
