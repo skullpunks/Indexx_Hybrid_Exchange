@@ -2,32 +2,64 @@ import './IndexxScan.css';
 import chartIcon from "../../assets/arts/chartIcon.svg";
 import chartHiddenIcon from "../../assets/arts/ChartHiddenIcon.svg";
 
-import IN500 from "../../assets/token-icons/33.png";
-import IUSD from "../../assets/token-icons/35.png";
 import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, InputNumber, Tag } from 'antd';
 import { useState } from 'react';
-import downArrow from "../../assets/arts/downArrow.svg";
+// import downArrow from "../../assets/arts/downArrow.svg";
 import Chart from "../Chart/Chart";
 import swapIcon from "../../assets/arts/swapIcon.svg";
 import historyIcon from "../../assets/arts/historyIcon.svg";
+import initialTokens from "../../utils/Tokens.json";
+
+
+import { useFromTokenContext, useToTokenContext } from '../../utils/SwapContext';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
+    setTokenType: (value: string | ((prevVar: string) => string)) => void;
 }
 
-const App: React.FC<(Props)> = ({ setStatus }) => {
+const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
     const [toggleChart, setToggleChart] = useState(true);
     let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
     const [fromTokenVal, setFromTokenVal] = useState(0);
     const [toTokenVal, setToTokenVal] = useState(0);
 
+    const { fromToken } = useFromTokenContext();
+    const { toToken } = useToTokenContext();
+
+    let fromTitle, fromAddress, fromImage;
+    let title, address, image;
+
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === fromToken;
+    });
+
+    if (filteredFromArray && filteredFromArray.length) {
+        fromTitle = filteredFromArray[0].title;
+        fromAddress = filteredFromArray[0].address;
+        fromImage = filteredFromArray[0].image;
+    }
+
+    const filteredArray = initialTokens.filter(function (obj) {
+        return obj?.address === toToken;
+    });
+
+    if (filteredArray && filteredArray.length) {
+        title = filteredArray[0].title;
+        address = filteredArray[0].address;
+        image = filteredArray[0].image;
+    }
+
+
+    // console.log(filteredArray[0]);
+
     const onChangeFromToken = (value: any) => {
-        console.log('changed', value);
+        // console.log('changed', value);
         setFromTokenVal(value);
     };
     const onChangeToToken = (value: any) => {
-        console.log('changed', value);
+        // console.log('changed', value);
         setToTokenVal(value);
     };
 
@@ -38,6 +70,11 @@ const App: React.FC<(Props)> = ({ setStatus }) => {
     }
     const changeFromIcon = () => {
         setStatus("SelectToken");
+        setTokenType("from");
+    }
+    const changeToIcon = () => {
+        setStatus("SelectToken");
+        setTokenType("to");
     }
     return (
         <div className="scan-container flex-align-stretch">
@@ -62,9 +99,9 @@ const App: React.FC<(Props)> = ({ setStatus }) => {
 
                 <div className='card__body'>
                     <div className='from__icon'>
-                        <Button type="link" className='icon__label' onClick={changeFromIcon}>
-                            <img src={IN500} alt="bit coin" width="30" />
-                            <span style={{ fontSize: "28px", padding: "0 10px 0", lineHeight: 1, color: "#5F5F5F" }}>IN500</span>
+                        <Button type="link" className='icon__label' onClick={changeFromIcon} data-address={address}>
+                            <img src={require(`../../assets/token-icons/${fromImage}.png`).default} alt="bit coin" width="30" />
+                            <span style={{ fontSize: "28px", padding: "0 10px 0", lineHeight: 1, color: "#5F5F5F" }}>{fromTitle}</span>
                             <DownOutlined style={{ fontSize: "16px" }} />
                         </Button>
                         <InputNumber<string>
@@ -81,15 +118,16 @@ const App: React.FC<(Props)> = ({ setStatus }) => {
                     </div>
 
                     <div className='swap__coin centered'>
-                        <span className='swap__coin__circle centered'>
-                            <img src={downArrow} alt="Swap coins" />
-                        </span>
+                        <Button className='swap__coin__circle centered'>
+                            {/* <img src={downArrow} alt="Swap coins" /> */}
+                            &nbsp;
+                        </Button>
                     </div>
 
                     <div className='to__icon'>
-                        <Button type="link" className='icon__label' onClick={changeFromIcon}>
-                            <img src={IUSD} alt="bit coin" width="30" />
-                            <span style={{ fontSize: "28px", padding: "0 10px 0", lineHeight: 1, color: "#5F5F5F" }}>IUSD+</span>
+                        <Button type="link" className='icon__label' onClick={changeToIcon} data-address={fromAddress}>
+                            <img src={require(`../../assets/token-icons/${image}.png`).default} alt="bit coin" width="30" />
+                            <span style={{ fontSize: "28px", padding: "0 10px 0", lineHeight: 1, color: "#5F5F5F" }}>{title}</span>
                             <DownOutlined style={{ fontSize: "16px" }} />
                         </Button>
                         <InputNumber<string>

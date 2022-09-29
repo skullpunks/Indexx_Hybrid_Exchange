@@ -1,0 +1,92 @@
+.card.bs_container {
+
+    border: 1px solid rgba(246, 96, 54, 0.2);
+}
+
+.bs_container {
+    background: #ffffff;
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 10px;
+    max-width: 423px;
+}
+
+
+
+
+
+.bs_container_main {
+    padding: 26px 41px 34px 44px;
+}
+
+button {
+    width: 100%;
+    background: #f66036;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    height: 55px;
+}
+
+.bs_container_header h1 {
+    margin: 0;
+    font-size: 30px;
+    padding: 26px;
+    color: #5f5f5f;
+    border-bottom: 1px solid rgba(246, 96, 54, 0.2);
+}
+
+.d-flex {
+    display: flex;
+}
+
+.bs_footer_action {
+    padding: 26px;
+    border-top: 1px solid rgba(246, 96, 54, 0.2);
+}
+
+.bs_footer_action button {
+    color: #ffffff;
+    background: rgba(95, 95, 95, 0.2);
+    border-radius: 5px;
+    height: 55px;
+}
+
+.bs_token_num {
+    font-size: 25px;
+    color: #5f5f5f;
+}
+
+.bs_token {
+    border-top: 1px solid rgba(246, 96, 54, 0.2);
+    padding: 26px;
+}
+
+.token_grey {
+    color: rgba(18, 18, 18, 0.2);
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.bs_purchase {
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+    width: fit-content;
+    padding: 7px 18px;
+    color: #5f5f5f;
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+    margin: auto;
+}
+
+.bs_curreny {
+    font-size: 100px;
+    color: rgba(18, 18, 18, 0.5);
+}
+
+.bs_currency_symbol {
+    font-size: 50px;
+}

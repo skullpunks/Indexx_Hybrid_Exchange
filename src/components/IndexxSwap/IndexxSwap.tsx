@@ -6,28 +6,29 @@ import ConfirmSwap from '../ConfirmSwap/ConfirmSwap';
 import WaitForConfirmation from '../WaitForConfirmation/WaitForConfirmation';
 import TransactionSubmit from '../TransactionSubmit/TransactionSubmit';
 import ConfirmSwapTwo from '../ConfirmSwapTwo/ConfirmSwapTwo';
+import Footer from '../Footer/Footer';
+import { SwapFromContext, SwapToContext } from '../../utils/SwapContext';
+import bgContainer from "../../assets/arts/bgContainer.png";
 
 const IndexxSwap = () => {
     const [status, setStatus] = useState("");
+    const [tokenType, setTokenType] = useState("from");
+    const [fromToken, setFromToken] = useState("0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A");
+    const [toToken, setToToken] = useState("0xa18f33e2C63C0A781f6836f9Ae8F5f6517Ce4e90");
 
     return (
-        <div>IndexxSwap <br />
-            {(function () {
-                switch (status) {
-                    case 'SelectToken':
-                        return <SelectToken setStatus={setStatus} />;
-                    case 'ConfirmSwap':
-                        return <ConfirmSwap setStatus={setStatus} />;
-                    case 'ConfirmSwapTwo':
-                        return <ConfirmSwapTwo setStatus={setStatus} />;
-                    case 'WaitForConfirmation':
-                        return <WaitForConfirmation setStatus={setStatus} />;
-                    case 'TransactionSubmit':
-                        return <TransactionSubmit setStatus={setStatus} />;
-                    default:
-                        return <IndexxScan setStatus={setStatus} />;
-                }
-            })()}
+        <div className='swap_container' style={{ backgroundImage: `url(${bgContainer})` }}> <br />
+            <SwapFromContext.Provider value={{ fromToken, setFromToken }} >
+                <SwapToContext.Provider value={{ toToken, setToToken }} >
+                    {status === "" && <IndexxScan setStatus={setStatus} setTokenType={setTokenType} />}
+                    {status === "SelectToken" && <SelectToken setStatus={setStatus} tokenType={tokenType} />}
+                    {status === "ConfirmSwap" && <ConfirmSwap setStatus={setStatus} />}
+                    {status === "ConfirmSwapTwo" && <ConfirmSwapTwo setStatus={setStatus} />}
+                    {status === "WaitForConfirmation" && <WaitForConfirmation setStatus={setStatus} />}
+                    {status === "TransactionSubmit" && <TransactionSubmit setStatus={setStatus} />}
+                </SwapToContext.Provider>
+            </SwapFromContext.Provider>
+            <Footer />
         </div>
     )
 }

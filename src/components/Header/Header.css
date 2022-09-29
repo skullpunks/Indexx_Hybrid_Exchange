@@ -68,6 +68,7 @@
     border-radius: 10px;
     font-size: 20px;
 }
+
 .ant-btn-primary {
     background-color: #006DFF;
     border-color: #006DFF;
@@ -82,9 +83,11 @@
     font-size: 43px;
     line-height: 1;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
+
 .padding-t-0 {
     padding-top: 0;
 }
@@ -92,21 +95,64 @@
 .padding-2x {
     padding: 20px;
 }
+
 .padding-l-1x {
     padding-left: 10px;
 }
+
+
+.padding-t-1x {
+    padding-top: 10px;
+}
+
+.padding-t-2x {
+    padding-top: 20px;
+}
+
 .padding-l-3x {
     padding-left: 30px;
 }
+
 .padding-b-2x {
     padding-bottom: 20px;
 }
-.primary_color {
-    color:#006DFF;
 
+.primary_color {
+    color: #006DFF;
 }
+
 .header_connect_wallet.ant-btn {
     font-size: 15px;
     height: 40px;
+    max-width: 180px;
 }
 
+
+.text-extra-small {
+    font-size: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.position-relative {
+    position: relative;
+}
+
+
+.d-block {
+    display: block;
+}
+
+.swap_container {
+    background-position: top 90px center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ant-btn.buy_sell_button {
+    background-color: #F66036;
+    font-size: 15px;
+    height: 40px;
+}

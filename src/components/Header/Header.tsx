@@ -54,7 +54,19 @@ const Header = () => {
                                 ]} />
                             </div>
                         </div>
-                        <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet">Connect Wallet</Button>
+                        {(location.pathname.includes("help")) &&
+                            <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet" onClick={() => window.open(window.location.origin, "_blank")}>Launch App</Button>
+                        }
+                        {(location.pathname.includes("buy_sell")) &&
+                            <div className="d-flex flex-align-center">
+                                <Link to="/" style={{ color: "#fff", width: 80 }}>Log In</Link>
+                                <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
+                            </div>
+                        }
+                        {(location.pathname.includes("swap")) &&
+                            <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet">Connect Wallet</Button>
+                        }
+
                     </div>
                 ) : (
                     <div className="d-flex">
@@ -68,8 +80,9 @@ const Header = () => {
                             { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
                         ]} />
                     </div>
-                )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 

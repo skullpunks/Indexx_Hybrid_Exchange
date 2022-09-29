@@ -4,16 +4,20 @@ import "./sections3.css"
 const Actions = {
     "first": [
         {
-            heading: "Create an Account in Minutes",
+            heading: "Trade to Earn",
+            label: "Earn Index Token and points with Buy & Sell and Swap in platform ",
+        },
+        {
+            heading: "0% Fee to Trade",
+            label: "For all transactions",
+        },
+        {
+            heading: "Setup an account instantly",
             label: "Buy crypto, easily manage your wallet, and maintain your portfolio",
         },
         {
             heading: "Recurring Buys",
             label: "Automatically invest on a scheduled basis with dollar-cost averaging",
-        },
-        {
-            heading: "Low-Cost Trading",
-            label: "Experience our low trading fees",
         },
     ],
     "second": [

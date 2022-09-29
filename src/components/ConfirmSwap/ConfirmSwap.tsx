@@ -63,9 +63,9 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                         />
                     </div>
                     <div className='swap__coin centered'>
-                        <span className='swap__coin__circle centered'>
+                        <Button className='swap__coin__circle centered'>
                             <img src={downArrow} alt="Swap coins" width="30" />
-                        </span>
+                        </Button>
                     </div>
 
                     <div className="to_body">

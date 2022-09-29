@@ -11,6 +11,7 @@
     box-shadow: none;
 
 }
+
 /* style={{ display: "flex", alignItems: "center", marginBottom: 30, padding: 0 }} */
 .token {
     display: flex;
@@ -21,10 +22,12 @@
     padding-bottom: 12px;
     border-bottom: 1px solid rgba(0, 109, 255, 0.25);
 }
-.token:hover{
+
+.token:hover {
     background: rgba(217, 217, 217, 0.4);
     border-bottom: 1px solid rgba(0, 109, 255, 0.25);
 }
+
 /* style={{ paddingLeft: 10, display: "flex", flexDirection: "column", alignItems: "baseline" }} */
 .token__data {
     padding-left: 10px;
@@ -32,6 +35,7 @@
     flex-direction: column;
     align-items: baseline;
 }
+
 /* style={{ fontSize: "30px", color: "#5F5F5F", padding: "0", lineHeight: 1, display: "block" }} */
 .token__data__title {
     font-size: 23px;
@@ -40,6 +44,7 @@
     display: "block";
     text-transform: uppercase;
 }
+
 /* style={{ "color": "#5F5F5F", paddingLeft: 3 }} */
 .token__data__subtitle {
     color: #5F5F5F;
@@ -48,23 +53,35 @@
 }
 
 .common_token_wrapper {
-    padding: 0 20px 20px;
+    padding: 0 17px 20px;
 }
+
 .common_token_heading {
     padding-bottom: 20px;
 }
+
 .common__token {
-    padding: 0 8px 0 0;
+    padding: 0 4px;
     border: none;
     border-right: 1px solid rgba(0, 109, 255, 0.2);
     height: auto;
 }
+
 .common__token:hover {
     border-right: 1px solid rgba(0, 109, 255, 0.2);
 }
 
-.common__token:hover .common__token__title{ 
+.common__token:hover .common__token__title {
     color: #333;
+}
+
+.common_tokens> :first-child {
+    padding-left: 0;
+}
+
+.common_tokens> :last-child {
+    padding-right: 0;
+    border: 0;
 }
 
 .common__token__title {
@@ -72,5 +89,9 @@
     color: #5F5F5F;
     font-size: 23px;
     line-height: 1.2;
-    padding-left: 5px;
+    padding-left: 4px;
+}
+
+.ant-btn.common__token[disabled] {
+    opacity: 0.3;
 }

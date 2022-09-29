@@ -137,3 +137,7 @@ iframe{
 .flex-justify-between {
   justify-content: space-between;
 }
+
+.flex-direction-column {
+  flex-direction: column;
+}

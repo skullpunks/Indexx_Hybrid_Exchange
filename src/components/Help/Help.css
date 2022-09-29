@@ -1,0 +1,146 @@
+.nav_container {
+    padding: 90px 90px 0 55px;
+}
+
+.help_content_page {
+    padding: 53px 0 180px 60px;
+    border-left: 1px solid rgba(0, 109, 255, 0.2);
+    width: 100%;
+}
+
+.nav_main_header {
+    padding-bottom: 7px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #5f5f5f;
+}
+
+.nav_container p {
+    font-size: 20px;
+    color: #5f5f5f;
+}
+
+.border-b {
+    border-bottom: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.info {
+    padding: 15px 30px;
+    background: rgba(211, 211, 211, 0.4);
+    margin-top: 12px;
+    font-size: 25px;
+    color: #5f5f5f;
+}
+
+.nav_section {
+    padding: 23px 0 27px 0;
+}
+
+.nav_section h1 {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.margin-t-0 {
+    margin-top: 0;
+}
+
+.margin-b-0 {
+    margin-bottom: 0;
+}
+
+.margin-l-3x {
+    margin-left: 30px;
+}
+
+.margin-l-2x {
+    margin-left: 20px;
+}
+
+/* Team.css*/
+.team_members_ul {
+    padding-top: 25px;
+}
+
+.team_members_ul li {
+    padding-left: 30px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+    font-size: 20px;
+    color: #5f5f5f;
+}
+
+.border-b {
+    border-bottom: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.nav_section h1 {
+    margin-bottom: 30px;
+}
+
+.address_datails {
+    font-size: 20px;
+    color: #5f5f5f;
+}
+
+.apart_datails {
+    margin-top: 16px;
+}
+
+
+
+/*Contact Us*/
+.border-b {
+    border-bottom: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.nav_section h1 {
+    margin-bottom: 30px;
+}
+
+.address_datails {
+    font-size: 20px;
+    color: #5f5f5f;
+}
+
+.apart_datails {
+    margin-top: 16px;
+}
+
+
+
+
+/*Left Nav.css*/
+.lef_nav_container {
+    padding: 53px 0px 0 20px;
+    min-width: 286px;
+    height: auto;
+}
+
+.lef_nav_container ul, ul {
+    padding: 0;
+    list-style-type: none;
+    margin-top: 0;
+}
+
+.lef_nav_container ul li a {
+    font-size: 20px;
+    color: #5f5f5f;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    display: inline-block;
+    width: 100%;
+    padding: 8px 0 8px 16px;
+}
+
+
+.lef_nav_container ul li a.active {
+    background: rgba(211, 211, 211, 0.4);
+    border: none;
+}

@@ -34,8 +34,9 @@
 }
 
 .getStarted:hover {
-    box-shadow: #ffffff85 0 5px 7px 0;
-    transform: scale(1.05);
+    /* box-shadow: #ffffff85 0 5px 7px 0; */
+    background-color: #d52f01;
+    /* transform: scale(1.05); */
 }
 
 .getStarted {
