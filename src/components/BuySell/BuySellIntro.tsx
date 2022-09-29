@@ -23,13 +23,12 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 One-time purchase
             </div>
         </div>
-        <div className="bs_token d-flex" style={{ alignItems: "center" }}>
+        <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }} onClick={() => setScreenName("select")}>
             <div className="bs_token_left d-flex justify-between">
-                <div className="bs_token_num d-flex flex-align-center" onClick={() => setScreenName("select")}>
+                <div className="bs_token_num d-flex flex-align-center" >
                     <img src={IN500} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
                     IN500 <span className="token_grey">Indexx500</span>
                 </div>
-
             </div>
             <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
         </div>

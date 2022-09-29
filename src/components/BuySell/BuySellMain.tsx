@@ -32,15 +32,15 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
     return (
         <div className="scan-container flex-align-stretch">
             {toggleChart && <Chart />}
-         {screenName=="" && <BuySellIntro setScreenName={setScreenName} />} 
-             {screenName=="select" && <BuySellSelect setScreenName={setScreenName} />} 
-             {screenName=="create" && <BuySellCreate />} 
+            {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
+            {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
+            {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
 
 
-            
+
         </div>
 
-        
+
 
 
 

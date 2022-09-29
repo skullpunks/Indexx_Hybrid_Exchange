@@ -44,7 +44,7 @@ const Header = () => {
                             </h1>
                             <div className="d-flex padding-l-3x">
                                 <Dropdown label="Products" items={[
-                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell" }
+                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
                                 ]} />
                                 <Dropdown label="Earn" items={[
                                     { key: 3, label: "Trade to earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
@@ -71,7 +71,7 @@ const Header = () => {
                 ) : (
                     <div className="d-flex">
                         <Dropdown label="Products" items={[
-                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell" }
+                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
                         ]} />
                         <Dropdown label="Earn" items={[
                             { key: 3, label: "Trade to earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
