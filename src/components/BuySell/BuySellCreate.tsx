@@ -24,16 +24,16 @@ const BuySellCreate: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className="bs_container card">
             <div className="bs_container_header d-flex">
-                <img src={arrowAdressLeft} alt="adressLeft" onClick={() => setScreenName("select")} />
+                <img src={arrowAdressLeft} alt="adressLeft" className="left_arrow" onClick={() => setScreenName("select")} />
                 <h1> Create Account</h1>
             </div>
             <div className="bs_container_create_main flex-align-center" >
-                <img src={createAccount} alt=" createAccount" className="search_icon" style={{ paddingRight: 8, width: 150, height: 167 }} />
+                <img src={createAccount} alt=" createAccount" style={{ paddingRight: 8, width: 150, height: 167 }} />
                 <div>Create an Account to Start Buying Crypto</div>
             </div>
-            <div className="bs_container_create_footer
-                " >
-                <Button type="primary" className="atn-btn atn-btn-round" style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Get Started </Button>
+            <div className="bs_container_create_footer">
+                <Button type="primary" className="atn-btn atn-btn-round" onClick={() => setScreenName("getStarted")} style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Get Started </Button>
+                <Button type="link" danger className="btn_link">Log In</Button>
             </div>
 
 

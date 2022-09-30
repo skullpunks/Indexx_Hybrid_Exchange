@@ -18,6 +18,11 @@ import Chart from "../ChartBuy/Chart";
 import BuySellIntro from './BuySellIntro';
 import BuySellSelect from './BuySellSelect';
 import BuySellCreate from './BuySellCreate';
+import BuySellGetStarted from './BuySellGetStarted';
+import BuySellEmailAuth from './BuySellEmailAuth';
+import BuySellSecureSteps from './BuySellSecureSteps';
+import BuySellMobiAuth from './BuySellMobiAuth';
+import BuySellmobiVerfication from './BuySellmobiVerfication';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -35,9 +40,11 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
             {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
             {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
             {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
-
-
-
+            {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+            {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName}  setToggleChart={setToggleChart} />}
+            {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart}  />}
+            {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart}  />}
+            {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart}  />}
         </div>
 
 

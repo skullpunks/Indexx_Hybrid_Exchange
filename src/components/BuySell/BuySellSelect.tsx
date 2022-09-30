@@ -20,7 +20,7 @@ const BuySellSelect: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className="bs_container card">
             <div className="bs_container_header d-flex border-b-0">
-                <img src={arrowAdressLeft} alt="adressLeft" style={{ paddingRight: 8 }} onClick={() => setScreenName("")} />
+                <img src={arrowAdressLeft} alt="adressLeft" className="left_arrow" onClick={() => setScreenName("")} />
                 <h1>Select Coin</h1>
             </div>
             <div className="bs_container_select_main position-relative" >
