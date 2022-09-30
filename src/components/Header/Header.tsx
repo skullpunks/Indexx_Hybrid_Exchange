@@ -28,6 +28,11 @@ const Header = () => {
             label: "Buy & Sell",
             value: "buy_sell",
             url: "/indexx-exchange/buy_sell"
+        },
+        {
+            label: "Trade to Earn",
+            value: "trade-to-earn",
+            url: "/indexx-exchange/trade-to-earn"
         }
     ]
 
@@ -47,7 +52,7 @@ const Header = () => {
                                     { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
                                 ]} />
                                 <Dropdown label="Earn" items={[
-                                    { key: 3, label: "Trade to earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
+                                    { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
                                 ]} />
                                 <Dropdown label="Company" items={[
                                     { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
@@ -63,6 +68,12 @@ const Header = () => {
                                 <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
                             </div>
                         }
+                        {(location.pathname.includes("trade-to-earn")) &&
+                            <div className="d-flex flex-align-center">
+                                <Link to="/" style={{ color: "#fff", width: 80 }}>Inside Trade</Link>
+                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x">Buy Crypto</Button>
+                            </div>
+                        }
                         {(location.pathname.includes("swap")) &&
                             <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet">Connect Wallet</Button>
                         }
@@ -74,7 +85,7 @@ const Header = () => {
                             { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
                         ]} />
                         <Dropdown label="Earn" items={[
-                            { key: 3, label: "Trade to earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
+                            { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
                         ]} />
                         <Dropdown label="Company" items={[
                             { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }

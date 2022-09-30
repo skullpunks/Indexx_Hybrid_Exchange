@@ -1,11 +1,47 @@
 import IN500 from "../../assets/token-icons/33.png";
 import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-import { ReloadOutlined } from '@ant-design/icons';
+import { DownOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Space } from "antd";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
+
+const menu = (
+    <Menu
+        items={[
+            {
+                label: <a href="https://www.antgroup.com">
+                    One-time purchase </a>,
+                key: '0',
+            },
+            {
+                label: <a href="https://www.aliyun.com">Daily <br />Every day starting today</a>,
+                key: '1',
+            },
+            {
+                label: <a href="https://www.aliyun.com">Weekly <br />Every Tuesday starting today</a>,
+                key: '2',
+            },
+            {
+                label: <a href="https://www.aliyun.com">Every 1st and 15th <br />Today and every 1st and 15th</a>,
+                key: '3',
+            },
+            {
+                label: <a href="https://www.aliyun.com">Monthly <br /> Purchase recurs every month</a>,
+                key: '4',
+            },
+            // {
+            //     type: 'divider',
+            // },
+            // {
+            //     label: '3rd menu item',
+            //     key: '3',
+            // },
+        ]}
+    />
+);
 
 const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
@@ -19,9 +55,26 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <div><img src={SwapArrowIcon} alt="ddd" /></div>
             </div>
             <div className="bs_purchase d-flex">
-                <ReloadOutlined className='swap_icons' style={{ fontSize: 16, marginRight: 10 }} />
-                One-time purchase
+
+
+                <Dropdown overlay={menu} trigger={['click']} >
+                    <a onClick={e => e.preventDefault()}>
+                        <Space style={{ color: "#F66036" }}>
+                            <ReloadOutlined className='swap_icons' style={{ fontSize: 16, marginRight: 10 }} />
+                            One-time purchase
+                            {/* <DownOutlined /> */}
+                        </Space>
+                    </a>
+                </Dropdown>
             </div>
+            {/* <Dropdown overlay={menu} trigger={['click']}>
+                <a onClick={e => e.preventDefault()}>
+                    <Space>
+                        Click me
+                        <DownOutlined />
+                    </Space>
+                </a>
+            </Dropdown> */}
         </div>
         <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }} onClick={() => setScreenName("select")}>
             <div className="bs_token_left d-flex justify-between">

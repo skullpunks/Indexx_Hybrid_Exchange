@@ -4,13 +4,19 @@
     border: 1px solid rgba(246, 96, 54, 0.2);
 }
 
+.card.bs_container {
+    min-height: 500px;
+}
 
 .padding-b-1x {
-    padding-bottom: 10px;;
+    padding-bottom: 10px;
+    ;
 }
-.margin-t-1_5x{
-    margin-top:15px;
+
+.margin-t-1_5x {
+    margin-top: 15px;
 }
+
 .bs_container {
     background: #ffffff;
     border: 1px solid rgba(246, 96, 54, 0.2);
@@ -40,6 +46,7 @@ button {
     font-size: 20px;
     border: none;
     height: 55px;
+    cursor: pointer;
 }
 
 .bs_container_header {
@@ -89,11 +96,15 @@ button {
     line-height: 20px;
     text-align: center;
     width: fit-content;
-    padding: 7px 18px;
     color: #5f5f5f;
     border: 1px solid rgba(246, 96, 54, 0.2);
     border-radius: 5px;
     margin: auto;
+}
+
+.bs_purchase .ant-space {
+
+    padding: 8px 16px;
 }
 
 .bs_curreny {
@@ -198,6 +209,7 @@ button.ant-btn-link.btn_link span {
 
 .left_arrow {
     padding-right: 8px;
+    cursor: pointer;
 }
 
 
@@ -262,48 +274,71 @@ input[type="checkbox"] {
 
 .verfication_text {
     width: 280px;
-    font-size:15px;
-    color:#5f5f5f;
+    font-size: 15px;
+    color: #5f5f5f;
 }
 
 .otp_container input {
     width: 50px;
-height: 65.48px;
-background: #FFFFFF;
-border: 1px solid rgba(246, 96, 54, 0.2);
-border-radius: 5px;
+    height: 65.48px;
+    background: #FFFFFF;
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+    font-size: 30px;
+    text-align: center;
 }
 
 .font_20x {
-    font-size:20px;
-    color:#5f5f5f;
-}
-.padding-r-1_x {
-    padding-right:15px
-}
-.send_code button {
-    background: rgba(95, 95, 95, 0.2);
-    border-radius:5px;
+    font-size: 20px;
+    color: #5f5f5f;
 }
 
-label {
-    font-size:15px;
-    color:#5f5f5f;
+.padding-r-1_x {
+    padding-right: 15px
+}
+
+.send_code button {
+    /* background: rgba(95, 95, 95, 0.2); */
+    border-radius: 5px;
+}
+
+.bs_main label {
+    font-size: 15px;
+    color: #5f5f5f;
 }
 
 .phone_container .ant-input-group-lg .ant-select-single .ant-select-selector,
 .phone_container input {
     background: #FFFFFF;
-border: 1px solid rgba(246, 96, 54, 0.2);
-border-radius: 5px;
-height:47px;
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+    height: 47px;
 }
 
 .phone_container .ant-select-single .ant-select-selector .ant-select-selection-item,
 .phone_container .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
-    line-height:47px;
+    line-height: 47px;
 }
 
 .phone_container_right {
-    flex:1;
+    flex: 1;
+}
+
+[type='number']::-webkit-inner-spin-button, [type='number']::-webkit-outer-spin-button {
+    display: none;
+}
+
+.ant-dropdown-menu-item {
+    padding: 10px 20px;
+    font-size: 15px;
+}
+
+.ant-dropdown-menu-item:hover {
+    color: #F66036;
+
+}
+
+.scan-container.bs_main {
+
+    padding-top: 120px;
 }
