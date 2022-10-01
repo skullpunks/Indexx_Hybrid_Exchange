@@ -27,7 +27,7 @@ const Section1 = () => {
                         <div className="launch-app-button-text">Swap</div>
                     </div>
                 </Link>
-                <Link className="td-none" to="/indexx-exchange/buy_sell">
+                <Link className="td-none" to="/indexx-exchange/buy-sell">
                     <div className="login-button cut_button">
                         <div className="login-button_text">Buy and Sell</div>
                     </div>

@@ -26,8 +26,8 @@ const Header = () => {
         },
         {
             label: "Buy & Sell",
-            value: "buy_sell",
-            url: "/indexx-exchange/buy_sell"
+            value: "buy-sell",
+            url: "/indexx-exchange/buy-sell"
         },
         {
             label: "Trade to Earn",
@@ -49,7 +49,7 @@ const Header = () => {
                             </h1>
                             <div className="d-flex padding-l-3x">
                                 <Dropdown label="Products" items={[
-                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
+                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
                                 ]} />
                                 <Dropdown label="Earn" items={[
                                     { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
@@ -62,9 +62,9 @@ const Header = () => {
                         {(location.pathname.includes("help")) &&
                             <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet" onClick={() => window.open(window.location.origin, "_blank")}>Launch App</Button>
                         }
-                        {(location.pathname.includes("buy_sell")) &&
+                        {(location.pathname.includes("buy-sell")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/" style={{ color: "#fff", width: 80 }}>Log In</Link>
+                                <Link to="/indexx-exchange/buy-sell/login" style={{ color: "#fff", width: 80 }}>Log In</Link>
                                 <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
                             </div>
                         }
@@ -82,7 +82,7 @@ const Header = () => {
                 ) : (
                     <div className="d-flex">
                         <Dropdown label="Products" items={[
-                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy_sell" }
+                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
                         ]} />
                         <Dropdown label="Earn" items={[
                             { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
