@@ -288,7 +288,8 @@ input[type="checkbox"] {
     text-align: center;
 }
 
-.font_20x {
+.font_20x,
+.default-link.font_20x {
     font-size: 20px;
     color: #5f5f5f;
 }
@@ -341,4 +342,54 @@ input[type="checkbox"] {
 .scan-container.bs_main {
 
     padding-top: 120px;
+}
+
+
+.default-link {
+font-size: 15px;
+line-height: 20px;
+color:#5F5F5F;
+
+}
+
+.w-fit-content{
+    width:fit-content;
+}
+
+.default-link:hover{
+    color:#5F5F5F;
+}
+
+.border-default{
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 3px;
+    padding: 6px 15px;
+}
+
+.border-b-1x{
+    border-bottom: 1px solid rgba(246, 96, 54, 0.2);
+}
+
+.margin-b-2x {
+    margin-bottom:20px;
+}
+.card_s.card {
+    min-height:294px;
+}
+
+.card_s .verfication_text {
+    font-size:17px;
+}
+
+.sms_verfication{
+    position: relative;
+    right:-104%;
+
+}
+
+.font_15x {
+    font-size:15px;
+}
+.padding-l-2x {
+    padding-left:20px;
 }
