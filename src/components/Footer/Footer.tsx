@@ -7,15 +7,17 @@ import YouTube from "../../assets/arts/youtTubeIcon.svg";
 import Reddit from "../../assets/arts/redditIcon.svg";
 import needHelp from "../../assets/arts/needHelp.svg";
 import personFlipCoin from "../../assets/arts/personFlipCoin.svg";
+import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
 import { Link } from "react-router-dom";
 import indexText from "../../assets/arts/indexText.svg";
 import "./Footer.css";
 
 interface FooterProps {
     helpIcon?: boolean;
+    footerArt?: string;
 }
 
-const Footer = ({ helpIcon = true }: FooterProps) => {
+const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
     const icons = [
         {
             src: Instagram,
@@ -94,7 +96,14 @@ const Footer = ({ helpIcon = true }: FooterProps) => {
 
                 </div>
                 <div className="col-xs-6 col-md-4 flip_icon_container">
-                    <img src={personFlipCoin} alt="Index flip coin art" className="flip_person_icon" />
+                    {
+                        (footerArt === "flipWoman") ?
+
+                            <img src={womanFlipCoin} alt="Index flip coin art" className="flip_person_icon flip_woman" />
+                            :
+                            <img src={personFlipCoin} alt="Index flip coin art" className="flip_person_icon" />
+
+                    }
                 </div>
             </div>
             <div className="copyright_bar">

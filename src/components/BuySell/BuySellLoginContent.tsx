@@ -20,7 +20,8 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className="form_element email position-relative">
                         <label>Email</label>
                         <div className="control-input"><input type="email" name="email" />
-                            <span className="input_icon"><img src={Email} alt="emailIcon" /></span></div>
+                            <span className="input_icon"><img src={Email} alt="emailIcon" /></span>
+                        </div>
                     </div>
                     <div className="form_element password position-relative padding-tb-2x">
                         <label>Password</label>
@@ -28,7 +29,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                             <span className="input_icon"><img src={PasswordEye} alt="PasswordEye" /></span>
                         </div>
                     </div>
-                    <a className='default-link'>Forgot password</a>
+                    <a className='default-link text-underline' onClick={() => setScreenName("TwoFactorAuth")}>Forgot password</a>
                     <br />
                     <br />
                     <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" onClick={() => setScreenName("LoginFail")} style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Log In</Button>
@@ -37,7 +38,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <a className="text_link">Get Started</a></div>
                     <br />
 
-                    <a className='default-link border-default text-center margin-t-1_5x '  onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</a>
+                    <a className='default-link border-default text-center margin-t-1_5x ' onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</a>
                 </div>
             </div>
 

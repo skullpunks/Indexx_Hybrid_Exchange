@@ -22,11 +22,13 @@ const BuySellLoginQR: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className=" d-flex  border-b-1x padding-b-1x">
                     <img src={arrowAdressLeft} alt="adressLeft" className="left_arrow" onClick={() => setScreenName("")} />
                     <h1>Log In </h1>
+                </div>
+                <div className='className=" d-flex  border-b-1x padding-b-2x'>
+                    <img src={QRCodeIcon} alt="QRCodeIcon" className="margin-lr-auto padding-t-2x margin-t-1_5x" width="160px" height="160px" />
 
                 </div>
-                <img src={QRCodeIcon} alt="QRCodeIcon" className="margin-lr-auto padding-t-2x margin-t-1_5x" width="160px" height="160px" />
-                <div className="padding-2x">
-                    <div>Scan this code with the <a className="text_link">indexx.ai</a> mobile app to log in instantly.</div><br/>
+                <div className="padding-2x font_15x">
+                    <div>Scan this code with the <a className="text_link">indexx.ai</a> mobile app to log in instantly.</div><br />
                     <div>1.Make sure you are logged into the app</div>
                     <div>2.Navigate to your  ‘Accounts’ tab</div>
                     <div>3.Tab the  QR code scan icon in the upper right corner</div>

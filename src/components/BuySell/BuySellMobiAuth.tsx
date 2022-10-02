@@ -24,7 +24,7 @@ const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) =
       <img src={MobileIcon} alt="MobileIcon" width="58" height="87" className="margin-lr-auto margin-t-1_5x" />
       <h1 className="margin-lr-auto padding-t-2x">SMS Authentication</h1>
       <div className="text-center margin-lr-auto  font_20x padding-tb-2x ">
-        Enable mobiule 2-Factor-Authentication</div>
+        Enable mobile 2-Factor-Authentication</div>
       <br />
       <div className="padding-b-1x phone_container">
         <label>Phone Number</label>

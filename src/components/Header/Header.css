@@ -109,6 +109,10 @@
     padding-top: 20px;
 }
 
+.padding-t-3x {
+    padding-top: 30px;
+}
+
 .padding-l-3x {
     padding-left: 30px;
 }
@@ -116,6 +120,12 @@
 .padding-b-2x {
     padding-bottom: 20px;
 }
+
+
+.padding-r-1_x {
+    padding-right: 15px
+}
+
 
 .primary_color {
     color: #006DFF;
@@ -155,4 +165,21 @@
     background-color: #F66036;
     font-size: 15px;
     height: 40px;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.main_navigation .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
+    color: #fff;
+}
+
+.main_navigation .ant-dropdown-menu-item:hover {
+    background-color: rgba(211, 211, 211, 0.42);
+    color: #fff;
+}
+
+.main_navigation.ant-dropdown-menu {
+    background-color: #171717;
 }

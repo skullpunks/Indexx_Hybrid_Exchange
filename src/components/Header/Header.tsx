@@ -1,10 +1,50 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"
-import Dropdown from "../DropDown/DropDown";
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from 'antd';
 import indexText from "../../assets/arts/indexText.svg";
+import { Dropdown, Menu, Space } from 'antd';
+import { CaretDownOutlined } from "@ant-design/icons";
 
+const menuProducts = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <a href="/indexx-exchange/swap">Swap</a> },
+        { key: 2, label: <a href="/indexx-exchange/buy-sell">Buy & Sell</a> }
+    ]}
+/>);
+const menuEarn = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <a href="/indexx-exchange/trade-to-earn">Trade to earn</a> },
+        { key: 2, label: <a href="/indexx-exchange/farms">Farms</a> },
+        { key: 3, label: <a href="/indexx-exchange/pools">Pools</a> }
+    ]}
+/>);
+const menuCompany = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <a href="/indexx-exchange/about">About</a> },
+        { key: 2, label: <a href="/indexx-exchange/hybrid-exchange">Hybrid exchange</a> },
+        { key: 3, label: <a href="/indexx-exchange/affliate">Affiliate Program</a> },
+        { key: 4, label: <a href="/indexx-exchange/blog">Blog</a> }
+    ]}
+
+/>);
+
+const menuNavigation = () => {
+    return <>
+        <Dropdown overlay={menuProducts} trigger={['click']}>
+            <a className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Products<CaretDownOutlined /></Space> </a>
+        </Dropdown>
+        <Dropdown overlay={menuEarn} trigger={['click']}>
+            <a className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Earn<CaretDownOutlined /></Space> </a>
+        </Dropdown>
+        <Dropdown overlay={menuCompany} trigger={['click']}>
+            <a className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Company<CaretDownOutlined /></Space> </a>
+        </Dropdown>
+    </>
+}
 
 const Header = () => {
     let location = useLocation()
@@ -47,16 +87,8 @@ const Header = () => {
                                 <Link to="/"><img src={indexText} alt="index logo" /></Link>
                                 <span className="logo__text">{showText[0]}</span>
                             </h1>
-                            <div className="d-flex padding-l-3x">
-                                <Dropdown label="Products" items={[
-                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
-                                ]} />
-                                <Dropdown label="Earn" items={[
-                                    { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
-                                ]} />
-                                <Dropdown label="Company" items={[
-                                    { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
-                                ]} />
+                            <div className="d-flex padding-l-3x padding-t-2x main_navigation">
+                                {menuNavigation()}
                             </div>
                         </div>
                         {(location.pathname.includes("help")) &&
@@ -64,7 +96,7 @@ const Header = () => {
                         }
                         {(location.pathname.includes("buy-sell")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/indexx-exchange/buy-sell/login" style={{ color: "#fff", width: 80 }}>Log In</Link>
+                                <Link to="/indexx-exchange/buy-sell/login" className="text-underline" style={{ color: "#fff", width: 80 }}>Log In</Link>
                                 <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
                             </div>
                         }
@@ -80,16 +112,8 @@ const Header = () => {
 
                     </div>
                 ) : (
-                    <div className="d-flex">
-                        <Dropdown label="Products" items={[
-                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
-                        ]} />
-                        <Dropdown label="Earn" items={[
-                            { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
-                        ]} />
-                        <Dropdown label="Company" items={[
-                            { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
-                        ]} />
+                    <div className="d-flex main_navigation">
+                        {menuNavigation()}
                     </div>
                 )
             }

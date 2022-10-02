@@ -9,21 +9,25 @@ import BuySellLoggedContent from './BuySellLoggedContent';
 import BuySellLoggedTwoFactor from './BuySellLoggedTwoFactor';
 import BuySellLoggedVerfication from './BuySellLoggedVerfication';
 import BuySellLoginQR from './BuySellLoginQR';
+import Footer from '../Footer/Footer';
 
 const BuySellLogin = () => {
     const [screenName, setScreenName] = useState("");
     return (
-        <div className='scan-container flex-align-stretch bs_main'>
+        <>
+            <div className='scan-container flex-align-stretch bs_main'>
 
-            {screenName === "" && <BuySellLoginContent setScreenName={setScreenName} />}
-            {screenName === "LoginFail" && <BuySellLoginFail setScreenName={setScreenName} />}
-            {screenName === "LoginSuccess" && <BuySellSuccess setScreenName={setScreenName} />}
-            {screenName === "TwoFactorAuth" && <BuySellTwoFactorAuth setScreenName={setScreenName} />}
-            {screenName === "LoggedIn" && <BuySellLoggedContent setScreenName={setScreenName} />} 
-            {screenName === "LoggedTwoFactor" && <BuySellLoggedTwoFactor setScreenName={setScreenName} />} 
-            {screenName === "loggedVerfication" && <BuySellLoggedVerfication setScreenName={setScreenName} />} 
-            {screenName === "LoginQR" && <BuySellLoginQR setScreenName={setScreenName} />}
-        </div> 
+                {screenName === "" && <BuySellLoginContent setScreenName={setScreenName} />}
+                {screenName === "LoginFail" && <BuySellLoginFail setScreenName={setScreenName} />}
+                {screenName === "LoginSuccess" && <BuySellSuccess setScreenName={setScreenName} />}
+                {screenName === "TwoFactorAuth" && <BuySellTwoFactorAuth setScreenName={setScreenName} />}
+                {screenName === "LoggedIn" && <BuySellLoggedContent setScreenName={setScreenName} />}
+                {screenName === "LoggedTwoFactor" && <BuySellLoggedTwoFactor setScreenName={setScreenName} />}
+                {screenName === "loggedVerfication" && <BuySellLoggedVerfication setScreenName={setScreenName} />}
+                {screenName === "LoginQR" && <BuySellLoginQR setScreenName={setScreenName} />}
+            </div>
+            <Footer footerArt="flipWoman" />
+        </>
     )
 }
 
