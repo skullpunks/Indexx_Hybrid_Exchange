@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
-import { CaretDownOutlined } from "@ant-design/icons";
+import { BellOutlined, CaretDownOutlined, DownOutlined, UserOutlined } from "@ant-design/icons";
 
 const menuProducts = (<Menu className="main_navigation"
     items={[
@@ -26,8 +26,8 @@ const menuCompany = (<Menu className="main_navigation"
         { key: 3, label: <a href="/indexx-exchange/affliate">Affiliate Program</a> },
         { key: 4, label: <a href="/indexx-exchange/blog">Blog</a> }
     ]}
-
 />);
+
 
 const menuNavigation = () => {
     return <>
@@ -48,7 +48,31 @@ const menuNavigation = () => {
 
 const Header = () => {
     let location = useLocation()
-    const [isInsideApp, setIsInsideApp] = useState(false)
+    let navigate = useNavigate()
+    const [isInsideApp, setIsInsideApp] = useState(false);
+
+    // (localStorage.getItem("user")) ? "" : 
+
+    const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        localStorage.removeItem("user"); //remove one item
+        // localStorage.clear(); //clear all localstorage
+        window.location.reload();
+
+    }
+    const userMenu = (
+        <Menu className="main_navigation"
+            items={[
+                { key: 1, label: <a href="/indexx-exchange/about">Dashboard</a> },
+                { key: 2, label: <a href="/indexx-exchange/hybrid-exchange">Account & Settings</a> },
+                { key: 3, label: <a href="/indexx-exchange/affliate">Security</a> },
+                { key: 4, label: <a href="/indexx-exchange/blog">Refer a Friend</a> },
+                { key: 5, label: <a href="/indexx-exchange/blog">Export Reports </a> },
+                { key: 6, label: <a href="/indexx-exchange/blog">API Management</a> },
+                { key: 7, label: <a onClick={logOutUser}>Log out</a> }
+            ]}
+        />
+    );
 
     useEffect(() => {
         if (location) {
@@ -96,10 +120,29 @@ const Header = () => {
                         }
                         {(location.pathname.includes("buy-sell")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/indexx-exchange/buy-sell/login" className="text-underline" style={{ color: "#fff", width: 80 }}>Log In</Link>
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
+                                {(localStorage.getItem("user")) ?
+                                    <>
+
+                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Buy Crypto</Button>
+                                        <BellOutlined className="padding-l-2x" style={{ fontSize: 20 }} />
+                                        <Dropdown overlay={userMenu} trigger={['click']}>
+                                            <a onClick={e => e.preventDefault()} className="padding-l-1x text-white">
+                                                <Space> {localStorage.getItem("user")} <DownOutlined /> </Space>
+                                            </a>
+                                        </Dropdown>
+                                    </>
+                                    :
+                                    (location.pathname.includes("login")) ?
+                                        <></>
+                                        :
+                                        <>
+                                            <Link to="/indexx-exchange/buy-sell/login" className="text-underline" style={{ color: "#fff", width: 80 }}>Log In</Link>
+                                            <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
+                                        </>
+                                }
                             </div>
                         }
+
                         {(location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
                                 <Link to="/" style={{ color: "#fff", width: 80 }}>Inside Trade</Link>

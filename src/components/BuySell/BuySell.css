@@ -1,4 +1,4 @@
-.card.bs_container {
+.card.bs_container, .bs_main>.card {
     border: 1px solid rgba(246, 96, 54, 0.2);
 }
 
@@ -30,6 +30,14 @@
     flex: 1;
     text-align: center;
     font-size: 100px;
+}
+
+.bs_curreny_left>input {
+    font-size: 80px;
+    width: 130px;
+    text-align: center;
+
+    color: #5f5f5f;
 }
 
 .bs_container_main {
@@ -152,13 +160,13 @@ input::-webkit-input-placeholder {
     color: rgba(95, 95, 95, 0.5);
 }
 
-.common__token__subTitle {
+.common_token_subTitle {
     color: rgb(95 95 95 / 20%);
     font-size: 25px;
     line-height: 1.2;
 }
 
-.bs_token_container .common__token__title {
+.bs_token_container .common_token_title {
     font-size: 25px;
     padding: 0 10px;
 }
@@ -409,4 +417,68 @@ input[type="checkbox"] {
 .text-underline:hover {
     color: #F66036;
     text-decoration: underline;
+}
+
+.ant-input-affix-wrapper {
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+    height: 51px;
+}
+
+.ant-form-vertical .ant-form-item-label {
+    padding: 0 0 0;
+}
+
+button.ant-btn-primary [disabled] {
+    background-color: #5F5F5F;
+    height: 55px;
+    border-color: "#5F5F5F";
+    color: "#fff";
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.bs_main .ant-btn-primary,
+.bs_main .ant-btn-primary:hover,
+.bs_main .ant-btn-primary:active,
+.bs_main .ant-btn-primary:focus {
+    height: 55px;
+    border-color: #F66036;
+    background-color: #F66036;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+
+
+.bs_tab_item>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
+    margin: 0 19px;
+    padding: 20px 10px;
+    font-size: 30px;
+}
+
+.bs_tab_item>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab:hover {
+    color: #F66036;
+}
+
+.bs_tab_item.ant-tabs {
+    color: #5f5f5f;
+}
+
+.bs_tab_item>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #000;
+}
+
+.bs_tab_item>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-ink-bar {
+    background-color: #F66036;
+}
+
+.bs_main>.card {
+    min-height: 570px;
+}
+
+.ant-btn-dangerous.ant-btn-primary:hover {
+    background-color: #d52f01;
+    border-color: #d52f01;
 }

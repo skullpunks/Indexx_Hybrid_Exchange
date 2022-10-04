@@ -23,6 +23,7 @@ import BuySellEmailAuth from './BuySellEmailAuth';
 import BuySellSecureSteps from './BuySellSecureSteps';
 import BuySellMobiAuth from './BuySellMobiAuth';
 import BuySellmobiVerfication from './BuySellmobiVerfication';
+import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -35,21 +36,28 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
     console.log(setToggleChart);
     // let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
     return (
-        <div className="scan-container flex-align-stretch bs_main">
-            {toggleChart && <Chart />}
-            {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
-            {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
-            {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
-            {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-            {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-            {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-            {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-            {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-        </div>
+        <>
+            <div className="scan-container flex-align-stretch bs_main">
+                {toggleChart && <Chart />}
+                {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
+                {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
+                {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
+                {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+            </div>
+            {
+                (screenName === "" || screenName === "select" || screenName === "create") ?
+                    <div className='centered' style={{ paddingBottom: 180 }}>
+                        <img src={personFlipIconGold} />
+                    </div>
+                    :
+                    <></>
 
-
-
-
+            }
+        </>
 
 
     )

@@ -10,6 +10,8 @@ import Team from './components/Help/Team';
 import ContactUs from './components/Help/ContactUs';
 import TradeToEarn from './components/TradeToEarn/TradeToEarn';
 import BuySellLogin from './components/BuySell/BuySellLogin';
+import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
+import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 
 function App() {
     return (
@@ -21,6 +23,7 @@ function App() {
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/buy-sell" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login" element={<BuySellLogin />} />
+                    <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/help" element={<Help />} >
