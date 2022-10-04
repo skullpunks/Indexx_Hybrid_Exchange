@@ -1,5 +1,6 @@
 import phoneIcon from "../../assets/arts/phoneIcon.svg";
 import locationIcon from "../../assets/arts/locationIcon.svg";
+import emailIcon from "../../assets/arts/emailIcon.png";
 
 const ContactUs = () => {
     return (
@@ -25,6 +26,14 @@ const ContactUs = () => {
                             <div>CA 92660 United State</div>
                         </div>
                     </div>
+                </div>
+                <div className="d-flex phone_details">
+                    <img src={emailIcon} style={{ marginTop: 6 }} alt="Email icon" width="20" height="20" />
+                    <p className="contat_us" >
+                        <a href="mailto:contact@indexx.ai">contact@indexx.ai</a><br />
+                        <a href="mailto:acounts@indexx.ai "> acounts@indexx.ai </a><br />
+                        <a href="mailto:support@indexx.ai">support@indexx.ai</a><br />
+                    </p>
                 </div>
             </div>
         </div>

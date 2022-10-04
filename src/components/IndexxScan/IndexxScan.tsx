@@ -3,7 +3,7 @@ import chartIcon from "../../assets/arts/chartIcon.svg";
 import chartHiddenIcon from "../../assets/arts/ChartHiddenIcon.svg";
 
 import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, InputNumber, Tag } from 'antd';
+import { Button, InputNumber, Tag, Tooltip } from 'antd';
 import { useState } from 'react';
 // import downArrow from "../../assets/arts/downArrow.svg";
 import Chart from "../Chart/Chart";
@@ -21,7 +21,8 @@ interface Props {
 
 const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
     const [toggleChart, setToggleChart] = useState(true);
-    let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
+    // let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
+    let chartIconVisible = toggleChart ? "cursor-pointer disable_icon" : "cursor-pointer ";
     const [fromTokenVal, setFromTokenVal] = useState(0);
     const [toTokenVal, setToTokenVal] = useState(0);
 
@@ -83,7 +84,8 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
                 <div className='card__header'>
                     <div className='card__header__inner'>
                         <div className='card__header__inner__left'>
-                            <img src={chartIconVisible} className="cursor-pointer" alt="chart icon" onClick={() => setToggleChart(!toggleChart)} />
+                            {/* <img src={chartIconVisible} className="cursor-pointer" alt="chart icon" onClick={() => setToggleChart(!toggleChart)} /> */}
+                            <img src={chartHiddenIcon} className={chartIconVisible} alt="chart icon" onClick={() => setToggleChart(!toggleChart)} />
                         </div>
                         <h1 className='card__title'>Swap</h1>
                         <div className='card__header__inner__right'>
@@ -145,7 +147,9 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
 
                     <div className='info__text'>
                         <Tag color="#006DFF" className='tag' >SCAN RISK</Tag>
-                        <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                        <Tooltip title="The scan result is provided by 3rd parties and may not cover every token. Therefore the result is for reference only, do NOT take it as investment or financial advice.">
+                            <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                        </Tooltip>
                     </div>
                     {(fromTokenVal > 0 || toTokenVal > 0) &&
                         <div className="d-flex flex-justify-between">

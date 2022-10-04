@@ -12,6 +12,7 @@ import { Button, Tag, InputNumber } from 'antd';
 import swapIcon from "../../assets/arts/swapIcon.svg";
 import historyIcon from "../../assets/arts/historyIcon.svg";
 import Chart from '../Chart/Chart';
+import { Tooltip } from 'antd';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -19,7 +20,7 @@ interface Props {
 
 const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
     const [toggleChart, setToggleChart] = useState(false);
-    let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
+    let chartIconVisible = toggleChart ? "cursor-pointer disable_icon" : "cursor-pointer ";
     console.log(setStatus);
     return (
         <div className="scan-container flex-align-stretch">
@@ -28,7 +29,7 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                 <div className="card__header">
                     <div className="card_header_inner d-flex flex-justify-between flex-align-center">
                         <div className="card_header_inner_left">
-                            <img src={chartIconVisible} className="cursor-pointer" alt="chart icon" onClick={() => setToggleChart(!toggleChart)} />
+                            <img src={chartHiddenIcon} className={chartIconVisible} alt="chart icon" onClick={() => setToggleChart(!toggleChart)} />
                         </div>
                         <h1 className="card_title">
                             Swap
@@ -89,7 +90,9 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                     </div>
                     <div className='info__text'>
                         <Tag color="#006DFF" className='tag' >SCAN RISK</Tag>
-                        <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                        <Tooltip title="The scan result is provided by 3rd parties and may not cover every token. Therefore the result is for reference only, do NOT take it as investment or financial advice.">
+                            <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                        </Tooltip>
 
                     </div>
                     <div className="card_body_meta_data" style={{ color: "#5f5f5f" }}>
