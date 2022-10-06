@@ -30,13 +30,20 @@
     flex: 1;
     text-align: center;
     font-size: 100px;
+    padding: 6px 32px 20px 0;
+    display: flex;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-align-items: end;
+    justify-content: center;
 }
 
 .bs_curreny_left>input {
-    font-size: 80px;
-    width: 130px;
+    font-size: 100px;
+    height: 100px;
     text-align: center;
-
+border:0;
     color: #5f5f5f;
 }
 
@@ -296,7 +303,7 @@ input[type="checkbox"] {
 
 .font_20x,
 .default-link.font_20x {
-    font-size: 20px;
+    font-size: 20px !important;
     color: #5f5f5f;
 }
 
@@ -481,4 +488,20 @@ button.ant-btn-primary [disabled] {
 .ant-btn-dangerous.ant-btn-primary:hover {
     background-color: #d52f01;
     border-color: #d52f01;
+}
+
+.bs_link, a.bs_link:hover{
+    color: #F66036 !important;
+
+}
+
+.padding-lr-0{
+    padding-left:0;
+    padding-right:0;
+}
+
+.swap_Arrow_icon{
+    position:absolute;
+    right: 4px;
+    top: 39%;
 }

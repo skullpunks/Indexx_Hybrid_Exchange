@@ -4,6 +4,7 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { ReloadOutlined } from '@ant-design/icons';
 import { Dropdown, Input, Menu, Space, Tabs } from "antd";
 import { useState } from "react";
+import BSConvertIntro from "./BSConvertIntro";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -56,10 +57,20 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const BuyContent = () => {
         return <>
             <div className="bs_container_main">
-                <div className="bs_curreny d-flex ">
-                    {/* <div className="bs_curreny_left"><span className="bs_currency_symbol">$ </span>0</div> */}
+                {/* <div className="bs_curreny d-flex ">
+                     <div className="bs_curreny_left"><span className="bs_currency_symbol">$ </span>0</div> 
                     <div className="bs_curreny_left"><span className="bs_currency_symbol">$ </span><Input placeholder="0" bordered={false} value={cryptoVal} onClick={updateCryptoVal} /></div>
                     <div><img src={SwapArrowIcon} alt="ddd" /></div>
+                </div> */}
+                <div className="bs_curreny d-flex position-relative ">
+                    <div className="bs_curreny_left padding-b-2x" style={{transform: "scale(1)"}}>
+                    <span className="font_20x">$</span>
+                        <input placeholder="0" className=" " type="text" value="" style={{width: "57px"}}/>
+                       
+                    </div>
+                    <div className='swap_Arrow_icon'>
+                        <img src={SwapArrowIcon} alt="ddd" style={{position:"absolute",right: "4px",top: "60%"}} />
+                    </div>
                 </div>
                 <div className="bs_purchase d-flex">
                     <Dropdown overlay={menu} trigger={['click']} >
@@ -81,7 +92,7 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </div>
                 </div>
                 <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
-            </div>
+            </div>    
             <div className="bs_footer_action">
                 <button>Preview Purchase </button>
             </div>
@@ -101,8 +112,8 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </h1>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Convert" key="3" >
-                    <h1 style={{ padding: 20 }}>
-                        Convert
+                    <h1 style={{  }}>
+                       <BSConvertIntro/>
                     </h1>
                 </Tabs.TabPane>
             </Tabs>
