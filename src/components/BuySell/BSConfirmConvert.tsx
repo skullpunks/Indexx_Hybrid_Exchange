@@ -60,7 +60,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="footer bs_footer_action">
 
 
-                    <Button type="primary" className="atn-btn atn-btn-round" block>Confirm Conversion (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSConvertInProgress")}> Confirm Conversion (11s)</Button>
                 </div>
             </div>
 

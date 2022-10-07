@@ -25,6 +25,9 @@ import BuySellMobiAuth from './BuySellMobiAuth';
 import BuySellmobiVerfication from './BuySellmobiVerfication';
 import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
 import BSConfirmConvert from './BSConfirmConvert';
+import BSConvertInProgress from './BSConvertInProgress';
+import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
+import BSTractionHistory from './BSTractionHistory';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -49,6 +52,9 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
+                {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}
+                {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}
+                {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} />}
             </div>
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
