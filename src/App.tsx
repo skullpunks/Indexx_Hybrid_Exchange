@@ -10,7 +10,7 @@ import Team from './components/Help/Team';
 import ContactUs from './components/Help/ContactUs';
 import TradeToEarn from './components/TradeToEarn/TradeToEarn';
 import BuySellLogin from './components/BuySell/BuySellLogin';
-import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
+// import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
 import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 
 function App() {

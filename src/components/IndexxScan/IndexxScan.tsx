@@ -1,5 +1,5 @@
 import './IndexxScan.css';
-import chartIcon from "../../assets/arts/chartIcon.svg";
+// import chartIcon from "../../assets/arts/chartIcon.svg";
 import chartHiddenIcon from "../../assets/arts/ChartHiddenIcon.svg";
 
 import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
@@ -150,7 +150,7 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
                         <div className='info__text'>
                             <Tag color="#006DFF" className='tag' >SCAN RISK</Tag>
                             <Tooltip title="The scan result is provided by 3rd parties and may not cover every token. Therefore the result is for reference only, do NOT take it as investment or financial advice.">
-                                <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                                <QuestionCircleOutlined className='question_iocn primary_hover' />
                             </Tooltip>
                         </div>
                         {(fromTokenVal > 0 || toTokenVal > 0) &&
@@ -191,7 +191,7 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
 
             </div>
             <div className='centered lady_swap_icon'>
-                {toggleChart && ladySwapIcon && <img src={ladySwapIcon} width="800" />}
+                {toggleChart && ladySwapIcon && <img src={ladySwapIcon} width="800" alt="Gold swap" />}
             </div>
         </>
 

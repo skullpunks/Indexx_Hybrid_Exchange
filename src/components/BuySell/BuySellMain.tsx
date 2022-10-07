@@ -24,6 +24,7 @@ import BuySellSecureSteps from './BuySellSecureSteps';
 import BuySellMobiAuth from './BuySellMobiAuth';
 import BuySellmobiVerfication from './BuySellmobiVerfication';
 import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
+import BSConfirmConvert from './BSConfirmConvert';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -47,6 +48,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
             </div>
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?

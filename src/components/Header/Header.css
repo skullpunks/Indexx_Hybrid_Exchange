@@ -191,3 +191,11 @@
 .disable_icon {
     opacity: 0.5;
 }
+
+.primary_hover:hover {
+    color: #00387d;
+}
+
+.index_logo {
+    padding-right: 10px;
+}

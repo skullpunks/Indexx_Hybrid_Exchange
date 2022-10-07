@@ -82,8 +82,8 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                         the cryptocurrency space.
                     </p>
                     <p className="footer_center_text">
-                        <span className="d-block">949-228-9079</span>
-                        <br />
+                        {/* <span className="d-block">949-228-9079</span>
+                        <br /> */}
 
                         indexx Limited, CUB Financial Centre,<br />
                         GF6, Lyford Cay, Nassau, Bahamas.<br /> <br />

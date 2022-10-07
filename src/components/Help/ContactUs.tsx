@@ -1,4 +1,4 @@
-import phoneIcon from "../../assets/arts/phoneIcon.svg";
+// import phoneIcon from "../../assets/arts/phoneIcon.svg";
 import locationIcon from "../../assets/arts/locationIcon.svg";
 import emailIcon from "../../assets/arts/emailIcon.png";
 
@@ -10,9 +10,9 @@ const ContactUs = () => {
             </div>
 
             <div className="nav_Section padding-t-2x">
-                <div className="d-flex phone_details">
+                {/* <div className="d-flex phone_details">
                     <p><img src={phoneIcon} alt="Phone icon" /> 949-228-9079 </p>
-                </div>
+                </div> */}
                 <div className="d-flex location_details padding-t-2x">
                     <div className="padding-t-1x">
                         <img src={locationIcon} alt="Phone icon" width="15" height="22" />

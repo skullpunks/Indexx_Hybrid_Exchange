@@ -63,13 +63,13 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <div><img src={SwapArrowIcon} alt="ddd" /></div>
                 </div> */}
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{transform: "scale(1)"}}>
-                    <span className="font_20x">$</span>
-                        <input placeholder="0" className=" " type="text" value="" style={{width: "57px"}}/>
-                       
+                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)" }}>
+                        <span className="font_20x">$</span>
+                        <input placeholder="0" className=" " type="text" value="" style={{ width: "57px" }} />
+
                     </div>
                     <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{position:"absolute",right: "4px",top: "60%"}} />
+                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
                 <div className="bs_purchase d-flex">
@@ -92,7 +92,7 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </div>
                 </div>
                 <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
-            </div>    
+            </div>
             <div className="bs_footer_action">
                 <button>Preview Purchase </button>
             </div>
@@ -112,8 +112,8 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </h1>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Convert" key="3" >
-                    <h1 style={{  }}>
-                       <BSConvertIntro/>
+                    <h1 style={{}}>
+                        <BSConvertIntro setScreenName={setScreenName} />
                     </h1>
                 </Tabs.TabPane>
             </Tabs>

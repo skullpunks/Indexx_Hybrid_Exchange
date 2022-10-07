@@ -13,12 +13,28 @@ import swapIcon from "../../assets/arts/swapIcon.svg";
 import historyIcon from "../../assets/arts/historyIcon.svg";
 import Chart from '../Chart/Chart';
 import { Tooltip } from 'antd';
+import initialTokens from "../../utils/Tokens.json";
+import { useFromTokenContext, useToTokenContext } from '../../utils/SwapContext';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
 }
 
 const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
+    const { fromToken } = useFromTokenContext();
+    const { toToken } = useToTokenContext();
+    let fromImage, image;
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === fromToken;
+    });
+    const filteredArray = initialTokens.filter(function (obj) {
+        return obj?.address === toToken;
+    });
+
+    (filteredFromArray && filteredFromArray.length) ? (fromImage = filteredFromArray[0].image) : fromImage = "";
+    (filteredArray && filteredArray.length) ? (image = filteredArray[0].image) : image = "";
+
+
     const [toggleChart, setToggleChart] = useState(false);
     let chartIconVisible = toggleChart ? "cursor-pointer disable_icon" : "cursor-pointer ";
     console.log(setStatus);
@@ -46,7 +62,9 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                 <div className="card_body">
                     <div className="from_body">
                         <div className="d-flex flex-align-center">
-                            <img src={IN500} alt="IN500 Here" width="30" />
+                            {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
+                            <img src={require(`../../assets/token-icons/${fromImage}.png`).default} alt="bit coin" width="30" />
+
                             <h1 className="chart_title">IN500</h1>
                             <img src={downArrow} alt="downarrow" style={{ width: 19, height: 18 }} />
                         </div>
@@ -71,7 +89,9 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
 
                     <div className="to_body">
                         <div className="d-flex flex-align-center">
-                            <img src={IUSD} alt="IUSD+ Here" width="30" />
+                            {/* <img src={IUSD} alt="IUSD+ Here" width="30" /> */}
+                            <img src={require(`../../assets/token-icons/${image}.png`).default} alt="bit coin" width="30" />
+
                             <h1 className="chart_title">IUSD+</h1>
                             <img src={downArrow} alt="downarrow" style={{ width: 19, height: 18 }} />
                         </div>
@@ -91,7 +111,7 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                     <div className='info__text'>
                         <Tag color="#006DFF" className='tag' >SCAN RISK</Tag>
                         <Tooltip title="The scan result is provided by 3rd parties and may not cover every token. Therefore the result is for reference only, do NOT take it as investment or financial advice.">
-                            <QuestionCircleOutlined style={{ fontSize: '20px', color: '#006DFF' }} />
+                            <QuestionCircleOutlined className='question_iocn primary_hover' />
                         </Tooltip>
 
                     </div>
@@ -108,7 +128,7 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
                 </div>
 
                 <div className="footer">
-                    <Button type="primary" onClick={() => { setStatus("ConfirmSwapTwo"); }} className="atn-btn atn-btn-round" style={{ height: 55, backgroundColor: " #006DFF", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Swap</Button>
+                    <Button type="primary" onClick={() => { setStatus("ConfirmSwapTwo"); }} className="atn-btn atn-btn-round btn_xl" block>Swap</Button>
 
                     <div className="footer_body">
                         <div className="d-flex flex-justify-between">

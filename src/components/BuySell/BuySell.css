@@ -35,7 +35,7 @@
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    -webkit-align-items: end;
+    align-items: end;
     justify-content: center;
 }
 
@@ -43,12 +43,12 @@
     font-size: 100px;
     height: 100px;
     text-align: center;
-border:0;
+    border: 0;
     color: #5f5f5f;
 }
 
 .bs_container_main {
-    padding: 26px 41px 34px 44px;
+    padding: 55px 41px 55px 44px;
 }
 
 button {
@@ -81,9 +81,17 @@ button {
 
 .bs_footer_action button {
     color: #ffffff;
-    background: rgba(95, 95, 95, 0.2);
+    /* background: rgba(95, 95, 95, 0.2); */
+    background-color: #f66036;
     border-radius: 5px;
     height: 55px;
+}
+
+.bs_footer_action button:hover,
+.bs_footer_action button:focus,
+.bs_footer_action button:active {
+    background-color: #d52f01;
+    outline: none;
 }
 
 .bs_token_num {
@@ -98,6 +106,7 @@ button {
 
 .token_grey {
     color: rgba(18, 18, 18, 0.2);
+    padding-left: 5px;
 }
 
 .justify-between {
@@ -217,8 +226,8 @@ button.ant-btn-link.btn_link span {
     font-size: 20px;
     height: 39px;
     padding-top: 16px;
-
 }
+
 
 .left_arrow {
     padding-right: 8px;
@@ -490,18 +499,57 @@ button.ant-btn-primary [disabled] {
     border-color: #d52f01;
 }
 
-.bs_link, a.bs_link:hover{
+.bs_link, a.bs_link:hover {
     color: #F66036 !important;
 
 }
 
-.padding-lr-0{
-    padding-left:0;
-    padding-right:0;
+.padding-lr-0 {
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.swap_Arrow_icon{
-    position:absolute;
+.swap_Arrow_icon {
+    position: absolute;
     right: 4px;
     top: 39%;
+}
+
+.bs_main .ant-btn-primary:hover {
+    background-color: #d52f01;
+}
+
+
+.bs_main .card__header {
+    border-color: rgba(246, 96, 54, 0.2);
+}
+
+.bs_main .ant-btn-primary:hover, .bs_main .ant-btn-primary:focus,
+.bs_main .footer.ant-btn-primary:hover, .bs_main .footer .ant-btn-primary:focus {
+
+    border-color: rgba(246, 96, 54, 0.2);
+    background-color: #d52f01;
+}
+
+.bs_curreny_left input:hover,
+.bs_curreny_left input:focus,
+.bs_curreny_left input:active {
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border: none;
+    outline: none;
+}
+
+.bs_curreny_left>input.input_currency {
+    max-width: 200px;
+    font-size: 60px;
+}
+
+.error_message {
+
+
+    background: rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+    margin-left: 20px;
+    padding: 5px 10px;
+    font-size: 13px;
 }
