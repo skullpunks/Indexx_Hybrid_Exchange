@@ -145,7 +145,7 @@ const Header = () => {
 
                         {(location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/" style={{ color: "#fff", width: 80 }}>Inside Trade</Link>
+                                <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link>
                                 <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x">Buy Crypto</Button>
                             </div>
                         }
