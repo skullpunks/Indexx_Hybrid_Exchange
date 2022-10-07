@@ -13,7 +13,7 @@ const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => 
              <div className="card__header flex-justify-between d-flex flex-align-center">
                     <h1 className='centered' style={{ color: "#5f5f5f" }}>
                         <span style={{ fontSize: 20, paddingRight: 10 }}>&#60;</span>
-                        Convert in Progress
+                        Convert in Processing
                     </h1>
              </div>
              <div className='card_body text-center'>
@@ -21,15 +21,16 @@ const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => 
     
                 <div className="bs_curreny d-flex position-relative ">
                         <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-                            <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                            <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
+                            
+                            <span placeholder="0" className=" " style={{ fontSize: 50 }} >0.00005102</span>
+                            <span className="font_20x" style={{ paddingBottom:14,paddingLeft:4}} >BTC</span>
                         </div>
-                        <div className='swap_Arrow_icon'>
-                            <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                        <div className='swap_Arrow_icon'  style={{ position: "absolute", right: "4px", top: "2%" }} >
+                            <img src={SwapArrowIcon} alt="ddd"/>
                         </div>
                     </div>
     
-                <div className='font_20x padding-b-2x'>Your convert order is being processed.</div>
+                <div className='font_18x padding-b-2x'>Your convert order is being processed.A confirmation email will be sent once the order is complete.</div>
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => setScreenName("BSTractionHistory")}> Go to Wallet</Button>
                 <a className="font_15x bs_link text-center d-block padding-t-3x" href="# " >New Convert</a>
              </div>

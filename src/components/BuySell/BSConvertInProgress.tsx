@@ -20,14 +20,21 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
             <img src={InProgressClock} alt="InProgressClock" className='padding-t-2x'/>
 
             <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
+                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px 0 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
                         <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
                     </div>
-                    <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                    <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "6%" }}>
+                        <img src={SwapArrowIcon} alt="ddd"  />
                     </div>
                 </div>
+                <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", paddingBottom: "50px" ,paddingTop:0}}>
+                        
+                        <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >0.00908 </span>
+                        <span className="font_20x" style={{ color:"rgba(96, 96, 96,.5)",paddingLeft:10
+}} >ETH</span>
+                       
+                    </div>
 
             <div className='font_20x padding-b-2x'>Your convert order is being processed.</div>
             <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => setScreenName("BSConvertInProgressProcessing")}> Go to Wallet</Button>
