@@ -16,7 +16,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // const BSSellConfirmConvert: React.FC = () => {
     // console.log(setStatus);
     return (
-        <div className="bs_container card">
+        <div className="bs_container card sell_screens">
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
