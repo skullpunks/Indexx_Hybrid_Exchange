@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Email from "../../assets/arts/Email.svg";
-import PasswordEye from "../../assets/arts/PasswordEye.svg";
+// import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface Props {
@@ -27,7 +27,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='d-flex flex-direction-column'>
                 <h1 className='text-center margin-lr-auto'>Log In</h1>
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
-                <a className='default-link border-default w-fit-content margin-lr-auto padding-b-2x margin-b-2x'>http://accounts.indexx.ai</a>
+                <Link to="" className='default-link border-default w-fit-content margin-lr-auto padding-b-2x margin-b-2x'>http://accounts.indexx.ai</Link>
                 <div className="bs_container bs_form card">
                     <Form
                         onFinish={onFinish}
@@ -56,7 +56,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                             </Form.Item>
 
                         </div>
-                        <a className='default-link text-underline' onClick={() => setScreenName("TwoFactorAuth")}>Forgot password</a>
+                        <Link to="" className='default-link text-underline' onClick={() => setScreenName("TwoFactorAuth")}>Forgot password</Link>
                         <br />
                         <br />
 
@@ -66,9 +66,9 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                     </Form>
                     <br />
 
-                    <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <a className="text_link">Get Started</a></div>
+                    <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <Link to="" className="text_link">Get Started</Link></div>
                     <br />
-                    <a className='default-link border-default text-center margin-t-1_5x ' onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</a>
+                    <Link to="" className='default-link border-default text-center margin-t-1_5x ' onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</Link>
                 </div>
             </div>
 

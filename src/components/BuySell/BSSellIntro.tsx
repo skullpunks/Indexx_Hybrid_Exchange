@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import IN500 from "../../assets/token-icons/33.png";
+// import IN500 from "../../assets/token-icons/33.png";
 import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import "./BS-Sell.css";
+import { Link } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -29,6 +30,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
 
     }
+    console.log(checkPurchase);
     return (
         <div className='sell_screens'>
 
@@ -53,7 +55,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className="bs_token_num d-flex flex-align-center" >
                         {/* <img src={require(`../../assets/token-icons/${fromImage}.png`).default}  */}
                         <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        IN500  <span className="token_grey">Index500</span><a className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</a>
+                        IN500  <span className="token_grey">Index500</span><Link to="" className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</Link>
                     </div>
                 </div>
                 <div className="d-flex">  <div style={{

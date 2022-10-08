@@ -2,10 +2,11 @@ import IN500 from "../../assets/token-icons/33.png";
 import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { ReloadOutlined } from '@ant-design/icons';
-import { Dropdown, Input, Menu, Space, Tabs } from "antd";
+import { Dropdown, Menu, Space, Tabs } from "antd";
 import { useState } from "react";
 import BSConvertIntro from "./BSConvertIntro";
 import BSSellIntro from "./BSSellIntro";
+import { Link } from "react-router-dom";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -54,6 +55,8 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         // console.log(setCryptoVal);
         setCryptoVal((e.target as any).value);
     }
+    console.log(cryptoVal);
+    console.log(updateCryptoVal);
 
     const BuyContent = () => {
         return <>
@@ -75,13 +78,13 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_purchase d-flex">
                     <Dropdown overlay={menu} trigger={['click']} >
-                        <a onClick={e => e.preventDefault()}>
+                        <Link to='' onClick={e => e.preventDefault()}>
                             <Space style={{ color: "#F66036" }}>
                                 <ReloadOutlined className='swap_icons' style={{ fontSize: 16, marginRight: 10 }} />
                                 One-time purchase
 
                             </Space>
-                        </a>
+                        </Link>
                     </Dropdown>
                 </div>
             </div>
@@ -108,14 +111,18 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <BuyContent />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Sell" key="2" >
-                    <h1 style={{ padding: 20 }}>
+                    <>
+                        <h1 style={{ padding: 20 }}>
+                        </h1>
                         <BSSellIntro setScreenName={setScreenName} />
-                    </h1>
+                    </>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Convert" key="3" >
-                    <h1 style={{}}>
+                    <>
+                        <h1 style={{}}>
+                        </h1>
                         <BSConvertIntro setScreenName={setScreenName} />
-                    </h1>
+                    </>
                 </Tabs.TabPane>
             </Tabs>
             :

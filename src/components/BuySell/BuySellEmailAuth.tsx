@@ -1,5 +1,6 @@
 
 
+import { Link } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -34,7 +35,7 @@ const BuySellEmailAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) 
                 </div>
                 <br />
                 <div className="margin-lr-auto padding-t-2x">Resend Email (9:50s)</div>
-                <div className="margin-lr-auto padding-tb-2x"><a className="text_link " onClick={() => setScreenName("SecureSteps")}>Didn’t receive an email?</a></div>
+                <div className="margin-lr-auto padding-tb-2x"><Link to="" className="text_link " onClick={() => setScreenName("SecureSteps")}>Didn’t receive an email?</Link></div>
             </div>
         </div>
     )

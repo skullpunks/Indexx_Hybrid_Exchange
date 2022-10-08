@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import React from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -7,7 +7,7 @@ import React from 'react';
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import "./BS-Sell.css";
 
-import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+// import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -32,20 +32,22 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
                         <input placeholder="0" className="input_currency" type="text" value="22.220" />
                     </div>
-                    <span className="font_20x" style={{position: "absolute",bottom: "38px",transform: "translatex(50%)",
-    width: "100%", fontSize:"12px"}} >$ 1</span>
+                    <span className="font_20x" style={{
+                        position: "absolute", bottom: "38px", transform: "translatex(50%)",
+                        width: "100%", fontSize: "12px"
+                    }} >$ 1</span>
                     <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "24px", top: "60%" }} />
                     </div>
                 </div>
-               
-               <div className='padding-lr-2x font_15x padding-b-2x padding-t-2x'>
-                <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
-                <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / BTC</span></div>
-                <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>1.00 USD</span></div>
-                <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>0 USD</span></div>
 
-               </div>
+                <div className='padding-lr-2x font_15x padding-b-2x padding-t-2x'>
+                    <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
+                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / BTC</span></div>
+                    <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>1.00 USD</span></div>
+                    <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>0 USD</span></div>
+
+                </div>
                 {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
                         <div className="bs_token_left d-flex justify-between">
                             <div className="bs_token_num d-flex flex-align-center" >
@@ -62,7 +64,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="footer bs_footer_action">
 
 
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block  onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button>
                 </div>
             </div>
 

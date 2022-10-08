@@ -2,6 +2,7 @@ import React from 'react';
 import Email from "../../assets/arts/Email.svg";
 import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 
 
@@ -35,11 +36,11 @@ const BuySellGetStarted: React.FC<(Props)> = ({ setScreenName, setToggleChart })
                 </div>
                 <div className="form_element d-flex terms_conditions_container">
                     <div className="control-input"><input type="checkbox" name="checkbox" /></div>
-                    <div className="terms_conditions">I am over 18 years old and I have read, understand and agree to the<a className="text_link"> indexx.ai Terms of Use, Privacy Policy, </a>and <a className="text_link"> Biometric Data Policy.</a> </div>
+                    <div className="terms_conditions">I am over 18 years old and I have read, understand and agree to the<Link to="" className="text_link"> indexx.ai Terms of Use, Privacy Policy, </Link>and <Link to="" className="text_link"> Biometric Data Policy.</Link> </div>
                 </div>
 
                 <Button type="primary" className="atn-btn atn-btn-round" onClick={() => setScreenName("EmailAuth")} style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Create Account</Button>
-                <div className="d-flex justify-center padding-tb-2x" >Already have an account? <a className="text_link">Log in.</a></div>
+                <div className="d-flex justify-center padding-tb-2x" >Already have an account? <Link to="" className="text_link">Log in.</Link></div>
             </div>
         </div>
 

@@ -4,6 +4,7 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
 
 import bsDollar from "../../assets/arts/bsDollar.svg";
+import { Link } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -52,7 +53,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className="bs_token_num d-flex flex-align-center" >
                         {/* <img src={require(`../../assets/token-icons/${fromImage}.png`).default}  */}
                         <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        IN500  <span className="token_grey">Index500</span><a className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</a>
+                        IN500  <span className="token_grey">Index500</span><Link className="font_15x bs_link padding-l-2x" to="" style={{ paddingTop: "5px", }}>Max</Link>
                     </div>
                 </div>
                 <div className="d-flex">  <div style={{
@@ -75,7 +76,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button onClick={checkPurchase} >Preview Purchase </button>
             </div>
             <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
-            <a className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</a>
+            <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link>
         </div >
     )
 }
