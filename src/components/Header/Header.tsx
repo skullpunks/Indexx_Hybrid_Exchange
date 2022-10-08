@@ -101,6 +101,7 @@ const Header = () => {
     ]
 
     const showText: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.label);
+    const showUrl: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.url);
     return (
         <div className="main-header">
             {isInsideApp ?
@@ -109,7 +110,7 @@ const Header = () => {
                         <div className="d-flex">
                             <h1 className="logo mb-0 d-flex">
                                 <Link to="/"><img src={indexText} className="index_logo" alt="index logo" /></Link>
-                                <span className="logo__text">{showText[0]}</span>
+                                <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
                             </h1>
                             <div className="d-flex padding-l-3x padding-t-2x main_navigation">
                                 {menuNavigation()}

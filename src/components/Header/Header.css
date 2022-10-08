@@ -82,6 +82,11 @@
 .logo__text {
     font-size: 30px;
     line-height: 1.8;
+    color: #fff;
+}
+
+.logo__text:hover {
+    color: #b9b9b9;
 }
 
 .cursor-pointer {
