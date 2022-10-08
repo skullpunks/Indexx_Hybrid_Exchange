@@ -1,0 +1,36 @@
+.bs_container.medium_card {
+    min-width: 700px;
+}
+
+.medium_card .light_button {
+    padding: 6px 15px 10px 40px;
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+}
+
+.deposit_btn {
+    background-image: url("../../assets/arts/depositIcon.svg");
+}
+
+.withdraw_btn {
+    background-image: url("../../assets/arts/rocketIcon.svg");
+
+}
+
+.sell_screens .bs_token {
+    padding: 12px;
+}
+
+.sell_screens .bs_footer_action button {
+    background-color: #00A151;
+}
+
+.sell_screens .bs_footer_action button:hover,
+.sell_screens .bs_footer_action button:focus,
+.sell_screens .bs_footer_action button:active {
+    background-color: #026333;
+}
+
+.sell_screens button.sell_btn {
+    background-color: #00A151;
+}

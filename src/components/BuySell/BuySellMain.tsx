@@ -28,6 +28,7 @@ import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
 import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
 import BSTractionHistory from './BSTractionHistory';
+import BSSellConfirmConvert from './BSSellConfirmConvert';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -54,7 +55,8 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}
-                {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} />}
+                {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {screenName === "BSSellConfirmConvert" && <BSSellConfirmConvert setScreenName={setScreenName} />}
             </div>
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?

@@ -5,6 +5,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import { Dropdown, Input, Menu, Space, Tabs } from "antd";
 import { useState } from "react";
 import BSConvertIntro from "./BSConvertIntro";
+import BSSellIntro from "./BSSellIntro";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -108,7 +109,7 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Sell" key="2" >
                     <h1 style={{ padding: 20 }}>
-                        Sell
+                        <BSSellIntro setScreenName={setScreenName} />
                     </h1>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Convert" key="3" >

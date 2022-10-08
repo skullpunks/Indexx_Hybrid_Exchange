@@ -3,13 +3,13 @@ import IN500 from "../../assets/token-icons/33.png";
 import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
-
 import bsDollar from "../../assets/arts/bsDollar.svg";
+import "./BS-Sell.css";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
-const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
+const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [val, setVal] = useState("");
     const [flag, setFlag] = useState(false);
     const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
@@ -30,13 +30,13 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     }
     return (
-        <div>
+        <div className='sell_screens'>
 
-            <div style={{ marginTop: "40px", marginRight: "26px" }} className="padding-b-2x">
+            <div style={{ marginTop: "40px", marginRight: "26px" }} className="padding-b-2x ">
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)" }}>
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} />
-                        <span className="font_20x">IN500</span>
+                        {/* <span className="font_20x">IN500</span> */}
                     </div>
                     <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
@@ -73,11 +73,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
             </div>
             <div className="bs_footer_action ">
-                <button onClick={checkPurchase} >Preview Purchase </button>
+                <button className="sell_btn" onClick={() => setScreenName("BSSellConfirmConvert")}>Preview Sell </button>
             </div>
-            <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
-            <a className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</a>
+            {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
+            <a className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</a> */}
         </div >
     )
 }
-export default BSConvertIntro;
+export default BSSellIntro;

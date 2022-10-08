@@ -12,7 +12,7 @@ const Chart = () => {
             <div className="chart_header d-flex flex-align-center">
                 <img src={IN500} alt="IN500 Here" width="30" />
                 {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
-                <h1 className="chart_title">IN500</h1>
+                <h1 className="chart_title">IN500/USD</h1>
                 {/* <div className="arrow_container">
                     <div><img src={ArrowRight} alt="Arrow Here" /></div>
                     <div><img src={ArrowLeft} alt="Arrow Here" /></div>

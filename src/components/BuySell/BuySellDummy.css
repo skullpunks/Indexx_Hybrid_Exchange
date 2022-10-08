@@ -1,0 +1,18 @@
+.bs_container.medium_card {
+    min-width: 700px;
+}
+
+.medium_card .light_button {
+    padding: 6px 15px 10px 40px;
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+}
+
+.deposit_btn {
+    background-image: url("../../assets/arts/depositIcon.svg");
+}
+
+.withdraw_btn {
+    background-image: url("../../assets/arts/rocketIcon.svg");
+
+}

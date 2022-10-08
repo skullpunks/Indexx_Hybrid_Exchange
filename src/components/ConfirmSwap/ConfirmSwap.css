@@ -32,7 +32,7 @@ h1 {
 }
 
 .footer.ant-btn-primary:hover, .footer .ant-btn-primary:focus {
-    background-color: #00387d !important;
+    background-color: #00387d;
     border-color: #00387d;
 }
 
