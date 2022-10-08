@@ -1,13 +1,13 @@
 import { Button, Tooltip } from 'antd';
 import React from 'react';
-import IN500 from "../../assets/token-icons/33.png";
-import IUSD from "../../assets/token-icons/35.png";
-import downArrow from "../../assets/arts/downArrow.svg";
-import swapIcon from "../../assets/arts/swapIcon.svg";
+// import IN500 from "../../assets/token-icons/33.png";
+// import IUSD from "../../assets/token-icons/35.png";
+// import downArrow from "../../assets/arts/downArrow.svg";
+// import swapIcon from "../../assets/arts/swapIcon.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 
 
-import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+// import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;

@@ -29,6 +29,7 @@ import BSConvertInProgress from './BSConvertInProgress';
 import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
 import BSTractionHistory from './BSTractionHistory';
 import BSSellConfirmConvert from './BSSellConfirmConvert';
+import BSSellInprogress from './BSSellInprogress';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -57,11 +58,12 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}
                 {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "BSSellConfirmConvert" && <BSSellConfirmConvert setScreenName={setScreenName} />}
+                {screenName === "BSSellInprogress" && <BSSellInprogress setScreenName={setScreenName} />}
             </div>
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
                     <div className='centered' style={{ paddingBottom: 180 }}>
-                        <img src={personFlipIconGold} />
+                        <img src={personFlipIconGold} alt="person Flip Icon Gold"/>
                     </div>
                     :
                     <></>

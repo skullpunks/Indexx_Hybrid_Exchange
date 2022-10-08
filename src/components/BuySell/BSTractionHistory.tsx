@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import React from 'react'
 import "./BuySellDummy.css";
-import { DatePicker, Radio, Space } from 'antd';
-import { Form, Input, Select } from 'antd';
+import { DatePicker } from 'antd';
+import {  Select } from 'antd';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;

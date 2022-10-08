@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import chartIcon from "../../assets/arts/chartIcon.svg";
 import chartHiddenIcon from "../../assets/arts/ChartHiddenIcon.svg";
 import './ConfirmSwap.css';
 // import BNBIcon from "../../assets/arts/BNBIcon.svg";
 // import BUSDIcon from "../../assets/arts/BUSDIcon.svg";
-import IN500 from "../../assets/token-icons/33.png";
-import IUSD from "../../assets/token-icons/35.png";
 import downArrow from "../../assets/arts/downArrow.svg";
 import { ReloadOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Button, Tag, InputNumber } from 'antd';

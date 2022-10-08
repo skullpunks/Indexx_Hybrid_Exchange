@@ -23,14 +23,24 @@
 
 .sell_screens .bs_footer_action button {
     background-color: #00A151;
+    border-color:#00A151;
 }
 
 .sell_screens .bs_footer_action button:hover,
 .sell_screens .bs_footer_action button:focus,
 .sell_screens .bs_footer_action button:active {
-    background-color: #026333;
+    background-color: #026333 !important;
 }
 
 .sell_screens button.sell_btn {
     background-color: #00A151;
+    border-color:#00A151;
+}
+
+.font_w_800{
+    font-weight: 800;
+}
+
+.margin-t-3x{
+    margin-top:60px;
 }

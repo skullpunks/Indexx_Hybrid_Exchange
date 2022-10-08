@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import MobileIcon from "../../assets/arts/MobileIcon.svg";
 
 
@@ -43,7 +43,7 @@ const BuySellLoggedTwoFactor: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <br />
 
-                <div className="margin-lr-auto padding-t-2x"> <a className="text_link" >Get Started</a></div>
+                <div className="margin-lr-auto padding-t-2x"> <a className="text_link" href="" >Get Started</a></div>
                 <br />
                 <div className="send_code">
                     <button onClick={() => setScreenName("loggedVerfication")}>Resend SMS</button>

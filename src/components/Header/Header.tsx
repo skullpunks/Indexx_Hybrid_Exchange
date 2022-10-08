@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
-import { BellOutlined, CaretDownOutlined, DownOutlined, UserOutlined } from "@ant-design/icons";
+import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
 
 const menuProducts = (<Menu className="main_navigation"
     items={[

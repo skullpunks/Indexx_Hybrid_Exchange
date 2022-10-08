@@ -1,5 +1,5 @@
 import { Button ,Card, Image } from 'antd'
-import { Divider,Space } from 'antd';
+import { Divider } from 'antd';
 import { Typography } from 'antd';
 
 import React from 'react'

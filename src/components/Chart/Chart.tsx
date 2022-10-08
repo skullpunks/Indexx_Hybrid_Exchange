@@ -1,6 +1,6 @@
 
-import IN500 from "../../assets/token-icons/33.png";
-import IUSD from "../../assets/token-icons/35.png";
+// import IN500 from "../../assets/token-icons/33.png";
+// import IUSD from "../../assets/token-icons/35.png";
 import ArrowLeft from "../../assets/arts/ArrowLeft.svg";
 import ArrowRight from "../../assets/arts/ArrowRight.svg";
 import curvedChart from "../../assets/arts/curvedChart.svg";
