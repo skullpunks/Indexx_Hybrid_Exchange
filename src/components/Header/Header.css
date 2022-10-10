@@ -79,11 +79,20 @@
     border-color: #00387d;
 }
 
+.logo__icon {
+    background-image: url("../../assets/arts/indexText.svg");
+    font-size: 0;
+    background-repeat: no-repeat;
+    width: 119px;
+    height: 26px;
+}
+
 .logo__text {
     font-size: 30px;
     line-height: 1.8;
     color: #fff;
 }
+
 
 .logo__text:hover {
     color: #b9b9b9;

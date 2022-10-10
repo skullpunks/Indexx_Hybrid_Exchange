@@ -109,7 +109,9 @@ const Header = () => {
                     <div className="link-container">
                         <div className="d-flex">
                             <h1 className="logo mb-0 d-flex">
-                                <Link to="/"><img src={indexText} className="index_logo" alt="index logo" /></Link>
+                                <Link to="/" className="logo__icon">
+                                    {/* <img src={indexText} className="index_logo" alt="index logo" /> */}
+                                </Link>
                                 <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
                             </h1>
                             <div className="d-flex padding-l-3x padding-t-2x main_navigation">
