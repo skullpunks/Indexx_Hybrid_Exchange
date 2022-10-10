@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
 import BuySell from "./components/BuySell/BuySell";
-import Help from './components/Help/Help';
+// import Help from './components/Help/Help';
 import Intro from './components/Help/Intro';
 import Team from './components/Help/Team';
 import ContactUs from './components/Help/ContactUs';

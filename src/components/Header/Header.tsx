@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Header.css"
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from 'antd';
-import indexText from "../../assets/arts/indexText.svg";
+// import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
 import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
 
@@ -97,6 +97,11 @@ const Header = () => {
             label: "Trade to Earn",
             value: "trade-to-earn",
             url: "/indexx-exchange/trade-to-earn"
+        },
+        {
+            label: "Markets",
+            value: "markets",
+            url: "/indexx-exchange/markets"
         }
     ]
 
@@ -107,14 +112,14 @@ const Header = () => {
             {isInsideApp ?
                 (
                     <div className="link-container">
-                        <div className="d-flex">
+                        <div className="d-flex flex-align-center">
                             <h1 className="logo mb-0 d-flex">
                                 <Link to="/" className="logo__icon">
                                     {/* <img src={indexText} className="index_logo" alt="index logo" /> */}
                                 </Link>
                                 <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
                             </h1>
-                            <div className="d-flex padding-l-3x padding-t-2x main_navigation">
+                            <div className="d-flex padding-l-3x main_navigation">
                                 {menuNavigation()}
                             </div>
                         </div>

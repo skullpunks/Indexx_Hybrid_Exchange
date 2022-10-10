@@ -2,7 +2,7 @@
     background-color: transparent;
     position: absolute;
     color: white;
-    padding: 20px 90px 0 90px;
+    padding: 25px 90px 0 90px;
     height: 50px;
     width: 100%;
 }
@@ -85,12 +85,22 @@
     background-repeat: no-repeat;
     width: 119px;
     height: 26px;
+    background-size: contain;
+}
+
+.logo__icon:hover {
+    background-image: url("../../assets/arts/indexTextHover.svg");
+    background-repeat: no-repeat;
+    width: 119px;
+    height: 26px;
+    background-size: contain;
 }
 
 .logo__text {
     font-size: 30px;
-    line-height: 1.8;
+    line-height: 1;
     color: #fff;
+    padding-left: 10px;
 }
 
 
@@ -100,6 +110,30 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+
+.font_15x {
+    font-size: 15px;
+}
+
+.font_18x {
+    font-size: 18px;
+}
+
+.font_20x,
+.default-link.font_20x {
+    font-size: 20px;
+    color: #5f5f5f;
+}
+
+.padding-l-2x {
+    padding-left: 20px;
+}
+
+.padding-lr-2x {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .padding-t-0 {
@@ -185,9 +219,10 @@
     color: #fff;
 }
 
+/* 
 .main_navigation {
     padding-top: 14px;
-}
+} */
 
 .main_navigation .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
     color: #fff;
@@ -236,4 +271,29 @@
 
 .flex_1 {
     flex: 1 1;
+}
+
+
+.arrow_address {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.arrow_address:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.hover_icon {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.hover_icon:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.color-warn {
+    color: #F66036;
 }

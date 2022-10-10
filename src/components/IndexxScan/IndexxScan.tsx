@@ -97,7 +97,7 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
                             </div>
                         </div>
                         <div className='card__header__inner flex-justify-center'>
-                            <p style={{ marginBottom: 0, color: "#006DFF", fontSize: "14px" }}>Trade token easier and faster</p>
+                            <p style={{ marginBottom: 0, color: "#5f5f5f", fontSize: "14px" }}>Trade token easier and faster</p>
                         </div>
                     </div>
 

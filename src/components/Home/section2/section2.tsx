@@ -130,7 +130,7 @@ const Section2 = () => {
                 </div>
             </div>
             <div className="all_markets">
-                <Button danger size="large" className="actionButton view_all_btn">View all Markets</Button>
+                <Button danger size="large" className="actionButton view_all_btn" onChange={() => window.location.href = "/indexx-exchange/markets"}>View all Markets</Button>
             </div>
         </div>
     );

@@ -73,7 +73,7 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
                     </div>
                     <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                        <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
                 <div className="bs_purchase d-flex">
@@ -95,7 +95,7 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         IN500 <span className="token_grey">Indexx500</span>
                     </div>
                 </div>
-                <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
+                <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
             </div>
             <div className="bs_footer_action">
                 <button>Preview Purchase </button>

@@ -33,7 +33,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
                     </div>
                     <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                        <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>

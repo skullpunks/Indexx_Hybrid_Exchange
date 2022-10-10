@@ -37,7 +37,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         width: "100%", fontSize: "12px"
                     }} >$ 1</span>
                     <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "24px", top: "60%" }} />
+                        <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "24px", top: "60%" }} />
                     </div>
                 </div>
 

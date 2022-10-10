@@ -41,7 +41,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         {/* <span className="font_20x">IN500</span> */}
                     </div>
                     <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                        <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
                 {(parseFloat(val) < 0.0007 && flag) ?
@@ -62,7 +62,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     fontSize: "10px",
                     paddingTop: "7px",
                     paddingRight: "4px"
-                }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
+                }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
             </div>
 
             <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
@@ -72,7 +72,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         USD  <span className="token_grey">US Dollar</span>
                     </div>
                 </div>
-                <div>  <img src={arrowAddress} alt="arrow icon" style={{}} /></div>
+                <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
             </div>
             <div className="bs_footer_action ">
                 <button className="sell_btn" onClick={() => setScreenName("BSSellConfirmConvert")}>Preview Sell </button>
