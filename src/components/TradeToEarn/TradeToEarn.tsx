@@ -14,12 +14,14 @@ import Footer from '../Footer/Footer';
 const { Text , Title} = Typography;
 const TradeToEarn = () => {
   return (
-   
+    <>
     <div className='scan-container trade-to-earn flex-direction-column '>
        <br/><br/><br/>
-       <Title level={2}>Trade To Earn ™</Title>
+       <p className='card__title' style={{ color: "#5F5F5F", fontSize: "50px",lineHeight:"1em",margin:-19 }}>Trade To Earn </p>
+       <p style={{marginLeft:320}}>&trade;</p> 
+       <br></br>
        <Card>
-        <h2 className='centered'>Withdraw Earnings</h2>
+        <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "30px" }}>Withdraw Earnings</h2>
         <Divider />
         <div style={{
         display: 'flex',
@@ -27,13 +29,15 @@ const TradeToEarn = () => {
         justifyContent: 'center',
       
       }}>
-          <Image src={exgcoin} width={90} height={90}></Image>
+          <Image src={exgcoin} width={120}></Image>
         </div>
-       
-        <h1 style={{display:'flex',justifyContent:'center',alignItems:'center', color:'gray'}}>$0</h1>
-       <Text className='centered'>Minimum limit:100</Text>
-       
-        <Button type="primary">Withdraw Tokens</Button>
+        <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
+        <h1 style={{display:'flex',marginTop:0,justifyContent:'center',alignItems:'center',opacity:"20%", color: "#5F5F5F", fontSize: "90px"}}>$0</h1>
+       <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:100</Text>
+        <br /> <br></br>
+        <button   style={{ backgroundColor:"#0084ff",width: "371px",
+            height: "55px",
+            borderRadius: "5px",textAlign:"center",fontSize: "22px"}}>Withdraw Tokens</button>
         
           
         </Card>
@@ -41,19 +45,12 @@ const TradeToEarn = () => {
         <Image src={exglady} style={{display:'flex',justifyContent:'center',width:650,alignItems:'center'}}></Image> 
         <Image src={no1} style={{display:'flex',justifyContent:'center',width:500,alignItems:'center'}}></Image> 
         <Image src={no2} style={{display:'flex',justifyContent:'center',width:500,alignItems:'center'}}></Image>  
-        <Image src={no3} style={{display:'flex',justifyContent:'center',width:630,alignItems:'center'}}></Image> 
+        <Image src={no3} style={{paddingLeft:10,display:'flex',justifyContent:'center',width:480,alignItems:'center'}}></Image> 
         
-        <br/><br/><br/><br/><br/><br/><br/><br/>
-
-        <div style={{width: "100%",height:"100%",position:'relative',bottom: "0"
-   }}>
-        <Footer></Footer>
-        </div>
-        
-         
         </div>
       
-    
+        <Footer></Footer>
+        </>
 
 
   )
