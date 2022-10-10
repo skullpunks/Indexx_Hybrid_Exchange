@@ -1,0 +1,16 @@
+.border{
+    border: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.scan-container.market-container {
+    flex-direction: column;
+}
+
+.search-input-container{
+    width:508px;
+    height:44px;
+}
+.ant-input-prefix {
+    border-right: 1px solid green;
+    padding-right:7px;
+}

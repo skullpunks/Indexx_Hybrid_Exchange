@@ -12,6 +12,8 @@ import TradeToEarn from './components/TradeToEarn/TradeToEarn';
 import BuySellLogin from './components/BuySell/BuySellLogin';
 // import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
 import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
+import TradeChart from './components/TradeChart/TradeChart';
+import Markets from './components/Markets/Markets';
 
 function App() {
     return (
@@ -26,7 +28,9 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
-                    <Route path="/indexx-exchange/help" element={<Help />} >
+                    <Route path="/indexx-exchange/charts" element={<Home />} />
+                    <Route path="/indexx-exchange/markets" element={<Markets />} />
+                    <Route path="/indexx-exchange/trade" element={<TradeChart />} >
                         <Route index element={<Intro />} />
                         <Route path="team" element={<Team />} />
                         <Route path="contact" element={<ContactUs />} />
