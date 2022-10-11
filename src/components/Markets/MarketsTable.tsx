@@ -9,12 +9,12 @@ interface DataType {
     key: React.Key;
     favourite: boolean;
     name: string;
-    Price: number;
+    Price: any;
     DailyChange: any;
     DailyHigh: any;
-    DailyLow: number;
-    Volume: number;
-    MarketCap: number;
+    DailyLow: any;
+    Volume: any;
+    MarketCap: any;
 }
 const MarketsTable = () => {
     const navigate = useNavigate();
@@ -116,45 +116,67 @@ const MarketsTable = () => {
             key: '1',
             favourite: false,
             name: 'Indexx Exchange',
-            Price: 98,
+            Price: "$10",
             DailyChange: "12.09%",
-            DailyHigh: 10.00,
-            DailyLow: 50,
-            Volume: 50,
-            MarketCap: 20,
+            DailyHigh: "$10.00",
+            DailyLow: "$12.09%",
+            Volume: "$100.00M",
+            MarketCap: "$100.00B",
         },
         {
             key: '2',
             favourite: false,
             name: 'Index 500',
-            Price: 98,
+            Price: "$6",
             DailyChange: "10.09%",
             DailyHigh: "$6.00",
-            DailyLow: 50,
-            Volume: 50,
-            MarketCap: 20,
+            DailyLow: "$10.00",
+            Volume: "$6.00M",
+            MarketCap: "$61.00B",
         },
         {
             key: '3',
             favourite: true,
             name: 'Indexx Crypto',
-            Price: 98,
+            Price: "$18",
             DailyChange: "-9.09%",
             DailyHigh: "$6.00",
-            DailyLow: 50,
-            Volume: 50,
-            MarketCap: 20,
+            DailyLow: "$6.00",
+            Volume: "$18.00M",
+            MarketCap: "$8.00B",
         },
         {
             key: '4',
             favourite: true,
             name: 'Indexx Fortune',
-            Price: 98,
+            Price: "$0.019",
             DailyChange: "0.09",
             DailyHigh: "$5.00",
-            DailyLow: 50,
-            Volume: 50,
-            MarketCap: 20,
+            DailyLow: "$0.019",
+            Volume: "$0.009M",
+            MarketCap: "$1.019B",
+        },
+        {
+            key: '5',
+            favourite: true,
+            name: 'Indexx Fortune',
+            Price: "$0.019",
+            DailyChange: "+2.78%",
+            DailyHigh: "$0.09",
+            DailyLow: "$0.09",
+            Volume: "$0.09M",
+            MarketCap: "$2.09B",
+        },
+        {
+            key: '6',
+            favourite: false,
+            name: 'Indexx Fortune',
+            Price: "$0.09",
+            DailyChange: "+3.03%",
+            DailyHigh: "$1.05",
+            DailyLow: "$1.05",
+            Volume: "$1.05M",
+            MarketCap: "$10.05B",
         },
     ];
 

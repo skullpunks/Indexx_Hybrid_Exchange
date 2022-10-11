@@ -115,3 +115,11 @@
     border-radius: 4px;
     max-width: 100px;
 }
+
+.ant-table-tbody > tr:last-child > td {
+    border-bottom:0;
+}
+
+.ant-table-pagination.ant-pagination {
+    display:none;
+}
