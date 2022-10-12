@@ -1,0 +1,53 @@
+.blog_container {
+    padding-top:90px;
+    margin:0 64px 64px;
+}
+
+.font_60x {
+    font-size:60px;
+    line-height: 1.2;
+}
+.font_48x {
+    font-size:48px;
+    line-height: 1.2;
+}
+.font_30x {
+    font-size:38px;
+    line-height: 1.2;
+}
+
+.blog_flipicon_image {
+    flex-basis:calc(62% - 20px);
+    background: #E6E6E6;
+   
+
+}
+
+.blog_flipicon_image img{
+    position: absolute;
+transform: translate(50%, 22%);
+}
+.blog_flipicon_image_content {
+    flex-basis:calc(38% - 20px);
+    color: #5A5858;
+
+}
+.flex-b-50 {
+    flex-basis: calc(50% - 20px);
+}
+
+.border-1x {
+    border:1px solid rgba(0, 109, 255, 0.5);
+}
+.flex-wrap {
+    flex-wrap:wrap;
+}
+
+.margin-b-3x {
+    margin-bottom:30px;
+}
+
+.margin-tb-2x{
+    margin-top:20px;
+    margin-bottom:20px;
+}

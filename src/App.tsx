@@ -14,6 +14,7 @@ import BuySellLogin from './components/BuySell/BuySellLogin';
 import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 import TradeChart from './components/TradeChart/TradeChart';
 import Markets from './components/Markets/Markets';
+import IndexBlog from './components/IndexBlog/IndexBlog';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                         <Route path="team" element={<Team />} />
                         <Route path="contact" element={<ContactUs />} />
                     </Route>
+                    <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
                 </Routes>
             </BrowserRouter>
         </div>
