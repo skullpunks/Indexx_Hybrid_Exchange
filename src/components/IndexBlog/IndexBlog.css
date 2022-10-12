@@ -1,3 +1,7 @@
+body{
+    color: #5A5858;
+
+}
 .blog_container {
     padding-top:90px;
     margin:0 64px 64px;
@@ -25,7 +29,8 @@
 
 .blog_flipicon_image img{
     position: absolute;
-transform: translate(50%, 22%);
+    transform: translatex(50%);
+    bottom: 0px;
 }
 .blog_flipicon_image_content {
     flex-basis:calc(38% - 20px);
