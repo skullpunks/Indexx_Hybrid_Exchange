@@ -1,4 +1,4 @@
-import { Card, Image, Button } from 'antd'
+import { Card, Image, Button, Input} from 'antd'
 import { Divider} from 'antd';
 import { Typography } from 'antd';
 import React from 'react'
@@ -36,9 +36,17 @@ const TradeToEarn = () => {
         <br /> <br></br>
         <Button type="primary"  block shape="round" size="large" className="btn_xl"  style={{ width: "371px",
             height: "55px",
-            borderRadius: "5px"}}>Withdraw Tokens</Button>
+            borderRadius: "5px",
+            
+            }}>Withdraw Tokens</Button>
         
-          
+        <br/><br/>
+        <Input.Group compact>
+        <Input size={"middle"} style={{ width: '100%', marginBottom: "10px"}} defaultValue="Enter Wallet Address" />
+        <Button type="primary" style={{borderRadius: "5px",}}>Submit Wallet Address</Button>
+      </Input.Group>
+      <br />
+
         </Card>
         
         <Image preview={false} src={exglady} style={{display:'flex',justifyContent:'center',width:650,alignItems:'center'}}></Image> 
