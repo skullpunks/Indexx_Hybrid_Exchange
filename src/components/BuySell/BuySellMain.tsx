@@ -18,7 +18,7 @@ import Chart from "../ChartBuy/Chart";
 import BuySellIntro from './BuySellIntro';
 import BuySellSelect from './BuySellSelect';
 import BuySellCreate from './BuySellCreate';
-import BuySellGetStarted from './BuySellGetStarted';
+// import BuySellGetStarted from './BuySellGetStarted';
 import BuySellEmailAuth from './BuySellEmailAuth';
 import BuySellSecureSteps from './BuySellSecureSteps';
 import BuySellMobiAuth from './BuySellMobiAuth';
@@ -48,7 +48,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
                 {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
-                {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {/* {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
                 {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />}
                 {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
@@ -63,7 +63,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
                     <div className='centered' style={{ paddingBottom: 180 }}>
-                        <img src={personFlipIconGold} alt="person Flip Icon Gold"/>
+                        <img src={personFlipIconGold} alt="person Flip Icon Gold" />
                     </div>
                     :
                     <></>

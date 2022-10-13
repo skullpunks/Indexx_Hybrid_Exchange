@@ -3,6 +3,8 @@
     position: absolute;
     color: white;
     padding: 25px 90px 0 90px;
+    padding-top: 0;
+    padding-bottom: 0;
     height: 50px;
     width: 100%;
 }
@@ -29,6 +31,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .td-none {
@@ -169,6 +174,10 @@
     padding-bottom: 20px;
 }
 
+.padding-b-3x {
+    padding-bottom: 30px;
+}
+
 
 .padding-r-1_x {
     padding-right: 15px
@@ -219,10 +228,20 @@
     color: #fff;
 }
 
+.text-white:hover {
+    color: rgba(255, 255, 255, 0.75);
+}
+
 /* 
 .main_navigation {
     padding-top: 14px;
 } */
+.index_page_nav {
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .main_navigation .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
     color: #fff;

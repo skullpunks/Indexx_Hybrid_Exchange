@@ -68,7 +68,7 @@ const Header = () => {
                 { key: 3, label: <Link to="/indexx-exchange/affliate">Security</Link> },
                 { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
                 { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
-                { key: 6, label: <Link to="/indexx-exchange/blog">API Management</Link> },
+                { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
                 { key: 7, label: <Link to="" onClick={logOutUser}>Log out</Link> }
             ]}
         />
@@ -163,7 +163,7 @@ const Header = () => {
 
                     </div>
                 ) : (
-                    <div className="d-flex main_navigation">
+                    <div className="d-flex main_navigation index_page_nav">
                         {menuNavigation()}
                     </div>
                 )

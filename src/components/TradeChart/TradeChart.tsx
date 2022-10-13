@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from '../Footer/Footer';
 import './TradeChart.css';
 import TradeScreenChart from "../../assets/arts/TradeScreenChart.svg";
-import { Radio, Tabs, Input, Button,Table } from 'antd';
+import { Radio, Tabs, Input, Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import type { ColumnsType } from 'antd/es/table';
 
@@ -12,68 +12,68 @@ interface DataType {
     name: number;
     age: number;
     address: number;
-   
-   
-  }
-  interface DataType1 {
+
+
+}
+interface DataType1 {
     name1: number;
     age1: number;
     address1: number;
-   
-   
-  }
+
+
+}
 
 const TradeChart = () => {
     const columns: ColumnsType<DataType> = [
         {
-          title: 'Price(USD)',
-          dataIndex: 'name',
-          width: 150,
+            title: 'Price(USD)',
+            dataIndex: 'name',
+            width: 150,
         },
         {
-          title: 'Amout(BTC)',
-          dataIndex: 'age',
-          width: 150,
+            title: 'Amout(BTC)',
+            dataIndex: 'age',
+            width: 150,
         },
         {
-          title: 'Time',
-          dataIndex: 'address',
+            title: 'Time',
+            dataIndex: 'address',
         },
-      ];
-      const columnsTop: ColumnsType<DataType1> = [
+    ];
+    const columnsTop: ColumnsType<DataType1> = [
         {
-          title: 'Price(USD)',
-          dataIndex: 'name1',
-          width: 150,
-        },
-        {
-          title: 'Amout(BTC)',
-          dataIndex: 'age1',
-          width: 150,
+            title: 'Price(USD)',
+            dataIndex: 'name1',
+            width: 150,
         },
         {
-          title: 'Total',
-          dataIndex: 'address1',
+            title: 'Amout(BTC)',
+            dataIndex: 'age1',
+            width: 150,
         },
-      ];
+        {
+            title: 'Total',
+            dataIndex: 'address1',
+        },
+    ];
     const data: DataType[] = [];
-for (let i = 0; i < 8; i++) {
-  data.push({
-    key: i,
-    name: 19.994,
-    age: 0.0017,
-    address: 5,
-  });
-}
-  const dataTop: DataType1[] = [];
-  for (let i = 0; i < 8; i++) {
-    dataTop.push({
-  
-      name1: 1999.994,
-      age1: 0.0017,
-      address1: 1234,
-    });
-}
+    for (let i = 0; i < 5; i++) {
+        data.push({
+            key: i,
+            name: 19.994,
+            age: 0.0017,
+            address: 5,
+        });
+    }
+    const dataTop: DataType1[] = [];
+    for (let i = 0; i < 4; i++) {
+        dataTop.push({
+
+            name1: 1999.994,
+            age1: 0.0017,
+            address1: 1234,
+        });
+    }
     return (
         <div>
 
@@ -108,24 +108,24 @@ for (let i = 0; i < 8; i++) {
                         <div className="main-left d-flex">
                             <div>
                                 <img src={TradeScreenChart} alt="TradeScreenChart" />
-                                <Tabs defaultActiveKey="1" className='margin-t-2x border-1x padding-lr-2x login_tabs'>
+                                <Tabs defaultActiveKey="1" className='margin-t-2x border-1x padding-lr-2x login_tabs orange'>
                                     <Tabs.TabPane tab="Open Orders (0)" key="1">
                                         <Link to="" className="text_link padding-r-1x">Log In</Link> or<Link to="" className="text_link padding-l-1x">Register</Link>  Now to trade
                                     </Tabs.TabPane>
                                     <Tabs.TabPane tab="Order History" key="2">
-                                        Content of Tab Pane 2
+                                        Order History Content
                                     </Tabs.TabPane>
                                     <Tabs.TabPane tab="Trade History" key="3">
-                                        Content of Tab Pane 3
+                                        Trade History Content
                                     </Tabs.TabPane>
                                     <Tabs.TabPane tab="Funds" key="4">
-                                        Content of Tab Pane 4
+                                        Funds  Content
                                     </Tabs.TabPane>
                                 </Tabs>
                             </div>
-                            <div className='padding-lr-2x'>
-                            <Table columns={columnsTop} dataSource={dataTop}  />
-                            <Table columns={columns} dataSource={data} scroll={{ y: 150 }} className="margin-t-2x" />
+                            <div className='padding-lr-2x trade_content'>
+                                <Table columns={columnsTop} dataSource={dataTop} />
+                                <Table columns={columns} dataSource={data} className="margin-t-2x" />
                             </div>
                         </div>
                         <div className="main-right card">

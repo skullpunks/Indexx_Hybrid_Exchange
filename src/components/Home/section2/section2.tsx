@@ -12,9 +12,11 @@ import chart3 from "../../../assets/arts/chart3.svg";
 import chart4 from "../../../assets/arts/chart4.svg";
 import chart5 from "../../../assets/arts/chart5.svg";
 import { Button } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 
 const Section2 = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="section2-container">
@@ -130,7 +132,7 @@ const Section2 = () => {
                 </div>
             </div>
             <div className="all_markets">
-                <Button danger size="large" className="actionButton view_all_btn" onChange={() => window.location.href = "/indexx-exchange/markets"}>View all Markets</Button>
+                <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(`/indexx-exchange/markets`)}>View all Markets</Button>
             </div>
         </div>
     );
