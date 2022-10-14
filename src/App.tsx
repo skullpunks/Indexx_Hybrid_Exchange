@@ -17,6 +17,9 @@ import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 import TradeChart from './components/TradeChart/TradeChart';
 import Markets from './components/Markets/Markets';
 import IndexBlog from './components/IndexBlog/IndexBlog';
+import BSDepositWithdarwSelect from './components/BSDepositWithdraw/BSDepositWithdarwSelect';
+import BSWithdrawInfo from './components/BSDepositWithdraw/BSWithdrawInfo';
+import BSDWAmount from './components/BSDepositWithdraw/BSDWAmount';
 
 function App() {
     return (
@@ -29,6 +32,9 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login" element={<BuySellLogin />} />
                     <Route path="/indexx-exchange/buy-sell/wallet" element={<BSWallet />} />
+                    <Route path="/indexx-exchange/buy-sell/bsDepositWithdraw" element={<BSDepositWithdarwSelect />} />
+                    <Route path="/indexx-exchange/buy-sell/BSWithdrawInfo" element={<BSWithdrawInfo />} />
+                    <Route path="/indexx-exchange/buy-sell/BSWDAmount" element={<BSDWAmount />} />
                     {/* <Route path="/indexx-exchange/buy-sell/get-started" element={<BuySellGetStarted />} /> */}
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
