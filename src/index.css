@@ -114,6 +114,9 @@ div.flex-justify-center {
   line-height: 1.2;
 }
 
+.orange.card {
+  border: 1px solid rgba(246, 96, 54, 0.3);
+}
 
 .tag {
   font-size: 1em;
