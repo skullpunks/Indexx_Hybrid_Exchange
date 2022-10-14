@@ -118,18 +118,30 @@ const BSWalletTable = () => {
         },
         {
             key: '3',
+            favourite: false,
+            name: 'BTC',
+            Price: "0",
+            DailyChange: "10.09%",
+            DailyHigh: "$6.00",
+            DailyLow: "0%",
+            Volume: "$6.00M",
+            MarketCap: "$61.00B",
+            subName: "Bitcoin"
+        },
+        {
+            key: '4',
             favourite: true,
-            name: 'Indexx Crypto',
+            name: 'INXC',
             Price: "0",
             DailyChange: "-9.09%",
             DailyHigh: "$6.00",
             DailyLow: "0%",
             Volume: "$18.00M",
             MarketCap: "$8.00B",
-            subName: "USD Dollar"
+            subName: "Indexx Crypto"
         },
         {
-            key: '4',
+            key: '5',
             favourite: true,
             name: 'iUSD+',
             Price: "0",

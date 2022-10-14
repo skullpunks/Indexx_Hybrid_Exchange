@@ -27,7 +27,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='d-flex flex-direction-column'>
                 <h1 className='text-center margin-lr-auto'>Log In</h1>
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
-                <Link to="" className='default-link border-default w-fit-content margin-lr-auto padding-b-2x margin-b-2x'>http://accounts.indexx.ai</Link>
+                <Link to="" className='default-link border-default w-fit-content margin-lr-auto padding-b-2x margin-b-2x'>http://inex.indexx.ai</Link>
                 <div className="bs_container bs_form card">
                     <Form
                         onFinish={onFinish}
@@ -66,7 +66,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                     </Form>
                     <br />
 
-                    <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <Link to="" className="text_link">Get Started</Link></div>
+                    <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <Link to="/indexx-exchange/buy-sell/get-started" className="text_link">Get Started</Link></div>
                     <br />
                     <Link to="" className='default-link border-default text-center margin-t-1_5x ' onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</Link>
                 </div>

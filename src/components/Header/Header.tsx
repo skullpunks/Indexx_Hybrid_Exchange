@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 // import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
@@ -47,8 +47,8 @@ const menuNavigation = () => {
 }
 
 const Header = () => {
-    let location = useLocation()
-    // let navigate = useNavigate()
+    let location = useLocation();
+    let navigate = useNavigate()
     const [isInsideApp, setIsInsideApp] = useState(false);
 
     // (localStorage.getItem("user")) ? "" : 
@@ -69,7 +69,8 @@ const Header = () => {
                 { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
                 { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
                 { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
-                { key: 7, label: <Link to="" onClick={logOutUser}>Log out</Link> }
+                { key: 7, label: <Link to="/indexx-exchange/buy-sell/deposit-withdraw">Withdraw</Link> },
+                { key: 8, label: <Link to="" onClick={logOutUser}>Log out</Link> }
             ]}
         />
     );
@@ -145,7 +146,7 @@ const Header = () => {
                                         :
                                         <>
                                             <Link to="/indexx-exchange/buy-sell/login" className="text-underline" style={{ color: "#fff", width: 80 }}>Log In</Link>
-                                            <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
+                                            <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/get-started")}>Get Started</Button>
                                         </>
                                 }
                             </div>

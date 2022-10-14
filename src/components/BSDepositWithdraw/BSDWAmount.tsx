@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button } from 'antd';
-import { RightOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import RecordedIcon from "../../assets/arts/RecordedIcon.svg";
+import { ArrowRightOutlined } from '@ant-design/icons';
+// import RecordedIcon from "../../assets/arts/RecordedIcon.svg";
+import { Link } from 'react-router-dom';
 export const BSDWAmount = () => {
     return (
         <div className='scan-container bs_main wd_container'>
-            <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span> <Button danger className='margin-l-2x'>Danger Default<ArrowRightOutlined /></Button></div><Button danger className='danger_disabled'>Danger Default<ArrowRightOutlined /></Button></div>
+            <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div><Button danger className='danger_disabled'>Deposit Crypto<ArrowRightOutlined /></Button></div>
             <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
                 <h1 className='padding-lr-2x padding-t-2x'>2. Enter Amount</h1>
                 <div className='padding-t-2x'>
@@ -17,8 +18,8 @@ export const BSDWAmount = () => {
                     <div className='font_!3x'>You receive:</div>
                     <div className='font_23x'>20.00 BUSD</div>
                 </div>
-                <div className='d-flex padding-tb-2x'> 
-                    <div> 
+                <div className='d-flex padding-tb-2x'>
+                    <div>
                         <div className='font_13x brand_opacity_5'>Bank Account:</div>
                         <div className='font_13x brand_opacity_5 padding-tb-1x'>Transaction method:</div>
                         <div className='font_13x brand_opacity_5'>Transaction Fee:   </div>
@@ -29,27 +30,19 @@ export const BSDWAmount = () => {
                         <div className='font_13x brand_opacity_5'>0.00 BUSD  </div>
                     </div>
                 </div>
-                <div className='d-flex flex_buttons flex-justify-between margin-t-3x'>
-                <Button  disabled className='disabled_button font_23x'>
-                Previous
-    </Button>
+                <div className='d-flex flex_buttons flex-justify-between margin-b-2x margin-t-auto'>
+                    <Button disabled className='disabled_button font_23x'>
+                        Previous
+                    </Button>
 
-    <Button type="primary" disabled >
-    Continue
-    </Button>
+                    <Button type="primary"  >
+                        <Link to="/indexx-exchange/buy-sell/deposit-withdraw/recorded">Continue</Link>
+                    </Button>
                 </div>
             </div>
-           <div className='margin-lr-auto'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
-         </div>
-            <br />
-            <div className='card bs_container sell_screens margin-lr-auto  margin-t-3x'>
-                <h1 className='text-center padding-lr-2x padding-t-2x'>Your transaction has recorded </h1>
-                <div className='text-center w-100 padding-tb-2x'><img src={RecordedIcon} className="padding-tb-2x" alt="RecordedIcon" width="100" height="121" /></div>
-                <p className='border-t-1x padding-lr-2x padding-t-2x'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
-                <div className='padding-lr-2x padding-t-2x'><Button type="primary" disabled className='margin-t-2x' >
-                        Home</Button>
-                </div>
+            <div className='margin-lr-auto'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
             </div>
+
         </div>
 
     )

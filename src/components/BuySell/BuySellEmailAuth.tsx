@@ -1,14 +1,15 @@
 
 
-import { Link } from "react-router-dom";
+import { Button } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
-interface Props {
-    setScreenName: (value: string | ((prevVar: string) => string)) => void;
-    setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-}
+// interface Props {
+//     setScreenName: (value: string | ((prevVar: string) => string)) => void;
+//     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
 
-const BuySellEmailAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
-    setToggleChart(false);
+const BuySellEmailAuth = () => {
+    const navigate = useNavigate();
     return (
         <div className='d-flex flex-direction-column'>
             <h1 className='text-center margin-lr-auto'>Get Started</h1>
@@ -34,8 +35,10 @@ const BuySellEmailAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) 
                     </div>
                 </div>
                 <br />
+                <Button type="primary" className="ant-btn ant-btn-primary ant-btn-block atn-btn atn-btn-round margin-b-1x d-none" block onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button>
                 <div className="margin-lr-auto padding-t-2x">Resend Email (9:50s)</div>
-                <div className="margin-lr-auto padding-tb-2x"><Link to="" className="text_link " onClick={() => setScreenName("SecureSteps")}>Didn’t receive an email?</Link></div>
+                {/* onClick={() => setScreenName("SecureSteps")} */}
+                <div className="margin-lr-auto padding-tb-2x"><Link to="" className="text_link " onClick={() => navigate("email-auth")}>Didn’t receive an email?</Link></div>
             </div>
         </div>
     )

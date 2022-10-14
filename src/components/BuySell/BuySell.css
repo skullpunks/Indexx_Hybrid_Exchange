@@ -228,6 +228,10 @@ button.ant-btn-link.btn_link span {
     padding-top: 16px;
 }
 
+button.ant-btn-link.btn_link span:hover {
+    color: #d52f01;
+}
+
 
 .left_arrow {
     padding-right: 8px;

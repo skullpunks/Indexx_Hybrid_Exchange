@@ -11,7 +11,6 @@ import ContactUs from './components/Help/ContactUs';
 import TradeToEarn from './components/TradeToEarn/TradeToEarn';
 import BuySellLogin from './components/BuySell/BuySellLogin';
 import BSWallet from './components/BuySell/BSWallet';
-// import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
 import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 import TradeChart from './components/TradeChart/TradeChart';
@@ -20,6 +19,14 @@ import IndexBlog from './components/IndexBlog/IndexBlog';
 import BSDepositWithdarwSelect from './components/BSDepositWithdraw/BSDepositWithdarwSelect';
 import BSWithdrawInfo from './components/BSDepositWithdraw/BSWithdrawInfo';
 import BSDWAmount from './components/BSDepositWithdraw/BSDWAmount';
+import BSDepositWithdrawMain from './components/BSDepositWithdraw/BSDepositWithdrawMain';
+import BSDWRecorded from './components/BSDepositWithdraw/BSDWRecorded';
+import BuySellGetStartedLayout from './components/BuySell/BuySellGetStartedLayout';
+// import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
+// import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
+// import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
+// import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
+// import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
 
 function App() {
     return (
@@ -32,10 +39,18 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login" element={<BuySellLogin />} />
                     <Route path="/indexx-exchange/buy-sell/wallet" element={<BSWallet />} />
-                    <Route path="/indexx-exchange/buy-sell/bsDepositWithdraw" element={<BSDepositWithdarwSelect />} />
+                    <Route path="/indexx-exchange/buy-sell/deposit-withdraw" element={<BSDepositWithdrawMain />} >
+                        <Route index element={<BSDepositWithdarwSelect />} />
+                        <Route path="info" element={<BSWithdrawInfo />} />
+                        <Route path="amount" element={<BSDWAmount />} />
+                        <Route path="recorded" element={<BSDWRecorded />} />
+                    </Route>
+                    {/* <Route path="/indexx-exchange/buy-sell/bsDepositWithdraw" element={<BSDepositWithdarwSelect />} />
                     <Route path="/indexx-exchange/buy-sell/BSWithdrawInfo" element={<BSWithdrawInfo />} />
-                    <Route path="/indexx-exchange/buy-sell/BSWDAmount" element={<BSDWAmount />} />
-                    {/* <Route path="/indexx-exchange/buy-sell/get-started" element={<BuySellGetStarted />} /> */}
+                    <Route path="/indexx-exchange/buy-sell/BSWDAmount" element={<BSDWAmount />} /> */}
+                    <Route path="/indexx-exchange/buy-sell/get-started/*" element={<BuySellGetStartedLayout />} >
+
+                    </Route>
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />

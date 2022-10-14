@@ -31,9 +31,6 @@
     max-width: calc(100% - 640px);
 }
 
-.margin-t-2x {
-    margin-top: 20px
-}
 
 .trade_radio .ant-radio-button-wrapper {
     width: 50%;

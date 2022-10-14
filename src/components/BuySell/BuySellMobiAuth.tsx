@@ -7,14 +7,16 @@ import {
   Row,
   Select
 } from 'antd';
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  setScreenName: (value: string | ((prevVar: string) => string)) => void;
-  setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-}
+// interface Props {
+//   setScreenName: (value: string | ((prevVar: string) => string)) => void;
+//   setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
 
-const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
-  setToggleChart(false);
+const BuySellMobiAuth = () => {
+  // setToggleChart(false);
+  const navigate = useNavigate();
   const { Option } = Select;
   return (<div className='d-flex flex-direction-column'>
     <h1 className='text-center margin-lr-auto'>Get Started</h1>
@@ -36,9 +38,9 @@ const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) =
 
               <Col >
                 <Select defaultValue="USA">
-                  <Option>USA</Option>
-                  <Option>UK</Option>
-                  <Option>India</Option>
+                  <Option value="usa">USA</Option>
+                  <Option value='uk'>UK</Option>
+                  <Option value="in">India</Option>
                 </Select>
               </Col>
               <Col className="phone_container_right" >
@@ -53,7 +55,7 @@ const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) =
       <br />
       <br />
       <div className="send_code">
-        <button onClick={() => setScreenName("mobiVerfication")}>Send Code</button>
+        <button onClick={() => navigate("/indexx-exchange/buy-sell/get-started/sms-verify")}>Send Code</button>
       </div>
     </div>
   </div>

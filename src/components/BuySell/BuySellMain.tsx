@@ -18,11 +18,10 @@ import Chart from "../ChartBuy/Chart";
 import BuySellIntro from './BuySellIntro';
 import BuySellSelect from './BuySellSelect';
 import BuySellCreate from './BuySellCreate';
-// import BuySellGetStarted from './BuySellGetStarted';
-import BuySellEmailAuth from './BuySellEmailAuth';
-import BuySellSecureSteps from './BuySellSecureSteps';
-import BuySellMobiAuth from './BuySellMobiAuth';
-import BuySellmobiVerfication from './BuySellmobiVerfication';
+// import BuySellEmailAuth from './BuySellEmailAuth';
+// import BuySellSecureSteps from './BuySellSecureSteps';
+// import BuySellMobiAuth from './BuySellMobiAuth';
+// import BuySellmobiVerfication from './BuySellmobiVerfication';
 import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -30,6 +29,7 @@ import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
 import BSTractionHistory from './BSTractionHistory';
 import BSSellConfirmConvert from './BSSellConfirmConvert';
 import BSSellInprogress from './BSSellInprogress';
+// import BuySellGetStarted from './BuySellGetStarted';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -49,10 +49,10 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
                 {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
                 {/* {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
-                {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-                {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-                {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-                {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />}
+                {/* {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
+                {/* {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
+                {/* {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
+                {/* {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
                 {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}

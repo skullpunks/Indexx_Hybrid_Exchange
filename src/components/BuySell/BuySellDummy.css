@@ -63,3 +63,26 @@
 .orange_input input, .orange_input input:hover {
     border-color: rgba(246, 96, 54, 0.3);
 }
+
+.bs_wallet .ant-input-prefix {
+    border-color: rgba(246, 96, 54, 0.3);
+}
+
+.bs_wallet .ant-tabs-extra-content {
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.bs_wallet .ant-tabs-nav-wrap {
+    padding-left: 20px;
+}
+
+.bs_wallet_top_banner {
+    margin-bottom: 150px;
+}
+
+.bs_wallet_buttons {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
