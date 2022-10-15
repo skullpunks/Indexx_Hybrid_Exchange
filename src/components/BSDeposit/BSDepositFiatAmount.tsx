@@ -2,12 +2,19 @@ import React from 'react';
 import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 // import RecordedIcon from "../../assets/arts/RecordedIcon.svg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import doubleArrow from "../../assets/arts/doubleArrow.svg";
 export const BSDepositFiatAmount = () => {
+    const navigate = useNavigate();
     return (
         <div className='scan-container bs_main wd_container'>
-            <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Fiat</span> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div><Button danger className='danger_disabled'>Deposit Crypto<ArrowRightOutlined /></Button></div>
+            <div className='d-flex w_fiat flex-justify-between flex-align-center '>
+                <div className='d-flex flex-align-center'>
+                    <span style={{ fontSize: 40 }}>Deposit Fiat</span>
+                    <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button>
+                </div>
+                <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto<ArrowRightOutlined /></Button>
+            </div>
             <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
                 <h1 className=' padding-t-2x'> Enter Amount</h1>
                 <div className='padding-t-2x'>
@@ -21,13 +28,13 @@ export const BSDepositFiatAmount = () => {
                 </div>
                 <div className='d-flex padding-tb-2x'>
                     <div>
-                       
+
                         <div className='font_13x brand_opacity_5 padding-tb-1x'>Transaction method:</div>
                         <div className='font_13x brand_opacity_5'>Transaction Fee:   </div>
                     </div>
                     <div className='padding-l-1x'>
-                       
-                        <div className='font_13x brand_opacity_5 padding-tb-1x'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{    marginTop: 3}}/>Bank Transfer(SWIFT)</div>
+
+                        <div className='font_13x brand_opacity_5 padding-tb-1x'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 3 }} />Bank Transfer(SWIFT)</div>
                         <div className='font_13x brand_opacity_5'>0.00 BUSD  </div>
                     </div>
                 </div>

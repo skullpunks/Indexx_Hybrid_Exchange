@@ -134,7 +134,7 @@ const Header = () => {
                                 {(localStorage.getItem("user")) ?
                                     <>
 
-                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Buy Crypto</Button>
+                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                                         <BellOutlined className="padding-l-2x" style={{ fontSize: 20 }} />
                                         <Dropdown overlay={userMenu} trigger={['click']}>
                                             <Link to="" onClick={e => e.preventDefault()} className="padding-l-1x text-white">
@@ -143,11 +143,11 @@ const Header = () => {
                                         </Dropdown>
                                     </>
                                     :
-                                    (location.pathname.includes("login")) ?
+                                    (location.pathname.includes("login") || location.pathname.includes("get-started")) ?
                                         <></>
                                         :
                                         <>
-                                            <Link to="/indexx-exchange/buy-sell/login" className="text-underline" style={{ color: "#fff", width: 80 }}>Log In</Link>
+                                            <Link to="/indexx-exchange/buy-sell/login" className=" text-white" style={{ width: 80 }}>Log In</Link>
                                             <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/get-started")}>Get Started</Button>
                                         </>
                                 }
@@ -157,7 +157,7 @@ const Header = () => {
                         {(location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
                                 <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link>
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x">Buy Crypto</Button>
+                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                             </div>
                         }
                         {(location.pathname.includes("swap")) &&

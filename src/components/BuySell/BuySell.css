@@ -275,9 +275,12 @@ button.ant-btn-link.btn_link span:hover {
     text-align: center;
 }
 
-.text_link,
-.text_link:hover {
+.text_link {
     color: #F66036;
+}
+
+.text_link:hover {
+    color: #d52f01;
 }
 
 input[type="checkbox"] {

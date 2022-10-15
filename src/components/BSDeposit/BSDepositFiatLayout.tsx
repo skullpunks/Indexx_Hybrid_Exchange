@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-import BSDepositCryptoSelect from './BSDepositCryptoSelect';
+// import BSDepositCryptoSelect from './BSDepositCryptoSelect';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import BSDepositFiatSelect from './BSDepositFiatSelect';
 import BSDepositFiatAmount from './BSDepositFiatAmount';

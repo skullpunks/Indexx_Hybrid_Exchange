@@ -19,7 +19,7 @@ export const BSDepositCryptoSelect = () => {
   return (
     <div className='scan-container bs_main wd_container'>
 
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }} onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
       </div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
 
@@ -68,7 +68,8 @@ export const BSDepositCryptoSelect = () => {
               </div>
               <div className='w_50'>
                 <div className='brand_opacity_5'>Selected wallet</div>
-                <div> Spot Wallet <span className="text_link"><Link to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
+                <div> Spot Wallet <span className="text_link">
+                  <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
               </div>
             </div>
 

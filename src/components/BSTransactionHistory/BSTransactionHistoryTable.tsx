@@ -1,6 +1,23 @@
 import { CopyOutlined, LinkOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { Select } from 'antd';
+import React from 'react';
+
+const { Option } = Select;
+
+const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+};
+
+
+const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+};
+
+const onSearch = (value: string) => {
+    console.log('search:', value);
+};
 
 interface DataType {
     key: string;
@@ -12,7 +29,6 @@ interface DataType {
     destination: string;
     txid: string;
 }
-
 
 const columns: ColumnsType<DataType> = [
     {
@@ -33,8 +49,6 @@ const columns: ColumnsType<DataType> = [
         key: 'wallet',
         render: text => <span>{text}</span>,
     },
-    // destination: string;
-    // txid: string;
     {
         title: 'Asset',
         key: 'asset',
@@ -50,7 +64,11 @@ const columns: ColumnsType<DataType> = [
         key: 'txid',
         render: (_, record) => (
             <span>
-                Invite {record.txid} <span><CopyOutlined /> <LinkOutlined /></span>
+                {record.txid}
+                <span>
+                    <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip>
+                    <LinkOutlined />
+                </span>
             </span>
         ),
     },
@@ -59,7 +77,10 @@ const columns: ColumnsType<DataType> = [
         key: 'destination',
         render: (_, record) => (
             <span>
-                Invite {record.destination} <span><CopyOutlined /> <LinkOutlined /></span>
+                {record.destination}
+                <span>
+                    <CopyOutlined className='padding-lr-1x' /> <LinkOutlined />
+                </span>
             </span>
         ),
     },
@@ -67,7 +88,6 @@ const columns: ColumnsType<DataType> = [
 
 
 const data: DataType[] = [
-
     {
         key: '1',
         time: '2022-10-10',
@@ -84,7 +104,7 @@ const data: DataType[] = [
         time: '2022-10-12',
         type: "Deposit",
         wallet: "Spot Wallet",
-        asset: "BNB",
+        asset: "IN500",
         amount: 0.07,
         destination: '0x56092...19',
         txid: '126092...19',
@@ -95,8 +115,59 @@ const data: DataType[] = [
 const BSTransactionHistoryTable: React.FC = () => {
     return (
         <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x'>
-            <Table columns={columns} dataSource={data} />;
+            <div className='d-flex transaction_filters margin-b-3x'>
+                <div>
+                    <label>Type</label> <br />
+                    <Select defaultValue="all" onChange={handleChange}>
+                        <Option value="all">All</Option>
+                        <Option value="deposit">Deposit</Option>
+                        <Option value="withdraw">Withdraw</Option>
+                    </Select>
+                </div>
+                <div>
+                    <label>Time</label> <br />
+                    <Select defaultValue="30" onChange={handleChange}>
+                        <Option value="all">All</Option>
+                        <Option value="7">Past 7 days</Option>
+                        <Option value="30">Past 30 days</Option>
+                        <Option value="90">Past 90 days</Option>
+                    </Select>
+                </div>
+                <div>
+                    <label>Asset</label> <br />
+                    <Select defaultValue="all" onChange={handleChange}>
+                        <Option value="all">All</Option>
+                        <Option value="IN500">IN500 <span>Index 500</span></Option>
+                        <Option value="BTC">BTC <span>Bitcoin</span></Option>
+                    </Select>
+                </div>
+                <div>
+                    <label>Status</label> <br />
+                    <Select defaultValue="completed" onChange={handleChange}>
+                        <Option value="all">All</Option>
+                        <Option value="completed">Completed</Option>
+                        <Option value="pending">Pending</Option>
+                    </Select>
+                </div>
+                <div>
+                    <label>TxID</label> <br />
+                    <Select
+                        showSearch
+                        placeholder="Search transaction id"
+                        optionFilterProp="children"
+                        onChange={onChange}
+                        onSearch={onSearch}
+                        filterOption={(input, option) =>
+                            (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                        }
+                    >
+                        <Option value="0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c">0x56092...19</Option>
+                        <Option value="0x7325E062EA31E7b977fbEBBcC45De30c3e894988">0x7325E...88</Option>
 
+                    </Select>
+                </div>
+            </div>
+            <Table columns={columns} dataSource={data} />
         </div>
     )
 }

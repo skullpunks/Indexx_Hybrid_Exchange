@@ -1,29 +1,53 @@
-import React from 'react';
+import { RadioChangeEvent, Space } from 'antd';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ArrowRightOutlined, CloseOutlined, LinkOutlined } from '@ant-design/icons';
 import { Button, Radio } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import copyIcon from "../../assets/arts/copyIcon.svg";
+import { useState } from 'react';
 
 
 export const BSDepositCryptoWallet = () => {
+
+  const [value, setValue] = useState("spot");
+  const navigate = useNavigate();
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
+
   return (
     <div className='scan-container bs_main wd_container'>
       <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Crypto</span>
       </div>
-        <Button danger className='danger_disabled'>Deposit Fiat<ArrowRightOutlined /></Button></div>
+        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <div className=' padding-t-2x d-flex flex-justify-between flex-align-center'><div><h1 className='font_20x'>Change Deposit Wallet</h1><div className='font_13x padding-t-1x'>Please select a wallet to use for deposit.</div></div><CloseOutlined className='font_15x' /></div>
 
 
 
-
-        <Radio checked className='orange margin-t-2x font_15x' >
+        <Radio.Group onChange={onChange} value={value} className='orange margin-t-2x font_15x'>
+          <Space direction="vertical">
+            <Radio value="spot" className='orange margin-t-2x font_15x d-flex'>
+              <span className='d-flex flex-align-center'>
+                <span style={{ minWidth: 200 }}>Spot Wallet</span>
+                {(value === "spot") && <Button danger>Selected</Button>}
+              </span>
+            </Radio>
+            <Radio value="funding" className='orange margin-t-1x font_15x d-flex'>
+              <span className='d-flex flex-align-center'>
+                <span style={{ minWidth: 200 }}>Funding Wallet</span>
+                {(value === "funding") && <Button danger>Selected</Button>}
+              </span>
+            </Radio>
+          </Space>
+        </Radio.Group>
+        {/* <Radio checked className='orange margin-t-2x font_15x' >
           <span className=''>Spot Wallet
           </span></Radio>
         <Radio className='orange margin-t-2x font_15x' >
           <span className=''>Funding Wallet
-          </span></Radio>
+          </span></Radio> */}
         <br />
         <Button type="primary" className='margin-tb-2x'>
           <Link to="">Confirm</Link>
