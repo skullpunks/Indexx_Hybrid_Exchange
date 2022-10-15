@@ -65,13 +65,14 @@ const Header = () => {
             items={[
                 { key: 1, label: <Link to="/indexx-exchange/about">Dashboard</Link> },
                 { key: 2, label: <Link to="/indexx-exchange/hybrid-exchange">Account & Settings</Link> },
-                { key: 3, label: <Link to="/indexx-exchange/affliate">Security</Link> },
-                { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
-                { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
+                // { key: 3, label: <Link to="/indexx-exchange/affliate">Security</Link> },
+                // { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
+                // { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
                 { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
                 { key: 7, label: <Link to="/indexx-exchange/buy-sell/withdraw">Withdraw</Link> },
                 { key: 8, label: <Link to="/indexx-exchange/buy-sell/deposit-crypto">Deposit</Link> },
-                { key: 9, label: <Link to="" onClick={logOutUser}>Log out</Link> }
+                { key: 9, label: <Link to="/indexx-exchange/buy-sell/transaction-history">Transaction History</Link> },
+                { key: 10, label: <Link to="" onClick={logOutUser}>Log out</Link> }
             ]}
         />
     );

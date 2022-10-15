@@ -24,7 +24,8 @@ import BSDWAmount from './components/BSDepositWithdraw/BSDWAmount';
 import BSDWRecorded from './components/BSDepositWithdraw/BSDWRecorded';
 import BuySellGetStartedLayout from './components/BuySell/BuySellGetStartedLayout';
 import BSDepositCryproLayout from './components/BSDeposit/BSDepositCryproLayout';
-import BSTransactionHistoryLayout from './components/BSDeposit/BSTransactionHistoryLayout';
+import BSTransactionHistoryLayout from './components/BSTransactionHistory/BSTransactionHistoryLayout';
+import BSDepositFiatLayout from './components/BSDeposit/BSDepositFiatLayout';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
@@ -49,10 +50,8 @@ function App() {
                         <Route path="recorded" element={<BSDWRecorded />} />
                     </Route>
                     <Route path="/indexx-exchange/buy-sell/deposit-crypto/*" element={<BSDepositCryproLayout />} />
+                    <Route path="/indexx-exchange/buy-sell/deposit-fiat/*" element={<BSDepositFiatLayout />} />
                     <Route path="/indexx-exchange/buy-sell/transaction-history/*" element={<BSTransactionHistoryLayout />} />
-                    {/* <Route path="/indexx-exchange/buy-sell/bsDepositWithdraw" element={<BSDepositWithdarwSelect />} />
-                    <Route path="/indexx-exchange/buy-sell/BSWithdrawInfo" element={<BSWithdrawInfo />} />
-                    <Route path="/indexx-exchange/buy-sell/BSWDAmount" element={<BSDWAmount />} /> */}
                     <Route path="/indexx-exchange/buy-sell/get-started/*" element={<BuySellGetStartedLayout />} />
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />

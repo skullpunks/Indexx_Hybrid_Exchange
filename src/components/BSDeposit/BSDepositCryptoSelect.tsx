@@ -1,27 +1,27 @@
 import React from 'react';
 
-import { ArrowRightOutlined, CaretDownOutlined, LinkOutlined, UserOutlined, QrcodeOutlined } from '@ant-design/icons';
-import { Button,Select } from 'antd';
+import { ArrowRightOutlined, CaretDownOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { Button, Select } from 'antd';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 
 import copyIcon from "../../assets/arts/copyIcon.svg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const BSDepositCryptoSelect = () => {
-
+  const navigate = useNavigate();
   const { Option } = Select;
 
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
- 
+
   return (
     <div className='scan-container bs_main wd_container'>
 
-<div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Crypto</span>
       </div>
-      <Button danger className='danger_disabled'>Deposit Fiat<ArrowRightOutlined /></Button></div>
+        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
 
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <h1 className='font_20x padding-tb-2x'>Select Coin</h1>
@@ -37,18 +37,18 @@ const handleChange = (value: string) => {
 
           <h1 className='font_20x padding-t-2x' >Deposit to</h1>
           <div className='padding-t-1x'>
-          <label>Network</label>
-           
+            <label>Network</label>
+
 
             <Select defaultValue="lucy" className='width-100' onChange={handleChange} >
-      <Option value="jack"><div className='font_23x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="Yiminghe">yiminghe</Option>
-    </Select>
+              <Option value="jack"><div className='font_23x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="Yiminghe">yiminghe</Option>
+            </Select>
           </div>
           <div className='sensitive_data margin-t-2x'>
             <div>Address</div>
-            <div className='margin-t-2x d-flex flex-align-center font_weight_800'>1LmkQDpGvx1FBygJCPG6hpjcH7ryMDSwGD<img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /><QrcodeOutlined className='margin-l-0_5x'/></div>
+            <div className='margin-t-2x d-flex flex-align-center font_weight_800'>1LmkQDpGvx1FBygJCPG6hpjcH7ryMDSwGD<img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /><QrcodeOutlined className='margin-l-0_5x' /></div>
 
             <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
 

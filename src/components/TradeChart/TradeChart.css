@@ -110,13 +110,13 @@
     content: none;
 }
 
-.ant-table-thead>tr>th:nth-child(3),
-.ant-table-tbody>tr>td:last-child {
+.trade_content .ant-table-thead>tr>th:nth-child(3),
+.trade_content .ant-table-tbody>tr>td:last-child {
     text-align: right;
 }
 
-.ant-table-thead>tr>th:nth-child(2),
-.ant-table-tbody>tr>td:nth-child(2) {
+.trade_content .ant-table-thead>tr>th:nth-child(2),
+.trade_content .ant-table-tbody>tr>td:nth-child(2) {
     text-align: center;
 }
 
