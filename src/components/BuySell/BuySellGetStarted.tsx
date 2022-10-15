@@ -50,7 +50,7 @@ const BuySellGetStarted: React.FC = () => {
                         </Form.Item>
                     </div>
                     <div className="form_element referral">
-                        <Form.Item label="Referral Code (Optional)" name="Referral"
+                        <Form.Item label="Referral Code (Optional)" name="referral"
                             rules={[{ required: false, message: "Referral  Id Required" }]}
                         >
                             <div className="control-input">

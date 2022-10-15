@@ -40,7 +40,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                                 rules={[{ required: true, message: "Email Id Required" }, { type: "email", message: "Please Enter Valid Email Id" }]}
                             >
                                 <div className="control-input">
-                                    <Input placeholder='Email id' />
+                                    <Input placeholder='Email id' className='input_height' />
                                     <span className="input_icon"><img src={Email} alt="emailIcon" /></span>
                                 </div>
                             </Form.Item>
