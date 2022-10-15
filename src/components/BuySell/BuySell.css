@@ -243,7 +243,7 @@ button.ant-btn-link.btn_link span:hover {
     padding: 32px 16px 25px 16px;
 }
 
-.form_element input:not([type="checkbox"]) {
+/* .form_element input:not([type="checkbox"]) {
     background: #FFFFFF;
     border: 1px solid rgba(246, 96, 54, 0.2);
     border-radius: 3px;
@@ -251,12 +251,21 @@ button.ant-btn-link.btn_link span:hover {
     width: 100%;
     font-size: 15px;
     padding: 0 13px;
+} */
+
+.input_height {
+    height: 50px;
 }
 
-.input_icon {
+.bs_main .input_icon {
     position: absolute;
     right: 21px;
     transform: translate(50%, 50%);
+}
+
+.bs_main input[type="text"],
+.ant-input-password.ant-input-affix-wrapper {
+    border-color: rgba(246, 96, 54, 0.2);
 }
 
 .terms_conditions {
@@ -454,6 +463,12 @@ button.ant-btn-primary [disabled] {
     border-radius: 5px;
 }
 
+.bs_main .ant-btn-primary[disabled],
+.bs_main .ant-btn-primary[disabled]:hover {
+
+    background: rgba(95, 95, 95, 0.2);
+    border-color: rgba(95, 95, 95, 0.2);
+}
 
 
 .bs_tab_item>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
