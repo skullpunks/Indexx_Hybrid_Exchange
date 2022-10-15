@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './BSDepositWithdraw.css';
+import './BSWithdraw.css';
 
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ArrowRightOutlined } from '@ant-design/icons';
@@ -32,7 +32,7 @@ export const BSDepositWithdarwSelect = () => {
             <span className='helper_text'>0 Fee, 1-4 Business days</span>
           </span></Radio>
         <Button type="primary" className='margin-b-2x margin-t-auto'>
-          <Link to="/indexx-exchange/buy-sell/deposit-withdraw/info">Continue</Link>
+          <Link to="/indexx-exchange/buy-sell/withdraw/info">Continue</Link>
         </Button>
 
       </div>

@@ -17,7 +17,7 @@ export const BSDWRecorded = () => {
                 <p className='border-t-1x padding-lr-2x padding-t-2x'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
                 <div className='padding-lr-2x padding-t-2x margin-b-2x margin-t-auto'>
                     <Button type="primary" className='margin-t-2x' >
-                        <Link to="/indexx-exchange/buy-sell/deposit-withdraw/">Home</Link>
+                        <Link to="/indexx-exchange/buy-sell/withdraw/">Home</Link>
                     </Button>
                 </div>
             </div>

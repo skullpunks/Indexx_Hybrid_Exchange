@@ -65,3 +65,7 @@
     padding: 10px 14px 22px;
     cursor: pointer;
 }
+
+.need_help:hover {
+    color: #00387d;
+}

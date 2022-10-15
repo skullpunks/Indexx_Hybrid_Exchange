@@ -1,5 +1,5 @@
 import React from 'react';
-import './BSDepositWithdraw.css';
+import './BSWithdraw.css';
 
 import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
@@ -50,7 +50,7 @@ export const BSWithdrawInfo = () => {
               <span className='placeholder_info'>Please input the address in English</span>
             </Form.Item>
             <Button type="primary" className='margin-t-2x'>
-              <Link to="/indexx-exchange/buy-sell/deposit-withdraw/amount">Continue</Link>
+              <Link to="/indexx-exchange/buy-sell/withdraw/amount">Continue</Link>
             </Button>
           </Form>
 

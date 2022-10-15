@@ -12,7 +12,6 @@ const BuySellGetStartedLayout = () => {
         <>
             <div className='scan-container flex-align-stretch bs_main'>
                 <Routes>
-
                     <Route index element={<BuySellGetStarted />} />
                     <Route path="email-auth" element={<BuySellEmailAuth />} />
                     <Route path="secure-steps" element={<BuySellSecureSteps />} />

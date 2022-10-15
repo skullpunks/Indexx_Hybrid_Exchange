@@ -1,8 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom';
-import './BSDepositWithdraw.css';
+import './BSWithdraw.css';
 
-const BSDepositWithdrawMain = () => {
+const BSWithdrawMain = () => {
     return (
         <div>
             <Outlet />
@@ -10,4 +10,4 @@ const BSDepositWithdrawMain = () => {
     )
 }
 
-export default BSDepositWithdrawMain
+export default BSWithdrawMain

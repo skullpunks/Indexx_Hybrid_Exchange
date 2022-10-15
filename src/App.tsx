@@ -16,10 +16,11 @@ import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 import TradeChart from './components/TradeChart/TradeChart';
 import Markets from './components/Markets/Markets';
 import IndexBlog from './components/IndexBlog/IndexBlog';
+
+import BSWithdrawMain from './components/BSDepositWithdraw/BSWithdrawMain';
 import BSDepositWithdarwSelect from './components/BSDepositWithdraw/BSDepositWithdarwSelect';
 import BSWithdrawInfo from './components/BSDepositWithdraw/BSWithdrawInfo';
 import BSDWAmount from './components/BSDepositWithdraw/BSDWAmount';
-import BSDepositWithdrawMain from './components/BSDepositWithdraw/BSDepositWithdrawMain';
 import BSDWRecorded from './components/BSDepositWithdraw/BSDWRecorded';
 import BuySellGetStartedLayout from './components/BuySell/BuySellGetStartedLayout';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
@@ -39,7 +40,7 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login" element={<BuySellLogin />} />
                     <Route path="/indexx-exchange/buy-sell/wallet" element={<BSWallet />} />
-                    <Route path="/indexx-exchange/buy-sell/deposit-withdraw" element={<BSDepositWithdrawMain />} >
+                    <Route path="/indexx-exchange/buy-sell/withdraw" element={<BSWithdrawMain />} >
                         <Route index element={<BSDepositWithdarwSelect />} />
                         <Route path="info" element={<BSWithdrawInfo />} />
                         <Route path="amount" element={<BSDWAmount />} />
@@ -48,9 +49,7 @@ function App() {
                     {/* <Route path="/indexx-exchange/buy-sell/bsDepositWithdraw" element={<BSDepositWithdarwSelect />} />
                     <Route path="/indexx-exchange/buy-sell/BSWithdrawInfo" element={<BSWithdrawInfo />} />
                     <Route path="/indexx-exchange/buy-sell/BSWDAmount" element={<BSDWAmount />} /> */}
-                    <Route path="/indexx-exchange/buy-sell/get-started/*" element={<BuySellGetStartedLayout />} >
-
-                    </Route>
+                    <Route path="/indexx-exchange/buy-sell/get-started/*" element={<BuySellGetStartedLayout />} />
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />

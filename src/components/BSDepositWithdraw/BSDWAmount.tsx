@@ -36,7 +36,7 @@ export const BSDWAmount = () => {
                     </Button>
 
                     <Button type="primary"  >
-                        <Link to="/indexx-exchange/buy-sell/deposit-withdraw/recorded">Continue</Link>
+                        <Link to="/indexx-exchange/buy-sell/withdraw/recorded">Continue</Link>
                     </Button>
                 </div>
             </div>
