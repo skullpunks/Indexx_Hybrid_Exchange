@@ -145,3 +145,14 @@
     font-size: 16px;
 
 }
+
+.w_50{
+    width: calc(50% - 20px);
+}
+
+.font_weight_800{
+    font-weight: 800;
+}
+.font_40x {
+    font-size:40px;
+}

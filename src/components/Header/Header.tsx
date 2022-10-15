@@ -70,7 +70,8 @@ const Header = () => {
                 { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
                 { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
                 { key: 7, label: <Link to="/indexx-exchange/buy-sell/withdraw">Withdraw</Link> },
-                { key: 8, label: <Link to="" onClick={logOutUser}>Log out</Link> }
+                { key: 8, label: <Link to="/indexx-exchange/buy-sell/deposit-crypto">Deposit</Link> },
+                { key: 9, label: <Link to="" onClick={logOutUser}>Log out</Link> }
             ]}
         />
     );
