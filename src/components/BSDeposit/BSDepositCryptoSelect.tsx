@@ -68,7 +68,7 @@ export const BSDepositCryptoSelect = () => {
               </div>
               <div className='w_50'>
                 <div className='brand_opacity_5'>Selected wallet</div>
-                <div> Spot Wallet <span className="text_link">
+                <div> Funding Wallet <span className="text_link">
                   <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
               </div>
             </div>
@@ -96,7 +96,7 @@ export const BSDepositCryptoSelect = () => {
           <div className='d-flex flex-justify-between padding-t-1x'>
             <div>
               <div className='font_15x'>2022-10-03</div>
-              <div className='font_15x'><span className='brand_opacity_5'>Deposit</span> wallet Spot Wallet</div>
+              <div className='font_15x'><span className='brand_opacity_5'>Deposit</span> wallet Funding Wallet</div>
             </div>
             <div className='font_15x'><span className='brand_opacity_5'>Network</span> BSC</div>
             <div className='font_15x'><span className='brand_opacity_5'>Address</span> 0x56092d7daffc1691662e7383c8ebc5f75247ca19<LinkOutlined className='margin-l-0_5x brand_opacity_5' /><img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /></div>

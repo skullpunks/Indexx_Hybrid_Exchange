@@ -50,7 +50,7 @@ export const BSDepositFiatInfo = () => {
               <span className='placeholder_info'>Please input the address in English</span>
             </Form.Item>
             <Button type="primary" className='margin-t-2x'>
-              <Link to="/indexx-exchange/buy-sell/withdraw/amount">Continue</Link>
+              <Link to="">Continue</Link>
             </Button>
           </Form>
 

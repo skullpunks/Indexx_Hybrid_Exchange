@@ -2,12 +2,12 @@ import React from 'react';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 
 const BuySellGetStarted: React.FC = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const onFinish = (values: any) => {
         console.log(values);
