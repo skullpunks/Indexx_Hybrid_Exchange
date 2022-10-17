@@ -31,8 +31,8 @@ export const BSDepositFiatSelect = () => {
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
-          <div className='d-flex'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 3 }} /><div> <span className='radio_text'>Bank Transfer(SWIFT) <br />
-            <span className='helper_text'>0 Fee, 1-4 Business days</span>
+          <div className='d-flex'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 5 }} /><div> <span className='radio_text'>Bank Transfer(SWIFT) <br />
+            <span className='helper_text'>1-4 Business days</span>
           </span></div></div></Radio>
         <Button type="primary" className='margin-b-2x margin-t-auto'>
           <Link to="/indexx-exchange/buy-sell/deposit-fiat/deposit-fiat-amount">Continue</Link>

@@ -173,7 +173,6 @@
 
 .bg_icon {
     background :#F66036;
-    ;
     width: 13px;
     height: 13px;
     border-radius: 50%;
@@ -182,4 +181,38 @@
 
 .W_form .ant-col-8 {
     max-width:100%;
+}
+
+.brand_color {
+    color:#5f5f5f;
+}
+
+.popover_container {
+    width:300px;
+     min-height:304px
+}
+.disc_ul{
+    list-style-type: disc;
+    margin-left:20px;
+}
+
+.ant-popover-inner-content {
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+   
+}
+
+
+
+.ant-popover-inner {
+    border-radius: 5px;
+}
+
+.popover_container_link , .popover_container_link:hover{
+    color:#5f5f5f;
+    text-decoration: underline;
+}
+
+.amount_container input{
+    border:none;
 }
