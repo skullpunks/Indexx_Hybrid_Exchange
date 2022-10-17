@@ -30,7 +30,7 @@ export const BSDepositCryptoWallet = () => {
           <Space direction="vertical">
             <Radio value="spot" className='orange margin-t-2x font_15x d-flex'>
               <span className='d-flex flex-align-center'>
-                <span style={{ minWidth: 200 }}>Spot Wallet</span>
+                <span style={{ minWidth: 200 }}>Funding Wallet</span>
                 {(value === "spot") && <Button danger>Selected</Button>}
               </span>
             </Radio>
@@ -43,7 +43,7 @@ export const BSDepositCryptoWallet = () => {
           </Space>
         </Radio.Group>
         {/* <Radio checked className='orange margin-t-2x font_15x' >
-          <span className=''>Spot Wallet
+          <span className=''>Funding Wallet
           </span></Radio>
         <Radio className='orange margin-t-2x font_15x' >
           <span className=''>Funding Wallet
@@ -55,7 +55,7 @@ export const BSDepositCryptoWallet = () => {
         <br />
         <br />
         <div className='padding-b-1x'>Wallet Selection History</div>
-        <div className='d-flex flex-justify-between border-1x padding-2x'><div>2022-10-10 04:22</div><div>Spot Wallet Selected</div></div>
+        <div className='d-flex flex-justify-between border-1x padding-2x'><div>2022-10-10 04:22</div><div>Funding Wallet Selected</div></div>
       </div>
       <div className='w_fiat'>
         <h1 className='font_48x font_weight_800 font_40x padding-b-1x'>Recent Deposit</h1>
@@ -65,7 +65,7 @@ export const BSDepositCryptoWallet = () => {
           <div className='d-flex flex-justify-between padding-t-1x'>
             <div>
               <div className='font_15x'>2022-10-03</div>
-              <div className='font_15x'><span className='brand_opacity_5'>Deposit</span> wallet Spot Wallet</div>
+              <div className='font_15x'><span className='brand_opacity_5'>Deposit</span> wallet Funding Wallet</div>
             </div>
             <div className='font_15x'><span className='brand_opacity_5'>Network</span> BSC</div>
             <div className='font_15x'><span className='brand_opacity_5'>Address</span> 0x56092d7daffc1691662e7383c8ebc5f75247ca19<LinkOutlined className='margin-l-0_5x brand_opacity_5' /><img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /></div>
