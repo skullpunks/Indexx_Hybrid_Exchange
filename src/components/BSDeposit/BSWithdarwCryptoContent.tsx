@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 import { ArrowRightOutlined, CaretDownOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
-import { Button, Popover, Select } from 'antd';
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import { Button, Select } from 'antd';
+
 import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 import IN500 from "../../assets/token-icons/33.png";
 
-import copyIcon from "../../assets/arts/copyIcon.svg";
+
 import { Link, useNavigate } from 'react-router-dom';
 
 export const BSWithdarwCryptoContent = () => {
@@ -37,9 +37,9 @@ export const BSWithdarwCryptoContent = () => {
   return (
     <div className='scan-container bs_main wd_container'>
 
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }} onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }} onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
       </div>
-        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
+        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
 
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
