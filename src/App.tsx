@@ -41,7 +41,7 @@ function App() {
                     <Route path="/*" element={<Home />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/buy-sell" element={<BuySell />} />
-                    <Route path="/indexx-exchange/buy-sell/login" element={<BuySellLogin />} />
+                    <Route path="/indexx-exchange/buy-sell/login/*" element={<BuySellLogin />} />
                     <Route path="/indexx-exchange/buy-sell/wallet" element={<BSWallet />} />
                     <Route path="/indexx-exchange/buy-sell/withdraw" element={<BSWithdrawMain />} >
                         <Route index element={<BSDepositWithdarwSelect />} />

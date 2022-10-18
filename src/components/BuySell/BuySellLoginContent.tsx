@@ -10,6 +10,7 @@ interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
+    console.log(setScreenName);
     const navigate = useNavigate();
 
     const onFinish = (values: any) => {
@@ -56,7 +57,8 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                             </Form.Item>
 
                         </div>
-                        <Link to="" className='default-link text-underline' onClick={() => setScreenName("TwoFactorAuth")}>Forgot password</Link>
+                        {/* setScreenName("TwoFactorAuth") */}
+                        <Link to="forgot-password" className='default-link text-underline'>Forgot password</Link>
                         <br />
                         <br />
 
@@ -68,7 +70,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
 
                     <div className=' padding-b-2x border-b-1x text-center'>Don’t have an account? <Link to="/indexx-exchange/buy-sell/get-started" className="text_link">Get Started</Link></div>
                     <br />
-                    <Link to="" className='default-link border-default text-center margin-t-1_5x ' onClick={() => setScreenName("LoginQR")}><img src={qrCode} alt='qr-code' /> Log In with QR code</Link>
+                    <Link to="" className='default-link border-default text-center margin-t-1_5x disabled' style={{ cursor: "not-allowed", pointerEvents: "none", opacity: "0.6" }} ><img src={qrCode} alt='qr-code' /> Log In with QR code (coming soon)</Link>
                 </div>
             </div>
 

@@ -1,0 +1,20 @@
+.trade_to_earn_banner {
+    display: flex;
+    padding: 0 120px;
+    margin: 0;
+    flex-direction: column;
+    height: 450px;
+    background-image: url("../../../assets/arts/TradeBannerBG.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.earn_btn {
+    position: absolute;
+    bottom: 30px;
+    right: 25%;
+    font-size: 22px;
+    min-width: 220px;
+    min-height: 43px;
+}

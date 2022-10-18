@@ -14,8 +14,14 @@ const Section1 = () => {
             <div className="section-helper-text">Hybrid Platform</div>
             <div className="section-usp" style={{ paddingTop: 120, paddingBottom: 70 }}>
                 <span className="font-big">
-                    <span style={{ color: "rgba(255, 255, 255, 0.6)" }}>Trade to</span>
-                    <span style={{ fontSize: 120, display: "inline-block" }}>Earn, </span>
+                    <Link to="/indexx-exchange/trade-to-earn">
+                        <span style={{ color: "rgba(255, 255, 255, 0.6)" }}>Trade to</span>
+                        <span style={{ fontSize: 120, color: "#fff", display: "inline-block" }}>
+                            Earn
+                            <sub style={{ fontSize: 20, color: "rgba(255, 255, 255, 0.6)" }}>TM</sub>
+                            ,
+                        </span>
+                    </Link>
                     <span style={{ fontSize: 120 }}> 0%</span>
                     <span style={{ color: "rgba(255, 255, 255, 0.6)" }}> fee</span>
 
@@ -24,7 +30,9 @@ const Section1 = () => {
             <div className="actions">
                 <Link className="td-none" to="/indexx-exchange/swap">
                     <div className="launch-app-button cut_button">
-                        <div className="launch-app-button-text">Swap</div>
+                        <div className="launch-app-button-text">Decentralized
+                            <p className="font_13x">(coming soon 31st Oct)</p>
+                        </div>
                     </div>
                 </Link>
                 <Link className="td-none" to="/indexx-exchange/buy-sell">
