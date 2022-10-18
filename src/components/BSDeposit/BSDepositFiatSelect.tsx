@@ -22,12 +22,13 @@ export const BSDepositFiatSelect = () => {
         <div className='margin-t-2x'>
           <label>Currency</label>
           <div className='select_container d-flex flex-justify-between flex-align-center'>
-            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }}>US Dollar</span> </div></div>
+            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">US Dollar</span> </div></div>
             {/* <RightOutlined /> */}
           </div>
         </div>
         <label className='padding-t-3x'>Deposit with</label>
-        <Button disabled className='disabled_button font_23x'>
+        <Button disabled className='disabled_button font_23x' style={{    height: 36,
+    lineHeight: "24px"}}>
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >

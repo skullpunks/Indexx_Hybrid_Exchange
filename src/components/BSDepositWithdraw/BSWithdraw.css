@@ -218,3 +218,11 @@
 .amount_container input{
     border:none;
 }
+
+.ant-btn.disabled_button:hover, .ant-btndisabled_button:focus {
+    color: #F66036;
+    border-color: #F66036;
+}
+.text_line{
+    text-decoration: underline;
+}
