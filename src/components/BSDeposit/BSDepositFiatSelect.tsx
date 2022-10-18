@@ -13,7 +13,7 @@ export const BSDepositFiatSelect = () => {
   return (
     <div className='scan-container bs_main wd_container'>
       <div className='d-flex w_fiat flex-justify-between flex-align-center '>
-        <div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Fiat</span>
+        <div className='d-flex flex-align-center top_heading'><span>Deposit Fiat</span>
           <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto<ArrowRightOutlined /></Button></div>
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
@@ -27,15 +27,17 @@ export const BSDepositFiatSelect = () => {
           </div>
         </div>
         <label className='padding-t-3x'>Deposit with</label>
-        <Button disabled className='disabled_button font_23x' style={{    height: 36,
-    lineHeight: "24px"}}>
+        <Button disabled className='disabled_button font_23x' style={{
+          height: 36,
+          lineHeight: "24px"
+        }}>
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
           <div className='d-flex'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 5 }} /><div> <span className='radio_text'>Bank Transfer(SWIFT) <br />
             <span className='helper_text'>1-4 Business days</span>
           </span></div></div></Radio>
-        <Button type="primary" className='margin-b-2x margin-t-auto'>
+        <Button type="primary" className='margin-b-2x margin-t-2x'>
           <Link to="/indexx-exchange/buy-sell/deposit-fiat/deposit-fiat-amount">Continue</Link>
         </Button>
 

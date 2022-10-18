@@ -146,15 +146,16 @@
 
 }
 
-.w_50{
+.w_50 {
     width: calc(50% - 20px);
 }
 
-.font_weight_800{
+.font_weight_800 {
     font-weight: 800;
 }
+
 .font_40x {
-    font-size:40px;
+    font-size: 40px;
 }
 
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -164,15 +165,15 @@
 }
 
 .ant-select-single .ant-select-selector .ant-select-selection-item {
-    top:21%;
+    top: 21%;
 }
 
 .bs_main label.ant-radio-wrapper {
-    color:#5f5f5f;
+    color: #5f5f5f;
 }
 
 .bg_icon {
-    background :#F66036;
+    background: #F66036;
     width: 13px;
     height: 13px;
     border-radius: 50%;
@@ -180,49 +181,57 @@
 }
 
 .W_form .ant-col-8 {
-    max-width:100%;
+    max-width: 100%;
 }
 
 .brand_color {
-    color:#5f5f5f;
+    color: #5f5f5f;
 }
 
 .popover_container {
-    width:300px;
-     min-height:304px
+    width: 300px;
+    min-height: 304px
 }
-.disc_ul{
+
+.disc_ul {
     list-style-type: disc;
-    margin-left:20px;
+    margin-left: 20px;
 }
 
 .ant-popover-inner-content {
     border: 1px solid rgba(246, 96, 54, 0.2);
     border-radius: 5px;
-   
+
 }
 
 .margin-l-1x {
-    margin-left:10px;
+    margin-left: 10px;
 }
 
 .ant-popover-inner {
     border-radius: 5px;
 }
 
-.popover_container_link , .popover_container_link:hover{
-    color:#5f5f5f;
+.popover_container_link, .popover_container_link:hover {
+    color: #5f5f5f;
     text-decoration: underline;
 }
 
-.amount_container input{
-    border:none;
+.amount_container input {
+    border: none;
 }
 
 .ant-btn.disabled_button:hover, .ant-btndisabled_button:focus {
     color: #F66036;
     border-color: #F66036;
 }
-.text_line{
+
+.text_line {
     text-decoration: underline;
+}
+
+.ant-select-selection-placeholder {
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
 }

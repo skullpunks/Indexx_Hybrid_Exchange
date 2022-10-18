@@ -1,43 +1,30 @@
-import React, { useState } from 'react';
+// import { useState } from 'react';
 
-import { ArrowRightOutlined, CaretDownOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 
-import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
+// import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 import IN500 from "../../assets/token-icons/33.png";
 
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const BSWithdarwCryptoContent = () => {
   const navigate = useNavigate();
-  const [network, setNetwork] = useState("");
+  // const [network, setNetwork] = useState<any>();
 
   const { Option } = Select;
 
   const handleChange = (value: string) => {
-    setNetwork(value)
+    // setNetwork(value)
     console.log(`selected ${value}`);
   };
-
-  const content = (
-    <div className='popover_container ' style={{}}>
-      <div className='font_13x text-center brand_color'>Scan the code on the withdrawal page of the trading platform APP or wallet APP</div>
-      <div className='text-center margin-tb-2x'><img src={QRCodeIcon} alt="qrCode" width="200" height="200" /></div>
-      <ul className='brand_color disc_ul'>
-        <li>Send only BTC to this deposit address.</li>
-        <li>Ensure the network is Bitcoin.</li>
-        <li>Do not send NFTs to this address.</li>
-        <Link to="" className='popover_container_link'>Learn how to deposit NFTs</Link>
-      </ul>
-    </div>
-  )
 
 
   return (
     <div className='scan-container bs_main wd_container'>
 
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }} onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
       </div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
 
@@ -56,7 +43,7 @@ export const BSWithdarwCryptoContent = () => {
           <h1 className='font_20x padding-t-2x' >Send to</h1>
           <div className='padding-t-1x'>
             <label>Address</label>
-<br/>
+            <br />
 
             <input type="text" placeholder='Enter address' className='select_container width-100 font_20x' />
           </div>
@@ -64,7 +51,7 @@ export const BSWithdarwCryptoContent = () => {
             <label>Network</label>
 
 
-            <Select className='width-100' onChange={handleChange} placeholder="Select  withdrawal network" >
+            <Select className='width-100' onChange={handleChange} placeholder="Select withdrawal network" >
               <Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chanin (BEP20)</span> </div></Option>
               <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option>
               <Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Option>
@@ -72,40 +59,40 @@ export const BSWithdarwCryptoContent = () => {
               <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option>
             </Select>
           </div>
-         
-            <div className='sensitive_data margin-t-2x'>
-              
 
-              <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
+          <div className='sensitive_data margin-t-2x'>
 
-                <div className='w_50'>
-                  <div className='brand_opacity_5'>iN500 Balance </div>
-                  <div>0 iN500 </div>
-                </div>
-               
-                <div className='w_50'>
-                  <div className='brand_opacity_5'>Minimum withrawal  </div>
-                  <div>0.00000084 iN500 </div>
-                </div>
-              </div>
-              <div className='d-flex flex-justify-between padding-t-1x'>
+
+            <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
+
               <div className='w_50'>
-                  <div className='brand_opacity_5'>Network Fee</div>
-                  <div> 0 </div>
-                </div>
-                <div className='w_50'>
-                 
-                  <div className='brand_opacity_5'> Funding Wallet </div>
-                   <div>0,000,000.00/8,000,000.00 BUSD</div>
-                
-              </div>
+                <div className='brand_opacity_5'>iN500 Balance </div>
+                <div>0 iN500 </div>
               </div>
 
-
-
-             
+              <div className='w_50'>
+                <div className='brand_opacity_5'>Minimum withrawal  </div>
+                <div>0.00000084 iN500 </div>
+              </div>
             </div>
-        
+            <div className='d-flex flex-justify-between padding-t-1x'>
+              <div className='w_50'>
+                <div className='brand_opacity_5'>Network Fee</div>
+                <div> 0 </div>
+              </div>
+              <div className='w_50'>
+
+                <div className='brand_opacity_5'> Funding Wallet </div>
+                <div>0,000,000.00/8,000,000.00 BUSD</div>
+
+              </div>
+            </div>
+
+
+
+
+          </div>
+
         </div>
 
 

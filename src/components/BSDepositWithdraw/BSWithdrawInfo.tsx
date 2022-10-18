@@ -3,13 +3,19 @@ import './BSWithdraw.css';
 
 import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import { ArrowRightOutlined } from '@ant-design/icons';
 
 export const BSWithdrawInfo = () => {
 
   return (
 
     <div className='scan-container bs_main wd_container'>
-      {/* <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{fontSize:40}}>Withdraw Fiat</span> <Button danger className='margin-l-2x'>Danger Default<ArrowRightOutlined /></Button></div><Button danger className='danger_disabled'>Danger Default<ArrowRightOutlined /></Button></div> */}
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '>
+        <div className='d-flex flex-align-center top_heading'><span>Withdraw Fiat</span>
+          <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button>
+        </div>
+        <Button danger className='danger_disabled'>Withdraw Crypto<ArrowRightOutlined /></Button>
+      </div>
       <div className='card bs_container sell_screens margin-lr-auto margin-t-3x wd_form_container'>
         <div className=' padding-t-2x padding-lr-2x '><h1>Withdrawal Information</h1></div>
         <p className='padding-t-2x padding-lr-2x '> Please enter your bank account details below for all future USD transactions. If your bank account is from EU, UK or Middle East, please enter the IBAN in the Account Number field.</p>

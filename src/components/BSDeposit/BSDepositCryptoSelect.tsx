@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export const BSDepositCryptoSelect = () => {
   const navigate = useNavigate();
-  const [network, setNetwork] =useState("");
+  const [network, setNetwork] = useState("");
 
   const { Option } = Select;
 
@@ -23,7 +23,7 @@ export const BSDepositCryptoSelect = () => {
   const content = (
     <div className='popover_container ' style={{}}>
       <div className='font_13x text-center brand_color'>Scan the code on the withdrawal page of the trading platform APP or wallet APP</div>
-      <div className='text-center margin-tb-2x'><img src={QRCodeIcon} alt="qrCode" width="200"  height="200"/></div>
+      <div className='text-center margin-tb-2x'><img src={QRCodeIcon} alt="qrCode" width="200" height="200" /></div>
       <ul className='brand_color disc_ul'>
         <li>Send only BTC to this deposit address.</li>
         <li>Ensure the network is Bitcoin.</li>
@@ -37,7 +37,7 @@ export const BSDepositCryptoSelect = () => {
   return (
     <div className='scan-container bs_main wd_container'>
 
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }} onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
       </div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
 
@@ -45,14 +45,14 @@ export const BSDepositCryptoSelect = () => {
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
         <div className=''>
           <label>Currency</label>
-          <div className='select_container d-flex flex-justify-between flex-align-center' style={{paddingLeft:10}}>
+          <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
 
-            <div className='d-flex'><img src={IN500} alt="IN500"  width="38" height="38"/><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
+            <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
             <CaretDownOutlined />
 
             {/* <RightOutlined /> */}
           </div>
-<br/>
+          <br />
           <h1 className='font_20x padding-t-2x' >Deposit to</h1>
           <div className='padding-t-1x'>
             <label>Network</label>
@@ -66,48 +66,48 @@ export const BSDepositCryptoSelect = () => {
               <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option>
             </Select>
           </div>
-          { network &&
-          <div className='sensitive_data margin-t-2x'>
-            <div>Address</div>
-            <div className='margin-t-2x d-flex flex-align-center font_weight_800'>1LmkQDpGvx1FBygJCPG6hpjcH7ryMDSwGD<img src={copyIcon} alt="QRCodeIcon" width="21" height="11" className='padding-l-1x' />      <Popover placement="bottom" content={content} trigger="click">
-            <QrcodeOutlined className='padding-l-1x' />
-      </Popover>
-</div>
-
-            <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
-
-              <div className='w_50'>
-                <div className='brand_opacity_5'>Expected arrival </div>
-                <div>1 network confirmations </div>
+          {network &&
+            <div className='sensitive_data margin-t-2x'>
+              <div>Address</div>
+              <div className='margin-t-2x d-flex flex-align-center font_weight_800'>1LmkQDpGvx1FBygJCPG6hpjcH7ryMDSwGD<img src={copyIcon} alt="QRCodeIcon" width="21" height="11" className='padding-l-1x' />      <Popover placement="bottom" content={content} trigger="click">
+                <QrcodeOutlined className='padding-l-1x' />
+              </Popover>
               </div>
-              <div className='w_50'>
-                <div className='brand_opacity_5'>Expected unlock</div>
-                <div> <span className="text_link">1</span> network confirmations</div>
+
+              <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
+
+                <div className='w_50'>
+                  <div className='brand_opacity_5'>Expected arrival </div>
+                  <div>1 network confirmations </div>
+                </div>
+                <div className='w_50'>
+                  <div className='brand_opacity_5'>Expected unlock</div>
+                  <div> <span className="text_link">1</span> network confirmations</div>
+                </div>
               </div>
+              <div className='d-flex flex-justify-between padding-t-1x'>
+                <div className='w_50'>
+                  <div className='brand_opacity_5'> Minimum deposit </div>
+                  <div>0.00000001 BTC </div>
+                </div>
+                <div className='w_50'>
+                  <div className='brand_opacity_5'>Selected wallet</div>
+                  <div> Funding Wallet <span className="text_link">
+                    <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
+                </div>
+              </div>
+
+
+
+              <ul className="margin-t-2x disc_ul">
+                <li>Send only BTC to this deposit address.</li>
+                <li>
+                  Ensure the network is <span className='text_link'>Bitcoin.</span>
+                </li>
+                <li>Do not send NFTs to this address.<Link to="" className='popover_container_link'>Learn how to deposit NFTs</Link> </li>
+              </ul>
             </div>
-            <div className='d-flex flex-justify-between padding-t-1x'>
-              <div className='w_50'>
-                <div className='brand_opacity_5'> Minimum deposit </div>
-                <div>0.00000001 BTC </div>
-              </div>
-              <div className='w_50'>
-                <div className='brand_opacity_5'>Selected wallet</div>
-                <div> Funding Wallet <span className="text_link">
-                  <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
-              </div>
-            </div>
-
-
-
-            <ul className="margin-t-2x disc_ul">
-              <li>Send only BTC to this deposit address.</li>
-              <li>
-                Ensure the network is <span className='text_link'>Bitcoin.</span>
-              </li>
-              <li>Do not send NFTs to this address.<Link to=""className='popover_container_link'>Learn how to deposit NFTs</Link> </li>
-            </ul>
-          </div>
-}
+          }
         </div>
 
 

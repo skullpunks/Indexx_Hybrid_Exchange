@@ -11,7 +11,7 @@ export const BSDepositWithdarwSelect = () => {
   const navigate = useNavigate();
   return (
     <div className='scan-container bs_main wd_container'>
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span >Withdraw Fiat</span>
         <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>Withdraw Crypto<ArrowRightOutlined /></Button></div>
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>

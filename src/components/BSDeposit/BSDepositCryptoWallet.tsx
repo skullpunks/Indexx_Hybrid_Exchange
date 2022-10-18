@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 export const BSDepositCryptoWallet = () => {
 
-  const [value, setValue] = useState("spot");
+  const [value, setValue] = useState("funding");
   const navigate = useNavigate();
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
@@ -28,16 +28,16 @@ export const BSDepositCryptoWallet = () => {
 
         <Radio.Group onChange={onChange} value={value} className='orange margin-t-2x font_15x'>
           <Space direction="vertical">
-            <Radio value="spot" className='orange margin-t-2x font_15x d-flex'>
-              <span className='d-flex flex-align-center'>
-                <span style={{ minWidth: 200 }}>Funding Wallet</span>
-                {(value === "spot") && <Button danger>Selected</Button>}
-              </span>
-            </Radio>
-            <Radio disabled={true} value="funding" className='orange margin-t-1x font_15x d-flex'>
+            <Radio value="funding" className='orange margin-t-2x font_15x d-flex'>
               <span className='d-flex flex-align-center'>
                 <span style={{ minWidth: 200 }}>Funding Wallet</span>
                 {(value === "funding") && <Button danger>Selected</Button>}
+              </span>
+            </Radio>
+            <Radio disabled={true} value="spot" className='orange margin-t-1x font_15x d-flex'>
+              <span className='d-flex flex-align-center'>
+                <span style={{ minWidth: 200 }}>Spot Wallet</span>
+                {(value === "spot") && <Button danger>Selected</Button>}
               </span>
             </Radio>
           </Space>
