@@ -56,9 +56,9 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                                 width="50%" height="22%" alt="" />
                         </a>
                          */}
-                    <h1>
+                    {/* <h1>
                         <Link to="/" className="primary_color">Get Connected</Link>
-                    </h1>
+                    </h1> */}
                     <div className="social-wrapper">
                         <ul>
                             {icons.map((icon, index) => (

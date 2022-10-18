@@ -8,7 +8,7 @@ import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons
 
 const menuProducts = (<Menu className="main_navigation"
     items={[
-        { key: 1, label: <Link to="/indexx-exchange/swap">Swap</Link> },
+        { key: 1, label: <Link to="">Swap</Link> },
         { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> }
     ]}
 />);
@@ -57,7 +57,8 @@ const Header = () => {
         e.preventDefault();
         localStorage.removeItem("user"); //remove one item
         // localStorage.clear(); //clear all localstorage
-        window.location.reload();
+        // window.location.reload();
+        navigate("/indexx-exchange/buy-sell/login");
 
     }
     const userMenu = (
@@ -120,10 +121,16 @@ const Header = () => {
                                 <Link to="/" className="logo__icon">
                                     {/* <img src={indexText} className="index_logo" alt="index logo" /> */}
                                 </Link>
-                                <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
+                                {((location.pathname.includes("get-started")) || (location.pathname.includes("login"))) ?
+                                    <></> :
+                                    <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
+                                }
                             </h1>
                             <div className="d-flex padding-l-3x main_navigation">
-                                {menuNavigation()}
+                                {((location.pathname.includes("get-started")) || (location.pathname.includes("login"))) ?
+                                    <></> :
+                                    menuNavigation()
+                                }
                             </div>
                         </div>
                         {(location.pathname.includes("help")) &&

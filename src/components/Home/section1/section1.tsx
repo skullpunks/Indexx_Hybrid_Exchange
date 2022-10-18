@@ -28,7 +28,7 @@ const Section1 = () => {
                 </span>
             </div>
             <div className="actions">
-                <Link className="td-none" to="/indexx-exchange/swap">
+                <Link className="td-none" to="">
                     <div className="launch-app-button cut_button">
                         <div className="launch-app-button-text">Decentralized
                             <p className="font_13x">(coming soon 31st Oct)</p>

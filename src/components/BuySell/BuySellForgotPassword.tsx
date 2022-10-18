@@ -6,7 +6,7 @@ const BuySellForgotPassword = () => {
     const navigate = useNavigate();
     const onFinish = (values: any) => {
         console.log(values);
-        console.log(navigate("/indexx-exchange/buy-sell/login/reset-password"));
+        console.log(navigate("/indexx-exchange/buy-sell/login/email-auth"));
     };
 
     const onFinishFailed = (errorInfo: any) => {

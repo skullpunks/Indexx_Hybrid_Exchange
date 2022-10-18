@@ -497,7 +497,8 @@ button.ant-btn-primary [disabled] {
 }
 
 .bs_main>.card {
-    min-height: 570px;
+    min-height: auto;
+    padding-bottom: 20px;
 }
 
 .ant-btn-dangerous.ant-btn-primary:hover {
@@ -558,4 +559,9 @@ button.ant-btn-primary [disabled] {
     margin-left: 20px;
     padding: 5px 10px;
     font-size: 13px;
+}
+
+.top_heading {
+    font-size: 48px;
+    font-family: AvenirLight;
 }

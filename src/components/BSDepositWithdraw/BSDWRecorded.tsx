@@ -9,7 +9,7 @@ export const BSDWRecorded = () => {
         <div className='scan-container bs_main wd_container'>
             <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span>
                 <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
-                <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto<ArrowRightOutlined /></Button></div>
+                <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>Withdraw Crypto<ArrowRightOutlined /></Button></div>
 
             {/* <div className='margin-lr-auto'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
             </div> */}

@@ -17,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 const BuySellMobiAuth = () => {
   // setToggleChart(false);
   const navigate = useNavigate();
-  const { Option } = Select;
+  // const { Option } = Select;
   return (<div className='d-flex flex-direction-column'>
-    <h1 className='text-center margin-lr-auto'>Get Started</h1>
+    <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
     <div className="bs_container bs_form card">
       <br />
@@ -29,7 +29,15 @@ const BuySellMobiAuth = () => {
         Enable mobile 2-Factor-Authentication</div>
       <br />
       <div className="padding-b-1x phone_container">
-        <label>Phone Number</label>
+
+        <Row gutter={12}>
+          <Col >
+            <label>Country</label>
+          </Col>
+          <Col >
+            <label>Phone Number</label>
+          </Col>
+        </Row>
 
         <div className="site-input-group-wrapper">
           <Input.Group size="large">
@@ -37,10 +45,10 @@ const BuySellMobiAuth = () => {
             <Row gutter={12}>
 
               <Col >
-                <Select defaultValue="USA">
-                  <Option value="usa">USA</Option>
+                <Select defaultValue=" ">
+                  {/* <Option value="usa">USA</Option>
                   <Option value='uk'>UK</Option>
-                  <Option value="in">India</Option>
+                  <Option value="in">India</Option> */}
                 </Select>
               </Col>
               <Col className="phone_container_right" >

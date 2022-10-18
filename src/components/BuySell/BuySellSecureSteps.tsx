@@ -14,7 +14,7 @@ const BuySellSecureSteps = () => {
     // setToggleChart(false);
     const navigate = useNavigate();
     return (<div className='d-flex flex-direction-column'>
-        <h1 className='text-center margin-lr-auto'>Get Started</h1>
+        <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
         <div className="bs_container bs_form card">
             <br />

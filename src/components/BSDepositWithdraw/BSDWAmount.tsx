@@ -12,12 +12,16 @@ export const BSDWAmount = () => {
                 <h1 className='padding-lr-2x padding-t-2x'>2. Enter Amount</h1>
                 <div className='padding-t-2x'>
                     <div className='d-flex flex-justify-between'><label>Amount</label><label>Transaction Requirements</label></div>
-                    <div className='d-flex flex-justify-between border-1x flex-align-center padding-1x'><div className='font_23x flex-align-center brand_opacity_5'>Enter 20-50000</div><div className="font_13x">Balance:  <span className='text_link'>0.00 BUSD</span></div></div>
+                    <div className='d-flex flex-justify-between border-1x flex-align-center padding-1x'>
+                        <div className='font_23x flex-align-center brand_opacity_5'>Enter 20-50000</div>
+                        <div className="font_13x">Balance:  <span className='text_link'>0.00 iUSD+</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className='margin-t-2x padding-tb-2x'>
                     <div className='font_!3x'>You receive:</div>
-                    <div className='font_23x'>20.00 BUSD</div>
+                    <div className='font_23x'>20.00 iUSD+</div>
                 </div>
                 <div className='d-flex padding-tb-2x'>
                     <div>
@@ -28,7 +32,7 @@ export const BSDWAmount = () => {
                     <div className='padding-l-1x'>
                         <div className='font_13x brand_opacity_5'>412*****123 <span className='text_link'>Edit Account</span></div>
                         <div className='font_13x brand_opacity_5 padding-tb-1x'>Bank Transfer(SWIFT)</div>
-                        <div className='font_13x brand_opacity_5'>0.00 BUSD  </div>
+                        <div className='font_13x brand_opacity_5'>0.00 iUSD+  </div>
                     </div>
                 </div>
                 <div className='d-flex flex_buttons flex-justify-between margin-b-2x margin-t-auto'>

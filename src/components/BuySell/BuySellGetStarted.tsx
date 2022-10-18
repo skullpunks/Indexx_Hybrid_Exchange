@@ -2,16 +2,16 @@ import React from 'react';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 
 const BuySellGetStarted: React.FC = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const onFinish = (values: any) => {
         console.log(values);
-        // console.log(navigate("/indexx-exchange/buy-sell"));
+        navigate("email-auth");
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -20,7 +20,7 @@ const BuySellGetStarted: React.FC = () => {
 
     return (
         <div className='d-flex flex-direction-column'>
-            <h1 className='text-center margin-lr-auto'>Get Started</h1>
+            <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
             <div className="bs_container bs_form card" >
                 <Form
                     onFinish={onFinish}

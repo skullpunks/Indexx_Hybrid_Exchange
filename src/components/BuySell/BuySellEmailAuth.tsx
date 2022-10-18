@@ -13,11 +13,11 @@ const BuySellEmailAuth = () => {
     const navigate = useNavigate();
     return (
         <div className='d-flex flex-direction-column'>
-            <h1 className='text-center margin-lr-auto'>Get Started</h1>
+            <h1 className='text-center margin-lr-auto top_heading'>Verify your Email </h1>
 
             <div className="bs_container bs_form card">
                 <img src={envelop} alt="envelop" width="100" height="69" className="margin-lr-auto margin-t-1_5x" />
-                <h1 className="margin-lr-auto padding-t-2x">Verify your Email</h1>
+                <h1 className="margin-lr-auto padding-t-2x">Email Verification</h1>
                 <div className="text-center margin-lr-auto verfication_text padding-tb-2x ">
                     <div>A verification code has been sent to your email address.</div>
                     <div>The code is valid for 10 minutes.</div>

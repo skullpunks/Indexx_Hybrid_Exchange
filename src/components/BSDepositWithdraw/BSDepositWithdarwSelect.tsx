@@ -5,14 +5,15 @@ import './BSWithdraw.css';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Radio } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const BSDepositWithdarwSelect = () => {
+  const navigate = useNavigate();
   return (
     <div className='scan-container bs_main wd_container'>
-     <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Withdraw Fiat</span>
         <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
-        <Button danger className='danger_disabled'>Withdraw Crypto<ArrowRightOutlined /></Button></div>
+        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>Withdraw Crypto<ArrowRightOutlined /></Button></div>
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <div className=' padding-t-2x'><h1>1.Select Currency</h1></div>
 
