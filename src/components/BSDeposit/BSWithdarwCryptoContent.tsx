@@ -53,12 +53,18 @@ export const BSWithdarwCryptoContent = () => {
             {/* <RightOutlined /> */}
           </div>
           <br />
-          <h1 className='font_20x padding-t-2x' >Deposit to</h1>
+          <h1 className='font_20x padding-t-2x' >Send to</h1>
           <div className='padding-t-1x'>
+            <label>Address</label>
+<br/>
+
+            <input type="text" placeholder='Enter address' className='select_container width-100 font_20x' />
+          </div>
+          <div className='padding-t-2x'>
             <label>Network</label>
 
 
-            <Select className='width-100' onChange={handleChange} >
+            <Select className='width-100' onChange={handleChange} placeholder="Select  withdrawal network" >
               <Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chanin (BEP20)</span> </div></Option>
               <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option>
               <Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Option>
@@ -66,56 +72,49 @@ export const BSWithdarwCryptoContent = () => {
               <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option>
             </Select>
           </div>
-          {network &&
+         
             <div className='sensitive_data margin-t-2x'>
-              <div>Address</div>
-              <div className='margin-t-2x d-flex flex-align-center font_weight_800'>1LmkQDpGvx1FBygJCPG6hpjcH7ryMDSwGD<img src={copyIcon} alt="QRCodeIcon" width="21" height="11" className='padding-l-1x' />      <Popover placement="bottom" content={content} trigger="click">
-                <QrcodeOutlined className='padding-l-1x' />
-              </Popover>
-              </div>
+              
 
               <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
 
                 <div className='w_50'>
-                  <div className='brand_opacity_5'>Expected arrival </div>
-                  <div>1 network confirmations </div>
+                  <div className='brand_opacity_5'>iN500 Balance </div>
+                  <div>0 iN500 </div>
                 </div>
+               
                 <div className='w_50'>
-                  <div className='brand_opacity_5'>Expected unlock</div>
-                  <div> <span className="text_link">1</span> network confirmations</div>
+                  <div className='brand_opacity_5'>Minimum withrawal  </div>
+                  <div>0.00000084 iN500 </div>
                 </div>
               </div>
               <div className='d-flex flex-justify-between padding-t-1x'>
-                <div className='w_50'>
-                  <div className='brand_opacity_5'> Minimum deposit </div>
-                  <div>0.00000001 BTC </div>
+              <div className='w_50'>
+                  <div className='brand_opacity_5'>Network Fee</div>
+                  <div> 0 </div>
                 </div>
                 <div className='w_50'>
-                  <div className='brand_opacity_5'>Selected wallet</div>
-                  <div> Funding Wallet <span className="text_link">
-                    <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span></div>
-                </div>
+                 
+                  <div className='brand_opacity_5'> Funding Wallet </div>
+                   <div>0,000,000.00/8,000,000.00 BUSD</div>
+                
+              </div>
               </div>
 
 
 
-              <ul className="margin-t-2x disc_ul">
-                <li>Send only BTC to this deposit address.</li>
-                <li>
-                  Ensure the network is <span className='text_link'>Bitcoin.</span>
-                </li>
-                <li>Do not send NFTs to this address.<Link to="" className='popover_container_link'>Learn how to deposit NFTs</Link> </li>
-              </ul>
+             
             </div>
-          }
+        
         </div>
 
 
 
       </div>
       <div className='w_fiat'>
-        <h1 className='font_48x font_40x padding-b-1x'>Recent Deposit</h1>
-        <div className='recent_deposit_container border-1x padding-2x'>
+        <h1 className='font_48x font_40x padding-b-1x'>Recent Withdrawals</h1>
+        <Button type="primary">Crypto Address</Button>
+        {/* <div className='recent_deposit_container border-1x padding-2x'>
 
           <div className='d-flex'><img src={bsDollar} alt="bsDollar" width="30" height="30" /><div className='font_20x padding-l-1x'>0.07 BNB</div><Button danger className='margin-l-2x'>Completed</Button></div>
           <div className='d-flex flex-justify-between padding-t-1x'>
@@ -128,7 +127,7 @@ export const BSWithdarwCryptoContent = () => {
             <div className='font_15x'><span className='brand_opacity_5'>TxID</span> 0x56092d7daffc....19<LinkOutlined className='margin-l-0_5x brand_opacity_5' /><img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /></div>
           </div>
 
-        </div>
+        </div> */}
       </div>
 
     </div>
