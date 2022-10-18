@@ -18,7 +18,7 @@ export const BSDepositCryptoWallet = () => {
 
   return (
     <div className='scan-container bs_main wd_container'>
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center'><span style={{ fontSize: 40 }}>Deposit Crypto</span>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span >Deposit Crypto</span>
       </div>
         <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
