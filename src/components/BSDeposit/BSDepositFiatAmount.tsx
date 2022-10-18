@@ -8,7 +8,9 @@ export const BSDepositFiatAmount = () => {
     const navigate = useNavigate();
     const [amount,SetAmount] =  useState('');
     const onchange=(e:any)=>{
+
         SetAmount(e.target.value);
+        console.log(amount);
     }
     return (
         <div className='scan-container bs_main wd_container'>

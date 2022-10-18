@@ -47,7 +47,7 @@ export const BSDepositCryptoSelect = () => {
           <label>Currency</label>
           <div className='select_container d-flex flex-justify-between flex-align-center' style={{paddingLeft:10}}>
 
-            <div className='d-flex'><img src={IN500} alt="IN500"  width="38" height="38"/><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Indexx 500</span> </div></div>
+            <div className='d-flex'><img src={IN500} alt="IN500"  width="38" height="38"/><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
             <CaretDownOutlined />
 
             {/* <RightOutlined /> */}
@@ -114,7 +114,7 @@ export const BSDepositCryptoSelect = () => {
 
       </div>
       <div className='w_fiat'>
-        <h1 className='font_48x font_weight_800 font_40x padding-b-1x'>Recent Deposit</h1>
+        <h1 className='font_48x font_40x padding-b-1x'>Recent Deposit</h1>
         <div className='recent_deposit_container border-1x padding-2x'>
 
           <div className='d-flex'><img src={bsDollar} alt="bsDollar" width="30" height="30" /><div className='font_20x padding-l-1x'>0.07 BNB</div><Button danger className='margin-l-2x'>Completed</Button></div>

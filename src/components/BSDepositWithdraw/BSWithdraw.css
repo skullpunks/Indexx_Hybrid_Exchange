@@ -202,7 +202,9 @@
    
 }
 
-
+.margin-l-1x {
+    margin-left:10px;
+}
 
 .ant-popover-inner {
     border-radius: 5px;
