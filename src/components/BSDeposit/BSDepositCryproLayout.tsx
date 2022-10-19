@@ -4,6 +4,7 @@ import Footer from '../Footer/Footer';
 import BSDepositCryptoSelect from './BSDepositCryptoSelect';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import BSDepositCryptoWallet from './BSDepositCryptoWallet';
+import BSDepositCryptoConfim from './BSDepositCryptoConfim';
 
 export const BSDepositCryproLayout = () => {
     return (
@@ -12,6 +13,7 @@ export const BSDepositCryproLayout = () => {
                 <Routes>
                     <Route index element={<BSDepositCryptoSelect />} />
                     <Route path="/deposit-wallet" element={<BSDepositCryptoWallet />} />
+                    <Route path="/confirm-message" element={<BSDepositCryptoConfim />} />
 
                 </Routes>
             </div>
