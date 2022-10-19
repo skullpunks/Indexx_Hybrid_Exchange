@@ -235,3 +235,15 @@
     display: inline-flex;
     align-items: center;
 }
+
+.border-r-1x {
+    border-right: 1px solid #5e5e5e;
+}
+
+.padding-r-1x {
+    padding-right:10px;
+}
+
+.padding-l-1x {
+    padding-left:10px
+}
