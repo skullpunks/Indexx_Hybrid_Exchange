@@ -8,16 +8,24 @@ import {
   Select
 } from 'antd';
 import { useNavigate } from "react-router-dom";
+import { getCountries } from "../../services/api";
 
 // interface Props {
 //   setScreenName: (value: string | ((prevVar: string) => string)) => void;
 //   setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 // }
+let countriesArr: any[] = [];
+const getAllCountries = async () => {
+  const res = await getCountries();
+  countriesArr = res.data;
+  console.log(countriesArr)
+}
 
 const BuySellMobiAuth = () => {
   // setToggleChart(false);
   const navigate = useNavigate();
   // const { Option } = Select;
+  getAllCountries();
   return (<div className='d-flex flex-direction-column'>
     <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
@@ -49,6 +57,9 @@ const BuySellMobiAuth = () => {
                   {/* <Option value="usa">USA</Option>
                   <Option value='uk'>UK</Option>
                   <Option value="in">India</Option> */}
+                  {countriesArr.map(country =>
+                    <option key={country.code} value={country.code}>{country.Text}</option>
+                  )};
                 </Select>
               </Col>
               <Col className="phone_container_right" >

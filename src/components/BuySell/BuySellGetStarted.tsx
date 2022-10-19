@@ -3,19 +3,46 @@ import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, notification } from 'antd';
+import { CheckCircleFilled } from '@ant-design/icons';
 
+import { signupAPI } from '../../services/api';
 
 const BuySellGetStarted: React.FC = () => {
     const navigate = useNavigate();
-
-    const onFinish = (values: any) => {
+    console.log(navigate)
+    const onFinish = async (values: any) => {
         console.log(values);
-        navigate("email-auth");
+
+        const res = await signupAPI(values.email, values.password, values.referral);
+        console.log(res)
+        if (res.status === 200) {
+            openNotificationWithIcon('success', 'Successfully registered');
+            navigate("email-auth");
+        } else {
+            openNotificationWithIcon('error', res.data);
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
+    };
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
     };
 
     return (
