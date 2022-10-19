@@ -5,7 +5,7 @@ import { Button } from 'antd';
 // import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
 import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
-import loaderGif from "../../assets/arts/loaderIcon.gif";
+// import loaderGif from "../../assets/arts/loaderIcon.gif";
 
 
 const menuProducts = (<Menu className="main_navigation"
