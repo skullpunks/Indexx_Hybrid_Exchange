@@ -173,7 +173,7 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
                             <div className="footer_body">
                                 <div className="d-flex flex-justify-between">
                                     <div>Minimum Received </div>
-                                    <div>1 BUSD</div>
+                                    <div>1 iUSD+</div>
                                 </div>
                                 <div className="d-flex flex-justify-between">
                                     <div>Price Impact</div>

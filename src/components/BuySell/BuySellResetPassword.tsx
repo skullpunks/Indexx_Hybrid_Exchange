@@ -34,7 +34,7 @@ const BuySellResetPassword = () => {
         console.log('Failed:', errorInfo);
     };
     return (<div className='d-flex flex-direction-column'>
-        <h1 className='text-center'>Reset Password</h1>
+        <h1 className='text-center top_heading'>Reset Password</h1>
         <div className="bs_container bs_form card card_s">
 
 

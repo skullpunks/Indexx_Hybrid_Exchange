@@ -50,7 +50,7 @@ export const BSDepositCryptoWallet = () => {
           </span></Radio> */}
         <br />
         <Button type="primary" className='margin-tb-2x'>
-          <Link to="">Confirm</Link>
+          <Link to="/indexx-exchange/buy-sell/deposit-crypto/confirm-message">Confirm</Link>
         </Button>
         {/* <br />
         <br />

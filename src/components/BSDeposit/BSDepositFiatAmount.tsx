@@ -33,7 +33,7 @@ export const BSDepositFiatAmount = () => {
 
                 <div className='margin-t-2x padding-tb-2x'>
                     <div className='font_!3x'>You receive:</div>
-                    <div className='font_23x font_weight_800'>20.00 BUSD</div>
+                    <div className='font_23x font_weight_800'>20.00 iUSD+</div>
                 </div>
                 <div className='d-flex padding-tb-2x'>
                     <div>
@@ -44,7 +44,7 @@ export const BSDepositFiatAmount = () => {
                     <div className='padding-l-1x'>
 
                         <div className='font_13x brand_opacity_5 padding-tb-1x'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' />Bank Transfer(SWIFT)</div>
-                        <div className='font_13x brand_opacity_5'>0.00 BUSD  </div>
+                        <div className='font_13x brand_opacity_5'>0.00 iUSD+  </div>
                     </div>
                 </div>
                 <div className='d-flex flex_buttons flex-justify-between margin-b-2x margin-t-auto'>
