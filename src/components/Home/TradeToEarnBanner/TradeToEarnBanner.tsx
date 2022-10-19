@@ -15,8 +15,10 @@ const TradeToEarnBanner = () => {
                     Trade to Earn
                     <sub className='tm_text'>TM</sub>
                 </h1>
-                <h1 className='mega_heading trade_percentage text-green line_height_1'>30%</h1>
-                <h1 className='text-white '>Earn on each transaction.</h1>
+                <h1 className='mega_heading trade_percentage text-green line_height_1'>
+                    30<span style={{ fontSize: 100 }}>%</span>
+                </h1>
+                <h1 className='text-white '>Earn on each trade.</h1>
                 <Button type='primary' size="middle" className="btn-success earn_btn" onClick={() => navigate("indexx-exchange/trade-to-earn")}>
                     Earn Now
                 </Button>

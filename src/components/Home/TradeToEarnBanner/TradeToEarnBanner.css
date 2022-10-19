@@ -57,6 +57,9 @@
 .earn_btn {
     font-size: 22px;
     min-height: 43px;
-    min-width: 210px;
     margin: 35px auto 0;
+}
+
+.ant-btn.btn-success.earn_btn {
+    max-width: 500px;
 }

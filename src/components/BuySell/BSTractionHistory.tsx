@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react'
 import "./BuySellDummy.css";
 import { DatePicker } from 'antd';
-import {  Select } from 'antd';
+import { Select } from 'antd';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -30,8 +30,8 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
           <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
         </div>
         <div className='d-flex'>
-          <Button className='light_button ant-btn width_auto deposit_btn margin-r-2x'> Deposit </Button>
-          <Button className='light_button ant-btn width_auto withdraw_btn'> Withdraw </Button>
+          <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn margin-r-2x'> Deposit </Button>
+          <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn withdraw_btn'> Withdraw </Button>
         </div>
 
         <div className='' style={{ marginTop: 80 }}>

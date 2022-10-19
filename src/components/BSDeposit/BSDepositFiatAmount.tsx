@@ -22,7 +22,7 @@ export const BSDepositFiatAmount = () => {
                 <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto<ArrowRightOutlined /></Button>
             </div>
             <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
-                <h1 className=' padding-t-2x'> Enter Amount</h1>
+                <h1 className=' padding-t-2x'> 2.Enter Amount</h1>
                 <div className='padding-t-2x'>
                     <div className='d-flex flex-justify-between'><label>Amount</label><label>Transaction Requirements</label></div>
                     <div className='d-flex flex-justify-between border-1x flex-align-center padding-1x'><div className='font_23x flex-align-center brand_opacity_5 amount_container'><input placeholder="Enter 20-50000" value={amount} onChange={onchange} /></div><div className="font_13x" style={{

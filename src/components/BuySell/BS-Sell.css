@@ -2,17 +2,24 @@
     min-width: 700px;
 }
 
-.medium_card .light_button {
+.medium_card .light_button, .light_button, .light_button:hover, .light_button:focus, .light_button:active {
     padding: 6px 15px 10px 40px;
     background-repeat: no-repeat;
     background-position: left 10px center;
 }
 
-.deposit_btn {
+.deposit_btn,
+.deposit_btn:hover,
+.deposit_btn:focus,
+.deposit_btn:active {
     background-image: url("../../assets/arts/depositIcon.svg");
 }
 
-.withdraw_btn {
+
+.withdraw_btn,
+.withdraw_btn:hover,
+.withdraw_btn:focus,
+.withdraw_btn:active {
     background-image: url("../../assets/arts/rocketIcon.svg");
 
 }

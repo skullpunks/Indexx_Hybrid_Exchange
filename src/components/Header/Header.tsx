@@ -5,6 +5,8 @@ import { Button } from 'antd';
 // import indexText from "../../assets/arts/indexText.svg";
 import { Dropdown, Menu, Space } from 'antd';
 import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
+import loaderGif from "../../assets/arts/loaderIcon.gif";
+
 
 const menuProducts = (<Menu className="main_navigation"
     items={[
@@ -70,7 +72,7 @@ const Header = () => {
                 // { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
                 // { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
                 { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
-                { key: 7, label: <Link to="/indexx-exchange/buy-sell/withdraw">Withdraw</Link> },
+                { key: 7, label: <Link to="/indexx-exchange/buy-sell/withdraw-crypto">Withdraw</Link> },
                 { key: 8, label: <Link to="/indexx-exchange/buy-sell/deposit-crypto">Deposit</Link> },
                 { key: 9, label: <Link to="/indexx-exchange/buy-sell/transaction-history">Transaction History</Link> },
                 { key: 10, label: <Link to="" onClick={logOutUser}>Log out</Link> }
@@ -141,7 +143,7 @@ const Header = () => {
                                 {(localStorage.getItem("user")) ?
                                     <>
 
-                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x buy_crypto_btn" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                                         <BellOutlined className="padding-l-2x" style={{ fontSize: 20 }} />
                                         <Dropdown overlay={userMenu} trigger={['click']}>
                                             <Link to="" onClick={e => e.preventDefault()} className="padding-l-1x text-white">
@@ -178,6 +180,7 @@ const Header = () => {
                     </div>
                 )
             }
+            {/* <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div> */}
         </div >
     );
 };

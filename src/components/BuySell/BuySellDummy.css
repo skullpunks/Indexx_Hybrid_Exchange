@@ -8,14 +8,6 @@
     background-position: left 10px center;
 }
 
-.deposit_btn {
-    background-image: url("../../assets/arts/depositIcon.svg");
-}
-
-.withdraw_btn {
-    background-image: url("../../assets/arts/rocketIcon.svg");
-
-}
 
 
 .bs_wallet_top {
@@ -62,6 +54,11 @@
 .orange_input.ant-input-affix-wrapper:hover,
 .orange_input input, .orange_input input:hover {
     border-color: rgba(246, 96, 54, 0.3);
+
+}
+
+.orange_input.ant-input-affix-wrapper {
+    height: 30px;
 }
 
 .bs_wallet .ant-input-prefix {
@@ -78,11 +75,17 @@
 }
 
 .bs_wallet_top_banner {
-    margin-bottom: 150px;
+    background-position-y: bottom 0;
+    padding-bottom: 320px;
+    background-image: url("../../assets/arts/graphWave.svg");
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: calc(100% - 50px);
 }
 
 .bs_wallet_buttons {
     position: absolute;
-    right: 20px;
+    right: 0;
     top: 20px;
 }

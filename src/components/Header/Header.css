@@ -283,6 +283,10 @@
     width: auto;
 }
 
+.margin-r-1x {
+    margin-right: 10px;
+}
+
 .margin-r-2x {
     margin-right: 20px;
 }
@@ -322,4 +326,23 @@
 
 .color-warn {
     color: #F66036;
+}
+
+.ant-btn.buy_crypto_btn,
+.ant-btn.buy_crypto_btn:hover,
+.ant-btn.buy_crypto_btn:focus,
+.ant-btn.buy_crypto_btn:active {
+
+    background-image: url("../../assets/arts/arrowSwapIcon.svg");
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    padding-left: 30px;
+}
+
+.loader {
+    background-color: rgba(211, 211, 211, 0.1);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    z-index: 99;
 }

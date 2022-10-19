@@ -24,8 +24,8 @@ const Section1 = () => {
                             ,
                         </span>
                     </Link>
-                    <span style={{ fontSize: 120 }}> 0%</span>
-                    <span style={{ color: "rgba(255, 255, 255, 0.6)" }}> Transaction fee</span>
+                    <span style={{ fontSize: 120 }}> 30%</span>
+                    <span style={{ color: "rgba(255, 255, 255, 0.6)" }}> Trade reward</span>
 
                 </span>
             </div>

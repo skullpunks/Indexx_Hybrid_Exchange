@@ -166,9 +166,9 @@ const BSWalletTable = () => {
                         <Table className='custom_table' columns={columns} dataSource={data} onChange={onChange} />
                     </div>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>
+                {/* <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>
                     Order History Content
-                </Tabs.TabPane>
+                </Tabs.TabPane> */}
             </Tabs>
 
         </div>

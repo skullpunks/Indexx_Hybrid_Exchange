@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export const BSWithdarwCryptoContent = () => {
   const navigate = useNavigate();
   const [network, setNetwork] = useState<any>();
-  const[value,setValue] =useState("funding");
+  const [value, setValue] = useState("funding");
 
 
   const { Option } = Select;
@@ -33,7 +33,7 @@ export const BSWithdarwCryptoContent = () => {
 
       <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
       </div>
-        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
+        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
 
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
@@ -77,16 +77,16 @@ export const BSWithdarwCryptoContent = () => {
               <div>
 
                 <Radio.Group onChange={onChange} value={value} className='orange margin-t-2x font_15x'>
-          <Space direction="vertical">
-            <Radio value="funding" className='orange margin-t-2x font_15x d-flex'>
-              <span className='d-flex flex-align-center'>
-                <span style={{ minWidth: 200 }}>Funding Wallet</span>
-               
-              </span>
-            </Radio>
-            
-          </Space>
-        </Radio.Group>
+                  <Space direction="vertical">
+                    <Radio value="funding" className='orange margin-t-2x font_15x d-flex'>
+                      <span className='d-flex flex-align-center'>
+                        <span style={{ minWidth: 200 }}>Funding Wallet</span>
+
+                      </span>
+                    </Radio>
+
+                  </Space>
+                </Radio.Group>
                 <label className='margin-t-2x d-flex'>Receive amount</label>
                 <div className='d-flex flex-justify-between '>
                   <div className='w_50 '>
@@ -159,7 +159,7 @@ export const BSWithdarwCryptoContent = () => {
         </div> */}
       </div>
 
-    
+
 
     </div>
 

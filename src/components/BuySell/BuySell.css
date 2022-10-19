@@ -296,6 +296,16 @@ input[type="checkbox"] {
     padding-bottom: 20px;
 }
 
+.padding-tb-3x {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.padding-tb-4x {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
 .terms_conditions_container {
     padding-top: 10px;
     padding-bottom: 30px;
@@ -433,6 +443,10 @@ input[type="checkbox"] {
 .text-underline:hover {
     color: #F66036;
     text-decoration: underline;
+}
+
+.text-heavy {
+    font-family: AvenirHeavy;
 }
 
 .ant-input-affix-wrapper {

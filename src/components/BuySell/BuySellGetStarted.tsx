@@ -4,7 +4,7 @@ import Email from "../../assets/arts/Email.svg";
 // import Footer from '../Footer/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input, notification } from 'antd';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
 
@@ -12,7 +12,7 @@ const BuySellGetStarted: React.FC = () => {
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
-        console.log(values);
+
 
         const res = await signupAPI(values.email, values.password, values.referral);
         console.log(res)
@@ -31,10 +31,11 @@ const BuySellGetStarted: React.FC = () => {
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
     const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        let Icon = (type === "error") ? <CloseCircleFilled /> : <CheckCircleFilled className='text_link' />;
         notification[type]({
             message: message,
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: Icon,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
