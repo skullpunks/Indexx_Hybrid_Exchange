@@ -4,15 +4,17 @@ import { Button } from 'antd';
 import completedCheck from "../../assets/arts/completedCheck.svg";
 import inProgressIcon from "../../assets/arts/inProgressIcon.svg";
 import futureIcon from "../../assets/arts/futureIcon.svg";
-interface Props {
-    setScreenName: (value: string | ((prevVar: string) => string)) => void;
-    setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-}
+import { useNavigate } from "react-router-dom";
+// interface Props {
+//     setScreenName: (value: string | ((prevVar: string) => string)) => void;
+//     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
 
-const BuySellSecureSteps: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
-    setToggleChart(false);
+const BuySellSecureSteps = () => {
+    // setToggleChart(false);
+    const navigate = useNavigate();
     return (<div className='d-flex flex-direction-column'>
-        <h1 className='text-center margin-lr-auto'>Get Started</h1>
+        <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
         <div className="bs_container bs_form card">
             <br />
@@ -36,7 +38,9 @@ const BuySellSecureSteps: React.FC<(Props)> = ({ setScreenName, setToggleChart }
             <br />
             <br />
             <br />
-            <Button type="primary" className="atn-btn atn-btn-round" onClick={() => setScreenName("MobiAuth")} style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Secure Account</Button>
+            {/* onClick={() => setScreenName("MobiAuth")} */}
+            {/* style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} */}
+            <Button type="primary" className="ant-btn ant-btn-primary ant-btn-block atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/get-started/sms-auth")}>Secure Account</Button>
         </div>
     </div>
     )

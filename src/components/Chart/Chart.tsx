@@ -1,18 +1,58 @@
 
-import IN500 from "../../assets/token-icons/33.png";
-import IUSD from "../../assets/token-icons/35.png";
+// import IN500 from "../../assets/token-icons/33.png";
+// import IUSD from "../../assets/token-icons/35.png";
 import ArrowLeft from "../../assets/arts/ArrowLeft.svg";
 import ArrowRight from "../../assets/arts/ArrowRight.svg";
 import curvedChart from "../../assets/arts/curvedChart.svg";
 import "./Chart.css";
 import { Segmented } from 'antd';
+import initialTokens from "../../utils/Tokens.json";
+// import { useState } from "react";
+import { useFromTokenContext, useToTokenContext } from '../../utils/SwapContext';
+
 const Chart = () => {
+    // const [fromTokenVal, setFromTokenVal] = useState(0);
+    // const [toTokenVal, setToTokenVal] = useState(0);
+    const { fromToken } = useFromTokenContext();
+    const { toToken } = useToTokenContext();
+
+    let fromImage, fromTitle, image, title;
+
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === fromToken;
+    });
+
+    const filteredArray = initialTokens.filter(function (obj) {
+        return obj?.address === toToken;
+    });
+
+    if (filteredFromArray && filteredFromArray.length) {
+        fromImage = filteredFromArray[0].image;
+        fromTitle = filteredFromArray[0].title;
+    }
+    else {
+        fromImage = "IN500";
+        fromTitle = "IN500";
+    }
+
+    if (filteredArray && filteredArray.length) {
+        image = filteredArray[0].image;
+        title = filteredArray[0].title;
+    }
+    else {
+        image = "IUSD";
+        title = "IUSD+";
+    }
+
+
     return (
         <div className='card' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
             <div className="chart_header d-flex flex-align-center">
-                <img src={IN500} alt="IN500 Here" width="30" />
-                <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} />
-                <h1 className="chart_title">IN500/IUSD+</h1>
+                {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
+                {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
+                <img src={require(`../../assets/token-icons/${fromImage}.png`).default} alt="bit coin" width="30" />
+                <img src={require(`../../assets/token-icons/${image}.png`).default} alt="bit coin" width="30" />
+                <h1 className="chart_title">{fromTitle}/{title}</h1>
                 <div className="arrow_container">
                     <div><img src={ArrowRight} alt="Arrow Here" /></div>
                     <div><img src={ArrowLeft} alt="Arrow Here" /></div>

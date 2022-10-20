@@ -1,0 +1,65 @@
+.trade_to_earn_banner {
+    display: flex;
+    padding: 50px 120px 0 0;
+    margin: 50px 0;
+    flex-direction: column;
+    height: auto;
+    background-image: url("../../../assets/arts/TradeBannerBG.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.trade_left {
+    width: 400px;
+    height: 400px;
+    align-self: flex-end;
+    background-image: url("../../../assets/arts/tradeEarnCoin.png");
+    background-size: cover;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+}
+
+.trade_right {
+    padding-bottom: 50px;
+    margin-left: auto;
+}
+
+.line_height_1 {
+    line-height: 1;
+}
+
+.mega_heading {
+    font-size: 100px;
+    font-family: AvenirMedium;
+}
+
+.flex-direction-row {
+    flex-direction: row;
+}
+
+.text-green {
+    color: #8BE64B;
+}
+
+.tm_text {
+    font-size: 15px;
+    position: relative;
+    bottom: 0;
+}
+
+.trade_percentage {
+    font-family: AvenirHeavy;
+    font-size: 350px;
+    margin-top: 50px;
+}
+
+.earn_btn {
+    font-size: 22px;
+    min-height: 43px;
+    margin: 35px auto 0;
+}
+
+.ant-btn.btn-success.earn_btn {
+    max-width: 500px;
+}

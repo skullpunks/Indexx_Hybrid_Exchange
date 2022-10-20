@@ -1,0 +1,40 @@
+.tabs_button .ant-tabs-tab.ant-tabs-tab-active {
+
+    background: #F66036;
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
+    margin: 50px 0 0;
+    min-width: 125px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab .ant-tabs-tab-btn {
+    color: #5f5f5f;
+    font-size: 20px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+}
+
+.tabs_button.ant-tabs-top>.ant-tabs-nav::before {
+    border: none;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-ink-bar {
+    border: none;
+    background: transparent;
+}
+
+.transaction_filters>div {
+    flex: 1 1;
+}
+
+.transaction_filters>div>.ant-select {
+    width: calc(100% - 20px);
+}

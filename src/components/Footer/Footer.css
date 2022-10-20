@@ -7,13 +7,14 @@
     padding: 30px 0 0 32px;
 }
 
-.site_footer_inner > div {
+.site_footer_inner>div {
     flex: 1 1;
 }
 
-.social-wrapper ul  {
+.social-wrapper ul {
     padding-left: 0;
 }
+
 .social-wrapper ul li {
     display: inline;
     margin: 0 20px 0 0;
@@ -27,7 +28,7 @@
 
 
 
-.copyright_bar{
+.copyright_bar {
     background-color: #393939;
     display: flex;
     align-items: center;
@@ -38,10 +39,15 @@
 .flip_icon_container {
     position: relative;
 }
+
 .flip_person_icon {
-    top: -246px;
+    top: -261px;
     position: absolute;
     right: 0;
+}
+
+.flip_woman {
+    top: -259px;
 }
 
 .copyright_text {
@@ -58,4 +64,8 @@
     background-repeat: no-repeat;
     padding: 10px 14px 22px;
     cursor: pointer;
+}
+
+.need_help:hover {
+    color: #00387d;
 }

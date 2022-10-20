@@ -7,27 +7,45 @@ import {
   Row,
   Select
 } from 'antd';
+import { useNavigate } from "react-router-dom";
+import { getCountries } from "../../services/api";
 
-interface Props {
-  setScreenName: (value: string | ((prevVar: string) => string)) => void;
-  setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// interface Props {
+//   setScreenName: (value: string | ((prevVar: string) => string)) => void;
+//   setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
+let countriesArr: any[] = [];
+const getAllCountries = async () => {
+  const res = await getCountries();
+  countriesArr = res.data;
+  console.log(countriesArr)
 }
 
-const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
-  setToggleChart(false);
-  const { Option } = Select;
+const BuySellMobiAuth = () => {
+  // setToggleChart(false);
+  const navigate = useNavigate();
+  // const { Option } = Select;
+  getAllCountries();
   return (<div className='d-flex flex-direction-column'>
-    <h1 className='text-center margin-lr-auto'>Get Started</h1>
+    <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
     <div className="bs_container bs_form card">
       <br />
       <img src={MobileIcon} alt="MobileIcon" width="58" height="87" className="margin-lr-auto margin-t-1_5x" />
       <h1 className="margin-lr-auto padding-t-2x">SMS Authentication</h1>
       <div className="text-center margin-lr-auto  font_20x padding-tb-2x ">
-        Enable mobiule 2-Factor-Authentication</div>
+        Enable mobile 2-Factor-Authentication</div>
       <br />
       <div className="padding-b-1x phone_container">
-        <label>Phone Number</label>
+
+        <Row gutter={12}>
+          <Col >
+            <label>Country</label>
+          </Col>
+          <Col >
+            <label>Phone Number</label>
+          </Col>
+        </Row>
 
         <div className="site-input-group-wrapper">
           <Input.Group size="large">
@@ -35,10 +53,13 @@ const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) =
             <Row gutter={12}>
 
               <Col >
-                <Select defaultValue="USA">
-                  <Option>USA</Option>
-                  <Option>UK</Option>
-                  <Option>India</Option>
+                <Select defaultValue=" ">
+                  {/* <Option value="usa">USA</Option>
+                  <Option value='uk'>UK</Option>
+                  <Option value="in">India</Option> */}
+                  {countriesArr.map(country =>
+                    <option key={country.code} value={country.code}>{country.Text}</option>
+                  )};
                 </Select>
               </Col>
               <Col className="phone_container_right" >
@@ -53,7 +74,7 @@ const BuySellMobiAuth: React.FC<(Props)> = ({ setScreenName, setToggleChart }) =
       <br />
       <br />
       <div className="send_code">
-        <button onClick={() => setScreenName("mobiVerfication")}>Send Code</button>
+        <button onClick={() => navigate("/indexx-exchange/buy-sell/get-started/sms-verify")}>Send Code</button>
       </div>
     </div>
   </div>

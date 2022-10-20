@@ -7,11 +7,14 @@ import Section4 from "./section4/section4";
 import Section5 from "./section5/section5";
 import Footer from "../Footer/Footer";
 
+import TradeToEarnBanner from "./TradeToEarnBanner/TradeToEarnBanner";
+
 const Home = () => {
     return (
         <>
             <Section1 />
             <Section2 />
+            <TradeToEarnBanner />
             <Section3 />
             <Section4 />
             <Section5 />

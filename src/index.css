@@ -2,14 +2,17 @@
   font-family: AvenirLight;
   src: url(./assets/fonts/AvenirLight.ttf) format("truetype");
 }
+
 @font-face {
   font-family: AvenirRegular;
   src: url(./assets/fonts/AvenirRoman.ttf) format("truetype");
 }
+
 @font-face {
   font-family: AvenirMedium;
   src: url(./assets/fonts/AvenirMedium.ttf) format("truetype");
 }
+
 @font-face {
   font-family: AvenirHeavy;
   src: url(./assets/fonts/AvenirBlack.ttf) format("truetype");
@@ -24,7 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-p{
+p {
   margin: 0;
 }
 
@@ -33,22 +36,26 @@ code {
     monospace;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
 .flex-align-start {
   align-items: start;
 }
+
 div.flex-align-center {
   align-items: center;
 }
+
 div.flex-align-stretch {
   align-items: stretch;
 }
+
 div.flex-justify-center {
   justify-content: center;
 }
+
 .mb-0 {
   margin-bottom: 0;
 }
@@ -58,26 +65,30 @@ div.flex-justify-center {
 .card {
   min-width: 420px;
   background-color: #fff;
-  border:  1px solid rgba(0, 109, 255, 0.5);
+  border: 1px solid rgba(0, 109, 255, 0.5);
   min-height: 600px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   max-width: 420px;
 }
+
 .card__header {
   padding: 20px;
   border-bottom: 1px solid rgba(0, 109, 255, 0.5);
 }
+
 .card__header__inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
 }
+
 .card__header__inner__left {
   flex: 1 1;
 }
+
 .card__header__inner__right {
   display: flex;
   flex: 1 1 0px;
@@ -103,12 +114,17 @@ div.flex-justify-center {
   line-height: 1.2;
 }
 
+.orange.card {
+  border: 1px solid rgba(246, 96, 54, 0.3);
+}
 
 .tag {
   font-size: 1em;
   font-family: AvenirHeavy;
   border-radius: 10px;
   padding: 5px 10px 2px;
+  background-color: #f2f2f2;
+  color: #5f5f5f;
 }
 
 .input__field {
@@ -130,7 +146,7 @@ div.flex-justify-center {
   justify-content: center;
 }
 
-iframe{
+iframe {
   display: none;
 }
 

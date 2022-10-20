@@ -1,14 +1,84 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"
-import Dropdown from "../DropDown/DropDown";
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
-import indexText from "../../assets/arts/indexText.svg";
+// import indexText from "../../assets/arts/indexText.svg";
+import { Dropdown, Menu, Space } from 'antd';
+import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
+// import loaderGif from "../../assets/arts/loaderIcon.gif";
 
+
+const menuProducts = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <Link to="">Swap</Link> },
+        { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> }
+    ]}
+/>);
+const menuEarn = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <Link to="/indexx-exchange/trade-to-earn">Trade to earn</Link> },
+        { key: 2, label: <Link to="/indexx-exchange/farms">Farms</Link> },
+        { key: 3, label: <Link to="/indexx-exchange/pools">Pools</Link> }
+    ]}
+/>);
+const menuCompany = (<Menu className="main_navigation"
+    items={[
+        { key: 1, label: <Link to="/indexx-exchange/about">About</Link> },
+        { key: 2, label: <Link to="/indexx-exchange/hybrid-exchange">Hybrid exchange</Link> },
+        { key: 3, label: <Link to="/indexx-exchange/affliate">Affiliate Program</Link> },
+        { key: 4, label: <Link to="/indexx-exchange/blog">Blog</Link> }
+    ]}
+/>);
+
+
+const menuNavigation = () => {
+    return <>
+        <Dropdown overlay={menuProducts} trigger={['click']}>
+            <Link to="" className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Products<CaretDownOutlined /></Space> </Link>
+        </Dropdown>
+        <Dropdown overlay={menuEarn} trigger={['click']}>
+            <Link to="" className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Earn<CaretDownOutlined /></Space> </Link>
+        </Dropdown>
+        <Dropdown overlay={menuCompany} trigger={['click']}>
+            <Link to="" className="text-white font_18x padding-r-1_x" onClick={e => e.preventDefault()}>
+                <Space>Company<CaretDownOutlined /></Space> </Link>
+        </Dropdown>
+    </>
+}
 
 const Header = () => {
-    let location = useLocation()
-    const [isInsideApp, setIsInsideApp] = useState(false)
+    let location = useLocation();
+    let navigate = useNavigate()
+    const [isInsideApp, setIsInsideApp] = useState(false);
+
+    // (localStorage.getItem("user")) ? "" : 
+
+    const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        localStorage.removeItem("user"); //remove one item
+        // localStorage.clear(); //clear all localstorage
+        // window.location.reload();
+        navigate("/indexx-exchange/buy-sell/login");
+
+    }
+    const userMenu = (
+        <Menu className="main_navigation"
+            items={[
+                { key: 1, label: <Link to="/indexx-exchange/about">Dashboard</Link> },
+                { key: 2, label: <Link to="/indexx-exchange/hybrid-exchange">Account & Settings</Link> },
+                // { key: 3, label: <Link to="/indexx-exchange/affliate">Security</Link> },
+                // { key: 4, label: <Link to="/indexx-exchange/blog">Refer a Friend</Link> },
+                // { key: 5, label: <Link to="/indexx-exchange/blog">Export Reports </Link> },
+                { key: 6, label: <Link to="/indexx-exchange/buy-sell/wallet">Wallet</Link> },
+                { key: 7, label: <Link to="/indexx-exchange/buy-sell/withdraw-crypto">Withdraw</Link> },
+                { key: 8, label: <Link to="/indexx-exchange/buy-sell/deposit-crypto">Deposit</Link> },
+                { key: 9, label: <Link to="/indexx-exchange/buy-sell/transaction-history">Transaction History</Link> },
+                { key: 10, label: <Link to="" onClick={logOutUser}>Log out</Link> }
+            ]}
+        />
+    );
 
     useEffect(() => {
         if (location) {
@@ -33,30 +103,36 @@ const Header = () => {
             label: "Trade to Earn",
             value: "trade-to-earn",
             url: "/indexx-exchange/trade-to-earn"
+        },
+        {
+            label: "Markets",
+            value: "markets",
+            url: "/indexx-exchange/markets"
         }
     ]
 
     const showText: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.label);
+    const showUrl: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.url);
     return (
         <div className="main-header">
             {isInsideApp ?
                 (
                     <div className="link-container">
-                        <div className="d-flex">
+                        <div className="d-flex flex-align-center">
                             <h1 className="logo mb-0 d-flex">
-                                <Link to="/"><img src={indexText} alt="index logo" /></Link>
-                                <span className="logo__text">{showText[0]}</span>
+                                <Link to="/" className="logo__icon">
+                                    {/* <img src={indexText} className="index_logo" alt="index logo" /> */}
+                                </Link>
+                                {((location.pathname.includes("get-started")) || (location.pathname.includes("login"))) ?
+                                    <></> :
+                                    <a href={showUrl[0]} className="logo__text">{showText[0]}</a>
+                                }
                             </h1>
-                            <div className="d-flex padding-l-3x">
-                                <Dropdown label="Products" items={[
-                                    { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
-                                ]} />
-                                <Dropdown label="Earn" items={[
-                                    { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
-                                ]} />
-                                <Dropdown label="Company" items={[
-                                    { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
-                                ]} />
+                            <div className="d-flex padding-l-3x main_navigation">
+                                {((location.pathname.includes("get-started")) || (location.pathname.includes("login"))) ?
+                                    <></> :
+                                    menuNavigation()
+                                }
                             </div>
                         </div>
                         {(location.pathname.includes("help")) &&
@@ -64,14 +140,33 @@ const Header = () => {
                         }
                         {(location.pathname.includes("buy-sell")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/indexx-exchange/buy-sell/login" style={{ color: "#fff", width: 80 }}>Log In</Link>
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x">Get Started</Button>
+                                {(localStorage.getItem("user")) ?
+                                    <>
+
+                                        <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x buy_crypto_btn" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+                                        <BellOutlined className="padding-l-2x" style={{ fontSize: 20 }} />
+                                        <Dropdown overlay={userMenu} trigger={['click']}>
+                                            <Link to="" onClick={e => e.preventDefault()} className="padding-l-1x text-white">
+                                                <Space> {localStorage.getItem("user")} <DownOutlined /> </Space>
+                                            </Link>
+                                        </Dropdown>
+                                    </>
+                                    :
+                                    (location.pathname.includes("login") || location.pathname.includes("get-started")) ?
+                                        <></>
+                                        :
+                                        <>
+                                            <Link to="/indexx-exchange/buy-sell/login" className=" text-white" style={{ width: 80 }}>Log In</Link>
+                                            <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/get-started")}>Get Started</Button>
+                                        </>
+                                }
                             </div>
                         }
+
                         {(location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
                                 <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link>
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x">Buy Crypto</Button>
+                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                             </div>
                         }
                         {(location.pathname.includes("swap")) &&
@@ -80,19 +175,12 @@ const Header = () => {
 
                     </div>
                 ) : (
-                    <div className="d-flex">
-                        <Dropdown label="Products" items={[
-                            { key: 1, label: "Swap", path: "/indexx-exchange/swap" }, { key: 2, label: "Buy & Sell", path: "/indexx-exchange/buy-sell" }
-                        ]} />
-                        <Dropdown label="Earn" items={[
-                            { key: 3, label: "Trade to earn", path: "/indexx-exchange/trade-to-earn" }, { key: 4, label: "Farms" }, { key: 5, label: "Pools" }
-                        ]} />
-                        <Dropdown label="Company" items={[
-                            { key: 6, label: "About" }, { key: 7, label: "Hybrid exchange" }, { key: 8, label: "Affiliate Program" }, { key: 9, label: "Blog" }
-                        ]} />
+                    <div className="d-flex main_navigation index_page_nav">
+                        {menuNavigation()}
                     </div>
                 )
             }
+            {/* <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div> */}
         </div >
     );
 };

@@ -1,18 +1,19 @@
 h1 {
-    margin-bottom:0;
-    font-size:30px;
-    color:#5f5f5f;
+    margin-bottom: 0;
+    font-size: 30px;
+    color: #5f5f5f;
 }
+
 .card_title {
-   
-    font-size:40px;
-    color:#5f5f5f;
-  line-height: 1.2;
+
+    font-size: 40px;
+    color: #5f5f5f;
+    line-height: 1.2;
 }
 
 .helper_text {
-    color: #006DFF;
-    font-size:14px;
+    color: #5f5f5f;
+    font-size: 14px;
     font-family: AvenirHeavy;
 }
 
@@ -22,18 +23,24 @@ h1 {
 }
 
 .swap__coin {
-    padding:23px 0 23px 0;
+    padding: 23px 0 23px 0;
 }
 
 .footer {
-    padding:0 20px 20px 20px;
-    color:#5f5f5f
+    padding: 0 20px 20px 20px;
+    color: #5f5f5f
 }
 
 .footer.ant-btn-primary:hover, .footer .ant-btn-primary:focus {
-    background-color: #00387d !important;
+    background-color: #00387d;
     border-color: #00387d;
 }
+
 .footer_body {
-    padding-top:10px;
+    padding-top: 10px;
+}
+
+
+.disable_icon {
+    opacity: 0.5;
 }

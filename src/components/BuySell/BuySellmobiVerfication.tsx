@@ -1,17 +1,19 @@
 
 
+import { useNavigate } from "react-router-dom";
 import MobileIcon from "../../assets/arts/MobileIcon.svg";
 
-interface Props {
-    setScreenName: (value: string | ((prevVar: string) => string)) => void;
-    setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-}
+// interface Props {
+//     setScreenName: (value: string | ((prevVar: string) => string)) => void;
+//     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+// }
 
-const BuySellmobiVerfication: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
-    setToggleChart(false);
+const BuySellmobiVerfication = () => {
+    // setToggleChart(false);
+    const navigate = useNavigate();
     return (
         <div className='d-flex flex-direction-column'>
-            <h1 className='text-center margin-lr-auto'>Get Started</h1>
+            <h1 className='text-center margin-lr-auto top_heading'>Confirm Verification</h1>
 
             <div className="bs_container bs_form card">
                 <br />
@@ -36,7 +38,7 @@ const BuySellmobiVerfication: React.FC<(Props)> = ({ setScreenName, setToggleCha
                 <br />
                 <br />
                 <div className="send_code">
-                    <button onClick={() => setScreenName("mobiVerfication")}>Send Code</button>
+                    <button onClick={() => navigate("")}>Send Code</button>
                 </div>
                 <div className="margin-lr-auto padding-t-2x">Resend Code (9:50s)</div>
             </div>

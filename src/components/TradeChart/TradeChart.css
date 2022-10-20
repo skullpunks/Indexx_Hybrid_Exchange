@@ -1,0 +1,129 @@
+.border {
+    border: 1px solid rgba(0, 109, 255, 0.2);
+}
+
+.scan-container.market-container {
+    flex-direction: column;
+}
+
+.search-input-container {
+    width: 508px;
+    height: 44px;
+}
+
+.ant-input-prefix {
+    border-right: 1px solid green;
+    padding-right: 7px;
+}
+
+.scan-container.scan-container-trade {
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.main-left {
+    flex-grow: 1;
+    max-width: calc(100% - 350px);
+}
+
+.trade_content {
+    max-width: calc(100% - 640px);
+}
+
+
+.trade_radio .ant-radio-button-wrapper {
+    width: 50%;
+    text-align: center;
+    height: 41px;
+    line-height: 41px;
+    font-size: 20px;
+}
+
+.ant-radio-button-wrapper:first-child {
+
+    border-radius: 5px 0 0 5px;
+}
+
+.ant-radio-button-wrapper:last-child {
+
+    border-radius: 0 5px 5px 0;
+}
+
+.trade_tabs.ant-tabs>.ant-tabs-nav .ant-tabs-nav-list,
+.trade_tabs.ant-tabs>div>.ant-tabs-nav .ant-tabs-nav-list {
+    width: 100%;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.ant-tabs-tab {
+    font-size: 18px;
+    color: rgba(95, 95, 95, 0.5);
+    ;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #5f5f5f;
+}
+
+.border-1x, .card.main-right {
+    border: 1px solid rgba(246, 96, 54, 0.2);
+    border-radius: 5px;
+}
+
+.card.main-right {
+    min-width: 350px;
+    max-width: 350px;
+}
+
+.main-left .ant-table-tbody>tr>td {
+    border-bottom: 0;
+}
+
+.login_tabs {
+    min-height: 400px;
+    border: 1px solid rgba(246, 96, 54, 0.2)
+}
+
+.login_tabs .ant-tabs-content-holder {
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+}
+
+.main-left .ant-table-thead>tr>th,
+.main-left .ant-table-tbody>tr>td,
+.main-left .ant-table tfoot>tr>th,
+.main-left .ant-table tfoot>tr>td {
+    padding: 0;
+}
+
+.main-left .ant-table-thead>tr>th {
+    background-color: #fff;
+    border-bottom: 0;
+}
+
+.main-left .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    content: none;
+}
+
+.trade_content .ant-table-thead>tr>th:nth-child(3),
+.trade_content .ant-table-tbody>tr>td:last-child {
+    text-align: right;
+}
+
+.trade_content .ant-table-thead>tr>th:nth-child(2),
+.trade_content .ant-table-tbody>tr>td:nth-child(2) {
+    text-align: center;
+}
+
+.orange .ant-tabs-ink-bar {
+    background: #F66036;
+}
+
+.orange .ant-tabs-tab:hover {
+    color: #F66036;
+}

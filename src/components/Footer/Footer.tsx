@@ -7,15 +7,17 @@ import YouTube from "../../assets/arts/youtTubeIcon.svg";
 import Reddit from "../../assets/arts/redditIcon.svg";
 import needHelp from "../../assets/arts/needHelp.svg";
 import personFlipCoin from "../../assets/arts/personFlipCoin.svg";
+import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
 import { Link } from "react-router-dom";
 import indexText from "../../assets/arts/indexText.svg";
 import "./Footer.css";
 
 interface FooterProps {
     helpIcon?: boolean;
+    footerArt?: string;
 }
 
-const Footer = ({ helpIcon = true }: FooterProps) => {
+const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
     const icons = [
         {
             src: Instagram,
@@ -54,9 +56,9 @@ const Footer = ({ helpIcon = true }: FooterProps) => {
                                 width="50%" height="22%" alt="" />
                         </a>
                          */}
-                    <h1>
+                    {/* <h1>
                         <Link to="/" className="primary_color">Get Connected</Link>
-                    </h1>
+                    </h1> */}
                     <div className="social-wrapper">
                         <ul>
                             {icons.map((icon, index) => (
@@ -80,8 +82,8 @@ const Footer = ({ helpIcon = true }: FooterProps) => {
                         the cryptocurrency space.
                     </p>
                     <p className="footer_center_text">
-                        <span className="d-block">949-228-9079</span>
-                        <br />
+                        {/* <span className="d-block">949-228-9079</span>
+                        <br /> */}
 
                         indexx Limited, CUB Financial Centre,<br />
                         GF6, Lyford Cay, Nassau, Bahamas.<br /> <br />
@@ -94,7 +96,14 @@ const Footer = ({ helpIcon = true }: FooterProps) => {
 
                 </div>
                 <div className="col-xs-6 col-md-4 flip_icon_container">
-                    <img src={personFlipCoin} alt="Index flip coin art" className="flip_person_icon" />
+                    {
+                        (footerArt === "flipWoman") ?
+
+                            <img src={womanFlipCoin} alt="Index flip coin art" className="flip_person_icon flip_woman" />
+                            :
+                            <img src={personFlipCoin} alt="Index flip coin art" className="flip_person_icon" />
+
+                    }
                 </div>
             </div>
             <div className="copyright_bar">

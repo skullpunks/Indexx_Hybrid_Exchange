@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
 import React from 'react';
 import IN500 from "../../assets/token-icons/33.png";
 import IUSD from "../../assets/token-icons/35.png";
@@ -6,7 +6,7 @@ import downArrow from "../../assets/arts/downArrow.svg";
 import swapIcon from "../../assets/arts/swapIcon.svg";
 
 import './ConfirmSwapTwo.css';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -57,15 +57,31 @@ const ConfirmSwapTwo: React.FC<(Props)> = ({ setStatus }) => {
                             <div style={{ height: 35 }}>0.004 IN500 per USD<img src={swapIcon} alt="swapIcon" style={{ marginTop: -6, paddingLeft: 5 }} /></div>
                         </div>
                         <div className="d-flex flex-justify-between">
-                            <div>Minimum Received </div>
+                            <div>Minimum Received &nbsp;
+                                <Tooltip title="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.">
+                                    <QuestionCircleOutlined style={{ color: "#5f5f5f" }} />
+                                </Tooltip>
+                            </div>
                             <div>1 IUSD+</div>
                         </div>
                         <div className="d-flex flex-justify-between">
-                            <div>Price Impact</div>
+                            <div>Price Impact  &nbsp;
+                                <Tooltip title="The difference between the market price and estimated price due to trade size.
+">
+                                    <QuestionCircleOutlined style={{ color: "#5f5f5f" }} />
+                                </Tooltip>
+                            </div>
                             <div className="helper_text">7.90%</div>
                         </div>
                         <div className="d-flex flex-justify-between" style={{ marginBottom: 15 }}>
-                            <div>Liquidity Provider Fee</div>
+                            <div>Liquidity Provider Fee  &nbsp;
+                                <Tooltip title="For each trade a 0.25% fee is paid  - 0.17% to LP token holders - 0.0225% to the Treasury - 0.0575% towards INDEXX buyback and burn
+
+">
+                                    <QuestionCircleOutlined style={{ color: "#5f5f5f" }} />
+                                </Tooltip>
+
+                            </div>
                             <div>0.005988 IN500</div>
                         </div>
                     </div>
