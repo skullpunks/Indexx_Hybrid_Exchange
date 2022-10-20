@@ -26,8 +26,8 @@ const Section4 = () => {
         },
         {
             icon: lowFees,
-            heading: "0% Fee",
-            info: "0% fee empower you to buy, sell, and trade cryptocurrencies"
+            heading: "Exchange Fee",
+            info: "0.075% for other cryptocurrencies and 0.055% for indexx tokens."
 
         },
     ]

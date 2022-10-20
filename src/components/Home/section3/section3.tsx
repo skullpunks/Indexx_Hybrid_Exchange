@@ -5,11 +5,11 @@ const Actions = {
     "first": [
         {
             heading: "Trade to Earn",
-            label: "Earn Index Token and points with Buy & Sell and Swap in platform ",
+            label: "30% trade reward for each transaction ",
         },
         {
-            heading: "0% Fee to Trade",
-            label: "For all transactions",
+            heading: "Low-Cost Trading",
+            label: "Experience our low trading fees",
         },
         {
             heading: "Setup an account instantly",
