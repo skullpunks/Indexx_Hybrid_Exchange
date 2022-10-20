@@ -12,8 +12,6 @@ const BuySellGetStarted: React.FC = () => {
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
-
-
         const res = await signupAPI(values.email, values.password, values.referral);
         console.log(res)
         if (res.status === 200) {

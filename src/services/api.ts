@@ -2,13 +2,12 @@ import axios from "axios";
 
 let baseURL = "";
 
-// if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-//   baseURL = "http://localhost:3000";
-// } else {
-//   baseURL = "http://18.183.187.118:3000";
-// }
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  baseURL = "http://localhost:3000";
+} else {
+  baseURL = "http://18.183.187.118:3000";
+}
 
-baseURL = "http://18.183.187.118:3000";
 console.log('baseURL', baseURL);
 
 const API = axios.create({
@@ -33,6 +32,19 @@ export const signupAPI = async (email: string, password: string, refferalCode: s
 };
 
 export const loginAPI = async (email: string, password: string) => {
+  try{
+    const result = await API.post("/api/v1/inex/user/login", {
+      email,
+      password,
+    });
+    return result.data;
+
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (loginAPI)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
 }
 
 export const logoutAPI = async () => {
@@ -46,6 +58,40 @@ export const getCountries = async () => {
     console.log("FAILED: unable to perform API request (getCountriesAPI)");
     console.log(e);
     console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const getUserWallet = async () => {
+}
+
+export const verifyPhoneCode = async (code: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/verifyPhoneCode", {
+      code
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+}
+
+export const verifyEmailCode = async(code :string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/verifyEmailCode", {
+      code
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+}
+
+export const getIndexxTokenPrices = async () => {
+  try{
+    const result = await API.get("api/v1/inex/price/indexx");
+    return result.data;
+  } catch(e: any) {
     return e.response.data;
   }
 }

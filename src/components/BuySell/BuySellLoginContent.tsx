@@ -2,9 +2,10 @@ import React from 'react';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { loginAPI } from '../../services/api'
+import { CheckCircleFilled } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -13,10 +14,38 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
     console.log(setScreenName);
     const navigate = useNavigate();
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
-        localStorage.setItem('user', values.email);
-        navigate("/indexx-exchange/buy-sell");
+        console.log('Success:', values);
+        let res = await loginAPI(values.email, values.password);
+        console.log(res.status);
+        console.log(res.data);
+        if (res.status === 200) {
+            openNotificationWithIcon('success', 'Login Successful');
+            localStorage.setItem('access_token', res.data.access_token);
+            localStorage.setItem('refresh_token', res.data.refresh_token);
+            navigate("/indexx-exchange/buy-sell");
+        } else {
+            console.log(res.data);
+            openNotificationWithIcon('error', res.data);
+        }
+    };
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
     };
 
     const onFinishFailed = (errorInfo: any) => {

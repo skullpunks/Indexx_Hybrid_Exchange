@@ -15,6 +15,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [flag, setFlag] = useState(false);
     const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";
+        console.log(e.currentTarget.value);
+        console.log('test');
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
             setVal(testVal);

@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import MobileIcon from "../../assets/arts/MobileIcon.svg";
-
+import { verifyPhoneCode } from "../../services/api";
 // interface Props {
 //     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 //     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
@@ -10,7 +10,13 @@ import MobileIcon from "../../assets/arts/MobileIcon.svg";
 
 const BuySellmobiVerfication = () => {
     // setToggleChart(false);
-    const navigate = useNavigate();
+    //const navigate = useNavigate('/indexx-exchange/buy-sell/get-started/identity-verification');
+    const verifyCode = async () => {
+
+        //      let res = await verifyPhoneCode("123456");
+        //    console.log(res);
+    }
+
     return (
         <div className='d-flex flex-direction-column'>
             <h1 className='text-center margin-lr-auto top_heading'>Confirm Verification</h1>
@@ -38,7 +44,7 @@ const BuySellmobiVerfication = () => {
                 <br />
                 <br />
                 <div className="send_code">
-                    <button onClick={() => navigate("")}>Send Code</button>
+                    <button onClick={() => verifyCode()}>Verify Code</button>
                 </div>
                 <div className="margin-lr-auto padding-t-2x">Resend Code (9:50s)</div>
             </div>
