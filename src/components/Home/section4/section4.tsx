@@ -65,10 +65,10 @@ const Section4 = () => {
 
     return (
         <>
-            <div className="section4-container section4-container1">
-                <div className="d-flex flex-align-start">
+            <div className="section4-container section4-container1 container">
+                <div className="d-flex flex-align-start row">
                     {data.map((item, key) => (
-                        <div className="item-container" key={key}>
+                        <div className="item-container col-md-4" key={key}>
                             <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>
