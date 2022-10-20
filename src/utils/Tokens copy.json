@@ -1,0 +1,52 @@
+[
+   
+    {
+        "title": "BUSD",
+        "subTitle": "Binance-Peg BUSD",
+        "image": "BUSD",
+        "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
+    },
+    {
+        "title": "CAKE",
+        "subTitle": "PancakeSwap",
+        "image": "CAKE",
+        "address": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+    },
+   
+    {
+        "title": "EPS",
+        "subTitle": "Ellipsis",
+        "image": "EPS",
+        "address": "0xA7f552078dcC247C2684336020c03648500C6d9F"
+    },
+    {
+        "title": "LINK",
+        "subTitle": "Binance-Peg ChainLink",
+        "image": "LINK",
+        "address": "0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD"
+    },
+    {
+        "title": "MANA",
+        "subTitle": "Decentraland ",
+        "image": "MANA",
+        "address": "0x26433c8127d9b4e9B71Eaa15111DF99Ea2EeB2f8"
+    },
+    {
+        "title": "IBAT",
+        "subTitle": "BattleInfinity",
+        "image": "IBAT",
+        "address": "0x19cd9B8e42d4EF62c3EA124110D5Cfd283CEaC43"
+    },
+    {
+        "title": "DOT",
+        "subTitle": "Binance-Peg Polkadot",
+        "image": "DOT",
+        "address": "0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402"
+    },
+    {
+        "title": "LBlock",
+        "subTitle": "LuckyBlock",
+        "image": "LBlock",
+        "address": "0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb"
+    }
+]

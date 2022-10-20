@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { ArrowRightOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Button, Select, Radio, Space, RadioChangeEvent } from 'antd';
+import initialTokens from "../../utils/Tokens.json";
 
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 import IN500 from "../../assets/token-icons/33.png";
@@ -39,12 +40,29 @@ export const BSWithdarwCryptoContent = () => {
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
         <div className=''>
           <label>Currency</label>
-          <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
+          <div className=' d-flex flex-justify-between flex-align-center'>
+          <Select className='width-100'
+              onChange={handleChange}>
+      
+      
+       {
+                    initialTokens.map((token, index) => {
 
-            <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
-            <CaretDownOutlined />
+                        return <Option key={index} value={token.subTitle}type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
+                          
+                           
+                            <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                        </Option>
+                    })
+                }
+
+    </Select>
+            {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
+            {/* <CaretDownOutlined /> */}
 
             {/* <RightOutlined /> */}
+
+          
           </div>
           <br />
           <h1 className='font_20x padding-t-2x' >Send to</h1>
