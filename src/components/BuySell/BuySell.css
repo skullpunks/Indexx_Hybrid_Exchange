@@ -375,7 +375,10 @@ input[type="checkbox"] {
 
 .ant-dropdown-menu-item:hover {
     color: #F66036;
+}
 
+.ant-dropdown-menu-item.ant-dropdown-menu-item-disabled:hover {
+    color: #f6603653;
 }
 
 .scan-container.bs_main {
