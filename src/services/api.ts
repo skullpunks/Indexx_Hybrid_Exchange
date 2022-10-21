@@ -31,7 +31,7 @@ export const signupAPI = async (email: string, password: string, refferalCode: s
 };
 
 export const loginAPI = async (email: string, password: string) => {
-  try{
+  try {
     const result = await API.post("/api/v1/inex/user/login", {
       email,
       password,
@@ -75,7 +75,7 @@ export const verifyPhoneCode = async (code: string) => {
   }
 }
 
-export const verifyEmailCode = async(code :string) => {
+export const verifyEmailCode = async (code: string) => {
   try {
     const result = await API.post("/api/v1/inex/user/verifyEmailCode", {
       code
@@ -87,10 +87,10 @@ export const verifyEmailCode = async(code :string) => {
 }
 
 export const getIndexxTokenPrices = async () => {
-  try{
+  try {
     const result = await API.get("api/v1/inex/price/indexx");
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     return e.response.data;
   }
 }
@@ -125,7 +125,7 @@ export interface TokenLite {
   refresh_token: string;
 }
 
-export const getWalletBalance = async (email: string, coin:string) => {
+export const getWalletBalance = async (email: string, coin: string) => {
   try {
     const result = await API.get("/api/v1/inex/getCountries");
     return result.data;
@@ -140,4 +140,52 @@ export const getWalletBalance = async (email: string, coin:string) => {
 export function decodeJWT(access_token: string) {
   let userObj = decode(access_token);
   return userObj;
+}
+
+export const getUserWallets = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getUserWallets/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getUserWallets)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/buy", {
+      basecoin,
+      quotecoin,
+      amount,
+      price,
+      email
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createBuyOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const createSellOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/sell", {
+      basecoin,
+      quotecoin,
+      amount,
+      price,
+      email
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createBuyOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
 }

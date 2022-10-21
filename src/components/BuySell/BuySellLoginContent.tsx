@@ -4,7 +4,7 @@ import Email from "../../assets/arts/Email.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginAPI } from '../../services/api'
+import { loginAPI, decodeJWT } from '../../services/api'
 import { CheckCircleFilled } from '@ant-design/icons';
 
 interface Props {
@@ -22,8 +22,11 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
         console.log(res.data);
         if (res.status === 200) {
             openNotificationWithIcon('success', 'Login Successful');
+            localStorage.setItem('user', values.email);
             localStorage.setItem('access_token', res.data.access_token);
             localStorage.setItem('refresh_token', res.data.refresh_token);
+            let resObj = await decodeJWT(res.data.access_token);
+            console.log(resObj);
             navigate("/indexx-exchange/buy-sell");
         } else {
             console.log(res.data);

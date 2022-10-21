@@ -58,6 +58,8 @@ const Header = () => {
     const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         localStorage.removeItem("user"); //remove one item
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
         // localStorage.clear(); //clear all localstorage
         // window.location.reload();
         navigate("/indexx-exchange/buy-sell/login");
