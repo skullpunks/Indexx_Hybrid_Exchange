@@ -1,11 +1,10 @@
 import axios from "axios";
-
+import decode from 'jwt-decode';
 let baseURL = "";
-
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   baseURL = "http://localhost:3000";
 } else {
-  baseURL = "http://18.183.187.118:3000";
+  baseURL = "https://67b7-54-250-16-116.ngrok.io";
 }
 
 console.log('baseURL', baseURL);
@@ -124,4 +123,21 @@ export function removeTokens() {
 export interface TokenLite {
   access_token: string;
   refresh_token: string;
+}
+
+export const getWalletBalance = async (email: string, coin:string) => {
+  try {
+    const result = await API.get("/api/v1/inex/getCountries");
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getCountriesAPI)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export function decodeJWT(access_token: string) {
+  let userObj = decode(access_token);
+  return userObj;
 }
