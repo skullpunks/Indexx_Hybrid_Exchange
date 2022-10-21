@@ -3,13 +3,38 @@ import React from 'react'
 import "./BuySellDummy.css";
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
+import { decodeJWT, getAllTransactions } from '../../services/api';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
   setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
+
 const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
+  let allTxsdata = [];
+  let access_token = String(localStorage.getItem("access_token"));
+  let decoded :any= decodeJWT(access_token);
+  // onChange =>()= {
+  // let userWallets = await getUserWallets(decoded.email);
+  // // }
+  // useEffect( async() {
+  // await getUserWallets(decoded.email);
+  // }, []);
+
+  // getUserWallets(decoded.email).then((userWallets) => {
+  //     data = userWallets.data;
+  //     userWallets.data.map((wallet: any) => {
+  //         totalBalanceInUSD += parseFloat(wallet.coinWalletBalanceInUSD);
+  //     })
+  //     console.log("data", data);
+  // })
+
+  getAllTransactions(decoded.email).then((userTxs) => {
+    console.log("userRewards", userTxs);
+    allTxsdata = userTxs.data;
+    console.log("allTxsdata", allTxsdata);
+  })
 
   const { Option } = Select;
   setToggleChart(false);

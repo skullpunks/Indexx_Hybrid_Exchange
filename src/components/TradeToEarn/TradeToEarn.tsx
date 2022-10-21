@@ -11,12 +11,36 @@ import no2 from "../../assets/arts/no2.png";
 import no3 from "../../assets/arts/no3.png";
 
 import Footer from '../Footer/Footer';
+import { decodeJWT, getUserRewards } from '../../services/api';
 
 
 const { Text } = Typography;
 
 const TradeToEarn = () => {
 
+  let totalTokensBalInUSD = 0;
+  let access_token = String(localStorage.getItem("access_token"));
+  let decoded :any= decodeJWT(access_token);
+  // onChange =>()= {
+  // let userWallets = await getUserWallets(decoded.email);
+  // // }
+  // useEffect( async() {
+  // await getUserWallets(decoded.email);
+  // }, []);
+
+  // getUserWallets(decoded.email).then((userWallets) => {
+  //     data = userWallets.data;
+  //     userWallets.data.map((wallet: any) => {
+  //         totalBalanceInUSD += parseFloat(wallet.coinWalletBalanceInUSD);
+  //     })
+  //     console.log("data", data);
+  // })
+
+  getUserRewards(decoded.email).then((userRewards) => {
+    console.log("userRewards", userRewards);
+    totalTokensBalInUSD = userRewards.data.rewardTokenBalanceInUSD;
+    console.log("totalTokensBalInUSD", totalTokensBalInUSD);
+  })
 
   return (
     <>

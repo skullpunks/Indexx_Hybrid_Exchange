@@ -4,6 +4,7 @@ import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React from 'react'
 // import { Link } from 'react-router-dom'
+import { decodeJWT, getUserWallets } from '../../services/api';
 
 interface DataType {
     key: React.Key;
@@ -79,82 +80,101 @@ const BSWalletTable = () => {
 
     ];
 
-    const data: DataType[] = [
-        {
-            key: '6',
-            favourite: false,
-            name: 'USD',
-            Price: "11.33",
-            DailyChange: "+3.03%",
-            DailyHigh: "$1.05",
-            DailyLow: "91%",
-            Volume: "$1.05M",
-            MarketCap: "$10.05B",
-            subName: "USD Dollar"
-        },
-        {
-            key: '1',
-            favourite: false,
-            name: 'INEX',
-            Price: "0.00005102",
-            DailyChange: "12.09%",
-            DailyHigh: "$10.00",
-            DailyLow: "9%",
-            Volume: "$100.00M",
-            MarketCap: "$100.00B",
-            subName: "Indexx Exchange"
-        },
-        {
-            key: '2',
-            favourite: false,
-            name: 'IN500',
-            Price: "0",
-            DailyChange: "10.09%",
-            DailyHigh: "$6.00",
-            DailyLow: "0%",
-            Volume: "$6.00M",
-            MarketCap: "$61.00B",
-            subName: "Index 500"
-        },
-        {
-            key: '3',
-            favourite: false,
-            name: 'BTC',
-            Price: "0",
-            DailyChange: "10.09%",
-            DailyHigh: "$6.00",
-            DailyLow: "0%",
-            Volume: "$6.00M",
-            MarketCap: "$61.00B",
-            subName: "Bitcoin"
-        },
-        {
-            key: '4',
-            favourite: true,
-            name: 'INXC',
-            Price: "0",
-            DailyChange: "-9.09%",
-            DailyHigh: "$6.00",
-            DailyLow: "0%",
-            Volume: "$18.00M",
-            MarketCap: "$8.00B",
-            subName: "Indexx Crypto"
-        },
-        {
-            key: '5',
-            favourite: true,
-            name: 'iUSD+',
-            Price: "0",
-            DailyChange: "0.09",
-            DailyHigh: "$5.00",
-            DailyLow: "0%",
-            Volume: "$0.009M",
-            MarketCap: "$1.019B",
-            subName: "Indexx USD+"
+    // const data: DataType[] = [
+    //     {
+    //         key: '6',
+    //         favourite: false,
+    //         name: 'USD',
+    //         Price: "11.33",
+    //         DailyChange: "+3.03%",
+    //         DailyHigh: "$1.05",
+    //         DailyLow: "91%",
+    //         Volume: "$1.05M",
+    //         MarketCap: "$10.05B",
+    //         subName: "USD Dollar"
+    //     },
+    //     {
+    //         key: '1',
+    //         favourite: false,
+    //         name: 'INEX',
+    //         Price: "0.00005102",
+    //         DailyChange: "12.09%",
+    //         DailyHigh: "$10.00",
+    //         DailyLow: "9%",
+    //         Volume: "$100.00M",
+    //         MarketCap: "$100.00B",
+    //         subName: "Indexx Exchange"
+    //     },
+    //     {
+    //         key: '2',
+    //         favourite: false,
+    //         name: 'IN500',
+    //         Price: "0",
+    //         DailyChange: "10.09%",
+    //         DailyHigh: "$6.00",
+    //         DailyLow: "0%",
+    //         Volume: "$6.00M",
+    //         MarketCap: "$61.00B",
+    //         subName: "Index 500"
+    //     },
+    //     {
+    //         key: '3',
+    //         favourite: false,
+    //         name: 'BTC',
+    //         Price: "0",
+    //         DailyChange: "10.09%",
+    //         DailyHigh: "$6.00",
+    //         DailyLow: "0%",
+    //         Volume: "$6.00M",
+    //         MarketCap: "$61.00B",
+    //         subName: "Bitcoin"
+    //     },
+    //     {
+    //         key: '4',
+    //         favourite: true,
+    //         name: 'INXC',
+    //         Price: "0",
+    //         DailyChange: "-9.09%",
+    //         DailyHigh: "$6.00",
+    //         DailyLow: "0%",
+    //         Volume: "$18.00M",
+    //         MarketCap: "$8.00B",
+    //         subName: "Indexx Crypto"
+    //     },
+    //     {
+    //         key: '5',
+    //         favourite: true,
+    //         name: 'iUSD+',
+    //         Price: "0",
+    //         DailyChange: "0.09",
+    //         DailyHigh: "$5.00",
+    //         DailyLow: "0%",
+    //         Volume: "$0.009M",
+    //         MarketCap: "$1.019B",
+    //         subName: "Indexx USD+"
+    //     }
+
+    // ];
+
+    let data: any[] = [];
+    let totalBalanceInUSD = 0;
+    let access_token = String(localStorage.getItem("access_token"));
+    let decoded: any = decodeJWT(access_token);
+    // onChange =>()= {
+    // let userWallets = await getUserWallets(decoded.email);
+    // // }
+    // useEffect( async() {
+    // await getUserWallets(decoded.email);
+    // }, []);
+
+    getUserWallets(decoded.email).then((userWallets) => {
+        data = userWallets.data;
+        for (let i = 0; i < data.length; i++) {
+            totalBalanceInUSD += parseFloat(data[i].coinWalletBalanceInUSD);
         }
-
-    ];
-
+        console.log("data", data);
+        console.log("totalBalanceInUSD", totalBalanceInUSD);
+    })
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
 

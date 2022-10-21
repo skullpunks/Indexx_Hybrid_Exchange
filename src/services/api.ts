@@ -89,7 +89,7 @@ export const verifyEmailCode = async (code: string) => {
 
 export const getIndexxTokenPrices = async () => {
   try {
-    const result = await API.get("api/v1/inex/price/indexx");
+    const result = await API.get("/api/v1/inex/price/indexx");
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -185,6 +185,49 @@ export const createSellOrder = async (basecoin: string, quotecoin: string, amoun
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (createBuyOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const createConvertOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/convert", {
+      basecoin,
+      quotecoin,
+      amount,
+      price,
+      email
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createBuyOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+
+export const getAllTransactions = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getTransactions/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getTransactions)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const getUserRewards = async (email: string) => {
+  try { 
+    const result = await API.get(`/api/v1/inex/user/getUserRewards/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getUserRewards)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

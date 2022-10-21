@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
-// import arrowAddress from "../../assets/arts/arrowAddress.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ReloadOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Select, Space } from 'antd';
-import initialTokens from "../../utils/Tokens.json";
 import { Option } from 'antd/lib/mentions';
+import bsDollar from "../../assets/arts/bsDollar.svg";
+import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+import initialTokens from "../../utils/Tokens.json";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
