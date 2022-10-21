@@ -51,7 +51,8 @@ const BuySellEmailAuth = () => {
                     </div>
                 </div>
                 <br />
-                <Button type="primary" className="ant-btn ant-btn-primary ant-btn-block atn-btn atn-btn-round margin-b-1x d-none" block onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button>
+                <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button>
+                <Button type="primary" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")}>Verify</Button>
                 <div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} />)</div>
 
                 <div className="margin-lr-auto padding-tb-2x" style={{ cursor: "pointer" }}><Popover content={content} trigger="click" className="text_link" >Didn’t receive an email?</Popover></div>

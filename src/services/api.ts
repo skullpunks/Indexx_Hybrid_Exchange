@@ -95,3 +95,33 @@ export const getIndexxTokenPrices = async () => {
     return e.response.data;
   }
 }
+
+export function isLoggedIn() {
+  return !!getJwtToken();
+}
+
+export function getJwtToken() {
+  return localStorage.getItem("access_token");
+}
+
+export function etRefreshToken() {
+  var token = localStorage.getItem("refresh_token");
+  return token;
+}
+
+export function storeTokens(tokens: TokenLite) {
+  //exact jwt and store in local store as user object
+  localStorage.setItem("access_token", tokens.access_token);
+  localStorage.setItem("refreshToken", tokens.refresh_token);
+}
+
+export function removeTokens() {
+  //remove from local store the user object
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+}
+
+export interface TokenLite {
+  access_token: string;
+  refresh_token: string;
+}

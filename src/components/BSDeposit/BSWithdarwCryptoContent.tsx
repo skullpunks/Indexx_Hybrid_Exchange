@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
-import { ArrowRightOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { Button, Select, Radio, Space, RadioChangeEvent } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Button, Radio, RadioChangeEvent, Select, Space } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
-import IN500 from "../../assets/token-icons/33.png";
-import AddressIcon from "../../assets/arts/AddressIcon.svg"
+import AddressIcon from "../../assets/arts/AddressIcon.svg";
 
 import { useNavigate } from 'react-router-dom';
 

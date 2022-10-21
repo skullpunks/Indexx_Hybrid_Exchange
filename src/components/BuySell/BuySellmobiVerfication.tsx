@@ -1,8 +1,6 @@
-
-
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import MobileIcon from "../../assets/arts/MobileIcon.svg";
-import { verifyPhoneCode } from "../../services/api";
+//import { verifyPhoneCode } from "../../services/api";
 // interface Props {
 //     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 //     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
