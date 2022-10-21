@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import IN500 from "../../assets/token-icons/33.png";
+// import IN500 from "../../assets/token-icons/33.png";
 import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ReloadOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
+import { Dropdown, Menu, Select, Space } from 'antd';
+import initialTokens from "../../utils/Tokens.json";
+import { Option } from 'antd/lib/mentions';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -42,6 +44,13 @@ const menu = (
 );
 const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     const [buyVal, setBuyVal] = useState("");
+    const [network, setNetwork] = useState<any>("Select");
+
+    const handleChange = (value: string) => {
+        setNetwork(value)
+        console.log(`selected ${value}`);
+    };
+
 
     const updateBuyVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";
@@ -71,29 +80,44 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </Dropdown>
             </div>
         </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }} onClick={() => setScreenName("select")}>
+            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center",padding:8 }} >
                 <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={IN500} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        IN500 <span className="token_grey">Indexx500</span>
-                    </div>
-                </div>
-                <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
-            </div>
+                    <div className=' d-flex flex-justify-between flex-align-center width-100'>
+                        <Select className='width-100 border-0'
+                            onChange={handleChange} value={network}>
 
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
-                <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={bsDollar} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        USD  <span className="token_grey">US Dollar</span>
+
+                            {
+                                initialTokens.map((token, index) => {
+
+                                    return <Option key={token.address} value={token.address}  className='common__token d-flex bs_token_container' data-address={token.address} >
+
+
+                                        <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                    </Option>
+                                })
+                            }
+
+                        </Select>
+                        </div>
                     </div>
+                    
                 </div>
 
-            </div>
-            <div className="bs_footer_action">
-                <button>Preview Purchase </button>
-            </div></div>
-    )
+                <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
+                    <div className="bs_token_left d-flex justify-between">
+                        <div className="bs_token_num d-flex flex-align-center" >
+                            <img src={bsDollar} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
+                            USD  <span className="token_grey">US Dollar</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div className="bs_footer_action">
+                    <button>Preview Purchase </button>
+                </div>
+                </div>
+            )
 }
 
-export default BuyContent
+            export default BuyContent;

@@ -355,6 +355,21 @@ input[type="checkbox"] {
     height: 47px;
 }
 
+.border-0 .ant-select-selector {
+    border:0 !important;
+}
+
+.border-0.ant-select-focused  .ant-select-selector  {
+    box-shadow:none !important;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-item {
+ font-size:30px;
+ color:rgba(18, 18, 18, 0.2);
+}
+
+
+
 .phone_container .ant-select-single .ant-select-selector .ant-select-selection-item,
 .phone_container .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
     line-height: 47px;
