@@ -49,8 +49,8 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                     Need Help?
                 </Link>
             }
-            <div className="flex-align-center d-flex flex-justify-between site_footer_inner">
-                <div className="col-xs-6 col-md-4 footercentre">
+            <div className="flex-align-center d-flex flex-justify-between site_footer_inner row">
+                <div className=" footercentre col-sm-12 col-md-12">
                     {/* <a href="/" id="1067941554">
                             <img src="https://lirp.cdn-website.com/5afbaf73/dms3rep/multi/opt/index-38-238w.png"
                                 width="50%" height="22%" alt="" />
@@ -70,7 +70,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                         </ul>
                     </div>
                 </div>
-                <div className="col-xs-6 col-md-4 footercentre2 text-center ">
+                <div className="col-sm-12 col-md-12 footercentre2 text-center ">
                     <h1>
                         <Link to="/"><img src={indexText} alt="index logo" /></Link>
                     </h1>

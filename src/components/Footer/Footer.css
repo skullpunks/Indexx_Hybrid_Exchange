@@ -69,3 +69,20 @@
 .need_help:hover {
     color: #00387d;
 }
+
+@media (max-width: 767px) {
+
+.site_footer_inner {
+    flex-direction: column;
+}
+
+    .site_footer>div>div {
+        display: block;
+        text-align: center
+    }
+
+    .site_footer>div>div.flip_icon_container {
+        display: none;
+
+    }
+}

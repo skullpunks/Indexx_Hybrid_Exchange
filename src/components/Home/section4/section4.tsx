@@ -65,7 +65,7 @@ const Section4 = () => {
 
     return (
         <>
-            <div className="section4-container section4-container1 container">
+            <div className="section4-container container">
                 <div className="d-flex flex-align-start row">
                     {data.map((item, key) => (
                         <div className="item-container col-md-4" key={key}>
@@ -81,14 +81,14 @@ const Section4 = () => {
                 <img src={footer_banner} alt="Banner" />
             </div>
 
-            <div className="section4-container">
+            <div className="container ">
                 <div className="section4-container-heading">
                     Get in Touch <br />
                     Stay in Touch
                 </div>
-                <div className="d-flex stay_in_touch">
+                <div className="d-flex stay_in_touch row">
                     {data2.map((item, key) => (
-                        <div className="item-container" key={key}>
+                        <div className="item-container col-md-3 col-sm-6 item-container" key={key} >
                             <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
-import arrowAddress from "../../assets/arts/arrowAddress.svg";
+// import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { ReloadOutlined } from '@ant-design/icons';
