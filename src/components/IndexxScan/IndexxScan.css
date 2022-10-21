@@ -123,3 +123,29 @@
     color: #006DFF;
     font-size: 20px;
 }
+
+
+
+@media (max-width: 767px) {
+    .section-usp {
+        padding-top: 20px;
+        text-align: center;
+    }
+
+    .center-Image {
+        height: 120px;
+    }
+
+    .font-big {
+        font-size: 30px;
+    }
+
+    .big_trade_font {
+        font-size: 60px;
+    }
+
+    .trade_to_earn_link {
+        padding-bottom: 50px;
+        display: inline-block;
+    }
+}

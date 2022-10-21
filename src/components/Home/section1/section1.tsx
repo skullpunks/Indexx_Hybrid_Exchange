@@ -10,21 +10,21 @@ const Section1 = () => {
     return (
         <div style={{ backgroundImage: `url(${BackgroundImage})` }} className="home-container">
             <div>
-                <img src={IndexxText} alt="Indexx Logo" className="center-Image" style={{ paddingLeft: 60 }} />
+                <img src={IndexxText} alt="Indexx Logo" className="center-Image" />
             </div>
             <div className="section-heading" style={{ color: "rgba(255, 255, 255, 0.6)" }}>Swap, Buy and Sell Cryptocurrency</div>
             <div className="section-helper-text">Hybrid Platform</div>
-            <div className="section-usp" style={{ paddingTop: 120, paddingBottom: 70 }}>
+            <div className="section-usp" >
                 <span className="font-big">
-                    <Link to="/indexx-exchange/trade-to-earn">
+                    <Link className="trade_to_earn_link" to="/indexx-exchange/trade-to-earn">
                         <span style={{ color: "rgba(255, 255, 255, 0.6)" }}>Trade to</span>
-                        <span style={{ fontSize: 120, color: "#fff", display: "inline-block" }}>
+                        <span className="big_trade_font" style={{ color: "#fff", display: "inline-block" }}>
                             Earn
                             <sub style={{ fontSize: 15, color: "#fff", position: "relative", bottom: 0 }}>TM</sub>
                             ,
                         </span>
                     </Link>
-                    <span style={{ fontSize: 120 }}> 30%</span>
+                    <span className="big_trade_font"> 30%</span>
                     <span style={{ color: "rgba(255, 255, 255, 0.6)" }}> Trade reward</span>
 
                 </span>

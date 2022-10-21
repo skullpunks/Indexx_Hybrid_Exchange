@@ -19,16 +19,16 @@ const Section2 = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="section2-container">
+        <div className="section2-container container margin-lr-auto">
             <div className="section2-table">
                 <div className="table-row">
                     <div className="table-header-element">
                         Cryptocurrency
                     </div>
-                    <div className="table-header-element">
+                    <div className="table-header-element ">
                         Price
                     </div>
-                    <div className="table-header-element">
+                    <div className="table-header-element  d-none d-sm-block">
                         24hr % Change
                     </div>
                     <div className="table-header-element">
@@ -43,7 +43,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $277.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -3.75%
                     </div>
                     <div className="table-header-element">
@@ -59,7 +59,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $200.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -1.75%
                     </div>
                     <div className="table-header-element">
@@ -75,7 +75,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $27.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -12.75%
                     </div>
                     <div className="table-header-element">
@@ -91,7 +91,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $127.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -2.75%
                     </div>
                     <div className="table-header-element">
@@ -107,7 +107,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $17.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -3.75%
                     </div>
                     <div className="table-header-element">
@@ -123,7 +123,7 @@ const Section2 = () => {
                     <div className="table-header-element price">
                         $16.098
                     </div>
-                    <div className="table-header-element hourChange">
+                    <div className="table-header-element hourChange d-none d-sm-block">
                         -1.75%
                     </div>
                     <div className="table-header-element">

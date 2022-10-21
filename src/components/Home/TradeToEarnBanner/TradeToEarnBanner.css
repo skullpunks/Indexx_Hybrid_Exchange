@@ -63,3 +63,9 @@
 .ant-btn.btn-success.earn_btn {
     max-width: 500px;
 }
+
+@media (max-width: 767px) {
+    .trade_percentage {
+        font-size: 50vw;
+    }
+}

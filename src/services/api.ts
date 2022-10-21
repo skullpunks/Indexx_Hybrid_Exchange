@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from 'jwt-decode';
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // baseURL = "http://localhost:3000";
-  baseURL = "https://67b7-54-250-16-116.ngrok.io";
+  baseURL = "http://localhost:3000";
+  // baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://67b7-54-250-16-116.ngrok.io";
 }
@@ -223,7 +223,7 @@ export const getAllTransactions = async (email: string) => {
 }
 
 export const getUserRewards = async (email: string) => {
-  try { 
+  try {
     const result = await API.get(`/api/v1/inex/user/getUserRewards/${email}`);
     return result.data;
   } catch (e: any) {
