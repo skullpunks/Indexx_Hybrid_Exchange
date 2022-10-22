@@ -157,3 +157,12 @@ iframe {
 .flex-direction-column {
   flex-direction: column;
 }
+
+.index_tokens img {
+  width:176px;
+  height:176px;
+}
+
+.font_25x {
+  font-size:25px;
+}

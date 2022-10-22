@@ -8,6 +8,10 @@
     background-color: transparent;
 }
 
+.font_50x {
+    font-size:50px;
+}
+
 .scan-Image {
     object-fit: contain;
     width: 653px;
