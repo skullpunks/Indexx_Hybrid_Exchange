@@ -65,12 +65,15 @@
 }
 
 @media (max-width: 767px) {
-    .trade_percentage {
-        font-size: 50vw;
+
+    .trade_percentage,
+    .trade_percentage span {
+        font-size: 30px !important;
     }
 
     .trade_left {
-        display: none;
+        width: 110px;
+        height: 98px;
     }
 
     .ant-btn.btn-success.earn_btn {
@@ -78,7 +81,25 @@
         max-width: calc(100% - 30px);
     }
 
+
+
+    .tm_text {
+        font-size: 7px;
+    }
+
+    .mega_heading.text-white {
+        font-size: 25px !important;
+    }
+
+    .mega_heading.trade_percentage .mega_heading.trade_percentage span {
+        font-size: 30px !important;
+    }
+
+    .trade_to_earn_banner h1.text-white {
+        font-size: 15px;
+    }
     .trade_to_earn_banner {
-        padding-right: 0 !important;
+       
+        padding-right: 35px;
     }
 }

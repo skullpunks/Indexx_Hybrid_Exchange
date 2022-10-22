@@ -82,7 +82,17 @@
     }
 
     .site_footer>div>div.flip_icon_container {
-        display: none;
+        width: 200px;
+        height: 200px;
 
+    }
+    .flip_person_icon{
+        position:inherit;
+        width:200px;
+        height:200px;
+        top: 0;
+    }
+    .footercentre2 p {
+        font-size:18px;
     }
 }

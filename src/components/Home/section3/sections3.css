@@ -63,7 +63,7 @@
 .data-right-container {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 50%;
     padding-left: 50px;
 }
 
@@ -113,5 +113,14 @@
 
     .section3-container>div {
         width: 100%;
+    }
+
+    .selected-data,
+    .data-right-container {
+        padding-left: 0;
+    }
+
+    .label-container {
+        text-align:left;
     }
 }

@@ -38,7 +38,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={BnbIcon} alt="coin-icon" />
                         <b className="coin-initials">BNB</b>
-                        BNB
+                        <span>BNB</span>
                     </div>
                     <div className="table-header-element price">
                         $277.098
@@ -54,7 +54,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={BitCoin} alt="coin-icon" />
                         <b className="coin-initials">BTC</b>
-                        Bitcoin
+                        <span>Bitcoin</span>
                     </div>
                     <div className="table-header-element price">
                         $200.098
@@ -70,7 +70,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Etherum} alt="coin-icon" />
                         <b className="coin-initials">ETH</b>
-                        Ethereum
+                        <span>Ethereum</span>
                     </div>
                     <div className="table-header-element price">
                         $27.098
@@ -86,7 +86,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={IUSD} alt="coin-icon" />
                         <b className="coin-initials">IUSD+</b>
-                        INDEXXUSD+
+                        <span>INDEXXUSD+</span>
                     </div>
                     <div className="table-header-element price">
                         $127.098
@@ -102,7 +102,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={IN500} alt="coin-icon" />
                         <b className="coin-initials">IN500</b>
-                        INDEXX500
+                        <span>INDEXX500</span>
                     </div>
                     <div className="table-header-element price">
                         $17.098
@@ -118,7 +118,7 @@ const Section2 = () => {
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Crypto} alt="coin-icon" />
                         <b className="coin-initials">INXC</b>
-                        INDEXXCRYPTO
+                        <span>INDEXXCRYPTO</span>
                     </div>
                     <div className="table-header-element price">
                         $16.098

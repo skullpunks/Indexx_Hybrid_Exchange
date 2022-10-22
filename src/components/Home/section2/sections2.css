@@ -70,16 +70,24 @@
 @media (max-width: 767px) {
     .table-header-element {
         text-align: center;
+        
     }
 
     .table-row {
         padding-left: 0;
         padding-right: 0;
+        justify-content: space-between;
     }
 
-    .coinName {
-        flex-direction: column;
+    .table-row>div{
+        margin-right:10px;
     }
+
+    .coinName span {
+      display:none;  
+    }
+
+   
 
     .section2-table {
 
@@ -88,6 +96,6 @@
     }
 
     .chart-icon {
-        max-width: 200px;
+        max-width: 120px;
     }
 }

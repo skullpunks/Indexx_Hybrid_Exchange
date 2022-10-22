@@ -136,7 +136,8 @@
     }
 
     .center-Image {
-        height: 120px;
+        height: 59px;
+        margin-top: -58px;
     }
 
     .font-big {
@@ -154,5 +155,16 @@
 
     .section-helper-text {
         font-size: 12px;
+    }
+}
+
+@media (max-width: 420px) { 
+
+    .big_trade_font {
+        font-size: 18px;
+    }
+
+    .font-big {
+        font-size: 28px;
     }
 }
