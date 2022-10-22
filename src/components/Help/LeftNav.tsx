@@ -7,9 +7,9 @@ const LeftNav = () => {
             <div className="nav_Section">
                 <ul>
                     <li><NavLink to="/indexx-exchange/help" className="" end>
-                        Indexx Swap Intro
+                        Indexx Intro
                     </NavLink></li>
-                    <li><NavLink to="/indexx-exchange/help/team">Indexx Swap Team</NavLink></li>
+                    <li><NavLink to="/indexx-exchange/help/team">Indexx Team</NavLink></li>
                     <li> <NavLink to="/indexx-exchange/help/contact">Contact Us</NavLink></li>
                 </ul>
             </div>

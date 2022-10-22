@@ -27,6 +27,7 @@ import BSSellConfirmConvert from './BSSellConfirmConvert';
 import BSSellInprogress from './BSSellInprogress';
 // import { Route, Routes } from 'react-router-dom';
 import BSConfirmPurchase from './BSConfirmPurchase';
+import BSBuyInProgress from './BSBuyInProgress';
 // import BuySellGetStarted from './BuySellGetStarted';
 
 interface Props {
@@ -46,6 +47,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
                 {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />}
+                {screenName === "BSBuyInProgress" && <BSBuyInProgress setScreenName={setScreenName} />}
                 {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
                 {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}

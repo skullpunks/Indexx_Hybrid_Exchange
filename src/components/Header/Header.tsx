@@ -10,23 +10,23 @@ import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons
 
 const menuProducts = (<Menu className="main_navigation"
     items={[
-        { key: 1, label: <Link to="">Swap</Link> },
         { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> },
-        { key: 3, label: <Link to="/indexx-exchange/tokens">indexx Tokens</Link> }
+        { key: 3, label: <a href="https://tokens.indexx.ai/" target="_blank" rel="noreferrer">indexx Tokens</a> },
+        { key: 1, label: <Link to="">Decentralized</Link> },
     ]}
 />);
 const menuEarn = (<Menu className="main_navigation"
     items={[
         { key: 1, label: <Link to="/indexx-exchange/trade-to-earn">Trade to earn</Link> },
-        { key: 2, label: <Link to="/indexx-exchange/farms">Farms</Link> },
-        { key: 3, label: <Link to="/indexx-exchange/pools">Pools</Link> }
+        { key: 2, label: <Link to="">Farms</Link> },
+        { key: 3, label: <Link to="">Pools</Link> }
     ]}
 />);
 const menuCompany = (<Menu className="main_navigation"
     items={[
-        { key: 1, label: <Link to="/indexx-exchange/about">About</Link> },
-        { key: 2, label: <Link to="/indexx-exchange/hybrid-exchange">Hybrid exchange</Link> },
-        { key: 3, label: <Link to="/indexx-exchange/affliate">Affiliate Program</Link> },
+        { key: 1, label: <Link to="/indexx-exchange/help">About</Link> },
+        { key: 2, label: <Link to="">Hybrid Exchange</Link> },
+        { key: 3, label: <a href="https://register.affiliate.indexx.ai/" target="_blank" rel="noreferrer">Affiliate Program</a> },
         { key: 4, label: <Link to="/indexx-exchange/blog">Blog</Link> }
     ]}
 />);
@@ -172,8 +172,10 @@ const Header = () => {
 
                         {(location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
-                                <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link>
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+                                {/* <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link> */}
+                                {/* <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
+                                <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x buy_crypto_btn" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+
                             </div>
                         }
                         {(location.pathname.includes("swap")) &&

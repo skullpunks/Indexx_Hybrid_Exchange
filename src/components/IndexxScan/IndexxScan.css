@@ -9,7 +9,7 @@
 }
 
 .font_50x {
-    font-size:50px;
+    font-size: 50px;
 }
 
 .scan-Image {
@@ -160,15 +160,23 @@
     .section-helper-text {
         font-size: 12px;
     }
+
+    .cut_button {
+        max-width: 150px;
+    }
+
+    .font_50x {
+        font-size: 28px;
+    }
 }
 
-@media (max-width: 420px) { 
+@media (max-width: 420px) {
 
     .big_trade_font {
-        font-size: 18px;
+        font-size: 28px;
     }
 
     .font-big {
-        font-size: 28px;
+        /* font-size: 28px; */
     }
 }

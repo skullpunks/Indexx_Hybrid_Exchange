@@ -6,25 +6,25 @@ const Intro = () => {
     return (
         <div className="help_content_page" style={{ height: "max-content" }}>
             <div className="nav_main_header border-b">
-                <h1> Indexx Swap Intro </h1>
+                <h1> Indexx Intro </h1>
             </div>
             <div className="info">
-                IndexxSwap helps you make the most out of your crypto in two ways: Trade
+                Indexx helps you make the most out of your crypto in two ways: Trade
                 and Earn.
             </div>
             <div className="trade_content nav_section border-b">
                 <div className="section_header d-flex">
                     <h1><img src={tradeIcon} alt="trade icon" />Trade</h1>
                 </div>
-                <p>Instantly swap crypto tokens: no registration or account needed.</p>
+                <p>Instantly  crypto tokens: no registration or account needed.</p>
                 <h1>The people's choice</h1>
                 <p>
-                    PancakeSwap is the leading decentralized exchange on BNB Smart Chain,
+                    indexx is the leading decentralized exchange on BNB Smart Chain,
                     with the highest trading volumes in the market.
                 </p>
                 <h1>Low fees</h1>
                 <p className="margin-b-0 ">
-                    Why pay more? PancakeSwap runs on BNB Smart Chain, a blockchain with
+                    Why pay more? indexx runs on BNB Smart Chain, a blockchain with
                     much lower transaction costs than Ethereum or Bitcoin.
                 </p>
                 <p className="margin-t-0">
@@ -34,7 +34,7 @@ const Intro = () => {
                 <h1>Decentralized</h1>
                 <p className="margin-b-0">Trade directly from your wallet app.</p>
                 <p className="margin-t-0 margin-b-0">
-                    Unlike centralized exchanges like Binance or Coinbase, PancakeSwap
+                    Unlike centralized exchanges like Binance or Coinbase, Indexx
                     doesn’t hold your funds when you trade: you have 100% ownership of
                     your own crypto
                 </p>

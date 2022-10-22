@@ -43,7 +43,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
 
 
     return (
-        <footer className="site_footer position-relative">
+        <footer className="site_footer position-relative container-fluid">
             {helpIcon &&
                 <Link to="/indexx-exchange/help" className="need_help" style={{ backgroundImage: `url(${needHelp})` }}>
                     Need Help?
@@ -106,7 +106,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                     }
                 </div>
             </div>
-            <div className="copyright_bar">
+            <div className="copyright_bar ">
                 <p className="copyright_text">
                     Copyright © 2022 All Rights Reserved by Indexx.
                 </p>
