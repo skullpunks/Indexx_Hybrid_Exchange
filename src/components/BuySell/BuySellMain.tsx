@@ -11,10 +11,6 @@ import Chart from "../ChartBuy/Chart";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import historyIcon from "../../assets/arts/historyIcon.svg";
 // import initialTokens from "../../utils/Tokens.json";
-
-
-
-
 import BuySellIntro from './BuySellIntro';
 import BuySellSelect from './BuySellSelect';
 import BuySellCreate from './BuySellCreate';
@@ -29,6 +25,8 @@ import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
 import BSTractionHistory from './BSTractionHistory';
 import BSSellConfirmConvert from './BSSellConfirmConvert';
 import BSSellInprogress from './BSSellInprogress';
+// import { Route, Routes } from 'react-router-dom';
+import BSConfirmPurchase from './BSConfirmPurchase';
 // import BuySellGetStarted from './BuySellGetStarted';
 
 interface Props {
@@ -47,12 +45,8 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {toggleChart && <Chart />}
                 {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
+                {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />}
                 {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
-                {/* {screenName === "getStarted" && <BuySellGetStarted setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
-                {/* {screenName === "EmailAuth" && <BuySellEmailAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
-                {/* {screenName === "SecureSteps" && <BuySellSecureSteps setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
-                {/* {screenName === "MobiAuth" && <BuySellMobiAuth setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
-                {/* {screenName === "mobiVerfication" && <BuySellmobiVerfication setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
                 {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}
                 {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}
@@ -60,6 +54,11 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {screenName === "BSSellConfirmConvert" && <BSSellConfirmConvert setScreenName={setScreenName} />}
                 {screenName === "BSSellInprogress" && <BSSellInprogress setScreenName={setScreenName} />}
             </div>
+
+            {/* <Routes>
+                <Route index element={<BuySellIntro setScreenName={setScreenName} />} />
+            </Routes> */}
+
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
                     <div className='centered' style={{ paddingBottom: 180 }}>

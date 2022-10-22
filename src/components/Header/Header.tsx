@@ -11,7 +11,8 @@ import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons
 const menuProducts = (<Menu className="main_navigation"
     items={[
         { key: 1, label: <Link to="">Swap</Link> },
-        { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> }
+        { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> },
+        { key: 3, label: <Link to="/indexx-exchange/tokens">indexx Tokens</Link> }
     ]}
 />);
 const menuEarn = (<Menu className="main_navigation"
@@ -110,6 +111,11 @@ const Header = () => {
             label: "Markets",
             value: "markets",
             url: "/indexx-exchange/markets"
+        },
+        {
+            label: "Tokens",
+            value: "tokens",
+            url: "/indexx-exchange/tokens"
         }
     ]
 
@@ -140,11 +146,10 @@ const Header = () => {
                         {(location.pathname.includes("help")) &&
                             <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet" onClick={() => window.open(window.location.origin, "_blank")}>Launch App</Button>
                         }
-                        {(location.pathname.includes("buy-sell")) &&
+                        {(location.pathname.includes("buy-sell") || location.pathname.includes("tokens")) &&
                             <div className="d-flex flex-align-center">
                                 {(localStorage.getItem("user")) ?
                                     <>
-
                                         <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x buy_crypto_btn" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                                         <BellOutlined className="padding-l-2x" style={{ fontSize: 20 }} />
                                         <Dropdown overlay={userMenu} trigger={['click']}>

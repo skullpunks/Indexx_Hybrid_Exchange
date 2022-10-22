@@ -15,7 +15,6 @@ const BuySell = () => {
       <SwapFromContext.Provider value={{ fromToken, setFromToken }} >
         <SwapToContext.Provider value={{ toToken, setToToken }} >
           {status === "" && <BuySellMain setStatus={setStatus} />}
-
         </SwapToContext.Provider>
       </SwapFromContext.Provider>
       <Footer />

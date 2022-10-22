@@ -80,4 +80,14 @@
     .coinName {
         flex-direction: column;
     }
+
+    .section2-table {
+
+        margin: 0 10px;
+        width: calc(100% - 20px);
+    }
+
+    .chart-icon {
+        max-width: 200px;
+    }
 }

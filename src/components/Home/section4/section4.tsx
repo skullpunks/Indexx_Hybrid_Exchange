@@ -7,7 +7,7 @@ import getInTouch from "../../../assets/getInTouch.png";
 import indexxai from "../../../assets/indexxai.png";
 import community from "../../../assets/community.png";
 import careers from "../../../assets/careers.png";
-import footer_banner from "../../../assets/arts/footer_banner.svg";
+import footer_banner from "../../../assets/arts/footer_banner.png";
 
 const Section4 = () => {
 

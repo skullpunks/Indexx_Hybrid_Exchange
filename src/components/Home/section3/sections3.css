@@ -7,7 +7,7 @@
 .data-container {
     display: flex;
     flex-direction: column;
-    width:45%;
+    width: 45%;
     cursor: pointer;
 }
 
@@ -17,7 +17,7 @@
     font-weight: 600;
     text-align: right;
     padding: 20px 0;
-    color:rgba(0,0,0,0.15);
+    color: rgba(0, 0, 0, 0.15);
     line-height: 55px;
 }
 
@@ -101,6 +101,17 @@
     cursor: pointer;
     border: 1px solid #F66036;
     border-radius: 10px;
-    color:#5A5858;
+    color: #5A5858;
     width: fit-content;
+}
+
+
+@media (max-width:767px) {
+    .section3-container {
+        flex-direction: column;
+    }
+
+    .section3-container>div {
+        width: 100%;
+    }
 }

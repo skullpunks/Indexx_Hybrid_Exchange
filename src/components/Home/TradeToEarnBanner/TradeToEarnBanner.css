@@ -68,4 +68,17 @@
     .trade_percentage {
         font-size: 50vw;
     }
+
+    .trade_left {
+        display: none;
+    }
+
+    .ant-btn.btn-success.earn_btn {
+
+        max-width: calc(100% - 30px);
+    }
+
+    .trade_to_earn_banner {
+        padding-right: 0 !important;
+    }
 }
