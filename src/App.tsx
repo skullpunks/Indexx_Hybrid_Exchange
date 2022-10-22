@@ -28,6 +28,7 @@ import BSTransactionHistoryLayout from './components/BSTransactionHistory/BSTran
 import BSDepositFiatLayout from './components/BSDeposit/BSDepositFiatLayout';
 import BSWithdrawCryptoLayout from './components/BSDepositWithdraw/BSWithdrawCryptoLayout';
 import IndexxTokens from './components/IndexxTokens/IndexxTokens';
+import ComingSoon from './components/ComingSoon/ComingSoon';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
@@ -42,6 +43,7 @@ function App() {
                 <Routes>
                     <Route path="/*" element={<Home />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
+                    <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
                     <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
                     <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login/*" element={<BuySellLogin />} />
@@ -59,6 +61,7 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell/get-started/*" element={<BuySellGetStartedLayout />} />
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
+                    <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/markets" element={<Markets />} />
                     <Route path="/indexx-exchange/trade" element={<TradeChart />} />

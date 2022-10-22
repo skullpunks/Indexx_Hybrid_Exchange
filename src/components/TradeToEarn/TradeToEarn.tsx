@@ -1,8 +1,10 @@
 import { Card, Image, Button, Input } from 'antd'
 import { Divider } from 'antd';
 import { Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import exgcoin from "../../assets/arts/exgcoin.png";
+import logo from "../../assets/arts/logo.png";
 // import exglady from "../../assets/arts/exglady.png";
 import exghands from "../../assets/arts/exghands.png";
 
@@ -17,6 +19,12 @@ import Footer from '../Footer/Footer';
 const { Text } = Typography;
 
 const TradeToEarn = () => {
+  const navigate = useNavigate();
+
+  const navigateUser = (path: any) => {
+    window.localStorage.setItem("redirect", window.location.pathname);
+    navigate(path);
+  }
 
   /* let totalTokensBalInUSD = 0;
    let access_token = String(localStorage.getItem("access_token"));
@@ -46,41 +54,63 @@ const TradeToEarn = () => {
     <>
       <div className='scan-container trade-to-earn flex-direction-column '>
         <br /><br /><br />
-        <p className='card__title' style={{ color: "#5F5F5F", fontSize: "50px", lineHeight: "1em", margin: -19 }}>Trade To Earn </p>
-        <p style={{ marginLeft: 320 }}>&trade;</p>
-        <br></br>
-        <Card>
-          <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "30px" }}>Withdraw Earnings</h2>
-          <Divider />
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
 
-          }}>
-            <Image src={exgcoin} width={120} preview={false}></Image>
-          </div>
-          <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
-          <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>$0</h1>
-          <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:100</Text>
-          <br /> <br></br>
-          <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
-            height: "55px",
-            borderRadius: "5px",
 
-          }}>Withdraw Tokens</Button>
 
-          <br /><br />
 
-          <Input.Group compact style={{ paddingTop: "40px" }}>
-            <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} defaultValue="Enter Wallet Address" />
-            <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
-              height: "55px", borderRadius: "5px",
-            }}>Submit Wallet Address</Button>
-          </Input.Group>
-          <br />
+        {
+          window.localStorage.getItem("user") ?
+            <>
+              <p className='card__title' style={{ color: "#5F5F5F", fontSize: "50px", lineHeight: "1em", margin: -19 }}>Trade To Earn </p>
+              <p style={{ marginLeft: 320 }}>&trade;</p>
+              <br></br>
+              <Card>
+                <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "30px" }}>Withdraw Earnings</h2>
+                <Divider />
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
 
-        </Card>
+                }}>
+                  <Image src={exgcoin} width={120} preview={false}></Image>
+                </div>
+                <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
+                <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>$0</h1>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:100</Text>
+                <br /> <br></br>
+                <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
+                  height: "55px",
+                  borderRadius: "5px",
+
+                }}>Withdraw Tokens</Button>
+
+                <br /><br />
+
+                <Input.Group compact style={{ paddingTop: "40px" }}>
+                  <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} defaultValue="Enter Wallet Address" />
+                  <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
+                    height: "55px", borderRadius: "5px",
+                  }}>Submit Wallet Address</Button>
+                </Input.Group>
+                <br />
+              </Card>
+            </>
+            :
+            <div className='text-center' style={{ maxWidth: 370 }}>
+              <img src={logo} alt="logo" width="150" />
+              <p className='pt-5 pb-5 '>
+                <span className='card__title d-inline-block' style={{ color: "#5F5F5F", fontSize: "55px", lineHeight: "1em" }}>Trade To Earn </span>
+                <sub style={{}}>&trade;</sub>
+              </p>
+              <Button type="primary" shape="round" size="large" className="btn_xl btn-primary" onClick={() => navigateUser("/indexx-exchange/buy-sell/get-started")}>Sign up</Button> <br /><br />
+              <Button type="primary" shape="round" size="large" className="btn_xl btn-primary" onClick={() => navigateUser("/indexx-exchange/buy-sell/login")}>Log In</Button> <br /><br />
+              {/* <Link to="/indexx-exchange/buy-sell/login" className=" orange text-success" style={{ width: 80 }}>Log In</Link> */}
+
+            </div>
+
+        }
+
 
         <Image preview={false} src={exghands} style={{ paddingTop: 100, display: 'flex', justifyContent: 'center', width: 400, alignItems: 'center' }}></Image>
         <Image preview={false} src={no1} style={{ display: 'flex', justifyContent: 'center', width: 500, alignItems: 'center' }}></Image>

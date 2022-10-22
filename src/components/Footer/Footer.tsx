@@ -4,7 +4,8 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Instagram from "../../assets/arts/instagramIcon.svg";
 import Twitter from "../../assets/arts/twitterIcon.svg";
 import YouTube from "../../assets/arts/youtTubeIcon.svg";
-import Reddit from "../../assets/arts/redditIcon.svg";
+// import Reddit from "../../assets/arts/redditIcon.svg";
+import facebook from "../../assets/arts/fb_logo.png";
 import needHelp from "../../assets/arts/needHelp.svg";
 import personFlipCoin from "../../assets/arts/personFlipCoin.svg";
 import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
@@ -21,23 +22,23 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
     const icons = [
         {
             src: Instagram,
-            href: "",
+            href: "https://www.instagram.com/indexx_ai/",
             alt: "Instagram",
         },
         {
             src: Twitter,
-            href: "https://twitter.com/IndexxFinance",
+            href: "https://twitter.com/Indexx_ai",
             alt: "Twitter",
         },
         {
             src: YouTube,
-            href: "",
+            href: "https://www.youtube.com/channel/UCYXrfhPg7jUMBxPEBCEsaFw",
             alt: "You-tube",
         },
         {
-            src: Reddit,
-            href: "",
-            alt: "Reddit",
+            src: facebook,
+            href: "https://www.facebook.com/profile.php?id=100086225564460",
+            alt: "facebook",
         },
     ]
 
@@ -64,7 +65,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                             {icons.map((icon, index) => (
                                 <li key={index} >
                                     <a href={icon.href} target="_blank" rel="noopener noreferrer">
-                                        <img className="social-connect-icons" src={icon.src} alt={icon.alt} /></a>
+                                        <img className="social-connect-icons" src={icon.src} alt={icon.alt} width="35" height="35" /></a>
                                 </li>
                             ))}
                         </ul>
@@ -106,8 +107,8 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                     }
                 </div>
             </div>
-            <div className="copyright_bar ">
-                <p className="copyright_text">
+            <div className="copyright_bar row">
+                <p className="copyright_text text-center">
                     Copyright © 2022 All Rights Reserved by Indexx.
                 </p>
                 <br />

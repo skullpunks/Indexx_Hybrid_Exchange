@@ -30,7 +30,7 @@ const Section1 = () => {
                 </span>
             </div>
             <div className="actions">
-                <Link className="td-none" to="">
+                <Link className="td-none" to="/indexx-exchange/coming-soon?page=Decentralized">
                     <Tooltip title={comingSoonText} color="#fff" key="#fff" >
                         <div className="launch-app-button cut_button">
                             <div className="launch-app-button-text">Decentralized</div>

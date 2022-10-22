@@ -11,6 +11,19 @@ import Timer from "../../utils/Timer";
 
 const BuySellEmailAuth = () => {
     const navigate = useNavigate();
+    const moveToNext = (e: React.FormEvent<HTMLInputElement>) => {
+        const { maxLength, value } = e.currentTarget;
+
+        if (value.length === maxLength) {
+            let next = e.currentTarget.nextElementSibling;
+            (next === null) ?
+                document.getElementById("verify_btn")?.focus()
+                :
+                (next as HTMLElement).focus();
+
+        }
+
+    }
 
     const content = (
         <div className='popover_container' style={{ width: 366 }}>
@@ -42,17 +55,17 @@ const BuySellEmailAuth = () => {
                 <div className="otp_container">
                     <label className="padding-b-1x">Code</label>
                     <div className="d-flex justify-between">
-                        <input type="number" min="1" max="1" />
-                        <input type="number" min="1" max="1" />
-                        <input type="number" min="1" max="1" />
-                        <input type="number" min="1" max="1" />
-                        <input type="number" min="1" max="1" />
-                        <input type="number" min="1" max="1" />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
                     </div>
                 </div>
                 <br />
                 {/* <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button> */}
-                <Button type="primary" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")}>Verify</Button>
+                <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/buy-sell/login")}>Verify</Button>
                 <div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} />)</div>
 
                 <div className="margin-lr-auto padding-tb-2x" style={{ cursor: "pointer" }}><Popover content={content} trigger="click" className="text_link" >Didn’t receive an email?</Popover></div>

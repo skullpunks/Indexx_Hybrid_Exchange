@@ -11,21 +11,21 @@ import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons
 const menuProducts = (<Menu className="main_navigation"
     items={[
         { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> },
+        { key: 1, label: <Link to="/indexx-exchange/coming-soon?page=decentralized">Decentralized</Link> },
         { key: 3, label: <a href="https://tokens.indexx.ai/" target="_blank" rel="noreferrer">indexx Tokens</a> },
-        { key: 1, label: <Link to="">Decentralized</Link> },
     ]}
 />);
 const menuEarn = (<Menu className="main_navigation"
     items={[
         { key: 1, label: <Link to="/indexx-exchange/trade-to-earn">Trade to earn</Link> },
-        { key: 2, label: <Link to="">Farms</Link> },
-        { key: 3, label: <Link to="">Pools</Link> }
+        { key: 2, label: <Link to="/indexx-exchange/coming-soon?page=Farms">Farms</Link> },
+        { key: 3, label: <Link to="/indexx-exchange/coming-soon?page=Pools">Pools</Link> }
     ]}
 />);
 const menuCompany = (<Menu className="main_navigation"
     items={[
         { key: 1, label: <Link to="/indexx-exchange/help">About</Link> },
-        { key: 2, label: <Link to="">Hybrid Exchange</Link> },
+        { key: 2, label: <Link to="/indexx-exchange/coming-soon?page=Hybrid Exchange">Hybrid Exchange</Link> },
         { key: 3, label: <a href="https://register.affiliate.indexx.ai/" target="_blank" rel="noreferrer">Affiliate Program</a> },
         { key: 4, label: <Link to="/indexx-exchange/blog">Blog</Link> }
     ]}
@@ -61,9 +61,9 @@ const Header = () => {
         localStorage.removeItem("user"); //remove one item
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        // localStorage.clear(); //clear all localstorage
-        // window.location.reload();
-        navigate("/indexx-exchange/buy-sell/login");
+        localStorage.clear(); //clear all localstorage
+        window.location.reload();
+        // navigate("/indexx-exchange/buy-sell/login");
 
     }
     const userMenu = (
@@ -146,7 +146,7 @@ const Header = () => {
                         {(location.pathname.includes("help")) &&
                             <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet" onClick={() => window.open(window.location.origin, "_blank")}>Launch App</Button>
                         }
-                        {(location.pathname.includes("buy-sell") || location.pathname.includes("tokens")) &&
+                        {(location.pathname.includes("buy-sell") || location.pathname.includes("tokens") || location.pathname.includes("trade-to-earn")) &&
                             <div className="d-flex flex-align-center">
                                 {(localStorage.getItem("user")) ?
                                     <>
@@ -170,14 +170,6 @@ const Header = () => {
                             </div>
                         }
 
-                        {(location.pathname.includes("trade-to-earn")) &&
-                            <div className="d-flex flex-align-center">
-                                {/* <Link to="/" style={{ color: "#fff", width: 80 }}>Trade To Earn</Link> */}
-                                {/* <Button danger type="primary" shape="round" size="large" className="btn_xl trade_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
-                                <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x buy_crypto_btn" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
-
-                            </div>
-                        }
                         {(location.pathname.includes("swap")) &&
                             <Button type="primary" shape="round" size="large" className="btn_xl header_connect_wallet">Connect Wallet</Button>
                         }

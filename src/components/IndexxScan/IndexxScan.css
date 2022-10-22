@@ -132,6 +132,15 @@
 }
 
 
+.coming_soon {
+    padding-top: 20px;
+}
+
+.coming_soon .page_name {
+    text-transform: capitalize;
+    /* padding-right: 10px; */
+}
+
 
 @media (max-width: 767px) {
     .section-usp {
@@ -149,12 +158,13 @@
     }
 
     .big_trade_font {
-        font-size: 28px;
+        font-size: 55px;
     }
 
     .trade_to_earn_link {
         padding-bottom: 50px;
-        display: inline-block;
+        display: block;
+        padding-top: 100px;
     }
 
     .section-helper-text {
@@ -172,11 +182,13 @@
 
 @media (max-width: 420px) {
 
-    .big_trade_font {
+    /* .big_trade_font {
         font-size: 28px;
-    }
+}
 
-    .font-big {
-        /* font-size: 28px; */
-    }
+.font-big {
+    font-size: 28px;
+}
+
+*/
 }
