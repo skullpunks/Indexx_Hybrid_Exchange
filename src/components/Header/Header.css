@@ -246,8 +246,8 @@
 .index_page_nav {
 
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    /* top: 50%;
+    transform: translateY(-50%); */
 }
 
 .main_navigation .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
@@ -346,4 +346,24 @@
     text-align: center;
     z-index: 99;
     position: absolute;
+}
+
+button.navbar-toggler{
+    width:auto;
+}
+
+@media (max-width: 767px) { 
+    .index_page_nav {
+        justify-content: end;
+    }
+    .main-header {
+        padding: 0 0 !important;
+    }
+    .bg-dark {
+        width:100%;
+    }
+    .hamburger-icon {
+        display: flex;
+        justify-content: end;
+    }
 }
