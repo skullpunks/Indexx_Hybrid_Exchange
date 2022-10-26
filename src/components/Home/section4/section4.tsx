@@ -8,6 +8,7 @@ import indexxai from "../../../assets/indexxai.png";
 import community from "../../../assets/community.png";
 import careers from "../../../assets/careers.png";
 import footer_banner from "../../../assets/arts/footer_banner.png";
+import { Link } from "react-router-dom";
 
 const Section4 = () => {
 
@@ -38,6 +39,7 @@ const Section4 = () => {
             heading: "Dedicated Support",
             info: "Our support team is here to keep you trading happily",
             link: "Get in touch",
+            url: "/indexx-exchange/blog"
 
         },
         {
@@ -45,6 +47,7 @@ const Section4 = () => {
             heading: "indexx.ai  Blog",
             info: "Get the latest news and updates or level up your trading skills",
             link: "Visit the Blog",
+            url: "/indexx-exchange/blog"
 
         },
         {
@@ -52,6 +55,7 @@ const Section4 = () => {
             heading: "Community",
             info: "Join other Binancians for discussions in our community",
             link: "Explore the Community",
+            url: "/indexx-exchange/blog"
 
         },
         {
@@ -59,6 +63,7 @@ const Section4 = () => {
             heading: "Careers",
             info: "Help us to build more opportunities for financial freedom in the United States",
             link: "See Open Positions",
+            url: "/indexx-exchange/blog"
 
         },
     ]
@@ -92,7 +97,7 @@ const Section4 = () => {
                             <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>
-                            <p className="item-link">{item.link}</p>
+                            <Link to={item?.url} className="item-link">{item.link}</Link>
                         </div>
                     ))}
                 </div>

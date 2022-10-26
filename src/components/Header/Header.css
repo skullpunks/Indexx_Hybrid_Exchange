@@ -1,6 +1,6 @@
 .main-header {
     background-color: transparent;
-    position: absolute;
+    position: relative;
     color: white;
     padding: 25px 90px 0 90px;
     padding-top: 0;
@@ -348,22 +348,36 @@
     position: absolute;
 }
 
-button.navbar-toggler{
-    width:auto;
+button.navbar-toggler {
+    width: auto;
 }
 
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
     .index_page_nav {
         justify-content: end;
     }
+
     .main-header {
         padding: 0 0 !important;
     }
-    .bg-dark {
-        width:100%;
+
+    .navbar {
+        width: 100%;
     }
+
     .hamburger-icon {
         display: flex;
         justify-content: flex-end;
+    }
+
+    .navbar-collapse {
+        background-color: rgba(0, 0, 0, 1);
+        box-shadow: 0 0 var(--bs-navbar-toggler-focus-width);
+        padding-left: 15px;
+        border-radius: 5px;
+    }
+
+    .text-white, .nav-link {
+        color: #fff !important;
     }
 }

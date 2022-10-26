@@ -4,7 +4,7 @@ body {
 }
 
 .blog_container {
-    padding-top: 90px;
+    /* padding-top: 90px; */
     margin: 0 64px 64px;
 }
 
@@ -66,34 +66,37 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.padding-0{
+
+.padding-0 {
     padding: 0 0;
 }
 
 @media (max-width: 767px) {
 
-    .blog_container .font_23x,.blog_container .default-link.font_20x,.blog_container .font_20x {
+    .blog_container .font_23x, .blog_container .default-link.font_20x, .blog_container .font_20x {
         font-size: 15px !important;
-       
-       
+
+
     }
+
     .blog_container .font_40x {
 
         font-size: 25px !important;
         text-align: center;
     }
+
     .blog_container {
-        padding-top: 90px;
+        /* padding-top: 90px; */
         margin: 0 19px 19px;
     }
 
-    .blog_container .border-1x.orange,.blog_container .border-1x {
-      
+    .blog_container .border-1x.orange, .blog_container .border-1x {
+
         border: 0 !important;
     }
+
     .font_60x {
         font-size: 35px;
-       
+
     }
 }
-

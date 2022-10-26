@@ -94,7 +94,8 @@
         top: 0;
     }
 
-    .footercentre2 p {
-        font-size: 18px;
+    .footercentre2 p,
+    .copyright_text {
+        font-size: 10px;
     }
 }

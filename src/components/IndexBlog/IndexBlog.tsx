@@ -18,13 +18,13 @@ export const IndexBlog = () => {
         <div>
             <div className='swap_container blog_container' style={{ paddingBottom: 200 }}>
                 <div className="margin-t-2x blog_container_header">
-                    <h1 className='font_60x'>indexx.ai | Blog</h1>
+                    <h1 className='font_60x'>Blog</h1>
                 </div>
                 <div className="margin-t-2x blog_container_main">
                     <div className='d-flex flex-justify-between margin-b-3x padding-b-3x row' onClick={() => onClickHandler("https://medium.com/@Indexx/a-deeper-look-into-what-makes-indexx-work-with-brian-zheng-6cbfae9307b1")}>
-                        <div className='blog_flipicon_image  col-lg-8 col-md-12'><img src={FlipIconGreyBG} alt="personFlipCoin" className='w-100'/></div>
+                        <div className='blog_flipicon_image  col-lg-8 col-md-12'><img src={FlipIconGreyBG} alt="personFlipCoin" className='w-100' /></div>
                         <div className='blog_flipicon_image_content col-lg-4 col-md-12'>
-                            <p className='font_40x padding-b-2x'>A deeper look into What makes Indexx work with Brian Zheng</p>
+                            <p className='font_40x padding-b-2x'>A deeper look into What makes Indexx work.</p>
                             <p className='font_23x'>Indexx 500 tokens offer the low risk, security and simplicity of S&P 500 stock index coupled with the innovative nature of blockchain technology...</p>
                         </div>
                     </div>
