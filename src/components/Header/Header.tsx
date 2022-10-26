@@ -35,7 +35,7 @@ const menuCompany = (<Menu className="main_navigation"
 const menuNavigation = () => {
     return <>
 
-        <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav className="navbar navbar-expand-sm navbar-dark">
             <div className="container-fluid">
                 <div className="width-100 hamburger-icon">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -45,16 +45,19 @@ const menuNavigation = () => {
                 <div className="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuProducts} trigger={['click']}>
-                                <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
-                                    <Space className="nav-link dropdown-toggle">Products</Space> </Link>
-                            </Dropdown></a>
+                            <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer">
+                                <Dropdown overlay={menuProducts} trigger={['click']}>
+                                    <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
+                                        <Space className="nav-link dropdown-toggle">Products</Space> </Link>
+                                </Dropdown>
+                            </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuEarn} trigger={['click']}>
-                                <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
-                                    <Space className="nav-link dropdown-toggle">Earn</Space> </Link>
-                            </Dropdown></a>
+                            <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer">
+                                <Dropdown overlay={menuEarn} trigger={['click']}>
+                                    <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
+                                        <Space className="nav-link dropdown-toggle">Earn</Space> </Link>
+                                </Dropdown></a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuCompany} trigger={['click']}>

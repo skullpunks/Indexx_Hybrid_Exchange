@@ -231,12 +231,18 @@
 }
 
 .text-white {
+    color: #fff !important;
+}
+
+
+.main_navigation .nav-link {
     color: #fff;
 }
 
-.text-white:hover {
+.text-white:hover,
+.main_navigation .nav-link:hover {
     /* color: rgba(255, 255, 255, 0.75); */
-    color: #C8C5C5;
+    color: #C8C5C5 !important;
 }
 
 /* 
@@ -372,9 +378,10 @@ button.navbar-toggler {
 
     .navbar-collapse {
         background-color: rgba(0, 0, 0, 1);
-        box-shadow: 0 0 var(--bs-navbar-toggler-focus-width);
+        /* box-shadow: 0 0 var(--bs-navbar-toggler-focus-width); */
         padding-left: 15px;
         border-radius: 5px;
+        min-height: 400px;
     }
 
     .text-white, .nav-link {
