@@ -233,3 +233,15 @@ export const getUserRewards = async (email: string) => {
     return e.response.data;
   }
 }
+
+export const getUserDetails = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getUserDetails/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getUserDetails)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}

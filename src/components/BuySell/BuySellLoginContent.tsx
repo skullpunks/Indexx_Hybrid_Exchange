@@ -4,7 +4,7 @@ import Email from "../../assets/arts/Email.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginAPI, decodeJWT } from '../../services/api'
+import { loginAPI, decodeJWT, getUserDetails } from '../../services/api'
 import { CheckCircleFilled } from '@ant-design/icons';
 
 interface Props {
@@ -29,7 +29,8 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             console.log(resObj);
             let redirectUrl = window.localStorage.getItem("redirect");
             window.localStorage.removeItem("redirect");
-
+            let userDetails = await getUserDetails(values.email);
+            console.log(userDetails.data);
             (redirectUrl) ?
                 navigate(redirectUrl)
                 :
