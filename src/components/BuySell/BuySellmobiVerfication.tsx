@@ -16,11 +16,11 @@ const BuySellmobiVerfication = () => {
     }
 
     return (
-        <div className='d-flex flex-direction-column'>
+        <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto top_heading'>Confirm Verification</h1>
 
             <div className="bs_container bs_form card">
-                <br />
+              
                 <img src={MobileIcon} alt="MobileIcon" width="58" height="87" className="margin-lr-auto margin-t-1_5x" />
                 <h1 className="margin-lr-auto padding-t-2x">Confirm verification code</h1>
                 <div className="text-center margin-lr-auto verfication_text padding-tb-2x ">

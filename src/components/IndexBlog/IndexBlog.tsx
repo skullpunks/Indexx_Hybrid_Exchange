@@ -28,26 +28,26 @@ export const IndexBlog = () => {
                             <p className='font_23x'>Indexx 500 tokens offer the low risk, security and simplicity of S&P 500 stock index coupled with the innovative nature of blockchain technology...</p>
                         </div>
                     </div>
-                    <div className='d-flex flex-justify-between flex-wrap row'>
-                        <div className=' border-1x margin-b-2x col-lg-6 col-md-1' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-500-and-indexx-cryptos-presale-is-on-160da8cc9f45")}>
+                    <div className='d-flex flex-justify-between flex-wrap row blog_Responsive'>
+                        <div className=' border-1x margin-b-2x col-lg-6 col-md-1 padding-0' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-500-and-indexx-cryptos-presale-is-on-160da8cc9f45")}>
                             <img src={IndexPreSaleIcon} alt="IndexPreSaleIcon" className='width-100' />
                             <p className='font_40x padding-lr-2x padding-t-1x'>Indexx 500 and Indexx Crypto’s presale is ON!</p>
                             <p className='font_23x padding-lr-2x margin-t-2x margin-b-3x '> As per our last announcement, we have some exciting news to share with you all.</p>
                             <span className='font_20x text-center d-block padding-b-1x'>September 13, 2022 - 2 min read</span>
                         </div>
-                        <div className='col-lg-6 col-md-1 border-1x margin-b-2x ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-family-new-products-launching-eb049862a913")}>
+                        <div className='col-lg-6 col-md-1 border-1x margin-b-2x padding-0 ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-family-new-products-launching-eb049862a913")}>
                             <img src={indexFamilyToken} alt="indexFamilyToken" className='width-100' />
                             <p className='font_40x padding-lr-2x padding-t-1x'>Indexx family — New products launching</p>
                             <p className='font_23x padding-lr-2x margin-t-2x margin-b-3x ' > As per our last announcement, we have some exciting news to share with you all.</p>
                             <span className='font_20x text-center d-block padding-b-1x'>August 23, 2022 - 2 min read</span>
                         </div>
-                        <div className='col-lg-6 col-md-1 border-1x margin-tb-2x ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-500-opens-a-new-way-to-index-funds-508eb27a7a15")}>
+                        <div className='col-lg-6 col-md-1 border-1x margin-tb-2x padding-0 ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-500-opens-a-new-way-to-index-funds-508eb27a7a15")}>
                             <img src={indexFund} alt="indexFund" className='width-100' />
                             <p className='font_40x padding-lr-2x padding-t-1x'>Indexx 500 Opens a new way to Index funds</p>
                             <p className='font_23x padding-lr-2x margin-t-2x margin-b-3x ' > 02 August 2022 The launch of a token backed by S&P Holdings and as development is moving forward the hunt for investors to buy...</p>
                             <span className='font_20x text-center d-block padding-b-1x'>August 23, 2022 - 2 min read</span>
                         </div>
-                        <div className='col-lg-6 col-md-1 border-1x margin-tb-2x ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-the-future-of-stock-tokens-an-asset-backed-token-by-s-p-500-holdings-282f6342df8e")}>
+                        <div className='col-lg-6 col-md-1 border-1x margin-tb-2x padding-0 ' onClick={() => onClickHandler("https://medium.com/@Indexx/indexx-the-future-of-stock-tokens-an-asset-backed-token-by-s-p-500-holdings-282f6342df8e")}>
                             <img src={indexFinance} alt="indexFinance" className='width-100' />
                             <p className='font_40x padding-lr-2x padding-t-1x'>Indexx, the future of Stock Tokens — An Asset-Backed token by S&P 500 holdings</p>
                             <p className='font_23x padding-lr-2x margin-t-2x margin-b-3x ' > The Indexx Stock Token is an asset-backed token pegged to the S&P 500.</p>

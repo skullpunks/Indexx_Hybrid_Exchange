@@ -26,14 +26,14 @@ const BuySellMobiAuth = () => {
   const navigate = useNavigate();
   // const { Option } = Select;
   getAllCountries();
-  return (<div className='d-flex flex-direction-column'>
+  return (<div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
     <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
 
     <div className="bs_container bs_form card">
-      <br />
+     
       <img src={MobileIcon} alt="MobileIcon" width="58" height="87" className="margin-lr-auto margin-t-1_5x" />
       <h1 className="margin-lr-auto padding-t-2x">SMS Authentication</h1>
-      <div className="text-center margin-lr-auto  font_20x padding-tb-2x ">
+      <div className="text-center margin-lr-auto  font_20x padding-tb-2x two-factor-text ">
         Enable mobile 2-Factor-Authentication</div>
       <br />
       <div className="padding-b-1x phone_container">

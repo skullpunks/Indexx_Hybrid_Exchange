@@ -40,7 +40,7 @@ const BuySellEmailAuth = () => {
     )
 
     return (
-        <div className='d-flex flex-direction-column'>
+        <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto top_heading'>Verify your Email </h1>
 
             <div className="bs_container bs_form card">

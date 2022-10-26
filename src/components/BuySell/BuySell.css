@@ -2,6 +2,8 @@
     border: 1px solid rgba(246, 96, 54, 0.2);
 }
 
+
+
 .card.bs_container {
     min-height: 500px;
 }
@@ -596,4 +598,56 @@ button.ant-btn-primary [disabled] {
 .top_heading {
     font-size: 48px;
     font-family: AvenirLight;
+}
+
+.responsive_container .card,
+.responsive_container .bs_container {
+    min-width:100%;
+    max-width:100%;
+    margin:19px;
+    
+}
+
+@media (max-width: 767px) {
+
+    .bs_main label, .placeholder_info {
+      
+        color: #5f5f5f !important;
+    }
+
+    .responsive_container .card{
+        border:none;
+    }
+
+    .responsive_container .bs_container.bs_form {
+        padding: 0 16px
+    }
+    .responsive_container .top_heading{
+font-size:35px;
+    }
+    .responsive_container h1{
+        font-size:25px;
+            }
+
+            .responsive_container .secure-steps .font_20x{
+                font-size:13px;
+            }
+
+            .responsive_container .secure-steps .d-flex img{
+                width:40px;
+                height:40px;
+            }
+
+            .two-factor-text{
+                font-size:15px
+            }
+
+            .verfication_text {
+                font-size:11px;
+            }
+            .scan-container.bs_main {
+                padding-top:60px;
+            }
+
+
 }
