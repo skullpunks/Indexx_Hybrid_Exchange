@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import "./Header.css"
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import "./Header.css";
 // import indexText from "../../assets/arts/indexText.svg";
+import { BellOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space } from 'antd';
-import { BellOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
 // import loaderGif from "../../assets/arts/loaderIcon.gif";
 
 
@@ -45,19 +45,19 @@ const menuNavigation = () => {
     <div className="collapse navbar-collapse" id="collapsibleNavbar">
       <ul className="navbar-nav">
         <li className="nav-item">
-          <a className="nav-link" href="#"> <Dropdown overlay={menuProducts} trigger={['click']}>
+          <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuProducts} trigger={['click']}>
             <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
                 <Space className="nav-link dropdown-toggle">Products</Space> </Link>
         </Dropdown></a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#"> <Dropdown overlay={menuEarn} trigger={['click']}>
+          <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuEarn} trigger={['click']}>
             <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
                 <Space className="nav-link dropdown-toggle">Earn</Space> </Link>
         </Dropdown></a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#"> <Dropdown overlay={menuCompany} trigger={['click']}>
+          <a className="nav-link" href="/" target="_blank" rel="noopener noreferrer"> <Dropdown overlay={menuCompany} trigger={['click']}>
             <Link to="" className="text-white font_18x padding-r-1_x nav-item" onClick={e => e.preventDefault()}>
                 <Space className="nav-link dropdown-toggle">Company</Space> </Link>
         </Dropdown></a>
