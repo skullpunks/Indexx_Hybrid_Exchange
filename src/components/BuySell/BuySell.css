@@ -356,16 +356,16 @@ input[type="checkbox"] {
 }
 
 .border-0 .ant-select-selector {
-    border:0 !important;
+    border: 0 !important;
 }
 
-.border-0.ant-select-focused  .ant-select-selector  {
-    box-shadow:none !important;
+.border-0.ant-select-focused .ant-select-selector {
+    box-shadow: none !important;
 }
 
 .ant-select-single .ant-select-selector .ant-select-selection-item {
- font-size:30px;
- color:rgba(18, 18, 18, 0.2);
+    font-size: 30px;
+    color: rgba(18, 18, 18, 0.2);
 }
 
 
@@ -397,8 +397,7 @@ input[type="checkbox"] {
 }
 
 .scan-container.bs_main {
-
-    padding-top: 120px;
+    padding-top: 20px;
 }
 
 

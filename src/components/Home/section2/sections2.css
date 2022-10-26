@@ -44,7 +44,7 @@
 
 .coin-initials {
     color: black;
-    padding: 0 4px;
+    padding: 0 6px;
 }
 
 .price {
@@ -70,7 +70,7 @@
 @media (max-width: 767px) {
     .table-header-element {
         text-align: center;
-        
+
     }
 
     .table-row {
@@ -79,15 +79,15 @@
         justify-content: space-between;
     }
 
-    .table-row>div{
-        margin-right:10px;
+    .table-row>div {
+        margin-right: 10px;
     }
 
     .coinName span {
-      display:none;  
+        display: none;
     }
 
-   
+
 
     .section2-table {
 
