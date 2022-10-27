@@ -623,7 +623,8 @@ button.ant-btn-primary [disabled] {
     }
 
     .responsive_container .card,
-    .responsive_container.card{
+    .responsive_container.card,
+    .responsive_container.card.bs_container, .bs_main>.responsive_container.card{
         border: none;
     }
 
