@@ -18,6 +18,12 @@
   src: url(./assets/fonts/AvenirBlack.ttf) format("truetype");
 }
 
+@import '~antd/dist/antd.css';
+
+html {
+  font-size: 15px;
+}
+
 body {
   margin: 0;
   font-family: AvenirRegular, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -40,6 +46,8 @@ code {
   box-sizing: border-box;
 }
 
+
+
 .flex-align-start {
   align-items: start;
 }
@@ -60,7 +68,6 @@ div.flex-justify-center {
   margin-bottom: 0;
 }
 
-@import '~antd/dist/antd.css';
 
 .card {
   min-width: 420px;
@@ -159,10 +166,10 @@ iframe {
 }
 
 .index_tokens img {
-  width:176px;
-  height:176px;
+  width: 176px;
+  height: 176px;
 }
 
 .font_25x {
-  font-size:25px;
+  font-size: 25px;
 }

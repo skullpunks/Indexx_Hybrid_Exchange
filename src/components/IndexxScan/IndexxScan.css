@@ -1,3 +1,10 @@
+.btn-danger {
+
+    --bs-btn-bg: #f66036;
+    --bs-btn-hover-bg: #d52f01;
+    --bs-btn-active-bg: #f66036;
+}
+
 .scan-container {
     width: 100%;
     display: flex;

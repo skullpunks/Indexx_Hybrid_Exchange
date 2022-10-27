@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/Header/Header";
+// import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
 import BuySell from "./components/BuySell/BuySell";
@@ -29,6 +29,7 @@ import BSDepositFiatLayout from './components/BSDeposit/BSDepositFiatLayout';
 import BSWithdrawCryptoLayout from './components/BSDepositWithdraw/BSWithdrawCryptoLayout';
 import IndexxTokens from './components/IndexxTokens/IndexxTokens';
 import ComingSoon from './components/ComingSoon/ComingSoon';
+import HeaderNew from './components/Header/HeaderNew';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
@@ -39,7 +40,8 @@ function App() {
     return (
         <div>
             <BrowserRouter>
-                <Header />
+                {/* <Header /> */}
+                <HeaderNew />
                 <Routes>
                     <Route path="/*" element={<Home />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />

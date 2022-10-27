@@ -68,7 +68,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='d-flex flex-direction-column'>
                 <h1 className='text-center margin-lr-auto top_heading'>Log In</h1>
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
-                <Link to="" className='default-link border-default w-fit-content margin-lr-auto padding-b-2x margin-b-2x'>https://indexx.ai</Link>
+                <Link to="" className='default-link border-default w-fit-content margin-lr-auto margin-b-2x'>https://indexx.ai</Link>
                 <div className="bs_container bs_form card">
                     <Form
                         onFinish={onFinish}

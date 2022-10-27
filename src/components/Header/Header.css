@@ -1,3 +1,50 @@
+.navbar-dark {
+    --bs-navbar-color: #fff;
+    --bs-navbar-hover-color: #C8C5C5;
+    --bs-navbar-active-color: #C8C5C5;
+    --bs-nav-link-font-size: 15px;
+    --bs-navbar-nav-link-padding-x: 1rem;
+    --bs-navbar-padding-y: 0.8rem;
+}
+
+.dark-menu .dropdown-item {
+    --bs-dropdown-link-hover-bg: rgba(211, 211, 211, 0.42);
+    --bs-dropdown-link-hover-color: #fff;
+    --bs-dropdown-link-active-bg: rgba(211, 211, 211, 0.42);
+    --bs-dropdown-item-padding-y: 0.45rem
+}
+
+.navbar.bg-dark {
+    background-color: #000 !important;
+    background-image: url("../../assets/arts/headerBG.png");
+    height: 90px;
+}
+
+.navbar button {
+    height: 36px;
+    font-size: 1rem;
+}
+
+/* .navbar-collapse.show {
+    padding: calc(var(--bs-gutter-y) * .5) calc(var(--bs-gutter-x) * .5);
+}
+*/
+
+.dark-menu .dropdown-menu {
+    background-color: #171717;
+}
+
+.dark-menu .dropdown-item {
+    --bs-dropdown-link-color: #fff;
+}
+
+.dark-menu .dropdown-toggle::after {
+
+    vertical-align: 0.05em;
+    margin-left: 0.3em;
+}
+
+
 .main-header {
     background-color: transparent;
     position: relative;
@@ -42,7 +89,7 @@
 }
 
 .active {
-    border-bottom: 4px solid #F66036;
+    /* border-bottom: 4px solid #F66036; */
 }
 
 .header-connect-wallet:hover {
@@ -234,16 +281,18 @@
     color: #fff !important;
 }
 
+a.link.text-white:hover {
+    color: #C8C5C5 !important;
+}
 
 .main_navigation .nav-link {
     color: #fff;
 }
 
-.text-white:hover,
+/* .text-white:hover,
 .main_navigation .nav-link:hover {
-    /* color: rgba(255, 255, 255, 0.75); */
     color: #C8C5C5 !important;
-}
+} */
 
 /* 
 .main_navigation {
@@ -376,15 +425,33 @@ button.navbar-toggler {
         justify-content: flex-end;
     }
 
-    .navbar-collapse {
+    /* .navbar-collapse {
         background-color: rgba(0, 0, 0, 1);
-        /* box-shadow: 0 0 var(--bs-navbar-toggler-focus-width); */
         padding-left: 15px;
         border-radius: 5px;
         min-height: 400px;
-    }
+    } */
 
     .text-white, .nav-link {
         color: #fff !important;
     }
+
+    .logo__text {
+        font-size: 20px;
+    }
+
+    .navbar-collapse {
+        background-color: #000;
+        padding: 15px;
+    }
+
+    .navbar.bg-dark {
+        height: 60px;
+    }
+
+    .navbar>.container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
 }
