@@ -94,6 +94,11 @@
         top: 0;
     }
 
+    .flip_person_icon.flip_woman {
+      
+        top: 26px;
+    }
+
     .footercentre2 p,
     .copyright_text {
         font-size: 10px;
