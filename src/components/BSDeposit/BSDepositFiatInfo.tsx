@@ -12,14 +12,14 @@ export const BSDepositFiatInfo = () => {
   return (
 
     <div className='scan-container bs_main wd_container'>
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '>
-        <div className='d-flex flex-align-center top_heading'>Deposit Fiat
-          <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button>
+      <div className='d-flex w_fiat flex-justify-between flex-align-center deposit_ontainer'>
+        <div className='d-flex flex-align-center top_heading'>
+          Deposit Fiat</div>
+        <div className='flex-justify-between flex-grow-1 d-flex'> <div className='order_history'> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
+          <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>
+            Deposit Crypto<ArrowRightOutlined /></Button></div>
         </div>
-
-        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto<ArrowRightOutlined /></Button>
-      </div>
-      <div className='card bs_container bank_info_card  margin-lr-auto margin-t-3x padding-2x  wd_form_container'>
+      <div className='card bs_container bank_info_card  margin-lr-auto margin-t-3x padding-2x  wd_form_container responsive_container'>
         <h1 className='font_28x'>3.Transfer money to process with order</h1>
         <p className='padding-b-2x padding-lr-2x padding-t-1x'>Please transfer your funds (USD) to the account below</p>
         <div className='d-flex flex-align-center  padding-tb-4x border-t-1x flex-justify-between'>

@@ -5,3 +5,20 @@
 .font_28x {
     font-size: 28px;
 }
+
+@media (max-width: 767px) {
+
+    .deposit_ontainer{
+        display: block !important;
+    }
+
+    .deposit_ontainer .order_history button{
+        margin-left:0;
+    }
+    .deposit_ontainer .top_heading{
+        font-size:35px;
+    }
+    .amount_container {
+        font-size:22px;
+    }
+}
