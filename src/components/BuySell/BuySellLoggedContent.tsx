@@ -11,7 +11,9 @@ const BuySellLoggedContent: React.FC<(Props)> = ({ setScreenName }) => {
     console.log(setScreenName);
 
     return (
-        <div className="bs_container bs_form card card_s">
+
+        
+        <div className="bs_container bs_form card card_s col-lg-5 col-md-12 flex-align-center responsive_container">
             <img src={lock} alt="lock" width="40" height="60" className="margin-lr-auto margin-t-1_5x" />
             <h1 className='text-center'>Account Locked</h1>
 
@@ -23,6 +25,7 @@ const BuySellLoggedContent: React.FC<(Props)> = ({ setScreenName }) => {
             <br />
             <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" onClick={() => setScreenName("LoggedTwoFactor")} style={{ height: 55, borderColor: "#F66036", backgroundColor: "#F66036", color: "#fff", fontSize: 20, borderRadius: 5 }} block>Understood</Button>
         </div>
+       
     );
 }
 

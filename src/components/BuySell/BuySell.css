@@ -601,20 +601,29 @@ button.ant-btn-primary [disabled] {
 
 .responsive_container .card,
 .responsive_container .bs_container {
-    min-width: 100%;
-    max-width: 100%;
+   
     margin: 19px;
 
 }
 
 @media (max-width: 767px) {
+    .responsive_container .card,
+.responsive_container .bs_container,
+.responsive_container.card.bs_container, .bs_main>.responsive_container.card {
+   
+   min-width:100%;
+   max-width:100%;
+
+}
+
 
     .bs_main label, .placeholder_info {
 
         color: #5f5f5f !important;
     }
 
-    .responsive_container .card {
+    .responsive_container .card,
+    .responsive_container.card{
         border: none;
     }
 
@@ -645,6 +654,10 @@ button.ant-btn-primary [disabled] {
 
     .verfication_text {
         font-size: 11px;
+    }
+
+    .verfication_text.email_verification {
+        font-size: 13px;
     }
 
     .scan-container.bs_main {

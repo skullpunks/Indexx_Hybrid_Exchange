@@ -65,7 +65,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className=''>
 
-            <div className='d-flex flex-direction-column'>
+            <div className='d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center'>
                 <h1 className='text-center margin-lr-auto top_heading'>Log In</h1>
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
                 <Link to="" className='default-link border-default w-fit-content margin-lr-auto margin-b-2x'>https://indexx.ai</Link>

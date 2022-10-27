@@ -14,9 +14,9 @@ interface Props {
 const BuySellLoggedVerfication: React.FC<(Props)> = ({ setScreenName }) => {
     console.log(setScreenName);
     return (
-        <div className='d-flex flex-direction-column'>
+        <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto'>Verify Identity</h1>
-            <br />
+          
             <div className="bs_container bs_form card">
                 <img src={loggedVerify} alt="loggedVerify" width="80px" height="80px" className="margin-lr-auto" />
                 <div className="font_20x text-center">SSN Authentication</div>

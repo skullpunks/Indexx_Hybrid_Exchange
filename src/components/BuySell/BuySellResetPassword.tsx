@@ -33,7 +33,7 @@ const BuySellResetPassword = () => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-    return (<div className='d-flex flex-direction-column'>
+    return (<div className='d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center'>
         <h1 className='text-center top_heading'>Reset Password</h1>
         <div className="bs_container bs_form card card_s">
 

@@ -13,9 +13,9 @@ interface Props {
 const BuySellLoggedTwoFactor: React.FC<(Props)> = ({ setScreenName }) => {
     console.log(setScreenName);
     return (
-        <div className='d-flex flex-direction-column'>
+        <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto'>Two-Factor Authentication</h1>
-            <br />
+            
             <div className="bs_container bs_form card">
 
                 <img src={MobileIcon} alt="MobileIcon" width="58" height="87" className="margin-lr-auto margin-t-1_5x" />
