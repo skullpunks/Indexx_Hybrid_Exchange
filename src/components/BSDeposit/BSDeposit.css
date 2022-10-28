@@ -15,10 +15,44 @@
     .deposit_ontainer .order_history button{
         margin-left:0;
     }
-    .deposit_ontainer .top_heading{
+   .top_heading{
         font-size:35px;
     }
     .amount_container {
         font-size:22px;
     }
+
+    .d_crypto_Container{
+        display: block !important;
+    }
+    .d_crypto_Container .crypto_con_button {
+        text-align: center;
+    }
+
+    .d_crypto_status {
+        justify-content: space-between;
+    }
+
+    .responsive_recent_deposits .d-flex,
+    .responsive_recent_deposits.d-flex{
+        display:block !important;
+    }
+
+    .responsive_recent_deposits .font_15x {
+        font-size:10px;
+    }
+
+    .wallet_funding {
+        padding-left:20px;
+    }
+    .recent_deposit_container {
+        padding: 0;
+    border: 0;
+    }
+
+    .w_fiat .font_40x {
+        font-size:15px;
+        font-weight:bold;
+    }
+
 }

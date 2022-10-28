@@ -74,6 +74,7 @@
 
     .site_footer_inner {
         flex-direction: column;
+        padding-left:0;
     }
 
     .site_footer>div>div {

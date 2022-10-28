@@ -11,10 +11,16 @@ export const BSDepositWithdarwSelect = () => {
   const navigate = useNavigate();
   return (
     <div className='scan-container bs_main wd_container'>
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span >Withdraw Fiat</span>
-        <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
-        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>Withdraw Crypto<ArrowRightOutlined /></Button></div>
-      <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
+      
+
+        <div className='d-flex w_fiat flex-justify-between flex-align-center deposit_ontainer'>
+        <div className='d-flex flex-align-center top_heading'>
+        Withdraw Fiat</div>
+        <div className='flex-justify-between flex-grow-1 d-flex'> <div className='order_history'> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
+          <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+          Withdraw Crypto<ArrowRightOutlined /></Button></div>
+        </div>
+      <div className='card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <div className=' padding-t-2x'><h1>1.Select Currency</h1></div>
 
         <div className='margin-t-2x'>

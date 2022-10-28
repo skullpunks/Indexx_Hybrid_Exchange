@@ -7,9 +7,14 @@ export const BSDWAmount = () => {
     const navigate = useNavigate();
     return (
         <div className='scan-container bs_main wd_container'>
-            <div className='d-flex w_fiat flex-justify-between flex-align-center '>
-                <div className='d-flex flex-align-center top_heading'><span>Withdraw Fiat</span> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto<ArrowRightOutlined /></Button></div>
-            <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
+             <div className='d-flex w_fiat flex-justify-between flex-align-center deposit_ontainer'>
+           <div className='d-flex flex-align-center top_heading'>
+        Withdraw Fiat</div>
+        <div className='flex-justify-between flex-grow-1 d-flex'> <div className='order_history'> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
+          <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+          Withdraw Crypto<ArrowRightOutlined /></Button></div>
+        </div>
+            <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container'>
                 <h1 className='padding-lr-2x padding-t-2x'>2. Enter Amount</h1>
                 <div className='padding-t-2x'>
                     <div className='d-flex flex-justify-between'><label>Amount</label><label>Transaction Requirements</label></div>
@@ -46,7 +51,7 @@ export const BSDWAmount = () => {
                     </Button>
                 </div>
             </div>
-            <div className='margin-lr-auto'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
+            <div className='margin-lr-auto row'> <p className='margin-lr-auto padding-t-2x max_400 col-md-12'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
             </div>
 
         </div>

@@ -31,11 +31,18 @@ export const BSWithdarwCryptoContent = () => {
   return (
     <div className='scan-container bs_main wd_container'>
 
-      <div className='d-flex w_fiat flex-justify-between flex-align-center '><div className='d-flex flex-align-center top_heading'><span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
-      </div>
-        <Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
+     
 
-      <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
+
+
+        <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'>
+          <div className='d-flex flex-align-center top_heading'>
+         <span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
+         </div>
+        <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
+       </div>
+
+      <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container'>
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
         <div className=''>
           <label>Currency</label>
