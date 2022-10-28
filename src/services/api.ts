@@ -2,7 +2,7 @@ import axios from "axios";
 import decode from 'jwt-decode';
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "http://localhost:3000";
+  baseURL = "http://localhost:3000";
   //baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://67b7-54-250-16-116.ngrok.io";
@@ -271,7 +271,7 @@ export const getAppSettings = async () => {
 }
 
 export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number) => {
-  try{
+  try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
       currencyOut: basecoin,
       currencyIn: quotecoin,
@@ -281,7 +281,7 @@ export const createBuyOrder = async (basecoin: string, quotecoin: string, amount
       email: localStorage.getItem("user")
     });
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (createOrder)");
     console.log(e);
     console.log(e.response.data);
