@@ -9,6 +9,7 @@ import initialTokens from "../../utils/Tokens.json";
 // import { useNavigate } from 'react-router-dom';
 import { isLoggedIn } from "../../services/api";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
+import { useEffect } from 'react';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -57,10 +58,18 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             setScreenName("create");
         }
     }
+
     const [buyVal, setBuyVal] = useState("");
+
     // const [network, setNetwork] = useState<any>(BSvalue?.fromToken);
 
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+
+    useEffect(() => {
+        if (BSvalue && BSvalue.amount !== 0)
+            setBuyVal(BSvalue?.amount.toString());
+
+    }, [BSvalue])
 
     const handleChange = (value: string) => {
         // setNetwork(value)
@@ -76,6 +85,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             setBuyVal(testVal);
         }
     }
+
     return (
         <div><div className="bs_container_main">
             <div className="bs_curreny d-flex position-relative ">
@@ -108,8 +118,6 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                                 initialTokens.map((token, index) => {
 
                                     return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-
-
                                         <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                     </Option>
                                 })
@@ -131,7 +139,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
             </div>
             <div className="bs_footer_action">
-                <button onClick={navigateUser}>Preview Purchase </button>
+                <button onClick={navigateUser} >Preview Purchase </button>
             </div>
         </div>
     )

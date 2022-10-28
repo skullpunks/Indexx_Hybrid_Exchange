@@ -6,7 +6,7 @@ import React from 'react';
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
-
+import initialTokens from "../../utils/Tokens.json";
 
 
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
@@ -16,6 +16,11 @@ interface Props {
 }
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
+
+
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === BSvalue?.fromToken;
+    });
 
     return (
         <div className="bs_container card">
@@ -40,25 +45,17 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
-                    <span>1247.34 USD / ETH</span>
+                    <span>{BSvalue?.amount} USD / {filteredFromArray[0].title}</span>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>0.00908 ETH</span>
+                    <span>0.00908 {filteredFromArray[0].title}</span>
                 </div>
-                {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
-                        <div className="bs_token_left d-flex justify-between">
-                            <div className="bs_token_num d-flex flex-align-center" >
-                                <img src={ethereum} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                                ETH  <span className="token_grey">Ethereum</span><a className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</a>
-                            </div>
-                        </div>
-                        <div className="d-flex">  <div style={{
-                            fontSize: "10px",
-                            paddingTop: "7px",
-                            paddingRight: "4px"
-                        }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
-                    </div> */}
+                <div className='d-flex' style={{
+                    justifyContent: "flex-end"
+                }}> <small>Transaction/Admin Fee: 0.05% </small></div>
+
+
                 <div className="footer bs_footer_action">
 
 

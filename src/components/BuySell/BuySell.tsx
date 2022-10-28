@@ -20,15 +20,9 @@ const BuySell = () => {
 
   return (
     <div className='swap_container' > <br />
-      {/* <SwapFromContext.Provider value={{ fromToken, setFromToken }} >
-        <SwapToContext.Provider value={{ toToken, setToToken }} >
-        {status === "" && <BuySellMain setStatus={setStatus} />}
-        </SwapToContext.Provider>
-      </SwapFromContext.Provider> */}
 
       <BSProvider >
         {status === "" && <BuySellMain setStatus={setStatus} />}
-
       </BSProvider>
       <Footer />
     </div>

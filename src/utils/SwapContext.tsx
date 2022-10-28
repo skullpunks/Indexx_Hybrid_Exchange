@@ -30,6 +30,7 @@ export type BuySellData = {
   fromToken: string;
   toToken: string;
   amount: number;
+  toAmount: number;
   fee: number;
 }
 
@@ -64,6 +65,7 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
     fromToken: "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
     toToken: "0xa18f33e2C63C0A781f6836f9Ae8F5f6517Ce4e90",
     amount: 0,
+    toAmount: 0,
     fee: 0.05
   });
 

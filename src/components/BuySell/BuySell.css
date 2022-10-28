@@ -398,7 +398,7 @@ input[type="checkbox"] {
     color: #f6603653;
 }
 
-.scan-container.bs_main {
+.scan-container.bs_main, .bs_wallet {
     padding-top: 120px;
 }
 

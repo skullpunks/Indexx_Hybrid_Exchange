@@ -11,7 +11,7 @@ import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
 const BSWallet = () => {
     return (
-        <div className='bs_wallet' style={{ paddingTop: 25 }}>
+        <div className='bs_wallet'>
             <div className='d-flex bs_wallet_top'>
                 <div>
                     <Link to="" className='font_15x text-white' ><CheckCircleOutlined className='padding-r-2x margin-r-0_5x' />Create account</Link>
