@@ -5,6 +5,7 @@ import React from 'react';
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+import { BSContext, BSContextType } from '../../utils/SwapContext';
 
 
 
@@ -14,6 +15,7 @@ interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
+    const { BSvalue } = React.useContext(BSContext) as BSContextType;
 
     return (
         <div className="bs_container card">
@@ -30,7 +32,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
+                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
                     </div>
                     <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />

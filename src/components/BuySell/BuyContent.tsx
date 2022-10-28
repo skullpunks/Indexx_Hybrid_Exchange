@@ -8,6 +8,7 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from "../../utils/Tokens.json";
 // import { useNavigate } from 'react-router-dom';
 import { isLoggedIn } from "../../services/api";
+import { BSContext, BSContextType } from '../../utils/SwapContext';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -48,17 +49,25 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     const navigateUser = () => {
         if (isLoggedIn()) {
             // navigate("./")
+            if (setBSvalue && BSvalue) {
+                setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
+            }
             setScreenName("confirmPurchase");
         } else {
             setScreenName("create");
         }
     }
     const [buyVal, setBuyVal] = useState("");
-    const [network, setNetwork] = useState<any>("0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A");
+    // const [network, setNetwork] = useState<any>(BSvalue?.fromToken);
+
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
 
     const handleChange = (value: string) => {
-        setNetwork(value)
-        console.log(`selected ${value}`);
+        // setNetwork(value)
+        if (setBSvalue && BSvalue) {
+            setBSvalue({ ...BSvalue, fromToken: value });
+        }
+        // console.log(`selected ${value}`);
     };
     const updateBuyVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";
@@ -92,7 +101,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_token_left d-flex justify-between">
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
                         <Select className='width-100 border-0'
-                            onChange={handleChange} value={network}>
+                            onChange={handleChange} value={BSvalue?.fromToken}>
 
 
                             {

@@ -39,7 +39,7 @@ export const BSDepositCryptoSelect = () => {
 
       <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'><div className='d-flex flex-align-center top_heading'>
         <span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
-       </div>
+      </div>
         <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
       </div>
 
@@ -115,18 +115,18 @@ export const BSDepositCryptoSelect = () => {
 
 
       </div>
-      <div className='w_fiat'>
+      <div className='w_fiat pt-5'>
         <h1 className='font_48x font_40x padding-b-1x'>Recent Deposit</h1>
         <div className='recent_deposit_container border-1x padding-2x '>
 
           <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="30" height="30" /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
           <div className='d-flex flex-justify-between padding-t-1x responsive_recent_deposits '>
-            
+
             <div className='d-flex '><div className='wallet_funding'>
               <div className='font_15x'>2022-10-03</div>
               <div className='font_15x '><span className='brand_opacity_5'>Deposit</span> wallet Funding Wallet</div>
             </div>
-            <div className='font_15x padding-l-2x padding-b-2x'><span className='brand_opacity_5'>Network</span> BSC</div></div>
+              <div className='font_15x padding-l-2x padding-b-2x'><span className='brand_opacity_5'>Network</span> BSC</div></div>
             <div className='font_15x'><span className='brand_opacity_5 '>Address</span> 0x56092d7daffc1691662e7383c8ebc5f75247ca19<LinkOutlined className='margin-l-0_5x brand_opacity_5' /><img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /></div>
             <div className='font_15x'><span className='brand_opacity_5 '>TxID</span> 0x56092d7daffc....19<LinkOutlined className='margin-l-0_5x brand_opacity_5' /><img src={copyIcon} alt="QRCodeIcon" width="11" height="11" className='margin-l-0_5x' /></div>
           </div>

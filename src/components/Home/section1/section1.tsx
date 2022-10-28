@@ -12,7 +12,7 @@ const Section1 = () => {
             <div>
                 <img src={IndexxText} alt="Indexx Logo" className="center-Image" />
             </div>
-            <div className="section-heading" style={{ color: "rgba(255, 255, 255, 0.6)" }}>Swap, Buy and Sell Cryptocurrency</div>
+            <div className="section-heading" style={{ color: "rgba(255, 255, 255, 0.6)" }}>Cryptocurrency Exchnage</div>
             <div className="section-helper-text">Hybrid Platform</div>
             <div className="section-usp" >
                 <span className="font-big">

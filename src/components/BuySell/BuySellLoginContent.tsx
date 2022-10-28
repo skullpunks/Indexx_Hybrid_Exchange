@@ -34,7 +34,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             (redirectUrl) ?
                 navigate(redirectUrl)
                 :
-                navigate("/indexx-exchange/buy-sell")
+                window.location.href = "/indexx-exchange/buy-sell" // navigate("/indexx-exchange/buy-sell")
 
         } else {
             console.log(res.data);

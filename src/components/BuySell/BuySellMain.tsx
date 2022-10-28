@@ -64,7 +64,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
                     <div className='centered' style={{ paddingBottom: 180 }}>
-                        <img src={personFlipIconGold} alt="person Flip Icon Gold" />
+                        <img className='mw-100' src={personFlipIconGold} alt="person Flip Icon Gold" />
                     </div>
                     :
                     <></>
