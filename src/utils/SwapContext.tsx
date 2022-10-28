@@ -32,6 +32,7 @@ export type BuySellData = {
   amount: number;
   toAmount: number;
   fee: number;
+  orderType: string;
 }
 
 export type BSContextType = {
@@ -66,7 +67,8 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
     toToken: "0xa18f33e2C63C0A781f6836f9Ae8F5f6517Ce4e90",
     amount: 0,
     toAmount: 0,
-    fee: 0.05
+    fee: 0.05,
+    orderType: "Buy"
   });
 
   return <BSContext.Provider value={{ BSvalue, setBSvalue }}>{children}</BSContext.Provider>;
