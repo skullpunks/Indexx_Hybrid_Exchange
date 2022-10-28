@@ -53,6 +53,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
             }
+            console.log(BSvalue);
             setScreenName("confirmPurchase");
         } else {
             setScreenName("create");
@@ -76,7 +77,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value });
         }
-        // console.log(`selected ${value}`);
+        console.log(`selected ${value}`);
+        console.log(BSvalue);
     };
     const updateBuyVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";

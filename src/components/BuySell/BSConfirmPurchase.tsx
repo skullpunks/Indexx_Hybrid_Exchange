@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
@@ -7,20 +7,52 @@ import React from 'react';
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-
+import { getCoinPriceByName, getAppSettings, createBuyOrder } from '../../services/api';
 
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
+let priceData: any = {};
+let appSettingArr: any[] = [];
+
+
+
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
-
 
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
+
+    const getPricesData = async () => {
+        const res = await getCoinPriceByName(String(filteredFromArray[0].title));
+        priceData = res.data;
+        console.log(priceData);
+        setTotalAmountToPay(priceData * Number(BSvalue?.amount));
+    }
+    getPricesData();
+    const getAllSetting = async () => {
+        const res = await getAppSettings();
+        appSettingArr = res.data;
+        let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
+        setAdminFees(adminFees.value)
+    }
+    const [adminFee, setAdminFees] = useState("");
+    getAllSetting();
+    const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+
+    const openStipePayment = async () => {
+        let res = await createBuyOrder(filteredFromArray[0].title, 'USD', Number(BSvalue?.amount), priceData);
+        if (res.status === 200) {
+            // route to new page by changing window.location
+            window.open("https://buy.stripe.com/test_14k3dEgSm2Zb2Iw289", "_self") //to open new page
+        } else {
+            alert("Failed to create an order");
+        }
+    }
+
 
     return (
         <div className="bs_container card">
@@ -49,17 +81,19 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>0.00908 {filteredFromArray[0].title}</span>
+                    <span>{Math.round(totalAmountToPay * 100) / 100} {filteredFromArray[0].title}</span>
                 </div>
                 <div className='d-flex' style={{
                     justifyContent: "flex-end"
-                }}> <small>Transaction/Admin Fee: 0.05% </small></div>
+                }}> <small>Transaction/Admin Fee: {adminFee}</small></div>
 
 
                 <div className="footer bs_footer_action">
-
-
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button>
+                    {Number(BSvalue?.amount) > 50 &&
+                        <h6>Rewards Applied for this order: {(Math.round(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
+                    }
+                    {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => openStipePayment()}> Confirm Purchase (11s)</Button>
                 </div>
             </div>
 

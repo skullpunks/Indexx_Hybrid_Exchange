@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from 'jwt-decode';
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // baseURL = "http://localhost:3000";
-  baseURL = "https://67b7-54-250-16-116.ngrok.io";
+   baseURL = "http://localhost:3000";
+  //baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://67b7-54-250-16-116.ngrok.io";
 }
@@ -52,7 +52,7 @@ export const logoutAPI = async () => {
 
 export const getCountries = async () => {
   try {
-    const result = await API.get("/api/v1/inex/getCountries");
+    const result = await API.post("/api/v1/inex/getCountries");
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getCountriesAPI)");
@@ -89,7 +89,7 @@ export const verifyEmailCode = async (code: string) => {
 
 export const getIndexxTokenPrices = async () => {
   try {
-    const result = await API.get("/api/v1/inex/price/indexx");
+    const result = await API.post("/api/v1/inex/price/indexx");
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -104,7 +104,7 @@ export function getJwtToken() {
   return localStorage.getItem("access_token");
 }
 
-export function etRefreshToken() {
+export function getRefreshToken() {
   var token = localStorage.getItem("refresh_token");
   return token;
 }
@@ -128,7 +128,7 @@ export interface TokenLite {
 
 export const getWalletBalance = async (email: string, coin: string) => {
   try {
-    const result = await API.get("/api/v1/inex/getCountries");
+    const result = await API.post("/api/v1/inex/getCountries");
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getCountriesAPI)");
@@ -145,7 +145,7 @@ export function decodeJWT(access_token: string) {
 
 export const getUserWallets = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getUserWallets/${email}`);
+    const result = await API.post(`/api/v1/inex/user/getUserWallets/${email}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserWallets)");
@@ -155,23 +155,23 @@ export const getUserWallets = async (email: string) => {
   }
 }
 
-export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
-  try {
-    const result = await API.post("/api/v1/inex/order/buy", {
-      basecoin,
-      quotecoin,
-      amount,
-      price,
-      email
-    });
-    return result.data;
-  } catch (e: any) {
-    console.log("FAILED: unable to perform API request (createBuyOrder)");
-    console.log(e);
-    console.log(e.response.data);
-    return e.response.data;
-  }
-}
+// export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+//   try {
+//     const result = await API.post("/api/v1/inex/order/buy", {
+//       basecoin,
+//       quotecoin,
+//       amount,
+//       price,
+//       email
+//     });
+//     return result.data;
+//   } catch (e: any) {
+//     console.log("FAILED: unable to perform API request (createBuyOrder)");
+//     console.log(e);
+//     console.log(e.response.data);
+//     return e.response.data;
+//   }
+// }
 
 export const createSellOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
   try {
@@ -212,7 +212,7 @@ export const createConvertOrder = async (basecoin: string, quotecoin: string, am
 
 export const getAllTransactions = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getTransactions/${email}`);
+    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getTransactions)");
@@ -224,7 +224,7 @@ export const getAllTransactions = async (email: string) => {
 
 export const getUserRewards = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getUserRewards/${email}`);
+    const result = await API.post(`/api/v1/inex/user/getUserRewards/${email}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserRewards)");
@@ -236,10 +236,53 @@ export const getUserRewards = async (email: string) => {
 
 export const getUserDetails = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getUserDetails/${email}`);
+    const result = await API.post(`/api/v1/inex/user/getUserDetails/${email}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserDetails)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const getCoinPriceByName = async (coin: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/basic/getcoinpirce/${coin}`);
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getCoinPriceByName)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const getAppSettings = async () => {
+  try {
+    const result = await API.post("/api/v1/inex/basic/appSettings");
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (appSettings)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number) => {
+  try{
+    const result = await API.post("/api/v1/inex/order/createOrder", {
+      currencyOut: basecoin,
+      currencyIn: quotecoin,
+      amount: amount,
+      price: price,
+      orderType: "Buy",
+      email: localStorage.getItem("user")
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

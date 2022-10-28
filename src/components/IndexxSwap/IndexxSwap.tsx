@@ -14,7 +14,7 @@ const IndexxSwap = () => {
     const [status, setStatus] = useState("");
     const [tokenType, setTokenType] = useState("from");
     const [fromToken, setFromToken] = useState("0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A");
-    const [toToken, setToToken] = useState("0xa18f33e2C63C0A781f6836f9Ae8F5f6517Ce4e90");
+    const [toToken, setToToken] = useState("IN500");
 
     return (
         <div className='swap_container' style={{ backgroundImage: `url(${bgContainer})` }}> <br />

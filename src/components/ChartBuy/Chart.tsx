@@ -3,10 +3,24 @@ import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import ArrowLeft from "../../assets/arts/ArrowLeft.svg";
 // import ArrowRight from "../../assets/arts/ArrowRight.svg";
-import curvedChart from "../../assets/arts/curvedChart.svg";
-import "./Chart.css";
 import { Segmented } from 'antd';
+import { useState } from "react";
+import curvedChart from "../../assets/arts/curvedChart.svg";
+import { getAppSettings } from '../../services/api';
+import "./Chart.css";
+
+let appSettingArr: any[] = [];
+
+
 const Chart = () => {
+    const getAllSetting = async () => {
+        const res = await getAppSettings();
+        appSettingArr = res.data;
+        let in500Obj = appSettingArr.find((item: any) => item.key === "Indexx500Price");
+        setBuyVal(in500Obj.value)
+    }
+    const [buyVal, setBuyVal] = useState("");
+    getAllSetting();
     return (
         <div className='card chart_mobile d-none d-md-flex  ' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
             <div className="chart_header d-flex flex-align-center">
@@ -21,10 +35,10 @@ const Chart = () => {
             <div className="Chart_inner">
                 <div className="chart_inner_left">
                     <div className="chart_inner_left_top d-flex flex-align-center">
-                        <div style={{ fontSize: 45, color: "#5f5f5f" }}>$257.04 </div>
+                        <div style={{ fontSize: 45, color: "#5f5f5f" }}>${buyVal} </div>
                         {/* <div style={{ fontSize: 30, color: "rgba(95, 95, 95, 0.5)", display: "flex", alignItems: "end" }}>IN500/IUSD+</div> */}
                         <div className="chart_inner_middle">
-                            -5.274%
+                            -0.274%
                         </div>
                     </div>
                     {/* <div style={{ color: "#006DFF", fontSize: 13, paddingTop: 2 }}>Sep 15, 2022, 06:55 AM</div> */}
