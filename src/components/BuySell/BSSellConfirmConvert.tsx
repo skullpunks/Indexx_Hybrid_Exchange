@@ -1,13 +1,14 @@
 import { Button } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import "./BS-Sell.css";
-
-// import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { BSContext, BSContextType } from '../../utils/SwapContext';
+import initialTokens from "../../utils/Tokens.json";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -15,26 +16,34 @@ interface Props {
 const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // const BSSellConfirmConvert: React.FC = () => {
     // console.log(setStatus);
+    const navigate = useNavigate();
+    const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === BSvalue?.fromToken;
+    });
+    const navigateBak = () => {
+        navigate("indexx-exchange/buy-sell?type=sell");
+        setScreenName("");
+    }
+
     return (
         <div className="bs_container card sell_screens">
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span style={{ fontSize: 20, paddingRight: 10 }}>&#60;</span>
+                    <span className='font_20x pe-2' onClick={navigateBak}>&#60;</span>
                     Confirm Sell
                 </h1>
-                {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}
             </div>
 
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative padding-lr-2x  ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-                        <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                        <input placeholder="0" className="input_currency" type="text" value="22.220" />
+                        <span className="font_20x" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
+                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
                     </div>
                     <span className="font_20x" style={{
-                        position: "absolute", bottom: "38px", transform: "translatex(50%)",
-                        width: "100%", fontSize: "12px"
+                        position: "absolute", bottom: "38px", left: "50%", fontSize: "12px"
                     }} >$ 1</span>
                     <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "24px", top: "60%" }} />
@@ -43,7 +52,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className='padding-lr-2x font_15x padding-b-2x padding-t-2x'>
                     <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
-                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / BTC</span></div>
+                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / {filteredFromArray[0].title}</span></div>
                     <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>1.00 USD</span></div>
                     <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>0 USD</span></div>
 
@@ -68,7 +77,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 
