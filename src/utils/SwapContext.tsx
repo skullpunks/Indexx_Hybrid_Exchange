@@ -28,6 +28,7 @@ export const useToTokenContext = () => useContext(SwapToContext);
 
 export type BuySellData = {
   fromToken: string;
+  fromTitle: string;
   toToken: string;
   amount: number;
   toAmount: number;
@@ -64,11 +65,12 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
 
   const [BSvalue, setBSvalue] = useState<BuySellData>({
     fromToken: "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
+    fromTitle: "IN500",
     toToken: "IN500",
     amount: 0,
     toAmount: 0,
     fee: 0.05,
-    orderType: "Buy"
+    orderType: "buy"
   });
 
   return <BSContext.Provider value={{ BSvalue, setBSvalue }}>{children}</BSContext.Provider>;

@@ -47,13 +47,13 @@ const menu = (
 );
 const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     // const navigate= useNavigate();
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const navigateUser = () => {
         if (isLoggedIn()) {
             // navigate("./")
             if (setBSvalue && BSvalue) {
-                setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
+                setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) | 0 });
             }
-            console.log(BSvalue);
             setScreenName("confirmPurchase");
         } else {
             setScreenName("create");
@@ -64,7 +64,6 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
     // const [network, setNetwork] = useState<any>(BSvalue?.fromToken);
 
-    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
 
     useEffect(() => {
         if (BSvalue && BSvalue.amount !== 0)
@@ -114,8 +113,6 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
                         <Select className='width-100 border-0'
                             onChange={handleChange} value={BSvalue?.fromToken}>
-
-
                             {
                                 initialTokens.map((token, index) => {
 

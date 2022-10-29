@@ -48,7 +48,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <></>
                 }
             </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 <div className="bs_token_left d-flex justify-between">
                     <div className="bs_token_num d-flex flex-align-center" >
                         {/* <img src={require(`../../assets/token-icons/${fromImage}.png`).default}  */}
@@ -63,7 +63,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
             </div>
 
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 <div className="bs_token_left d-flex justify-between">
                     <div className="bs_token_num d-flex flex-align-center" >
                         <img src={bsDollar} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />

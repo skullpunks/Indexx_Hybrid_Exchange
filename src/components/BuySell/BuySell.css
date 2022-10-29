@@ -580,7 +580,7 @@ button.ant-btn-primary [disabled] {
 }
 
 .bs_curreny_left>input.input_currency {
-    max-width: 200px;
+    max-width: 300px;
     font-size: 60px;
 }
 
