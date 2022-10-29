@@ -19,12 +19,49 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 
 }
 
+
+const Links = [
+    {
+        label: "Swap",
+        value: "swap",
+        url: "/indexx-exchange/swap"
+    },
+    {
+        label: "Buy & Sell",
+        value: "buy-sell",
+        url: "/indexx-exchange/buy-sell"
+    },
+    {
+        label: "Trade to Earn",
+        value: "trade-to-earn",
+        url: "/indexx-exchange/trade-to-earn"
+    },
+    {
+        label: "Markets",
+        value: "markets",
+        url: "/indexx-exchange/markets"
+    },
+    {
+        label: "Tokens",
+        value: "tokens",
+        url: "/indexx-exchange/tokens"
+    }
+]
+
+const showText: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.label);
+const showUrl: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.url);
+
+
 function HeaderNew() {
     let title = <>{localStorage.getItem("user")}</>
     return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
                 <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
+                {((window.location.pathname.includes("get-started")) || (window.location.pathname.includes("login"))) ?
+                    <></> :
+                    <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{showText[0]}</Nav.Link>
+                }
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

@@ -5,11 +5,16 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { Link } from 'react-router-dom';
+import { Select } from 'antd';
+import initialTokens from "../../utils/Tokens.json";
+import { BSContext, BSContextType } from '../../utils/SwapContext';
+// import { Option } from 'antd/lib/mentions';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
     const [flag, setFlag] = useState(false);
     const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
@@ -29,6 +34,16 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
 
     }
+
+    const handleChange = (value: string) => {
+        // setNetwork(value)
+        if (setBSvalue && BSvalue) {
+            setBSvalue({ ...BSvalue, fromToken: value });
+        }
+        console.log(`selected ${value}`);
+        console.log(BSvalue);
+    };
+
     return (
         <div>
 
@@ -49,18 +64,30 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 }
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
-                <div className="bs_token_left d-flex justify-between">
+
+                <Select className='width-100 border-0'
+                    onChange={handleChange} value={BSvalue?.fromToken}>
+                    {
+                        initialTokens.map((token, index) => {
+
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                            </Select.Option>
+                        })
+                    }
+
+                </Select>
+                {/* <div className="bs_token_left d-flex justify-between">
                     <div className="bs_token_num d-flex flex-align-center" >
-                        {/* <img src={require(`../../assets/token-icons/${fromImage}.png`).default}  */}
                         <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
                         IN500  <span className="token_grey">Index500</span><Link className="font_15x bs_link padding-l-2x" to="" style={{ paddingTop: "5px", }}>Max</Link>
                     </div>
-                </div>
-                <div className="d-flex">  <div style={{
+                </div> */}
+                {/* <div className="d-flex">  <div style={{
                     fontSize: "10px",
                     paddingTop: "7px",
                     paddingRight: "4px"
-                }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div>
+                }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div> */}
             </div>
 
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>

@@ -90,7 +90,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div><div className="bs_container_main">
             <div className="bs_curreny d-flex position-relative ">
-                <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)" }}>
+                <div className="bs_curreny_left padding-b-2x flex-align-center" style={{ transform: "scale(1)" }}>
                     <span className="font_20x">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
                     <input placeholder="0" className="input_currency" type="text" value={buyVal} onChange={updateBuyVal} />
