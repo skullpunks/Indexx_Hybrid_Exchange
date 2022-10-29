@@ -57,7 +57,8 @@ const BSWalletTable = () => {
             sorter: {
                 compare: (a, b) => parseFloat(a.coinBalanceInBTC) - parseFloat(b.coinBalanceInBTC),
                 multiple: 2,
-            }
+            },
+            responsive: ["sm"],
             // render: (_, record) => {
             //     let opts = { danger: false, success: false };
             //     if (parseFloat(record.DailyChange) > 0) {
@@ -80,6 +81,7 @@ const BSWalletTable = () => {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
                 multiple: 1,
             },
+            responsive: ["sm"],
         },
 
 

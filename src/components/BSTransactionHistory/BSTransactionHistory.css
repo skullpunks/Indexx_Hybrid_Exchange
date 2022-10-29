@@ -38,3 +38,31 @@
 .transaction_filters>div>.ant-select {
     width: calc(100% - 20px);
 }
+
+.large_card .reset_button {
+    top: 41px;
+    right: 0;
+    margin-top: 50px;
+}
+
+
+
+@media (max-width: 767px) {
+    .transaction_crypto_history th{
+display: none;
+    }
+    .large_card {
+        max-width:90%;
+    }
+
+    .transaction_crypto_history .ant-table-tbody > tr > td:last-child{
+        text-align:end;
+    }
+    .transaction_crypto_history .ant-table-tbody > tr > td {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
+        min-width:97px;
+    }
+}

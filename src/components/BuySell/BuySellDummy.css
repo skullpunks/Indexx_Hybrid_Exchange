@@ -89,3 +89,24 @@
     right: 0;
     top: 20px;
 }
+
+@media (max-width: 767px) {
+    .bs_wallet_top{
+        max-width:90%;
+        display: block !important;
+    }
+    .bs_wallet_top div:nth-child(2) a{
+        margin-left: 0;
+    }
+    .bs_wallet_buttons {
+        position: inherit;
+       
+    }
+    .bs_wallet_table table th,
+    .bs_wallet_table table td{
+        padding:16px 8px;
+    }
+    h1{
+        font-size:25px;
+    }
+}

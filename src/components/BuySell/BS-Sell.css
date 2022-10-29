@@ -3,7 +3,7 @@
 }
 
 .medium_card .light_button, .light_button, .light_button:hover, .light_button:focus, .light_button:active {
-    padding: 6px 15px 10px 40px;
+    padding: 6px 15px 10px 40px !important;
     background-repeat: no-repeat;
     background-position: left 10px center;
 }

@@ -7,7 +7,7 @@ const BSWalletTop = () => {
     return (
         <>
             <div className='border-b-1x orange width-100 padding-t-2x'>
-                <h1 className='padding-l-3x'>Funding</h1>
+                <h1 className='padding-l-3x padding-b-1x'>Funding Wallet</h1>
             </div>
             <div className='padding-t-1x width-100 bs_wallet_top_banner position-relative' >
                 <h2>Estimated Balance</h2>
@@ -16,7 +16,7 @@ const BSWalletTop = () => {
                     <h1 className='margin-b-0'>11.33</h1>
                     <img className='padding-l-1x' src={openEye} alt="eye" />
                 </div>
-                <div className='bs_wallet_buttons d-flex'>
+                <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}
                     {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
                     <Button type="primary" className='margin-r-1x buy_crypto_btn' danger onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>

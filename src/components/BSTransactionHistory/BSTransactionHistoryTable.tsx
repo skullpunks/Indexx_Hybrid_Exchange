@@ -31,33 +31,61 @@ interface DataType {
 }
 
 const columns: ColumnsType<DataType> = [
+
+    {
+        title: "Time Type",
+        render: (record) => (
+          <React.Fragment>
+            {record.type}
+            <br />
+            {record.time}
+          </React.Fragment>
+        ),
+        responsive: ["xs"]
+      },
+      {
+        title: "Amount Asset",
+        render: (record) => (
+          <React.Fragment>
+            {record.amount}
+            
+            {record.asset}
+          </React.Fragment>
+        ),
+        responsive: ["xs"]
+      },
     {
         title: 'Time',
         dataIndex: 'time',
         key: 'time',
         render: text => <span>{text}</span>,
+        responsive: ["sm"],
     },
 
     {
         title: 'Type',
         dataIndex: 'type',
         key: 'type',
+        responsive: ["sm"]
     },
     {
         title: 'Deposit Wallet',
         dataIndex: 'wallet',
         key: 'wallet',
         render: text => <span>{text}</span>,
+        responsive: ["sm"],
     },
     {
         title: 'Asset',
         key: 'asset',
-        dataIndex: 'asset'
+        dataIndex: 'asset', 
+        responsive: ["sm"],
     },
     {
         title: 'Amount',
         key: 'amount',
-        dataIndex: 'amount'
+        dataIndex: 'amount',
+         responsive: ["sm"],
     },
     {
         title: 'TxID',
@@ -71,6 +99,7 @@ const columns: ColumnsType<DataType> = [
                 </span>
             </span>
         ),
+        responsive: ["sm"],
     },
     {
         title: 'Destination',
@@ -83,6 +112,7 @@ const columns: ColumnsType<DataType> = [
                 </span>
             </span>
         ),
+        responsive: ["sm"],
     },
 ];
 
@@ -114,7 +144,7 @@ const data: DataType[] = [
 
 const BSTransactionHistoryTable: React.FC = () => {
     return (
-        <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x'>
+        <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x '>
             <div className='d-flex transaction_filters margin-b-3x'>
                 <div>
                     <label>Type</label> <br />
@@ -124,7 +154,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                         <Option value="withdraw">Withdraw</Option>
                     </Select>
                 </div>
-                <div>
+                <div className='d-md-block d-none'>
                     <label>Time</label> <br />
                     <Select defaultValue="30" onChange={handleChange}>
                         <Option value="all">All</Option>
@@ -133,7 +163,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                         <Option value="90">Past 90 days</Option>
                     </Select>
                 </div>
-                <div>
+                <div className='d-md-block d-none'>
                     <label>Asset</label> <br />
                     <Select defaultValue="all" onChange={handleChange}>
                         <Option value="all">All</Option>
@@ -141,7 +171,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                         <Option value="BTC">BTC <span>Bitcoin</span></Option>
                     </Select>
                 </div>
-                <div>
+                <div className='d-md-block d-none'>
                     <label>Status</label> <br />
                     <Select defaultValue="completed" onChange={handleChange}>
                         <Option value="all">All</Option>
@@ -149,7 +179,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                         <Option value="pending">Pending</Option>
                     </Select>
                 </div>
-                <div>
+                <div className='d-md-block d-none'>
                     <label>TxID</label> <br />
                     <Select
                         showSearch
@@ -167,7 +197,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                     </Select>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data} className="transaction_crypto_history"/>
         </div>
     )
 }

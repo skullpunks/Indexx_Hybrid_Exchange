@@ -17,7 +17,7 @@ const BSWallet = () => {
                     <Link to="" className='font_15x text-white' ><CheckCircleOutlined className='padding-r-2x margin-r-0_5x' />Create account</Link>
                 </div>
                 <div>
-                    <Link to="" className='font_15x margin-l-2x text-white' ><img src={PlainCircle} alt="PlainCircle" width="15" height="15" className='padding-r-2x' /> Add payment method<CaretRightOutlined className='margin-l-0_5x' /></Link>
+                    <Link to="" className='font_15x margin-l-2x text-white' ><img src={PlainCircle} alt="PlainCircle" width="15" height="15" className='padding-r-2x' /> <span style={{paddingTop:5}}>Add payment method</span><CaretRightOutlined className='margin-l-0_5x' /></Link>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@ const BSWallet = () => {
 
                 <BSWalletTop />
 
-                <div className='width-100'>
+                <div className='width-100 bs_wallet_table'>
                     <BSWalletTable />
                 </div>
             </div>
