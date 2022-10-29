@@ -288,3 +288,32 @@ export const createBuyOrder = async (basecoin: string, quotecoin: string, amount
     return e.response.data;
   }
 }
+
+
+export const oneUSDHelper = async (coinValue: number, coinType: string) => {
+  try {
+    let oneUSDValue = 0;
+    if (coinType === 'IN500') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'INXC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IUSD+') {
+      oneUSDValue = 1;
+    } else if (coinType === 'BUSD') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BTC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'ETH') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BNB') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'LTC') {
+      oneUSDValue = 1 / coinValue;
+    } else {
+      oneUSDValue = 0;
+    }
+    return oneUSDValue;
+  } catch (err) {
+    return 0;
+  }
+}

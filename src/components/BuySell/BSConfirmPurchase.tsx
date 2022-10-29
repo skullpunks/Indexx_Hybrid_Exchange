@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { getCoinPriceByName, getAppSettings, createBuyOrder } from '../../services/api';
+import { getCoinPriceByName, getAppSettings, createBuyOrder, oneUSDHelper } from '../../services/api';
 
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
@@ -30,7 +30,8 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
         priceData = res.data;
         console.log(priceData);
-        setTotalAmountToPay(priceData * Number(BSvalue?.amount));
+        let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        setTotalAmountToPay(oneUsdValue * Number(BSvalue?.amount));
     }
     getPricesData();
     const getAllSetting = async () => {
