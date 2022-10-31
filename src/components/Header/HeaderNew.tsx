@@ -1,5 +1,6 @@
 // import { Button } from 'react-bootstrap';
 import { BellOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 // import { Dropdown } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -7,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import "./Header.css";
+
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const Links = [
         url: "/indexx-exchange/swap"
     },
     {
-        label: "Buy & Sell",
+        label: "Centralized",
         value: "buy-sell",
         url: "/indexx-exchange/buy-sell"
     },
@@ -54,14 +56,23 @@ const showUrl: any = Links.filter((link) => window.location.pathname.includes(li
 
 function HeaderNew() {
     let title = <>{localStorage.getItem("user")}</>
+    const [insideApp, setInsideApp] = useState(true);
+    console.log(insideApp);
+
+    useEffect(() => {
+        if (window.location) {
+            setInsideApp(window.location.pathname.includes("/indexx-exchange/"));
+        }
+    }, []);
+
     return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
-                <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
-                {((window.location.pathname.includes("get-started")) || (window.location.pathname.includes("login"))) ?
-                    <></> :
-                    <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{showText[0]}</Nav.Link>
-                }
+                <div className='d-flex logo__holder'><Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
+                    {((window.location.pathname.includes("get-started")) || (window.location.pathname.includes("login"))) ?
+                        <></> :
+                        <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{showText[0]}</Nav.Link>
+                    }</div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

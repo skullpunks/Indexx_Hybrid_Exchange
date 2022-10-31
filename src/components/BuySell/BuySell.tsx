@@ -19,7 +19,7 @@ const BuySell = () => {
   // });
 
   return (
-    <div className='swap_container' > <br />
+    <div className='swap_container' >
 
       <BSProvider >
         {status === "" && <BuySellMain setStatus={setStatus} />}

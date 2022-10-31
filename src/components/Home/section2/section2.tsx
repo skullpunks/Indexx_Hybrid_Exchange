@@ -1,7 +1,7 @@
 import "./sections2.css"
-import BnbIcon from "../../../assets/bnb-icon.svg";
-import BitCoin from "../../../assets/bitcoin-icon.svg";
-import Etherum from "../../../assets/etherum-icon.svg";
+import BnbIcon from "../../../assets/token-icons/BNB.png";
+import BitCoin from "../../../assets/token-icons/BTCB.png";
+import Etherum from "../../../assets/arts/ethereum.svg";
 import IUSD from "../../../assets/token-icons/35.png";
 import IN500 from "../../../assets/token-icons/33.png";
 import Crypto from "../../../assets/token-icons/34.png";

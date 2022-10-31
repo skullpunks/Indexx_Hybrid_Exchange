@@ -18,6 +18,7 @@ const filteredArray = (items: any, keyName: any, key: any) => {
 
 const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const userId = localStorage.getItem("user");
+    // const navigate = useNavigate();
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const items = [
         { label: 'Buy', key: '1', value: "buy", children: <BuyContent setScreenName={setScreenName} /> }, // remember to pass the key prop

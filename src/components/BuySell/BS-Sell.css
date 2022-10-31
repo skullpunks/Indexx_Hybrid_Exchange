@@ -39,6 +39,12 @@
     background-color: #026333 !important;
 }
 
+.sell_screens .bs_footer_action button.disable_icon:hover,
+.sell_screens .bs_footer_action button.disable_icon:focus,
+.sell_screens .bs_footer_action button.disable_icon:active {
+    background-color: #00A151 !important;
+}
+
 .sell_screens button.sell_btn {
     background-color: #00A151;
     border-color: #00A151;

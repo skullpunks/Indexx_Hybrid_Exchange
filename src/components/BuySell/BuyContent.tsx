@@ -131,7 +131,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
                 <div className="bs_token_left d-flex justify-between">
                     <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={bsDollar} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
+                        <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
                         USD  <span className="token_grey">US Dollar</span>
                     </div>
                 </div>
