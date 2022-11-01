@@ -1,26 +1,31 @@
 import axios from "axios";
-import decode from 'jwt-decode';
+import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // baseURL = "http://localhost:3000";
-  baseURL = "https://67b7-54-250-16-116.ngrok.io";
+   baseURL = "http://localhost:3000";
+  //baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://67b7-54-250-16-116.ngrok.io";
 }
 
-console.log('baseURL', baseURL);
+console.log("baseURL", baseURL);
 
 const API = axios.create({
   baseURL: baseURL,
 });
 
+export default baseURL;
 
-export const signupAPI = async (email: string, password: string, refferalCode: string) => {
+export const signupAPI = async (
+  email: string,
+  password: string,
+  refferalCode: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/user/register", {
       email,
       password,
-      refferalCode
+      refferalCode,
     });
     return result.data;
   } catch (e: any) {
@@ -38,17 +43,15 @@ export const loginAPI = async (email: string, password: string) => {
       password,
     });
     return result.data;
-
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (loginAPI)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
-export const logoutAPI = async () => {
-}
+export const logoutAPI = async () => {};
 
 export const getCountries = async () => {
   try {
@@ -60,32 +63,31 @@ export const getCountries = async () => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
-export const getUserWallet = async () => {
-}
+export const getUserWallet = async () => {};
 
 export const verifyPhoneCode = async (code: string) => {
   try {
     const result = await API.post("/api/v1/inex/user/verifyPhoneCode", {
-      code
+      code,
     });
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
-}
+};
 
 export const verifyEmailCode = async (code: string) => {
   try {
     const result = await API.post("/api/v1/inex/user/verifyEmailCode", {
-      code
+      code,
     });
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
-}
+};
 
 export const getIndexxTokenPrices = async () => {
   try {
@@ -94,7 +96,7 @@ export const getIndexxTokenPrices = async () => {
   } catch (e: any) {
     return e.response.data;
   }
-}
+};
 
 export function isLoggedIn() {
   return !!getJwtToken();
@@ -136,7 +138,7 @@ export const getWalletBalance = async (email: string, coin: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export function decodeJWT(access_token: string) {
   let userObj = decode(access_token);
@@ -153,7 +155,7 @@ export const getUserWallets = async (email: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 // export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
 //   try {
@@ -173,14 +175,20 @@ export const getUserWallets = async (email: string) => {
 //   }
 // }
 
-export const createSellOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+export const createSellOrder1 = async (
+  basecoin: string,
+  quotecoin: string,
+  amount: number,
+  price: number,
+  email: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/order/sell", {
       basecoin,
       quotecoin,
       amount,
       price,
-      email
+      email,
     });
     return result.data;
   } catch (e: any) {
@@ -189,16 +197,22 @@ export const createSellOrder = async (basecoin: string, quotecoin: string, amoun
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
-export const createConvertOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
+export const createConvertOrder1 = async (
+  basecoin: string,
+  quotecoin: string,
+  amount: number,
+  price: number,
+  email: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/order/convert", {
       basecoin,
       quotecoin,
       amount,
       price,
-      email
+      email,
     });
     return result.data;
   } catch (e: any) {
@@ -207,8 +221,7 @@ export const createConvertOrder = async (basecoin: string, quotecoin: string, am
     console.log(e.response.data);
     return e.response.data;
   }
-}
-
+};
 
 export const getAllTransactions = async (email: string) => {
   try {
@@ -220,7 +233,7 @@ export const getAllTransactions = async (email: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const getUserRewards = async (email: string) => {
   try {
@@ -232,7 +245,7 @@ export const getUserRewards = async (email: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const getUserDetails = async (email: string) => {
   try {
@@ -244,11 +257,11 @@ export const getUserDetails = async (email: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const getCoinPriceByName = async (coin: string) => {
   try {
-    const result = await API.post(`/api/v1/inex/basic/getcoinpirce/${coin}`);
+    const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getCoinPriceByName)");
@@ -256,7 +269,7 @@ export const getCoinPriceByName = async (coin: string) => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const getAppSettings = async () => {
   try {
@@ -268,9 +281,14 @@ export const getAppSettings = async () => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
-export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number) => {
+export const createBuyOrder = async (
+  basecoin: string,
+  quotecoin: string,
+  amount: number,
+  price?: number
+) => {
   try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
       currencyOut: basecoin,
@@ -278,7 +296,7 @@ export const createBuyOrder = async (basecoin: string, quotecoin: string, amount
       amount: amount,
       price: price,
       orderType: "Buy",
-      email: localStorage.getItem("user")
+      email: localStorage.getItem("user"),
     });
     return result.data;
   } catch (e: any) {
@@ -287,27 +305,92 @@ export const createBuyOrder = async (basecoin: string, quotecoin: string, amount
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
+export const createSellOrder = async (
+  basecoin: string,
+  quotecoin: string,
+  amount: number,
+  price?: number
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/createOrder", {
+      currencyOut: basecoin,
+      currencyIn: quotecoin,
+      amount: amount,
+      price: price,
+      orderType: "Sell",
+      email: localStorage.getItem("user"),
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createConvertOrder = async (
+  basecoin: string,
+  quotecoin: string,
+  amount: number,
+  price?: number
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/createOrder", {
+      currencyOut: basecoin,
+      currencyIn: quotecoin,
+      amount: amount,
+      price: price,
+      orderType: "Convert",
+      email: localStorage.getItem("user"),
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createStripePaymentIntent = async (amount: number, orderId: string, email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/stripe/createPaymentIntent", {
+      amount: amount,
+      orderId: orderId,
+      email: email
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      "FAILED: unable to perform API request (createStripePaymentIntent)"
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
 
 export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   try {
     let oneUSDValue = 0;
-    if (coinType === 'IN500') {
+    if (coinType === "IN500") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'INXC') {
+    } else if (coinType === "INXC") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IUSD+') {
+    } else if (coinType === "IUSD+") {
       oneUSDValue = 1;
-    } else if (coinType === 'BUSD') {
+    } else if (coinType === "BUSD") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'BTC') {
+    } else if (coinType === "BTC") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'ETH') {
+    } else if (coinType === "ETH") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'BNB') {
+    } else if (coinType === "BNB") {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'LTC') {
+    } else if (coinType === "LTC") {
       oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0;
@@ -316,4 +399,21 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   } catch (err) {
     return 0;
   }
-}
+};
+
+export const getMinAndMaxOrderValues = async (coin: string, orderType: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/basic/orderMinMax", {
+      currency: coin,
+      orderType: orderType
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      "FAILED: unable to perform API request (createStripePaymentIntent)"
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};

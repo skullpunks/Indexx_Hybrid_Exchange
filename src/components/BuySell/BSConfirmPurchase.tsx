@@ -1,5 +1,5 @@
-import { Button } from 'antd';
-import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
+import React, { useEffect, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
@@ -7,8 +7,11 @@ import React, { useState } from 'react';
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { getCoinPriceByName, getAppSettings, createBuyOrder, oneUSDHelper } from '../../services/api';
-
+import { getCoinPriceByName, getAppSettings, oneUSDHelper, createStripePaymentIntent, createBuyOrder } from '../../services/api';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "../Stripe/CheckoutForm";
+import "../Stripe/CheckoutForm.css"
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -17,6 +20,8 @@ interface Props {
 let priceData: any = {};
 let appSettingArr: any[] = [];
 
+// This is your test publishable API key.
+const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
 
 
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
@@ -30,10 +35,14 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
         priceData = res.data;
         console.log(priceData);
+        setRateData(priceData);
         let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        console.log('usid oper', oneUsdValue)
+        console.log('usid oper1', Number(BSvalue?.amount))
         setTotalAmountToPay(oneUsdValue * Number(BSvalue?.amount));
     }
     getPricesData();
+
     const getAllSetting = async () => {
         const res = await getAppSettings();
         appSettingArr = res.data;
@@ -41,19 +50,62 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         setAdminFees(adminFees.value)
     }
     const [adminFee, setAdminFees] = useState("");
-    getAllSetting();
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+    const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+    const [clientSecret, setClientSecret] = useState("");
+    const [rateData, setRateData] = useState();
+    const showTransferModal = () => {
+        setIsTransferModalVisible(true);
+    };
 
-    const openStipePayment = async () => {
-        let res = await createBuyOrder(filteredFromArray[0].title, 'USD', Number(BSvalue?.amount), priceData);
-        if (res.status === 200) {
-            // route to new page by changing window.location
-            window.open("https://buy.stripe.com/test_14k3dEgSm2Zb2Iw289", "_self") //to open new page
-        } else {
-            alert("Failed to create an order");
-        }
+    const handleTransferOk = () => {
+        setIsTransferModalVisible(false);
+    };
+
+    const handleTransferCancel = () => {
+        setIsTransferModalVisible(false);
+    };
+
+    // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+
+    const createNewBuyOrder = async () => {
+        let basecoin: string = filteredFromArray[0].title;
+        let quotecoin: string = 'USD';
+        let amount: number = Number(BSvalue?.amount);
+        const res = await createBuyOrder(basecoin, quotecoin, amount);
+        console.log(res.data);
+        getStripePaymentIntent(res.data.orderId, res.data.user.email);
     }
 
+    const getStripePaymentIntent = async (orderId :string, email: string) => {
+        const res = await createStripePaymentIntent(Number(BSvalue?.amount), orderId, email);
+        setClientSecret(res.client_secret);
+        showTransferModal();
+    };
+
+    useEffect(() => {
+        getAllSetting();
+    }, [BSvalue])
+
+    const appearance = {
+        theme: String('stripe'),
+    };
+    const options = {
+        clientSecret,
+        appearance
+        // appearance: {
+        //     theme: String('stripe'),
+        // }
+    } as any;
+    // const openStipePayment = async () => {
+    //     let res = await createBuyOrder(filteredFromArray[0].title, 'USD', Number(BSvalue?.amount), priceData);
+    //     if (res.status === 200) {
+    //         // route to new page by changing window.location
+    //         window.open("https://buy.stripe.com/test_14k3dEgSm2Zb2Iw289", "_self") //to open new page
+    //     } else {
+    //         alert("Failed to create an order");
+    //     }
+    // }
 
     return (
         <div className="bs_container card">
@@ -78,7 +130,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
-                    <span>{BSvalue?.amount} USD / {filteredFromArray[0].title}</span>
+                    <span>{rateData} USD / {filteredFromArray[0].title}</span>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
@@ -94,7 +146,15 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6>Rewards Applied for this order: {(Math.round(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => openStipePayment()}> Confirm Purchase (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase (11s)</Button>
+
+                    <Modal title="Stripe Payment" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850}>
+                        {clientSecret && (
+                            <Elements options={options} stripe={stripePromise}>
+                                <CheckoutForm />
+                            </Elements>
+                        )}
+                    </Modal>
                 </div>
             </div>
 
