@@ -68,7 +68,14 @@ function HeaderNew() {
     return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
-                <div className='d-flex logo__holder'><Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
+                <div className='d-flex logo__holder'>
+                    <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
+                    {/* {(insideApp) ?
+                        <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
+                        :
+                        <></>
+
+                    } */}
                     {((window.location.pathname.includes("get-started")) || (window.location.pathname.includes("login"))) ?
                         <></> :
                         <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{showText[0]}</Nav.Link>

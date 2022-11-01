@@ -30,6 +30,7 @@ import BSWithdrawCryptoLayout from './components/BSDepositWithdraw/BSWithdrawCry
 import IndexxTokens from './components/IndexxTokens/IndexxTokens';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
+import About from './components/About/About';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
@@ -67,6 +68,7 @@ function App() {
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/markets" element={<Markets />} />
                     <Route path="/indexx-exchange/trade" element={<TradeChart />} />
+                    <Route path="/indexx-exchange/about" element={<About />} />
                     <Route path="/indexx-exchange/help" element={<Help />} >
                         <Route index element={<Intro />} />
                         <Route path="team" element={<Team />} />

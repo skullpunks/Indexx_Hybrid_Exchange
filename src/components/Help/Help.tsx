@@ -6,12 +6,12 @@ import ContactUs from './ContactUs';
 
 import Team from './Team';
 import { Collapse } from 'antd';
-const { Panel } = Collapse;
 
 
 import Footer from "../Footer/Footer";
 import Intro from "./Intro";
 
+const { Panel } = Collapse;
 const Help = () => {
     return (
         <>
@@ -21,27 +21,27 @@ const Help = () => {
 
             </div>
             <div className="nav_container d-flex help_main_page d-md-none">
-            <Collapse>
-       
-      
-        
-      
-       <Panel header=" indexx Swap Intro" key="1">
-          
-      <Intro/>
+                <Collapse>
 
-      </Panel>
-      <Panel header="indexx Swap Team" key="2">
-          
-      <Team/>
 
-      </Panel>
-      <Panel header="Contact Us" key="3">
-          
-      <ContactUs/>
 
-      </Panel>
-    </Collapse>
+
+                    <Panel header=" indexx Swap Intro" key="1">
+
+                        <Intro />
+
+                    </Panel>
+                    <Panel header="indexx Swap Team" key="2">
+
+                        <Team />
+
+                    </Panel>
+                    <Panel header="Contact Us" key="3">
+
+                        <ContactUs />
+
+                    </Panel>
+                </Collapse>
 
             </div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import arrowAddress from "../../assets/arts/arrowAddress.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import "./BS-Sell.css";
@@ -95,9 +95,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} />
                         {/* <span className="font_20x">IN500</span> */}
                     </div>
-                    <div className='swap_Arrow_icon'>
+                    {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
-                    </div>
+                    </div> */}
                 </div>
                 {(!isLimitPassed) ?
                     <div className='error_message font_15x'>You can only Sell a minimum of {String(minMavData?.min)} USD or maximum of {String(minMavData?.max)} USD </div>
