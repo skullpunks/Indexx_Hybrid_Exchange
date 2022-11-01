@@ -5,7 +5,7 @@ import emailIcon from "../../assets/arts/emailIcon.png";
 const ContactUs = () => {
     return (
         <div className="help_content_page">
-            <div className="nav_main_header border-b">
+            <div className="nav_main_header border-b d-md-block d-none">
                 <h1> Contact Us </h1>
             </div>
 

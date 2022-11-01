@@ -32,6 +32,7 @@ const MarketsTable = () => {
             render: (_, record) => {
                 return (record?.favourite === true) ? <StarOutlined className='font_20x' /> : <StarFilled className='color-warn font_20x' />;
             },
+            responsive: ["sm"],
         },
         {
             title: 'Pair Name',
@@ -66,6 +67,7 @@ const MarketsTable = () => {
                     {record.DailyChange}
                 </Button>
             },
+            responsive: ["sm"],
         },
         {
             title: 'Daily High',
@@ -74,6 +76,7 @@ const MarketsTable = () => {
                 compare: (a, b) => a.DailyHigh - b.DailyHigh,
                 multiple: 1,
             },
+            responsive: ["sm"],
         },
         {
             title: 'Daily Low',
@@ -82,6 +85,7 @@ const MarketsTable = () => {
                 compare: (a, b) => a.DailyLow - b.DailyLow,
                 multiple: 1,
             },
+            responsive: ["sm"],
         },
         {
             title: 'Volume',
@@ -90,6 +94,7 @@ const MarketsTable = () => {
                 compare: (a, b) => a.Volume - b.Volume,
                 multiple: 1,
             },
+            responsive: ["sm"],
         },
         {
             title: 'Market Cap',
@@ -98,6 +103,7 @@ const MarketsTable = () => {
                 compare: (a, b) => a.MarketCap - b.MarketCap,
                 multiple: 1,
             },
+            responsive: ["sm"],
         },
         {
             title: 'Trade',
@@ -182,13 +188,13 @@ const MarketsTable = () => {
 
     return (
         <div>
-            <div className='grey-strip d-flex'>
+            <div className='grey-strip d-flex market_button_strips'>
                 <Button className='white-strip '>All</Button>
                 <Button className='white-strip margin-lr-2x'>Top Gainerts</Button>
                 <Button className='white-strip margin-lr-2x'>Top Losers</Button>
                 <Button className='white-strip margin-lr-2x'>New Listings</Button>
-                <Button className='white-strip '>Trending</Button>
-                <Button className='white-strip last-item'>ID</Button>
+                <Button className='white-strip d-md-block d-none'>Trending</Button>
+                <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
                 <Table columns={columns} dataSource={data} onChange={onChange} />
