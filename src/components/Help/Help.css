@@ -157,3 +157,30 @@ h1 {
 .contat_us>a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 767px) {
+
+    .nav_container {
+        padding: 90px 10px 40px 10px;
+    }
+    .ant-collapse {
+        width:100%;
+    }
+    .help_content_page {
+        padding: 13px 0 30px 10px;
+        border-left: 0;
+        width: 100%;
+    }
+
+    .ant-collapse > .ant-collapse-item {
+        background-color: #fff;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text {
+        flex: auto;
+        font-size: 25px;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+
+    line-height:25px;
+}
+}
