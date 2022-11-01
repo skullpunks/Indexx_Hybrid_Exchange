@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -9,10 +9,14 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import "./BS-Sell.css";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
+// import { createSellOrder, getAppSettings } from '../../services/api';
+import { getAppSettings } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
+let appSettingArr: any[] = [];
+
 const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // const BSSellConfirmConvert: React.FC = () => {
     // console.log(setStatus);
@@ -25,6 +29,33 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         navigate("indexx-exchange/buy-sell?type=sell");
         setScreenName("");
     }
+
+    useEffect(() => {
+       getAllSetting();
+    })
+    
+    const getAllSetting = async () => {
+        const res = await getAppSettings();
+        appSettingArr = res.data;
+        if (filteredFromArray[0].title.includes('I')) {
+            let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
+            setAdminFees(adminFees.value);
+        } else {
+            let adminFees = appSettingArr.find((item: any) => item.key === "AdminFees");
+            setAdminFees(adminFees.value);
+        }
+    }
+    const [adminFee, setAdminFees] = useState("");
+
+    // const createNewSellOrder = async () => {
+    //     let quotecoin: string = filteredFromArray[0].title;
+    //     let basecoin: string = 'USD';
+    //     let amount: number = Number(BSvalue?.amount);
+    //     const res = await createSellOrder(basecoin, quotecoin, amount);
+    //     console.log(res.data);
+
+    //     setScreenName("BSSellInprogress");
+    // }
 
     return (
         <div className="bs_container card sell_screens">
@@ -54,7 +85,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                     <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
                     <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / {filteredFromArray[0].title}</span></div>
                     <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>1.00 USD</span></div>
-                    <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>0 USD</span></div>
+                    <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>{adminFee} %</span></div>
 
                 </div>
                 {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
@@ -71,8 +102,6 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-
-
                     <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button>
                 </div>
             </div>
