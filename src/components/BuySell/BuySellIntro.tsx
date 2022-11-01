@@ -4,7 +4,7 @@ import BSConvertIntro from "./BSConvertIntro";
 import BSSellIntro from "./BSSellIntro";
 import BuyContent from "./BuyContent";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -18,7 +18,7 @@ const filteredArray = (items: any, keyName: any, key: any) => {
 
 const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const userId = localStorage.getItem("user");
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const items = [
         { label: 'Buy', key: '1', value: "buy", children: <BuyContent setScreenName={setScreenName} /> }, // remember to pass the key prop
@@ -26,14 +26,16 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         { label: 'Convert', key: '3', value: "convert", children: <BSConvertIntro setScreenName={setScreenName} /> },
     ];
     const callback = function (key: any) {
-        console.log(key);
+        // console.log(key);
         const filteredFromArray = items.filter(function (obj) {
             return obj?.key === key;
         });
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, orderType: filteredFromArray[0].value });
         }
-        console.log(BSvalue);
+        // console.log(BSvalue);
+
+        navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
     };
 
     let activeKey = "1";
