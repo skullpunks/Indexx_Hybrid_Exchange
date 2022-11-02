@@ -103,6 +103,15 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
             setBuyVal(testVal);
+
+            // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;
+            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.2 : 0.9
+            e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+            e.currentTarget.style.fontSize = charFontSize + "ch";
+
+
+
             let value = BSvalue?.fromTitle;
             let getRequiredCoin = initialTokens.find(x => x.address === value);
             console.log(String(getRequiredCoin?.title));
@@ -116,7 +125,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny_left padding-b-2x flex-align-center" style={{ transform: "scale(1)" }}>
                     <span className="font_20x">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
-                    <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} />
+                    <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} style={{ width: "1.2ch" }} />
                 </div>
                 {/* <div className='swap_Arrow_icon'>
                     <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
