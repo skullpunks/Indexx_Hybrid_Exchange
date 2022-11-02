@@ -47,7 +47,7 @@ const ChartBuySell = () => {
                 {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
                 {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
                 <img src={require(`../../assets/token-icons/${filteredFromArrayChart[0].image}.png`).default} alt="bit coin" width="30" />
-                <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="USD" width="30" />
+                <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="USD" width="38" height="38" />
                 <h1 className="chart_title">{filteredFromArrayChart[0].title}/USD</h1>
                 {/* <div className="arrow_container">
                     <div><img src={ArrowRight} alt="Arrow Here" /></div>

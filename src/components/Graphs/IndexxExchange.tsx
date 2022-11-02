@@ -34,8 +34,8 @@ const IndexxExchangeGraph = () => {
 
   const getINEXCoinPrice = async () => {
     const res = await getIndexxTokenPrices();
-    setINEXPrice(res.data?.INXCPrice);
-    setINEXPriceChange(res.data?.INXCpriceChangePercent)
+    setINEXPrice(res.data?.INEXPrice);
+    setINEXPriceChange(res.data?.INEXpriceChangePercent)
 }
   return (
     <React.Fragment>

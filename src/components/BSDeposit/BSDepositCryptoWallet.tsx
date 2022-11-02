@@ -33,13 +33,13 @@ export const BSDepositCryptoWallet = () => {
             <Radio value="funding" className='orange margin-t-2x font_15x d-flex'>
               <span className='d-flex flex-align-center'>
                 <span style={{ minWidth: 200 }}>Funding Wallet</span>
-                {(value === "funding") && <Button danger>Selected</Button>}
+                {(value === "funding") && <Button size="small" className='pointer-events-none' danger>Selected</Button>}
               </span>
             </Radio>
             <Radio disabled={true} value="spot" className='orange margin-t-1x font_15x d-flex'>
               <span className='d-flex flex-align-center'>
                 <span style={{ minWidth: 200 }}>Spot Wallet</span>
-                {(value === "spot") && <Button danger>Selected</Button>}
+                <Button disabled={true} size="small" danger>coming soon</Button>
               </span>
             </Radio>
           </Space>

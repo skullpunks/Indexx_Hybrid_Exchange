@@ -1,5 +1,6 @@
 import Etherum from "../../../assets/arts/ethereum.svg";
 import IN500 from "../../../assets/token-icons/33.png";
+import INEX from "../../../assets/token-icons/INEX.png";
 import Crypto from "../../../assets/token-icons/34.png";
 import IUSD from "../../../assets/token-icons/35.png";
 import BnbIcon from "../../../assets/token-icons/BNB.png";
@@ -82,9 +83,73 @@ const Section2 = () => {
                 </div>
                 <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
+                        <img style={{ height: 30, width: 30 }} src={INEX} alt="coin-icon" />
+                        <b className="coin-initials">INEX</b>
+                        <span>IndexxExchange</span>
+                    </div>
+                    <div className="table-header-element price">
+                        ${Math.round(indexxTokenPrices?.INEXPrice * 100) / 100}
+                    </div>
+                    <div className="table-header-element hourChange d-none d-sm-block">
+                        {(indexxTokenPrices?.INEXpriceChangePercent)}%
+                    </div>
+                    <div className="table-header-element">
+                        <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
+                    </div>
+                </div>
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
+                    <div className="table-header-element coinName">
+                        <img style={{ height: 30, width: 30 }} src={IN500} alt="coin-icon" />
+                        <b className="coin-initials">IN500</b>
+                        <span>Indexx500</span>
+                    </div>
+                    <div className="table-header-element price">
+                        ${Math.round(indexxTokenPrices?.IN500Price * 100) / 100}
+                    </div>
+                    <div className="table-header-element hourChange d-none d-sm-block">
+                        {(indexxTokenPrices?.IN500priceChangePercent)}%
+                    </div>
+                    <div className="table-header-element">
+                        <img src={chart4} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
+                    </div>
+                </div>
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
+                    <div className="table-header-element coinName">
+                        <img style={{ height: 30, width: 30 }} src={IUSD} alt="coin-icon" />
+                        <b className="coin-initials">IUSD+</b>
+                        <span>IndexxUSD+</span>
+                    </div>
+                    <div className="table-header-element price">
+                        ${Math.round(indexxTokenPrices?.IUSDPPrice * 100) / 100}
+                    </div>
+                    <div className="table-header-element hourChange d-none d-sm-block">
+                        {(indexxTokenPrices?.IUSDPpriceChangePercent)}%
+                    </div>
+                    <div className="table-header-element">
+                        <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
+                    </div>
+                </div>
+                <div className="table-row cursor-pointer">
+                    <div className="table-header-element coinName">
+                        <img style={{ height: 30, width: 30 }} src={Crypto} alt="coin-icon" />
+                        <b className="coin-initials">INXC</b>
+                        <span>IndexxCrypto</span>
+                    </div>
+                    <div className="table-header-element price">
+                        ${Math.round(indexxTokenPrices?.INXCPrice * 100) / 100}
+                    </div>
+                    <div className="table-header-element hourChange d-none d-sm-block">
+                        {(indexxTokenPrices?.INXCpriceChangePercent)}%
+                    </div>
+                    <div className="table-header-element">
+                        <img src={chart3} alt="Chart" className="chart-icon" />
+                    </div>
+                </div>
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
+                    <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={BnbIcon} alt="coin-icon" />
                         <b className="coin-initials">BNB</b>
-                        <span>BNB</span>
+                        <span>Binance</span>
                     </div>
                     <div className="table-header-element price">
                         ${Math.round(BNBPrice?.lastPrice * 100) / 100}
@@ -112,7 +177,7 @@ const Section2 = () => {
                         <img src={chart2} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
+                <div className="table-row no-border" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Etherum} alt="coin-icon" />
                         <b className="coin-initials">ETH</b>
@@ -128,54 +193,7 @@ const Section2 = () => {
                         <img src={chart3} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
-                    <div className="table-header-element coinName">
-                        <img style={{ height: 30, width: 30 }} src={IUSD} alt="coin-icon" />
-                        <b className="coin-initials">IUSD+</b>
-                        <span>INDEXXUSD+</span>
-                    </div>
-                    <div className="table-header-element price">
-                        ${Math.round(indexxTokenPrices?.IUSDPPrice * 100) / 100}
-                    </div>
-                    <div className="table-header-element hourChange d-none d-sm-block">
-                        {(indexxTokenPrices?.IUSDPpriceChangePercent)}%
-                    </div>
-                    <div className="table-header-element">
-                        <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
-                    </div>
-                </div>
-                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
-                    <div className="table-header-element coinName">
-                        <img style={{ height: 30, width: 30 }} src={IN500} alt="coin-icon" />
-                        <b className="coin-initials">IN500</b>
-                        <span>INDEXX500</span>
-                    </div>
-                    <div className="table-header-element price">
-                        ${Math.round(indexxTokenPrices?.IN500Price * 100) / 100}
-                    </div>
-                    <div className="table-header-element hourChange d-none d-sm-block">
-                        {(indexxTokenPrices?.IN500priceChangePercent)}%
-                    </div>
-                    <div className="table-header-element">
-                        <img src={chart4} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
-                    </div>
-                </div>
-                <div className="table-row no-border">
-                    <div className="table-header-element coinName">
-                        <img style={{ height: 30, width: 30 }} src={Crypto} alt="coin-icon" />
-                        <b className="coin-initials">INXC</b>
-                        <span>INDEXXCRYPTO</span>
-                    </div>
-                    <div className="table-header-element price">
-                        ${Math.round(indexxTokenPrices?.INXCPrice * 100) / 100}
-                    </div>
-                    <div className="table-header-element hourChange d-none d-sm-block">
-                        {(indexxTokenPrices?.INXCpriceChangePercent)}%
-                    </div>
-                    <div className="table-header-element">
-                        <img src={chart3} alt="Chart" className="chart-icon" />
-                    </div>
-                </div>
+                
             </div>
             <div className="all_markets">
                 <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(`/indexx-exchange/markets`)}>View all Markets</Button>

@@ -31,44 +31,44 @@ export const BSWithdarwCryptoContent = () => {
   return (
     <div className='scan-container bs_main wd_container'>
 
-     
 
 
 
-        <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'>
-          <div className='d-flex flex-align-center top_heading'>
-         <span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Withdraw Crypto</span>
-         </div>
+
+      <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'>
+        <div className='d-flex flex-align-center top_heading'>
+          <span>Withdraw Crypto</span>
+        </div>
         <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>Withdraw Fiat<ArrowRightOutlined /></Button></div>
-       </div>
+      </div>
 
       <div className='card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container'>
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
         <div className=''>
           <label>Currency</label>
           <div className=' d-flex flex-justify-between flex-align-center'>
-          <Select className='width-100'
+            <Select className='width-100'
               onChange={handleChange}>
-      
-      
-       {
-                    initialTokens.map((token, index) => {
 
-                        return <Option key={index} value={token.subTitle}type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
-                          
-                           
-                            <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                        </Option>
-                    })
-                }
 
-    </Select>
+              {
+                initialTokens.map((token, index) => {
+
+                  return <Option key={index} value={token.subTitle} type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
+
+
+                    <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                  </Option>
+                })
+              }
+
+            </Select>
             {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
             {/* <CaretDownOutlined /> */}
 
             {/* <RightOutlined /> */}
 
-          
+
           </div>
           <br />
           <h1 className='font_20x padding-t-2x' >Send to</h1>

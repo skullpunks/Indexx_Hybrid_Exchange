@@ -4,7 +4,7 @@ import useFetch from "../Hooks/use-fetch";
 import styles from "./Graph.module.css";
 import { getIndexxTokenPrices } from "../../services/api";
 
-const url = "https://api.coingecko.com/api/v3/coins/spdr-s-p-500-etf-trust-defichain/market_chart?vs_currency=usd&days=";
+const url = "https://api.coingecko.com/api/v3/coins/gains-network/market_chart?vs_currency=usd&days=";
 const currencyName = "Indexx500";
 const currencySymbol = "IN500"
 
