@@ -7,7 +7,7 @@ import './BuySell.css';
 // import { Button, InputNumber, Tag } from 'antd';
 import { useState } from 'react';
 // import downArrow from "../../assets/arts/downArrow.svg";
-import ChartBuySell from "../ChartBuy/ChartBuySell";
+// import ChartBuySell from "../ChartBuy/ChartBuySell";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import historyIcon from "../../assets/arts/historyIcon.svg";
 // import initialTokens from "../../utils/Tokens.json";
@@ -50,7 +50,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                 {/* {toggleChart && <EthereumGraph />} */}
                 {/* {toggleChart && <IndexxCryptoGraph />} */}
                 {/* {toggleChart && <LineGraph /> } Indexx500Graph */}
-                {toggleChart && <ChartBuySell />}
+                {/* {toggleChart && <ChartBuySell />} */}
                 {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
                 {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />}

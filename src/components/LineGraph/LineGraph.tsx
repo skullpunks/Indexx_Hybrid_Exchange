@@ -22,7 +22,7 @@ const LineGraph = (props: any) => {
       width = 250;
       height = 250;
     } else {
-      width = 500;
+      width = 700;
       height = 450;
     }
   };
@@ -58,77 +58,89 @@ const LineGraph = (props: any) => {
           -5.274 (-1.88%)
         </div> */}
         <div className="chart_inner_right">
-          <Segmented options={['24H', '1W', '1M', '1Y']} >
-          <button className={styles.button} onClick={props.yearClickHandler}>
+          <Segmented className="chart_dynamic" options={[{
+            label: (<span onClick={props.yearClickHandler}>
               1 Year
-            </button>
-            <button className={styles.button} onClick={props.monthClickHandler}>
+            </span>),
+            value: 1
+          },
+          {
+            label: (<span onClick={props.monthClickHandler}>
               1 Month
-            </button>
-            <button className={styles.button} onClick={props.weekClickHandler}>
+            </span>),
+            value: 2
+          },
+          {
+            label: (<span onClick={props.weekClickHandler}>
               1 Week
-            </button>
-            <button className={styles.button} onClick={props.dayClickHandler}>
+            </span>),
+            value: 3
+          },
+          {
+            label: (<span onClick={props.dayClickHandler}>
               1 Day
-            </button>
-            </Segmented>
+            </span>),
+            value: 4
+          }
+          ]} >
+          </Segmented>
         </div>
       </div>
-        <LineChart
-          margin={{ left: 17, right: 6, top: 10 }}
-          className={styles.graphBackground}
-          width={width}
-          height={height}
-          data={props.data}
-        >
+      <LineChart
+        margin={{ left: 17, right: 6, top: 10 }}
+        className={styles.graphBackground}
+        width={width}
+        height={height}
+        data={props.data}
+      >
 
-          <Line
-            dot={false}
-            type="monotone"
-            dataKey="price"
-            stroke="#4592af"
-            strokeWidth={1.5}
-          />
-          {/* <CartesianGrid stroke="grey" /> */}
-          <XAxis
-            padding={{ right: 40 }}
-            dataKey={"time"}
-            tick={{ fill: "black" }}
-          />
-          <YAxis padding={{ top: 60 }} tick={{ fill: "black" }} />
-          {/* <Brush startIndex={0} dataKey="time" height={20} stroke="#4a4844" /> */}
-          <Tooltip />
-          <div>
-            <button className={styles.button} onClick={props.yearClickHandler}>
-              1 Year
-            </button>
-            <button className={styles.button} onClick={props.monthClickHandler}>
-              1 Month
-            </button>
-            <button className={styles.button} onClick={props.weekClickHandler}>
-              1 Week
-            </button>
-            <button className={styles.button} onClick={props.dayClickHandler}>
-              1 Day
-            </button>
-          </div>
-        </LineChart>
-        <div>
-          <button className={styles.button} onClick={props.yearClickHandler}>
+        <Line
+          dot={false}
+          type="monotone"
+          dataKey="price"
+          stroke="#4592af"
+          strokeWidth={1.5}
+        />
+        {/* <CartesianGrid stroke="grey" /> */}
+        <XAxis
+          padding={{ right: 40 }}
+          dataKey={"time"}
+          tick={{ fill: "black" }}
+        />
+        <YAxis padding={{ top: 60 }} tick={{ fill: "black" }} />
+        {/* <Brush startIndex={0} dataKey="time" height={20} stroke="#4a4844" /> */}
+        <Tooltip />
+        {/* <div>
+          <button  onClick={props.yearClickHandler}>
             1 Year
           </button>
-          <button className={styles.button} onClick={props.monthClickHandler}>
+          <button  onClick={props.monthClickHandler}>
             1 Month
           </button>
-          <button className={styles.button} onClick={props.weekClickHandler}>
+          <button  onClick={props.weekClickHandler}>
             1 Week
           </button>
-          <button className={styles.button} onClick={props.dayClickHandler}>
+          <button  onClick={props.dayClickHandler}>
             1 Day
           </button>
-        </div>
+        </div> */}
+      </LineChart>
+      {/* <div>
+        <button  onClick={props.yearClickHandler}>
+          1 Year
+        </button>
+        <button  onClick={props.monthClickHandler}>
+          1 Month
+        </button>
+        <button  onClick={props.weekClickHandler}>
+          1 Week
+        </button>
+        <button  onClick={props.dayClickHandler}>
+          1 Day
+        </button>
+      </div> */}
 
-        {/* <div className="chart_inner_right">
+      {/* <div className="chart_inner_right">
                     <Segmented options={['24H', '1W', '1M', '1Y']} />
                 </div> */}
     </div>

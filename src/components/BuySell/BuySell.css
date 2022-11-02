@@ -96,6 +96,12 @@ button {
     outline: none;
 }
 
+.bs_footer_action button.disable_icon:hover,
+.bs_footer_action button.disable_icon:focus,
+.bs_footer_action button.disable_icon:active {
+    background-color: #f66036;
+}
+
 .bs_token_num {
     font-size: 25px;
     color: #5f5f5f;
@@ -582,6 +588,8 @@ button.ant-btn-primary [disabled] {
 .bs_curreny_left>input.input_currency {
     max-width: 300px;
     font-size: 60px;
+    font-size: 1.1ch;
+
 }
 
 .error_message {

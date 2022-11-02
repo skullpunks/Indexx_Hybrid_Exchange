@@ -50,6 +50,11 @@
     line-height: 37px;
 }
 
+.chart_inner_right .chart_dynamic .ant-segmented-item-label {
+    width: 80px;
+}
+
+
 .bs_main .chart_inner_right .ant-segmented-item-selected {
     /* background: #006DFF;
     color:#fff; */
