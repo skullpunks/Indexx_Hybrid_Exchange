@@ -184,7 +184,7 @@ const MarketsTable = () => {
         <div>
             <div className='grey-strip d-flex'>
                 <Button className='white-strip '>All</Button>
-                <Button className='white-strip margin-lr-2x'>Top Gainerts</Button>
+                <Button className='white-strip margin-lr-2x'>Top Gainers</Button>
                 <Button className='white-strip margin-lr-2x'>Top Losers</Button>
                 <Button className='white-strip margin-lr-2x'>New Listings</Button>
                 <Button className='white-strip '>Trending</Button>
