@@ -5,7 +5,7 @@ const Team = () => {
     // let memebrs = ["BZ", ""];
     return (
         <div className="help_content_page">
-            <div className="nav_main_header border-b">
+            <div className="nav_main_header border-b d-md-block d-none">
                 <h1> Indexx Swap Team </h1>
             </div>
 

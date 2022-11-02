@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import bsDollar from "../../assets/arts/bsDollar.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from "../../utils/Tokens.json";
 // import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -116,11 +116,11 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny_left padding-b-2x flex-align-center" style={{ transform: "scale(1)" }}>
                     <span className="font_20x">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
-                    <input placeholder="0"  className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} />
+                    <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} />
                 </div>
-                <div className='swap_Arrow_icon'>
+                {/* <div className='swap_Arrow_icon'>
                     <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
-                </div>
+                </div> */}
 
             </div>
             {(!isLimitPassed) ?
@@ -137,6 +137,15 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </Dropdown>
             </div> */}
         </div>
+            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
+                <div className="bs_token_left d-flex justify-between">
+                    <div className="bs_token_num d-flex flex-align-center" >
+                        <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
+                        USD  <span className="token_grey">US Dollar</span>
+                    </div>
+                </div>
+
+            </div>
             <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center", padding: 8 }} >
                 <div className="bs_token_left d-flex justify-between">
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
@@ -157,16 +166,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
             </div>
 
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
-                <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
-                        USD  <span className="token_grey">US Dollar</span>
-                    </div>
-                </div>
 
-            </div>
-            
+
             <div className="bs_footer_action">
                 <button onClick={navigateUser} disabled={(!isLimitPassed)}>Preview Purchase </button>
             </div>

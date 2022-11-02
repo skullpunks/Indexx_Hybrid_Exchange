@@ -5,7 +5,7 @@ import earnIcon from "../../assets/arts/earnIcon.svg";
 const Intro = () => {
     return (
         <div className="help_content_page" style={{ height: "max-content" }}>
-            <div className="nav_main_header border-b">
+            <div className="nav_main_header border-b d-md-block d-none">
                 <h1> Indexx Intro </h1>
             </div>
             <div className="info">

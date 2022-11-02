@@ -9,9 +9,7 @@ import Footer from '../Footer/Footer';
 
 
 const Markets = () => {
-
-
-  return (
+return (
     <div>
       <div className='scan-container market-container'>
         <h1>Cryptocurrency prices, charts, and trends</h1>
@@ -22,7 +20,7 @@ const Markets = () => {
         </div>
         <div className='tabs-container border'>
           <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab={<StarFilled className='padding-l-1x' />} key="0">
+            <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
               <MarketsTable />
 
             </Tabs.TabPane>
