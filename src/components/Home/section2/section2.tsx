@@ -94,7 +94,7 @@ const Section2 = () => {
                         {(indexxTokenPrices?.INEXpriceChangePercent)}%
                     </div>
                     <div className="table-header-element">
-                        <img src={chart4} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
+                        <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
                     </div>
                 </div>
                 <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
@@ -129,7 +129,7 @@ const Section2 = () => {
                         <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
                     </div>
                 </div>
-                <div className="table-row no-border">
+                <div className="table-row cursor-pointer">
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Crypto} alt="coin-icon" />
                         <b className="coin-initials">INXC</b>
@@ -177,7 +177,7 @@ const Section2 = () => {
                         <img src={chart2} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
+                <div className="table-row no-border" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Etherum} alt="coin-icon" />
                         <b className="coin-initials">ETH</b>
