@@ -31,6 +31,7 @@ import IndexxTokens from './components/IndexxTokens/IndexxTokens';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
 import About from './components/About/About';
+import Account from './components/AccountSettings/Account';
 // import Header from './components/Header/Header';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
@@ -76,6 +77,7 @@ function App() {
                         <Route path="contact" element={<ContactUs />} />
                     </Route>
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
+                    <Route path="/indexx-exchange/account" element={<Account />} />
                 </Routes>
             </BrowserRouter>
         </div>

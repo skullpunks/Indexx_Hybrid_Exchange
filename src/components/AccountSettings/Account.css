@@ -1,0 +1,16 @@
+.accounts_container .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap{
+    background: #F6F6F6;
+    padding-left: 55px;
+}
+
+.basic_info > div {
+    border: 1px solid #E4E4E4 !important;
+    border-radius:5px;
+
+
+}
+.basic_info .border-b-1x {
+    border-color: #E4E4E4 !important;
+
+
+}
