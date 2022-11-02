@@ -11,9 +11,9 @@ import ChartBuySell from "../ChartBuy/ChartBuySell";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import historyIcon from "../../assets/arts/historyIcon.svg";
 // import initialTokens from "../../utils/Tokens.json";
+import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 import BuySellSelect from './BuySellSelect';
-import BuySellCreate from './BuySellCreate';
 // import BuySellEmailAuth from './BuySellEmailAuth';
 // import BuySellSecureSteps from './BuySellSecureSteps';
 // import BuySellMobiAuth from './BuySellMobiAuth';
@@ -22,12 +22,13 @@ import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
 import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
-import BSTractionHistory from './BSTractionHistory';
 import BSSellConfirmConvert from './BSSellConfirmConvert';
 import BSSellInprogress from './BSSellInprogress';
+import BSTractionHistory from './BSTractionHistory';
 // import { Route, Routes } from 'react-router-dom';
-import BSConfirmPurchase from './BSConfirmPurchase';
+import Indexx500Graph from '../Graphs/Indexx500Graph';
 import BSBuyInProgress from './BSBuyInProgress';
+import BSConfirmPurchase from './BSConfirmPurchase';
 // import BuySellGetStarted from './BuySellGetStarted';
 
 interface Props {
@@ -43,6 +44,11 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
     return (
         <>
             <div className="scan-container flex-align-stretch bs_main">
+                {/* {toggleChart && <BitcoinGraph />} */}
+                {toggleChart && <Indexx500Graph />}
+                {/* {toggleChart && <EthereumGraph />} */}
+                {/* {toggleChart && <IndexxCryptoGraph />} */}
+                {/* {toggleChart && <LineGraph /> } Indexx500Graph */}
                 {toggleChart && <ChartBuySell />}
                 {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
                 {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}

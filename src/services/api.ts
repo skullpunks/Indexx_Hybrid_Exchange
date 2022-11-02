@@ -100,7 +100,7 @@ export const getIndexxTokenPrices = async () => {
 
 export const getCryptoPrice = async (coin: string) => {
   try {
-    const result = await API.post(`api/v1/inex/basic/getPriceByName`,{
+    const result = await API.post(`api/v1/inex/basic/getPriceByName`, {
       coin: coin
     });
     return result.data;
@@ -108,6 +108,34 @@ export const getCryptoPrice = async (coin: string) => {
     return e.response.data;
   }
 }
+
+//https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=USD&days=1&interval=hourly
+export const getGraphicalCurrencyData = async (coinId: string, days: string, currency: string = 'USD') => {
+  let url = '';
+  if (coinId === 'IUSD+') {
+    url = `https://api.coingecko.com/api/v3/coins/tether/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'INXC') {
+    url = `https://api.coingecko.com/api/v3/coins/uma/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'IN500') {
+    url = `https://api.coingecko.com/api/v3/coins/spdr-s-p-500-etf-trust-defichain/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'BTC') {
+    url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'BNB') {
+    url = `https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'ETH') {
+    url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'LTC') {
+    url = `https://api.coingecko.com/api/v3/coins/litecoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'BUSD') {
+    url = `https://api.coingecko.com/api/v3/coins/binance-usd/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === 'INEX') {
+    url = `https://api.coingecko.com/api/v3/coins/stellar/market_chart?vs_currency=${currency}&days=${days}`;
+  }
+  let res = await fetch(url);
+  console.log(res);
+  return res;
+}
+
 export function isLoggedIn() {
   return !!getJwtToken();
 }
