@@ -65,8 +65,17 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     const [minMavData, setMinMaxData] = useState() as any;
 
     useEffect(() => {
-        if (BSvalue && BSvalue.amount !== 0)
+        if (BSvalue && BSvalue.amount !== 0) {
             setBuyVal(BSvalue?.amount.toString());
+            let amount = BSvalue?.amount.toString();
+            let charFontSize = amount.length < 6 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
+            let charWidth = amount.length <= 1 ? 1.2 : 0.9
+            if (document.getElementsByClassName("input_currency")[0]) {
+                let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
+                element.style.width = ((amount.length + 1) * charWidth) + 'ch';
+                element.style.fontSize = charFontSize + "ch";
+            }
+        }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
         });
