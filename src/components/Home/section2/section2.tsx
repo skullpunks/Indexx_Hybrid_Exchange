@@ -32,7 +32,7 @@ const Section2 = () => {
         getETHCoinPrice();
         // getLTCCoinPrice();
         // getBUSDCoinPrice();
-    }, [indexxTokenPrices, BNBPrice, BTCPrice, ETHPrice])
+    }, [indexxTokenPrices])
 
 
     const getAllIndexxTokenPrices = async () => {
