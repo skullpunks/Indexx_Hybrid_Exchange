@@ -83,7 +83,7 @@ const HeaderNew = () => {
                             {/* <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Pools" className="dropdown-item" href="/">Pools</NavDropdown.Item> */}
                         </NavDropdown>
                         <NavDropdown title="Company" id="collasible-nav-dropdown" className='dark-menu'>
-                            <NavDropdown.Item as={Link} to="/indexx-exchange/help" className="dropdown-item" href="/">About</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/indexx-exchange/about" className="dropdown-item" href="/">About</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Hybrid Exchange" className='dropdown-item' href="/">Hybrid Exchange</NavDropdown.Item>
                             <NavDropdown.Item href="https://register.affiliate.indexx.ai/" target="_blank" rel="noreferrer">Affiliate Program</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/blog" className='dropdown-item' href="/">Blog</NavDropdown.Item>

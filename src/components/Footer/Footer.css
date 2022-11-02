@@ -48,7 +48,10 @@
 }
 
 .flip_woman {
-    top: -279px;
+    /* top: -279px; */
+
+    top: -221px;
+    max-width: 470px;
 }
 
 .copyright_text {

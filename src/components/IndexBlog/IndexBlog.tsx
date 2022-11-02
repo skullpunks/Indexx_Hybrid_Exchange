@@ -7,7 +7,6 @@ import indexFinance from "../../assets/arts/indexFinance.svg";
 import Footer from '../Footer/Footer';
 import FlipIconGreyBG from "../../assets/arts/FlipIconGreyBG.svg";
 
-
 export const IndexBlog = () => {
 
     const onClickHandler = (path: any) => {
