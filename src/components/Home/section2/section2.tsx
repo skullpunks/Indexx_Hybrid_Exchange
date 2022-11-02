@@ -1,22 +1,68 @@
-import "./sections2.css"
-import BnbIcon from "../../../assets/token-icons/BNB.png";
-import BitCoin from "../../../assets/token-icons/BTCB.png";
 import Etherum from "../../../assets/arts/ethereum.svg";
-import IUSD from "../../../assets/token-icons/35.png";
 import IN500 from "../../../assets/token-icons/33.png";
 import Crypto from "../../../assets/token-icons/34.png";
+import IUSD from "../../../assets/token-icons/35.png";
+import BnbIcon from "../../../assets/token-icons/BNB.png";
+import BitCoin from "../../../assets/token-icons/BTCB.png";
+import "./sections2.css";
 
+import { Button } from 'antd';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import chart1 from "../../../assets/arts/chart1.svg";
 import chart2 from "../../../assets/arts/chart2.svg";
 import chart3 from "../../../assets/arts/chart3.svg";
 import chart4 from "../../../assets/arts/chart4.svg";
 import chart5 from "../../../assets/arts/chart5.svg";
-import { Button } from 'antd';
-import { useNavigate } from "react-router-dom";
-
+import { getCryptoPrice, getIndexxTokenPrices } from "../../../services/api";
 
 const Section2 = () => {
     const navigate = useNavigate();
+
+    const [indexxTokenPrices, setIndexxTokenPrices] = useState() as any;
+    const [BNBPrice, setBNBPrice] = useState() as any;
+    const [BTCPrice, setBTCPrice] = useState() as any;
+    const [ETHPrice, setETHPrice] = useState() as any;
+    // const [LTCPrice, setLTCPrice] = useState() as any;
+    // const [BUSDPrice, setBUSDPrice] = useState() as any;
+    useEffect(() => {
+        getAllIndexxTokenPrices();
+        getBNBCoinPrice();
+        getBTCCoinPrice();
+        getETHCoinPrice();
+        // getLTCCoinPrice();
+        // getBUSDCoinPrice();
+    }, [indexxTokenPrices, BNBPrice, BTCPrice, ETHPrice])
+
+
+    const getAllIndexxTokenPrices = async () => {
+        const res = await getIndexxTokenPrices();
+        setIndexxTokenPrices(res.data);
+    }
+
+    const getBNBCoinPrice = async () => {
+        const res = await getCryptoPrice('BNB');
+        setBNBPrice(res.data);
+    }
+
+    const getBTCCoinPrice = async () => {
+        const res = await getCryptoPrice('BTC');
+        setBTCPrice(res.data);
+    }
+
+    // const getLTCCoinPrice = async () => {
+    //     const res = await getCryptoPrice('LTC');
+    //     setLTCPrice(res.data);
+    // }
+    // const getBUSDCoinPrice = async () => {
+    //     const res = await getCryptoPrice('BUSD');
+    //     setBUSDPrice(res.data);
+    // }
+    
+    const getETHCoinPrice = async () => {
+        const res = await getCryptoPrice('ETH');
+        setETHPrice(res.data);
+    }
 
     return (
         <div className="section2-container container margin-lr-auto">
@@ -41,10 +87,10 @@ const Section2 = () => {
                         <span>BNB</span>
                     </div>
                     <div className="table-header-element price">
-                        $277.098
+                        ${Math.round(BNBPrice?.lastPrice * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -3.75%
+                        {Math.round(BNBPrice?.priceChangePercent * 100) / 100}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart1} alt="Chart" className="chart-icon" />
@@ -57,10 +103,10 @@ const Section2 = () => {
                         <span>Bitcoin</span>
                     </div>
                     <div className="table-header-element price">
-                        $200.098
+                        ${Math.round(BTCPrice?.lastPrice * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -1.75%
+                        {Math.round(BTCPrice?.priceChangePercent * 100) / 100}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart2} alt="Chart" className="chart-icon" />
@@ -73,10 +119,10 @@ const Section2 = () => {
                         <span>Ethereum</span>
                     </div>
                     <div className="table-header-element price">
-                        $27.098
+                        ${Math.round(ETHPrice?.lastPrice * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -12.75%
+                        {Math.round(ETHPrice?.priceChangePercent * 100) / 100}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart3} alt="Chart" className="chart-icon" />
@@ -89,10 +135,10 @@ const Section2 = () => {
                         <span>INDEXXUSD+</span>
                     </div>
                     <div className="table-header-element price">
-                        $127.098
+                        ${Math.round(indexxTokenPrices?.IUSDPPrice * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -2.75%
+                        {(indexxTokenPrices?.IUSDPpriceChangePercent)}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
@@ -105,10 +151,10 @@ const Section2 = () => {
                         <span>INDEXX500</span>
                     </div>
                     <div className="table-header-element price">
-                        $17.098
+                        ${Math.round(indexxTokenPrices?.IN500Price * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -3.75%
+                        {(indexxTokenPrices?.IN500priceChangePercent)}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart4} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
@@ -121,10 +167,10 @@ const Section2 = () => {
                         <span>INDEXXCRYPTO</span>
                     </div>
                     <div className="table-header-element price">
-                        $16.098
+                        ${Math.round(indexxTokenPrices?.INXCPrice * 100) / 100}
                     </div>
                     <div className="table-header-element hourChange d-none d-sm-block">
-                        -1.75%
+                        {(indexxTokenPrices?.INXCpriceChangePercent)}%
                     </div>
                     <div className="table-header-element">
                         <img src={chart3} alt="Chart" className="chart-icon" />

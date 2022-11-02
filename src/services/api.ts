@@ -2,7 +2,7 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "http://localhost:3000";
+  baseURL = "http://localhost:3000";
   //baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://67b7-54-250-16-116.ngrok.io";
@@ -51,7 +51,7 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-export const logoutAPI = async () => {};
+export const logoutAPI = async () => { };
 
 export const getCountries = async () => {
   try {
@@ -65,7 +65,7 @@ export const getCountries = async () => {
   }
 };
 
-export const getUserWallet = async () => {};
+export const getUserWallet = async () => { };
 
 export const verifyPhoneCode = async (code: string) => {
   try {
@@ -91,13 +91,23 @@ export const verifyEmailCode = async (code: string) => {
 
 export const getIndexxTokenPrices = async () => {
   try {
-    const result = await API.post("/api/v1/inex/price/indexx");
+    const result = await API.post("/api/v1/inex/basic/indexxcoins");
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
 };
 
+export const getCryptoPrice = async (coin: string) => {
+  try {
+    const result = await API.post(`api/v1/inex/basic/getPriceByName`,{
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+}
 export function isLoggedIn() {
   return !!getJwtToken();
 }
