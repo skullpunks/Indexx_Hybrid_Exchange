@@ -35,8 +35,12 @@ const About = () => {
                     <div className='font_30x'>
                         Launched in September 2019 and headquartered in California, indexx.ai was established to serve U.S. consumers and adhere to U.S. regulations.</div>
                 </div>
+                <br/>
+                    <br/>
                 <div className='margin-t-2x margin-b-2x text-center'>
                     <div className='font_40x text-center padding-t-3x'>Meet Our Executive Team</div>
+                    <br/>
+                    <br/>
                     <div className='row'>
                         <div className='col-lg-4 text-center'>
                             <img src={brian} alt="BRIAN" /><br />

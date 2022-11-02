@@ -6,6 +6,15 @@
   height: 40vmin;
   pointer-events: none;
 }
+.ant-select-arrow {
+  height: 20px;
+  font-size:19px;
+  transform: rotate(-90deg);
+  color: #5f5f5f;
+}
+
+  
+   
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
