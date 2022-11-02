@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './IndexBlog.css';
 import IndexPreSaleIcon from "../../assets/arts/IndexPreSaleIcon.svg";
 import indexFamilyToken from "../../assets/arts/indexFamilyToken.svg";
@@ -6,12 +6,41 @@ import indexFund from "../../assets/arts/indexFund.svg";
 import indexFinance from "../../assets/arts/indexFinance.svg";
 import Footer from '../Footer/Footer';
 import FlipIconGreyBG from "../../assets/arts/FlipIconGreyBG.svg";
+import axios from 'axios';
 
 export const IndexBlog = () => {
 
     const onClickHandler = (path: any) => {
         window.open(`${path}`);
     };
+    let mediumURL =
+        "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@Indexx";
+
+    useEffect(() => {
+        axios
+            .get(mediumURL)
+            .then(async (res) => res.data)
+            .then((data) => {
+                // create two-dimensional array with 3 elements per inner array
+                const avatar = data.feed.image;
+                const profileLink = data.feed.link;
+                const res = data.items; //This is an array with the content. No feed, no info about author etc..
+                const posts = res.filter((item: any) => item.categories.length > 0);
+
+                console.log(avatar, profileLink, res, posts);
+                // this.setState({ avatar: avatar, profileLink: profileLink });
+                // const itemRows = [];
+                // posts.forEach((item, i) => {
+                //     item["avatar"] = this.state.avatar; // push avatar inside the json
+                //     item["profilelink"] = this.state.profileLink; // push profile link inside the JSON
+                //     const row = Math.floor(i / 3);
+                //     if (!itemRows[row]) itemRows[row] = [];
+                //     itemRows[row].push(item);
+                // });
+
+                // this.setState({ itemRows: itemRows });
+            });
+    }, [mediumURL]);
 
     return (
         <div>

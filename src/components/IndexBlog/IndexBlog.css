@@ -4,7 +4,7 @@ body {
 }
 
 .blog_container {
-    /* padding-top: 90px; */
+    padding-top: 90px;
     margin: 0 64px 64px;
 }
 
@@ -13,12 +13,13 @@ body {
     line-height: 1.2;
 }
 
-@media (min-width: 992px){
-.blog_Responsive .col-lg-6 {
-    flex: 0 0 auto;
-    width: calc(50% - 10px);
+@media (min-width: 992px) {
+    .blog_Responsive .col-lg-6 {
+        flex: 0 0 auto;
+        width: calc(50% - 10px);
+    }
 }
-}
+
 /* .blog_Responsive .col-lg-6 {
     flex: 0 0 auto;
     width: calc(50% - 10px);

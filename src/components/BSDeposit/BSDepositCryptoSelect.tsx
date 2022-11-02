@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
 
-import { ArrowRightOutlined, CaretDownOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { Button, Popover, Select } from 'antd';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
-import IN500 from "../../assets/token-icons/33.png";
+// import IN500 from "../../assets/token-icons/33.png";
 
 import copyIcon from "../../assets/arts/copyIcon.svg";
 import { Link, useNavigate } from 'react-router-dom';
+import initialTokens from "../../utils/Tokens.json";
+import { BSContext, BSContextType } from '../../utils/SwapContext';
 
 export const BSDepositCryptoSelect = () => {
   const navigate = useNavigate();
   const [network, setNetwork] = useState("");
-
+  const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const { Option } = Select;
 
   const handleChange = (value: string) => {
     setNetwork(value)
     console.log(`selected ${value}`);
+  };
+
+  const handleChangeCurrency = (value: string) => {
+    if (setBSvalue && BSvalue) {
+      setBSvalue({ ...BSvalue, fromToken: value });
+    }
   };
 
   const content = (
@@ -47,13 +55,24 @@ export const BSDepositCryptoSelect = () => {
         <h1 className='font_20x padding-t-2x padding-b-1x'>Select Coin</h1>
         <div className=''>
           <label>Currency</label>
-          <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
+          <Select className='width-100'
+            onChange={handleChangeCurrency} value={BSvalue?.fromToken}>
+            {
+              initialTokens.map((token) => {
+
+                return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                  <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                </Select.Option>
+              })
+            }
+
+          </Select>
+          {/* <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
 
             <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
             <CaretDownOutlined />
 
-            {/* <RightOutlined /> */}
-          </div>
+          </div> */}
           <br />
           <h1 className='font_20x padding-t-2x' >Deposit to</h1>
           <div className='padding-t-1x'>
