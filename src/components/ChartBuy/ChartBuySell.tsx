@@ -1,32 +1,22 @@
 
-// import IN500 from "../../assets/token-icons/33.png";
-// import IUSD from "../../assets/token-icons/35.png";
-import ArrowLeft from "../../assets/arts/ArrowLeft.svg";
-import ArrowRight from "../../assets/arts/ArrowRight.svg";
 import curvedChart from "../../assets/arts/curvedChart.svg";
 import "./Chart.css";
 import { Segmented } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 import { useContext } from "react";
-import { useFromTokenContext, useToTokenContext } from '../../utils/SwapContext';
+import { useFromTokenContext } from '../../utils/SwapContext';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 
 const ChartBuySell = () => {
-    // const [fromTokenVal, setFromTokenVal] = useState(0);
-    // const [toTokenVal, setToTokenVal] = useState(0);
     const { fromToken } = useFromTokenContext();
-    const { toToken } = useToTokenContext();
     const { BSvalue } = useContext(BSContext) as BSContextType;
 
-    let fromImage, fromTitle, image, title;
+    let fromImage, fromTitle;
 
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === fromToken;
     });
 
-    const filteredArray = initialTokens.filter(function (obj) {
-        return obj?.address === toToken;
-    });
 
     if (filteredFromArray && filteredFromArray.length) {
         fromImage = filteredFromArray[0].image;
@@ -37,14 +27,14 @@ const ChartBuySell = () => {
         fromTitle = "IN500";
     }
 
-    if (filteredArray && filteredArray.length) {
-        image = filteredArray[0].image;
-        title = filteredArray[0].title;
-    }
-    else {
-        image = "IUSD";
-        title = "IUSD+";
-    }
+    // if (filteredArray && filteredArray.length) {
+    //     image = filteredArray[0].image;
+    //     title = filteredArray[0].title;
+    // }
+    // else {
+    //     image = "IUSD";
+    //     title = "USD";
+    // }
 
     const filteredFromArrayChart = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
@@ -57,12 +47,12 @@ const ChartBuySell = () => {
                 {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
                 {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
                 <img src={require(`../../assets/token-icons/${filteredFromArrayChart[0].image}.png`).default} alt="bit coin" width="30" />
-                <img src={require(`../../assets/token-icons/${image}.png`).default} alt="bit coin" width="30" />
-                <h1 className="chart_title">{filteredFromArrayChart[0].title}/{title}</h1>
-                <div className="arrow_container">
+                <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="USD" width="30" />
+                <h1 className="chart_title">{filteredFromArrayChart[0].title}/USD</h1>
+                {/* <div className="arrow_container">
                     <div><img src={ArrowRight} alt="Arrow Here" /></div>
                     <div><img src={ArrowLeft} alt="Arrow Here" /></div>
-                </div>
+                </div> */}
             </div>
             <div className="Chart_inner">
                 <div className="chart_inner_left">

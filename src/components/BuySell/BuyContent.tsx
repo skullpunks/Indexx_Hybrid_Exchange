@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 import { Select } from 'antd';
-import { Option } from 'antd/lib/mentions';
+// import { Option } from 'antd/lib/mentions';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from "../../utils/Tokens.json";
@@ -154,9 +154,9 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                             {
                                 initialTokens.map((token, index) => {
 
-                                    return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                                    return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
                                         <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                                    </Option>
+                                    </Select.Option>
                                 })
                             }
 

@@ -18,7 +18,8 @@ import BuySellSelect from './BuySellSelect';
 // import BuySellSecureSteps from './BuySellSecureSteps';
 // import BuySellMobiAuth from './BuySellMobiAuth';
 // import BuySellmobiVerfication from './BuySellmobiVerfication';
-import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
+// import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
+// import ladyBuyGoldImage from "../../assets/arts/ladyBuyGoldImage.png";
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
 import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
@@ -69,8 +70,8 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
 
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
-                    <div className='centered' style={{ paddingBottom: 180 }}>
-                        <img className='mw-100' src={personFlipIconGold} alt="person Flip Icon Gold" />
+                    <div className='centered buy_sell_bg'>
+                        {/* <img className='mw-100' src={ladyBuyGoldImage} alt="person Flip Icon Gold" /> */}
                     </div>
                     :
                     <></>

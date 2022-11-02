@@ -7,7 +7,7 @@ import YouTube from "../../assets/arts/youtTubeIcon.svg";
 // import Reddit from "../../assets/arts/redditIcon.svg";
 import facebook from "../../assets/arts/fb_logo.png";
 import needHelp from "../../assets/arts/needHelp.svg";
-import personFlipCoin from "../../assets/arts/personFlipCoin.svg";
+import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
 import { Link } from "react-router-dom";
 import indexText from "../../assets/arts/indexText.svg";

@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import "./Header.css";
 
 
@@ -23,69 +23,58 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 
 
 const Links = [
-    {
-        label: "Swap",
-        value: "swap",
-        url: "/indexx-exchange/swap"
-    },
-    {
-        label: "Centralized",
-        value: "buy-sell",
-        url: "/indexx-exchange/buy-sell"
-    },
-    {
-        label: "Trade to Earn",
-        value: "trade-to-earn",
-        url: "/indexx-exchange/trade-to-earn"
-    },
-    {
-        label: "Markets",
-        value: "markets",
-        url: "/indexx-exchange/markets"
-    },
-    {
-        label: "Tokens",
-        value: "tokens",
-        url: "/indexx-exchange/tokens"
-    }
+    { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
+    { label: "Trade to Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
+    { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
+    { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
+    { label: "", value: "/", url: "/" }
 ]
 
-const showText: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.label);
-const showUrl: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.url);
 
 
-function HeaderNew() {
+const HeaderNew = () => {
     let title = <>{localStorage.getItem("user")}</>
-    const [insideApp, setInsideApp] = useState(true);
-    console.log(insideApp);
-
+    const [isInsideApp, setIsInsideApp] = useState(false);
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    let pageName = searchParams.get("page");
+    // alert(pageName)
     useEffect(() => {
-        if (window.location) {
-            setInsideApp(window.location.pathname.includes("/indexx-exchange/"));
+        if (location) {
+            setIsInsideApp(location.pathname.includes("/indexx-exchange/"))
         }
-    }, []);
+    },
+        [location]
+    )
 
-    return (
+    const showText: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.label);
+    const showUrl: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.url);
+    console.log(isInsideApp);
+
+    if (window.location.pathname.includes("get-started") || window.location.pathname.includes("login")) {
+        return <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
+            <Container>
+                <div className='d-flex logo__holder'>
+                    <Navbar.Brand href="/" className='logo__icon'>index.ai</Navbar.Brand>
+
+                </div>
+            </Container>
+        </Navbar>
+    }
+    else return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
                 <div className='d-flex logo__holder'>
-                    <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
-                    {/* {(insideApp) ?
-                        <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>React-Bootstrap</Navbar.Brand>
-                        :
-                        <></>
+                    <Navbar.Brand as={Link} to="/" href="/" className='logo__icon'>index.ai</Navbar.Brand>
+                    <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{pageName || showText[0]}</Nav.Link>
 
-                    } */}
-                    {((window.location.pathname.includes("get-started")) || (window.location.pathname.includes("login"))) ?
-                        <></> :
-                        <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">{showText[0]}</Nav.Link>
-                    }</div>
+                </div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <NavDropdown title="Products" id="collasible-nav-dropdown" className='dark-menu'>
-                            <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell" className='dropdown-item' href="/">Centralized</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=decentralized" className="dropdown-item" href="/" >Decentralized</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell" className='dropdown-item' >Centralized</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Decentralized" className="dropdown-item" href="/" >Decentralized</NavDropdown.Item>
                             <NavDropdown.Item href="https://tokens.indexx.ai/" className='dropdown-item' target="_blank" rel="noreferrer">indexx Tokens</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Earn" id="collasible-nav-dropdown" className='dark-menu'>

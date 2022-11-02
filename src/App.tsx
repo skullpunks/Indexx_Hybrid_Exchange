@@ -31,6 +31,7 @@ import IndexxTokens from './components/IndexxTokens/IndexxTokens';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
 import About from './components/About/About';
+// import Header from './components/Header/Header';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';

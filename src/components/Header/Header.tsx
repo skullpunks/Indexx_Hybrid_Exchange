@@ -120,32 +120,13 @@ const Header = () => {
         [location]
     )
 
+
     const Links = [
-        {
-            label: "Swap",
-            value: "swap",
-            url: "/indexx-exchange/swap"
-        },
-        {
-            label: "Buy & Sell",
-            value: "buy-sell",
-            url: "/indexx-exchange/buy-sell"
-        },
-        {
-            label: "Trade to Earn",
-            value: "trade-to-earn",
-            url: "/indexx-exchange/trade-to-earn"
-        },
-        {
-            label: "Markets",
-            value: "markets",
-            url: "/indexx-exchange/markets"
-        },
-        {
-            label: "Tokens",
-            value: "tokens",
-            url: "/indexx-exchange/tokens"
-        }
+        { label: "Decentralized", value: "swap", url: "/indexx-exchange/swap" },
+        { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
+        { label: "Trade to Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
+        { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
+        { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" }
     ]
 
     const showText: any = Links.filter((link) => location.pathname.includes(link.value)).map(obj => obj.label);

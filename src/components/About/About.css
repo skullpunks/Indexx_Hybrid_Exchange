@@ -1,3 +1,48 @@
 .about-container {
     height: 600px;
 }
+
+.handsImage {
+    width: 50%;
+    margin: auto;
+    transform: translateY(-60%);
+}
+
+.row{
+    width: 100%;
+}
+.disignation {
+    font-size:12px;
+}
+.employee_name {
+    font-size:15px;
+}
+
+.main_container {
+    padding: 0 10%;
+}
+
+.main_container .col-lg-4 {
+    margin-top:20px;
+}
+
+@media (max-width: 767px) {
+
+    .about-container {
+        height: 338px;
+    }
+    .font_40x {
+        font-size: 25px;
+    }
+    .font_30x {
+        font-size: 15px;
+        line-height: 1.2;
+    }
+    
+
+.handsImage {
+    width: 63%;
+}
+
+
+}
