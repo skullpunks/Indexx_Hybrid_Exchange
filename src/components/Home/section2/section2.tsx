@@ -58,7 +58,7 @@ const Section2 = () => {
     //     const res = await getCryptoPrice('BUSD');
     //     setBUSDPrice(res.data);
     // }
-    
+
     const getETHCoinPrice = async () => {
         const res = await getCryptoPrice('ETH');
         setETHPrice(res.data);
@@ -67,7 +67,7 @@ const Section2 = () => {
     return (
         <div className="section2-container container margin-lr-auto">
             <div className="section2-table">
-                <div className="table-row">
+                <div className="table-row" >
                     <div className="table-header-element">
                         Cryptocurrency
                     </div>
@@ -80,7 +80,7 @@ const Section2 = () => {
                     <div className="table-header-element">
                     </div>
                 </div>
-                <div className="table-row">
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={BnbIcon} alt="coin-icon" />
                         <b className="coin-initials">BNB</b>
@@ -96,7 +96,7 @@ const Section2 = () => {
                         <img src={chart1} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row">
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={BitCoin} alt="coin-icon" />
                         <b className="coin-initials">BTC</b>
@@ -112,7 +112,7 @@ const Section2 = () => {
                         <img src={chart2} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row">
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={Etherum} alt="coin-icon" />
                         <b className="coin-initials">ETH</b>
@@ -128,7 +128,7 @@ const Section2 = () => {
                         <img src={chart3} alt="Chart" className="chart-icon" />
                     </div>
                 </div>
-                <div className="table-row">
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={IUSD} alt="coin-icon" />
                         <b className="coin-initials">IUSD+</b>
@@ -144,7 +144,7 @@ const Section2 = () => {
                         <img src={chart5} alt="Chart" className="chart-icon" style={{ paddingLeft: 40 }} />
                     </div>
                 </div>
-                <div className="table-row">
+                <div className="table-row cursor-pointer" onClick={() => navigate(`/indexx-exchange/markets`)}>
                     <div className="table-header-element coinName">
                         <img style={{ height: 30, width: 30 }} src={IN500} alt="coin-icon" />
                         <b className="coin-initials">IN500</b>

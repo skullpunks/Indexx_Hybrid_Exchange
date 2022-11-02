@@ -599,6 +599,13 @@ button.ant-btn-primary [disabled] {
     font-family: AvenirLight;
 }
 
+.buy_sell_bg {
+    background-image: url("../../assets/arts/ladyBuyGoldImage.png");
+    height: 650px;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
 .responsive_container .card,
 .responsive_container .bs_container {
 

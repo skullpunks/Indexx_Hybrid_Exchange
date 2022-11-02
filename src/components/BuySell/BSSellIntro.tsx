@@ -88,9 +88,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className='sell_screens'>
 
-            <div style={{ marginTop: "40px", marginRight: "26px" }} className="padding-b-2x ">
+            <div className="padding-lr-2x padding-tb-3x">
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)" }}>
+                    <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
 
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} />
                         {/* <span className="font_20x">IN500</span> */}

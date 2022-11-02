@@ -7,7 +7,7 @@ import getInTouch from "../../../assets/getInTouch.png";
 import indexxai from "../../../assets/indexxai.png";
 import community from "../../../assets/community.png";
 import careers from "../../../assets/careers.png";
-import footer_banner from "../../../assets/arts/footer_banner.png";
+// import footer_banner from "../../../assets/arts/footer_banner.png";
 import { Link } from "react-router-dom";
 
 const Section4 = () => {
@@ -83,7 +83,7 @@ const Section4 = () => {
             </div>
 
             <div className="section4_banner">
-                <img src={footer_banner} alt="Banner" />
+                {/* <img src={footer_banner} alt="Banner" /> */}
             </div>
 
             <div className="container ">

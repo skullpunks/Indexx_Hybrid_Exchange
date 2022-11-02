@@ -10,10 +10,18 @@
 
 }
 
-.section4_banner>img {
+.section4_banner {
+    background-image: url("../../../assets/arts/footer_banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 420px;
+
+}
+
+/* .section4_banner>img {
     margin-left: -28px;
     width: calc(100% + 28px);
-}
+} */
 
 .d-flex {
     display: flex;
@@ -66,11 +74,15 @@
     padding-bottom: 50px;
 }
 
+.item-link:hover {
+    color: #d52f01;
+}
+
 .section4-container-heading {
 
     font-family: AvenirRegular, serif;
     font-size: 60px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 73px;
     letter-spacing: 0em;
     padding: 50px 0 20px;
