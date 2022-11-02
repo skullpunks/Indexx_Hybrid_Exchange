@@ -1,16 +1,12 @@
-import React from "react";
+import { Segmented } from 'antd';
 import {
-  LineChart,
   //   Brush,
-  Line,
-  Tooltip,
+  Line, LineChart, Tooltip,
   // CartesianGrid,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import styles from "./LineGraph.module.css";
-import { Segmented } from 'antd';
-import Moment from 'moment';
 
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
@@ -27,7 +23,6 @@ const LineGraph = (props: any) => {
     }
   };
   media();
-  const formatDate = Moment().format('MMM Do YY')
   return (
     <div className='card' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
       {/* <h3>{props.currencyName}/USD</h3> */}
