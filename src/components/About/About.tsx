@@ -8,6 +8,7 @@ import brian from "../../assets/arts/brian.svg";
 import tony from "../../assets/arts/tony.svg";
 import Nick from "../../assets/arts/Nick.svg";
 import "./About.css";
+import Footer from '../Footer/Footer';
 
 const About = () => {
     return (
@@ -35,12 +36,12 @@ const About = () => {
                     <div className='font_30x'>
                         Launched in September 2019 and headquartered in California, indexx.ai was established to serve U.S. consumers and adhere to U.S. regulations.</div>
                 </div>
-                <br/>
-                    <br/>
+                <br />
+                <br />
                 <div className='margin-t-2x margin-b-2x text-center'>
                     <div className='font_40x text-center padding-t-3x'>Meet Our Executive Team</div>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <div className='row'>
                         <div className='col-lg-4 text-center'>
                             <img src={brian} alt="BRIAN" /><br />
@@ -53,42 +54,43 @@ const About = () => {
                         <div className='col-lg-4 text-center'>
                             <img src={Omkar} alt="BRIAN" /><br />
                             <span className='employee_name'>
-                               OMKAR SUNKU<br />
-                               <div className='disignation'>Chief Technology Officer </div></span>
+                                OMKAR SUNKU<br />
+                                <div className='disignation'>Chief Technology Officer </div></span>
                         </div>
                         <div className='col-lg-4 text-center'>
-                            <img src={  Nick} alt="BRIAN" /><br />
+                            <img src={Nick} alt="BRIAN" /><br />
                             <span className='employee_name'>
-                            NICK FRASER<br/>
-                            <div className='disignation'>Chief Operations Officer</div></span>
+                                NICK FRASER<br />
+                                <div className='disignation'>Chief Operations Officer</div></span>
                         </div>
                         <div className='col-lg-4 text-center margin-t-2x'>
-                            <img src={  tony} alt="BRIAN" /><br />
+                            <img src={tony} alt="BRIAN" /><br />
                             <span className='employee_name'>
-                            TONY PELAYO<br/>
-                            <div className='disignation'>Chief Marketing & Sales Officer</div></span>
+                                TONY PELAYO<br />
+                                <div className='disignation'>Chief Marketing & Sales Officer</div></span>
                         </div>
-                       
+
                         <div className='col-lg-4 text-center margin-t-2x'>
                             <img src={frank} alt="frank" /><br />
                             <span className='employee_name'>
                                 FRANK HETTMANN<br />
-                               <div className='disignation'>Chief People Officer</div> 
+                                <div className='disignation'>Chief People Officer</div>
 
                             </span>
                         </div>
                         <div className='col-lg-4 text-center margin-t-2x'>
                             <img src={lili} alt="frank" /><br />
                             <span className='employee_name'>
-                            LILI<br/>
-                            <div className='disignation'>Chief Financial Officer</div>
+                                LILI<br />
+                                <div className='disignation'>Chief Financial Officer</div>
 
                             </span>
                         </div>
                     </div>
                 </div>
-                <div className='font_40x padding-t-3x margin-t-3x padding-b-3x'>Make a career out of crypto. Join the indexx.ai team and help us take the future of money to new heights.</div>
+                <div className='font_40x padding-t-3x margin-t-3x padding-b-3x' style={{ paddingBottom: 200 }}>Make a career out of crypto. Join the indexx.ai team and help us take the future of money to new heights.</div>
             </div>
+            <Footer footerArt="flipWoman" />
         </>
     );
 }
