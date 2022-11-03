@@ -23,10 +23,10 @@ import Indexx500Graph from '../Graphs/Indexx500Graph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
 import BSBuyInProgress from './BSBuyInProgress';
 import BSConfirmPurchase from './BSConfirmPurchase';
-// import IndexxUSDPGraph from '../Graphs/IndexxUSDPGraph';
+import IndexxUSDPGraph from '../Graphs/IndexxUSDPGraph';
 import IndexxExchangeGraph from '../Graphs/IndexxExchange';
 import LitecoinGraph from '../Graphs/LitecoinGraph';
-// import BinanceGraph from '../Graphs/BinanceGraph';
+import BinanceGraph from '../Graphs/BinanceGraph';
 // import BuySellGetStarted from './BuySellGetStarted';
 import { Route, Routes } from 'react-router-dom';
 // import { BSProvider } from '../../utils/SwapContext';
@@ -39,8 +39,8 @@ let graphs: any = {
     "Indexx500Graph": Indexx500Graph,
     "EthereumGraph": EthereumGraph,
     "IndexxCrypto": IndexxCryptoGraph,
-    // "IndexxUSDPGraph": IndexxUSDPGraph,
-    // "BinanceGraph": BinanceGraph,
+    "IndexxUSDPGraph": IndexxUSDPGraph,
+    "BinanceGraph": BinanceGraph,
     "LitecoinGraph": LitecoinGraph,
     "IndexxExchange": IndexxExchangeGraph
 
