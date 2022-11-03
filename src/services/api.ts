@@ -5,7 +5,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
    baseURL = "http://localhost:3000";
   //baseURL = "https://67b7-54-250-16-116.ngrok.io";
 } else {
-  baseURL = "https://67b7-54-250-16-116.ngrok.io";
+  baseURL = "https://3bc0-54-250-16-116.ngrok.io";
 }
 
 console.log("baseURL", baseURL);
