@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import "./Header.css";
+import loaderGif from "../../assets/arts/loaderIcon.gif";
 
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
@@ -59,6 +60,7 @@ const HeaderNew = () => {
 
                 </div>
             </Container>
+            <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div>
         </Navbar>
     }
     else return (
@@ -115,6 +117,7 @@ const HeaderNew = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
+            <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div>
         </Navbar>
     );
 }

@@ -395,12 +395,21 @@ a.link.text-white:hover {
 }
 
 .loader {
-    background-color: rgba(211, 211, 211, 0.1);
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
     text-align: center;
     z-index: 99;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loader>img {
+    text-align: center;
+    margin-top: calc(50vh - 100px);
+    width: 100px;
 }
 
 button.navbar-toggler {
