@@ -20,7 +20,8 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => setScreenName("confirmPurchase")}>&#60;</span>
+                    {/* onClick={() => setScreenName("confirmPurchase")} */}
+                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell/confirm-purchase")}>&#60;</span>
                     Purchase in Progress
                 </h1>
             </div>

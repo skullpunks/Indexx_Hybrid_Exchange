@@ -11,23 +11,25 @@ import { useEffect } from 'react';
 import { getMinAndMaxOrderValues, isLoggedIn } from "../../services/api";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import "./BS-Sell.css";
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 
 const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
-    // const navigate= useNavigate();
+    const navigate = useNavigate();
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const navigateUser = () => {
         if (isLoggedIn()) {
-            // navigate("./")
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
             }
-            setScreenName("confirmPurchase");
+            navigate("/indexx-exchange/buy-sell/confirm-purchase");
+            // setScreenName("confirmPurchase");
         } else {
-            setScreenName("create");
+            // setScreenName("create");
+            navigate("/indexx-exchange/buy-sell/create");
         }
     }
 

@@ -6,20 +6,9 @@ import './BuySell.css';
 //import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 // import { Button, InputNumber, Tag } from 'antd';
 import { useContext, useState } from 'react';
-// import downArrow from "../../assets/arts/downArrow.svg";
-// import ChartBuySell from "../ChartBuy/ChartBuySell";
-// import swapIcon from "../../assets/arts/swapIcon.svg";
-// import historyIcon from "../../assets/arts/historyIcon.svg";
-// import initialTokens from "../../utils/Tokens.json";
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
-import BuySellSelect from './BuySellSelect';
-// import BuySellEmailAuth from './BuySellEmailAuth';
-// import BuySellSecureSteps from './BuySellSecureSteps';
-// import BuySellMobiAuth from './BuySellMobiAuth';
-// import BuySellmobiVerfication from './BuySellmobiVerfication';
-// import personFlipIconGold from "../../assets/arts/personFlipIconGold.svg";
-// import ladyBuyGoldImage from "../../assets/arts/ladyBuyGoldImage.png";
+// import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
 import BSConvertInProgressProcessing from './BSConvertInProgressProcessing';
@@ -39,6 +28,8 @@ import IndexxExchangeGraph from '../Graphs/IndexxExchange';
 import LitecoinGraph from '../Graphs/LitecoinGraph';
 // import BinanceGraph from '../Graphs/BinanceGraph';
 // import BuySellGetStarted from './BuySellGetStarted';
+import { Route, Routes } from 'react-router-dom';
+// import { BSProvider } from '../../utils/SwapContext';
 
 interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -56,53 +47,47 @@ let graphs: any = {
 }
 
 const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
+    // const [status, setStatus] = useState("");
     const [toggleChart, setToggleChart] = useState(true);
     const [screenName, setScreenName] = useState("");
     const { BSvalue } = useContext(BSContext) as BSContextType;
 
-    // const Checkout = ({ step }: any) => {
-    //     const ToRender = graphs[step]
-    //     return (
-    //         <ToRender />
-    //     )
-    // }
-    // console.log(setToggleChart);
-    // let chartIconVisible = toggleChart ? chartIcon : chartHiddenIcon;
     let ChartCoin: any = Indexx500Graph;
     if (BSvalue && BSvalue.fromGraph && graphs) {
         ChartCoin = graphs[BSvalue.fromGraph];
     }
 
     return (
-        <>
+        <div className='swap_container' >
             <div className="scan-container flex-align-stretch bs_main">
-                {/* {(BSvalue && BSvalue.fromGraph == "Indexx500Graph") && <Indexx500Graph />} */}
-
-
-                {/* {toggleChart && <Indexx500Graph />} */}
                 {toggleChart && <ChartCoin />}
-                {/* {<ChartCoin />} */}
-                {/* {toggleChart && <Checkout step={BSvalue?.fromGraph} />} */}
-                {/* {toggleChart && <ChartCoin />} */}
-                {/* {toggleChart && <EthereumGraph />} */}
-                {/* {toggleChart && <IndexxCryptoGraph />} */}
-                {/* {toggleChart && <ChartBuySell />} */}
-                {screenName === "" && <BuySellIntro setScreenName={setScreenName} />}
-                {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />}
-                {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />}
-                {screenName === "BSBuyInProgress" && <BSBuyInProgress setScreenName={setScreenName} />}
-                {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />}
-                {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />}
-                {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />}
-                {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />}
-                {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} setToggleChart={setToggleChart} />}
-                {screenName === "BSSellConfirmConvert" && <BSSellConfirmConvert setScreenName={setScreenName} />}
-                {screenName === "BSSellInprogress" && <BSSellInprogress setScreenName={setScreenName} />}
+                {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
+                {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
+                {/* {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />} */}
+                {/* {screenName === "BSBuyInProgress" && <BSBuyInProgress setScreenName={setScreenName} />} */}
+                {/* {screenName === "create" && <BuySellCreate setScreenName={setScreenName} />} */}
+                {/* {screenName === "confirmConvert" && <BSConfirmConvert setScreenName={setScreenName} />} */}
+                {/* {screenName === "BSConvertInProgress" && <BSConvertInProgress setScreenName={setScreenName} />} */}
+                {/* {screenName === "BSConvertInProgressProcessing" && <BSConvertInProgressProcessing setScreenName={setScreenName} />} */}
+                {/* {screenName === "BSTractionHistory" && <BSTractionHistory setScreenName={setScreenName} setToggleChart={setToggleChart} />} */}
+                {/* {screenName === "BSSellConfirmConvert" && <BSSellConfirmConvert setScreenName={setScreenName} />} */}
+                {/* {screenName === "BSSellInprogress" && <BSSellInprogress setScreenName={setScreenName} />} */}
+                <Routes>
+                    <Route path="" element={<BuySellIntro setScreenName={setScreenName} />} />
+                    <Route path="confirm-purchase" element={<BSConfirmPurchase setScreenName={setScreenName} />} />
+                    <Route path="buy-in-progress" element={<BSBuyInProgress setScreenName={setScreenName} />} />
+                    <Route path="create" element={<BuySellCreate setScreenName={setScreenName} />} />
+                    <Route path="confirm-convert" element={<BSConfirmConvert setScreenName={setScreenName} />} />
+                    <Route path="convert-in-progress" element={<BSConvertInProgress setScreenName={setScreenName} />} />
+                    <Route path="convert-in-progress-process" element={<BSConvertInProgressProcessing setScreenName={setScreenName} />} />
+                    <Route path="traction-history" element={<BSTractionHistory setScreenName={setScreenName} setToggleChart={setToggleChart} />} />
+                    <Route path="sell-confirm-convert" element={<BSSellConfirmConvert setScreenName={setScreenName} />} />
+                    <Route path="sell-in-progress" element={<BSSellInprogress setScreenName={setScreenName} />} />
+
+                </Routes>
             </div>
 
-            {/* <Routes>
-                <Route index element={<BuySellIntro setScreenName={setScreenName} />} />
-            </Routes> */}
+
 
             {
                 (screenName === "" || screenName === "select" || screenName === "create") ?
@@ -113,7 +98,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
                     <></>
 
             }
-        </>
+        </div >
 
 
     )

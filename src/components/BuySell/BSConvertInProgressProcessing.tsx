@@ -2,17 +2,20 @@ import React from 'react';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 
 const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => {
+    const navigate = useNavigate();
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => setScreenName("BSConvertInProgress")}>&#60;</span>
+                    {/* setScreenName("BSConvertInProgress") */}
+                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}>&#60;</span>
 
                     Convert in Processing
                 </h1>
@@ -32,7 +35,8 @@ const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => 
                 </div>
 
                 <div className='font_18x padding-b-2x'>Your convert order is being processed.A confirmation email will be sent once the order is complete.</div>
-                <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => setScreenName("BSTractionHistory")}> Go to Wallet</Button>
+                {/*setScreenName("BSTractionHistory")  */}
+                <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/traction-history")}> Go to Wallet</Button>
                 <a className="font_15x bs_link text-center d-block padding-t-3x" href="# " >New Convert</a>
             </div>
         </div>
