@@ -148,6 +148,10 @@
     /* padding-right: 10px; */
 }
 
+.ant-modal-close {
+    width: auto;
+}
+
 
 @media (max-width: 767px) {
     .section-usp {
@@ -209,6 +213,14 @@
     .navbar-toggler, .navbar-toggler:focus {
         border: none;
         box-shadow: none;
+    }
+
+    .chart_buy {
+        display: none;
+    }
+
+    .buy_sell_bg {
+        background-size: contain;
     }
 }
 

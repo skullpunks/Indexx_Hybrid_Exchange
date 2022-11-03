@@ -122,7 +122,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className='card-body padding-0'>
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
+                    <div className="bs_curreny_left flex-align-center padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
                         <span placeholder="0" className="font_60x color_general"  >{BSvalue?.amount}</span>
                     </div>
@@ -148,9 +148,9 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.round(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
 
-                    <Modal title="Stripe Payment" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850}>
+                    <Modal title="Stripe Payment" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false}>
                         {clientSecret && (
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm />

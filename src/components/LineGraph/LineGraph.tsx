@@ -24,7 +24,7 @@ const LineGraph = (props: any) => {
   };
   media();
   return (
-    <div className='card' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
+    <div className='card chart_buy' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
       {/* <h3>{props.currencyName}/USD</h3> */}
       <div className="chart_header d-flex flex-align-center">
         {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
