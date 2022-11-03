@@ -637,6 +637,24 @@ button.ant-btn-primary [disabled] {
 
     }
 
+    .bs_wallet .card,
+    .bs_wallet .border-b-1x
+     {
+        min-width:unset;
+        border-color:#d7d7d7;
+    }
+
+    .bs_wallet .ant-input-prefix,
+    .bs_wallet .orange_input.ant-input-affix-wrapper, 
+    .bs_wallet .orange_input.ant-input-affix-wrapper:hover, 
+    .bs_wallet .orange_input input, .orange_input input:hover {
+      
+        border-color:#d7d7d7 !important;
+    }
+    .bs_wallet .padding-2x {
+        padding:0
+    }
+
 
     .bs_main label, .placeholder_info {
 
