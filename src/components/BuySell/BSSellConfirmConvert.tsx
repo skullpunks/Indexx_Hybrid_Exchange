@@ -140,7 +140,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         <div className="bs_container card sell_screens">
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
-                <h1 className='centered' style={{ color: "#5f5f5f" }}>
+                <h1 className='centered cursor-pointer' style={{ color: "#5f5f5f" }}>
                     <span className='font_20x pe-2' onClick={navigateBak}>&#60;</span>
                     Confirm Sell
                 </h1>

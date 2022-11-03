@@ -222,6 +222,18 @@
     .buy_sell_bg {
         background-size: contain;
     }
+
+    .accounts_container .ant-tabs>.ant-tabs-nav .ant-tabs-nav-wrap {
+        padding-left: 12px !important;
+    }
+
+    .accounts_container .ant-tabs-tab+.ant-tabs-tab {
+        margin-left: 20px !important;
+    }
+
+    .accounts_container .ant-tabs-tab {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 420px) {
