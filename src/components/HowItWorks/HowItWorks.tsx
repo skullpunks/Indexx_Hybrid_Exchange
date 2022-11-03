@@ -8,6 +8,7 @@ import tokens from "../../assets/how-it-works/tokens.png";
 import indexxfortune from "../../assets/how-it-works/indexxfortune.png";
 import finalsquare from "../../assets/how-it-works/finalsquare.png";
 import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -26,11 +27,16 @@ const HowItWorks = () => {
 
         <div className='row'>
         <div className='col-lg-4 text-center'>
-                            <img src={firstcoin} alt="indexxcoin"  /><br />
+          <Link to='/indexx-exchange/how-it-works/centralized' style={{textDecoration:"none"}}>
+          <img src={firstcoin} alt="indexxcoin"  /><br />
                             <span className='employee_name'>
-                                <strong>indexx<br />Centralized</strong>
+                                <strong >indexx<br />Centralized</strong>
                                 
                             </span>
+                            
+          </Link>
+               
+                          
                         </div>
                         <div className='col-lg-4 text-center'>
                             <img src={firstcoin} alt="indexxcoin" /><br />
