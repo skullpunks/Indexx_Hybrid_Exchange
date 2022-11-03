@@ -18,8 +18,8 @@ const LineGraph = (props: any) => {
       width = 250;
       height = 250;
     } else {
-      width = 700;
-      height = 450;
+      width = 650;
+      height = 420;
     }
   };
   media();
@@ -42,7 +42,7 @@ const LineGraph = (props: any) => {
         <div className="chart_inner_left">
           <div className="chart_inner_left_top d-flex">
             {/* <div style={{ fontSize: 45, color: "#5f5f5f" }}>{props.currencyPrice} */}
-              {/* <div className="chart_inner_middle">
+            {/* <div className="chart_inner_middle">
                 ({props.currencyPriceChange})
               </div> */}
             {/* </div> */}
@@ -61,25 +61,25 @@ const LineGraph = (props: any) => {
               </span>),
               value: 1
             },
-           
-          {
-            label: (<span onClick={props.monthClickHandler}>
-              1 Month
-            </span>),
-            value: 2
-          },
-          {
-            label: (<span onClick={props.weekClickHandler}>
-              1 Week
-            </span>),
-            value: 3
-          },
-          {
-            label: (<span onClick={props.yearClickHandler}>
-              1 Year
-            </span>),
-            value: 4
-          },
+
+            {
+              label: (<span onClick={props.monthClickHandler}>
+                1 Month
+              </span>),
+              value: 2
+            },
+            {
+              label: (<span onClick={props.weekClickHandler}>
+                1 Week
+              </span>),
+              value: 3
+            },
+            {
+              label: (<span onClick={props.yearClickHandler}>
+                1 Year
+              </span>),
+              value: 4
+            },
           ]} >
           </Segmented>
         </div>
