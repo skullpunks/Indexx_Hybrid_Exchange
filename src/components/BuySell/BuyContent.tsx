@@ -34,7 +34,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const [buyVal, setBuyVal] = useState("");
-    const [isLimitPassed, setLimitPassed] = useState(true);
+    const [isLimitPassed, setLimitPassed] = useState(false);
     const [minMavData, setMinMaxData] = useState() as any;
 
     useEffect(() => {
@@ -163,7 +163,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
 
             <div className="bs_footer_action">
-                <button onClick={navigateUser} disabled={(!isLimitPassed)}>Preview Purchase </button>
+                {/* disabled={(!isLimitPassed)} */}
+                <button onClick={navigateUser} className={(!isLimitPassed) ? "disable_icon" : ""} >Preview Purchase </button>
             </div>
         </div>
     )
