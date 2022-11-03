@@ -102,7 +102,7 @@ const HeaderNew = () => {
                                         <NavDropdown.Item as={Link} to="/" className='dropdown-item' href="/">Account & Settings</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/wallet" href="/" className='dropdown-item' >Wallet</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/withdraw-crypto" className='dropdown-item' href="/">Withdraw</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/deposit-fiat" className='dropdown-item' href="/">Deposit</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/deposit-crypto" className='dropdown-item' href="/">Deposit</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/transaction-history" className='dropdown-item' href="/">Transaction History</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="" onClick={logOutUser} className='dropdown-item' href="/">Logout</NavDropdown.Item>
                                     </NavDropdown>

@@ -36,6 +36,10 @@
     justify-content: center;
 }
 
+.row.copyright_bar {
+    width: calc(100% + 1.5rem);
+}
+
 .flip_icon_container {
     position: relative;
 }
