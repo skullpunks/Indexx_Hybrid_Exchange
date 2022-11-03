@@ -29,8 +29,10 @@ export const useToTokenContext = () => useContext(SwapToContext);
 export type BuySellData = {
   fromToken: string;
   fromTitle: string;
+  fromGraph: string;
   toToken: string;
   toTitle: string;
+  toGraph: string;
   amount: number;
   toAmount: number;
   fee: number;
@@ -67,8 +69,10 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
   const [BSvalue, setBSvalue] = useState<BuySellData>({
     fromToken: "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
     fromTitle: "IN500",
+    fromGraph: "Indexx500Graph",
     toToken: "0x7325E062EA31E7b977fbEBBcC45De30c3e894988",
     toTitle: "INXC",
+    toGraph: "IndexxCrypto",
     amount: 0,
     toAmount: 0,
     fee: 0.05,

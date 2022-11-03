@@ -1,6 +1,7 @@
 
 import curvedChart from "../../assets/arts/curvedChart.svg";
-import "./Chart.css";
+
+import "./ChartBuy.css";
 import { Segmented } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 import { useContext } from "react";

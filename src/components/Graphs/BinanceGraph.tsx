@@ -35,7 +35,7 @@ const BinanceGraph = () => {
     const res = await getCryptoPrice('BNB');
     setBNBPrice(res.data.lastPrice);
     setBNBPriceChange(res.data.priceChangePercent)
-}
+  }
 
   return (
     <React.Fragment>

@@ -5,6 +5,7 @@ import { Select } from 'antd';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from "../../utils/Tokens.json";
+import graphTokens from "../../utils/graphs.json";
 // import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getMinAndMaxOrderValues, isLoggedIn } from "../../services/api";
@@ -14,37 +15,7 @@ import "./BS-Sell.css";
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
-// const menu = (
-//     <Menu
-//         items={[
-//             {
-//                 label: <span>
-//                     One-time purchase </span>,
-//                 key: '0',
-//             },
-//             {
-//                 label: <span>Daily <span>(coming soon)</span> <br />Every day starting today </span>,
-//                 key: '1',
-//                 disabled: true,
-//             },
-//             {
-//                 label: <span>Weekly <span>(coming soon)</span> <br />Every Tuesday starting today</span>,
-//                 key: '2',
-//                 disabled: true,
-//             },
-//             {
-//                 label: <span>Every 1st and 15th <span>(coming soon)</span> <br />Today and every 1st and 15th</span>,
-//                 key: '3',
-//                 disabled: true,
-//             },
-//             {
-//                 label: <span>Monthly <span>(coming soon)</span> <br /> Purchase recurs every month</span>,
-//                 key: '4',
-//                 disabled: true,
-//             },
-//         ]}
-//     />
-// );
+
 const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     // const navigate= useNavigate();
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
@@ -83,10 +54,13 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }, [BSvalue])
 
     const handleChange = async (value: string) => {
-        if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, fromToken: value });
-        }
         let getRequiredCoin = initialTokens.find(x => x.address === value);
+        let getGraphCoin = graphTokens.find(x => x.address === value);
+
+        console.log(getGraphCoin);
+        if (setBSvalue && BSvalue) {
+            setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
+        }
         await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(buyVal));
     };
 
