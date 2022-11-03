@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LineGraph from "../LineGraph/LineGraph";
 import useFetch from "../Hooks/use-fetch";
-import styles from "./CoinGraph.module.css";
+import styles from "./Graph.module.css";
 
 const url = "https://api.coingecko.com/api/v3/coins/tether/market_chart?vs_currency=usd&days=";
 const currencyName = "tether";

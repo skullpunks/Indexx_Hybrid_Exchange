@@ -53,7 +53,7 @@ export const IndexBlog = () => {
                     <div className='d-flex flex-justify-between flex-wrap row blog_Responsive'>
                         {itemRows.length > 1 &&
                             itemRows.map((post, index) => {
-                                if (index == 0) return "";
+                                if (index === 0) return "";
                                 return <div className=' border-1x margin-b-2x col-lg-6 col-md-12 col-sm-12 padding-0' onClick={() => onClickHandler(post.link)}>
                                     <img src={post.thumbnail} alt="IndexPreSaleIcon" className='width-100' />
                                     <p className='font_40x padding-lr-2x padding-t-1x'>{post.title}</p>

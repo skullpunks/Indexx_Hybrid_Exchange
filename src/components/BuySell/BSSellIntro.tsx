@@ -46,6 +46,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             let value = BSvalue?.fromTitle;
             let getRequiredCoin = initialTokens.find(x => x.address === value);
             console.log(String(getRequiredCoin?.title));
+            console.log(isLimitPassed, minMavData)
             await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
         }
     }
@@ -99,11 +100,12 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div> */}
                 </div>
-                {(!isLimitPassed) ?
+                {/* {((!isLimitPassed) && )?
                     <div className='error_message font_15x'>You can only Sell a minimum of {String(minMavData?.min)} USD or maximum of {String(minMavData?.max)} USD </div>
                     :
                     <></>
-                }
+                } */}
+                
             </div>
             <div className="bs_token d-flex cursor-pointer py-4" style={{ alignItems: "center" }}>
                 {/* <div className="bs_token_left d-flex justify-between">
@@ -138,7 +140,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 {/* <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div> */}
             </div>
             <div className="bs_footer_action ">
-                <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button>
+                {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
+                <button className="sell_btn" onClick={formSubmit}>Preview Sell </button>
             </div>
 
         </div >

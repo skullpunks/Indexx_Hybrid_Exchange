@@ -30,8 +30,6 @@ import BSTractionHistory from './BSTractionHistory';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
 import BSBuyInProgress from './BSBuyInProgress';
 import BSConfirmPurchase from './BSConfirmPurchase';
-import BitcoinGraph from '../Graphs/BitcoinGraph';
-import EthereumGraph from '../Graphs/EthereumGraph';
 // import BuySellGetStarted from './BuySellGetStarted';
 
 interface Props {
@@ -47,9 +45,9 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
     return (
         <>
             <div className="scan-container flex-align-stretch bs_main">
-                {toggleChart && <BitcoinGraph />}
+                {/* {toggleChart && <BitcoinGraph />} */}
                 {toggleChart && <Indexx500Graph />}
-                {toggleChart && <EthereumGraph />}
+                {/* {toggleChart && <EthereumGraph />} */}
                 {/* {toggleChart && <IndexxCryptoGraph />} */}
                 {/* {toggleChart && <LineGraph /> } Indexx500Graph */}
                 {/* {toggleChart && <ChartBuySell />} */}

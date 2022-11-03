@@ -353,8 +353,8 @@ export const createSellOrder = async (
 ) => {
   try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
-      currencyOut: basecoin,
-      currencyIn: quotecoin,
+      currencyOut: quotecoin,
+      currencyIn: basecoin,
       amount: amount,
       price: price,
       orderType: "Sell",
@@ -368,6 +368,24 @@ export const createSellOrder = async (
     return e.response.data;
   }
 };
+
+export const confirmSellOrder = async(emal: string, orderId: string, orderStatus :string, basecoin: string) =>{
+  try{
+    const result = await API.post("/api/v1/inex/order/updateOrder",{
+      email: emal,
+      orderId: orderId,
+      orderStatus: orderStatus,
+      currencyIn: basecoin
+    });
+    return result.data;
+  } 
+    catch (e: any) {
+      console.log("FAILED: unable to perform API request (createOrder)");
+      console.log(e);
+      console.log(e.response.data);
+      return e.response.data;
+    }
+}
 
 export const createConvertOrder = async (
   basecoin: string,

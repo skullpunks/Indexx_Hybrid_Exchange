@@ -5,6 +5,7 @@ const useFetch = () => {
     const [value, setValue] = useState([]);
     //State to update the number of days of value it needs to be fetched
     const [day, setDay] = useState(365);
+    const [hour, setHour] = useState(24);
 
     const fetchDaysValue = day;
 
@@ -46,9 +47,9 @@ const useFetch = () => {
         setDay(7);
     };
     const dayClickHandler = () => {
-        setDay(1);
+        setHour(24);
     };
-
+    console.log(hour)
     //Values to return to respective components where useFetch custom hook is being used
     return {
         yearClickHandler: yearClickHandler,
