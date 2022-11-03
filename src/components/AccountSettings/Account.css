@@ -3,14 +3,131 @@
     padding-left: 55px;
 }
 
-.basic_info > div {
+.basic_info > div,
+.security_container.border-1x {
     border: 1px solid #E4E4E4 !important;
     border-radius:5px;
 
 
 }
-.basic_info .border-b-1x {
+
+
+.basic_info .border-b-1x,
+.security_container .border-b-1x,
+.authenticator_container.border-1x,
+.security_change.card,
+.security_change .ant-input-password.ant-input-affix-wrapper {
     border-color: #E4E4E4 !important;
 
 
+}
+
+.ant-tabs {
+    color:#5f5f5f;
+}
+
+.border-1x-orange {
+  border: 1px solid #F66036;
+  border-radius:5px;
+
+
+}
+.ant-switch-checked {
+
+    background: #F66036;
+}
+
+.basic_funtion > div {
+   
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 24px;
+    background-size: auto;
+    font-size:15px;
+}
+
+.apple_pay {
+    background-image: url("../../assets/arts/applePayA.svg");
+}
+.staking {
+    background-image: url("../../assets/arts/stakingA.svg");
+}
+.wire_transfer {
+    background-image: url("../../assets/arts/wireA.svg");
+}
+
+.otc_trading {
+    background-image: url("../../assets/arts/otcA.svg");
+}
+.api_trading {
+    background-image: url("../../assets/arts/apiA.svg");
+}
+.adv_trade {
+    background-image: url("../../assets/arts/tradeA.svg");
+}
+.usd_deposit {
+    background-image: url("../../assets/arts/dollarA.svg");
+}
+.crypto_deposit  {
+    background-image: url("../../assets/arts/airplane.svg");
+}
+
+.buy_Sell_convert  {
+    background-image: url("../../assets/arts/BSArrowA.svg");
+}
+
+.bank_trns_debit {
+    background-image: url("../../assets/arts/RectangleA.svg");
+}
+
+.security_container .btn-primary {
+
+background: #F66036;
+height:38px;
+border-color:#F66036;
+}
+
+.security_container .height_28x{
+    height:28px;
+    font-size:13px;
+    border-radius:5px;
+}
+.padding-l-24px {
+    padding-left:24px;
+}
+
+.border_radius_5x {
+    border-radius:5px;
+}
+
+.basic_funtion .disabled_button,
+.basic_funtion .disabled_button:hover {
+    background: #E4E4E4;
+    color: #5F5F5F;
+    border-color:#E4E4E4;
+    font-size:18px;
+
+}
+
+.security_form_element .ant-row{
+    display:block
+}
+
+.bs_main .security_form_element label, .security_form_element .placeholder_info {
+    font-size: 13px;
+    color: #5f5f5f;
+}
+
+.ant-tabs-tab:hover {
+    color: #5f5f5f;
+}
+
+.ant-tabs-ink-bar {
+ 
+    background: #F66036;
+  
+}
+.font_17x {
+    font-size:17px;
+    color: #5f5f5f;
 }
