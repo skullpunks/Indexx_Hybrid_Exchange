@@ -1,6 +1,6 @@
 import React from 'react'
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
@@ -41,9 +41,9 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                         <span className="font_15x" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
                         <span placeholder="0" className="font_40x " >{BSvalue?.amount}</span>
                     </div>
-                    <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "6%" }}>
+                    {/* <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "6%" }}>
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0 }}>
 

@@ -51,20 +51,23 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }, [BSvalue])
 
     const handleChange = (value: string) => {
-        // setNetwork(value)
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value });
         }
     };
 
     const handleChangeToToken = (value: string) => {
-        // setNetwork(value)
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, toToken: value });
         }
-        console.log(`selected ${value}`);
-        console.log(BSvalue);
     };
+    const swapCoin = () => {
+        let temp = BSvalue?.fromToken;
+        if (BSvalue && temp) {
+            setBSvalue({ ...BSvalue, fromToken: BSvalue?.toToken, toToken: temp });
+        }
+
+    }
 
     return (
         <div>
@@ -75,8 +78,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} />
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>
-                    <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                    <div className='swap_Arrow_icon cursor-pointer' onClick={swapCoin}>
+                        <img src={SwapArrowIcon} className="" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
                 {(parseFloat(val) < 0.0007) ?
@@ -91,47 +94,24 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
-
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
                     }
-
                 </Select>
-                {/* <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        IN500  <span className="token_grey">Index500</span><Link className="font_15x bs_link padding-l-2x" to="" style={{ paddingTop: "5px", }}>Max</Link>
-                    </div>
-                </div> */}
-                {/* <div className="d-flex">  <div style={{
-                    fontSize: "10px",
-                    paddingTop: "7px",
-                    paddingRight: "4px"
-                }}><div>0.00908 IN500</div><div>= $ 11.72</div></div><img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div> */}
             </div>
 
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
-                {/* <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={bsDollar} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        USD  <span className="token_grey">US Dollar</span>
-                    </div>
-                </div>
-                <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div> */}
                 <Select className='width-100 border-0'
                     onChange={handleChangeToToken} value={BSvalue?.toToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
-
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
-
                         })
                     }
-
                 </Select>
             </div>
             <div className="bs_footer_action ">

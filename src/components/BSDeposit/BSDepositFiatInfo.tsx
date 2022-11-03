@@ -4,10 +4,12 @@ import { ArrowRightOutlined, CopyFilled, InfoCircleFilled } from '@ant-design/ic
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { Button, Tooltip, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { DialogContext, DialogCtxState } from './BSDepositFiatLayout';
 
 
 export const BSDepositFiatInfo = () => {
   const navigate = useNavigate();
+  const { depositeAmount } = React.useContext(DialogContext) as DialogCtxState;
   let message = `Please include your reference code in the comments. Transfers with missing/incorrect code will be rejected`;
   return (
 
@@ -27,7 +29,7 @@ export const BSDepositFiatInfo = () => {
             <img src={bsDollar} alt="bsDollar" width="38" height="38" />
             <p className='font_28x padding-l-1x text-heavy'>USD</p>
           </div>
-          <p className='font_weight_800 font_28x text-heavy'>$100.00</p>
+          <p className='font_weight_800 font_28x text-heavy'>${depositeAmount}</p>
         </div>
         <div className=' padding-t-2x border-t-1x'><h1 >Indexx Bank Account Details</h1></div>
 

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 
@@ -53,9 +53,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <span className="font_20x" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
                         <span placeholder="0" className="ps-2" style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
                     </div>
-                    <div className='swap_Arrow_icon'>
+                    {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
