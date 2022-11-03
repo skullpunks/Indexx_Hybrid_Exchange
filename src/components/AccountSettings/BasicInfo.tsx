@@ -58,33 +58,33 @@ const BasicInfo = () => {
                                     advanced verification</div>
 
                             </div>
-                            </div>
-                            <div className="col-lg-2"></div>
-                            <div className="col-lg-5 basic_funtion bs_main">
-                                <h1 className="font_18x margin-b-3x d-block font_weight_800 padding-l-24px">
-                                    Basic Functions
-                                </h1>
-                                <div className="usd_deposit">USD Deposits & Withdrawals,</div>
-                                <div className="padding-tb-1x crypto_deposit">Crypto Deposits & Withdrawals,</div>
-                                <div className="buy_Sell_convert">Buy, Sell & Convert</div>
-                                <div className="padding-tb-1x adv_trade">Advanced Trading</div>
-                                <div className="bank_trns_debit">Bank Transfer & Debit Card</div>
-                                <div className="padding-tb-1x apple_pay">Apple Pay</div>
-                                <div className="api_trading">API Trading</div>
-                                <h1 className="padding-tb-1x font_18x  font_weight_800 margin-tb-2x padding-l-24px">Advanced Functions</h1>
-                                <div className="staking">Staking</div>
-                                <div className="padding-tb-1x otc_trading">OTC Trading</div>
-                                <div className="wire_transfer">Wire Transfer</div>
-                                <div className="padding-tb-1x ">Region currently not supported</div>
-                                <Button type="primary" className="disabled_button">Verify Identity</Button>
-
-                            </div>
+                        </div>
+                        <div className="col-lg-2"></div>
+                        <div className="col-lg-5 basic_funtion bs_main">
+                            <h1 className="font_18x margin-b-3x d-block font_weight_800 padding-l-24px">
+                                Basic Functions
+                            </h1>
+                            <div className="usd_deposit">USD Deposits & Withdrawals,</div>
+                            <div className="padding-tb-1x crypto_deposit">Crypto Deposits & Withdrawals,</div>
+                            <div className="buy_Sell_convert">Buy, Sell & Convert</div>
+                            <div className="padding-tb-1x adv_trade">Advanced Trading</div>
+                            <div className="bank_trns_debit">Bank Transfer & Debit Card</div>
+                            <div className="padding-tb-1x apple_pay">Apple Pay</div>
+                            <div className="api_trading">API Trading</div>
+                            <h1 className="padding-tb-1x font_18x  font_weight_800 margin-tb-2x padding-l-24px">Advanced Functions</h1>
+                            <div className="staking">Staking</div>
+                            <div className="padding-tb-1x otc_trading">OTC Trading</div>
+                            <div className="wire_transfer">Wire Transfer</div>
+                            <div className="padding-tb-1x ">Region currently not supported</div>
+                            <Button type="primary" className="disabled_button margin-l-2x">Verify Identity</Button>
 
                         </div>
+
                     </div>
                 </div>
             </div>
-            )
+        </div>
+    )
 }
 
-            export default BasicInfo
+export default BasicInfo
