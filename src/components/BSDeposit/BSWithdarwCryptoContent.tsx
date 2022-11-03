@@ -47,17 +47,14 @@ export const BSWithdarwCryptoContent = () => {
         <div className=''>
           <label>Currency</label>
           <div className=' d-flex flex-justify-between flex-align-center'>
-            <Select className='width-100'
-              onChange={handleChange}>
-
-
+            <Select className='width-100' onChange={handleChange} value="0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A">
               {
                 initialTokens.map((token, index) => {
 
-                  return <Option key={index} value={token.subTitle} type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
+                  return <Option key={index} value={token.address} type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
 
 
-                    <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                    <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="35" height="35" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                   </Option>
                 })
               }
@@ -76,7 +73,7 @@ export const BSWithdarwCryptoContent = () => {
             <label>Address</label>
             <br />
             <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
-              <input type="text" placeholder='Enter address' className='width-100 font_20x' style={{ border: "none" }} /><img src={AddressIcon} alt="AddressIcon" /></div>
+              <input type="text" placeholder='Enter address' className='width-100 font_20x outline-none' style={{ border: "none" }} /><img src={AddressIcon} alt="AddressIcon" /></div>
           </div>
           <div className='padding-t-2x'>
             <label>Network</label>
@@ -96,7 +93,8 @@ export const BSWithdarwCryptoContent = () => {
                 <label>Amount</label>
                 <br />
                 <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
-                  <input type="text" placeholder='Enter address' className='width-100 font_20x' style={{ border: "none" }} /><div className='d-flex'><span className="border-r-1x padding-r-1x text_link">MAX</span><span className="padding-l-1x">iN500</span></div></div>
+                  <input type="text" placeholder='Enter Amount' className='width-100 font_23x outline-none' style={{ border: "none" }} />
+                  <div className='d-flex'><span className="border-r-1x padding-r-1x text_link">MAX</span><span className="padding-l-1x">iN500</span></div></div>
               </div>
               <div>
 

@@ -559,6 +559,11 @@ button.ant-btn-primary [disabled] {
     position: absolute;
     right: 4px;
     top: 39%;
+    opacity: 0.7;
+}
+
+.swap_Arrow_icon:hover {
+    opacity: 1;
 }
 
 .bs_main .ant-btn-primary:hover {
