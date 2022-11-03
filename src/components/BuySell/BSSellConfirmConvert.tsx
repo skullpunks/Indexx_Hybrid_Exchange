@@ -25,17 +25,17 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [rateData, setRateData] = useState();
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
-    const [isFirstEnabled,setisFirstEnabled] = useState(true);
-    const [isSecondEnabled,setisSecondEnabled] = useState(false);
-    const [order,setOrder] = useState() as any;
+    const [isFirstEnabled, setisFirstEnabled] = useState(true);
+    const [isSecondEnabled, setisSecondEnabled] = useState(false);
+    const [order, setOrder] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
     let priceData: any = {};
 
     const navigateBak = () => {
-        navigate("indexx-exchange/buy-sell?type=sell");
-        setScreenName("");
+        navigate("/indexx-exchange/buy-sell?type=sell");
+        // setScreenName("");
     }
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         let amount: number = Number(BSvalue?.amount);
         const res = await createSellOrder(basecoin, quotecoin, amount);
         console.log(res.data, res);
-        if(res.status === 200) {
+        if (res.status === 200) {
             setisFirstEnabled(false);
             setisSecondEnabled(true);
             setOrder(res.data);
@@ -104,9 +104,10 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const processSellOrder = async () => {
         let basecoin: string = filteredFromArray[0].title;
         const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
-        if(res.status === 200) {
-             openNotificationWithIcon('success');
-            setScreenName("BSSellInprogress");
+        if (res.status === 200) {
+            openNotificationWithIcon('success');
+            // setScreenName("BSSellInprogress");
+            navigate("/indexx-exchange/buy-sell/sell-in-progress");
         } else {
             openNotificationWithIcon2('error');
         }
@@ -180,7 +181,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-                {Number(totalAmountToPay) > 50 &&
+                    {Number(totalAmountToPay) > 50 &&
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.round(Number(totalAmountToPay) * 100) / 100) * 30 / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}

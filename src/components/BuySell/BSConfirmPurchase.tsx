@@ -12,6 +12,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Stripe/CheckoutForm";
 import "../Stripe/CheckoutForm.css"
+import { useNavigate } from 'react-router-dom';
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -25,6 +26,7 @@ const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
 
 
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
+    const navigate = useNavigate();
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
 
     const filteredFromArray = initialTokens.filter(function (obj) {
@@ -112,7 +114,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => setScreenName("")}>&#60;</span>
+                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell/")}>&#60;</span>
                     Confirm Purchase
                 </h1>
                 {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}

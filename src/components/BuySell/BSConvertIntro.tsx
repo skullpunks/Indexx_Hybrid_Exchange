@@ -8,6 +8,7 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Select } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
+import { useNavigate } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
+    const navigate = useNavigate();
     // const [flag, setFlag] = useState(false);
     const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";
@@ -32,7 +34,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
     const checkPurchase = () => {
         if (val) {
-            setScreenName("confirmConvert");
+            // setScreenName("confirmConvert");
+            navigate("/indexx-exchange/buy-sell/confirm-convert");
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) | 0 });
             }

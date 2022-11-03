@@ -11,11 +11,13 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
 import { getMinAndMaxOrderValues } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [val, setVal] = useState("");
+    const navigate = useNavigate()
     // const [flag, setFlag] = useState(false);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [isLimitPassed, setLimitPassed] = useState(true);
@@ -78,7 +80,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const formSubmit = () => {
 
         if (val) {
-            setScreenName("BSSellConfirmConvert");
+            // setScreenName("BSSellConfirmConvert");
+            navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) });
             }
