@@ -101,7 +101,7 @@ const HeaderNew = () => {
                                     <BellOutlined className="p-2 px-3 text-white cursor-pointer" style={{ fontSize: 20 }} />
                                     <NavDropdown title={title} id="collasible-nav-dropdown" className='dark-menu ' >
                                         <NavDropdown.Item as={Link} to="/" className="dropdown-item" href="/">Dashboard</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/" className='dropdown-item' href="/">Account & Settings</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/indexx-exchange/account" className='dropdown-item' href="/">Account & Settings</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/wallet" href="/" className='dropdown-item' >Wallet</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/withdraw-crypto" className='dropdown-item' href="/">Withdraw</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/indexx-exchange/buy-sell/deposit-crypto" className='dropdown-item' href="/">Deposit</NavDropdown.Item>

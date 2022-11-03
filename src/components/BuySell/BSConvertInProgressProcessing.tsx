@@ -2,7 +2,7 @@ import React from 'react';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -37,7 +37,7 @@ const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => 
                 <div className='font_18x padding-b-2x'>Your convert order is being processed.A confirmation email will be sent once the order is complete.</div>
                 {/*setScreenName("BSTractionHistory")  */}
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/traction-history")}> Go to Wallet</Button>
-                <a className="font_15x bs_link text-center d-block padding-t-3x" href="# " >New Convert</a>
+                <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=convert" >New Convert</Link>
             </div>
         </div>
     )

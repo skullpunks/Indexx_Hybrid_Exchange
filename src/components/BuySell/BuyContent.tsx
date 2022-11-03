@@ -34,7 +34,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const [buyVal, setBuyVal] = useState("");
-    const [isLimitPassed, setLimitPassed] = useState(false);
+    const [isLimitPassed, setLimitPassed] = useState(true);
     const [minMavData, setMinMaxData] = useState() as any;
 
     useEffect(() => {
@@ -50,8 +50,10 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             }
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
+            // console.log(x);
             setMinMaxData(x);
         });
+
 
     }, [BSvalue])
 
@@ -67,7 +69,9 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     };
 
     const checkMinMaxValue = async (value: string, buyValue: number) => {
+
         let minAndMax = await getMinMaxValue(value);
+        // debugger;
         if (buyValue > minAndMax.max) {
             setLimitPassed(false);
         } else if (buyValue < minAndMax.min) {
@@ -97,7 +101,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
 
 
-            let value = BSvalue?.fromTitle;
+            let value = BSvalue?.fromToken;
+            // debugger;
             let getRequiredCoin = initialTokens.find(x => x.address === value);
             console.log(String(getRequiredCoin?.title));
             await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
@@ -164,7 +169,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="bs_footer_action">
                 {/* disabled={(!isLimitPassed)} */}
-                <button onClick={navigateUser} className={(!isLimitPassed) ? "disable_icon" : ""} >Preview Purchase </button>
+                <button onClick={navigateUser} className={(!isLimitPassed || buyVal === "") ? "disable_icon " : ""} >Preview Purchase </button>
             </div>
         </div>
     )

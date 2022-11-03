@@ -4,7 +4,7 @@ import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import { Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -21,7 +21,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     });
     // const navigateBak = () => {
     //     navigate("/indexx-exchange/buy-sell?type=convert");
-    //     setScreenName("");
+    //     // setScreenName("");
     // }
     return (
         <div className='bs_container card'>
@@ -56,7 +56,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className='font_20x padding-b-2x'>Your convert order is being processed.</div>
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/wallet")}> Go to Wallet</Button>
-                {/* <Link className="font_15x bs_link text-center d-block padding-t-3x" to="" onClick={navigateBak}>New Convert</Link> */}
+                <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=convert" >New Convert</Link>
             </div>
         </div>
     )

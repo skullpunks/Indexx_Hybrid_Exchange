@@ -4,10 +4,10 @@ import "./BuySellDummy.css";
 import Footer from '../Footer/Footer';
 import BSWalletTable from './BSWalletTable';
 import BSWalletTop from './BSWalletTop';
-import { Link } from 'react-router-dom';
-import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
+// import { Link } from 'react-router-dom';
+// import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
-import PlainCircle from "../../assets/arts/PlainCircle.svg";
+// import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
 const BSWallet = () => {
     return (

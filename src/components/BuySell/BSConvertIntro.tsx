@@ -115,7 +115,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action ">
-                <button className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) ? " disable_icon" : ""} onClick={checkPurchase} >Preview Purchase </button>
+                <button className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) ? " disable_icon" : ""} onClick={checkPurchase} >Preview Convert </button>
             </div>
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
