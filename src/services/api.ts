@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "http://localhost:3000";
-  //baseURL = "https://253f-54-250-16-116.ngrok.io";
+   //baseURL = "http://localhost:3000";
+   baseURL = "http://253f-54-250-16-116.ngrok.io";
 } else {
   baseURL =  "https://253f-54-250-16-116.ngrok.io"; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
 }
