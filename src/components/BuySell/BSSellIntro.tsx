@@ -83,11 +83,6 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             setLimitPassed(true);
         }
     }
-    // const checkPurchase = () => {
-
-
-
-    // }
 
     const formSubmit = () => {
 

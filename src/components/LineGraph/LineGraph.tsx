@@ -6,6 +6,8 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
 import styles from "./LineGraph.module.css";
 
 //Checks if max width is 560px and then sets new values to graph width and height
@@ -29,7 +31,7 @@ const LineGraph = (props: any) => {
       <div className="chart_header d-flex flex-align-center">
         {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
         {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
-        <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" />
+        <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" className='me-1' />
         <img src={require(`../../assets/token-icons/${props.currencySymbol}.png`).default} alt="bitcoin" width="30" />
 
         <h1 className="chart_title">{props.currencyPrice} USD/{props.currencySymbol}</h1>
@@ -95,51 +97,41 @@ const LineGraph = (props: any) => {
           dot={false}
           type="monotone"
           dataKey="price"
-          stroke="#4592af"
+          stroke="#f66036"
           strokeWidth={1.5}
         />
-        {/* <CartesianGrid stroke="grey" /> */}
         <XAxis
           padding={{ right: 40 }}
           dataKey={"time"}
-          tick={{ fill: "black" }}
+          stroke="#5f5f5f"
+          tick={{ fill: "#5f5f5f" }}
         />
-        <YAxis padding={{ top: 60 }} tick={{ fill: "black" }} />
-        {/* <Brush startIndex={0} dataKey="time" height={20} stroke="#4a4844" /> */}
+        <YAxis
+          stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
         <Tooltip />
-        {/* <div>
-          <button  onClick={props.yearClickHandler}>
-            1 Year
-          </button>
-          <button  onClick={props.monthClickHandler}>
-            1 Month
-          </button>
-          <button  onClick={props.weekClickHandler}>
-            1 Week
-          </button>
-          <button  onClick={props.dayClickHandler}>
-            1 Day
-          </button>
-        </div> */}
-      </LineChart>
-      {/* <div>
-        <button  onClick={props.yearClickHandler}>
-          1 Year
-        </button>
-        <button  onClick={props.monthClickHandler}>
-          1 Month
-        </button>
-        <button  onClick={props.weekClickHandler}>
-          1 Week
-        </button>
-        <button  onClick={props.dayClickHandler}>
-          1 Day
-        </button>
-      </div> */}
 
-      {/* <div className="chart_inner_right">
-                    <Segmented options={['24H', '1W', '1M', '1Y']} />
-                </div> */}
+      </LineChart>
+
+      {/* <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          width={500}
+          height={400}
+          data={props.data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+        </AreaChart>
+      </ResponsiveContainer> */}
+
+
     </div>
   );
 };

@@ -150,7 +150,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
 
-                    <Modal title="Stripe Payment" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false}>
+                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false}>
                         {clientSecret && (
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm />
