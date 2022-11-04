@@ -95,7 +95,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
             // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;
             let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.2 : 0.9
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
@@ -110,10 +110,10 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     return (
-        <div><div className="padding-lr-2x padding-tb-3x">
+        <div><div className="padding-lr-1x padding-tb-3x">
             <div className="bs_curreny d-flex position-relative ">
                 <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
-                    <span className="font_20x">$</span>
+                    <span className="font_20x pe-1">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
                     <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} style={{ width: "1.2ch" }} />
                 </div>
