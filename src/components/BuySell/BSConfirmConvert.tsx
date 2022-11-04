@@ -1,11 +1,12 @@
 import { Button } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+import { getAppSettings, getCoinPriceByName } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 
@@ -25,6 +26,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // const BSConfirmConvert: React.FC = () => {
     // console.log(setStatus);
     const navigate = useNavigate();
+    const [rateData1, setRateData1] = useState();
+    const [rateData3, setRateData3] = useState(0);
+    const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
@@ -36,6 +40,53 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         navigate("/indexx-exchange/buy-sell?type=convert");
         // setScreenName("");
     }
+    let priceData1: any = {};
+    let priceData2: any = {};
+    let appSettingArr: any[] = [];
+
+    useEffect(() => {
+        getAllSetting();
+        getPricesData();
+    })
+
+    const getPricesData = async () => {
+        const res = await getCoinPriceByName(String(filteredFromArray[0].title));
+        priceData1 = res.data;
+        console.log(priceData1);
+        setRateData1(priceData1);
+        const res2 = await getCoinPriceByName(String(filteredToArray[0].title));
+        priceData2 = res2.data;
+        console.log(priceData2);
+        setRateData1(priceData2);
+        let finalRate = priceData1 / priceData2;
+        console.log(finalRate);
+        setRateData3(finalRate);
+        console.log(rateData1);
+
+        console.log(finalRate * Number(BSvalue?.amount));
+        setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
+        // let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        // console.log('usid oper', oneUsdValue)
+        // console.log('usid oper1', Number(BSvalue?.amount))
+        // setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee)));
+    }
+
+
+    const getAllSetting = async () => {
+        const res = await getAppSettings();
+        appSettingArr = res.data;
+        if (filteredFromArray[0].title.includes('I')) {
+            let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
+            setAdminFees(adminFees.value);
+        } else {
+            let adminFees = appSettingArr.find((item: any) => item.key === "AdminFees");
+            setAdminFees(adminFees.value);
+        }
+        console.log(adminFee)
+    }
+    const [adminFee, setAdminFees] = useState("");
+
+
     return (
         <div className="bs_container card">
 
@@ -59,11 +110,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
-                    <span>1247.34 {filteredFromArray[0].title} / {filteredToArray[0].title}</span>
+                    <span>{Math.floor(rateData3 * 100) / 100} {filteredFromArray[0].title} / {filteredToArray[0].title}</span>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>0.00908 {filteredToArray[0].title}</span>
+                    <span>{Math.floor(totalAmountToPay * 100) / 100} {filteredToArray[0].title}</span>
                 </div>
                 {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
                         <div className="bs_token_left d-flex justify-between">

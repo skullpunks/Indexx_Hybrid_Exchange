@@ -136,7 +136,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>{Math.round(totalAmountToPay * 100) / 100} {filteredFromArray[0].title}</span>
+                    <span>{Math.floor(totalAmountToPay * 100) / 100} {filteredFromArray[0].title}</span>
                 </div>
                 <div className='d-flex pe-3' style={{
                     justifyContent: "flex-end"
@@ -145,7 +145,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className="footer bs_footer_action">
                     {Number(BSvalue?.amount) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.round(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>

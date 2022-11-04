@@ -1,19 +1,30 @@
 import React from 'react';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
-
+import initialTokens from "../../utils/Tokens.json";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { BSContext, BSContextType } from '../../utils/SwapContext';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 
 const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
+    const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === BSvalue?.fromToken;
+    });
+    const filteredToArray = initialTokens.filter(function (obj) {
+        return obj?.address === BSvalue?.toToken;
+    });
     const navigate = useNavigate()
     const navigateBak = () => {
         // setScreenName("BSSellConfirmConvert");
         navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
     }
+    console.log(BSvalue)
+    console.log(filteredFromArray)
+    console.log(filteredToArray)
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
@@ -28,8 +39,8 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
 
-                        <span placeholder="0" className=" " style={{ fontSize: 50 }} >0.00005102</span>
-                        <span className="font_20x" style={{ paddingBottom: 14, paddingLeft: 4 }} >BTC</span>
+                        <span placeholder="0" className=" " style={{ fontSize: 50 }} >{BSvalue?.amount}</span>
+                        <span className="font_20x" style={{ paddingBottom: 14, paddingLeft: 4 }} >{BSvalue?.fromTitle}</span>
                     </div>
 
                 </div>

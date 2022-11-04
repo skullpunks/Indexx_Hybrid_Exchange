@@ -24,7 +24,8 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const [rateData, setRateData] = useState();
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-    const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+
     const [isFirstEnabled, setisFirstEnabled] = useState(true);
     const [isSecondEnabled, setisSecondEnabled] = useState(false);
     const [order, setOrder] = useState() as any;
@@ -65,6 +66,12 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             setisFirstEnabled(false);
             setisSecondEnabled(true);
             setOrder(res.data);
+            if (setBSvalue && BSvalue) {
+                setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
+                setBSvalue({ ...BSvalue, orderType: 'Sell' || '' });
+                setBSvalue({ ...BSvalue, fromTitle: filteredFromArray[0].title });
+            }
+
         }
         //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     }
@@ -182,7 +189,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                     </div> */}
                 <div className="footer bs_footer_action">
                     {Number(totalAmountToPay) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.round(Number(totalAmountToPay) * 100) / 100) * 30 / 100} INEX</h6>
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isFirstEnabled)} block onClick={() => createNewSellOrder()}> Confirm Sell (11s)</Button>
