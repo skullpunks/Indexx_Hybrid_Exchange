@@ -109,7 +109,7 @@ const MarketsTable = () => {
             title: 'Trade',
             dataIndex: 'MarketCap',
             render: (_) => (
-                <Button type="primary" danger onClick={() => navigate(`/indexx-exchange/trade`)}>
+                <Button type="primary" danger onClick={() => navigate(`/indexx-exchange/coming-soon?page=Trade`)}>
                     Trade
                 </Button>
             ),

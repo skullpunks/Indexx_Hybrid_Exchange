@@ -110,9 +110,9 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     return (
-        <div><div className="bs_container_main">
+        <div><div className="padding-lr-2x padding-tb-3x">
             <div className="bs_curreny d-flex position-relative ">
-                <div className="bs_curreny_left padding-b-2x flex-align-center" style={{ transform: "scale(1)" }}>
+                <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
                     <span className="font_20x">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
                     <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} style={{ width: "1.2ch" }} />
@@ -145,7 +145,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
             </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center", padding: 8 }} >
+            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center", padding: "12px 8px" }} >
                 <div className="bs_token_left d-flex justify-between">
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
                         <Select className='width-100 border-0'

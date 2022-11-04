@@ -62,6 +62,7 @@
 .bs_main .chart_inner_right .ant-segmented-item-selected {
     /* background: #006DFF;
     color:#fff; */
+    background: #f66036;
     color: #000;
     background-color: transparent;
     border-radius: 5px;

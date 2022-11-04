@@ -108,9 +108,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     :
                     <></>
                 } */}
-                
+
             </div>
-            <div className="bs_token d-flex cursor-pointer py-4" style={{ alignItems: "center" }}>
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 {/* <div className="bs_token_left d-flex justify-between">
                     <div className="bs_token_num d-flex flex-align-center" >
                         <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />

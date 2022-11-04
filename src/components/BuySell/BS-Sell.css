@@ -28,17 +28,18 @@
     padding: 12px;
 }
 
+/* 
 .sell_screens .bs_footer_action button {
     background-color: #00A151;
     border-color: #00A151;
-}
-
+} */
+/* 
 .sell_screens .bs_footer_action button:hover,
 .sell_screens .bs_footer_action button:focus,
 .sell_screens .bs_footer_action button:active {
     background-color: #026333 !important;
-}
-
+} */
+/* 
 .sell_screens .bs_footer_action button.disable_icon:hover,
 .sell_screens .bs_footer_action button.disable_icon:focus,
 .sell_screens .bs_footer_action button.disable_icon:active {
@@ -48,7 +49,7 @@
 .sell_screens button.sell_btn {
     background-color: #00A151;
     border-color: #00A151;
-}
+} */
 
 .font_w_800 {
     font-weight: 800;
