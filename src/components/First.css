@@ -1,0 +1,55 @@
+@import '~antd/dist/antd.css';
+
+.main {
+    display: flex;
+    justify-content: center;
+    color: #5f5f5f;
+    font-size: 1.875rem;
+    /* 30px */
+    line-height: 2.25rem;
+    margin-top: 8rem;
+    margin-bottom: 0.75rem;
+}
+
+.main2 {
+    display: flex;
+    justify-content: center;
+    color: #5f5f5f;
+
+}
+
+.border {
+    margin-left: 550px;
+    margin-right: 550px;
+    border-width: 1px;
+    padding-left: 1.25rem;
+    /* 20px */
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    /* 12px */
+    padding-bottom: 0.75rem;
+    margin-right: 1.75rem;
+    color: #5f5f5f;
+    border-color: #5f5f5f;
+    border-radius: 0.125rem;
+
+}
+
+.input {
+    padding-top: 0.25rem;
+    /* 4px */
+    padding-bottom: 0.25rem;
+    color: #5f5f5f;
+    
+    padding-left: 0.75rem;
+    /* 12px */
+    padding-right: 0.75rem;
+    padding-right: 4rem;
+    margin-top: 1.5rem;
+}
+
+.button{
+    margin-left: 1rem;
+    color: #5f5f5f;
+    display: inline-flex;
+}

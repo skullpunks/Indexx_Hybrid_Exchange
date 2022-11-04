@@ -11,7 +11,7 @@ import { Dropdown, Menu, Space } from 'antd';
 const menuProducts = (<Menu className="main_navigation"
     items={[
         { key: 2, label: <Link to="/indexx-exchange/buy-sell">Buy & Sell</Link> },
-        { key: 1, label: <Link to="/indexx-exchange/coming-soon?page=decentralized">Decentralized</Link> },
+        { key: 1, label: <Link to="/indexx-exchange/decentralized">Decentralized</Link> },
         { key: 3, label: <a href="https://tokens.indexx.ai/" target="_blank" rel="noreferrer">indexx Tokens</a> },
     ]}
 />);

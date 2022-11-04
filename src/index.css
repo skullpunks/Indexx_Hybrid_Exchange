@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: AvenirLight;
   src: url(./assets/fonts/AvenirLight.ttf) format("truetype");
@@ -173,3 +177,5 @@ iframe {
 .font_25x {
   font-size: 25px;
 }
+
+

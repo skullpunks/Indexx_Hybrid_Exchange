@@ -34,6 +34,10 @@ import About from './components/About/About';
 import Account from './components/AccountSettings/Account';
 
 import SecurityChange from './components/AccountSettings/SecurityChange';
+import First from './components/First';
+import Exchange from './components/Exchange';
+import Exchange1 from './components/Exhange1';
+import Await from './components/Await';
 // import Header from './components/Header/Header';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
@@ -50,7 +54,7 @@ function App() {
                 <Routes>
                     <Route path="/*" element={<Home />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
-                    <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
+                    <Route path="/indexx-exchange/decentralized" element={<First />} />
                     <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
                     <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
                     <Route path="/indexx-exchange/buy-sell/login/*" element={<BuySellLogin />} />
@@ -81,6 +85,9 @@ function App() {
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
                     <Route path="/indexx-exchange/account" element={<Account />} />
                     <Route path="/indexx-exchange/change-password" element={<SecurityChange />} />
+                    <Route path="/Exchange" element={<Exchange />} />
+                    <Route path="/ExchangeSwap" element={<Exchange1/>} />
+                    <Route path="/Await" element={<Await />} />
                 </Routes>
             </BrowserRouter>
         </div>
