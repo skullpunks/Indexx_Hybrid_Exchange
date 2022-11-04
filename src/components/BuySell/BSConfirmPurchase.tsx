@@ -124,7 +124,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left flex-align-center padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                        <span placeholder="0" className="font_60x color_general"  >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
