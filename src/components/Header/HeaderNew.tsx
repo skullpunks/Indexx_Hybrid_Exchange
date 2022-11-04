@@ -25,7 +25,7 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 
 const Links = [
     { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
-    { label: "Trade to Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
+    { label: "Centralized", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
     { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
     { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
     { label: "", value: "/", url: "/" }

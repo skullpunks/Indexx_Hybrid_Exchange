@@ -75,13 +75,16 @@ const TradeToEarn = () => {
                   justifyContent: 'center',
 
                 }}>
-                  <Image src={exgcoin} width={120} preview={false}></Image>
+                  <Image src={exgcoin} style={{marginBottom:5}} width={120} preview={false}></Image>
+
                 </div>
-                <h2 className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
-                <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>${Math.floor((totalBalanceInUSD * 100) / 100 )}</h1>
-                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:100</Text>
+                <h2 className='centered' style={{ marginBottom: 10, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
+                <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>${Math.floor((totalBalanceInUSD * 100) / 100 )}</h1><br/>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:100$</Text>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>1 USD = 0.1 INEX</Text>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>Earning Percentage = 30%</Text>
                 <br /> <br></br>
-                <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
+                <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
                   height: "55px",
                   borderRadius: "5px",
 
@@ -91,7 +94,7 @@ const TradeToEarn = () => {
 
                 <Input.Group compact style={{ paddingTop: "40px" }}>
                   <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} defaultValue="Enter Wallet Address" />
-                  <Button type="primary" block shape="round" size="large" className="btn_xl" style={{
+                  <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
                     height: "55px", borderRadius: "5px",
                   }}>Submit Wallet Address</Button>
                 </Input.Group>
