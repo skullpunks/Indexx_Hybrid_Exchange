@@ -16,7 +16,7 @@ const Indexx500Graph = () => {
   const [IN500PriceChange, setIN500PriceChange] = useState() as any;
   //Custom Hook for Fetching Data using Fetch API
   const {
-    yearClickHandler,
+    // yearClickHandler,
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
@@ -43,7 +43,7 @@ const Indexx500Graph = () => {
       {!error ? (
         <LineGraph
           currencyName={currencyName}
-          yearClickHandler={yearClickHandler}
+          // yearClickHandler={yearClickHandler}
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}

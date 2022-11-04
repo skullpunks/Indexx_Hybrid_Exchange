@@ -61,16 +61,15 @@ const LineGraph = (props: any) => {
               </span>),
               value: 1
             },
-
             {
-              label: (<span onClick={props.monthClickHandler}>
-                1 Month
+              label: (<span onClick={props.weekClickHandler}>
+                1 Week
               </span>),
               value: 2
             },
             {
-              label: (<span onClick={props.weekClickHandler}>
-                1 Week
+              label: (<span onClick={props.monthClickHandler}>
+                1 Month
               </span>),
               value: 3
             },

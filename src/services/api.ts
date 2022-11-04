@@ -5,10 +5,10 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
    baseURL = "http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
-  baseURL =  "https://253f-54-250-16-116.ngrok.io"; //"http://54.250.16.116";
+  baseURL =  "http://api.indexx.ai"; //https://253f-54-250-16-116.ngrok.io"; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
 }
 
-console.log("baseURL", baseURL);
+//console.log("baseURL", baseURL);
 
 const API = axios.create({
   baseURL: baseURL,
