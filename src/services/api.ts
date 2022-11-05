@@ -2,10 +2,10 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "https://indexx-exchange.herokuapp.com"//"http://localhost:3000";
+   baseURL = "https://api.indexx.ngrok.io"//"http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
-  baseURL =  "https://indexx-exchange.herokuapp.com"; //"https://253f-54-250-16-116.ngrok.io"; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
+  baseURL =  "https://api.indexx.ngrok.io" //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
 }
 
 //console.log("baseURL", baseURL);
