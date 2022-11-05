@@ -4,15 +4,14 @@ import { Button, Popover } from "antd";
 import { useNavigate } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
 import Timer from "../../utils/Timer";
-// interface Props {
-//     setScreenName: (value: string | ((prevVar: string) => string)) => void;
-//     setToggleChart: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-// }
 
 const BuySellEmailAuth = () => {
     const navigate = useNavigate();
+
     const moveToNext = (e: React.FormEvent<HTMLInputElement>) => {
         const { maxLength, value } = e.currentTarget;
+        if (value.length > maxLength)
+            e.currentTarget.value = value.slice(0, maxLength);
 
         if (value.length === maxLength) {
             let next = e.currentTarget.nextElementSibling;

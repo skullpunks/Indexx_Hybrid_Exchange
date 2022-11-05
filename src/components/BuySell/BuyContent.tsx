@@ -95,7 +95,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
             // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;
             let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.2 : 0.9
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
@@ -110,10 +110,10 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     return (
-        <div><div className="padding-lr-2x padding-tb-3x">
+        <div><div className="padding-lr-1x padding-tb-3x">
             <div className="bs_curreny d-flex position-relative ">
                 <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
-                    <span className="font_20x">$</span>
+                    <span className="font_20x pe-1">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
                     <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} style={{ width: "1.2ch" }} />
                 </div>
@@ -136,8 +136,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </Dropdown>
             </div> */}
         </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
-                <div className="bs_token_left d-flex justify-between">
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
+                <div className="bs_token_left d-flex justify-between" style={{ height: "55px", padding: "0 11px" }}>
                     <div className="bs_token_num d-flex flex-align-center" >
                         <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
                         USD  <span className="token_grey">US Dollar</span>
@@ -145,7 +145,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
             </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center", padding: "12px 8px" }} >
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }} >
                 <div className="bs_token_left d-flex justify-between">
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
                         <Select className='width-100 border-0'

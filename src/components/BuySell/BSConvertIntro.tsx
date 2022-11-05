@@ -30,6 +30,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
             setVal(testVal);
+
+            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+            e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+            e.currentTarget.style.fontSize = charFontSize + "ch";
         }
     }
     const checkPurchase = () => {
@@ -49,6 +54,10 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             setVal(BSvalue?.amount.toString());
 
     }, [BSvalue])
+
+    const filteredFromArray = initialTokens.filter(function (obj) {
+        return obj?.address === BSvalue?.fromToken;
+    });
 
     const handleChange = (value: string) => {
         if (setBSvalue && BSvalue) {
@@ -72,10 +81,12 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div>
 
-            <div className="padding-lr-2x padding-tb-3x">
+            <div className="padding-lr-1x padding-tb-3x">
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
-                        <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} />
+                    <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
+
+                        <span className="font_20x pe-1">{ filteredFromArray[0].title}</span>
+                        <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>
                     <div className='swap_Arrow_icon cursor-pointer' onClick={swapCoin}>
