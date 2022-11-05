@@ -27,15 +27,13 @@ const HowItWorks = () => {
 
         <div className='row'>
         <div className='col-lg-4 text-center'>
-          <Link to='/indexx-exchange/how-it-works/centralized' style={{textDecoration:"none"}}>
-          <img src={firstcoin} alt="indexxcoin"  /><br />
+
+          <img src={firstcoin} alt="indexxcoin"  onClick={() => navigateUser("/indexx-exchange/how-it-works/centralized")}/><br />
                             <span className='employee_name'>
-                                <strong >indexx<br />Centralized</strong>
+                                <strong onClick={() => navigateUser("/indexx-exchange/how-it-works/centralized")}>indexx<br />Centralized</strong>
                                 
                             </span>
-                            
-          </Link>
-               
+        
                           
                         </div>
                         <div className='col-lg-4 text-center'>
