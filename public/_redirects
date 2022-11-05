@@ -1,1 +1,7 @@
-/*    /index.html   200
+# http and https need separate rules if you don’t force_ssl!
+https://indexx.ai/indexx-exchange/buy-sell/buy-in-progress/* param1=:value1 param2=:value2 param3=:value3 param3=:value3 https://indexx.ai/indexx-exchange/buy-sell/buy-in-progress/:value1/:value2/:value3/:value4//:splat 301
+
+
+
+# other URLS might proxy or redirect offsite
+https://frontend.yoursite.com/login/* https://backend.yoursite.com/:splat 200
