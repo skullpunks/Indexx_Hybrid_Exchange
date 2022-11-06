@@ -26,9 +26,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
 
-    const [isFirstEnabled, setisFirstEnabled] = useState(true);
-    const [isSecondEnabled, setisSecondEnabled] = useState(false);
-    const [order, setOrder] = useState() as any;
+    //const [isFirstEnabled, setisFirstEnabled] = useState(true);
+    // const [isSecondEnabled, setisSecondEnabled] = useState(false);
+    //const [order, setOrder] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
@@ -42,18 +42,18 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     useEffect(() => {
         getAllSetting();
         getPricesData();
-
-    })
+    }, [BSvalue])
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
-        priceData = res.data;
+        priceData = res.data.results.data;
         console.log(priceData);
         setRateData(priceData);
         let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
         console.log('usid oper', oneUsdValue)
+        console.log('adminFee', adminFee)
         console.log('usid oper1', Number(BSvalue?.amount))
-        setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee)));
+        setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee) / 100));
     }
 
     const createNewSellOrder = async () => {
@@ -63,15 +63,15 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         const res = await createSellOrder(basecoin, quotecoin, amount);
         console.log(res.data, res);
         if (res.status === 200) {
-            setisFirstEnabled(false);
-            setisSecondEnabled(true);
-            setOrder(res.data);
+            //setisFirstEnabled(false);
+            //setisSecondEnabled(true);
+            //setOrder(res.data);
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
                 setBSvalue({ ...BSvalue, orderType: 'Sell' || '' });
                 setBSvalue({ ...BSvalue, fromTitle: filteredFromArray[0].title });
+                await processSellOrder(res.data);
             }
-
         }
         //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     }
@@ -108,8 +108,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         });
     };
 
-    const processSellOrder = async () => {
+    const processSellOrder = async (order :any) => {
         let basecoin: string = filteredFromArray[0].title;
+        console.log(order);
         const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
         if (res.status === 200) {
             openNotificationWithIcon('success');
@@ -192,8 +193,8 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isFirstEnabled)} block onClick={() => createNewSellOrder()}> Confirm Sell (11s)</Button>
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell (11s)</Button>
+                    {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewSellOrder()}> Confirm Purchase (11s)</Button> */}
 
                 </div>

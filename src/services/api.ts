@@ -2,10 +2,11 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "https://api.indexx.ngrok.io"//"http://localhost:3000";
+  baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
+  // baseURL =   "http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
-  baseURL =  "https://api.indexx.ngrok.io" //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
+  baseURL = "https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
 }
 
 //console.log("baseURL", baseURL);
@@ -51,7 +52,7 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-export const logoutAPI = async () => { };
+export const logoutAPI = async () => {};
 
 export const getCountries = async () => {
   try {
@@ -65,7 +66,7 @@ export const getCountries = async () => {
   }
 };
 
-export const getUserWallet = async () => { };
+export const getUserWallet = async () => {};
 
 export const verifyPhoneCode = async (code: string) => {
   try {
@@ -74,6 +75,16 @@ export const verifyPhoneCode = async (code: string) => {
     });
     return result.data;
   } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getWalletBalance = async (email: string, coin :string) => {
+  try{
+  const result = await API.post(`/api/v1/inex/user/getBalance/${email}/${coin}`);
+  if (result.status === 200) return result.data;
+  else return result.data;
+  } catch(e :any) {
     return e.response.data;
   }
 };
@@ -101,40 +112,44 @@ export const getIndexxTokenPrices = async () => {
 export const getCryptoPrice = async (coin: string) => {
   try {
     const result = await API.post(`api/v1/inex/basic/getPriceByName`, {
-      coin: coin
+      coin: coin,
     });
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
-}
+};
 
 //https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=USD&days=1&interval=hourly
-export const getGraphicalCurrencyData = async (coinId: string, days: string, currency: string = 'USD') => {
-  let url = '';
-  if (coinId === 'IUSD+') {
+export const getGraphicalCurrencyData = async (
+  coinId: string,
+  days: string,
+  currency: string = "USD"
+) => {
+  let url = "";
+  if (coinId === "IUSD+") {
     url = `https://api.coingecko.com/api/v3/coins/tether/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'INXC') {
+  } else if (coinId === "INXC") {
     url = `https://api.coingecko.com/api/v3/coins/uma/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'IN500') {
+  } else if (coinId === "IN500") {
     url = `https://api.coingecko.com/api/v3/coins/spdr-s-p-500-etf-trust-defichain/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'BTC') {
+  } else if (coinId === "BTC") {
     url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'BNB') {
+  } else if (coinId === "BNB") {
     url = `https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'ETH') {
+  } else if (coinId === "ETH") {
     url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'LTC') {
+  } else if (coinId === "LTC") {
     url = `https://api.coingecko.com/api/v3/coins/litecoin/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'BUSD') {
+  } else if (coinId === "BUSD") {
     url = `https://api.coingecko.com/api/v3/coins/binance-usd/market_chart?vs_currency=${currency}&days=${days}`;
-  } else if (coinId === 'INEX') {
+  } else if (coinId === "INEX") {
     url = `https://api.coingecko.com/api/v3/coins/stellar/market_chart?vs_currency=${currency}&days=${days}`;
   }
   let res = await fetch(url);
   console.log(res);
   return res;
-}
+};
 
 export function isLoggedIn() {
   return !!getJwtToken();
@@ -166,7 +181,7 @@ export interface TokenLite {
   refresh_token: string;
 }
 
-export const getWalletBalance = async (email: string, coin: string) => {
+export const getAllCountries = async (email: string, coin: string) => {
   try {
     const result = await API.post("/api/v1/inex/getCountries");
     return result.data;
@@ -369,23 +384,27 @@ export const createSellOrder = async (
   }
 };
 
-export const confirmSellOrder = async(emal: string, orderId: string, orderStatus :string, basecoin: string) =>{
-  try{
-    const result = await API.post("/api/v1/inex/order/updateOrder",{
+export const confirmSellOrder = async (
+  emal: string,
+  orderId: string,
+  orderStatus: string,
+  basecoin: string
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/updateOrder", {
       email: emal,
       orderId: orderId,
       orderStatus: orderStatus,
-      currencyIn: basecoin
+      currencyIn: basecoin,
     });
     return result.data;
-  } 
-    catch (e: any) {
-      console.log("FAILED: unable to perform API request (createOrder)");
-      console.log(e);
-      console.log(e.response.data);
-      return e.response.data;
-    }
-}
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
 
 export const createConvertOrder = async (
   basecoin: string,
@@ -411,12 +430,38 @@ export const createConvertOrder = async (
   }
 };
 
-export const createStripePaymentIntent = async (amount: number, orderId: string, email: string) => {
+export const confirmConvertOrder = async (
+  emal: string,
+  orderId: string,
+  orderStatus: string,
+  basecoin: string
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/updateOrder", {
+      email: emal,
+      orderId: orderId,
+      orderStatus: orderStatus,
+      currencyIn: basecoin,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createStripePaymentIntent = async (
+  amount: number,
+  orderId: string,
+  email: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/stripe/createPaymentIntent", {
       amount: amount,
       orderId: orderId,
-      email: email
+      email: email,
     });
     return result.data;
   } catch (e: any) {
@@ -457,11 +502,14 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   }
 };
 
-export const getMinAndMaxOrderValues = async (coin: string, orderType: string) => {
+export const getMinAndMaxOrderValues = async (
+  coin: string,
+  orderType: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/basic/orderMinMax", {
       currency: coin,
-      orderType: orderType
+      orderType: orderType,
     });
     return result.data;
   } catch (e: any) {

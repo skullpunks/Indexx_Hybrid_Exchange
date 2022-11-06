@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+import { CheckCircleFilled } from '@ant-design/icons';
 import { getAppSettings, getCoinPriceByName } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
@@ -40,6 +41,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         navigate("/indexx-exchange/buy-sell?type=convert");
         // setScreenName("");
     }
+    
     let priceData1: any = {};
     let priceData2: any = {};
     let appSettingArr: any[] = [];
@@ -47,18 +49,17 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     useEffect(() => {
         getAllSetting();
         getPricesData();
-    })
+    }, [BSvalue])
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
         priceData1 = res.data;
-        console.log(priceData1);
-        setRateData1(priceData1);
+        console.log(priceData1.results.data);
+        setRateData1(priceData1.results.data);
         const res2 = await getCoinPriceByName(String(filteredToArray[0].title));
         priceData2 = res2.data;
         console.log(priceData2);
-        setRateData1(priceData2);
-        let finalRate = priceData1 / priceData2;
+        let finalRate = priceData1.results.data / priceData2.results.data;
         console.log(finalRate);
         setRateData3(finalRate);
         console.log(rateData1);
@@ -70,6 +71,39 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // console.log('usid oper1', Number(BSvalue?.amount))
         // setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee)));
     }
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType) => {
+        notification[type]({
+            message: 'Successfully Processed Sell Order',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon2 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to Process Sell Order. Please check balance on the wallet',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
 
 
     const getAllSetting = async () => {
@@ -86,6 +120,17 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     }
     const [adminFee, setAdminFees] = useState("");
 
+    // const processConvertOrder = async () => {
+    //     let basecoin: string = filteredFromArray[0].title;
+    //     const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
+    //     if (res.status === 200) {
+    //         openNotificationWithIcon('success');
+    //         // setScreenName("BSSellInprogress");
+    //         navigate("/indexx-exchange/buy-sell/sell-in-progress");
+    //     } else {
+    //         openNotificationWithIcon2('error');
+    //     }
+    // }
 
     return (
         <div className="bs_container card">
@@ -131,8 +176,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                     </div> */}
                 <div className="footer bs_footer_action">
 
-                    {/* setScreenName("BSConvertInProgress") */}
+                    {/* setScreenName("BSConvertInProgress")  rocessSellOrder()*/}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button>
+                
                 </div>
             </div>
 

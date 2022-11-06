@@ -8,6 +8,8 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Select } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
+import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
+
 import { useNavigate } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
 
@@ -24,6 +26,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [userBalance, setUserBalance] = useState(0);
+    const [showUserBalance, setShowUserBalance] = useState(false);
+    const [selectedCoin, setSelectedCoin] = useState("");
+
     // const [flag, setFlag] = useState(false);
     const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
         let testVal: string = "";
@@ -50,19 +57,39 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
 
     useEffect(() => {
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        setEmail(decoded.email)
         if (BSvalue && BSvalue.amount !== 0)
             setVal(BSvalue?.amount.toString());
+            getCoinBalance(String(filteredFromArray[0].title));
 
-    }, [BSvalue])
+    }, [BSvalue]);
+
+    const getCoinBalance = async (value: string) => {
+        const res = await getWalletBalance(email, value);
+        console.log(res);
+        setSelectedCoin(value);
+        if (res.status === 200) {
+            setUserBalance(res.data.balance);
+            setShowUserBalance(true);
+        } else {
+            setUserBalance(0);
+            setShowUserBalance(true);
+        }
+    }
 
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
 
-    const handleChange = (value: string) => {
+    const handleChange = async(value: string) => {
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value });
         }
+        let getRequiredCoin = initialTokens.find(x => x.address === value);
+        await getCoinBalance(String(getRequiredCoin?.title));
+
     };
 
     const handleChangeToToken = (value: string) => {
@@ -93,8 +120,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
-                {(parseFloat(val) < 0.0007) ?
-                    <div className='error_message font_15x'>You can only convert a minimum total of 0.0007 </div>
+                {(userBalance < parseFloat(val)) ?
+                    <div className='error_message font_15x'>You can only convert a total of {userBalance} </div>
                     :
                     <></>
                 }
@@ -126,8 +153,14 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action ">
-                <button className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) ? " disable_icon" : ""} onClick={checkPurchase} >Preview Convert </button>
+                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000) )) ? " disable_icon" : (userBalance == 0 || (userBalance < parseFloat(val)) ) ? "disable_icon" :""} onClick={checkPurchase} >Preview Convert </button>
             </div>
+
+            {showUserBalance &&
+                <div>
+                    <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 1000) / 1000}  {selectedCoin} </h6>
+                </div>
+            }
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
         </div >

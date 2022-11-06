@@ -35,13 +35,14 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
-        priceData = res.data;
+        priceData = res.data.results.data;
         console.log(priceData);
         setRateData(priceData);
         let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
         console.log('usid oper', oneUsdValue)
         console.log('usid oper1', Number(BSvalue?.amount))
-        setTotalAmountToPay(oneUsdValue * Number(BSvalue?.amount));
+        const finalPay = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
+        setTotalAmountToPay(finalPay);
     }
     getPricesData();
 
@@ -140,7 +141,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className='d-flex pe-3' style={{
                     justifyContent: "flex-end"
-                }}> <small>Transaction/Admin Fee: {adminFee || "0.00"}</small></div>
+                }}> <small>Transaction/Admin Fee: {adminFee || "0.00"} %</small></div>
 
 
                 <div className="footer bs_footer_action">
