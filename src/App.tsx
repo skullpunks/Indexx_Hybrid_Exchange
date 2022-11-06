@@ -11,6 +11,7 @@ import ContactUs from './components/Help/ContactUs';
 import TradeToEarn from './components/TradeToEarn/TradeToEarn';
 import HowItWorks from './components/HowItWorks/HowItWorks';
 import HowCentralized from './components/HowItWorks/howCentralized';
+import HowTradeToEarn from './components/HowItWorks/howTradeToEarn';
 import BuySellLogin from './components/BuySell/BuySellLogin';
 import BSWallet from './components/BuySell/BSWallet';
 // import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
@@ -69,6 +70,7 @@ function App() {
                     <Route path="/indexx-exchange/buy-sell/welcome" element={<BuySellLoggedWelcome />} />
                     <Route path="/indexx-exchange/how-it-works" element={<HowItWorks />} />
                     <Route path="/indexx-exchange/how-it-works/centralized" element={<HowCentralized />} />
+                    <Route path="/indexx-exchange/how-it-works/tradetoearn" element={<HowTradeToEarn />} />
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
