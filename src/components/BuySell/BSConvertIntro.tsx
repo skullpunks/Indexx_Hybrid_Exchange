@@ -6,9 +6,9 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import bsDollar from "../../assets/arts/bsDollar.svg";
 // import { Link } from 'react-router-dom';
 import { Select } from 'antd';
-import initialTokens from "../../utils/Tokens.json";
+import { decodeJWT, getWalletBalance } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
-import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
+import initialTokens from "../../utils/Tokens.json";
 
 import { useNavigate } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
@@ -52,18 +52,19 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) | 0 });
             }
         }
-
     }
 
-
     useEffect(() => {
-        let access_token = String(localStorage.getItem("access_token"));
-        let decoded: any = decodeJWT(access_token);
-        setEmail(decoded.email)
-        if (BSvalue && BSvalue.amount !== 0)
-            setVal(BSvalue?.amount.toString());
-            getCoinBalance(String(filteredFromArray[0].title));
-
+        return () => {
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            setEmail(decoded.email)
+            if (BSvalue && BSvalue.amount !== 0)
+                setVal(BSvalue?.amount.toString());
+            // getCoinBalance(String(filteredFromArray[0].title)).then((x) => {
+            //     setUserBalance(x);
+            // });
+        }
     }, [BSvalue]);
 
     const getCoinBalance = async (value: string) => {
@@ -73,9 +74,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         if (res.status === 200) {
             setUserBalance(res.data.balance);
             setShowUserBalance(true);
+            return Number(res.data.balance);
         } else {
             setUserBalance(0);
             setShowUserBalance(true);
+            return 0;
         }
     }
 
@@ -83,7 +86,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         return obj?.address === BSvalue?.fromToken;
     });
 
-    const handleChange = async(value: string) => {
+    const handleChange = async (value: string) => {
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value });
         }
@@ -112,7 +115,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
 
-                        <span className="font_20x pe-1">{ filteredFromArray[0].title}</span>
+                        <span className="font_20x pe-1">{filteredFromArray[0].title}</span>
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>
@@ -153,7 +156,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action ">
-                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000) )) ? " disable_icon" : (userBalance == 0 || (userBalance < parseFloat(val)) ) ? "disable_icon" :""} onClick={checkPurchase} >Preview Convert </button>
+                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
             {showUserBalance &&

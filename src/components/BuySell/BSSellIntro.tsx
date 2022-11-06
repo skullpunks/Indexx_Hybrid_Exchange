@@ -45,12 +45,12 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
         });
-        getCoinBalance(String(filteredFromArray[0].title));
+        //getCoinBalance(String(filteredFromArray[0].title));
         //removing INEX for sell
     //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
     //    setUpdateInitialTokens(filteredPeople);
 
-    }, [BSvalue])
+    }, [BSvalue] )
 
     const getCoinBalance = async (value: string) => {
         const res = await getWalletBalance(email, value);
@@ -194,7 +194,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="bs_footer_action ">
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
                 <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000) )) ? "disable_icon" :
-                    (userBalance == 0 || (userBalance < parseFloat(val)) ) ? "disable_icon" :"" } onClick={formSubmit}>Preview Sell </button>
+                    (userBalance === 0 || (userBalance < parseFloat(val)) ) ? "disable_icon" :"" } onClick={formSubmit}>Preview Sell </button>
             </div>
             {showUserBalance &&
                 <div>

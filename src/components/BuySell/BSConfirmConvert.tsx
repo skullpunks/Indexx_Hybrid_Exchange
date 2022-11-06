@@ -1,12 +1,12 @@
-import { Button, notification } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-import { CheckCircleFilled } from '@ant-design/icons';
+// import { CheckCircleFilled } from '@ant-design/icons';
 import { getAppSettings, getCoinPriceByName } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
@@ -46,10 +46,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     let priceData2: any = {};
     let appSettingArr: any[] = [];
 
-    useEffect(() => {
-        getAllSetting();
-        getPricesData();
-    }, [BSvalue])
+   
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
@@ -72,37 +69,37 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee)));
     }
 
-    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+    // type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-    const openNotificationWithIcon = (type: NotificationType) => {
-        notification[type]({
-            message: 'Successfully Processed Sell Order',
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+    // const openNotificationWithIcon = (type: NotificationType) => {
+    //     notification[type]({
+    //         message: 'Successfully Processed Sell Order',
+    //         description: '',
+    //         icon: <CheckCircleFilled className='text_link' />,
+    //         style: {
+    //             border: "1px solid #F66036",
+    //             boxShadow: "none",
+    //             borderRadius: 5,
+    //             top: 100
+    //         },
 
-        });
-    };
+    //     });
+    // };
 
-    const openNotificationWithIcon2 = (type: NotificationType) => {
-        notification[type]({
-            message: 'Failed to Process Sell Order. Please check balance on the wallet',
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+    // const openNotificationWithIcon2 = (type: NotificationType) => {
+    //     notification[type]({
+    //         message: 'Failed to Process Sell Order. Please check balance on the wallet',
+    //         description: '',
+    //         icon: <CheckCircleFilled className='text_link' />,
+    //         style: {
+    //             border: "1px solid #F66036",
+    //             boxShadow: "none",
+    //             borderRadius: 5,
+    //             top: 100
+    //         },
 
-        });
-    };
+    //     });
+    // };
 
 
 
@@ -120,6 +117,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     }
     const [adminFee, setAdminFees] = useState("");
 
+    // useEffect(() => {
+    //     getAllSetting();
+    //     getPricesData();
+    // }, [])
+
     // const processConvertOrder = async () => {
     //     let basecoin: string = filteredFromArray[0].title;
     //     const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
@@ -131,6 +133,8 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     //         openNotificationWithIcon2('error');
     //     }
     // }
+    getAllSetting();
+    getPricesData();
 
     return (
         <div className="bs_container card">
