@@ -45,7 +45,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
         });
-        getCoinBalance(String(filteredFromArray[0].title));
+        //getCoinBalance(String(filteredFromArray[0].title));
         //removing INEX for sell
         //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
         //    setUpdateInitialTokens(filteredPeople);

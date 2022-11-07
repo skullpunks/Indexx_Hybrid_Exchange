@@ -1,5 +1,5 @@
 import { Button, notification } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -39,10 +39,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // setScreenName("");
     }
 
-    useEffect(() => {
-        getAllSetting();
-        getPricesData();
-    }, [BSvalue])
+    // useEffect(() => {
+      
+    // }, [BSvalue])
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
@@ -132,6 +131,8 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             setAdminFees(adminFees.value);
         }
     }
+    getAllSetting();
+    getPricesData();
     const [adminFee, setAdminFees] = useState("");
 
     // const createNewSellOrder = async () => {
