@@ -122,8 +122,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
 
-                        <span className="font_20x pe-1">{filteredFromArray[0].title}</span>
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
+                        <span className="font_20x px-1">{filteredFromArray[0].title}</span>
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>
                     <div className='swap_Arrow_icon cursor-pointer' onClick={swapCoin}>

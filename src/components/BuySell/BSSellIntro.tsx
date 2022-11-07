@@ -13,12 +13,12 @@ import initialTokens from "../../utils/Tokens.json";
 import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 export interface TokensObj {
-    title:       string;
-    subTitle:    string;
-    image:       string;
-    address:     string;
+    title: string;
+    subTitle: string;
+    image: string;
+    address: string;
     commonToken: boolean;
-    graph:       string;
+    graph: string;
 }
 
 interface Props {
@@ -35,7 +35,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [userBalance, setUserBalance] = useState(0);
     const [showUserBalance, setShowUserBalance] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState("");
-    
+
     useEffect(() => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
@@ -47,10 +47,10 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         });
         //getCoinBalance(String(filteredFromArray[0].title));
         //removing INEX for sell
-    //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
-    //    setUpdateInitialTokens(filteredPeople);
+        //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
+        //    setUpdateInitialTokens(filteredPeople);
 
-    }, [BSvalue] )
+    }, [BSvalue])
 
     const getCoinBalance = async (value: string) => {
         const res = await getWalletBalance(email, value);
@@ -95,10 +95,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             await checkMinMaxValue(String(value), parseInt(testVal));
 
 
+
         }
     }
 
-    const filteredFromArray = initialTokens.filter(function (obj : any) {
+    const filteredFromArray = initialTokens.filter(function (obj: any) {
         return (obj?.address === BSvalue?.fromToken);
     });
 
@@ -139,9 +140,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="padding-lr-2x padding-tb-3x">
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
-                        <span className="font_20x pe-1">{filteredFromArray[0].title}</span>
-
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
+                        <span className="font_20x px-1">{filteredFromArray[0].title}</span>
+
                         {/* <span className="font_20x">IN500</span> */}
                     </div>
                     {/* <div className='swap_Arrow_icon'>
@@ -166,15 +167,15 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens
-                        .filter(function (token) {
-                            return token.title !== "INEX";
-                        })
-                        .map((token, index) => {
+                            .filter(function (token) {
+                                return token.title !== "INEX";
+                            })
+                            .map((token, index) => {
 
-                            return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                            </Option>
-                        })
+                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                </Option>
+                            })
                     }
 
                 </Select>
@@ -193,8 +194,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             </div>
             <div className="bs_footer_action ">
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000) )) ? "disable_icon" :
-                    (userBalance === 0 || (userBalance < parseFloat(val)) ) ? "disable_icon" :"" } onClick={formSubmit}>Preview Sell </button>
+                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                    (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
             {showUserBalance &&
                 <div>

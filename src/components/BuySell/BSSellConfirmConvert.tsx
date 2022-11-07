@@ -18,8 +18,8 @@ interface Props {
 }
 let appSettingArr: any[] = [];
 
+// const BSSellConfirmConvert: React.FC = () => {
 const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
-    // const BSSellConfirmConvert: React.FC = () => {
     // console.log(setStatus);
     const navigate = useNavigate();
     const [rateData, setRateData] = useState();
@@ -157,9 +157,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative padding-lr-2x  ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-                        <span className="font_20x" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
+                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px" }}>
                         <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
+                        <span className="font_20x ps-2" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
                     </div>
                     {/* <span className="font_20x" style={{
                         position: "absolute", bottom: "38px", left: "50%", fontSize: "12px"

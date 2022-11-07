@@ -17,8 +17,10 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.clear(); //clear all localstorage
-    window.location.reload();
-    // navigate("/indexx-exchange/buy-sell/login");
+    if (window.location.pathname.includes("trade-to-earn"))
+        window.location.reload();
+    else
+        window.location.href = "/indexx-exchange/buy-sell/login";
 
 }
 
@@ -36,6 +38,7 @@ const Links = [
 const HeaderNew = () => {
     let title = <>{localStorage.getItem("user")}</>
     const [isInsideApp, setIsInsideApp] = useState(false);
+    // const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
     let pageName = searchParams.get("page");
