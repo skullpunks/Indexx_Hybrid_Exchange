@@ -9,6 +9,7 @@ import { Select } from 'antd';
 import { decodeJWT, getWalletBalance } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
+import graphTokens from "../../utils/graphs.json";
 
 import { useNavigate } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
@@ -101,8 +102,9 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     });
 
     const handleChange = async (value: string) => {
+        let getGraphCoin = graphTokens.find(x => x.address === value);
         if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, fromToken: value });
+            setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
         }
         let getRequiredCoin = initialTokens.find(x => x.address === value);
         await getCoinBalance(String(getRequiredCoin?.title));

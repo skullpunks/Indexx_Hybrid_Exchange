@@ -1,6 +1,6 @@
 import React from 'react';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -26,12 +26,12 @@ const BSConvertInProgressProcessing: React.FC<(Props)> = ({ setScreenName }) => 
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
 
-                        <span placeholder="0" className=" " style={{ fontSize: 50 }} >0.00005102</span>
+                        <span placeholder="0" className="color_general" style={{ fontSize: 50 }} >0.00005102</span>
                         <span className="font_20x" style={{ paddingBottom: 14, paddingLeft: 4 }} >BTC</span>
                     </div>
-                    <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "2%" }} >
+                    {/* <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "2%" }} >
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className='font_18x padding-b-2x'>Your convert order is being processed.A confirmation email will be sent once the order is complete.</div>

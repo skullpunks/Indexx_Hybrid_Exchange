@@ -10,6 +10,7 @@ import { Select } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
+import graphTokens from "../../utils/graphs.json";
 import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 export interface TokensObj {
@@ -75,9 +76,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const handleChange = async (value: string) => {
+
+        let getGraphCoin = graphTokens.find(x => x.address === value);
         // setNetwork(value)
         if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, fromToken: value });
+            setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
         }
         let getRequiredCoin = initialTokens.find(x => x.address === value);
         await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(val));
