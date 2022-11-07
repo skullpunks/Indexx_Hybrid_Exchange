@@ -1,11 +1,9 @@
-import { Card, Image, Button, Input } from "antd";
-import { Divider } from "antd";
+import {  Image, Button } from "antd";
 import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import buysell from "../../assets/how-it-works/buysellss.png";
 import sell from "../../assets/how-it-works/sell.png";
 import convert from "../../assets/how-it-works/convert.png";
-
 import Footer from "../Footer/Footer";
 
 const { Text } = Typography;

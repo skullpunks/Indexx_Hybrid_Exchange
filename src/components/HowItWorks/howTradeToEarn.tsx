@@ -1,14 +1,11 @@
-import { Card, Image, Button, Input } from "antd";
-import { Divider } from "antd";
-import { Typography } from "antd";
+import {  Image, Button } from "antd";
+
 import { useNavigate } from "react-router-dom";
 import t2e from "../../assets/how-it-works/tradetoearncoin.png";
 import phase1 from "../../assets/how-it-works/phase1.png";
 import phase2 from "../../assets/how-it-works/phase2.png";
-
 import Footer from "../Footer/Footer";
 
-const { Text } = Typography;
 
 const HowTradeToEarn = () => {
   const navigate = useNavigate();

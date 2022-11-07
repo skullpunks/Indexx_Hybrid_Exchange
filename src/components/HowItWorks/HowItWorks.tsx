@@ -1,5 +1,4 @@
-import { Card, Image, Button, Input } from "antd";
-import { Divider } from "antd";
+
 import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import firstcoin from "../../assets/how-it-works/indexxlogo.png";
@@ -9,7 +8,6 @@ import indexxfortune from "../../assets/how-it-works/indexxfortune.png";
 import finalsquare from "../../assets/how-it-works/finalsquare.png";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
-
 const { Text } = Typography;
 
 const HowItWorks = () => {
@@ -85,7 +83,10 @@ const HowItWorks = () => {
             </span>
           </div>
           <div className="col-lg-4 text-center">
+            <Link to={"/indexx-exchange/how-it-works/tokens"}>
             <img src={tokens} alt="indexxcoin" style={{ marginTop: 50 }} />
+            </Link>
+           
             <br />
             <span className="employee_name">
               <strong>
