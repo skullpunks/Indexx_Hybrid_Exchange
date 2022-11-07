@@ -40,7 +40,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     // useEffect(() => {
-      
+
     // }, [BSvalue])
 
     const getPricesData = async () => {
@@ -107,7 +107,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         });
     };
 
-    const processSellOrder = async (order :any) => {
+    const processSellOrder = async (order: any) => {
         let basecoin: string = filteredFromArray[0].title;
         console.log(order);
         const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
@@ -150,7 +150,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered cursor-pointer' style={{ color: "#5f5f5f" }}>
-                    <span className='font_20x pe-2' onClick={navigateBak}>&#60;</span>
+                    <span className='font_20x pe-2 ' onClick={navigateBak}>&#60;</span>
                     Confirm Sell
                 </h1>
             </div>
@@ -158,7 +158,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative padding-lr-2x  ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px" }}>
-                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="color_general" style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
                         <span className="font_20x ps-2" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
                     </div>
                     {/* <span className="font_20x" style={{
@@ -194,7 +194,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewSellOrder()}> Confirm Purchase (11s)</Button> */}
 

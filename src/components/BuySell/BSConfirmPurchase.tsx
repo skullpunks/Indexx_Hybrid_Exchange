@@ -125,7 +125,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left flex-align-center padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                        <span placeholder="0" className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="font_60x color_general padding-l-1x" style={{ minHeight: "100px", lineHeight: "100px" }} >{BSvalue?.amount}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
@@ -151,7 +151,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
 
-                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false}>
+                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
                         {clientSecret && (
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm />

@@ -320,6 +320,7 @@ a.link.text-white:hover {
 
 .disable_icon {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .primary_hover:hover {

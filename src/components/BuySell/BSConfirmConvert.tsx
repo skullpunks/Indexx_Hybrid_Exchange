@@ -166,9 +166,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-                        <span className="font_20x" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
-                        <span placeholder="0" className="ps-2" style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
+                    <div className="bs_curreny_left" style={{ alignItems: "baseline", padding: "50px 20px" }}>
+                        <span placeholder="0" className="pe-2 color_general font_60x" >{BSvalue?.amount}</span>
+                        <span className="font_20x" style={{ lineHeight: "60px" }} >{filteredFromArray[0].title}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
@@ -196,7 +196,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-                    <small>Transaction/Admin Fee: {adminFee || "0.00"} %</small>
+                    <p>Transaction/Admin Fee: {adminFee || "0.00"} %</p>
                     {Number(totalAmountToPayInUSD) > 50 &&
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX({totalAmountToPayInUSD} USD)</h6>
                     }
