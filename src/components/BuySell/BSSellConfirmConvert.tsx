@@ -44,7 +44,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // }, [BSvalue])
 
     const getPricesData = async () => {
-        const res = await getCoinPriceByName(String(filteredFromArray[0].title));
+        const res = await getCoinPriceByName(String(filteredFromArray[0].title), 'Sell');
         priceData = res.data.results.data;
         console.log(priceData);
         setRateData(priceData);

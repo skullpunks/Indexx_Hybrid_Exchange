@@ -19,9 +19,11 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const filteredToArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.toToken;
     });
+    console.log(BSvalue)
     // const navigateBak = () => {
     //     navigate("/indexx-exchange/buy-sell?type=convert");
     //     // setScreenName("");
+    
     // }
     return (
         <div className='bs_container card'>

@@ -36,6 +36,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
+            console.log('testVal',testVal)
             setVal(testVal);
 
             let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
@@ -47,9 +48,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const checkPurchase = () => {
         if (val) {
             // setScreenName("confirmConvert");
+            console.log(val)
+            console.log(parseFloat(val))
             navigate("/indexx-exchange/buy-sell/confirm-convert");
             if (setBSvalue && BSvalue) {
-                setBSvalue({ ...BSvalue, amount: parseFloat(val) | 0 });
+                setBSvalue({ ...BSvalue, amount: parseFloat(val) });
             }
         }
     }
@@ -102,8 +105,12 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     };
     const swapCoin = () => {
         let temp = BSvalue?.fromToken;
+        let getRequiredCoin = initialTokens.find(x => x.address === temp);
+        console.log('temp',temp, BSvalue?.fromTitle, getRequiredCoin);
+        console.log(BSvalue?.toToken, BSvalue?.toTitle);
         if (BSvalue && temp) {
             setBSvalue({ ...BSvalue, fromToken: BSvalue?.toToken, toToken: temp });
+           //getCoinBalance(BSvalue?.fromTitle)
         }
 
     }
@@ -124,7 +131,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </div>
                 </div>
                 {(userBalance < parseFloat(val)) ?
-                    <div className='error_message font_15x'>You can only convert a total of {userBalance} </div>
+                    <div className='error_message font_15x'>You can only convert a total of {Math.floor(userBalance * 10000) / 10000} </div>
                     :
                     <></>
                 }
@@ -161,7 +168,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
             {showUserBalance &&
                 <div>
-                    <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 1000) / 1000}  {selectedCoin} </h6>
+                    <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
             }
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>

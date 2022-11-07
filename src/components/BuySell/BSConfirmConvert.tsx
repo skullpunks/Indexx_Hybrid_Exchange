@@ -1,15 +1,16 @@
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
-// import IUSD from "../../assets/token-icons/35.png";
+// import IUSD from "../../assets/token-icons/35.png"; 
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import { CheckCircleFilled } from '@ant-design/icons';
-import { getAppSettings, getCoinPriceByName } from '../../services/api';
+import { getAppSettings, getCoinPriceByName, createConvertOrder, confirmConvertOrder } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
+import { CheckCircleFilled } from '@ant-design/icons';
 
 
 // const filteredArray = (items: any, keyName: any, key: any) => {
@@ -30,7 +31,8 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [rateData1, setRateData1] = useState();
     const [rateData3, setRateData3] = useState(0);
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-    const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const [totalAmountToPayInUSD, setTotalAmountToPayInUSD] = useState(0);
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
@@ -41,12 +43,12 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         navigate("/indexx-exchange/buy-sell?type=convert");
         // setScreenName("");
     }
-    
+
     let priceData1: any = {};
     let priceData2: any = {};
     let appSettingArr: any[] = [];
 
-   
+
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title));
@@ -60,48 +62,16 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         console.log(finalRate);
         setRateData3(finalRate);
         console.log(rateData1);
-
+        console.log(BSvalue?.amount)
         console.log(finalRate * Number(BSvalue?.amount));
-        setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
+        //setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
+        setTotalAmountToPayInUSD(finalRate * Number(BSvalue?.amount) * priceData2.results.data)
         // let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
         // console.log('usid oper', oneUsdValue)
         // console.log('usid oper1', Number(BSvalue?.amount))
-        // setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee)));
+        setTotalAmountToPay(finalRate * Number(BSvalue?.amount) - (finalRate * Number(BSvalue?.amount) * Number(adminFee) / 100));
+        return;
     }
-
-    // type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-    // const openNotificationWithIcon = (type: NotificationType) => {
-    //     notification[type]({
-    //         message: 'Successfully Processed Sell Order',
-    //         description: '',
-    //         icon: <CheckCircleFilled className='text_link' />,
-    //         style: {
-    //             border: "1px solid #F66036",
-    //             boxShadow: "none",
-    //             borderRadius: 5,
-    //             top: 100
-    //         },
-
-    //     });
-    // };
-
-    // const openNotificationWithIcon2 = (type: NotificationType) => {
-    //     notification[type]({
-    //         message: 'Failed to Process Sell Order. Please check balance on the wallet',
-    //         description: '',
-    //         icon: <CheckCircleFilled className='text_link' />,
-    //         style: {
-    //             border: "1px solid #F66036",
-    //             boxShadow: "none",
-    //             borderRadius: 5,
-    //             top: 100
-    //         },
-
-    //     });
-    // };
-
-
 
     const getAllSetting = async () => {
         const res = await getAppSettings();
@@ -113,7 +83,8 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             let adminFees = appSettingArr.find((item: any) => item.key === "AdminFees");
             setAdminFees(adminFees.value);
         }
-        console.log(adminFee)
+        console.log(adminFee);
+        return;
     }
     const [adminFee, setAdminFees] = useState("");
 
@@ -122,17 +93,63 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     //     getPricesData();
     // }, [])
 
-    // const processConvertOrder = async () => {
-    //     let basecoin: string = filteredFromArray[0].title;
-    //     const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
-    //     if (res.status === 200) {
-    //         openNotificationWithIcon('success');
-    //         // setScreenName("BSSellInprogress");
-    //         navigate("/indexx-exchange/buy-sell/sell-in-progress");
-    //     } else {
-    //         openNotificationWithIcon2('error');
-    //     }
-    // }
+    const createProcessOrder = async () => {
+        let basecoin: string = filteredFromArray[0].title;
+        let quotecoin: string = filteredToArray[0].title;
+        const res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount));
+        console.log(res);
+        if (res.status === 200) {
+            if (setBSvalue && BSvalue) {
+                setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
+                await processConvertOrder(res.data);
+            }
+        } else {
+            openNotificationWithIcon2('error');
+        }
+    }
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType) => {
+        notification[type]({
+            message: 'Successfully Processed Convert Order',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon2 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to Process Convert Order. Please check balance on the wallet',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+    const processConvertOrder = async (order: any) => {
+        const res = await confirmConvertOrder(order.user.email, order.orderId);
+        console.log(res);
+        if (res.status === 200) {
+            openNotificationWithIcon('success');
+            navigate("/indexx-exchange/buy-sell/convert-in-progress");
+        } else {
+            openNotificationWithIcon2('error');
+        }
+    }
+
     getAllSetting();
     getPricesData();
 
@@ -159,7 +176,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
-                    <span>{Math.floor(rateData3 * 100) / 100} {filteredFromArray[0].title} / {filteredToArray[0].title}</span>
+                    <span>{Math.floor(rateData3 * 100) / 100} {filteredToArray[0].title} / {filteredFromArray[0].title}</span>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
@@ -179,10 +196,14 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-
+                    <small>Transaction/Admin Fee: {adminFee || "0.00"} %</small>
+                    {Number(totalAmountToPayInUSD) > 50 &&
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX({totalAmountToPayInUSD} USD)</h6>
+                    }
                     {/* setScreenName("BSConvertInProgress")  rocessSellOrder()*/}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button>
-                
+                    {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button> */}
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createProcessOrder()}> Confirm Conversion (11s)</Button>
+
                 </div>
             </div>
 

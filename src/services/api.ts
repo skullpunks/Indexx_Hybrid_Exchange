@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
-  // baseURL =   "http://localhost:3000";
+  // baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
+  baseURL = "http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
@@ -79,12 +79,14 @@ export const verifyPhoneCode = async (code: string) => {
   }
 };
 
-export const getWalletBalance = async (email: string, coin :string) => {
-  try{
-  const result = await API.post(`/api/v1/inex/user/getBalance/${email}/${coin}`);
-  if (result.status === 200) return result.data;
-  else return result.data;
-  } catch(e :any) {
+export const getWalletBalance = async (email: string, coin: string) => {
+  try {
+    const result = await API.post(
+      `/api/v1/inex/user/getBalance/${email}/${coin}`
+    );
+    if (result.status === 200) return result.data;
+    else return result.data;
+  } catch (e: any) {
     return e.response.data;
   }
 };
@@ -312,9 +314,14 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
-export const getCoinPriceByName = async (coin: string) => {
+export const getCoinPriceByName = async (
+  coin: string,
+  type: string = "Buy"
+) => {
   try {
-    const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`);
+    const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
+      type: type,
+    });
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getCoinPriceByName)");
@@ -414,8 +421,8 @@ export const createConvertOrder = async (
 ) => {
   try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
-      currencyOut: basecoin,
-      currencyIn: quotecoin,
+      currencyOut: quotecoin,
+      currencyIn: basecoin,
       amount: amount,
       price: price,
       orderType: "Convert",
@@ -433,15 +440,14 @@ export const createConvertOrder = async (
 export const confirmConvertOrder = async (
   emal: string,
   orderId: string,
-  orderStatus: string,
-  basecoin: string
+  orderStatus: string = "Completed",
+  basecoin: string = "IN500"
 ) => {
   try {
-    const result = await API.post("/api/v1/inex/order/updateOrder", {
+    const result = await API.post("/api/v1/inex/order/processCovert", {
       email: emal,
       orderId: orderId,
-      orderStatus: orderStatus,
-      currencyIn: basecoin,
+     
     });
     return result.data;
   } catch (e: any) {
