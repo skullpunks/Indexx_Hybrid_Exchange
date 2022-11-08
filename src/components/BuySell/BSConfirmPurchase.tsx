@@ -88,6 +88,14 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
     useEffect(() => {
         getAllSetting();
+        // if(document.getElementById("input_get_value") && document.getElementById("input_get_value")?.innerHTML){
+            let element =document.getElementById("input_get_value")!;
+            let testVal = element.innerText;
+            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+            element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+            element.style.fontSize = charFontSize + "ch";
+        // }
     }, [BSvalue])
 
     const appearance = {
@@ -115,7 +123,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell/")}>&#60;</span>
+                    <span className='cursor-pointer'  onClick={() => navigate("/indexx-exchange/buy-sell/")}>&#60;</span>
                     Confirm Purchase
                 </h1>
                 {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}
@@ -123,9 +131,10 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className='card-body padding-0'>
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left flex-align-center padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
+                    <div className="bs_curreny_left flex-align-center padding-b-2x" style={{ alignItems: "baseline", padding: "50px 20px" }}>
                         <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-                        <span placeholder="0" className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="font_60x color_general padding-l-1x" id="input_get_value" style={{ width: "1.2ch", minHeight: "100px", lineHeight: "100px" }} >{BSvalue?.amount}</span>
+                        {/* <span placeholder="0" id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
                     </div>
                     {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
@@ -151,7 +160,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
 
-                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false}>
+                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
                         {clientSecret && (
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm />

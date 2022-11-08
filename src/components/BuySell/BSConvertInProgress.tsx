@@ -23,7 +23,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     // const navigateBak = () => {
     //     navigate("/indexx-exchange/buy-sell?type=convert");
     //     // setScreenName("");
-    
+
     // }
     return (
         <div className='bs_container card'>
@@ -40,16 +40,16 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className=" d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px 0 20px" }}>
-                        <span className="font_15x" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
-                        <span placeholder="0" className="font_40x " >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="font_60x " >{BSvalue?.amount}</span>
+                        <span className="font_20x ps-2" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "6%" }}>
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
                     </div> */}
                 </div>
-                <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0 }}>
+                <div className="bs_curreny_left padding-b-2x pe-0" style={{ transform: "scale(1)", paddingBottom: "20px", paddingTop: 0 }}>
 
-                    <span placeholder="0" className="font_40x " > <span className='dummy'>0.9</span>  </span>
+                    <span placeholder="0" className="font_20x " > <span className='dummy'>0.9</span>  </span>
                     <span className="font_20x" style={{
                         color: "rgba(96, 96, 96,.5)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>

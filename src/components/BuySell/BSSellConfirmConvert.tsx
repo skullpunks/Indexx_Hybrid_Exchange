@@ -1,5 +1,5 @@
 import { Button, notification } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -39,9 +39,16 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // setScreenName("");
     }
 
-    // useEffect(() => {
+   
+    useEffect(() => {
+        let element =document.getElementById("input_get_value")!;
+            let testVal = element.innerText;
+            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+            element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+            element.style.fontSize = charFontSize + "ch";
       
-    // }, [BSvalue])
+    }, [BSvalue])
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title), 'Sell');
@@ -107,7 +114,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         });
     };
 
-    const processSellOrder = async (order :any) => {
+    const processSellOrder = async (order: any) => {
         let basecoin: string = filteredFromArray[0].title;
         console.log(order);
         const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
@@ -150,7 +157,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered cursor-pointer' style={{ color: "#5f5f5f" }}>
-                    <span className='font_20x pe-2' onClick={navigateBak}>&#60;</span>
+                    <span className='font_20x pe-2 ' onClick={navigateBak}>&#60;</span>
                     Confirm Sell
                 </h1>
             </div>
@@ -158,7 +165,8 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative padding-lr-2x  ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px" }}>
-                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="color_general font_60x" id="input_get_value" style={{ width: "1.2ch" }} >{BSvalue?.amount}</span>
+                        {/* <span placeholder="0" className=" " id="input_get_value" style={{ width: "1.2ch" }}>{BSvalue?.amount}</span> */}
                         <span className="font_20x ps-2" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
                     </div>
                     {/* <span className="font_20x" style={{
@@ -194,7 +202,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell (11s)</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewSellOrder()}> Confirm Purchase (11s)</Button> */}
 

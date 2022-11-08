@@ -37,15 +37,14 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
                 <img src={InProgressClock} alt="InProgressClock" className='padding-t-2x' />
 
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-
-                        <span placeholder="0" className=" " style={{ fontSize: 50 }} >{BSvalue?.amount}</span>
-                        <span className="font_20x" style={{ paddingBottom: 14, paddingLeft: 4 }} >{BSvalue?.fromTitle}</span>
+                    <div className="bs_curreny_left padding-b-2x" style={{ padding: "30px 20px", alignItems: "baseline" }}>
+                        <span placeholder="0" className="font_60x color_general" >{BSvalue?.amount}</span>
+                        <span className="font_20x ps-2" >{BSvalue?.fromTitle}</span>
                     </div>
 
                 </div>
 
-                <div className='font_18x padding-b-2x'>Your convert order is being processed.A confirmation email will be sent once the order is complete.</div>
+                <div className='font_18x padding-b-2x'>Your sell order is being processed. A confirmation email will be sent once the order is complete.</div>
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block > Go to Wallet</Button>
                 <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=sell" >New Sell</Link>
             </div>

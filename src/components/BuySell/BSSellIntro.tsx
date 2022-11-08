@@ -10,6 +10,7 @@ import { Select } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
+import graphTokens from "../../utils/graphs.json";
 import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 export interface TokensObj {
@@ -40,8 +41,17 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
         setEmail(decoded.email)
-        if (BSvalue && BSvalue.amount !== 0)
+        if (BSvalue && BSvalue.amount !== 0) {
             setVal(BSvalue?.amount.toString());
+            let amount = BSvalue?.amount.toString();
+            let charFontSize = amount.length < 7 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
+            let charWidth = amount.length <= 1 ? 1.2 : 0.9
+            if (document.getElementsByClassName("input_currency")[0]) {
+                let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
+                element.style.width = ((amount.length + 1) * charWidth) + 'ch';
+                element.style.fontSize = charFontSize + "ch";
+            }
+        }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
         });
@@ -66,9 +76,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const handleChange = async (value: string) => {
+
+        let getGraphCoin = graphTokens.find(x => x.address === value);
         // setNetwork(value)
         if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, fromToken: value });
+            setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
         }
         let getRequiredCoin = initialTokens.find(x => x.address === value);
         await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(val));
@@ -81,7 +93,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             testVal = e?.currentTarget?.value;
             setVal(testVal);
 
-            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
             let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
@@ -137,9 +149,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className='sell_screens'>
 
-            <div className="padding-lr-2x padding-tb-3x">
+            <div className="padding-lr-1x padding-tb-3x">
                 <div className="bs_curreny d-flex position-relative ">
-                    <div className="bs_curreny_left padding-2x flex-align-center" style={{ transform: "scale(1)" }}>
+                    <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
                         <span className="font_20x px-1">{filteredFromArray[0].title}</span>
 
