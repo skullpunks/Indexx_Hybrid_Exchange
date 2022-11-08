@@ -97,7 +97,7 @@ const TradeToEarn = () => {
   const withdrawMyINEX = async () => {
     console.log(withdrawAmount)
     console.log(email)
-    let res = await withdrawINEX(email, 7);
+    let res = await withdrawINEX(email, withdrawAmount);
     console.log(res);
     if(res.status === 200) {
       openNotificationWithIcon('success', res.data.txData.blockHash);
@@ -177,7 +177,7 @@ const TradeToEarn = () => {
                   size={"middle"} style={{ width: '100%', marginBottom: "10px" }}
                   placeholder="Enter Amount to Withdraw"
                 />
-                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:$100</Text>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:$1000</Text>
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>1 USD = 0.1 INEX</Text>
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>Earning Percentage = 30%</Text>
                 <br /> <br></br>
@@ -185,7 +185,7 @@ const TradeToEarn = () => {
                   height: "55px",
                   borderRadius: "5px",
                 }}
-                  disabled={(!withdrawAmount || withdrawAmount < 100 || withdrawAmount > userRewardDetails?.rewardTokenBalanceInUSD)}
+                  disabled={(!withdrawAmount || withdrawAmount < 1000 || withdrawAmount > userRewardDetails?.rewardTokenBalanceInUSD)}
                   onClick={() => withdrawMyINEX()}
                 >Withdraw Tokens</Button>
                 {/* { showTxText && 

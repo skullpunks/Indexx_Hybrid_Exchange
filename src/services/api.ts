@@ -562,3 +562,14 @@ export const withdrawINEX = async (
   }
 }
 
+export const transactionList = async (email: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`);
+    return result.data;
+  } catch(err: any) {
+    console.log("FAILED: unable to perform API request (transactionList)");
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+}

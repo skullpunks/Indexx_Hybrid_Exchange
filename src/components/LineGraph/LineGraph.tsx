@@ -6,8 +6,12 @@ import { Segmented } from 'antd';
 // } from "recharts";
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
-
+import moment from "moment";
+//import numeral from "numeral";
 import styles from "./LineGraph.module.css";
+
+//const numberFormatter = (item : any) => numeral(item).format("0,00");
+const dateFormatter = (item :any ) => moment(item).format("MMM DD");
 
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
@@ -104,13 +108,13 @@ const LineGraph = (props: any) => {
           dataKey={"time"}
           stroke="#5f5f5f"
           tick={{ fill: "#5f5f5f" }}
+          tickFormatter={dateFormatter}
         />
         <YAxis
           stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
-        <Tooltip />
+        <Tooltip labelFormatter={dateFormatter} />
 
       </AreaChart>
-
       {/* <LineChart
         margin={{ left: 17, right: 6, top: 10 }}
         className={styles.graphBackground}
