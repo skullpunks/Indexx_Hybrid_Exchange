@@ -32,8 +32,11 @@ import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
 import About from './components/About/About';
 import Account from './components/AccountSettings/Account';
-
+import BSDashhboard from './components/BuySell/BSDashboard';
 import SecurityChange from './components/AccountSettings/SecurityChange';
+// import { useEffect, useState } from 'react';
+// import { decodeJWT, getUserDetails } from '../src/services/api';
+
 // import Header from './components/Header/Header';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
@@ -42,6 +45,31 @@ import SecurityChange from './components/AccountSettings/SecurityChange';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
 
 function App() {
+    /*
+    const [email, setEmail] = useState('');
+    const [userData, setUserData] = useState() as any;
+
+    useEffect(() => {
+        return () => {
+            const access_token = localStorage.getItem("access_token") !== undefined ? String(localStorage.getItem("access_token")) : undefined;
+            console.log(access_token)
+            if (access_token !== undefined || access_token !== null) {
+                let access_token = String(localStorage.getItem("access_token"));
+                let decoded: any = decodeJWT(access_token);
+                setEmail(decoded.email)
+                getUserDetails(decoded.email).then((res: any) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        setUserData(res.data);
+                    }
+                });
+            } else {
+                console.log('token not found')
+            }
+        }
+    }, [email]);
+*/
     return (
         <div>
             <BrowserRouter>
@@ -49,6 +77,12 @@ function App() {
                 <HeaderNew />
                 <Routes>
                     <Route path="/*" element={<Home />} />
+                    <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
+                    {/* {
+                        // userData?.role === "Standard"
+                            ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
+                            : <Route path="/external-link" element={<External />} />
+                    } */}
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
                     <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
@@ -86,5 +120,11 @@ function App() {
         </div>
     );
 }
+
+// function External() {
+//     console.log(' IAM HERE')
+//     window.location.href = 'http://localhost:3002/';
+//     return null;
+// }
 
 export default App;

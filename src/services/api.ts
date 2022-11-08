@@ -290,9 +290,9 @@ export const getAllTransactions = async (email: string) => {
   }
 };
 
-export const getUserRewards = async (email: string) => {
+export const getUserRewardDetails = async (email: string) => {
   try {
-    const result = await API.post(`/api/v1/inex/user/getUserRewards/${email}`);
+    const result = await API.get(`/api/v1/inex/user/getUserRewardDetails/${email}`);
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserRewards)");
@@ -301,6 +301,21 @@ export const getUserRewards = async (email: string) => {
     return e.response.data;
   }
 };
+
+export const updateRewardsWallet = async(email: string, walletAddr: string) => {
+  try{
+    const result = await API.post(`/api/v1/inex/user/updateRewardsWallet`, {
+      email: email,
+      rewardWalletAddress: walletAddr
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (updateRewardsWallet)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+ }
 
 export const getUserDetails = async (email: string) => {
   try {
@@ -527,3 +542,23 @@ export const getMinAndMaxOrderValues = async (
     return e.response.data;
   }
 };
+
+
+export const withdrawINEX = async (
+  email: string,
+  amount: number,
+) => {
+  try{
+    const result = await API.post("/api/v1/inex/user/withdrawRewards", {
+      email: email,
+      amount: amount,
+    });
+    return result.data;
+  } catch(e :any) {
+    console.log("FAILED: unable to perform API request (withdrawINEX)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
