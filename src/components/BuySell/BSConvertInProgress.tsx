@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import { Link, useNavigate } from 'react-router-dom';
+import { decodeJWT, getOrderDetails } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -13,6 +14,7 @@ interface Props {
 const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
     const navigate = useNavigate();
+    const [orderData, setOrderData] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
@@ -20,11 +22,20 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         return obj?.address === BSvalue?.toToken;
     });
     console.log(BSvalue)
-    // const navigateBak = () => {
-    //     navigate("/indexx-exchange/buy-sell?type=convert");
-    //     // setScreenName("");
-
+    
+    useEffect(() => {
+        getOrder();
+    })
     // }
+
+    const getOrder = async () => {
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
+        console.log(order);
+        setOrderData(order);
+    }
+
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
@@ -49,7 +60,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_curreny_left padding-b-2x pe-0" style={{ transform: "scale(1)", paddingBottom: "20px", paddingTop: 0 }}>
 
-                    <span placeholder="0" className="font_20x " > <span className='dummy'>0.9</span>  </span>
+                    <span placeholder="0" className="font_20x " > <span className='dummy'>{orderData?.breakdown?.outAmount}</span>  </span>
                     <span className="font_20x" style={{
                         color: "rgba(96, 96, 96,.5)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>

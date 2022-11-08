@@ -7,7 +7,7 @@ import { Segmented } from 'antd';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 import moment from "moment";
-//import numeral from "numeral";
+//0import numeral from "numeral";
 import styles from "./LineGraph.module.css";
 
 //const numberFormatter = (item : any) => numeral(item).format("0,00");

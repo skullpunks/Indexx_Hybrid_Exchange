@@ -573,3 +573,18 @@ export const transactionList = async (email: string) => {
     return err.response.data;
   }
 }
+
+export const getOrderDetails = async(
+  email: string,
+  orderId: string
+) => {
+  try{
+    const result = await API.get(`/api/v1/inex/user/getUserOrder/${email}/${orderId}`);
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (getOrderDetails)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}

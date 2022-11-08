@@ -179,7 +179,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className='padding-lr-2x font_15x padding-b-2x padding-t-2x'>
                     <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
-                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>{rateData} {filteredFromArray[0].title}/ USD </span></div>
+                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>{rateData} USD / {filteredFromArray[0].title}   </span></div>
                     <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>{Math.floor(totalAmountToPay * 100) / 100} USD</span></div>
                     <div className='d-flex flex-justify-between'><span> Transaction/Admin Fee:</span><span className='font_w_800'>{adminFee} %</span></div>
 

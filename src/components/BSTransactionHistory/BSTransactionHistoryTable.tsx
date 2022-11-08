@@ -161,7 +161,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                     <label>Asset</label> <br />
                     <Select defaultValue="all" onChange={handleChange}>
                         <Option value="all">All</Option>
-                        <Option value="IN500">IN500 <span>Index 500</span></Option>
+                        <Option value="IN500">IN500 <span>Indexx 500</span></Option>
                         <Option value="BTC">BTC <span>Bitcoin</span></Option>
                     </Select>
                 </div>

@@ -58,10 +58,10 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         const res2 = await getCoinPriceByName(String(filteredToArray[0].title));
         priceData2 = res2.data;
         console.log(priceData2);
+        console.log(rateData1);
         let finalRate = priceData1.results.data / priceData2.results.data;
         console.log(finalRate);
         setRateData3(finalRate);
-        console.log(rateData1);
         console.log(BSvalue?.amount)
         console.log(finalRate * Number(BSvalue?.amount));
         //setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
@@ -89,15 +89,15 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [adminFee, setAdminFees] = useState("");
 
     useEffect(() => {
-        // getAllSetting();
-        // getPricesData();
+         getAllSetting();
+         getPricesData();
         let element =document.getElementById("input_get_value")!;
             let testVal = element.innerText;
             let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
             let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             element.style.fontSize = charFontSize + "ch";
-    }, [])
+    })
 
     const createProcessOrder = async () => {
         let basecoin: string = filteredFromArray[0].title;
@@ -156,8 +156,8 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         }
     }
 
-    getAllSetting();
-    getPricesData();
+    // getAllSetting();
+    // getPricesData();
 
     return (
         <div className="bs_container card">
@@ -208,7 +208,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="footer bs_footer_action">
                     <p className='text-center pb-2'>Transaction/Admin Fee: {adminFee || "0.00"} %</p>
                     {Number(totalAmountToPayInUSD) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX({totalAmountToPayInUSD} USD)</h6>
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX({Math.floor(totalAmountToPayInUSD * 100 ) /  100} USD)</h6>
                     }
                     {/* setScreenName("BSConvertInProgress")  rocessSellOrder()*/}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button> */}
