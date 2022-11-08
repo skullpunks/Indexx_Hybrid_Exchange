@@ -1,12 +1,11 @@
 import { Segmented } from 'antd';
-import {
-  //   Brush,
-  Line, LineChart, Tooltip,
-  // CartesianGrid,
-  XAxis,
-  YAxis
-} from "recharts";
-// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import {
+//   Line, LineChart, Tooltip,
+//   XAxis,
+//   YAxis
+// } from "recharts";
+
+import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
 import styles from "./LineGraph.module.css";
 
@@ -27,10 +26,8 @@ const LineGraph = (props: any) => {
   media();
   return (
     <div className='card chart_buy' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
-      {/* <h3>{props.currencyName}/USD</h3> */}
+
       <div className="chart_header d-flex flex-align-center">
-        {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
-        {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
         <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" className='me-1' />
         <img src={require(`../../assets/token-icons/${props.currencySymbol}.png`).default} alt="bitcoin" width="30" />
 
@@ -85,7 +82,36 @@ const LineGraph = (props: any) => {
           </Segmented>
         </div>
       </div>
-      <LineChart
+      <AreaChart
+        margin={{ left: 17, right: 6, top: 10 }}
+        className={styles.graphBackground}
+        width={width}
+        height={height}
+        data={props.data}
+      >
+
+        <Area
+          dot={false}
+          type="monotone"
+          dataKey="price"
+          strokeWidth={1.5}
+          isAnimationActive={false}
+          stroke="rgba(246, 96, 54 , 1)"
+          fill="rgba(246, 96, 54 , 0.16)"
+        />
+        <XAxis
+          padding={{ right: 40 }}
+          dataKey={"time"}
+          stroke="#5f5f5f"
+          tick={{ fill: "#5f5f5f" }}
+        />
+        <YAxis
+          stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
+        <Tooltip />
+
+      </AreaChart>
+
+      {/* <LineChart
         margin={{ left: 17, right: 6, top: 10 }}
         className={styles.graphBackground}
         width={width}
@@ -99,6 +125,7 @@ const LineGraph = (props: any) => {
           dataKey="price"
           stroke="#f66036"
           strokeWidth={1.5}
+          isAnimationActive={false}
         />
         <XAxis
           padding={{ right: 40 }}
@@ -110,26 +137,8 @@ const LineGraph = (props: any) => {
           stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
         <Tooltip />
 
-      </LineChart>
+      </LineChart> */}
 
-      {/* <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          width={500}
-          height={400}
-          data={props.data}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-        </AreaChart>
-      </ResponsiveContainer> */}
 
 
     </div>
