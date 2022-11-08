@@ -1,4 +1,3 @@
-
 import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import firstcoin from "../../assets/how-it-works/indexxlogo.png";
@@ -31,7 +30,7 @@ const HowItWorks = () => {
             marginTop: 50,
           }}
         >
-          How it Works?
+          How it Works
         </Text>
 
         <div className="row">
@@ -84,9 +83,9 @@ const HowItWorks = () => {
           </div>
           <div className="col-lg-4 text-center">
             <Link to={"/indexx-exchange/how-it-works/tokens"}>
-            <img src={tokens} alt="indexxcoin" style={{ marginTop: 50 }} />
+              <img src={tokens} alt="indexxcoin" style={{ marginTop: 50 }} />
             </Link>
-           
+
             <br />
             <span className="employee_name">
               <strong>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import buysell from "../../assets/how-it-works/buysellss.png";
 import sell from "../../assets/how-it-works/sell.png";
 import convert from "../../assets/how-it-works/convert.png";
+import firstcoin from "../../assets/how-it-works/indexxlogo.png";
 import Footer from "../Footer/Footer";
 
 const { Text } = Typography;
@@ -19,6 +20,12 @@ const HowCentralized = () => {
   return (
     <>
       <div className="scan-container how-it-works flex-direction-column">
+      <Image
+          preview={false}
+          src={firstcoin}
+          className="rounded mx-auto d-block"
+          style={{ width: "100px", paddingTop: 40, display: "flex" }}
+        ></Image>
         <Text
           className="card__title"
           style={{
@@ -26,7 +33,7 @@ const HowCentralized = () => {
             color: "#5F5F5F",
             fontSize: "70px",
             lineHeight: "1em",
-            marginTop: 50,
+            
           }}
         >
           Centralized{" "}
@@ -39,14 +46,14 @@ const HowCentralized = () => {
               <Text
                 style={{
                   color: "#5F5F5F",
-                  fontSize: "30px",
+                  fontSize: "40px",
                   lineHeight: "1em",
                   marginTop: 50,
                   paddingLeft: 60,
                 }}
               >
                 {" "}
-                Buy and Sell
+                <strong>Buy and Sell</strong>
               </Text>
               <br />
               <p

@@ -27,20 +27,15 @@ const HowTradeToEarn = () => {
         <p
           className="text-center"
           style={{
-            fontSize: 30,
+            fontSize: 70,
             fontWeight: 500,
             marginTop: -10,
             lineHeight: "normal",
           }}
         >
-          indexx
-          <br />
           Trade To Earn
-          <br />
-          <br />
-          <br />
-          <br />
-          Trade To Earn
+          <br /><br />
+          
         </p>
         <div className="row">
           <div className="col-sm-3"></div>

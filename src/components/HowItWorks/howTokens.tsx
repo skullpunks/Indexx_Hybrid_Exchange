@@ -1,4 +1,4 @@
-import {  Image, Button } from "antd";
+import { Image, Button } from "antd";
 import tokens from "../../assets/how-it-works/tokens.png";
 import inex from "../../assets/how-it-works/inex.png";
 import dt from "../../assets/how-it-works/discounttable.png";
@@ -7,11 +7,7 @@ import incr from "../../assets/how-it-works/incr.png";
 import inu from "../../assets/how-it-works/inu.png";
 import Footer from "../Footer/Footer";
 
-
 const HowTokens = () => {
-  
-
-
   return (
     <>
       <div className="scan-container how-it-works flex-direction-column">
@@ -25,17 +21,16 @@ const HowTokens = () => {
         <p
           className="text-center"
           style={{
-            fontSize: 30,
+            fontSize: 70,
             fontWeight: 500,
             paddingTop: 10,
             lineHeight: "normal",
           }}
         >
-          indexx
-          <br />
           Tokens
         </p>
-
+        <br />
+        <br />
         <Image
           preview={false}
           src={inex}
