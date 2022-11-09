@@ -72,9 +72,9 @@
     font-size: 0;
     /* background-image: url("../../assets/arts/indexGreyLogoIcon.svg"); */
 
-    background-image: url("../../assets/indexLogoGrey.svg");
+    background-image: url("../../assets/arts/indexBlueLogoIcon.png");
     background-repeat: no-repeat;
     background-size: contain;
-    height: 26px;
+    height: 35px;
     width: auto;
 }
