@@ -64,7 +64,7 @@ const BSWalletTop = () => {
                 <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}
                     {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
-                    <Button type="primary" className='margin-r-1x buy_crypto_btn' style={{ backgroundColor: "#F66036" }} danger onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+                    <Button type="primary" className='margin-r-1x buy_crypto_btn' danger onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
                     {/* <Link to="/indexx-exchange/buy-sell/withdraw-crypto"></Link> */}
                     <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn margin-r-1x' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}> Deposit </Button>
                     <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn withdraw_btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}> Withdraw </Button>

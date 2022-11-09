@@ -52,9 +52,9 @@ const BasicInfo = () => {
                                 </div>
                             </div>
 
-                            <div className="d-flex align-items-center align-items-stretch border margin-t-2x padding-1x col-lg-8 margin-lr-auto">
+                            <div className="d-flex align-items-center align-items-stretch border margin-t-2x mb-4 padding-1x col-lg-8 margin-lr-auto">
 
-                                <div className="font_12x ">Please verify your identity first in order to start
+                                <div className="font_12x">Please verify your identity first in order to start
                                     advanced verification</div>
 
                             </div>
