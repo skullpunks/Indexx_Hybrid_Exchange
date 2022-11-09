@@ -1,5 +1,5 @@
 import { Button, notification } from 'antd';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png"; 
@@ -11,6 +11,7 @@ import { getAppSettings, getCoinPriceByName, createConvertOrder, confirmConvertO
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import { CheckCircleFilled } from '@ant-design/icons';
+import loaderGif from "../../assets/arts/loaderIcon.gif";
 
 
 // const filteredArray = (items: any, keyName: any, key: any) => {
@@ -30,6 +31,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const [rateData1, setRateData1] = useState();
     const [rateData3, setRateData3] = useState(0);
+    const [showLoader, isShowLoader] = useState(false);
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const [totalAmountToPayInUSD, setTotalAmountToPayInUSD] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
@@ -89,17 +91,18 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [adminFee, setAdminFees] = useState("");
 
     useEffect(() => {
-         getAllSetting();
-         getPricesData();
-        let element =document.getElementById("input_get_value")!;
-            let testVal = element.innerText;
-            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
-            element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
-            element.style.fontSize = charFontSize + "ch";
+        getAllSetting();
+        getPricesData();
+        let element = document.getElementById("input_get_value")!;
+        let testVal = element.innerText;
+        let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+        let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+        element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+        element.style.fontSize = charFontSize + "ch";
     })
 
     const createProcessOrder = async () => {
+        isShowLoader(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = filteredToArray[0].title;
         const res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount));
@@ -108,8 +111,10 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
                 await processConvertOrder(res.data);
+
             }
         } else {
+            isShowLoader(false);
             openNotificationWithIcon2('error');
         }
     }
@@ -149,9 +154,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         const res = await confirmConvertOrder(order.user.email, order.orderId);
         console.log(res);
         if (res.status === 200) {
+            isShowLoader(false);
             openNotificationWithIcon('success');
             navigate("/indexx-exchange/buy-sell/convert-in-progress");
         } else {
+            isShowLoader(false);
             openNotificationWithIcon2('error');
         }
     }
@@ -161,7 +168,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
     return (
         <div className="bs_container card">
-
+            {showLoader &&
+                <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div>
+            }
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
                     <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={navigateBak}>&#60;</span>
@@ -173,11 +182,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative ">
                     {/* <div className="bs_curreny_left" style={{ alignItems: "baseline", padding: "50px 20px" }}> */}
-                        {/* <span placeholder="0" className="pe-2 color_general font_60x" >{BSvalue?.amount}</span> */}
-                        {/* <span className="font_20x" style={{ lineHeight: "60px" }} >{filteredFromArray[0].title}</span> */}
+                    {/* <span placeholder="0" className="pe-2 color_general font_60x" >{BSvalue?.amount}</span> */}
+                    {/* <span className="font_20x" style={{ lineHeight: "60px" }} >{filteredFromArray[0].title}</span> */}
 
                     <div className="bs_curreny_left padding-b-2x" style={{ alignItems: "baseline", padding: "50px 20px" }}>
-                        <span placeholder="0" className="pe-2 color_general font_60x" id="input_get_value" style={{ width: "1.2ch"}} >{BSvalue?.amount}</span>
+                        <span placeholder="0" className="pe-2 color_general font_60x" id="input_get_value" style={{ width: "1.2ch" }} >{BSvalue?.amount}</span>
                         <span className="font_20x" style={{ lineHeight: "1.1ch" }} >{filteredFromArray[0].title}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon'>
@@ -186,11 +195,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Rate</span>
-                    <span>{Math.floor(rateData3 * 100) / 100} {filteredToArray[0].title} / {filteredFromArray[0].title}</span>
+                    <span>{Math.floor(rateData3 * 10000) / 10000} {filteredToArray[0].title} / {filteredFromArray[0].title}</span>
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>{Math.floor(totalAmountToPay * 100) / 100} {filteredToArray[0].title}</span>
+                    <span>{Math.floor(totalAmountToPay * 100000) / 100000} {filteredToArray[0].title}</span>
                 </div>
                 {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
                         <div className="bs_token_left d-flex justify-between">
@@ -208,9 +217,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="footer bs_footer_action">
                     <p className='text-center pb-2'>Transaction/Admin Fee: {adminFee || "0.00"} %</p>
                     {Number(totalAmountToPayInUSD) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX({Math.floor(totalAmountToPayInUSD * 100 ) /  100} USD)</h6>
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
-                    {/* setScreenName("BSConvertInProgress")  rocessSellOrder()*/}
+                    {/* setScreenName("BSConvertInProgress")  rocessSellOrder() ({Math.floor(totalAmountToPayInUSD * 100 ) /  100} USD)*/}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createProcessOrder()}> Confirm Conversion</Button>
 

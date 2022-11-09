@@ -22,19 +22,26 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         return obj?.address === BSvalue?.toToken;
     });
     console.log(BSvalue)
-    
+
     useEffect(() => {
-        getOrder();
+        //getOrder();
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        getOrderDetails(decoded.email, String(BSvalue?.orderId)).then((order) => {
+            console.log(order.data);
+            setOrderData(order.data);
+        });
+
     })
     // }
 
-    const getOrder = async () => {
-        let access_token = String(localStorage.getItem("access_token"));
-        let decoded: any = decodeJWT(access_token);
-        const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
-        console.log(order);
-        setOrderData(order);
-    }
+    // const getOrder = async () => {
+    //     let access_token = String(localStorage.getItem("access_token"));
+    //     let decoded: any = decodeJWT(access_token);
+    //     const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
+    //     console.log(order);
+    //     setOrderData(order);
+    // }
 
     return (
         <div className='bs_container card'>

@@ -37,13 +37,13 @@ const BSWalletTable = () => {
                 return record.coinSymbol + " " + record.coinName;
             },
         },
-        {
-            title: 'Allocations',
-            dataIndex: 'coinBalance',
-            render: (_, record) => {
-                return Math.floor(record.coinBalance * 10000000) / 100000000;
-            },
-        },
+        // {
+        //     title: 'Allocations',
+        //     dataIndex: 'coinBalance',
+        //     render: (_, record) => {
+        //         return Math.floor(record.coinBalance * 10000000) / 100000000;
+        //     },
+        // },
         {
             title: 'Balance',
             dataIndex: 'coinBalance',
@@ -54,7 +54,7 @@ const BSWalletTable = () => {
         },
         {
             title: 'Available Balance',
-            dataIndex: 'coinBalanceInBTC',
+            dataIndex: 'coinBalance',
             sorter: {
                 compare: (a, b) => parseFloat(a.coinBalanceInBTC) - parseFloat(b.coinBalanceInBTC),
                 multiple: 2,
@@ -92,16 +92,17 @@ const BSWalletTable = () => {
 
     const [walletData, setWalletData] = useState() as any;
     // let data: any[] = [{ "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x9a327efba5e175fb240f1b8b9326bdf10d9297b1", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Binance", "coinSymbol": "BNB", "coinDecimals": 18, "coinBalance": 0.10753, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-19T12:39:57.526Z", "coinLastUsedOn": "2022-10-19T12:39:57.526Z", "isCoinActive": true, "_id": "634ff01d03980b5c11c96f74" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x986081cb3253264f57535056b55673d4674038bf", "coinPrivateKey": "", "coinNetwork": "Ethereum", "coinName": "Ethereum", "coinSymbol": "ETH", "coinDecimals": 18, "coinBalance": 0.095925216001389, "coinBalanceInUSD": 123, "coinBalanceInBTC": 0.0065, "coinCreatedOn": "2022-10-19T17:12:33.087Z", "coinLastUsedOn": "2022-10-19T17:12:33.087Z", "isCoinActive": true, "_id": "63503001204238ba708ec2b2" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x43e4d660fa09b82d5c906d87f775eb6cd215ccff", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Indexx500", "coinSymbol": "IN500", "coinDecimals": 18, "coinBalance": 10, "coinBalanceInUSD": 37, "coinBalanceInBTC": 0.0019, "coinCreatedOn": "2022-10-20T01:27:32.295Z", "coinLastUsedOn": "2022-10-20T01:27:32.295Z", "isCoinActive": true, "_id": "6350a40436c8ac9aa13874ad" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "msT58masPu6racd9XFUHCSibfdwDPjZdgc", "coinPrivateKey": "", "coinNetwork": "Bitcoin", "coinName": "Bitcoin", "coinSymbol": "BTC", "coinDecimals": 8, "coinBalance": 0.0015, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-20T09:49:16.127Z", "coinLastUsedOn": "2022-10-20T09:49:16.127Z", "isCoinActive": true, "_id": "6351199c93823abe5ccbca1d" }];
-    let access_token = String(localStorage.getItem("access_token"));
-    let decoded: any = decodeJWT(access_token);
+
 
     useEffect(() => {
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
         getUserWallets(decoded.email).then((userWallets) => {
-            console.log("userWallets", userWallets);
+            //console.log("userWallets", userWallets);
             setWalletData(userWallets.data);
         });
         //getAllUserWallet();
-    }, [decoded]);
+    });
 
     // const getAllUserWallet = async () => {
     //     let userWallets = await getUserWallets(decoded.email);
