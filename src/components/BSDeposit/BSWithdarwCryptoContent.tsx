@@ -49,11 +49,10 @@ export const BSWithdarwCryptoContent = () => {
           <div className=' d-flex flex-justify-between flex-align-center'>
             <Select className='width-100' onChange={handleChange} value="0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A">
               {
-                initialTokens.map((token, index) => {
-
+                initialTokens
+                .filter(token => (token.title !== "BTC" && token.title !== "LTC"))
+                .map((token, index) => {
                   return <Option key={index} value={token.address} type="link" className='common__token d-flex bs_token_container' data-address={token.address} >
-
-
                     <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="35" height="35" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                   </Option>
                 })

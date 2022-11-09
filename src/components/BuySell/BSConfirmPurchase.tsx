@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -13,6 +13,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Stripe/CheckoutForm";
 import "../Stripe/CheckoutForm.css"
 import { useNavigate } from 'react-router-dom';
+import { CheckCircleFilled } from '@ant-design/icons';
+
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -69,6 +71,22 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         setIsTransferModalVisible(false);
     };
 
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon2 = (type: NotificationType, message:string) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+        });
+    };
+
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
 
     const createNewBuyOrder = async () => {
@@ -76,8 +94,11 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
         const res = await createBuyOrder(basecoin, quotecoin, amount);
-        console.log(res.data);
-        getStripePaymentIntent(res.data.orderId, res.data.user.email);
+        if(res.status === 200) {
+            getStripePaymentIntent(res.data.orderId, res.data.user.email);
+        } else {
+            openNotificationWithIcon2('error', res.data);
+        }
     }
 
     const getStripePaymentIntent = async (orderId: string, email: string) => {
