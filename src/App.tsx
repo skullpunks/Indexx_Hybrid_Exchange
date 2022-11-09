@@ -34,7 +34,8 @@ import About from './components/About/About';
 import Account from './components/AccountSettings/Account';
 import BSDashhboard from './components/BuySell/BSDashboard';
 import SecurityChange from './components/AccountSettings/SecurityChange';
-import Blockpass from './components/Blockpass/Blockpass';
+// import Blockpass from './components/Blockpass/Blockpass';
+import BlockpassLink from './components/Blockpass/BlockpassLink';
 // import { useEffect, useState } from 'react';
 // import { decodeJWT, getUserDetails } from '../src/services/api';
 
@@ -84,7 +85,7 @@ function App() {
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
                             : <Route path="/external-link" element={<External />} />
                     } */}
-                    <Route path="/indexx-exchange/kyc" element={<Blockpass />} />
+                    <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
                     <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
