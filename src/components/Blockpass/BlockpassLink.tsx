@@ -1,6 +1,7 @@
 
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 
 const BlockpassLink = () => {
@@ -12,7 +13,7 @@ const BlockpassLink = () => {
     //https://verify-with.blockpass.org/?clientId=indexx_2c1c1&serviceName=Indexx.ai&env=prod
 
     return (
-        <div>
+        <div className='row scan-container'>
             <br></br>
             <br></br>
             <br></br>
@@ -22,9 +23,12 @@ const BlockpassLink = () => {
             <br></br>
             <br></br>
             <br></br>
-            <Button type="primary" className='margin-r-1x buy_crypto_btn' style={{backgroundColor:"#F66036"}}danger onClick={() => openBlockpassLink()}>
-                Verify KYC
-            </Button>
+            <div className='col-2'>
+
+                <Button className='margin-r-1x btn btn-danger' onClick={() => openBlockpassLink()}>
+                    Verify KYC
+                </Button>
+            </div>
         </div>
     )
 

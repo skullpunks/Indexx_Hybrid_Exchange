@@ -55,7 +55,7 @@ const HeaderNew = () => {
     const showUrl: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.url);
     console.log(isInsideApp);
 
-    if (window.location.pathname.includes("get-started") || window.location.pathname.includes("login")) {
+    if (window.location.pathname.includes("get-started") || window.location.pathname.includes("login") || window.location.pathname.includes('/indexx-exchange/kyc')) {
         return <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
                 <div className='d-flex logo__holder'>
