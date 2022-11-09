@@ -70,9 +70,11 @@
 
 .buy_purchase_modal .ant-modal-title {
     font-size: 0;
-    background-image: url("../../assets/arts/indexGreyLogoIcon.svg");
+    /* background-image: url("../../assets/arts/indexGreyLogoIcon.svg"); */
+
+    background-image: url("../../assets/indexLogoGrey.svg");
     background-repeat: no-repeat;
     background-size: contain;
-    height: 35px;
+    height: 26px;
     width: auto;
 }

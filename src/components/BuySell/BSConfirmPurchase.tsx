@@ -73,7 +73,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-    const openNotificationWithIcon2 = (type: NotificationType, message:string) => {
+    const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
         notification[type]({
             message: message,
             description: '',
@@ -94,7 +94,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
         const res = await createBuyOrder(basecoin, quotecoin, amount);
-        if(res.status === 200) {
+        if (res.status === 200) {
             getStripePaymentIntent(res.data.orderId, res.data.user.email);
         } else {
             openNotificationWithIcon2('error', res.data);
@@ -110,12 +110,12 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     useEffect(() => {
         getAllSetting();
         // if(document.getElementById("input_get_value") && document.getElementById("input_get_value")?.innerHTML){
-            let element =document.getElementById("input_get_value")!;
-            let testVal = element.innerText;
-            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
-            element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
-            element.style.fontSize = charFontSize + "ch";
+        let element = document.getElementById("input_get_value")!;
+        let testVal = element.innerText;
+        let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+        let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+        element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+        element.style.fontSize = charFontSize + "ch";
         // }
     }, [BSvalue])
 
@@ -144,7 +144,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='cursor-pointer'  onClick={() => navigate("/indexx-exchange/buy-sell/")}>&#60;</span>
+                    <span className='cursor-pointer' onClick={() => navigate("/indexx-exchange/buy-sell/")}>&#60;</span> &nbsp;
                     Confirm Purchase
                 </h1>
                 {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}
