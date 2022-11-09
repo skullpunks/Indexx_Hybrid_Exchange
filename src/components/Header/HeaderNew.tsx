@@ -55,7 +55,7 @@ const HeaderNew = () => {
     const showUrl: any = Links.filter((link) => window.location.pathname.includes(link.value)).map(obj => obj.url);
     console.log(isInsideApp);
 
-    if (window.location.pathname.includes("get-started") || window.location.pathname.includes("login")) {
+    if (window.location.pathname.includes("get-started") || window.location.pathname.includes("login") || window.location.pathname.includes('/indexx-exchange/kyc')) {
         return <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
             <Container>
                 <div className='d-flex logo__holder'>
@@ -82,6 +82,7 @@ const HeaderNew = () => {
                             <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Decentralized" className="dropdown-item" href="/" >Decentralized</NavDropdown.Item>
                             <NavDropdown.Item href="https://tokens.indexx.ai/" className='dropdown-item' target="_blank" rel="noreferrer">indexx Tokens</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
                         <NavDropdown title="Earn" id="collasible-nav-dropdown" className='dark-menu'>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/trade-to-earn" className="dropdown-item" href="/">Trade to earn</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Indexx Bank" className="dropdown-item" href="/">Indexx Bank</NavDropdown.Item>

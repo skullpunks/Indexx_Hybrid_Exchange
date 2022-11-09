@@ -101,7 +101,7 @@ const LineGraph = (props: any) => {
           strokeWidth={1.5}
           isAnimationActive={false}
           stroke="rgba(246, 96, 54 , 1)"
-          fill="rgba(246, 96, 54 , 0.16)"
+          fill="rgba(246, 96, 54 , 0.09)"
         />
         <XAxis
           padding={{ right: 40 }}
