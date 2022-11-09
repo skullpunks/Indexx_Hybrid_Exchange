@@ -45,6 +45,7 @@ import BlockpassLink from './components/Blockpass/BlockpassLink';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
 // import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
     /*
@@ -76,8 +77,10 @@ function App() {
         <div>
             <BrowserRouter>
                 {/* <Header /> */}
+                <ScrollToTop />
                 <HeaderNew />
                 <Routes>
+
                     <Route path="/*" element={<Home />} />
                     <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
                     {/* {
