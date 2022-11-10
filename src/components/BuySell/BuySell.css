@@ -372,8 +372,9 @@ input[type="checkbox"] {
 }
 
 .ant-select-single .ant-select-selector .ant-select-selection-item {
-    font-size: 30px;
-    color: rgba(18, 18, 18, 0.2);
+    font-size: 19px;
+    /* color: rgba(18, 18, 18, 0.2); */
+    color: #5f5f5f;
 }
 
 
