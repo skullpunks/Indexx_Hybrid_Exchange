@@ -179,9 +179,6 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens
-                            .filter(function (token) {
-                                return token.title !== "INEX";
-                            })
                             .map((token, index) => {
 
                                 return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >

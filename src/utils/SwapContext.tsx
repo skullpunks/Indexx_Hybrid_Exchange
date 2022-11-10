@@ -68,9 +68,9 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
 export const BSProvider = ({ children }: UserContextProviderProps) => {
 
   const [BSvalue, setBSvalue] = useState<BuySellData>({
-    fromToken: "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
-    fromTitle: "IN500",
-    fromGraph: "Indexx500Graph",
+    fromToken: "0x9Be6B3a0Aa74f0b012c47E05Be253F9608F8c6E7",
+    fromTitle: "INEX",
+    fromGraph: "IndexxExchange",
     toToken: "0x7325E062EA31E7b977fbEBBcC45De30c3e894988",
     toTitle: "INXC",
     toGraph: "IndexxCrypto",

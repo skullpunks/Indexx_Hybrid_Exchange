@@ -39,15 +39,15 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // setScreenName("");
     }
 
-   
+
     useEffect(() => {
-        let element =document.getElementById("input_get_value")!;
-            let testVal = element.innerText;
-            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
-            element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
-            element.style.fontSize = charFontSize + "ch";
-      
+        let element = document.getElementById("input_get_value")!;
+        let testVal = element.innerText;
+        let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+        let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+        element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+        element.style.fontSize = charFontSize + "ch";
+
     }, [BSvalue])
 
     const getPricesData = async () => {
@@ -114,16 +114,36 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         });
     };
 
+    const openNotificationWithIcon3 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to Process Sell Order. INEX token not allowed to sell',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
     const processSellOrder = async (order: any) => {
+
         let basecoin: string = filteredFromArray[0].title;
         console.log(order);
-        const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
-        if (res.status === 200) {
-            openNotificationWithIcon('success');
-            // setScreenName("BSSellInprogress");
-            navigate("/indexx-exchange/buy-sell/sell-in-progress");
+        if (basecoin === 'INEX') {
+            openNotificationWithIcon3('error')
         } else {
-            openNotificationWithIcon2('error');
+            const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
+            if (res.status === 200) {
+                openNotificationWithIcon('success');
+                // setScreenName("BSSellInprogress");
+                navigate("/indexx-exchange/buy-sell/sell-in-progress");
+            } else {
+                openNotificationWithIcon2('error');
+            }
         }
     }
 
