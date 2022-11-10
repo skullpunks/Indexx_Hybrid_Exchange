@@ -4,6 +4,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const SecurityChange = () => {
+
+    // const onFinish = (values: any) => {
+    //     console.log('Success:', values);
+    // }
+
   return (
     <div className="" style={{    marginTop: 142}}>
         <h1 className="text-center padding-b-2x">Change Password</h1>
@@ -47,6 +52,7 @@ const SecurityChange = () => {
                             </div>
                         </Form.Item>
                     </div>
+            {/* <Button type="primary" className="margin-t-auto font_!8x"><Link to="/indexx-exchange/account"> Confirm Changes</Link></Button> */}
             <Button type="primary" className="margin-t-auto font_!8x"><Link to="/indexx-exchange/account"> Confirm Changes</Link></Button>
         </div>
 </div>
