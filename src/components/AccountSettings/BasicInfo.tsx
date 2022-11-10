@@ -63,14 +63,19 @@ const BasicInfo = () => {
                                     {/* <div className="font_12x text_link">Region currently not supported </div> */}
                                 </div>
                             </div>
-
-                            <div className="d-flex align-items-center border margin-t-2x padding-1x">
-                                <div><img src={AdvanceVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
+                            <br></br>
+                            <div className={(!userData?.isKYCPass) ? "d-flex align-items-center border margin-t-2x padding-1x" : "d-flex align-items-center border-1x-orange padding-1x"}>
+                                {(!userData?.isKYCPass)
+                                    ? <div><img src={AdvanceVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
+                                    : <div><img src={BasicVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
+                                }
                                 <div>
                                     <h2 className="font_18x margin-b-0">Advanced Verification
                                     </h2>
-                                    <div className="font_12x opacity-50">Unlock further features and raise your deposit and
-                                        withdrawal limits </div>
+                                    {(!userData?.isKYCPass) &&
+                                        <div className="font_12x opacity-50">Unlock further features and raise your deposit and
+                                            withdrawal limits </div>
+                                    }
                                 </div>
                             </div>
                             {(!userData?.isKYCPass) &&
@@ -99,6 +104,8 @@ const BasicInfo = () => {
                             {/* <div className="padding-tb-1x otc_trading">OTC Trading</div>
                             <div className="wire_transfer">Wire Transfer</div>
                             <div className="padding-tb-1x ">Region currently not supported</div> */}
+                            <br>
+                            </br>
                             {(!userData?.isKYCPass) &&
                                 <Button type="primary" className="margin-l-2x"
                                     onClick={() => openBlockpassLink()}>

@@ -11,7 +11,7 @@ import moment from "moment";
 import styles from "./LineGraph.module.css";
 
 //const numberFormatter = (item : any) => numeral(item).format("0,00");
-const dateFormatter = (item :any ) => moment(item).format("MMM DD");
+const dateFormatter = (item: any) => moment(item).format("MMM DD");
 
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
@@ -104,15 +104,21 @@ const LineGraph = (props: any) => {
           fill="rgba(246, 96, 54 , 0.09)"
         />
         <XAxis
-          padding={{ right: 40 }}
+          padding={{ right: 20 }}
           dataKey={"time"}
           stroke="#5f5f5f"
           tick={{ fill: "#5f5f5f" }}
           tickFormatter={dateFormatter}
+
+          style={{ fontSize: 13 }}
+          minTickGap={16}
         />
         <YAxis
-          stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
-        <Tooltip labelFormatter={dateFormatter} />
+          stroke="#5f5f5f" padding={{ top: 20 }} tick={{ fill: "#5f5f5f" }} />
+        <Tooltip labelFormatter={dateFormatter}
+          formatter={function (value: any, name) {
+            return `${(Math.round(value * 100) / 100).toFixed(3)}`;
+          }} />
 
       </AreaChart>
       {/* <LineChart
