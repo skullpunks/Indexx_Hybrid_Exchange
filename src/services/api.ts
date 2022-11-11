@@ -592,6 +592,59 @@ export const transactionList = async (email: string) => {
   }
 };
 
+export const createFiatWithdraw =async (email: string, amount:number, accountDetails: any,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createFiatWithdraw", {
+      email: email,
+      amount: amount,
+      accountDetails: accountDetails,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createFiatWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createCryptoWithdraw =async (email: string, amount:number, address: string,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createCryptoWithdraw", {
+      email: email,
+      amount: amount,
+      address: address,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createCryptoWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createFiatDeposit =async (email: string, amount:number, txHash: any,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createFiatDeposit", {
+      email: email,
+      amount: amount,
+      txHash: txHash,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createFiatWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+
+
 export const getOrderDetails = async (email: string, orderId: string) => {
   try {
     const result = await API.get(

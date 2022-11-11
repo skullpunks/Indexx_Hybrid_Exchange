@@ -178,7 +178,7 @@ const TradeToEarn = () => {
                   placeholder="Enter Amount to Withdraw"
                 />
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "15px" }}>Minimum limit:$1000</Text>
-                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>1 USD = 0.1 INEX</Text>
+                <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>1 INEX = 0.1 USD</Text>
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>Earning Percentage = 30%</Text>
                 <br /> <br></br>
                 <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{

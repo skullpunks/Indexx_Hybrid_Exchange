@@ -1,15 +1,32 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import { ArrowRightOutlined, CopyFilled, InfoCircleFilled } from '@ant-design/icons';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import { Button, Tooltip, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { DialogContext, DialogCtxState } from './BSDepositFiatLayout';
+import { decodeJWT, getUserDetails } from '../../services/api';
 
 
 export const BSDepositFiatInfo = () => {
   const navigate = useNavigate();
   const { depositeAmount } = React.useContext(DialogContext) as DialogCtxState;
+  const [email, setEmail] = useState('');
+  const [userData, setUserData] = useState() as any;
+  useEffect(() => {
+    let access_token = String(localStorage.getItem("access_token"));
+    let decoded: any = decodeJWT(access_token);
+    console.log(decoded.email);
+    setEmail(decoded.email)
+    getUserDetails(decoded.email).then((res) => {
+        if (res.status === 200) {
+            console.log(res.data);
+            setUserData(res.data);
+        }
+    });
+}, [email]);
+
   let message = `Please include your reference code in the comments. Transfers with missing/incorrect code will be rejected`;
   return (
 
@@ -37,7 +54,7 @@ export const BSDepositFiatInfo = () => {
         <div className=' padding-t-2x'>
           <div className='d-flex flex-justify-between font_15x brand_color padding-b-2x'>
             <span className=''>Reference Code</span>
-            <Link to="" className='text_link text_line font_w_800'>VBJQP4DB <Tooltip title="Click To Copy">
+            <Link to="" className='text_link text_line font_w_800'>{userData?._id}<Tooltip title="Click To Copy">
               <span><CopyFilled className="margin-l-0_5x brand_color" /></span>
             </Tooltip></Link>
           </div>

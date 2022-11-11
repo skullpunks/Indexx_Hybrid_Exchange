@@ -64,10 +64,15 @@ export const BSDepositFiatAmount = () => {
                     <Button className='disabled_button font_23x'>
                         <Link to="/indexx-exchange/buy-sell/deposit-fiat">Previous</Link>
                     </Button>
-
-                    <Button type="primary"  >
-                        <Link to="/indexx-exchange/buy-sell/deposit-fiat/deposit-fiat-info">Continue</Link>
-                    </Button>
+                    { (Number(amount) >= 20 && Number(amount) <= 50000) ? 
+                        <Button type="primary"  >
+                            <Link to="/indexx-exchange/buy-sell/deposit-fiat/deposit-fiat-info">Continue</Link>
+                        </Button> 
+                        : 
+                        <Button type="primary" className='disable_icon'>
+                            <Link to="/indexx-exchange/buy-sell/deposit-fiat/deposit-fiat-info">Continue</Link>
+                        </Button>
+                    }
                 </div>
             </div>
             <div className='margin-lr-auto row'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
