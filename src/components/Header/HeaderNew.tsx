@@ -27,9 +27,11 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 
 const Links = [
     { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
-    { label: "Centralized", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
+    { label: "Trade To Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
     { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
     { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
+    { label: "Blog", value: "blog", url: "/indexx-exchange/blog" },
+    { label: "About", value: "about", url: "/indexx-exchange/about" },
     { label: "", value: "/", url: "/" }
 ]
 
@@ -82,7 +84,7 @@ const HeaderNew = () => {
                             <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Decentralized" className="dropdown-item" href="/" >Decentralized</NavDropdown.Item>
                             <NavDropdown.Item href="https://tokens.indexx.ai/" className='dropdown-item' target="_blank" rel="noreferrer">indexx Tokens</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link> */}
                         <NavDropdown title="Earn" id="collasible-nav-dropdown" className='dark-menu'>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/trade-to-earn" className="dropdown-item" href="/">Trade to earn</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Indexx Bank" className="dropdown-item" href="/">Indexx Bank</NavDropdown.Item>
