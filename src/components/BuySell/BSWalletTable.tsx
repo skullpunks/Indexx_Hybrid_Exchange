@@ -95,34 +95,35 @@ const BSWalletTable = () => {
 
 
     useEffect(() => {
+        // let access_token = String(localStorage.getItem("access_token"));
+        // let decoded: any = decodeJWT(access_token);
+        // getUserWallets(decoded.email).then((userWallets) => {
+        //     //console.log("userWallets", userWallets);
+        //     setWalletData(userWallets.data);
+        // });
+        getAllUserWallet();
+    }, []);
+
+    const getAllUserWallet = async () => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
-        getUserWallets(decoded.email).then((userWallets) => {
-            //console.log("userWallets", userWallets);
-            setWalletData(userWallets.data);
-        });
-        //getAllUserWallet();
-    });
-
-    // const getAllUserWallet = async () => {
-    //     let userWallets = await getUserWallets(decoded.email);
-    //     console.log("userWallets", userWallets);
-    //     setWalletData(userWallets.data);
-    //     // let usersWallet = userWallets.data;
-    //     // let totalBalInUSD = 0;
-    //     // for (let i = 0; i < usersWallet.length; i++) {
-    //     //     if(usersWallet[i].coinType === "Crypto") {
-    //     //         console.log(usersWallet[i]?.coinSymbol)
-    //     //        let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-    //     //        let price = res.data.results.data;
-    //     //        totalBalInUSD += userWallets[i]?.coinBalance * price;
-    //     //     } else {
-    //     //         totalBalInUSD += parseFloat(userWallets[i]?.coinBalance);
-    //     //     }
-    //     //     setTotalBalanceInUSD(totalBalInUSD)
-    //     // }
-
-    // }
+        let userWallets = await getUserWallets(decoded.email);
+        console.log("userWallets", userWallets);
+        setWalletData(userWallets.data);
+        // let usersWallet = userWallets.data;
+        // let totalBalInUSD = 0;
+        // for (let i = 0; i < usersWallet.length; i++) {
+        //     if(usersWallet[i].coinType === "Crypto") {
+        //         console.log(usersWallet[i]?.coinSymbol)
+        //        let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
+        //        let price = res.data.results.data;
+        //        totalBalInUSD += userWallets[i]?.coinBalance * price;
+        //     } else {
+        //         totalBalInUSD += parseFloat(userWallets[i]?.coinBalance);
+        //     }
+        //     setTotalBalanceInUSD(totalBalInUSD)
+        // }
+    }
 
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;

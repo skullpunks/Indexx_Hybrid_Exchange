@@ -212,6 +212,22 @@ export const getUserWallets = async (email: string) => {
   }
 };
 
+export const checkAndUpdateDeposit = async (email: string, txHash: string, coin : string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/transaction/createTx`, {
+      email,
+      txHash,
+      coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (checkAndUpdateDeposit)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
 // export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
 //   try {
 //     const result = await API.post("/api/v1/inex/order/buy", {
@@ -292,7 +308,9 @@ export const getAllTransactions = async (email: string) => {
 
 export const getUserRewardDetails = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getUserRewardDetails/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getUserRewardDetails/${email}`
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserRewards)");
@@ -302,20 +320,23 @@ export const getUserRewardDetails = async (email: string) => {
   }
 };
 
-export const updateRewardsWallet = async(email: string, walletAddr: string) => {
-  try{
+export const updateRewardsWallet = async (
+  email: string,
+  walletAddr: string
+) => {
+  try {
     const result = await API.post(`/api/v1/inex/user/updateRewardsWallet`, {
       email: email,
-      rewardWalletAddress: walletAddr
+      rewardWalletAddress: walletAddr,
     });
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (updateRewardsWallet)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
- }
+};
 
 export const getUserDetails = async (email: string) => {
   try {
@@ -462,7 +483,6 @@ export const confirmConvertOrder = async (
     const result = await API.post("/api/v1/inex/order/processCovert", {
       email: emal,
       orderId: orderId,
-     
     });
     return result.data;
   } catch (e: any) {
@@ -514,8 +534,10 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === "LTC") {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === "INEX") {
+      oneUSDValue = 1 / coinValue;
     } else {
-      oneUSDValue = 0;
+      oneUSDValue = 0.1;
     }
     return oneUSDValue;
   } catch (err) {
@@ -543,48 +565,43 @@ export const getMinAndMaxOrderValues = async (
   }
 };
 
-
-export const withdrawINEX = async (
-  email: string,
-  amount: number,
-) => {
-  try{
+export const withdrawINEX = async (email: string, amount: number) => {
+  try {
     const result = await API.post("/api/v1/inex/user/withdrawRewards", {
       email: email,
       amount: amount,
     });
     return result.data;
-  } catch(e :any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (withdrawINEX)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const transactionList = async (email: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`);
     return result.data;
-  } catch(err: any) {
+  } catch (err: any) {
     console.log("FAILED: unable to perform API request (transactionList)");
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
   }
-}
+};
 
-export const getOrderDetails = async(
-  email: string,
-  orderId: string
-) => {
-  try{
-    const result = await API.get(`/api/v1/inex/user/getUserOrder/${email}/${orderId}`);
+export const getOrderDetails = async (email: string, orderId: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getUserOrder/${email}/${orderId}`
+    );
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (getOrderDetails)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
