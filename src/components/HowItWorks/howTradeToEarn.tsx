@@ -1,11 +1,10 @@
-import {  Image, Button } from "antd";
+import { Image, Button } from "antd";
 
 import { useNavigate } from "react-router-dom";
 import t2e from "../../assets/how-it-works/tradetoearncoin.png";
 import phase1 from "../../assets/how-it-works/phase1.png";
 import phase2 from "../../assets/how-it-works/phase2.png";
 import Footer from "../Footer/Footer";
-
 
 const HowTradeToEarn = () => {
   const navigate = useNavigate();
@@ -34,24 +33,31 @@ const HowTradeToEarn = () => {
           }}
         >
           Trade To Earn
-          <br /><br />
-          
+          <br />
+          <br />
         </p>
         <div className="row">
           <div className="col-sm-3"></div>
           <p
             className="col-sm-6 text-center"
-            style={{ textAlign: "center", fontSize: "20px" }}
+            style={{ textAlign: "center", fontSize: "25px" }}
           >
             <br />
-            Each day you trade (buy or sell INDEXX TOKENS) a percentage of USD
-            worth or more of from our token collection within the INDEXX
-            protocol will result in INDEXX tokens delivered to your wallet.‍ At
-            the end of each day, you’ll be rewarded INDEXX tokens based upon the
-            proportion of your trading volume to the total trading volume <br />{" "}
-            <br />
-            The daily amount of INEX tokens available for distribution will
-            depend on the total transaction volume on that day.
+            <strong>
+              Trade to earn reward system allows users to earn 30% off each
+              transaction.
+              <br />
+              Collect 100 points on the indexx Task Center to unlock trade to
+              earn rewards.
+              <br />
+              You will only be able to withdraw tokens once 100 points are
+              collected.
+              <br />
+              Trade to earn rewards will last till you have earned 1000$ worth
+              of Indexx Exchange Tokens.
+              <br />
+              Repeat this cycle to keep on earning 30%!
+            </strong>
           </p>
         </div>
         <p
@@ -131,21 +137,20 @@ const HowTradeToEarn = () => {
           able to withdraw and exchange them with other tokens.
         </p>
         <div className="text-center" style={{ width: 300, marginTop: 100 }}>
-        <Button
-          danger
-          type="primary"
-          shape="round"
-          size="large"
-          className="btn_xl btn-primary w-100 p-10 "
-          onClick={() => navigateUser("/indexx-exchange/trade-to-earn")}
-        >
-          Trade To Earn
-        </Button>
-        <br />
-        <br />
+          <Button
+            danger
+            type="primary"
+            shape="round"
+            size="large"
+            className="btn_xl btn-primary w-100 p-10 "
+            onClick={() => navigateUser("/indexx-exchange/trade-to-earn")}
+          >
+            Trade To Earn
+          </Button>
+          <br />
+          <br />
+        </div>
       </div>
-      </div>
-      
 
       <Footer></Footer>
     </>
