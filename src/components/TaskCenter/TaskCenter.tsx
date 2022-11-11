@@ -20,66 +20,218 @@ const TaskCenter = () => {
   };
   return (
     <>
-      <div className="scan-container trade-to-earn flex-direction-column ">
+      <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
         <div className="row" style={{ paddingLeft: 70, paddingTop: 60 }}>
-          <p style={{ fontWeight: 50, fontSize: 48 }}>Task Center</p> <br />
-          <p style={{ fontWeight: 50, paddingTop: 10, fontSize: 32 }}>
-            Limited Tasks
-          </p> <br/><br/><br/><br/><br/>
-          <p className="opacity-50" style={{ fontWeight: 50, paddingTop: 10, fontSize: 20 }}>
-          Once you receive the task, you can start completing it. Complete your task within the deadline to get your reward.
-          </p>
-          <Card className="w-75 shadow-sm p-3 mb-5 bg-white rounded " style={{marginTop:20}}>
+          <div className="text-center">
+            <p style={{ fontWeight: 50, fontSize: 70 }}>Task Center</p>
+            <p style={{ fontWeight: 60, fontSize: 32 }}>
+              Earn Upto 100 Points to Unlock Trade To Earn
+            </p>
+
+            <br />
+
+            <p style={{ fontSize: 20 }}>
+              Complete your tasks to get 30% Trade Reward
+            </p>
+          </div>
+          <div className="d-flex justify-content-center">
+            <Card
+              className="w-55 shadow-sm p-3 mb-5 bg-white rounded "
+              style={{ marginTop: 20 }}
+            >
               <div className="row">
-              <div className="col-2">
-                <Image preview={false} src={exgcoin} width={79}></Image>
-              </div>
-              <div className="col-7">
-                <Text style={{fontSize:20,fontWeight:100}} >Invite 3 users using the indexx Affiliate System.</Text> 
-                <Progress />
-                <p className="opacity-50"style={{fontSize:15}}>Expired Time:2022-10-2823:53:13(UTC + 5)</p> 
-              </div>
-              <div className="col" style={{alignContent:"end",alignItems:"end",paddingLeft:70,paddingTop:15}} >
-              <Button
-                  danger
-                  type="primary"
-                  shape="round"
-                  size="small"
-                  className="btn_xl buy_sell_button "
-                  style={{width:156}}
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                    Invite 3 users using the indexx Affiliate System.
+                  </Text>
+                  <Progress style={{width:439}}/>
+                </div>
+                <div className="col-3 d-flex justify-content-center">
+                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                    35
+                  </Text>
+                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                    Points Earned.
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+                    paddingTop: 15,
+                  }}
                 >
-                  Complete
-                </Button>
+                  <Button
+                    danger
+                    type="primary"
+                    shape="round"
+                    size="small"
+                    className="btn_xl buy_sell_button "
+                    style={{ width: 156 }}
+                  >
+                    Complete
+                  </Button>
+                </div>
               </div>
-            </div>
-          <Divider></Divider>
+              <Divider></Divider>
+              <div className="row">
+
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                    Make a transaction on indexx Exchange.
+                  </Text> <br/>
+                  <Progress style={{width:439}}/>
+                
+                </div>
+                <div className="col-3 d-flex justify-content-center">
+                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                    30
+                  </Text>
+                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                    Points Earned.
+                  </Text>
+
+                </div>
+
+
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+                    paddingTop: 15,
+                  }}
+                >
+                  <Button
+                    danger
+                    type="primary"
+                    shape="round"
+                    size="small"
+                    className="btn_xl buy_sell_button "
+                    style={{ width: 156 }}
+                  >
+                    Complete
+                  </Button>
+                  
+                </div>
+                
+              
+              
+              </div>
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                    Report a bug on Indexx.ai.
+                  </Text>
+                  <Progress style={{width:439}}/>
+                </div>
+                <div className="col-3 d-flex justify-content-center">
+                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                    30
+                  </Text>
+                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                    Points Earned.
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+                    paddingTop: 15,
+                  }}
+                >
+                  <Button
+                    danger
+                    type="primary"
+                    shape="round"
+                    size="small"
+                    className="btn_xl buy_sell_button "
+                    style={{ width: 156 }}
+                  >
+                    Complete
+                  </Button>
+                </div>
+              </div>      
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                    Take part in Indexx Lotto.
+                  </Text>
+                  <Progress style={{width:439}}/>
+                </div>
+                <div className="col-3 d-flex justify-content-center">
+                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                    40
+                  </Text>
+                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                    Points Earned.
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+                    paddingTop: 15,
+                  }}
+                >
+                  <Button
+                    danger
+                    type="primary"
+                    shape="round"
+                    size="small"
+                    className="btn_xl buy_sell_button "
+                    style={{ width: 156 }}
+                  >
+                    Complete
+                  </Button>
+                </div>
+              </div>     
+
+
+            </Card>
+            
+          </div>
           <div className="row">
-              <div className="col-2">
-                <Image  preview={false} src={exgcoin} width={79}></Image>
-              </div>
-              <div className="col-7">
-                <Text style={{fontSize:20,fontWeight:100}} >Make a transaction on indexx Exchange!</Text> 
-                <Progress />
-                <p className="opacity-50"style={{fontSize:15}}>Expired Time:2022-10-2823:53:13(UTC + 5)</p> 
-              </div>
-              <div className="col" style={{alignContent:"end",alignItems:"end",paddingLeft:70,paddingTop:15}} >
-              <Button
-                  danger
-                  type="primary"
-                  shape="round"
-                  size="small"
-                  className="btn_xl buy_sell_button "
-                  style={{width:156}}
-                >
-                  Complete
-                </Button>
-              </div>
+            
+            <div className="col d-flex justify-content-center">
+            <Button
+                    danger
+                    type="primary"
+                    shape="round"
+                    size="small"
+                    className="btn_xl buy_sell_button "
+                    style={{ width: 156 }}
+                  >
+                    How it Works
+                  </Button>
+
             </div>
-          </Card>
-
+             </div>
           
+          </div>
 
-        </div>
+        
       </div>
 
       <Footer></Footer>
