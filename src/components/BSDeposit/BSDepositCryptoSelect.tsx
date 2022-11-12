@@ -10,6 +10,7 @@ import copyIcon from "../../assets/arts/copyIcon.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import initialTokens from "../../utils/Tokens.json";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
+import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import { decodeJWT, transactionList, getUserWallets, checkAndUpdateDeposit } from '../../services/api';
 import { ColumnsType } from 'antd/lib/table';
 import { QRCodeCanvas } from "qrcode.react";
@@ -125,17 +126,20 @@ export const BSDepositCryptoSelect = () => {
   const navigate = useNavigate();
   const [network, setNetwork] = useState("");
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
-  const { Option } = Select;
+  // const { Option } = Select;
   const [txList, setTxList] = useState() as any;
   const [usersWallets, setUsersWallets] = useState() as any;
   const [singleWallet, setSingleWallet] = useState() as any;
   const [depositHash, setDepositHash] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('');
 
+  const [copiedValue, copy] = useCopyToClipboard();
+  console.log(copiedValue);
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
-    
+
     transactionList(decodedToken?.email).then((res) => {
       let finalArr = res.data.filter((x: any) => x.transactionType === "DEPOSIT_CYRPTO");
       console.log(finalArr);
@@ -182,7 +186,7 @@ export const BSDepositCryptoSelect = () => {
     console.log(decodedToken.email, depositHash, String(BSvalue?.fromTitle))
     const res = await checkAndUpdateDeposit(decodedToken.email, depositHash, String(selectedCoin))
     console.log(res);
-    if(res.status === 200){
+    if (res.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success')
     } else {
@@ -193,35 +197,35 @@ export const BSDepositCryptoSelect = () => {
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-    const openNotificationWithIcon = (type: NotificationType) => {
-        notification[type]({
-            message: 'Your Deposit is successfully',
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+  const openNotificationWithIcon = (type: NotificationType) => {
+    notification[type]({
+      message: 'Your Deposit is successfully',
+      description: '',
+      icon: <CheckCircleFilled className='text_link' />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
 
-        });
-    };
+    });
+  };
 
-    const openNotificationWithIcon2 = (type: NotificationType, message :string) => {
-        notification[type]({
-            message: message,
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+  const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
+    notification[type]({
+      message: message,
+      description: '',
+      icon: <CheckCircleFilled className='text_link' />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
 
-        });
-    };
+    });
+  };
 
   const content = (value: string, network: string, address: string) => (
     <div className='popover_container ' style={{}}>
@@ -261,12 +265,12 @@ export const BSDepositCryptoSelect = () => {
             onChange={handleChangeCurrency} value={BSvalue?.fromToken}>
             {
               initialTokens
-              .filter((x: any) => x.title === "BNB" || x.title === "ETH" || x.title === "IN500" || x.title === "INEX" || x.title === "INXC" || x.title === "IUSD+")
-              .map((token) => {
-                return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-                  <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                </Select.Option>
-              })
+                .filter((x: any) => x.title === "BNB" || x.title === "ETH" || x.title === "IN500" || x.title === "INEX" || x.title === "INXC" || x.title === "IUSD+")
+                .map((token) => {
+                  return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                  </Select.Option>
+                })
             }
 
           </Select>
@@ -283,19 +287,22 @@ export const BSDepositCryptoSelect = () => {
 
 
             <Select className='width-100' onChange={handleChange} >
-              <Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chanin (BEP20)</span> </div></Option>
+              <Select.Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chanin (BEP20)</span> </div></Select.Option>
               {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
-              <Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Option>
-              <Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Option>
+              <Select.Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Select.Option>
+              <Select.Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Select.Option>
               {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
             </Select>
           </div>
           {network &&
             <div className='sensitive_data margin-t-2x'>
               <div>Address</div>
-              <div className='margin-t-2x d-flex flex-align-center font_weight_800'>{singleWallet?.coinWalletAddress}<img src={copyIcon} alt="QRCodeIcon" width="21" height="11" className='padding-l-1x' />      <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinWalletAddress)} trigger="click">
-                <QrcodeOutlined className='padding-l-1x' />
-              </Popover>
+              <div className='margin-t-2x d-flex flex-align-center font_weight_800'>
+                {singleWallet?.coinWalletAddress}
+                <img src={copyIcon} alt="copy icon" width="21" height="11" className='padding-l-1x cursor-pointer' onClick={() => copy(singleWallet?.coinWalletAddress)} />
+                <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinWalletAddress)} trigger="click">
+                  <QrcodeOutlined className='padding-l-1x' />
+                </Popover>
               </div>
 
               <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
@@ -316,9 +323,9 @@ export const BSDepositCryptoSelect = () => {
                 </div>
                 <div className='w_50'>
                   <div className='brand_opacity_5'>Selected wallet</div>
-                  <div> Funding Wallet 
+                  <div> Funding Wallet
                     {/* <span className="text_link"> <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span> */}
-                    </div>
+                  </div>
                 </div>
               </div>
 
