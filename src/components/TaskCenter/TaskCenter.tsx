@@ -31,7 +31,21 @@ const TaskCenter = () => {
             <br />
 
             <p style={{ fontSize: 20 }}>
-              Complete your tasks to get <span style={{fontSize:40}}>30%</span>Trade Reward
+              Complete your tasks to get{" "}
+              <span style={{ fontSize: 40 }}>30%</span>Trade Reward
+            </p>
+
+            <br />
+            <p style={{ fontSize: 30, textAlign: "center" }}>
+              <strong>0/100</strong>{" "}
+              <span style={{ fontSize: 10 }}>Points Earned.</span>
+              <span
+                style={{ fontSize: 30, textAlign: "center", paddingLeft: 30 }}
+              >
+                {" "}
+                <strong>0</strong>
+                <span style={{ fontSize: 10 }}>Total Points Earned.</span>
+              </span>
             </p>
           </div>
           <div className="d-flex justify-content-center">
@@ -47,13 +61,18 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Invite 3 users using the indexx Affiliate System.
                   </Text>
-                  <Progress style={{width:439}}/>
+                  <Progress style={{ width: 439 }} />
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text className="opacity-75" style={{  fontSize: 80, fontWeight: 50, marginTop:-30}}>
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 80, fontWeight: 50, marginTop: -30 }}
+                  >
                     35
                   </Text>
-                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                  >
                     Points Earned.
                   </Text>
                 </div>
@@ -69,7 +88,7 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{borderRadius:5}}
+                    style={{ borderRadius: 5 }}
                     size={"large"}
                   >
                     Complete
@@ -78,27 +97,29 @@ const TaskCenter = () => {
               </div>
               <Divider></Divider>
               <div className="row">
-
                 <div className="col-2 d-flex justify-content-center">
                   <Image preview={false} src={exgcoin} width={79}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Make a transaction on indexx Exchange.
-                  </Text> <br/>
-                  <Progress style={{width:439}}/>
-                
+                  </Text>{" "}
+                  <br />
+                  <Progress style={{ width: 439 }} />
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text className="opacity-75" style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                  >
                     30
                   </Text>
-                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                  >
                     Points Earned.
                   </Text>
-
                 </div>
-
 
                 <div
                   className="col-2"
@@ -112,16 +133,12 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{borderRadius:5}}
+                    style={{ borderRadius: 5 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                  
                 </div>
-                
-              
-              
               </div>
               <Divider></Divider>
               <div className="row">
@@ -132,13 +149,18 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Report a bug on Indexx.ai.
                   </Text>
-                  <Progress style={{width:439}}/>
+                  <Progress style={{ width: 439 }} />
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text className="opacity-75"style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                  >
                     30
                   </Text>
-                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                  >
                     Points Earned.
                   </Text>
                 </div>
@@ -154,13 +176,13 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{borderRadius:5}}
+                    style={{ borderRadius: 5 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
                 </div>
-              </div>      
+              </div>
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
@@ -170,13 +192,18 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Take part in Indexx Lotto.
                   </Text>
-                  <Progress style={{width:439}}/>
+                  <Progress style={{ width: 439 }} />
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text className="opacity-75"style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                  >
                     40
                   </Text>
-                  <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                  >
                     Points Earned.
                   </Text>
                 </div>
@@ -189,40 +216,31 @@ const TaskCenter = () => {
                     paddingTop: 15,
                   }}
                 >
-                <Button
+                  <Button
                     danger
                     type="primary"
-                    style={{borderRadius:5}}
+                    style={{ borderRadius: 5 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
                 </div>
-              </div>     
-
-
+              </div>
             </Card>
-            
           </div>
           <div className="row">
-            
             <div className="col d-flex justify-content-center">
-            <Button
-                    danger
-                    type="primary"
-                    style={{borderRadius:5,width:156}}
-                    size={"large"}
-                   
-                  >
-                    Complete
-                  </Button>
-
+              <Button
+                danger
+                type="primary"
+                style={{ borderRadius: 5, width: 156 }}
+                size={"large"}
+              >
+                Complete
+              </Button>
             </div>
-             </div>
-          
           </div>
-
-        
+        </div>
       </div>
 
       <Footer></Footer>
