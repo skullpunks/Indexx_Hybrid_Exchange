@@ -32,7 +32,7 @@ import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
 import About from './components/About/About';
 import Account from './components/AccountSettings/Account';
-import BSDashhboard from './components/BuySell/BSDashboard';
+// import BSDashhboard from './components/BuySell/BSDashboard';
 import SecurityChange from './components/AccountSettings/SecurityChange';
 // import Blockpass from './components/Blockpass/Blockpass';
 import BlockpassLink from './components/Blockpass/BlockpassLink';
@@ -82,7 +82,7 @@ function App() {
                 <Routes>
 
                     <Route path="/*" element={<Home />} />
-                    <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
+                    <Route path="/indexx-exchange/dashboard" element={<Account />} />
                     {/* {
                         // userData?.role === "Standard"
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />

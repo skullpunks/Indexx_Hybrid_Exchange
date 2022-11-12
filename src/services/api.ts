@@ -338,6 +338,61 @@ export const updateRewardsWallet = async (
   }
 };
 
+export const changePassword = async (
+  email: string,
+  newPassword: string,
+  oldPassword: string
+ ) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/changePassword`, {
+      email: email,
+      newPassword: newPassword,
+      oldPassword: oldPassword
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (changePassword)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const forgotPassword = async (
+  email: string,
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/forgotPassword`, {
+      email: email,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (forgotPassword)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const resetPassword = async (
+  email: string,
+  password: string,
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/resetPassword`, {
+      email: email,
+      password: password,
+      code: "123"
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (resetPassword)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getUserDetails = async (email: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/getUserDetails/${email}`);
