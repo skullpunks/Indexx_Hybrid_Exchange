@@ -31,7 +31,7 @@ const TaskCenter = () => {
             <br />
 
             <p style={{ fontSize: 20 }}>
-              Complete your tasks to get 30% Trade Reward
+              Complete your tasks to get <span style={{fontSize:40}}>30%</span>Trade Reward
             </p>
           </div>
           <div className="d-flex justify-content-center">
@@ -50,7 +50,7 @@ const TaskCenter = () => {
                   <Progress style={{width:439}}/>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                <Text className="opacity-75" style={{  fontSize: 80, fontWeight: 50, marginTop:-30}}>
                     35
                   </Text>
                   <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
@@ -69,10 +69,8 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    shape="round"
-                    size="small"
-                    className="btn_xl buy_sell_button "
-                    style={{ width: 156 }}
+                    style={{borderRadius:5}}
+                    size={"large"}
                   >
                     Complete
                   </Button>
@@ -92,7 +90,7 @@ const TaskCenter = () => {
                 
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                <Text className="opacity-75" style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
                     30
                   </Text>
                   <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
@@ -114,10 +112,8 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    shape="round"
-                    size="small"
-                    className="btn_xl buy_sell_button "
-                    style={{ width: 156 }}
+                    style={{borderRadius:5}}
+                    size={"large"}
                   >
                     Complete
                   </Button>
@@ -139,7 +135,7 @@ const TaskCenter = () => {
                   <Progress style={{width:439}}/>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                <Text className="opacity-75"style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
                     30
                   </Text>
                   <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
@@ -158,10 +154,8 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    shape="round"
-                    size="small"
-                    className="btn_xl buy_sell_button "
-                    style={{ width: 156 }}
+                    style={{borderRadius:5}}
+                    size={"large"}
                   >
                     Complete
                   </Button>
@@ -179,7 +173,7 @@ const TaskCenter = () => {
                   <Progress style={{width:439}}/>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                <Text style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
+                <Text className="opacity-75"style={{  fontSize: 80, fontWeight: 100, marginTop:-30}}>
                     40
                   </Text>
                   <Text style={{  fontSize: 15, fontWeight: 100,marginTop:40}}>
@@ -195,13 +189,11 @@ const TaskCenter = () => {
                     paddingTop: 15,
                   }}
                 >
-                  <Button
+                <Button
                     danger
                     type="primary"
-                    shape="round"
-                    size="small"
-                    className="btn_xl buy_sell_button "
-                    style={{ width: 156 }}
+                    style={{borderRadius:5}}
+                    size={"large"}
                   >
                     Complete
                   </Button>
@@ -218,12 +210,11 @@ const TaskCenter = () => {
             <Button
                     danger
                     type="primary"
-                    shape="round"
-                    size="small"
-                    className="btn_xl buy_sell_button "
-                    style={{ width: 156 }}
+                    style={{borderRadius:5,width:156}}
+                    size={"large"}
+                   
                   >
-                    How it Works
+                    Complete
                   </Button>
 
             </div>
