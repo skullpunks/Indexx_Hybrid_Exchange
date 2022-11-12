@@ -12,7 +12,7 @@ import exghands from "../../assets/arts/exghands.png";
 import no1 from "../../assets/arts/no1.png";
 import no2 from "../../assets/arts/no2.png";
 import no3 from "../../assets/arts/no3.png";
-
+import tradetoearnlogo from "../../assets/arts/tradetoearnlogo.png";
 import Footer from '../Footer/Footer';
 import { decodeJWT, getUserRewardDetails, withdrawINEX, updateRewardsWallet } from '../../services/api';
 import { useEffect, useState } from 'react';
@@ -37,8 +37,8 @@ const TradeToEarn = () => {
   const [showTxText, setShowTxTest] = useState(false);
   const [txHash, setTxHash] = useState('');
 
- 
- 
+
+
   useEffect(() => {
     getUserDetails()
   }, []);
@@ -50,7 +50,7 @@ const TradeToEarn = () => {
     setEmail(decoded.email);
     const res = await updateRewardsWallet(decoded.email, walletAddress);
     console.log(res);
-    if(res.status === 200) {
+    if (res.status === 200) {
       await getUserDetails();
     } else {
       console.log('err')
@@ -59,15 +59,15 @@ const TradeToEarn = () => {
 
   const getUserDetails = async () => {
     const access_token = String(localStorage.getItem("access_token"));
-    if(access_token !== undefined) {
-        const decoded: any = decodeJWT(access_token);
-        const res = await getUserRewardDetails(decoded.email);
-        setEmail(decoded.email);
-        setUserRewardDetails(res.data);
-        console.log(res.data)
-        setAmount(res.data.rewardTokenBalanceInUSD);
+    if (access_token !== undefined) {
+      const decoded: any = decodeJWT(access_token);
+      const res = await getUserRewardDetails(decoded.email);
+      setEmail(decoded.email);
+      setUserRewardDetails(res.data);
+      console.log(res.data)
+      setAmount(res.data.rewardTokenBalanceInUSD);
     } else {
-      
+
     }
   }
 
@@ -88,18 +88,18 @@ const TradeToEarn = () => {
     }
   }
 
- const checkWalletAddress = async(address:string)  => {
-  const res = web3.utils.checkAddressChecksum(address)
-  console.log(res);
-  setIsWalletAddrValid(res);
- }
+  const checkWalletAddress = async (address: string) => {
+    const res = web3.utils.checkAddressChecksum(address)
+    console.log(res);
+    setIsWalletAddrValid(res);
+  }
 
   const withdrawMyINEX = async () => {
     console.log(withdrawAmount)
     console.log(email)
     let res = await withdrawINEX(email, withdrawAmount);
     console.log(res);
-    if(res.status === 200) {
+    if (res.status === 200) {
       openNotificationWithIcon('success', res.data.txData.blockHash);
       setShowTxTest(true);
       setTxHash(res.data.txData.blockHash);
@@ -112,35 +112,35 @@ const TradeToEarn = () => {
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-    const openNotificationWithIcon = (type: NotificationType, txHash: string) => {
-        notification[type]({
-            message: 'Rewards successsfully withdraw, Tx: ' + txHash,
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+  const openNotificationWithIcon = (type: NotificationType, txHash: string) => {
+    notification[type]({
+      message: 'Rewards successsfully withdraw, Tx: ' + txHash,
+      description: '',
+      icon: <CheckCircleFilled className='text_link' />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
 
-        });
-    };
+    });
+  };
 
-    const openNotificationWithIcon2 = (type: NotificationType) => {
-        notification[type]({
-            message: 'Failed to Rewards. Please check balance and try agrain after sometime',
-            description: '',
-            icon: <CheckCircleFilled className='text_link' />,
-            style: {
-                border: "1px solid #F66036",
-                boxShadow: "none",
-                borderRadius: 5,
-                top: 100
-            },
+  const openNotificationWithIcon2 = (type: NotificationType) => {
+    notification[type]({
+      message: 'Failed to Rewards. Please check balance and try agrain after sometime',
+      description: '',
+      icon: <CheckCircleFilled className='text_link' />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
 
-        });
-    };
+    });
+  };
 
   return (
     <>
@@ -153,6 +153,13 @@ const TradeToEarn = () => {
         {
           window.localStorage.getItem("user") ?
             <>
+             <Image
+              src={tradetoearnlogo}
+              style={{ marginBottom: 30 }}
+              width={"full"}
+              preview={false}
+            ></Image>
+
               <p className='card__title' style={{ color: "#5F5F5F", fontSize: "50px", lineHeight: "1em", margin: -19 }}>Trade To Earn </p>
               <p style={{ marginLeft: 320 }}>&trade;</p>
               <br></br>
@@ -197,33 +204,33 @@ const TradeToEarn = () => {
                 <br /><br />
                 {userRewardDetails?.rewardTokenAddress === "" ?
                   <Input.Group compact style={{ paddingTop: "40px" }}>
-                    <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} placeholder="Enter Wallet Address" onChange={updateVal}  maxLength={42}/>
+                    <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} placeholder="Enter Wallet Address" onChange={updateVal} maxLength={42} />
                     <span>
                       {isWalletAddrValid ? "" : <Text >Invalid Wallet Address</Text>}
                     </span>
                     <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
                       height: "55px", borderRadius: "5px",
-                    }} 
-                    onClick={() => updateWalletAddress()} //0x68A62a16d381fd8C11F092b3Eea68845C3Db721E
-                    disabled={(!walletAddress || walletAddress.length < 42 || !isWalletAddrValid)}
+                    }}
+                      onClick={() => updateWalletAddress()} //0x68A62a16d381fd8C11F092b3Eea68845C3Db721E
+                      disabled={(!walletAddress || walletAddress.length < 42 || !isWalletAddrValid)}
                     >Submit Wallet Address</Button>
-                   
+
                   </Input.Group>
                   :
                   <Input.Group compact style={{ paddingTop: "40px" }}>
                     <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} placeholder="Enter Wallet Address" onChange={updateVal} value=
-                    {userRewardDetails?.rewardTokenAddress || ''} 
-                    maxLength={42}
+                      {userRewardDetails?.rewardTokenAddress || ''}
+                      maxLength={42}
                     />
                     <span>
                       {isWalletAddrValid ? "" : <Text >Invalid Wallet Address</Text>}
                     </span>
                     <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
                       height: "55px", borderRadius: "5px",
-                    }} onClick={() => updateWalletAddress()} 
-                    disabled={(!userRewardDetails?.rewardTokenAddress || userRewardDetails?.rewardTokenAddress.length < 42 || !isWalletAddrValid)}
+                    }} onClick={() => updateWalletAddress()}
+                      disabled={(!userRewardDetails?.rewardTokenAddress || userRewardDetails?.rewardTokenAddress.length < 42 || !isWalletAddrValid)}
                     >Update Wallet Address</Button>
-                    
+
                   </Input.Group>
                 }
                 <br />
@@ -231,13 +238,52 @@ const TradeToEarn = () => {
             </>
             :
             <div className='text-center' style={{ maxWidth: 370 }}>
-              <img src={logo} alt="logo" width="150" />
+              {/* <img src={logo} alt="logo" width="150" />
               <p className='pt-5 pb-5 '>
                 <span className='card__title d-inline-block' style={{ color: "#5F5F5F", fontSize: "55px", lineHeight: "1em" }}>Trade To Earn </span>
                 <sub style={{}}>&trade;</sub>
               </p>
               <Button type="primary" shape="round" size="large" className="btn_xl btn-primary" onClick={() => navigateUser("/indexx-exchange/buy-sell/get-started")}>Sign up</Button> <br /><br />
-              <Button type="primary" shape="round" size="large" className="btn_xl btn-primary" onClick={() => navigateUser("/indexx-exchange/buy-sell/login")}>Log In</Button> <br /><br />
+              <Button type="primary" shape="round" size="large" className="btn_xl btn-primary" onClick={() => navigateUser("/indexx-exchange/buy-sell/login")}>Log In</Button> <br /><br /> */}
+
+              <img src={logo} alt="logo" width="150" />
+              <p className="pt-5 pb-5 ">
+                <span
+                  className="card__title d-inline-block"
+                  style={{
+                    color: "#5F5F5F",
+                    fontSize: "55px",
+                    lineHeight: "1em",
+                  }}
+                >
+                  Trade To Earn{" "}
+                </span>
+                <sub style={{}}>&trade;</sub>
+              </p>
+              <Button
+                danger
+                type="primary"
+                shape="round"
+                size="large"
+                className="btn_xl btn-primary"
+                onClick={() =>
+                  navigateUser("/indexx-exchange/buy-sell/get-started")
+                }
+              >
+                Sign up
+              </Button>{" "}
+              <br />
+              <br />
+              <Button
+                danger
+                type="primary"
+                shape="round"
+                size="large"
+                className="btn_xl btn-primary"
+                onClick={() => navigateUser("/indexx-exchange/buy-sell/login")}
+              >
+                Log In
+              </Button>{" "}
               {/* <Link to="/indexx-exchange/buy-sell/login" className=" orange text-success" style={{ width: 80 }}>Log In</Link> */}
 
             </div>
