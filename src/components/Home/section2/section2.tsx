@@ -16,6 +16,7 @@ import chart3 from "../../../assets/arts/chart3.svg";
 import chart4 from "../../../assets/arts/chart4.svg";
 import chart5 from "../../../assets/arts/chart5.svg";
 import { getCryptoPrice, getIndexxTokenPrices } from "../../../services/api";
+import { Button } from "antd";
 
 const Section2 = () => {
     const navigate = useNavigate();
@@ -195,9 +196,9 @@ const Section2 = () => {
                 </div>
 
             </div>
-            {/* <div className="all_markets">
-                <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(``)}>View all Markets</Button>
-            </div> */}
+            <div className="all_markets">
+                <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(`/indexx-exchange/markets`)}>View all Markets</Button>
+            </div>
         </div>
     );
 };

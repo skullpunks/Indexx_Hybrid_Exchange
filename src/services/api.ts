@@ -434,6 +434,33 @@ export const getAppSettings = async () => {
   }
 };
 
+export const marketsData = async () => {
+  try{
+    const result = await API.get("/api/v1/inex/basic/marketPrice");
+    return result.data;
+  } catch(e :any) {
+    console.log("FAILED: unable to perform API request (marketPrice)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const updateFavCurrencies = async (email: string, currency: string) => {
+  try{
+    const result = await API.post("/api/v1/inex/basic/updateFavCurrencies", {
+      email: email,
+      currency: currency
+    });
+    return result.data;
+  } catch(e :any) {
+    console.log("FAILED: unable to perform API request (updateFavCurrencies)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
 export const createBuyOrder = async (
   basecoin: string,
   quotecoin: string,

@@ -21,7 +21,7 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsTable = () => {
+const MarketsIUSDPable = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -31,21 +31,47 @@ const MarketsTable = () => {
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
+    const [fav, setFav] = useState('color-warn font_20x');
+    const [notFav, setNotFav] = useState('font_20x');
+
 
     useEffect(() => {
         if (!calledOnce) {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
             console.log(decoded.email);
-            setEmail(decoded.email);
+            setEmail(decoded.email)
             console.log(email);
             marketsData().then((data) => {
-                setMarketData(data.data);
-                setMarketDataFixed(data.data);
+                const res = data.data.filter((x: any) => x.Symbol !== 'IUSDP')
+                console.log(res);
+                setMarketData(res);
+                setMarketDataFixed(res);
                 setCalledOnce(true);
             });
         }
     }, [calledOnce, email]);
+
+    const updateFavCurr = async (row: any) => {
+        console.log(row);
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        console.log(decoded.email);
+        setEmail(decoded.email);
+        console.log(email);
+        if (row.Favourite === true) {
+            row.Favourite = false;
+            setFav('font_20x');
+            setNotFav('color-warn font_20x');
+            
+        } else {
+            row.Favourite = true;
+            setFav('color-warn font_20x');
+            setNotFav('font_20x');
+        }
+        // const updateFavCurr = await updateFavCurrencies(email, )
+
+    }
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
@@ -63,7 +89,7 @@ const MarketsTable = () => {
             title: ' ',
             dataIndex: 'Favourite',
             render: (_, record) => {
-                return (record?.Favourite === true) ? <StarOutlined className='color-warn font_20x' /> : <StarFilled className='font_20x' />;
+                return (record?.Favourite === true) ? <StarOutlined className={fav} onClick={() => updateFavCurr(record)} /> : <StarFilled className={notFav} onClick={() => updateFavCurr(record)} />;
             },
             responsive: ["sm"],
         },
@@ -71,7 +97,7 @@ const MarketsTable = () => {
             title: 'Pair Name',
             dataIndex: 'Symbol',
             render: (_, record) => {
-                return record?.Symbol + '/USD';
+                return record?.Symbol + '/IUSD+';
             }
         },
         {
@@ -80,6 +106,9 @@ const MarketsTable = () => {
             sorter: {
                 compare: (a, b) => a.Price - b.Price,
                 multiple: 3,
+            },
+            render: (_, record) => {
+                return '$ ' + record?.Price;
             },
         },
         {
@@ -100,7 +129,7 @@ const MarketsTable = () => {
 
                 let classNameLabel = (parseFloat(record.Change) > 0) ? "btn-success" : "btn-warn"
                 return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
-                    {record.Change}
+                    {Math.floor(record.Change * 100) / 100} %
                 </Button>
             },
             responsive: ["sm"],
@@ -113,6 +142,9 @@ const MarketsTable = () => {
                 multiple: 1,
             },
             responsive: ["sm"],
+            render: (_, record) => {
+                return '$ ' + record?.Price;
+            }
         },
         {
             title: 'Daily Low',
@@ -122,6 +154,9 @@ const MarketsTable = () => {
                 multiple: 1,
             },
             responsive: ["sm"],
+            render: (_, record) => {
+                return '$ ' + record?.Price;
+            }
         },
         {
             title: 'Volume',
@@ -160,7 +195,7 @@ const MarketsTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => parseFloat(x.Change) < 0));
     }
 
-    const showAll = async() => {
+    const showAll = async () => {
         setMarketData(marketDataFixed);
     }
 
@@ -243,7 +278,7 @@ const MarketsTable = () => {
                 <Button className='white-strip' onClick={() => showAll()}>All</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainerts</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
-                <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
+                <Button className='white-strip margin-lr-2x' onClick={() => showAll()}>New Listings</Button>
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
@@ -254,4 +289,4 @@ const MarketsTable = () => {
     )
 }
 
-export default MarketsTable
+export default MarketsIUSDPable

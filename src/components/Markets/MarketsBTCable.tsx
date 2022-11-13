@@ -21,7 +21,7 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsTable = () => {
+const MarketsBTCTable = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -32,16 +32,19 @@ const MarketsTable = () => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+
     useEffect(() => {
         if (!calledOnce) {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
             console.log(decoded.email);
-            setEmail(decoded.email);
+            setEmail(decoded.email)
             console.log(email);
             marketsData().then((data) => {
-                setMarketData(data.data);
-                setMarketDataFixed(data.data);
+                const res = data.data.filter((x:any) => x.Symbol !== 'BTC')
+                console.log(res);
+                setMarketData(res);
+                setMarketDataFixed(res);
                 setCalledOnce(true);
             });
         }
@@ -71,7 +74,7 @@ const MarketsTable = () => {
             title: 'Pair Name',
             dataIndex: 'Symbol',
             render: (_, record) => {
-                return record?.Symbol + '/USD';
+                return record?.Symbol + '/BTC';
             }
         },
         {
@@ -81,6 +84,10 @@ const MarketsTable = () => {
                 compare: (a, b) => a.Price - b.Price,
                 multiple: 3,
             },
+            render: (_, record) => {
+                return '$ ' + record?.Price;
+            },
+            
         },
         {
             title: 'Daily Change',
@@ -100,7 +107,7 @@ const MarketsTable = () => {
 
                 let classNameLabel = (parseFloat(record.Change) > 0) ? "btn-success" : "btn-warn"
                 return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
-                    {record.Change}
+                    {Math.floor(record.Change * 100) /100 } %
                 </Button>
             },
             responsive: ["sm"],
@@ -113,6 +120,9 @@ const MarketsTable = () => {
                 multiple: 1,
             },
             responsive: ["sm"],
+            render: (_, record) => {
+                return '$ ' + record?.HighPrice;
+            },
         },
         {
             title: 'Daily Low',
@@ -122,6 +132,9 @@ const MarketsTable = () => {
                 multiple: 1,
             },
             responsive: ["sm"],
+            render: (_, record) => {
+                return '$ ' + record?.LowPrice;
+            },
         },
         {
             title: 'Volume',
@@ -254,4 +267,4 @@ const MarketsTable = () => {
     )
 }
 
-export default MarketsTable
+export default MarketsBTCTable

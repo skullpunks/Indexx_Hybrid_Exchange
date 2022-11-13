@@ -5,8 +5,9 @@ import { Input, Tabs } from 'antd';
 // import type { ColumnsType, TableProps } from 'antd/es/table';
 import MarketsTable from './MarketsTable';
 import Footer from '../Footer/Footer';
-
-
+import MarketsBTCTable from './MarketsBTCable';
+import MarketsIUSDPable from './MarketsIUSDPTable';
+import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
 return (
@@ -21,7 +22,7 @@ return (
         <div className='tabs-container border'>
           <Tabs defaultActiveKey="1">
             <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
-              <MarketsTable />
+              <MarketsFavTable />
 
             </Tabs.TabPane>
 
@@ -30,11 +31,11 @@ return (
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="USD" key="2">
-              <MarketsTable />
+              <MarketsIUSDPable />
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="BTC Pairs" key="3">
-              <MarketsTable />
+              <MarketsBTCTable />
             </Tabs.TabPane>
           </Tabs>
         </div>

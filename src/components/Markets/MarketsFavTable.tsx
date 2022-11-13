@@ -4,7 +4,7 @@ import { Button, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-import { decodeJWT, marketsData } from "../../services/api";
+import { decodeJWT, marketsData  } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -21,7 +21,7 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsTable = () => {
+const MarketsFavTable = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -40,12 +40,24 @@ const MarketsTable = () => {
             setEmail(decoded.email);
             console.log(email);
             marketsData().then((data) => {
-                setMarketData(data.data);
-                setMarketDataFixed(data.data);
+                const res = data.data.filter((x: any) => x.Favourite === true)
+                setMarketData(res);
+                setMarketDataFixed(res);
                 setCalledOnce(true);
             });
         }
     }, [calledOnce, email]);
+
+    const updateFavCurr = async (row: any) => {
+        console.log(row);
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        console.log(decoded.email);
+        setEmail(decoded.email);
+        console.log(email);
+        // const updateFavCurr = await updateFavCurrencies(email, )
+
+    }
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
@@ -63,7 +75,7 @@ const MarketsTable = () => {
             title: ' ',
             dataIndex: 'Favourite',
             render: (_, record) => {
-                return (record?.Favourite === true) ? <StarOutlined className='color-warn font_20x' /> : <StarFilled className='font_20x' />;
+                return (record?.Favourite === true) ? <StarOutlined className='color-warn font_20x' onClick={() => updateFavCurr(record)} /> : <StarFilled className='font_20x' />;
             },
             responsive: ["sm"],
         },
@@ -160,7 +172,7 @@ const MarketsTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => parseFloat(x.Change) < 0));
     }
 
-    const showAll = async() => {
+    const showAll = async () => {
         setMarketData(marketDataFixed);
     }
 
@@ -243,7 +255,7 @@ const MarketsTable = () => {
                 <Button className='white-strip' onClick={() => showAll()}>All</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainerts</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
-                <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
+                <Button className='white-strip margin-lr-2x' onClick={() => showAll()}>New Listings</Button>
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
@@ -254,4 +266,4 @@ const MarketsTable = () => {
     )
 }
 
-export default MarketsTable
+export default MarketsFavTable
