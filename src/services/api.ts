@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
-  baseURL = "http://localhost:3000";
+  baseURL = "https://api.indexx.ngrok.io"; //"http://localhost:3000";
+  // baseURL = "http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
@@ -292,7 +292,9 @@ export const getAllTransactions = async (email: string) => {
 
 export const getUserRewardDetails = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getUserRewardDetails/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getUserRewardDetails/${email}`
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserRewards)");
@@ -302,20 +304,23 @@ export const getUserRewardDetails = async (email: string) => {
   }
 };
 
-export const updateRewardsWallet = async(email: string, walletAddr: string) => {
-  try{
+export const updateRewardsWallet = async (
+  email: string,
+  walletAddr: string
+) => {
+  try {
     const result = await API.post(`/api/v1/inex/user/updateRewardsWallet`, {
       email: email,
-      rewardWalletAddress: walletAddr
+      rewardWalletAddress: walletAddr,
     });
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (updateRewardsWallet)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
- }
+};
 
 export const getUserDetails = async (email: string) => {
   try {
@@ -462,7 +467,6 @@ export const confirmConvertOrder = async (
     const result = await API.post("/api/v1/inex/order/processCovert", {
       email: emal,
       orderId: orderId,
-     
     });
     return result.data;
   } catch (e: any) {
@@ -543,22 +547,17 @@ export const getMinAndMaxOrderValues = async (
   }
 };
 
-
-export const withdrawINEX = async (
-  email: string,
-  amount: number,
-) => {
-  try{
+export const withdrawINEX = async (email: string, amount: number) => {
+  try {
     const result = await API.post("/api/v1/inex/user/withdrawRewards", {
       email: email,
       amount: amount,
     });
     return result.data;
-  } catch(e :any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (withdrawINEX)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
-
+};

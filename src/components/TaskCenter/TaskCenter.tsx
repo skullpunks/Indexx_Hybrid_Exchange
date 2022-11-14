@@ -236,7 +236,7 @@ const TaskCenter = () => {
                 style={{ borderRadius: 5, width: 156 }}
                 size={"large"}
               >
-                Complete
+                How it Works
               </Button>
             </div>
           </div>
