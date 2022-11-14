@@ -16,6 +16,7 @@ import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
 import TradeChart from './components/TradeChart/TradeChart';
 import Markets from './components/Markets/Markets';
 import IndexBlog from './components/IndexBlog/IndexBlog';
+import Vlog from './components/IndexVlog/vlog'
 
 import BSWithdrawMain from './components/BSDepositWithdraw/BSWithdrawMain';
 import BSDepositWithdarwSelect from './components/BSDepositWithdraw/BSDepositWithdarwSelect';
@@ -119,6 +120,7 @@ function App() {
                         <Route path="contact" element={<ContactUs />} />
                     </Route>
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
+                    <Route path="/indexx-exchange/vlog" element={<Vlog />} />
                     <Route path="/indexx-exchange/account" element={<Account />} />
                     <Route path="/indexx-exchange/change-password" element={<SecurityChange />} />
                 </Routes>

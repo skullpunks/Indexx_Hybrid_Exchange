@@ -31,6 +31,7 @@ const Links = [
   { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
   { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
   { label: "Blog", value: "blog", url: "/indexx-exchange/blog" },
+  { label: "Vlog", value: "vlog", url: "/indexx-exchange/vlog" },
   { label: "About", value: "about", url: "/indexx-exchange/about" },
   { label: "", value: "/", url: "/" },
 ];
@@ -121,7 +122,14 @@ const HeaderNew = () => {
                   indexx Tokens
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/indexx-exchange/markets"
+                className="text-white link"
+                href="#"
+              >
+                Markets
+              </Nav.Link>
               <NavDropdown
                 title="Earn"
                 id="collasible-nav-dropdown"
@@ -180,6 +188,14 @@ const HeaderNew = () => {
                   href="/"
                 >
                   Blog
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/indexx-exchange/vlog"
+                  className="dropdown-item"
+                  href="/"
+                >
+                  Vlog
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
