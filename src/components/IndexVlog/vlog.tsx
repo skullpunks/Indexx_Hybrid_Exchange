@@ -7,8 +7,8 @@ const vlog = () => {
     <>
       <div className="scan-container trade-to-earn flex-direction-column ">
         <div className="row">
-            <div className="col-1">
-            <Image src={camera} className="float-left " preview={false} style={{width:80,height:52,paddingLeft:20,marginTop:20}}>Vlog</Image>
+            <div className="col-1" style={{justifyContent:'normal'}}>
+            <Image src={camera} className="float-left " preview={false} style={{width:80,height:52,paddingLeft:10,marginTop:20}}>Vlog</Image>
             </div>
             <div className="col">
               <p className="opacity-80" style={{fontWeight:500, fontSize:60}}>VLOG</p>
