@@ -20,7 +20,8 @@ const Team = () => {
                     <li style={{ backgroundImage: `url(${profileIcon})` }}> Nick Fraser</li>
                     <li style={{ backgroundImage: `url(${profileIcon})` }}> Omkar Sai</li>
                     <li style={{ backgroundImage: `url(${profileIcon})` }}> Roselouren Roberts</li>
-                    <li style={{ backgroundImage: `url(${profileIcon})` }}> Sai Kumar Tony Pelayo</li>
+                    <li style={{ backgroundImage: `url(${profileIcon})` }}> Sai Kumar </li>
+                    <li style={{ backgroundImage: `url(${profileIcon})` }}>  Tony Pelayo</li>
                     <li style={{ backgroundImage: `url(${profileIcon})` }}> Willie Apelacio</li>
                 </ul>
             </div>
