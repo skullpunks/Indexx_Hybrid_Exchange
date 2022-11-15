@@ -24,9 +24,9 @@ let priceData: any = {};
 let appSettingArr: any[] = [];
 
 // This is your test publishable API key.
- const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
+// const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
 // This is your live publishable API key.
-//const stripePromise = loadStripe("pk_live_zzWqHxo3dd26OcBFKjTHrsNZ00O7B4PcT6");
+const stripePromise = loadStripe("pk_live_zzWqHxo3dd26OcBFKjTHrsNZ00O7B4PcT6");
 
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
