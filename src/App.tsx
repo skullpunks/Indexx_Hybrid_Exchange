@@ -117,7 +117,7 @@ function App() {
                     {localStorage.getItem("user") ? (
                         <Route path="/indexx-exchange/markets" element={<Markets />} />
                     ) : (
-                        <></>
+                        <Route path="/indexx-exchange/markets" element={<Markets />} />
                     )}
                     <Route path="/indexx-exchange/trade" element={<TradeChart />} />
                     <Route path="/indexx-exchange/about" element={<About />} />

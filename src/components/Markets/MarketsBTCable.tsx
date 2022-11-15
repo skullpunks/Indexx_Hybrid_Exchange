@@ -258,7 +258,7 @@ const MarketsBTCTable = () => {
         <div>
             <div className='grey-strip d-flex market_button_strips'>
                 <Button className='white-strip' onClick={() => showAll()}>All</Button>
-                <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainerts</Button>
+                <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainers</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
                 <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
