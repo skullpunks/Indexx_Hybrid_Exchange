@@ -6,55 +6,57 @@ import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 import AllNotification from './AllNotification';
 import Activity from './Activity';
+import SystemMsg from './SystemMsg';
 const { Panel } = Collapse;
 const Notification = () => {
-  return (
-    <div>
+    return (
+        <div>
 
 
-             <>
+            <>
+
+                <div className='nav_container' style={{ paddingTop: 120 }}><h2 className='border-bottom padding-b-1x font_40x d-md-flex d-none' style={{ marginBottom: 0 }}>Notifications</h2>
+                    <div className=" d-flex help_main_page d-md-flex d-none">
+
+
+                        <NotificationLeftNav />
+                        <Outlet />
+                    </div>
+                    <div className=" nav_container d-flex help_main_page d-md-none notification_nav_container">
+                        <Collapse>
+
+
+
+
+                            <Panel header=" indexx Swap Intro" key="1">
+
+                                < AllNotification />
+
+                            </Panel>
+                            <Panel header="indexx Swap Team" key="2">
+
+                                <Activity />
+
+                            </Panel>
+                            <Panel header="Contact Us" key="3">
+
+                                <SystemMsg />
+
+                            </Panel>
+                        </Collapse>
+
+                    </div>
+                </div>
+
             
-            <div className='nav_container' style={{paddingTop:120}}><h2 className='border-bottom padding-b-1x font_40x' style={{marginBottom:0}}>Notifications</h2>
-            <div className=" d-flex help_main_page d-md-flex d-none">
 
-            
-                <NotificationLeftNav />
-                <Outlet />
-                <div className=" d-flex help_main_page d-md-none">
-                <Collapse>
-
-
-
-
-                    <Panel header=" indexx Swap Intro" key="1">
-
-                        < AllNotification/>
-
-                    </Panel>
-                    <Panel header="indexx Swap Team" key="2">
-
-                       <Activity/>
-
-                    </Panel>
-                    <Panel header="Contact Us" key="3">
-
-                        {/* <ContactUs /> */}
-
-                    </Panel>
-                </Collapse>
-
-            </div>
-            </div>
-
-            </div>
-          
 
 
             <Footer helpIcon={false} />
         </>
 
 
-    </div>
+    </div >
   )
 }
 

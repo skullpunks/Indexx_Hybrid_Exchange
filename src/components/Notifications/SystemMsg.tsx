@@ -14,7 +14,7 @@ const SystemMsg = () => {
                         <span className='font_25x padding-l-1x'>Login attempted from new IP
                         </span>
                         </div>
-                        <div className='font_15x'>
+                        <div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                     </div>
@@ -23,7 +23,7 @@ const SystemMsg = () => {
 
                         </p>
                     </div>
-                    <div className='padding-t-1x text_link'>
+                    <div className='padding-t-1x text_link d-md-flex d-none'>
                         View more
                     </div>
                 </div>

@@ -11,7 +11,7 @@ const AllNotification = () => {
                     <img src={paper} alt="paper"/>
                     <span className='font_25x padding-l-1x'>Log in and check your gifts!</span>
                     </div>
-                    <div className='font_15x'>
+                    <div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                 </div>
@@ -28,7 +28,7 @@ const AllNotification = () => {
                     <div className='d-flex'>
                     <img src={paper} alt="paper" />
                     <span className='font_25x padding-l-1x'>You’ve received a new task
-</span></div><div className='font_15x'>
+</span></div><div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                 </div>
@@ -47,7 +47,7 @@ const AllNotification = () => {
                     <img src={paper} alt="paper" />
                     <span className='font_25x padding-l-1x'>Login attempted from new IP
 </span></div>
-<div className='font_15x'>
+<div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                 </div>

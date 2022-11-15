@@ -9,7 +9,7 @@ const Activity = () => {
                     <div className='d-flex'>
                        <div className='d-flex'> <img src={paper} alt="paper" />
                         <span className='font_25x padding-l-1x'>Log in and check your gifts!</span></div>
-                        <div className='font_15x'>
+                        <div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                     </div>
@@ -17,7 +17,7 @@ const Activity = () => {
                         <p className='font_15x'>We have a gift for you! Click to explore and redeem now.
                         </p>
                     </div>
-                    <div className='padding-t-1x text_link'>
+                    <div className='padding-t-1x text_link d-md-flex d-none'>
                         View more
                     </div>
                 </div>
@@ -28,7 +28,7 @@ const Activity = () => {
                         <span className='font_25x padding-l-1x'>You’ve received a new task
                         </span>
                         </div>
-                        <div className='font_15x'>
+                        <div className='font_15x d-md-flex d-none'>
                     2022-11-11 08:33:40
                     </div>
                     </div>
@@ -37,7 +37,7 @@ const Activity = () => {
 
                         </p>
                     </div>
-                    <div className='padding-t-1x text_link'>
+                    <div className='padding-t-1x text_link d-md-flex d-none'>
                         View more
                     </div>
                 </div>
