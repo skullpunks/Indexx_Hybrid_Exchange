@@ -24,7 +24,7 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 650;
-      height = 420;
+      height = 400;
     }
   };
   media();
@@ -95,8 +95,8 @@ const LineGraph = (props: any) => {
       >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            <stop offset="5%" stopColor="#f66036" stopOpacity={0.5} />
+            <stop offset="90%" stopColor="#f66036" stopOpacity={0} />
           </linearGradient>
         </defs>
 
@@ -107,7 +107,8 @@ const LineGraph = (props: any) => {
           strokeWidth={1.5}
           isAnimationActive={false}
           stroke="rgba(246, 96, 54 , 1)"
-          fill="rgba(246, 96, 54 , 0.09)"
+          // fill="rgba(246, 96, 54 , 0.09)"
+          fill="url(#colorUv)"
         />
         <XAxis
           padding={{ right: 20 }}

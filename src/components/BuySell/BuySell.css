@@ -635,6 +635,13 @@ button.ant-btn-primary [disabled] {
 
 }
 
+.index_link_info {
+    background-color: #E4E4E4;
+}
+
+
+
+
 @media (max-width: 767px) {
 
     .responsive_container .card,

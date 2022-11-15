@@ -96,6 +96,7 @@ const HeaderNew = () => {
                 title="Products"
                 id="collasible-nav-dropdown"
                 className="dark-menu"
+                renderMenuOnMount={true}
               >
                 <NavDropdown.Item
                   as={Link}
@@ -128,6 +129,7 @@ const HeaderNew = () => {
                 title="Earn"
                 id="collasible-nav-dropdown"
                 className="dark-menu"
+                renderMenuOnMount={true}
               >
                 <NavDropdown.Item
                   as={Link}
@@ -151,6 +153,7 @@ const HeaderNew = () => {
                 title="Company"
                 id="collasible-nav-dropdown"
                 className="dark-menu"
+                renderMenuOnMount={true}
               >
                 <NavDropdown.Item
                   as={Link}

@@ -46,6 +46,10 @@ import BlockpassLink from './components/Blockpass/BlockpassLink';
 // import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
 import ScrollToTop from "./utils/ScrollToTop";
+import Notification from './components/Notifications/Notification';
+import AllNotification from './components/Notifications/AllNotification';
+import Activity from './components/Notifications/Activity';
+import SystemMsg from './components/Notifications/SystemMsg';
 
 function App() {
     /*
@@ -121,6 +125,11 @@ function App() {
                         <Route index element={<Intro />} />
                         <Route path="team" element={<Team />} />
                         <Route path="contact" element={<ContactUs />} />
+                    </Route>
+                    <Route path="/indexx-exchange/notification" element={<Notification />} >
+                        <Route index element={<AllNotification />} />
+                        <Route path="Activities" element={<Activity />} />
+                        <Route path="system" element={<SystemMsg />} />
                     </Route>
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
                     <Route path="/indexx-exchange/account" element={<Account />} />

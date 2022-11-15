@@ -88,8 +88,12 @@
     text-decoration: none !important;
 }
 
-.active {
-    /* border-bottom: 4px solid #F66036; */
+.dropdown-toggle.nav-link:hover~.dropdown-menu, .dropdown-menu:hover {
+    display: block;
+}
+
+.dropdown-menu[data-bs-popper] {
+    margin-top: 0;
 }
 
 .header-connect-wallet:hover {

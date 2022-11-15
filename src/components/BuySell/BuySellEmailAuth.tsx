@@ -7,6 +7,7 @@ import Timer from "../../utils/Timer";
 import { CheckCircleFilled } from '@ant-design/icons';
 import { validateEmail } from "../../services/api";
 import { useEffect, useState } from "react";
+import React, { ClipboardEvent } from 'react';
 
 const BuySellEmailAuth = () => {
     const navigate = useNavigate();
@@ -26,7 +27,33 @@ const BuySellEmailAuth = () => {
                 document.getElementById("verify_btn")?.focus()
                 :
                 (next as HTMLElement).focus();
+        }
+    }
 
+    function isNumeric(value: any) {
+        return /^-?\d+$/.test(value);
+    }
+
+    const pastePassowrd = (e: ClipboardEvent<HTMLInputElement>) => {
+        let clipboardData, pastedData;
+        // Stop data actually being pasted into div
+        e.stopPropagation();
+        e.preventDefault();
+
+        // Get pasted data via clipboard API
+        clipboardData = e.clipboardData;
+        pastedData = clipboardData.getData('Text');
+        if (isNumeric(pastedData)) {
+            let arr: any = document.querySelectorAll(".otp_container input");
+            let pastedArr = pastedData.split("");
+            if (arr) {
+                for (let i = 0; i < arr.length; i++) {
+                    arr[i].value = pastedArr[i];
+                }
+
+                if (document.getElementById("verify_btn"))
+                    document.getElementById("verify_btn")?.focus();
+            }
         }
     }
 
@@ -110,6 +137,7 @@ const BuySellEmailAuth = () => {
         otpCode[5] = val[0];
     }
 
+
     const content = (
         <div className='popover_container' style={{ width: 366 }}>
             <img src={envelop} alt="envelop" className="text-center width-100" width="100" height="69" />
@@ -140,12 +168,12 @@ const BuySellEmailAuth = () => {
                 <div className="otp_container">
                     <label className="padding-b-1x">Code</label>
                     <div className="d-flex justify-between">
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput1} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput2} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput3} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput4} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput5} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput6} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput1} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput2}/>
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput3}/>
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput4}/>
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput5}/>
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput6}/>
                     </div>
                 </div>
                 <br />
