@@ -91,6 +91,12 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
+
+            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
+                e.preventDefault();
+                return;
+            }
+
             setBuyVal(testVal);
 
             // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;

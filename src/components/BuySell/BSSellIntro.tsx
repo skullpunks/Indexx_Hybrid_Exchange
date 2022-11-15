@@ -91,6 +91,10 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
+            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
+                e.preventDefault();
+                return;
+            }
             setVal(testVal);
 
             let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
