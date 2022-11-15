@@ -1,14 +1,15 @@
 // import { Button } from 'react-bootstrap';
-import { BellOutlined } from "@ant-design/icons";
+// import { BellOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 // import { Dropdown } from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
+import Bellicon from "../../assets/arts/Bellicon.png";
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
@@ -38,7 +39,7 @@ const Links = [
 const HeaderNew = () => {
   let title = <>{localStorage.getItem("user")}</>;
   const [isInsideApp, setIsInsideApp] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   let pageName = searchParams.get("page");
@@ -199,9 +200,10 @@ const HeaderNew = () => {
                   >
                     Buy Crypto
                   </Nav.Link>
-                  <BellOutlined
-                    className="p-2 px-3 text-white cursor-pointer"
-                    style={{ fontSize: 20 }}
+                  <img src={Bellicon} alt="Notifications"
+                    className="ms-3 my-2 text-white cursor-pointer"
+                    style={{ maxHeight: 26, alignSelf: "center" }}
+                    onClick={() => navigate("/indexx-exchange/notification")}
                   />
                   <NavDropdown
                     title={title}
