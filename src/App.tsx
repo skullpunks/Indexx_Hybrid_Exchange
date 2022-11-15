@@ -30,20 +30,69 @@ import BSWithdrawCryptoLayout from './components/BSDepositWithdraw/BSWithdrawCry
 import IndexxTokens from './components/IndexxTokens/IndexxTokens';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import HeaderNew from './components/Header/HeaderNew';
+import About from './components/About/About';
+import Account from './components/AccountSettings/Account';
+// import BSDashhboard from './components/BuySell/BSDashboard';
+import SecurityChange from './components/AccountSettings/SecurityChange';
+// import Blockpass from './components/Blockpass/Blockpass';
+import BlockpassLink from './components/Blockpass/BlockpassLink';
+// import { useEffect, useState } from 'react';
+// import { decodeJWT, getUserDetails } from '../src/services/api';
+
+// import Header from './components/Header/Header';
 // import BuySellGetStarted from './components/BuySell/BuySellGetStarted';
 // import BuySellEmailAuth from './components/BuySell/BuySellEmailAuth';
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
 // import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
+import ScrollToTop from "./utils/ScrollToTop";
+import Notification from './components/Notifications/Notification';
+import AllNotification from './components/Notifications/AllNotification';
+import Activity from './components/Notifications/Activity';
+import SystemMsg from './components/Notifications/SystemMsg';
 
 function App() {
+    /*
+    const [email, setEmail] = useState('');
+    const [userData, setUserData] = useState() as any;
+
+    useEffect(() => {
+        return () => {
+            const access_token = localStorage.getItem("access_token") !== undefined ? String(localStorage.getItem("access_token")) : undefined;
+            console.log(access_token)
+            if (access_token !== undefined || access_token !== null) {
+                let access_token = String(localStorage.getItem("access_token"));
+                let decoded: any = decodeJWT(access_token);
+                setEmail(decoded.email)
+                getUserDetails(decoded.email).then((res: any) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        setUserData(res.data);
+                    }
+                });
+            } else {
+                console.log('token not found')
+            }
+        }
+    }, [email]);
+*/
     return (
         <div>
             <BrowserRouter>
                 {/* <Header /> */}
+                <ScrollToTop />
                 <HeaderNew />
                 <Routes>
+
                     <Route path="/*" element={<Home />} />
+                    <Route path="/indexx-exchange/dashboard" element={<Account />} />
+                    {/* {
+                        // userData?.role === "Standard"
+                            ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
+                            : <Route path="/external-link" element={<External />} />
+                    } */}
+                    <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
                     <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
                     <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
                     <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
@@ -65,18 +114,36 @@ function App() {
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
-                    <Route path="/indexx-exchange/markets" element={<Markets />} />
+                    {localStorage.getItem("user") ? (
+                        <Route path="/indexx-exchange/markets" element={<Markets />} />
+                    ) : (
+                        <></>
+                    )}
                     <Route path="/indexx-exchange/trade" element={<TradeChart />} />
+                    <Route path="/indexx-exchange/about" element={<About />} />
                     <Route path="/indexx-exchange/help" element={<Help />} >
                         <Route index element={<Intro />} />
                         <Route path="team" element={<Team />} />
                         <Route path="contact" element={<ContactUs />} />
                     </Route>
+                    <Route path="/indexx-exchange/notification" element={<Notification />} >
+                        <Route index element={<AllNotification />} />
+                        <Route path="Activities" element={<Activity />} />
+                        <Route path="system" element={<SystemMsg />} />
+                    </Route>
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
+                    <Route path="/indexx-exchange/account" element={<Account />} />
+                    <Route path="/indexx-exchange/change-password" element={<SecurityChange />} />
                 </Routes>
             </BrowserRouter>
         </div>
     );
 }
+
+// function External() {
+//     console.log(' IAM HERE')
+//     window.location.href = 'http://localhost:3002/';
+//     return null;
+// }
 
 export default App;

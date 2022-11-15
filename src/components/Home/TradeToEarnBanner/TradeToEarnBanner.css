@@ -1,6 +1,6 @@
 .trade_to_earn_banner {
     display: flex;
-    padding: 50px 120px 0 0;
+    padding: 40px 120px 0 0;
     margin: 50px 0;
     flex-direction: column;
     height: auto;
@@ -11,18 +11,19 @@
 }
 
 .trade_left {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
+    margin-left: 20%;
     align-self: flex-end;
     background-image: url("../../../assets/arts/tradeEarnCoin.png");
-    background-size: cover;
+    background-size: auto;
     background-position-y: bottom;
     background-repeat: no-repeat;
+    background-position-x: right;
 }
 
 .trade_right {
-    padding-bottom: 50px;
-    margin-left: auto;
+    padding-bottom: 35px;
 }
 
 .line_height_1 {
@@ -30,7 +31,7 @@
 }
 
 .mega_heading {
-    font-size: 100px;
+    font-size: 80px;
     font-family: AvenirMedium;
 }
 
@@ -50,8 +51,8 @@
 
 .trade_percentage {
     font-family: AvenirHeavy;
-    font-size: 350px;
-    margin-top: 50px;
+    font-size: 130px;
+    margin-top: 20px;
 }
 
 .earn_btn {
@@ -61,7 +62,7 @@
 }
 
 .ant-btn.btn-success.earn_btn {
-    max-width: 500px;
+    max-width: 325px;
 }
 
 @media (max-width: 767px) {
@@ -107,7 +108,12 @@
         padding-right: 35px;
     }
 
+    .trade_left {
+        display: none;
+    }
+
     .trade_right {
         margin-right: auto;
+        margin-left: auto;
     }
 }

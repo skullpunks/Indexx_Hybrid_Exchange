@@ -2,13 +2,14 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-   baseURL = "http://localhost:3000";
-  //baseURL = "https://67b7-54-250-16-116.ngrok.io";
+  // baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
+  baseURL = "http://localhost:3000";
+  //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
-  baseURL = "https://67b7-54-250-16-116.ngrok.io";
+  baseURL = "https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
 }
 
-console.log("baseURL", baseURL);
+//console.log("baseURL", baseURL);
 
 const API = axios.create({
   baseURL: baseURL,
@@ -78,12 +79,13 @@ export const verifyPhoneCode = async (code: string) => {
   }
 };
 
-export const verifyEmailCode = async (code: string) => {
+export const getWalletBalance = async (email: string, coin: string) => {
   try {
-    const result = await API.post("/api/v1/inex/user/verifyEmailCode", {
-      code,
-    });
-    return result.data;
+    const result = await API.post(
+      `/api/v1/inex/user/getBalance/${email}/${coin}`
+    );
+    if (result.status === 200) return result.data;
+    else return result.data;
   } catch (e: any) {
     return e.response.data;
   }
@@ -91,11 +93,53 @@ export const verifyEmailCode = async (code: string) => {
 
 export const getIndexxTokenPrices = async () => {
   try {
-    const result = await API.post("/api/v1/inex/price/indexx");
+    const result = await API.post("/api/v1/inex/basic/indexxcoins");
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
+};
+
+export const getCryptoPrice = async (coin: string) => {
+  try {
+    const result = await API.post(`api/v1/inex/basic/getPriceByName`, {
+      coin: coin,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+//https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=USD&days=1&interval=hourly
+export const getGraphicalCurrencyData = async (
+  coinId: string,
+  days: string,
+  currency: string = "USD"
+) => {
+  let url = "";
+  if (coinId === "IUSD+") {
+    url = `https://api.coingecko.com/api/v3/coins/tether/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "INXC") {
+    url = `https://api.coingecko.com/api/v3/coins/uma/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "IN500") {
+    url = `https://api.coingecko.com/api/v3/coins/spdr-s-p-500-etf-trust-defichain/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "BTC") {
+    url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "BNB") {
+    url = `https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "ETH") {
+    url = `https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "LTC") {
+    url = `https://api.coingecko.com/api/v3/coins/litecoin/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "BUSD") {
+    url = `https://api.coingecko.com/api/v3/coins/binance-usd/market_chart?vs_currency=${currency}&days=${days}`;
+  } else if (coinId === "INEX") {
+    url = `https://api.coingecko.com/api/v3/coins/stellar/market_chart?vs_currency=${currency}&days=${days}`;
+  }
+  let res = await fetch(url);
+  console.log(res);
+  return res;
 };
 
 export function isLoggedIn() {
@@ -128,7 +172,7 @@ export interface TokenLite {
   refresh_token: string;
 }
 
-export const getWalletBalance = async (email: string, coin: string) => {
+export const getAllCountries = async (email: string, coin: string) => {
   try {
     const result = await API.post("/api/v1/inex/getCountries");
     return result.data;
@@ -156,6 +200,22 @@ export const getUserWallets = async (email: string) => {
     return e.response.data;
   }
 };
+
+export const checkAndUpdateDeposit = async (email: string, txHash: string, coin : string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/transaction/createTx`, {
+      email,
+      txHash,
+      coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (checkAndUpdateDeposit)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
 // export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
 //   try {
@@ -235,12 +295,87 @@ export const getAllTransactions = async (email: string) => {
   }
 };
 
-export const getUserRewards = async (email: string) => {
+export const getUserRewardDetails = async (email: string) => {
   try {
-    const result = await API.post(`/api/v1/inex/user/getUserRewards/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getUserRewardDetails/${email}`
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getUserRewards)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const updateRewardsWallet = async (
+  email: string,
+  walletAddr: string
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/updateRewardsWallet`, {
+      email: email,
+      rewardWalletAddress: walletAddr,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (updateRewardsWallet)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const changePassword = async (
+  email: string,
+  newPassword: string,
+  oldPassword: string
+ ) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/changePassword`, {
+      email: email,
+      newPassword: newPassword,
+      oldPassword: oldPassword
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (changePassword)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const forgotPassword = async (
+  email: string,
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/forgotPassword`, {
+      email: email,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (forgotPassword)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const resetPassword = async (
+  email: string,
+  password: string,
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/resetPassword`, {
+      email: email,
+      password: password,
+      code: "123"
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (resetPassword)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
@@ -259,9 +394,14 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
-export const getCoinPriceByName = async (coin: string) => {
+export const getCoinPriceByName = async (
+  coin: string,
+  type: string = "Buy"
+) => {
   try {
-    const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`);
+    const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
+      type: type,
+    });
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (getCoinPriceByName)");
@@ -282,6 +422,33 @@ export const getAppSettings = async () => {
     return e.response.data;
   }
 };
+
+export const marketsData = async () => {
+  try{
+    const result = await API.get("/api/v1/inex/basic/marketPrice");
+    return result.data;
+  } catch(e :any) {
+    console.log("FAILED: unable to perform API request (marketPrice)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const updateFavCurrencies = async (email: string, currency: string) => {
+  try{
+    const result = await API.post("/api/v1/inex/basic/updateFavCurrencies", {
+      email: email,
+      currency: currency
+    });
+    return result.data;
+  } catch(e :any) {
+    console.log("FAILED: unable to perform API request (updateFavCurrencies)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
 export const createBuyOrder = async (
   basecoin: string,
@@ -315,12 +482,34 @@ export const createSellOrder = async (
 ) => {
   try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
-      currencyOut: basecoin,
-      currencyIn: quotecoin,
+      currencyOut: quotecoin,
+      currencyIn: basecoin,
       amount: amount,
       price: price,
       orderType: "Sell",
       email: localStorage.getItem("user"),
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const confirmSellOrder = async (
+  emal: string,
+  orderId: string,
+  orderStatus: string,
+  basecoin: string
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/updateOrder", {
+      email: emal,
+      orderId: orderId,
+      orderStatus: orderStatus,
+      currencyIn: basecoin,
     });
     return result.data;
   } catch (e: any) {
@@ -339,8 +528,8 @@ export const createConvertOrder = async (
 ) => {
   try {
     const result = await API.post("/api/v1/inex/order/createOrder", {
-      currencyOut: basecoin,
-      currencyIn: quotecoin,
+      currencyOut: quotecoin,
+      currencyIn: basecoin,
       amount: amount,
       price: price,
       orderType: "Convert",
@@ -355,12 +544,36 @@ export const createConvertOrder = async (
   }
 };
 
-export const createStripePaymentIntent = async (amount: number, orderId: string, email: string) => {
+export const confirmConvertOrder = async (
+  emal: string,
+  orderId: string,
+  orderStatus: string = "Completed",
+  basecoin: string = "IN500"
+) => {
+  try {
+    const result = await API.post("/api/v1/inex/order/processCovert", {
+      email: emal,
+      orderId: orderId,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createOrder)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createStripePaymentIntent = async (
+  amount: number,
+  orderId: string,
+  email: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/stripe/createPaymentIntent", {
       amount: amount,
       orderId: orderId,
-      email: email
+      email: email,
     });
     return result.data;
   } catch (e: any) {
@@ -392,8 +605,10 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === "LTC") {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === "INEX") {
+      oneUSDValue = 1 / coinValue;
     } else {
-      oneUSDValue = 0;
+      oneUSDValue = 0.1;
     }
     return oneUSDValue;
   } catch (err) {
@@ -401,17 +616,143 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   }
 };
 
-export const getMinAndMaxOrderValues = async (coin: string, orderType: string) => {
+export const getMinAndMaxOrderValues = async (
+  coin: string,
+  orderType: string
+) => {
   try {
     const result = await API.post("/api/v1/inex/basic/orderMinMax", {
       currency: coin,
-      orderType: orderType
+      orderType: orderType,
     });
     return result.data;
   } catch (e: any) {
     console.log(
       "FAILED: unable to perform API request (createStripePaymentIntent)"
     );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const withdrawINEX = async (email: string, amount: number) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/withdrawRewards", {
+      email: email,
+      amount: amount,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (withdrawINEX)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const transactionList = async (email: string, type: string = 'FIAT') => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`, {
+      type: type,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log("FAILED: unable to perform API request (transactionList)");
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const createFiatWithdraw =async (email: string, amount:number, accountDetails: any,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createFiatWithdraw", {
+      email: email,
+      amount: amount,
+      accountDetails: accountDetails,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createFiatWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createCryptoWithdraw =async (email: string, amount:number, address: string,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createCryptoWithdraw", {
+      email: email,
+      amount: amount,
+      address: address,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createCryptoWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createFiatDeposit =async (email: string, amount:number, txHash: any,  coin: string = 'USD') => {
+  try {
+    const result = await API.post("/api/v1/inex/transaction/createFiatDeposit", {
+      email: email,
+      amount: amount,
+      txHash: txHash,
+      coin: coin
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (createFiatWithdraw)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const resendEmailCode = async(email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/resendEmailCode", {
+      email: email,
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (resendEmailCode)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const validateEmail = async(email: string, code: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/validateEmail", {
+      email: email,
+      code: code
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (validateEmail)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
+export const getOrderDetails = async (email: string, orderId: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getUserOrder/${email}/${orderId}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log("FAILED: unable to perform API request (getOrderDetails)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

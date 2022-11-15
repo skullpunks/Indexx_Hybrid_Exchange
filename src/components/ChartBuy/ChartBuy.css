@@ -22,7 +22,7 @@
     display: flex;
     justify-content: space-between;
     line-height: 1;
-    padding: 39px 0;
+    padding: 12px 0;
     align-items: baseline;
 }
 
@@ -50,9 +50,19 @@
     line-height: 37px;
 }
 
+.chart_inner_right .chart_dynamic label {
+    padding-bottom: 0;
+}
+
+.chart_inner_right .chart_dynamic .ant-segmented-item-label {
+    width: 80px;
+}
+
+
 .bs_main .chart_inner_right .ant-segmented-item-selected {
     /* background: #006DFF;
     color:#fff; */
+    background: #f66036;
     color: #000;
     background-color: transparent;
     border-radius: 5px;

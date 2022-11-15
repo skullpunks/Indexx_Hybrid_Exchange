@@ -6,6 +6,10 @@
     font-size: 28px;
 }
 
+.no-outline, .outline-none {
+    outline: none;
+}
+
 @media (max-width: 767px) {
 
     .deposit_ontainer {

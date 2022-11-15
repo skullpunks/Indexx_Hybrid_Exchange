@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 const LeftNav = () => {
     return (
-        <div className="lef_nav_container">
+       
+ <div className="lef_nav_container d-md-block d-none">
             <div className="nav_Section">
                 <ul>
                     <li><NavLink to="/indexx-exchange/help" className="" end>
@@ -13,7 +14,11 @@ const LeftNav = () => {
                     <li> <NavLink to="/indexx-exchange/help/contact">Contact Us</NavLink></li>
                 </ul>
             </div>
+          
         </div >
+       
+     
+       
     )
 }
 

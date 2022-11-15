@@ -36,6 +36,10 @@
     justify-content: center;
 }
 
+.row.copyright_bar {
+    width: calc(100% + 1.5rem);
+}
+
 .flip_icon_container {
     position: relative;
 }
@@ -44,10 +48,14 @@
     top: -267px;
     position: absolute;
     right: 0;
+    max-width: 400px;
 }
 
 .flip_woman {
-    top: -259px;
+    /* top: -279px; */
+
+    top: -221px;
+    max-width: 470px;
 }
 
 .copyright_text {
@@ -74,7 +82,7 @@
 
     .site_footer_inner {
         flex-direction: column;
-        padding-left:0;
+        padding-left: 0;
     }
 
     .site_footer>div>div {
@@ -96,7 +104,7 @@
     }
 
     .flip_person_icon.flip_woman {
-      
+
         top: 26px;
     }
 

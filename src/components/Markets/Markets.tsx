@@ -5,13 +5,12 @@ import { Input, Tabs } from 'antd';
 // import type { ColumnsType, TableProps } from 'antd/es/table';
 import MarketsTable from './MarketsTable';
 import Footer from '../Footer/Footer';
-
-
+import MarketsBTCTable from './MarketsBTCable';
+import MarketsIUSDPable from './MarketsIUSDPTable';
+import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
-
-
-  return (
+return (
     <div>
       <div className='scan-container market-container'>
         <h1>Cryptocurrency prices, charts, and trends</h1>
@@ -22,8 +21,8 @@ const Markets = () => {
         </div>
         <div className='tabs-container border'>
           <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab={<StarFilled className='padding-l-1x' />} key="0">
-              <MarketsTable />
+            <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
+              <MarketsFavTable />
 
             </Tabs.TabPane>
 
@@ -32,11 +31,11 @@ const Markets = () => {
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="USD" key="2">
-              <MarketsTable />
+              <MarketsIUSDPable />
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="BTC Pairs" key="3">
-              <MarketsTable />
+              <MarketsBTCTable />
             </Tabs.TabPane>
           </Tabs>
         </div>

@@ -3,65 +3,78 @@
     align-items:center;
 } */
 .chart_header h1 {
-    margin-bottom:0;
+    margin-bottom: 0;
     font-size: 30px;
     color: #5F5F5F;
     line-height: 1;
 }
+
 .chart_title {
-    padding:0 7px;
+    padding: 0 7px;
 }
-.arrow_container div{
-    line-height:0;
+
+.arrow_container div {
+    line-height: 0;
     padding-bottom: 2px;
 }
+
 .Chart_inner {
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    line-height:1;
-    padding:39px 0;
+    line-height: 1;
+    padding: 19px 0;
     align-items: baseline;
 }
+
 /* .chart_inner_left_top {
     display:flex;
 } */
 
 .chart_inner_middle {
-    color:#F66036;
-    font-size:20px;
+    color: #F66036;
+    font-size: 20px;
 }
 
 .chart_inner_right .ant-segmented {
-    background-color:rgba(129, 129, 129, 0.1);
-    font-size:15px;
-    color:#5f5f5f;
-    padding:0;
-    border-radius:5px;
+    background-color: rgba(129, 129, 129, 0.1);
+    font-size: 15px;
+    color: #5f5f5f;
+    padding: 0;
+    border-radius: 5px;
 }
 
-.chart_inner_right .ant-segmented-item-label{
+.chart_inner_right .ant-segmented-item-label {
     width: 58px;
     font-size: 15px;
     min-height: 37px;
     line-height: 37px;
 }
 
-.chart_inner_right .ant-segmented-item-selected{
-    background: #006DFF;
-    color:#fff;
-    border-radius:5px;
+.chart_inner_right .chart_dynamic .ant-segmented-item-label {
+    width: 80px;
+}
+
+.chart_inner_right .chart_dynamic label {
+    padding-bottom: 0;
+}
+
+
+.chart_inner_right .ant-segmented-item-selected {
+    background: #f66036;
+    color: #fff;
+    border-radius: 5px;
 
 }
 
 .time {
     /* display:flex;
     justify-content: space-between; */
-    padding:10px 15px;
+    padding: 10px 15px;
 }
 
 
-.time div{
+.time div {
     color: #5F5F5F;
-    font-size:20px;
+    font-size: 20px;
 
 }

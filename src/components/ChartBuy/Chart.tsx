@@ -24,7 +24,7 @@ const Chart = () => {
     return (
         <div className='card chart_mobile d-none d-md-flex  ' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
             <div className="chart_header d-flex flex-align-center">
-                <img src={IN500} alt="IN500 Here" width="30" />
+                <img src={IN500} alt="IN500 Here" width="30" className="me-1" />
                 {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
                 <h1 className="chart_title">IN500/USD</h1>
                 {/* <div className="arrow_container">

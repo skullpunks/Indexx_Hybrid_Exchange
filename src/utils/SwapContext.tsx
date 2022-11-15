@@ -29,12 +29,15 @@ export const useToTokenContext = () => useContext(SwapToContext);
 export type BuySellData = {
   fromToken: string;
   fromTitle: string;
+  fromGraph: string;
   toToken: string;
   toTitle: string;
+  toGraph: string;
   amount: number;
   toAmount: number;
   fee: number;
   orderType: string;
+  orderId: string
 }
 
 export type BSContextType = {
@@ -65,14 +68,17 @@ export const BSProvider = ({ children }: UserContextProviderProps) => {
 export const BSProvider = ({ children }: UserContextProviderProps) => {
 
   const [BSvalue, setBSvalue] = useState<BuySellData>({
-    fromToken: "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
-    fromTitle: "IN500",
+    fromToken: "0x9Be6B3a0Aa74f0b012c47E05Be253F9608F8c6E7",
+    fromTitle: "INEX",
+    fromGraph: "IndexxExchange",
     toToken: "0x7325E062EA31E7b977fbEBBcC45De30c3e894988",
     toTitle: "INXC",
+    toGraph: "IndexxCrypto",
     amount: 0,
     toAmount: 0,
     fee: 0.05,
-    orderType: "buy"
+    orderType: "buy",
+    orderId: ""
   });
 
   return <BSContext.Provider value={{ BSvalue, setBSvalue }}>{children}</BSContext.Provider>;

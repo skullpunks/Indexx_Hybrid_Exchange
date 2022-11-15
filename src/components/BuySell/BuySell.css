@@ -37,7 +37,7 @@
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    align-items: flex-end;
+    align-items: baseline;
     justify-content: center;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .bs_container_main {
-    padding: 55px 41px 55px 44px;
+    padding: 44px 41px 44px 44px;
 }
 
 button {
@@ -94,6 +94,12 @@ button {
 .bs_footer_action button:active {
     background-color: #d52f01;
     outline: none;
+}
+
+.bs_footer_action button.disable_icon:hover,
+.bs_footer_action button.disable_icon:focus,
+.bs_footer_action button.disable_icon:active {
+    background-color: #f66036;
 }
 
 .bs_token_num {
@@ -366,8 +372,9 @@ input[type="checkbox"] {
 }
 
 .ant-select-single .ant-select-selector .ant-select-selection-item {
-    font-size: 30px;
-    color: rgba(18, 18, 18, 0.2);
+    font-size: 19px;
+    /* color: rgba(18, 18, 18, 0.2); */
+    color: #5f5f5f;
 }
 
 
@@ -534,6 +541,11 @@ button.ant-btn-primary [disabled] {
     padding-bottom: 20px;
 }
 
+.ant-btn-dangerous.ant-btn-primary {
+    background-color: #F66036;
+    border-color: #F66036;
+}
+
 .ant-btn-dangerous.ant-btn-primary:hover {
     background-color: #d52f01;
     border-color: #d52f01;
@@ -553,6 +565,11 @@ button.ant-btn-primary [disabled] {
     position: absolute;
     right: 4px;
     top: 39%;
+    opacity: 0.7;
+}
+
+.swap_Arrow_icon:hover {
+    opacity: 1;
 }
 
 .bs_main .ant-btn-primary:hover {
@@ -562,6 +579,7 @@ button.ant-btn-primary [disabled] {
 
 .bs_main .card__header {
     border-color: rgba(246, 96, 54, 0.2);
+    min-height: 87px;
 }
 
 .bs_main .ant-btn-primary:hover, .bs_main .ant-btn-primary:focus,
@@ -580,8 +598,10 @@ button.ant-btn-primary [disabled] {
 }
 
 .bs_curreny_left>input.input_currency {
-    max-width: 300px;
+    max-width: 275px;
     font-size: 60px;
+    font-size: 1.1ch;
+
 }
 
 .error_message {
@@ -589,14 +609,23 @@ button.ant-btn-primary [disabled] {
 
     background: rgba(246, 96, 54, 0.2);
     border-radius: 5px;
-    margin-left: 20px;
-    padding: 5px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5rem 1rem;
     font-size: 13px;
+    width: fit-content;
 }
 
 .top_heading {
     font-size: 48px;
     font-family: AvenirLight;
+}
+
+.buy_sell_bg {
+    background-image: url("../../assets/arts/ladyBuyGoldImage.png");
+    height: 650px;
+    background-repeat: no-repeat;
+    background-position: top center;
 }
 
 .responsive_container .card,
@@ -605,6 +634,13 @@ button.ant-btn-primary [disabled] {
     margin: 19px;
 
 }
+
+.index_link_info {
+    background-color: #E4E4E4;
+}
+
+
+
 
 @media (max-width: 767px) {
 
@@ -615,6 +651,24 @@ button.ant-btn-primary [disabled] {
         min-width: 100%;
         max-width: 100%;
 
+    }
+
+    .bs_wallet .card,
+    .bs_wallet .border-b-1x {
+        min-width: unset;
+        border-color: #d7d7d7;
+    }
+
+    .bs_wallet .ant-input-prefix,
+    .bs_wallet .orange_input.ant-input-affix-wrapper,
+    .bs_wallet .orange_input.ant-input-affix-wrapper:hover,
+    .bs_wallet .orange_input input, .orange_input input:hover {
+
+        border-color: #d7d7d7 !important;
+    }
+
+    .bs_wallet .padding-2x {
+        padding: 0
     }
 
 
@@ -672,6 +726,10 @@ button.ant-btn-primary [disabled] {
 
     .card.bs_container, .bs_main>.card {
         border: none;
+    }
+
+    .bs_curreny_left .font_60x {
+        font-size: 60px;
     }
 
 }

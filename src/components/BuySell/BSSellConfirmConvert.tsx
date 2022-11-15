@@ -1,39 +1,162 @@
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
-import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-import "./BS-Sell.css";
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
+import "./BS-Sell.css";
 // import { createSellOrder, getAppSettings } from '../../services/api';
-import { getAppSettings } from '../../services/api';
+import { confirmSellOrder, createSellOrder, getAppSettings, getCoinPriceByName, oneUSDHelper } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 let appSettingArr: any[] = [];
 
+// const BSSellConfirmConvert: React.FC = () => {
 const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
-    // const BSSellConfirmConvert: React.FC = () => {
     // console.log(setStatus);
     const navigate = useNavigate();
-    const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const [rateData, setRateData] = useState();
+    const [loadings, setLoadings] = useState<boolean>(false);
+
+    const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+    const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+    const [adminFee, setAdminFees] = useState("");
+
+    //const [isFirstEnabled, setisFirstEnabled] = useState(true);
+    // const [isSecondEnabled, setisSecondEnabled] = useState(false);
+    //const [order, setOrder] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
+    let priceData: any = {};
+
     const navigateBak = () => {
-        navigate("indexx-exchange/buy-sell?type=sell");
-        setScreenName("");
+        navigate("/indexx-exchange/buy-sell?type=sell");
+        // setScreenName("");
     }
 
+
     useEffect(() => {
-       getAllSetting();
+        let element = document.getElementById("input_get_value")!;
+        let testVal = element.innerText;
+        let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+        let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+        element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+        element.style.fontSize = charFontSize + "ch";
+        getAllSetting();
+        getPricesData();
     })
-    
+
+    const getPricesData = async () => {
+        const res = await getCoinPriceByName(String(filteredFromArray[0].title), 'Sell');
+        priceData = res.data.results.data;
+        console.log(priceData);
+        setRateData(priceData);
+        let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        console.log('usid oper', oneUsdValue)
+        console.log('adminFee', adminFee)
+        console.log('usid oper1', Number(BSvalue?.amount))
+        setTotalAmountToPay(priceData * Number(BSvalue?.amount) - (priceData * Number(BSvalue?.amount) * Number(adminFee) / 100));
+    }
+
+    const createNewSellOrder = async () => {
+        setLoadings(true);
+        let basecoin: string = filteredFromArray[0].title;
+        let quotecoin: string = 'USD';
+        let amount: number = Number(BSvalue?.amount);
+        const res = await createSellOrder(basecoin, quotecoin, amount);
+        console.log(res.data, res);
+        if (res.status === 200) {
+            //setisFirstEnabled(false);
+            //setisSecondEnabled(true);
+            //setOrder(res.data);
+            if (setBSvalue && BSvalue) {
+                setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
+                setBSvalue({ ...BSvalue, orderType: 'Sell' || '' });
+                setBSvalue({ ...BSvalue, fromTitle: filteredFromArray[0].title });
+                await processSellOrder(res.data);
+            }
+        } else {
+            setLoadings(false);
+            openNotificationWithIcon2('error');
+        }
+        //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    }
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType) => {
+        notification[type]({
+            message: 'Successfully Processed Sell Order',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon2 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to Process Sell Order. Please check balance on the wallet',
+            description: '',
+            icon: <CloseCircleFilled />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon3 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to Process Sell Order. INEX token not allowed to sell',
+            description: '',
+            icon: <CloseCircleFilled />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const processSellOrder = async (order: any) => {
+
+        let basecoin: string = filteredFromArray[0].title;
+        console.log(order);
+        if (basecoin === 'INEX') {
+            openNotificationWithIcon3('error')
+        } else {
+            const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
+            if (res.status === 200) {
+                setLoadings(false);
+                openNotificationWithIcon('success');
+                // setScreenName("BSSellInprogress");
+                navigate("/indexx-exchange/buy-sell/sell-in-progress");
+            } else {
+                setLoadings(false);
+                openNotificationWithIcon2('error');
+            }
+        }
+    }
+
     const getAllSetting = async () => {
         const res = await getAppSettings();
         appSettingArr = res.data;
@@ -45,7 +168,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             setAdminFees(adminFees.value);
         }
     }
-    const [adminFee, setAdminFees] = useState("");
+    //
 
     // const createNewSellOrder = async () => {
     //     let quotecoin: string = filteredFromArray[0].title;
@@ -61,31 +184,32 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         <div className="bs_container card sell_screens">
 
             <div className="card__header flex-justify-between d-flex flex-align-center">
-                <h1 className='centered' style={{ color: "#5f5f5f" }}>
-                    <span className='font_20x pe-2' onClick={navigateBak}>&#60;</span>
+                <h1 className='centered cursor-pointer' style={{ color: "#5f5f5f" }}>
+                    <span className='font_20x pe-2 ' onClick={navigateBak}>&#60;</span>
                     Confirm Sell
                 </h1>
             </div>
 
             <div className='card-body '>
                 <div className="bs_curreny d-flex position-relative padding-lr-2x  ">
-                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "50px 20px" }}>
-                        <span className="font_20x" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
-                        <span placeholder="0" className=" " style={{ fontSize: 60 }} >{BSvalue?.amount}</span>
+                    <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px" }}>
+                        <span placeholder="0" className="color_general font_60x" id="input_get_value" style={{ width: "1.2ch" }} >{BSvalue?.amount}</span>
+                        {/* <span placeholder="0" className=" " id="input_get_value" style={{ width: "1.2ch" }}>{BSvalue?.amount}</span> */}
+                        <span className="font_20x ps-2" style={{ lineHeight: 4 }} > {filteredFromArray[0].title}</span>
                     </div>
-                    <span className="font_20x" style={{
+                    {/* <span className="font_20x" style={{
                         position: "absolute", bottom: "38px", left: "50%", fontSize: "12px"
                     }} >$ 1</span>
                     <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "24px", top: "60%" }} />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className='padding-lr-2x font_15x padding-b-2x padding-t-2x'>
                     <div className='d-flex flex-justify-between'><span> Sell To</span><span className='font_w_800'>USD Balance</span></div>
-                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>18,645.3576844548 USD / {filteredFromArray[0].title}</span></div>
-                    <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>1.00 USD</span></div>
-                    <div className='d-flex flex-justify-between'><span> Fees</span><span className='font_w_800'>{adminFee} %</span></div>
+                    <div className='d-flex flex-justify-between'><span> Price</span><span className='font_w_800'>{rateData} USD / {filteredFromArray[0].title}   </span></div>
+                    <div className='d-flex flex-justify-between'><span> You will get</span><span className='font_w_800'>{Math.floor(totalAmountToPay * 100) / 100} USD</span></div>
+                    <div className='d-flex flex-justify-between'><span> Transaction/Admin Fee:</span><span className='font_w_800'>{adminFee} %</span></div>
 
                 </div>
                 {/* <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
@@ -102,7 +226,14 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button>
+                    {Number(totalAmountToPay) > 50 &&
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
+                    }
+                    {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" loading={loadings} block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
+                    {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}
+                    {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewSellOrder()}> Confirm Purchase (11s)</Button> */}
+
                 </div>
             </div>
 

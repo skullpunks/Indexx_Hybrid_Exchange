@@ -5,7 +5,7 @@ import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAPI, decodeJWT, getUserDetails } from '../../services/api'
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, InfoCircleFilled, CloseCircleFilled} from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -45,10 +45,11 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
     const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        const Icon = (type === "error") ? <CloseCircleFilled /> : <CheckCircleFilled className='text_link' />;
         notification[type]({
             message: message,
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: Icon,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
@@ -68,7 +69,10 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
             <div className='d-flex flex-direction-column col-md-12 responsive_container flex-align-center'>
                 <h1 className='text-center margin-lr-auto top_heading'>Log In</h1>
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
-                <Link to="" className='default-link border-default w-fit-content margin-lr-auto margin-b-2x'>https://indexx.ai</Link>
+                <p className='w-fit-content py-1 p-2 index_link_info'>
+                    <InfoCircleFilled className='pe-2' style={{ color: "#5F5F5F" }} />
+                    <span>https://indexx.ai</span>
+                </p>
                 <div className="bs_container bs_form card">
                     <Form
                         onFinish={onFinish}

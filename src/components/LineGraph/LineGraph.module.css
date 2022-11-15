@@ -1,0 +1,49 @@
+.container {
+  margin: auto;
+  max-width: 1200px;
+}
+
+.graph {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.graph h3 {
+  text-align: center;
+}
+
+.graphBackground {
+  background-color: white;
+  width: auto;
+  height: auto;
+}
+
+.xscroll {
+  overflow: scroll;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #112d3f;
+  color: white;
+  width: 65px;
+  height: 23px;
+  margin-right: 3rem;
+  cursor: pointer;
+  border: none;
+  margin: 0.4rem;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #236086;
+}
+
+.Chart_inner {
+  padding: 10px 0;
+}

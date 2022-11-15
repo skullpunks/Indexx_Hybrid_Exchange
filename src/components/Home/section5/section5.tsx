@@ -35,8 +35,10 @@ import Icon32 from "../../../assets/token-icons/32.png";
 import Icon33 from "../../../assets/token-icons/33.png";
 import Icon34 from "../../../assets/token-icons/34.png";
 import Icon35 from "../../../assets/token-icons/35.png";
+import { useNavigate } from "react-router-dom";
 
 const Section5 = () => {
+    const navigate = useNavigate();
     const IconsSet1 = [
         Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15,
         Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35,
@@ -47,6 +49,14 @@ const Section5 = () => {
         Icon9, Icon10, Icon11, Icon12, Icon13, Icon14, Icon15, Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8,
         Icon24, Icon25, Icon26, Icon26, Icon27, Icon28, Icon29, Icon31, Icon32, Icon33, Icon34, Icon35, Icon1, Icon2, Icon4, Icon5, Icon6, Icon7, Icon8, Icon16, Icon17, Icon18, Icon19, Icon20, Icon21, Icon22, Icon31, Icon32, Icon33, Icon34, Icon35
     ]
+    const navigateUsertoStart = () => {
+        if (localStorage.getItem("user")) {
+            navigate("/indexx-exchange/buy-sell");
+        } else {
+            navigate("/indexx-exchange/buy-sell/get-started");
+        }
+    }
+
     return (
         <div style={{ backgroundImage: `url(${BackgroundImage})` }} className="last-container">
             <div className="currencies">
@@ -64,6 +74,7 @@ const Section5 = () => {
                 <div className="getStarted">
                
                 <Link to="/indexx-exchange/buy-sell" style={{color:"white"}}>Get Started</Link>
+
 
                 </div>
             </div>

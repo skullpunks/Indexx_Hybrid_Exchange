@@ -1,0 +1,34 @@
+[
+    {
+        "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+        "graph": "BinanceGraph"
+    },
+    {
+        "address": "0x7325E062EA31E7b977fbEBBcC45De30c3e894988",
+        "graph": "IndexxCrypto"
+    },
+    {
+        "address": "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
+        "graph": "Indexx500Graph"
+    },
+    {
+        "address": "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005B",
+        "graph": "IndexxUSDPGraph"
+    },
+    {
+        "address": "0x55d398326f99059fF775485246999027B3197955",
+        "graph": "BitcoinGraph"
+    },
+    {
+        "address": "LRH6TL9hhrPowrZXeZZ8vpgBR1Cj8QeVGa",
+        "graph": "LitecoinGraph"
+    },
+    {
+        "address": "0x56092d7daffc1691662e7383c8ebc5f75247ca19",
+        "graph": "EthereumGraph"
+    },
+    {
+        "address": "0x9Be6B3a0Aa74f0b012c47E05Be253F9608F8c6E7",
+        "graph": "IndexxExchange"
+    }
+]

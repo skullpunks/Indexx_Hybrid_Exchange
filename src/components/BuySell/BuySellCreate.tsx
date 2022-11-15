@@ -26,7 +26,7 @@ const BuySellCreate: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className="bs_container card">
             <div className="bs_container_header d-flex">
-                <img src={arrowAdressLeft} alt="adressLeft" className="left_arrow" onClick={() => setScreenName("select")} />
+                <img src={arrowAdressLeft} alt="adressLeft" className="left_arrow" onClick={() => setScreenName("")} />
                 <h1> Create Account</h1>
             </div>
             <div className="bs_container_create_main flex-align-center" >

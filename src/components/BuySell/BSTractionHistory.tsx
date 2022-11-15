@@ -14,7 +14,7 @@ interface Props {
 const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart }) => {
   let allTxsdata = [];
   let access_token = String(localStorage.getItem("access_token"));
-  let decoded :any= decodeJWT(access_token);
+  let decoded: any = decodeJWT(access_token);
   // onChange =>()= {
   // let userWallets = await getUserWallets(decoded.email);
   // // }
@@ -47,7 +47,7 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
       </div>
       <div className='card__body' >
         <div className="bs_token_num d-flex flex-align-center" >
-          <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
+          <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
           USD  <span className="token_grey">US Dollar</span>
         </div>
         <div className="color_general" style={{ transform: "scale(1)", padding: "10px" }}>
