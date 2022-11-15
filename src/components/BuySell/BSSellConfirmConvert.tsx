@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
@@ -23,8 +23,11 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // console.log(setStatus);
     const navigate = useNavigate();
     const [rateData, setRateData] = useState();
+    const [loadings, setLoadings] = useState<boolean>(false);
+
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+    const [adminFee, setAdminFees] = useState("");
 
     //const [isFirstEnabled, setisFirstEnabled] = useState(true);
     // const [isSecondEnabled, setisSecondEnabled] = useState(false);
@@ -47,8 +50,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         let charWidth = testVal.length <= 1 ? 1.1 : 0.9
         element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
         element.style.fontSize = charFontSize + "ch";
-
-    }, [BSvalue])
+        getAllSetting();
+        getPricesData();
+    })
 
     const getPricesData = async () => {
         const res = await getCoinPriceByName(String(filteredFromArray[0].title), 'Sell');
@@ -63,6 +67,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const createNewSellOrder = async () => {
+        setLoadings(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
@@ -78,6 +83,9 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                 setBSvalue({ ...BSvalue, fromTitle: filteredFromArray[0].title });
                 await processSellOrder(res.data);
             }
+        } else {
+            setLoadings(false);
+            openNotificationWithIcon2('error');
         }
         //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     }
@@ -103,7 +111,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         notification[type]({
             message: 'Failed to Process Sell Order. Please check balance on the wallet',
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
@@ -118,7 +126,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         notification[type]({
             message: 'Failed to Process Sell Order. INEX token not allowed to sell',
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
@@ -138,10 +146,12 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         } else {
             const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
             if (res.status === 200) {
+                setLoadings(false);
                 openNotificationWithIcon('success');
                 // setScreenName("BSSellInprogress");
                 navigate("/indexx-exchange/buy-sell/sell-in-progress");
             } else {
+                setLoadings(false);
                 openNotificationWithIcon2('error');
             }
         }
@@ -158,9 +168,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
             setAdminFees(adminFees.value);
         }
     }
-    getAllSetting();
-    getPricesData();
-    const [adminFee, setAdminFees] = useState("");
+    //
 
     // const createNewSellOrder = async () => {
     //     let quotecoin: string = filteredFromArray[0].title;
@@ -222,7 +230,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" loading={loadings} block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewSellOrder()}> Confirm Purchase (11s)</Button> */}
 

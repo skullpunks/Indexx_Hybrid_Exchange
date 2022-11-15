@@ -126,21 +126,22 @@ const columns: ColumnsType<DataType> = [
 ];
 
 
-const BSTransactionHistoryTable: React.FC = () => {
+const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [txList, setTxList] = useState() as any;
     useEffect(() => {
         const token = localStorage.getItem('access_token');
         const decodedToken: any = decodeJWT(String(token)) as any;
-        transactionList(decodedToken?.email).then((res) => {
+
+        transactionList(decodedToken?.email, '').then((res) => {
             console.log(res.data);
             const results = res.data;
             let finalArr = [];
             for(let i = 0; i < results.length; i++) {
                 if(results[i].transactionType?.includes('FIAT')) {
                     console.log(results[i].transactionType);
-                    finalArr.push(results[i]);
                 } else {
                     console.log(results[i].transactionType, 'typoe');
+                    finalArr.push(results[i]);
                 }
             }
             setTxList(finalArr);
@@ -207,4 +208,4 @@ const BSTransactionHistoryTable: React.FC = () => {
     )
 }
 
-export default BSTransactionHistoryTable
+export default BSTransactionCryptoHistoryTable

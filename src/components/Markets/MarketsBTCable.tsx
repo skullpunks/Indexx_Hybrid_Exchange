@@ -20,6 +20,7 @@ interface DataType {
     HighPrice: any;
     LowPrice: any;
     Symbol: any;
+    BTCPrice: any
 }
 const MarketsBTCTable = () => {
 
@@ -35,11 +36,13 @@ const MarketsBTCTable = () => {
 
     useEffect(() => {
         if (!calledOnce) {
-            let access_token = String(localStorage.getItem("access_token"));
-            let decoded: any = decodeJWT(access_token);
-            console.log(decoded.email);
-            setEmail(decoded.email)
-            console.log(email);
+            let access_token = String(localStorage?.getItem("access_token"));
+            if (access_token !== "null" || access_token !== undefined) {
+                let decoded: any = decodeJWT(access_token);
+                console.log(decoded.email);
+                setEmail(decoded.email);
+                console.log(email);
+            }
             marketsData().then((data) => {
                 const res = data.data.filter((x:any) => x.Symbol !== 'BTC')
                 console.log(res);
@@ -79,13 +82,14 @@ const MarketsBTCTable = () => {
         },
         {
             title: 'Pair Price',
-            dataIndex: 'Price',
+            dataIndex: 'BTCPrice',
             sorter: {
-                compare: (a, b) => a.Price - b.Price,
+                compare: (a, b) => a.BTCPrice
+                - b.BTCPrice,
                 multiple: 3,
             },
             render: (_, record) => {
-                return '$ ' + record?.Price;
+                return Math.floor(record?.BTCPrice * 10000000) / 10000000 + ' BTC';
             },
             
         },

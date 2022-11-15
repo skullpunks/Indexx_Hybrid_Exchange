@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { getAppSettings, getCoinPriceByName, createConvertOrder, confirmConvertOrder } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { CheckCircleFilled } from '@ant-design/icons';
-import loaderGif from "../../assets/arts/loaderIcon.gif";
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+//import loaderGif from "../../assets/arts/loaderIcon.gif";
 
 
 // const filteredArray = (items: any, keyName: any, key: any) => {
@@ -29,9 +29,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     // const BSConfirmConvert: React.FC = () => {
     // console.log(setStatus);
     const navigate = useNavigate();
+    const [loadings, setLoadings] = useState<boolean>(false);
     const [rateData1, setRateData1] = useState();
     const [rateData3, setRateData3] = useState(0);
-    const [showLoader, isShowLoader] = useState(false);
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const [totalAmountToPayInUSD, setTotalAmountToPayInUSD] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
@@ -102,7 +102,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     })
 
     const createProcessOrder = async () => {
-        isShowLoader(true);
+        setLoadings(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = filteredToArray[0].title;
         const res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount));
@@ -114,7 +114,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
             }
         } else {
-            isShowLoader(false);
+            setLoadings(false);
             openNotificationWithIcon2('error');
         }
     }
@@ -140,7 +140,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         notification[type]({
             message: 'Failed to Process Convert Order. Please check balance on the wallet',
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
@@ -154,11 +154,11 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         const res = await confirmConvertOrder(order.user.email, order.orderId);
         console.log(res);
         if (res.status === 200) {
-            isShowLoader(false);
+            setLoadings(false);
             openNotificationWithIcon('success');
             navigate("/indexx-exchange/buy-sell/convert-in-progress");
         } else {
-            isShowLoader(false);
+            setLoadings(false);
             openNotificationWithIcon2('error');
         }
     }
@@ -168,9 +168,6 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
 
     return (
         <div className="bs_container card">
-            {showLoader &&
-                <div className="loader" id="loaderLayer"> <img src={loaderGif} alt="loader" /></div>
-            }
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
                     <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={navigateBak}>&#60;</span>
@@ -221,7 +218,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                     }
                     {/* setScreenName("BSConvertInProgress")  rocessSellOrder() ({Math.floor(totalAmountToPayInUSD * 100 ) /  100} USD)*/}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createProcessOrder()}> Confirm Conversion</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" loading={loadings} block onClick={() => createProcessOrder()}> Confirm Conversion</Button>
 
                 </div>
             </div>

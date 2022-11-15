@@ -114,7 +114,11 @@ function App() {
                     <Route path="/indexx-exchange/trade-to-earn" element={<TradeToEarn />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
                     <Route path="/indexx-exchange/charts" element={<Home />} />
-                    <Route path="/indexx-exchange/markets" element={<Markets />} />
+                    {localStorage.getItem("user") ? (
+                        <Route path="/indexx-exchange/markets" element={<Markets />} />
+                    ) : (
+                        <></>
+                    )}
                     <Route path="/indexx-exchange/trade" element={<TradeChart />} />
                     <Route path="/indexx-exchange/about" element={<About />} />
                     <Route path="/indexx-exchange/help" element={<Help />} >

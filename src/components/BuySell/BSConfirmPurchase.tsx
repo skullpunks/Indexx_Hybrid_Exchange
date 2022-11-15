@@ -13,7 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Stripe/CheckoutForm";
 import "../Stripe/CheckoutForm.css"
 import { useNavigate } from 'react-router-dom';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled } from '@ant-design/icons';
 
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
@@ -47,7 +47,6 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         const finalPay = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
         setTotalAmountToPay(finalPay);
     }
-    getPricesData();
 
     const getAllSetting = async () => {
         const res = await getAppSettings();
@@ -78,7 +77,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         notification[type]({
             message: message,
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
@@ -110,6 +109,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
     useEffect(() => {
         getAllSetting();
+        getPricesData();
         // if(document.getElementById("input_get_value") && document.getElementById("input_get_value")?.innerHTML){
         let element = document.getElementById("input_get_value")!;
         let testVal = element.innerText;
@@ -118,7 +118,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         element.style.width = ((testVal.length + 1) * charWidth) + 'ch';
         element.style.fontSize = charFontSize + "ch";
         // }
-    }, [BSvalue])
+    })
 
     const appearance = {
         theme: String('stripe'),
@@ -168,7 +168,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_token d-flex cursor-pointer justify-between font_20x" style={{ alignItems: "center" }}>
                     <span>Total</span>
-                    <span>{Math.floor(totalAmountToPay * 100) / 100} {filteredFromArray[0].title}</span>
+                    <span>{Math.floor(totalAmountToPay * 1000000) / 1000000} {filteredFromArray[0].title}</span>
                 </div>
                 <div className='d-flex pe-3' style={{
                     justifyContent: "flex-end"

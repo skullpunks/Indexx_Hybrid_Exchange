@@ -1,5 +1,6 @@
 import { Button, Tabs } from 'antd'
 import React from 'react'
+import BSTransactionCryptoHistoryTable from './BSTransactionCryptoHistoryTable'
 import BSTransactionHistoryTable from './BSTransactionHistoryTable'
 
 const BSTransactionHistoryContent = () => {
@@ -8,7 +9,7 @@ const BSTransactionHistoryContent = () => {
             <h1>Transaction History</h1>
             <Tabs type='line' defaultActiveKey="1" className="bs_tab_item orange tabs_button">
                 <Tabs.TabPane tab="Crypto" key="1" >
-                    <BSTransactionHistoryTable />
+                    <BSTransactionCryptoHistoryTable />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Fiat" key="2" >
                     <BSTransactionHistoryTable />

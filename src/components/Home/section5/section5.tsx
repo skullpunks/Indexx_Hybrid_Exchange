@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./sections5.css"
 import BackgroundImage from "../../../assets/background.jpg";
 import Icon1 from "../../../assets/token-icons/1.png";
@@ -70,8 +71,11 @@ const Section5 = () => {
             <div className="section-heading">Select From Over 100 Cryptocurrencies</div>
             <div className="section-helper-text">  Trade BTC, ETH and other cryptocurrencies in minutes.</div>
             <div className="actions">
-                <div className="getStarted" onClick={navigateUsertoStart}>
-                    Get Started
+                <div className="getStarted">
+               
+                <Link to="/indexx-exchange/buy-sell" style={{color:"white"}}>Get Started</Link>
+
+
                 </div>
             </div>
         </div>

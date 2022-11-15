@@ -34,16 +34,19 @@ const MarketsTable = () => {
 
     useEffect(() => {
         if (!calledOnce) {
-            let access_token = String(localStorage.getItem("access_token"));
-            let decoded: any = decodeJWT(access_token);
-            console.log(decoded.email);
-            setEmail(decoded.email);
-            console.log(email);
+            let access_token = String(localStorage?.getItem("access_token"));
+            if (access_token !== "null" || access_token !== undefined) {
+                let decoded: any = decodeJWT(access_token);
+                console.log(decoded.email);
+                setEmail(decoded.email);
+                console.log(email);
+            }
             marketsData().then((data) => {
                 setMarketData(data.data);
                 setMarketDataFixed(data.data);
                 setCalledOnce(true);
             });
+
         }
     }, [calledOnce, email]);
     /*
@@ -160,7 +163,7 @@ const MarketsTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => parseFloat(x.Change) < 0));
     }
 
-    const showAll = async() => {
+    const showAll = async () => {
         setMarketData(marketDataFixed);
     }
 
@@ -239,13 +242,14 @@ const MarketsTable = () => {
 
     return (
         <div>
-            <div className='grey-strip d-flex market_button_strips'>
-                <Button className='white-strip' onClick={() => showAll()}>All</Button>
-                <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainerts</Button>
-                <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
-                <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
-                <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
-                <Button className='white-strip last-item d-md-block d-none'>ID</Button>
+
+            <div className='grey-strip d-flex'>
+                <Button className='white-strip '>All</Button>
+                <Button className='white-strip margin-lr-2x'>Top Gainers</Button>
+                <Button className='white-strip margin-lr-2x'>Top Losers</Button>
+                <Button className='white-strip margin-lr-2x'>New Listings</Button>
+                <Button className='white-strip '>Trending</Button>
+                <Button className='white-strip last-item'>ID</Button>
             </div>
             <div className='tab-body-container'>
                 <Table columns={columns} dataSource={marketData} onChange={onChange} />

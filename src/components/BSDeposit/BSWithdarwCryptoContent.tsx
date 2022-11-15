@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRightOutlined, CopyOutlined, LinkOutlined } from '@ant-design/icons';
 import { Button, Select, Table, Tooltip, RadioChangeEvent, Radio, Space } from 'antd';
+import { Typography } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 import AddressIcon from "../../assets/arts/AddressIcon.svg";
@@ -8,7 +9,10 @@ import { decodeJWT, transactionList, getUserWallets, getMinAndMaxOrderValues, cr
 import { useNavigate } from 'react-router-dom';
 import { ColumnsType } from 'antd/lib/table';
 import React from 'react';
+import Web3 from 'web3';
 
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+const { Text } = Typography;
 export const BSWithdarwCryptoContent = () => {
   const navigate = useNavigate();
   const [network, setNetwork] = useState<any>();
@@ -19,6 +23,8 @@ export const BSWithdarwCryptoContent = () => {
   const [selectedCoin, setSelectedCoin] = useState('');
   const [receiveAmountt, setReceiveAmount] = useState('');
   const [selectedCoinObj, setSelectedCoinObj] = useState('0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A');
+  const [isWalletAddrValid, setIsWalletAddrValid] = useState(true);
+
   // const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [values, setValues] = useState() as any;
   const [finalAmount, setFinalAmount] = useState() as any;
@@ -53,7 +59,7 @@ export const BSWithdarwCryptoContent = () => {
     txid: string;
   }
 
-  
+
   const columns: ColumnsType<DataType> = [
 
     {
@@ -175,18 +181,29 @@ export const BSWithdarwCryptoContent = () => {
 
   const { Option } = Select;
 
-  const handleChange = (value: string) => {
-    setNetwork(value)
-    console.log(`selected ${value}`);
-  };
+  // const handleChange = (value: string) => {
+  //   setNetwork(value)
+  //   console.log(`selected ${value}`);
+  // };
+
+  const checkWalletAddress = async (address: string) => {
+    const res = web3.utils.checkAddressChecksum(address)
+    console.log(res);
+    setIsWalletAddrValid(res);
+  }
 
   const onChangeReceiveAmt = (e: any) => {
     // if (e.currentTarget.value) {
+    console.log(e.currentTarget.value);
     let val = e.currentTarget.value;
     setReceiveAmount(val + "");
-    
+    setNetwork("")
+    setFinalAmount(parseFloat(val) - 0.0005)
+    if (val < 0.001) {
+      setFinalAmount(0.0005)
+    }
     // }
-}
+  }
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
@@ -197,8 +214,9 @@ export const BSWithdarwCryptoContent = () => {
     let val = e.currentTarget.value;
     console.log('radio checked', val);
     setWalletAddre(val);
+    checkWalletAddress(val);
   };
-  
+
   const handleChangeCurrency = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter((x: any) => x.coinSymbol === getRequiredCoin?.title);
@@ -218,8 +236,8 @@ export const BSWithdarwCryptoContent = () => {
     setValues(res);
   };
 
- const withdrawFiat = async () => {
-  console.log(' iam her')
+  const withdrawFiat = async () => {
+    console.log(' iam her')
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
     let reqObj = {
@@ -231,7 +249,7 @@ export const BSWithdarwCryptoContent = () => {
       "userId": decodedToken?.email
     }
     console.log(reqObj);
-    let res = await createCryptoWithdraw(decodedToken?.email, Number(finalAmount), walletAddress, value);
+    let res = await createCryptoWithdraw(decodedToken?.email, Number(finalAmount), walletAddress, selectedCoin);
     console.log(res);
     if (res.status === 200) {
       alert("Withdrawal request submitted successfully");
@@ -241,15 +259,15 @@ export const BSWithdarwCryptoContent = () => {
     }
   }
 
-//   const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
-//     let testVal: string = "";
-//     if (e.currentTarget != null) {
-//         testVal = e?.currentTarget?.value;
-//         console.log('testVal', testVal)
-//         setFinalAmount(testVal);
+  //   const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
+  //     let testVal: string = "";
+  //     if (e.currentTarget != null) {
+  //         testVal = e?.currentTarget?.value;
+  //         console.log('testVal', testVal)
+  //         setFinalAmount(testVal);
 
-//     }
-// }
+  //     }
+  // }
   return (
     <div className='scan-container bs_main wd_container'>
 
@@ -290,27 +308,37 @@ export const BSWithdarwCryptoContent = () => {
             <label>Address</label>
             <br />
             <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
-              <input type="text" placeholder='Enter address' className='width-100 font_20x outline-none' style={{ border: "none" }} onChange={onChageAdd}/><img src={AddressIcon} alt="AddressIcon" /></div>
+              <input type="text" placeholder='Enter address' className='width-100 font_20x outline-none' style={{ border: "none" }} onChange={onChageAdd} maxLength={42} /><img src={AddressIcon} alt="AddressIcon" /></div>
+            <span>
+              {isWalletAddrValid ? "" : <Text>Invalid Wallet Address</Text>}
+            </span>
           </div>
-          <div className='padding-t-2x'>
+          <div className='padding-t-1x'>
+            <label>Amount</label>
+            <br />
+            <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
+              <input type="number" placeholder='Enter Amount' className='width-100 font_23x outline-none' style={{ border: "none" }} value={receiveAmountt} onChange={onChangeReceiveAmt} />
+              <div className='d-flex'><span className="padding-l-1x">{selectedCoin}</span></div></div>
+          </div>
+          {/* <div className='padding-t-2x'>
             <label>Network</label>
 
 
             <Select className='width-100' onChange={handleChange} placeholder="Select withdrawal network" >
-              <Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chain (BEP20)</span> </div></Option>
-              {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
-              {/* <Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Option> */}
-              <Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Option>
-              {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
-            </Select>
-          </div>
+              <Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chain (BEP20)</span> </div></Option> */}
+          {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
+          {/* <Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Option> */}
+          {/* <Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Option> */}
+          {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
+          {/* </Select>
+          </div> */}
           {network &&
             <>
               <div className='padding-t-1x'>
                 <label>Amount</label>
                 <br />
                 <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
-                  <input type="number" placeholder='Enter Amount' className='width-100 font_23x outline-none' style={{ border: "none" }} value={receiveAmountt} onChange={onChangeReceiveAmt}/>
+                  <input type="number" placeholder='Enter Amount' className='width-100 font_23x outline-none' style={{ border: "none" }} value={receiveAmountt} onChange={onChangeReceiveAmt} />
                   <div className='d-flex'><span className="border-r-1x padding-r-1x text_link">MAX</span><span className="padding-l-1x">{selectedCoin}</span></div></div>
               </div>
               <div>
@@ -348,16 +376,16 @@ export const BSWithdarwCryptoContent = () => {
                   <div>{singleWallet?.coinBalance} {selectedCoin} </div>
                 </div>
 
-               
+
                 <div className='w_50'>
                   <div className='brand_opacity_5'>Minimum withrawal  </div>
-                  <div>{setFinalAmount?.min} {selectedCoin} </div>
+                  <div> 0.0015 {selectedCoin} </div>
                 </div>
               </div>
               <div className='d-flex flex-justify-between padding-t-1x'>
                 <div className='w_50'>
                   <div className='brand_opacity_5'>Network Fee</div>
-                  <div> 0 </div>
+                  <div> 0.0005 {selectedCoin}</div>
                 </div>
                 <div className='w_50'>
 
@@ -365,9 +393,26 @@ export const BSWithdarwCryptoContent = () => {
                   <div> {selectedCoin}</div>
 
                 </div>
+
+
               </div>
 
+              <br></br>
+
+              <div className='w_50 '>
+
+                <div className='brand_opacity_5'>Final Recieve Amount</div>
+                <div className='font_weight_800'>{finalAmount} {selectedCoin}</div>
+              </div>
+              {parseFloat(finalAmount) <= parseFloat(singleWallet?.coinBalance) && parseFloat(finalAmount) >= 0.001 &&
+                <div className='d-flex flex-justify-between '>
+                  {/* //<Button type="primary" onClick={() => withdrawFiat()} disabled>Withdraw</Button> */}
+                  <Button type="primary" disabled>Withdraw</Button>
+
+                </div>
+              }
             </div>
+
           }
 
 

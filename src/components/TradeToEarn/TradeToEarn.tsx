@@ -2,7 +2,7 @@ import { Card, Image, Button, Input, notification } from 'antd'
 import { Divider } from 'antd';
 import { Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import exgcoin from "../../assets/arts/exgcoin.png";
 import logo from "../../assets/arts/logo.png";
@@ -131,7 +131,7 @@ const TradeToEarn = () => {
     notification[type]({
       message: 'Failed to Rewards. Please check balance and try agrain after sometime',
       description: '',
-      icon: <CheckCircleFilled className='text_link' />,
+      icon: <CloseCircleFilled />,
       style: {
         border: "1px solid #F66036",
         boxShadow: "none",

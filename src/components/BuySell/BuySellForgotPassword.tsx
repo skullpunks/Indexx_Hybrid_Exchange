@@ -1,7 +1,7 @@
 import { Button, Input, Form, notification } from 'antd'
 import Email from "../../assets/arts/Email.svg";
 import { forgotPassword } from '../../services/api';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 const BuySellForgotPassword = () => {
     const onFinish = (values: any) => {
@@ -39,7 +39,7 @@ const BuySellForgotPassword = () => {
         notification[type]({
             message: 'Failed to send reset password. User email not registered',
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled  />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",

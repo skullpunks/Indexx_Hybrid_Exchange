@@ -12,6 +12,7 @@ const BuySellGetStarted: React.FC = () => {
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
+        localStorage.setItem("tempAuthEmail", values.email);
         const res = await signupAPI(values.email, values.password, values.referral);
         console.log(res)
         if (res.status === 200) {

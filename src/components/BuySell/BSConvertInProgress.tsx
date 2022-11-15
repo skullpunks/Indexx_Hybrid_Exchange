@@ -21,18 +21,16 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const filteredToArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.toToken;
     });
-    console.log(BSvalue)
 
     useEffect(() => {
         //getOrder();
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
         getOrderDetails(decoded.email, String(BSvalue?.orderId)).then((order) => {
-            console.log(order.data);
             setOrderData(order.data);
         });
 
-    })
+    }, [orderData, BSvalue])
     // }
 
     // const getOrder = async () => {
@@ -40,7 +38,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     //     let decoded: any = decodeJWT(access_token);
     //     const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
     //     console.log(order);
-    //     setOrderData(order);
+    //     setOrderData(order.data);
     // }
 
     return (
@@ -67,7 +65,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_curreny_left padding-b-2x pe-0" style={{ transform: "scale(1)", paddingBottom: "20px", paddingTop: 0 }}>
 
-                    <span placeholder="0" className="font_20x " > <span className='dummy'>{orderData?.breakdown?.outAmount}</span>  </span>
+                    <span placeholder="0" className="font_20x " > <span className='dummy'>{Math.floor(orderData?.breakdown?.outAmount * 100000) / 100000}</span>  </span>
                     <span className="font_20x" style={{
                         color: "rgba(96, 96, 96,.5)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>
