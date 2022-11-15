@@ -406,7 +406,8 @@ export const BSWithdarwCryptoContent = () => {
               </div>
               {parseFloat(finalAmount) <= parseFloat(singleWallet?.coinBalance) && parseFloat(finalAmount) >= 0.001 &&
                 <div className='d-flex flex-justify-between '>
-                  <Button type="primary" onClick={() => withdrawFiat()}>Withdraw</Button>
+                  {/* //<Button type="primary" onClick={() => withdrawFiat()} disabled>Withdraw</Button> */}
+                  <Button type="primary" disabled>Withdraw</Button>
 
                 </div>
               }
