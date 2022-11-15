@@ -1,12 +1,17 @@
 import { Segmented } from 'antd';
-import {
-  //   Brush,
-  Line, LineChart, Tooltip,
-  // CartesianGrid,
-  XAxis,
-  YAxis
-} from "recharts";
+// import {
+//   Line, LineChart, Tooltip,
+//   XAxis,
+//   YAxis
+// } from "recharts";
+
+import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
+import moment from "moment";
+//0import numeral from "numeral";
 import styles from "./LineGraph.module.css";
+
+//const numberFormatter = (item : any) => numeral(item).format("0,00");
+const dateFormatter = (item: any) => moment(item).format("MMM DD");
 
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
@@ -19,17 +24,15 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 650;
-      height = 420;
+      height = 400;
     }
   };
   media();
   return (
-    <div className='card' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
-      {/* <h3>{props.currencyName}/USD</h3> */}
+    <div className='card chart_buy' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
+
       <div className="chart_header d-flex flex-align-center">
-        {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
-        {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
-        <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" />
+        <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" className='me-1' />
         <img src={require(`../../assets/token-icons/${props.currencySymbol}.png`).default} alt="bitcoin" width="30" />
 
         <h1 className="chart_title">{props.currencyPrice} USD/{props.currencySymbol}</h1>
@@ -61,16 +64,15 @@ const LineGraph = (props: any) => {
               </span>),
               value: 1
             },
-
             {
-              label: (<span onClick={props.monthClickHandler}>
-                1 Month
+              label: (<span onClick={props.weekClickHandler}>
+                1 Week
               </span>),
               value: 2
             },
             {
-              label: (<span onClick={props.weekClickHandler}>
-                1 Week
+              label: (<span onClick={props.monthClickHandler}>
+                1 Month
               </span>),
               value: 3
             },
@@ -84,7 +86,49 @@ const LineGraph = (props: any) => {
           </Segmented>
         </div>
       </div>
-      <LineChart
+      <AreaChart
+        margin={{ left: 17, right: 6, top: 10 }}
+        className={styles.graphBackground}
+        width={width}
+        height={height}
+        data={props.data}
+      >
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#f66036" stopOpacity={0.5} />
+            <stop offset="90%" stopColor="#f66036" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+
+        <Area
+          dot={false}
+          type="monotone"
+          dataKey="price"
+          strokeWidth={1.5}
+          isAnimationActive={false}
+          stroke="rgba(246, 96, 54 , 1)"
+          // fill="rgba(246, 96, 54 , 0.09)"
+          fill="url(#colorUv)"
+        />
+        <XAxis
+          padding={{ right: 20 }}
+          dataKey={"time"}
+          stroke="#5f5f5f"
+          tick={{ fill: "#5f5f5f" }}
+          tickFormatter={dateFormatter}
+
+          style={{ fontSize: 13 }}
+          minTickGap={16}
+        />
+        <YAxis
+          stroke="#5f5f5f" padding={{ top: 20 }} tick={{ fill: "#5f5f5f" }} />
+        <Tooltip labelFormatter={dateFormatter}
+          formatter={function (value: any, name) {
+            return `${(Math.round(value * 100) / 100).toFixed(3)}`;
+          }} />
+
+      </AreaChart>
+      {/* <LineChart
         margin={{ left: 17, right: 6, top: 10 }}
         className={styles.graphBackground}
         width={width}
@@ -96,51 +140,24 @@ const LineGraph = (props: any) => {
           dot={false}
           type="monotone"
           dataKey="price"
-          stroke="#4592af"
+          stroke="#f66036"
           strokeWidth={1.5}
+          isAnimationActive={false}
         />
-        {/* <CartesianGrid stroke="grey" /> */}
         <XAxis
           padding={{ right: 40 }}
           dataKey={"time"}
-          tick={{ fill: "black" }}
+          stroke="#5f5f5f"
+          tick={{ fill: "#5f5f5f" }}
         />
-        <YAxis padding={{ top: 60 }} tick={{ fill: "black" }} />
-        {/* <Brush startIndex={0} dataKey="time" height={20} stroke="#4a4844" /> */}
+        <YAxis
+          stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
         <Tooltip />
-        {/* <div>
-          <button  onClick={props.yearClickHandler}>
-            1 Year
-          </button>
-          <button  onClick={props.monthClickHandler}>
-            1 Month
-          </button>
-          <button  onClick={props.weekClickHandler}>
-            1 Week
-          </button>
-          <button  onClick={props.dayClickHandler}>
-            1 Day
-          </button>
-        </div> */}
-      </LineChart>
-      {/* <div>
-        <button  onClick={props.yearClickHandler}>
-          1 Year
-        </button>
-        <button  onClick={props.monthClickHandler}>
-          1 Month
-        </button>
-        <button  onClick={props.weekClickHandler}>
-          1 Week
-        </button>
-        <button  onClick={props.dayClickHandler}>
-          1 Day
-        </button>
-      </div> */}
 
-      {/* <div className="chart_inner_right">
-                    <Segmented options={['24H', '1W', '1M', '1Y']} />
-                </div> */}
+      </LineChart> */}
+
+
+
     </div>
   );
 };

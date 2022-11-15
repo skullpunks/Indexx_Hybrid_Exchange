@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
 import {
-    PaymentElement,
-    useStripe,
-    useElements
+    PaymentElement, useElements, useStripe
 } from "@stripe/react-stripe-js";
+import { useEffect, useState } from "react";
 import baseURL from '../../services/api';
 
 export default function CheckoutForm() {
@@ -61,6 +59,7 @@ export default function CheckoutForm() {
             confirmParams: {
                 // Make sure to change this to your payment completion page
                 return_url: baseURL + '/api/v1/inex/stripe/confirmPayment',
+                //return_url: 'http://localhost:3000' + '/api/v1/inex/stripe/confirmPayment',
             },
         });
 

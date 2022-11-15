@@ -1,0 +1,69 @@
+.bs_container.medium_card {
+    min-width: 700px;
+}
+
+.medium_card .light_button, .light_button, .light_button:hover, .light_button:focus, .light_button:active {
+    padding: 6px 15px 10px 40px !important;
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+}
+
+.deposit_btn,
+.deposit_btn:hover,
+.deposit_btn:focus,
+.deposit_btn:active {
+    background-image: url("../../assets/arts/depositIcon.svg");
+}
+
+
+.withdraw_btn,
+.withdraw_btn:hover,
+.withdraw_btn:focus,
+.withdraw_btn:active {
+    background-image: url("../../assets/arts/rocketIcon.svg");
+
+}
+
+.sell_screens .bs_token {
+    padding: 12px 20px;
+}
+
+/* 
+.sell_screens .bs_footer_action button {
+    background-color: #00A151;
+    border-color: #00A151;
+} */
+/* 
+.sell_screens .bs_footer_action button:hover,
+.sell_screens .bs_footer_action button:focus,
+.sell_screens .bs_footer_action button:active {
+    background-color: #026333 !important;
+} */
+/* 
+.sell_screens .bs_footer_action button.disable_icon:hover,
+.sell_screens .bs_footer_action button.disable_icon:focus,
+.sell_screens .bs_footer_action button.disable_icon:active {
+    background-color: #00A151 !important;
+}
+
+.sell_screens button.sell_btn {
+    background-color: #00A151;
+    border-color: #00A151;
+} */
+
+.font_w_800 {
+    font-weight: 800;
+}
+
+.margin-t-3x {
+    margin-top: 30px;
+}
+
+
+.margin-t-2x {
+    margin-top: 20px
+}
+
+.margin-t-auto {
+    margin-top: auto;
+}

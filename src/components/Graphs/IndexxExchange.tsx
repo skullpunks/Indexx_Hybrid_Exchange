@@ -16,7 +16,7 @@ const IndexxExchangeGraph = () => {
   const [INEXPriceChange, setINEXPriceChange] = useState() as any;
   //Custom Hook for Fetching Data using Fetch API
   const {
-    yearClickHandler,
+    // yearClickHandler,
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
@@ -42,7 +42,7 @@ const IndexxExchangeGraph = () => {
       {!error ? (
         <LineGraph
           currencyName={currencyName}
-          yearClickHandler={yearClickHandler}
+          // yearClickHandler={yearClickHandler}
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}

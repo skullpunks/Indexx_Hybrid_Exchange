@@ -111,8 +111,8 @@
 
 
 .ant-btn.btn-warn {
+    border-color: transparent;
     border-radius: 4px;
-    max-width: 100px;
 }
 
 .ant-table-tbody>tr:last-child>td {
@@ -124,41 +124,47 @@
 }
 
 @media (max-width: 767px) {
-    .market_button_strips button{
-        min-width:83px;
-        font-size: 11px;
+    .market_button_strips button {
+        min-width: 50px;
+        max-width: 90px;
+        font-size: 12px;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
     }
 
-    
+
     .market_button_strips .margin-lr-2x {
-            margin-left: 12px;
-            margin-right: 0;
-     
+        margin-left: 8px;
+        margin-right: 0;
+
     }
+
     .market-container .tab-body-container .ant-table-content {
-        margin:0 0;
+        margin: 0 0;
     }
 
     .market-container .ant-tabs-tab+.ant-tabs-tab,
     .market-container .ant-tabs-tab:hover .ant-tabs-tab-btn,
     .market-container .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
-    .market-container .ant-tabs-tab .ant-tabs-tab-btn{
+    .market-container .ant-tabs-tab .ant-tabs-tab-btn {
         font-size: 15px;
     }
+
     .market-container .ant-tabs-nav {
-        padding-left:0;
+        padding-left: 0;
     }
 
-    .market-container h1{
-        font-size:25px;
+    .market-container h1 {
+        font-size: 25px;
         padding: 0 16px;
     }
 
     .market-container .search-input-container {
         width: 100%;
-    padding: 0 20px;
+        padding: 0 20px;
     }
+
     .market-container .ant-tabs-tab:nth-child(2) {
-        margin-left:20px;
+        margin-left: 20px;
     }
 }

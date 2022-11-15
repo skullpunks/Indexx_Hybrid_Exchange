@@ -2,7 +2,8 @@ import { CopyOutlined, LinkOutlined } from '@ant-design/icons';
 import { Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Select } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { decodeJWT, transactionList } from '../../services/api';
 
 const { Option } = Select;
 
@@ -20,11 +21,13 @@ const onSearch = (value: string) => {
 };
 
 interface DataType {
+    to: string;
+    txId: string;
     key: string;
     time: string;
     type: string;
     wallet: string;
-    asset: string;
+    currencyRef: string;
     amount: number;
     destination: string;
     txid: string;
@@ -35,64 +38,70 @@ const columns: ColumnsType<DataType> = [
     {
         title: "Time Type",
         render: (record) => (
-          <React.Fragment>
-            {record.type}
-            <br />
-            {record.time}
-          </React.Fragment>
+            <React.Fragment>
+                {record.modified}
+                <br />
+                {record.modified}
+            </React.Fragment>
         ),
         responsive: ["xs"]
-      },
-      {
-        title: "Amount Asset",
+    },
+    {
+        title: "Amount",
         render: (record) => (
-          <React.Fragment>
-            {record.amount}
-            
-            {record.asset}
-          </React.Fragment>
+            <React.Fragment>
+                {record.amount}
+
+                {record.currencyRef}
+            </React.Fragment>
         ),
         responsive: ["xs"]
-      },
+    },
     {
         title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        render: text => <span>{text}</span>,
-        responsive: ["sm"],
-    },
-
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        responsive: ["sm"]
-    },
-    {
-        title: 'Deposit Wallet',
-        dataIndex: 'wallet',
-        key: 'wallet',
+        dataIndex: 'modified',
+        key: 'modified',
         render: text => <span>{text}</span>,
         responsive: ["sm"],
     },
     {
         title: 'Asset',
-        key: 'asset',
-        dataIndex: 'asset', 
+        dataIndex: 'currencyRef',
+        key: 'currencyRef',
+        render: text => <span>{text}</span>,
+        responsive: ["sm"],
+    },
+    {
+        title: 'Type',
+        dataIndex: 'transactionType',
+        key: 'transactionType',
+        responsive: ["sm"]
+    },
+    {
+        title: 'Deposit Wallet',
+        dataIndex: 'walletType',
+        key: 'walletType',
+        render: text => <span>{text}</span>,
+        responsive: ["sm"],
+    },
+    {
+        title: 'Asset',
+        key: 'currencyRef',
+        dataIndex: 'asset',
         responsive: ["sm"],
     },
     {
         title: 'Amount',
         key: 'amount',
         dataIndex: 'amount',
-         responsive: ["sm"],
+        responsive: ["sm"],
     },
     {
         title: 'TxID',
-        key: 'txid',
+        key: 'txId',
         render: (_, record) => (
             <span>
-                {record.txid}
+                {record.txId}
                 <span>
                     <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip>
                     <LinkOutlined />
@@ -103,10 +112,10 @@ const columns: ColumnsType<DataType> = [
     },
     {
         title: 'Destination',
-        key: 'destination',
+        key: 'to',
         render: (_, record) => (
             <span>
-                {record.destination}
+                {record.to}
                 <span>
                     <CopyOutlined className='padding-lr-1x' /> <LinkOutlined />
                 </span>
@@ -117,32 +126,27 @@ const columns: ColumnsType<DataType> = [
 ];
 
 
-const data: DataType[] = [
-    {
-        key: '1',
-        time: '2022-10-10',
-        type: "Deposit",
-        wallet: "Funding Wallet",
-        asset: "BNB",
-        amount: 0.07,
-        destination: '0x56092...19',
-        txid: '126092...19',
-    },
-
-    {
-        key: '2',
-        time: '2022-10-12',
-        type: "Deposit",
-        wallet: "Funding Wallet",
-        asset: "IN500",
-        amount: 0.07,
-        destination: '0x56092...19',
-        txid: '126092...19',
-    },
-
-];
-
 const BSTransactionHistoryTable: React.FC = () => {
+    const [txList, setTxList] = useState() as any;
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        const decodedToken: any = decodeJWT(String(token)) as any;
+        transactionList(decodedToken?.email).then((res) => {
+            console.log(res.data);
+            const results = res.data;
+            let finalArr = [];
+            for(let i = 0; i < results.length; i++) {
+                if(results[i].transactionType?.includes('FIAT')) {
+                    console.log(results[i].transactionType);
+                    finalArr.push(results[i]);
+                } else {
+                    console.log(results[i].transactionType, 'typoe');
+                }
+            }
+            setTxList(finalArr);
+        });
+    }, []);
+
     return (
         <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x '>
             <div className='d-flex transaction_filters margin-b-3x'>
@@ -152,6 +156,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                         <Option value="all">All</Option>
                         <Option value="deposit">Deposit</Option>
                         <Option value="withdraw">Withdraw</Option>
+                        <Option value="reward_withdraw">Reward Withdraw</Option>
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>
@@ -167,7 +172,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                     <label>Asset</label> <br />
                     <Select defaultValue="all" onChange={handleChange}>
                         <Option value="all">All</Option>
-                        <Option value="IN500">IN500 <span>Index 500</span></Option>
+                        <Option value="IN500">IN500 <span>Indexx 500</span></Option>
                         <Option value="BTC">BTC <span>Bitcoin</span></Option>
                     </Select>
                 </div>
@@ -197,7 +202,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                     </Select>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} className="transaction_crypto_history"/>
+            <Table columns={columns} dataSource={txList} className="transaction_crypto_history" />
         </div>
     )
 }
