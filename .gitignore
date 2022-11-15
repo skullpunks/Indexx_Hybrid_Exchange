@@ -24,3 +24,5 @@ yarn-error.log*
 package-lock.json
 package-lock.json
 tsconfig.json
+src/components/Iframe/iframe.css
+src/components/Iframe/iframe.js
