@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ArrowRightOutlined, CopyOutlined, LinkOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CopyOutlined, LinkOutlined, QrcodeOutlined, CloseCircleFilled } from '@ant-design/icons';
 import { Button, Input, Popover, Select, Table, Tooltip, notification } from 'antd';
 // import bsDollar from "../../assets/arts/bsDollar.svg";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
@@ -216,7 +216,7 @@ export const BSDepositCryptoSelect = () => {
     notification[type]({
       message: message,
       description: '',
-      icon: <CheckCircleFilled className='text_link' />,
+      icon:<CloseCircleFilled />,
       style: {
         border: "1px solid #F66036",
         boxShadow: "none",

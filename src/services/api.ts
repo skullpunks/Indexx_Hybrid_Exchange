@@ -91,17 +91,6 @@ export const getWalletBalance = async (email: string, coin: string) => {
   }
 };
 
-export const verifyEmailCode = async (code: string) => {
-  try {
-    const result = await API.post("/api/v1/inex/user/verifyEmailCode", {
-      code,
-    });
-    return result.data;
-  } catch (e: any) {
-    return e.response.data;
-  }
-};
-
 export const getIndexxTokenPrices = async () => {
   try {
     const result = await API.post("/api/v1/inex/basic/indexxcoins");
@@ -662,9 +651,11 @@ export const withdrawINEX = async (email: string, amount: number) => {
   }
 };
 
-export const transactionList = async (email: string) => {
+export const transactionList = async (email: string, type: string = 'FIAT') => {
   try {
-    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`);
+    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`, {
+      type: type,
+    });
     return result.data;
   } catch (err: any) {
     console.log("FAILED: unable to perform API request (transactionList)");
@@ -725,7 +716,34 @@ export const createFiatDeposit =async (email: string, amount:number, txHash: any
   }
 };
 
+export const resendEmailCode = async(email: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/resendEmailCode", {
+      email: email,
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (resendEmailCode)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
+export const validateEmail = async(email: string, code: string) => {
+  try {
+    const result = await API.post("/api/v1/inex/user/validateEmail", {
+      email: email,
+      code: code
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (validateEmail)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
 export const getOrderDetails = async (email: string, orderId: string) => {
   try {

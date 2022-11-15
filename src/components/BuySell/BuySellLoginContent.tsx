@@ -5,7 +5,7 @@ import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAPI, decodeJWT, getUserDetails } from '../../services/api'
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -45,10 +45,11 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
     const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        const Icon = (type === "error") ? <CloseCircleFilled /> : <CheckCircleFilled className='text_link' />;
         notification[type]({
             message: message,
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: Icon,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",

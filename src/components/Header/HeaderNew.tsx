@@ -121,7 +121,9 @@ const HeaderNew = () => {
                   indexx Tokens
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
+              {localStorage.getItem("user") ? (
+                <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
+              ) : <></>}
               <NavDropdown
                 title="Earn"
                 id="collasible-nav-dropdown"

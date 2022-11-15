@@ -1,13 +1,20 @@
 
 
-import { Button, Popover } from "antd";
+import { Button, Popover, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
 import Timer from "../../utils/Timer";
+import { CheckCircleFilled } from '@ant-design/icons';
+import { validateEmail } from "../../services/api";
+import { useEffect, useState } from "react";
 
 const BuySellEmailAuth = () => {
     const navigate = useNavigate();
-
+    const [email, setEmail] = useState('');
+    const otpCode = new Array(6);
+    useEffect(() => {
+        setEmail(String(localStorage.getItem("tempAuthEmail")));
+    }, [email]);
     const moveToNext = (e: React.FormEvent<HTMLInputElement>) => {
         const { maxLength, value } = e.currentTarget;
         if (value.length > maxLength)
@@ -21,7 +28,86 @@ const BuySellEmailAuth = () => {
                 (next as HTMLElement).focus();
 
         }
+    }
 
+    const verifyCode = async () => {
+        console.log(email);
+        console.log((otpCode).join().toString());
+        const res = await validateEmail(email, (otpCode).join('').toString());
+        if (res.status === 200) {
+            openNotificationWithIcon('success', res.data);
+            navigate("/indexx-exchange/kyc")
+        } else {
+            console.log("error");
+            openNotificationWithIcon2('error', res.data);
+        }
+    }
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType, message: string) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+        });
+    };
+
+    // const resendEmail = async () => {
+    //     let email = '';
+    //     await resendEmailCode(email);
+    // }
+
+    const handleInput1 = (e: any) => {
+        let val = e.currentTarget.value;
+        console.log(val, 'val;')
+        otpCode[0] = val[0];
+    }
+
+    const handleInput2 = (e: any) => {
+        let val = e.currentTarget.value;
+        otpCode[1] = val[0];
+    }
+
+    const handleInput3 = (e: any) => {
+        let val = e.currentTarget.value;
+        otpCode[2] = val[0];
+    }
+
+    const handleInput4 = (e: any) => {
+        let val = e.currentTarget.value;
+        otpCode[3] = val[0];
+    }
+
+    const handleInput5 = (e: any) => {
+        let val = e.currentTarget.value;
+        otpCode[4] = val[0];
+    }
+
+    const handleInput6 = (e: any) => {
+        let val = e.currentTarget.value;
+        otpCode[5] = val[0];
     }
 
     const content = (
@@ -30,7 +116,7 @@ const BuySellEmailAuth = () => {
             <div className='font_30x text-center brand_color padding-t-2x'>Didn’d receive email?</div>
             <div className='text-center margin-tb-2x'></div>
             <ul className='brand_color disc_ul'>
-                <li>Make sure the email address ‘sample@azooca.com’ is correct.</li>
+                <li>Make sure the email address {email} is correct.</li>
                 <li>This email might be delayed for a few minutues. Try again after 20 minutes.</li>
                 <li>Check your Spam or Junk mail folders.</li>
                 <li>Add indexx.ai to your email address whitelist.</li>
@@ -54,18 +140,21 @@ const BuySellEmailAuth = () => {
                 <div className="otp_container">
                     <label className="padding-b-1x">Code</label>
                     <div className="d-flex justify-between">
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput1} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput2} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput3} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput4} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput5} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onChange={handleInput6} />
                     </div>
                 </div>
                 <br />
                 {/* <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button> */}
-                <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button>
-                <div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} />)</div>
+                {/* <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button> */}
+                <Button id="verify_btn" type="primary" onClick={() => verifyCode()}>Verify</Button>
+                { 
+                < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} /> )</div>
+                }
 
                 <div className="margin-lr-auto padding-tb-2x" style={{ cursor: "pointer" }}><Popover content={content} trigger="click" className="text_link" >Didn’t receive an email?</Popover></div>
             </div>

@@ -1,5 +1,5 @@
 import { InfoCircleFilled } from '@ant-design/icons';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Button, Input, Form, notification } from 'antd'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -50,7 +50,7 @@ const SecurityChange = () => {
         notification[type]({
             message: message,
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",

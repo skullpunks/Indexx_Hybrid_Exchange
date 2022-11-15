@@ -196,9 +196,12 @@ const Section2 = () => {
                 </div>
 
             </div>
-            <div className="all_markets">
-                <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(`/indexx-exchange/markets`)}>View all Markets</Button>
-            </div>
+            {localStorage.getItem("user") ? (
+                <div className="all_markets">
+                    <Button danger size="large" className="actionButton view_all_btn" onClick={() => navigate(`/indexx-exchange/markets`)}>View all Markets</Button>
+                </div>)
+                : <></>
+            }
         </div>
     );
 };

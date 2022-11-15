@@ -54,17 +54,25 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
+            console.log(String(BSvalue?.fromTitle))
+            // getWalletBalance(decoded.email, 'INEX').then((res) => {
+            //     if (res.status === 200) {
+            //         setUserBalance(res.data.balance);
+            //         setShowUserBalance(true);
+            //     } else {
+            //         setUserBalance(0);
+            //         setShowUserBalance(true);
+            //     }
+            // });
         });
-        //getCoinBalance(String(filteredFromArray[0].title));
         //removing INEX for sell
         //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
         //    setUpdateInitialTokens(filteredPeople);
 
-    }, [BSvalue])
+    }, [email, BSvalue])
 
     const getCoinBalance = async (value: string) => {
         const res = await getWalletBalance(email, value);
-        console.log(res);
         setSelectedCoin(value);
         if (res.status === 200) {
             setUserBalance(res.data.balance);

@@ -1,4 +1,4 @@
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Button, Input, Form, notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom';
@@ -45,7 +45,7 @@ const BuySellResetPassword = () => {
         notification[type]({
             message: 'Failed to reset the password',
             description: '',
-            icon: <CheckCircleFilled className='text_link' />,
+            icon: <CloseCircleFilled />,
             style: {
                 border: "1px solid #F66036",
                 boxShadow: "none",
