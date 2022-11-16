@@ -1,23 +1,12 @@
-import { Card, Image, Button, Input, notification } from "antd";
-import { Divider } from "antd";
-import { Typography, Progress } from "antd";
-import { useNavigate } from "react-router-dom";
-import { CheckCircleFilled } from "@ant-design/icons";
+import { Card, Image, Button, Divider ,Typography, Progress} from "antd";
 import exgcoin from "../../assets/arts/exgcoin.png";
-import logo from "../../assets/arts/logo.png";
-// import exglady from "../../assets/arts/exglady.png";
-import exghands from "../../assets/arts/exghands.png";
 import Footer from "../Footer/Footer";
-import { useEffect, useState } from "react";
-
 const { Text } = Typography;
 
+
+
 const TaskCenter = () => {
-  const navigate = useNavigate();
-  const navigateUser = (path: any) => {
-    window.localStorage.setItem("redirect", window.location.pathname);
-    navigate(path);
-  };
+
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
