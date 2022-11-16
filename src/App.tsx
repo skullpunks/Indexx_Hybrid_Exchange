@@ -50,10 +50,14 @@ import BlockpassLink from "./components/Blockpass/BlockpassLink";
 // import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
 import ScrollToTop from "./utils/ScrollToTop";
-import Notification from "./components/Notifications/Notification";
-import AllNotification from "./components/Notifications/AllNotification";
-import Activity from "./components/Notifications/Activity";
-import SystemMsg from "./components/Notifications/SystemMsg";
+
+import Notification from './components/Notifications/Notification';
+import AllNotification from './components/Notifications/AllNotification';
+import Activity from './components/Notifications/Activity';
+import SystemMsg from './components/Notifications/SystemMsg';
+import Career from './components/Careers/Career';
+import CareerSoon from './components/Careers/CareerSoon';
+
 
 function App() {
   /*
@@ -95,6 +99,7 @@ function App() {
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
                             : <Route path="/external-link" element={<External />} />
                     } */}
+
           <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
           <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
           <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />

@@ -1,0 +1,21 @@
+.width_50 {
+    width:50%;
+}
+
+.apply_button,
+ .apply_button:hover,
+ .apply_button:active,
+ .apply_button:focus{
+    background-color: #F66036;
+    color:#fff;
+    font-size:20px;
+    height:46px;
+}
+
+.margin-t_300x {
+    margin-top:300px;
+}
+
+.career_icon { 
+    background-image: url("../../assets/arts/CareerIcon.svg");
+}
