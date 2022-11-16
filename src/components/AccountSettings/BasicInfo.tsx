@@ -1,13 +1,16 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import AdvanceVerfication from "../../assets/arts/AdvanceVerfication.svg";
 import BasicVerfication from "../../assets/arts/BasicVerfication.svg";
 import { decodeJWT, getUserDetails } from '../../services/api';
+import useCopyToClipboard from '../../utils/useCopyToClipboard';
 
 const BasicInfo = () => {
     const [email, setEmail] = useState('');
     const [userData, setUserData] = useState() as any;
+    const [copiedValue, copy] = useCopyToClipboard();
+    console.log(copiedValue);
 
     useEffect(() => {
         let access_token = String(localStorage.getItem("access_token"));
@@ -39,9 +42,16 @@ const BasicInfo = () => {
                             <div>{userData?.vipLevel}</div>
                             <div className="padding-lr-1x">Personal</div>
                             <div>User ID</div>
-                            <div className="padding-lr-1x d-flex align-items-center"><span>12345678</span><CopyOutlined /></div>
+                            <div className="padding-lr-1x d-flex align-items-center">
+                                <span>{String(userData?.email)}</span>
+                                <CopyOutlined className='hover_icon' onClick={() => copy(String(userData?.email))} />
+                                {/* <Tooltip title="Copied to Clipboard!" ></Tooltip> */}
+                            </div>
                             <div>Referral Code</div>
-                            <div className="padding-lr-1x d-flex align-items-center"><span>{userData?.referralCode}</span> <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip></div>
+                            <div className="padding-lr-1x d-flex align-items-center"><span>{userData?.referralCode}</span>
+                                {/* <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip> */}
+                                <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(userData?.referralCode)} />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -28,17 +28,17 @@ const Notification = () => {
 
 
 
-                            <Panel header=" indexx Swap Intro" key="1">
+                            <Panel header=" All" key="1">
 
                                 < AllNotification />
 
                             </Panel>
-                            <Panel header="indexx Swap Team" key="2">
+                            <Panel header="Activities" key="2">
 
                                 <Activity />
 
                             </Panel>
-                            <Panel header="Contact Us" key="3">
+                            <Panel header="System messages" key="3">
 
                                 <SystemMsg />
 
@@ -48,16 +48,16 @@ const Notification = () => {
                     </div>
                 </div>
 
-            
 
 
 
-            <Footer helpIcon={false} />
-        </>
+
+                <Footer helpIcon={false} />
+            </>
 
 
-    </div >
-  )
+        </div >
+    )
 }
 
 export default Notification
