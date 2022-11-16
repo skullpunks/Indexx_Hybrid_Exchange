@@ -88,8 +88,12 @@
     text-decoration: none !important;
 }
 
-.active {
-    /* border-bottom: 4px solid #F66036; */
+.dropdown-toggle.nav-link:hover~.dropdown-menu, .dropdown-menu:hover {
+    display: block;
+}
+
+.dropdown-menu[data-bs-popper] {
+    margin-top: 0;
 }
 
 .header-connect-wallet:hover {
@@ -320,6 +324,7 @@ a.link.text-white:hover {
 
 .disable_icon {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .primary_hover:hover {
@@ -395,12 +400,21 @@ a.link.text-white:hover {
 }
 
 .loader {
-    background-color: rgba(211, 211, 211, 0.1);
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
     text-align: center;
     z-index: 99;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loader>img {
+    text-align: center;
+    margin-top: calc(50vh - 100px);
+    width: 100px;
 }
 
 button.navbar-toggler {

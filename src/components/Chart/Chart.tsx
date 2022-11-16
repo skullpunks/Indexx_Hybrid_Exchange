@@ -50,7 +50,7 @@ const Chart = () => {
             <div className="chart_header d-flex flex-align-center">
                 {/* <img src={IN500} alt="IN500 Here" width="30" /> */}
                 {/* <img src={IUSD} alt="IUSD Here" width="30" style={{ marginLeft: 5 }} /> */}
-                <img src={require(`../../assets/token-icons/${fromImage}.png`).default} alt="bit coin" width="30" />
+                <img src={require(`../../assets/token-icons/${fromImage}.png`).default} alt="bit coin" width="30" className="me-1" />
                 <img src={require(`../../assets/token-icons/${image}.png`).default} alt="bit coin" width="30" />
                 <h1 className="chart_title">{fromTitle}/{title}</h1>
                 <div className="arrow_container">

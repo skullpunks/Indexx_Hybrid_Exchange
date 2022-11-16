@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
@@ -12,15 +12,20 @@ const BuySellGetStarted: React.FC = () => {
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
+        setLoadings(true);
+        localStorage.setItem("tempAuthEmail", values.email);
         const res = await signupAPI(values.email, values.password, values.referral);
         console.log(res)
         if (res.status === 200) {
+            setLoadings(false);
             openNotificationWithIcon('success', 'Successfully registered');
             navigate("email-auth");
         } else {
+            setLoadings(false);
             openNotificationWithIcon('error', res.data);
         }
     };
+    const [loadings, setLoadings] = useState<boolean>(false);
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -67,7 +72,7 @@ const BuySellGetStarted: React.FC = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}>
+                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }]}>
                             <div className="control-input">
                                 {/* <input type="password" name="password" id="password" autoComplete='off' onChange={() => handleChange} /> */}
                                 <Input.Password />
@@ -103,7 +108,7 @@ const BuySellGetStarted: React.FC = () => {
                     </div>
                     <Form.Item shouldUpdate>
                         <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" htmlType='submit' block
-
+                            loading={loadings}
                         > Create Account</Button>
                     </Form.Item>
                 </Form>

@@ -1,16 +1,27 @@
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Button, Input, Form, notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
+import { resetPassword } from '../../services/api';
 // import Email from "../../assets/arts/Email.svg";
 
 const BuySellResetPassword = () => {
     const navigate = useNavigate();
-    const onFinish = (values: any) => {
+    const [searchParams] = useSearchParams();
+
+    const onFinish = async(values: any) => {
         console.log(values);
-        openNotificationWithIcon('success');
-        setTimeout(() => {
-            console.log(navigate("/indexx-exchange/buy-sell/login"));
-        }, 1000);
+        const email = searchParams.get("email");
+        console.log(email);
+        await resetPassword(String(email), values.password).then((res)=> {
+            console.log(res);
+            if (res.status === 200) {
+                openNotificationWithIcon('success');
+                navigate("/indexx-exchange/buy-sell/login");
+            } else {
+                openNotificationWithIcon2('error');
+            }
+        })
     };
 
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -30,9 +41,25 @@ const BuySellResetPassword = () => {
         });
     };
 
+    const openNotificationWithIcon2 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to reset the password',
+            description: '',
+            icon: <CloseCircleFilled />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+        });
+    };
+
+
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
     return (<div className='d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center'>
         <h1 className='text-center top_heading'>Reset Password</h1>
         <div className="bs_container bs_form card card_s">

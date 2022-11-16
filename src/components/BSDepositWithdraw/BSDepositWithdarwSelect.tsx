@@ -38,7 +38,7 @@ export const BSDepositWithdarwSelect = () => {
           <span className='radio_text'>Bank Transfer(SWIFT) <br />
             <span className='helper_text'>0 Fee, 1-4 Business days</span>
           </span></Radio>
-        <Button type="primary" className='margin-b-2x margin-t-auto'>
+        <Button type="primary" className='disable_icon'>
           <Link to="/indexx-exchange/buy-sell/withdraw/info">Continue</Link>
         </Button>
 

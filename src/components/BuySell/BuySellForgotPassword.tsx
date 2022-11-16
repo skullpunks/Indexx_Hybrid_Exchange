@@ -1,13 +1,55 @@
-import { Button, Input, Form } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Button, Input, Form, notification } from 'antd'
 import Email from "../../assets/arts/Email.svg";
+import { forgotPassword } from '../../services/api';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 const BuySellForgotPassword = () => {
-    const navigate = useNavigate();
     const onFinish = (values: any) => {
         console.log(values);
-        console.log(navigate("/indexx-exchange/buy-sell/login/email-auth"));
+        localStorage.setItem('tempEmail', values.email);
+        forgotPassword(values.email).then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+                openNotificationWithIcon('success');
+            } else {
+                openNotificationWithIcon2('error');
+            }
+            //console.log(navigate("/indexx-exchange/buy-sell/login/email-auth"));
+        });
     };
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (type: NotificationType) => {
+        notification[type]({
+            message: 'Email sent for resetting the password',
+            description: '',
+            icon: <CheckCircleFilled className='text_link' />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
+    const openNotificationWithIcon2 = (type: NotificationType) => {
+        notification[type]({
+            message: 'Failed to send reset password. User email not registered',
+            description: '',
+            icon: <CloseCircleFilled  />,
+            style: {
+                border: "1px solid #F66036",
+                boxShadow: "none",
+                borderRadius: 5,
+                top: 100
+            },
+
+        });
+    };
+
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);

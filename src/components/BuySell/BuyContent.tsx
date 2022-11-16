@@ -11,23 +11,25 @@ import { useEffect } from 'react';
 import { getMinAndMaxOrderValues, isLoggedIn } from "../../services/api";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import "./BS-Sell.css";
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 
 const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
-    // const navigate= useNavigate();
+    const navigate = useNavigate();
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const navigateUser = () => {
         if (isLoggedIn()) {
-            // navigate("./")
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
             }
-            setScreenName("confirmPurchase");
+            navigate("/indexx-exchange/buy-sell/confirm-purchase");
+            // setScreenName("confirmPurchase");
         } else {
-            setScreenName("create");
+            // setScreenName("create");
+            navigate("/indexx-exchange/buy-sell/create");
         }
     }
 
@@ -39,7 +41,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
         if (BSvalue && BSvalue.amount !== 0) {
             setBuyVal(BSvalue?.amount.toString());
             let amount = BSvalue?.amount.toString();
-            let charFontSize = amount.length < 6 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
+            let charFontSize = amount.length < 7 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
             let charWidth = amount.length <= 1 ? 1.2 : 0.9
             if (document.getElementsByClassName("input_currency")[0]) {
                 let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
@@ -48,8 +50,10 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
             }
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
+            // console.log(x);
             setMinMaxData(x);
         });
+
 
     }, [BSvalue])
 
@@ -65,7 +69,9 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     };
 
     const checkMinMaxValue = async (value: string, buyValue: number) => {
+
         let minAndMax = await getMinMaxValue(value);
+        // debugger;
         if (buyValue > minAndMax.max) {
             setLimitPassed(false);
         } else if (buyValue < minAndMax.min) {
@@ -85,17 +91,24 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
+
+            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
+                e.preventDefault();
+                return;
+            }
+
             setBuyVal(testVal);
 
             // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;
-            let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.2 : 0.9
+            let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
 
 
-            let value = BSvalue?.fromTitle;
+            let value = BSvalue?.fromToken;
+            // debugger;
             let getRequiredCoin = initialTokens.find(x => x.address === value);
             console.log(String(getRequiredCoin?.title));
             await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
@@ -103,10 +116,10 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     return (
-        <div><div className="bs_container_main">
+        <div><div className="padding-lr-1x padding-tb-3x">
             <div className="bs_curreny d-flex position-relative ">
-                <div className="bs_curreny_left padding-b-2x flex-align-center" style={{ transform: "scale(1)" }}>
-                    <span className="font_20x">$</span>
+                <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
+                    <span className="font_20x pe-1">$</span>
                     {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
                     <input placeholder="0" className="input_currency" type="number" value={buyVal} onChange={updateBuyVal} style={{ width: "1.2ch" }} />
                 </div>
@@ -129,8 +142,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </Dropdown>
             </div> */}
         </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center" }}>
-                <div className="bs_token_left d-flex justify-between">
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
+                <div className="bs_token_left d-flex justify-between" style={{ height: "55px", padding: "0 11px" }}>
                     <div className="bs_token_num d-flex flex-align-center" >
                         <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
                         USD  <span className="token_grey">US Dollar</span>
@@ -138,7 +151,7 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
             </div>
-            <div className="bs_token d-flex cursor-pointer" style={{ alignItems: "center", padding: 8 }} >
+            <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }} >
                 <div className="bs_token_left d-flex justify-between">
                     <div className=' d-flex flex-justify-between flex-align-center width-100'>
                         <Select className='width-100 border-0'
@@ -161,7 +174,8 @@ const BuyContent: React.FC<(Props)> = ({ setScreenName }) => {
 
 
             <div className="bs_footer_action">
-                <button onClick={navigateUser} disabled={(!isLimitPassed)}>Preview Purchase </button>
+                {/* disabled={(!isLimitPassed)} */}
+                <button onClick={navigateUser} className={(!isLimitPassed || buyVal === "") ? "disable_icon " : ""} >Preview Purchase </button>
             </div>
         </div>
     )

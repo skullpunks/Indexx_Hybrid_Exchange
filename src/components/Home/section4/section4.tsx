@@ -39,7 +39,7 @@ const Section4 = () => {
             heading: "Dedicated Support",
             info: "Our support team is here to keep you trading happily",
             link: "Get in touch",
-            url: "/indexx-exchange/blog"
+            url: "/indexx-exchange/help/contact"
 
         },
         {
