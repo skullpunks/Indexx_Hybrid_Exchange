@@ -64,7 +64,7 @@ const HowItWorks = () => {
           </div>
           <div className="col-lg-4 text-center">
             <Link to="/indexx-exchange/how-it-works/tradetoearn">
-              <img src={tradetoearn} />
+              <img src={tradetoearn} alt=""/>
               <br />
             </Link>
 

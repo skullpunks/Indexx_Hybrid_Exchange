@@ -156,6 +156,7 @@ const HeaderNew = () => {
                 className="dark-menu"
                 renderMenuOnMount={true}
               >
+                 <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">How it Works</NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
                   to="/indexx-exchange/about"
