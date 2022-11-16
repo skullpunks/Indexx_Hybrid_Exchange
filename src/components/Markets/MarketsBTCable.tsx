@@ -32,7 +32,7 @@ const MarketsBTCTable = () => {
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
-
+    const [isLoading, setLoadings] = useState(true);
 
     useEffect(() => {
         if (!calledOnce) {
@@ -49,6 +49,7 @@ const MarketsBTCTable = () => {
                 setMarketData(res);
                 setMarketDataFixed(res);
                 setCalledOnce(true);
+                setLoadings(false);
             });
         }
     }, [calledOnce, email]);
@@ -265,7 +266,7 @@ const MarketsBTCTable = () => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} />
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={isLoading}/>
             </div>
         </div>
     )

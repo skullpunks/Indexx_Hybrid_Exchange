@@ -28,9 +28,12 @@ const MarketsTable = () => {
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
+    
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
+    const [isLoading, setLoadings] = useState(true);
+
 
     useEffect(() => {
         if (!calledOnce) {
@@ -46,6 +49,7 @@ const MarketsTable = () => {
                     setMarketData(data.data);
                     setMarketDataFixed(data.data);
                     setCalledOnce(true);
+                    setLoadings(false)
                 });
             }
         }
@@ -254,7 +258,7 @@ const MarketsTable = () => {
                 <Button className='white-strip last-item'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} />
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={isLoading}/>
             </div>
         </div>
     )

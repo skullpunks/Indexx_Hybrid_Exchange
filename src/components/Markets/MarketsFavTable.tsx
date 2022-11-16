@@ -262,7 +262,7 @@ const MarketsFavTable = () => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} />
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={true}/>
             </div>
         </div>
     )

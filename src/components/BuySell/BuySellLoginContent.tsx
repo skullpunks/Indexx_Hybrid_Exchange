@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAPI, decodeJWT, getUserDetails } from '../../services/api'
-import { CheckCircleFilled, InfoCircleFilled, CloseCircleFilled} from '@ant-design/icons';
+import { CheckCircleFilled, InfoCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -15,12 +15,14 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
 
     const onFinish = async (values: any) => {
+        setLoadings(true);
         console.log('Success:', values);
         console.log('Success:', values);
         let res = await loginAPI(values.email, values.password);
         console.log(res.status);
         console.log(res.data);
         if (res.status === 200) {
+            setLoadings(false);
             openNotificationWithIcon('success', 'Login Successful');
             localStorage.setItem('user', values.email);
             localStorage.setItem('access_token', res.data.access_token);
@@ -38,11 +40,13 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
 
         } else {
             console.log(res.data);
+            setLoadings(false);
             openNotificationWithIcon('error', res.data);
         }
     };
 
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
+    const [loadings, setLoadings] = useState<boolean>(false);
 
     const openNotificationWithIcon = (type: NotificationType, message: string) => {
         const Icon = (type === "error") ? <CloseCircleFilled /> : <CheckCircleFilled className='text_link' />;
@@ -71,7 +75,7 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className='text-center margin-lr-auto padding-tb-2x'>Please make sure you are visiting the correct URL</div>
                 <p className='w-fit-content py-1 p-2 index_link_info'>
                     <InfoCircleFilled className='pe-2' style={{ color: "#5F5F5F" }} />
-                    <span>https://indexx.ai</span>
+                        <span>https://indexx.ai</span>
                 </p>
                 <div className="bs_container bs_form card">
                     <Form
@@ -107,7 +111,10 @@ const BuySellLoginContent: React.FC<(Props)> = ({ setScreenName }) => {
                         <br />
 
                         <Form.Item shouldUpdate>
-                            <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" htmlType='submit' block>Log In</Button>
+                            <Button type="primary" className="atn-btn atn-btn-round margin-b-1x"
+                                loading={loadings}
+                                htmlType='submit' block>
+                                Log In</Button>
                         </Form.Item>
                     </Form>
                     <br />

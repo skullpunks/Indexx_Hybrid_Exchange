@@ -33,6 +33,7 @@ const MarketsIUSDPable = () => {
     };
     const [fav, setFav] = useState('color-warn font_20x');
     const [notFav, setNotFav] = useState('font_20x');
+    const [isLoading, setLoadings] = useState(true);
 
 
     useEffect(() => {
@@ -50,6 +51,7 @@ const MarketsIUSDPable = () => {
                 setMarketData(res);
                 setMarketDataFixed(res);
                 setCalledOnce(true);
+                setLoadings(false)
             });
         }
     }, [calledOnce, email]);
@@ -285,7 +287,7 @@ const MarketsIUSDPable = () => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} />
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={isLoading}/>
             </div>
         </div>
     )
