@@ -182,10 +182,11 @@ function App() {
             element={<Notification />}
           >
             <Route index element={<AllNotification />} />
-            <Route index element={<Career />} />
+
             <Route path="Activities" element={<Activity />} />
             <Route path="system" element={<SystemMsg />} />
           </Route>
+          <Route path="/indexx-exchange/carrer" element={<Career />} />
           <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
           <Route path="/indexx-exchange/account" element={<Account />} />
           <Route
