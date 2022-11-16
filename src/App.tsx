@@ -50,6 +50,8 @@ import Notification from './components/Notifications/Notification';
 import AllNotification from './components/Notifications/AllNotification';
 import Activity from './components/Notifications/Activity';
 import SystemMsg from './components/Notifications/SystemMsg';
+import Career from './components/Careers/Career';
+import CareerSoon from './components/Careers/CareerSoon';
 
 function App() {
     /*
@@ -134,6 +136,7 @@ function App() {
                     <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
                     <Route path="/indexx-exchange/account" element={<Account />} />
                     <Route path="/indexx-exchange/change-password" element={<SecurityChange />} />
+                    <Route path="/indexx-exchange/career" element={<Career />} />
                 </Routes>
             </BrowserRouter>
         </div>
