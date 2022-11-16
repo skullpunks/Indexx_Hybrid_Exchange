@@ -216,7 +216,7 @@ export const BSDepositCryptoSelect = () => {
     notification[type]({
       message: message,
       description: '',
-      icon:<CloseCircleFilled />,
+      icon: <CloseCircleFilled />,
       style: {
         border: "1px solid #F66036",
         boxShadow: "none",
@@ -287,9 +287,9 @@ export const BSDepositCryptoSelect = () => {
 
 
             <Select className='width-100' onChange={handleChange} >
-              <Select.Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chanin (BEP20)</span> </div></Select.Option>
+              <Select.Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chain (BEP20)</span> </div></Select.Option>
               {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
-              <Select.Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chanin (BEP2)</span> </div></Select.Option>
+              <Select.Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chain (BEP2)</span> </div></Select.Option>
               <Select.Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Select.Option>
               {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
             </Select>

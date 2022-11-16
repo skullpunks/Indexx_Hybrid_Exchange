@@ -56,7 +56,7 @@ import AllNotification from './components/Notifications/AllNotification';
 import Activity from './components/Notifications/Activity';
 import SystemMsg from './components/Notifications/SystemMsg';
 import Career from './components/Careers/Career';
-import CareerSoon from './components/Careers/CareerSoon';
+// import CareerSoon from './components/Careers/CareerSoon';
 
 
 function App() {
@@ -182,6 +182,7 @@ function App() {
             element={<Notification />}
           >
             <Route index element={<AllNotification />} />
+            <Route index element={<Career />} />
             <Route path="Activities" element={<Activity />} />
             <Route path="system" element={<SystemMsg />} />
           </Route>
