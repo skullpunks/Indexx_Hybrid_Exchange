@@ -75,7 +75,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
                       size={"large"}
                     >
                       Get Affiliates
@@ -88,7 +88,7 @@ const TaskCenter = () => {
                 <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150 }}
+                    style={{ borderRadius: 5,width:150 , marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
@@ -135,7 +135,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10 ,width:150}}
+                      style={{ borderRadius: 5, marginTop: 15 ,width:150}}
                       size={"large"}
                     >
                       Buy Tokens
@@ -148,7 +148,7 @@ const TaskCenter = () => {
                 <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150 }}
+                    style={{ borderRadius: 5,width:150, marginTop: 15  }}
                     size={"large"}
                   >
                     Complete
@@ -193,7 +193,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
                       size={"large"}
                     >
                       Report a bug
@@ -205,7 +205,7 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150}}
+                    style={{ borderRadius: 5,width:150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
@@ -250,7 +250,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
                       size={"large"}
                     >
                       Fortune daily
@@ -262,7 +262,7 @@ const TaskCenter = () => {
                     <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 ,width:150}}
+                    style={{ borderRadius: 5 ,width:150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
