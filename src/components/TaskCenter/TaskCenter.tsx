@@ -1,12 +1,9 @@
-import { Card, Image, Button, Divider ,Typography, Progress} from "antd";
+import { Card, Image, Button, Divider, Typography, Progress } from "antd";
 import exgcoin from "../../assets/arts/exgcoin.png";
 import Footer from "../Footer/Footer";
 const { Text } = Typography;
 
-
-
 const TaskCenter = () => {
-
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
@@ -33,7 +30,7 @@ const TaskCenter = () => {
               >
                 {" "}
                 <strong>0</strong>
-                <span style={{ fontSize: 10 }}>  Total Points Earned.</span>
+                <span style={{ fontSize: 10 }}> Total Points Earned.</span>
               </span>
             </p>
           </div>
@@ -71,9 +68,20 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    paddingTop: 15,
+                    
                   }}
                 >
+                  <a href="https://register.affiliate.indexx.ai/">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      size={"large"}
+                    >
+                      Get Affiliates
+                    </Button>
+                  </a>
+
                   <Button
                     danger
                     type="primary"
@@ -116,9 +124,19 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    paddingTop: 15,
+                    
                   }}
                 >
+                  <a href="/indexx-exchange/buy-sell">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      size={"large"}
+                    >
+                      Buy Tokens
+                    </Button>
+                  </a>
                   <Button
                     danger
                     type="primary"
@@ -159,19 +177,20 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    paddingTop: 15,
+                    
                   }}
-                ><a href="/indexx-exchange/report-bug">
+                >
+                  <a href="/indexx-exchange/report-bug">
                     <Button
-                    danger
-                    type="primary"
-                    style={{ borderRadius: 5 ,marginBottom:10}}
-                    size={"large"}
-                  >
-                    Report a bug
-                  </Button>
-                </a>
-                 
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      size={"large"}
+                    >
+                      Report a bug
+                    </Button>
+                  </a>
+
                   <Button
                     danger
                     type="primary"
@@ -212,9 +231,19 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    paddingTop: 15,
+                    
                   }}
                 >
+                   <a href="/indexx-exchange/fortune-daily">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      size={"large"}
+                    >
+                      Fortune daily
+                    </Button>
+                  </a>
                   <Button
                     danger
                     type="primary"
@@ -230,16 +259,15 @@ const TaskCenter = () => {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <a href="/indexx-exchange/how-it-works">
-              <Button
-                danger
-                type="primary"
-                style={{ borderRadius: 5, width: 156 }}
-                size={"large"}
-              >
-                How it Works
-              </Button>
+                <Button
+                  danger
+                  type="primary"
+                  style={{ borderRadius: 5, width: 156 }}
+                  size={"large"}
+                >
+                  How it Works
+                </Button>
               </a>
-            
             </div>
           </div>
         </div>
