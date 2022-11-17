@@ -24,15 +24,14 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 
 const Links = [
   { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
-  {
-    label: "Trade To Earn",
-    value: "trade-to-earn",
-    url: "/indexx-exchange/trade-to-earn",
-  },
+  { label: "Trade To Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
   { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
   { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
   { label: "Blog", value: "blog", url: "/indexx-exchange/blog" },
   { label: "About", value: "about", url: "/indexx-exchange/about" },
+  { label: "Careers", value: "careers", url: "/indexx-exchange/careers" },
+  { label: "Notifications", value: "notification", url: "/indexx-exchange/notification" },
+  { label: "How it Works", value: "how-it-works", url: "/indexx-exchange/how-it-works" },
   { label: "", value: "/", url: "/" },
 ];
 
@@ -50,6 +49,8 @@ const HeaderNew = () => {
     }
   }, [location]);
 
+
+
   const showText: any = Links.filter((link) =>
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.label);
@@ -57,6 +58,18 @@ const HeaderNew = () => {
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.url);
   console.log(isInsideApp);
+
+  useEffect(() => {
+
+    (showText[0] !== "") ?
+      document.title = `${showText[0]} | indexx.ai`
+      :
+      (pageName) ?
+        document.title = `${pageName} | indexx.ai`
+        :
+        document.title = "indexx.ai"
+
+  }, [showText, pageName]);
 
   if (
     window.location.pathname.includes("get-started") ||
@@ -156,7 +169,7 @@ const HeaderNew = () => {
                 className="dark-menu"
                 renderMenuOnMount={true}
               >
-                 <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">How it Works</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">How it Works</NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
                   to="/indexx-exchange/about"
@@ -188,6 +201,7 @@ const HeaderNew = () => {
                 >
                   Blog
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/indexx-exchange/careers" className="dropdown-item" href="/">Careers</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Nav>

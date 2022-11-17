@@ -16,17 +16,27 @@ const BuySellEmailAuth = () => {
     useEffect(() => {
         setEmail(String(localStorage.getItem("tempAuthEmail")));
     }, [email]);
-    const moveToNext = (e: React.FormEvent<HTMLInputElement>) => {
+    const moveToNext = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
         const { maxLength, value } = e.currentTarget;
         if (value.length > maxLength)
             e.currentTarget.value = value.slice(0, maxLength);
 
         if (value.length === maxLength) {
             let next = e.currentTarget.nextElementSibling;
-            (next === null) ?
+            // let prev = e.currentTarget.previousElementSibling;
+            debugger;
+            if (next === null) {
                 document.getElementById("verify_btn")?.focus()
-                :
+            }
+            else if (e.key === 'Tab' && e.shiftKey === true) {
+
+                e.preventDefault();
+                return;
+            }
+            else {
                 (next as HTMLElement).focus();
+            }
         }
     }
 
@@ -169,19 +179,19 @@ const BuySellEmailAuth = () => {
                     <label className="padding-b-1x">Code</label>
                     <div className="d-flex justify-between">
                         <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput1} />
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput2}/>
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput3}/>
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput4}/>
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput5}/>
-                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput6}/>
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput2} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput3} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput4} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput5} />
+                        <input type="number" maxLength={1} max={1} onKeyUp={moveToNext} onPaste={pastePassowrd} onChange={handleInput6} />
                     </div>
                 </div>
                 <br />
                 {/* <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button> */}
                 {/* <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button> */}
                 <Button id="verify_btn" type="primary" onClick={() => verifyCode()}>Verify</Button>
-                { 
-                < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} /> )</div>
+                {
+                    < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} /> )</div>
                 }
 
                 <div className="margin-lr-auto padding-tb-2x" style={{ cursor: "pointer" }}><Popover content={content} trigger="click" className="text_link" >Didn’t receive an email?</Popover></div>

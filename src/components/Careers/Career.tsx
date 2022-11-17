@@ -1,5 +1,6 @@
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import './Career.css'
 
@@ -8,11 +9,11 @@ const Career = () => {
     return (
         <>
             <div className="nav_container  help_main_page" >
-                <div className=' border-b width-100'>
-                    <h2 className='font_40x padding-t-2x padding-b-1x margin-b-0'>Careers</h2>
+                <div className=' border-bottom width-100'>
+                    <h2 className='font_40x padding-t-2x padding-b-1x margin-b-0 top_heading'>Careers</h2>
                 </div>
 
-                <div className='border-b padding-b-3x'>
+                <div className='border-bottom padding-b-3x'>
                     <h4 className='font_25x padding-t-3x padding-b-1x margin-b-0'> DATA AND ANALYTICS</h4>
 
                     <div className='d-flex flex-justify-between align-items-center padding-t-3x row'>
@@ -21,8 +22,7 @@ const Career = () => {
                             <span className='font_15x'>U.S. REMOTEDATA & ANALYTICS</span>
                         </div>
                         <div className='col-md-4 '>
-                            <Button className='width_50 apply_button'>APPLY</Button>
-
+                            <Link className='btn btn-danger width_50 apply_button' to="/indexx-exchange/coming-soon?page=Careers">APPLY</Link>
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@ const Career = () => {
                             <span className='font_15x'>U.S. REMOTEDATA & ANALYTICS</span>
                         </div>
                         <div className='col-md-4 '>
-                            <Button className='width_50 apply_button'>APPLY</Button>
+                            <Link className='btn btn-danger width_50 apply_button' to="/indexx-exchange/coming-soon?page=Careers">APPLY</Link>
 
                         </div>
                     </div>
@@ -44,7 +44,7 @@ const Career = () => {
                             <span className='font_15x'>U.S. REMOTEDATA & ANALYTICS</span>
                         </div>
                         <div className='col-md-4 '>
-                            <Button className='width_50 apply_button'>APPLY</Button>
+                            <Link className='btn btn-danger width_50 apply_button' to="/indexx-exchange/coming-soon?page=Careers">APPLY</Link>
 
                         </div>
                     </div>
@@ -55,7 +55,7 @@ const Career = () => {
                             <span className='font_15x'>U.S. REMOTEDATA & ANALYTICS</span>
                         </div>
                         <div className='col-md-4 '>
-                            <Button className='width_50 apply_button'>APPLY</Button>
+                            <Link className='btn btn-danger width_50 apply_button' to="/indexx-exchange/coming-soon?page=Careers">APPLY</Link>
 
                         </div>
                     </div>
@@ -66,16 +66,15 @@ const Career = () => {
                             <span className='font_15x'>U.S. REMOTEDATA & ANALYTICS</span>
                         </div>
                         <div className='col-md-4 '>
-                            <Button className='width_50 apply_button'>APPLY</Button>
-
+                            <Link className='btn btn-danger width_50 apply_button' to="/indexx-exchange/coming-soon?page=Careers">APPLY</Link>
                         </div>
                     </div>
 
 
                 </div>
 
-                <div className='padding-t-2x'>
-                    <span className='font_20x centered '>For inquiries, please reach us out at <span className='text_link'>hr@indexx.ai</span></span>
+                <div className='padding-t-2x text-center'>
+                    <span className='font_20x  '>For inquiries, please reach us out at <a href='mailto:hr@indexx.ai' className='text_link ps-1'> hr@indexx.ai</a></span>
                 </div>
 
 

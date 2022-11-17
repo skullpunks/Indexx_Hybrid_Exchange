@@ -195,7 +195,7 @@ function App() {
             <Route path="Activities" element={<Activity />} />
             <Route path="system" element={<SystemMsg />} />
           </Route>
-          <Route path="/indexx-exchange/carrer" element={<Career />} />
+          <Route path="/indexx-exchange/careers" element={<Career />} />
           <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
           <Route path="/indexx-exchange/account" element={<Account />} />
           <Route
