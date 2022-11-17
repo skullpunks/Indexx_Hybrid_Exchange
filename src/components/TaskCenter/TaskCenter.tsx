@@ -24,13 +24,13 @@ const TaskCenter = () => {
             <br />
             <p style={{ fontSize: 30, textAlign: "center" }}>
               <strong>0/100</strong>{" "}
-              <span style={{ fontSize: 10 }}>Points Earned.</span>
+              <span style={{ fontSize: 10 }}>Points</span>
               <span
                 style={{ fontSize: 30, textAlign: "center", paddingLeft: 30 }}
               >
                 {" "}
                 <strong>0</strong>
-                <span style={{ fontSize: 10 }}> Total Points Earned.</span>
+                <span style={{ fontSize: 10 }}> Total Points</span>
               </span>
             </p>
           </div>
@@ -49,7 +49,7 @@ const TaskCenter = () => {
                   </Text>
                   <Progress style={{ width: 439 }} />
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
                     style={{ fontSize: 80, fontWeight: 50, marginTop: -30 }}
@@ -59,7 +59,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
                   >
-                    Points Earned.
+                    Points
                   </Text>
                 </div>
                 <div
@@ -75,21 +75,25 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
                       size={"large"}
                     >
                       Get Affiliates
                     </Button>
                   </a>
 
-                  <Button
+                 
+                </div>
+                <div className="col-2"> 
+                <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 }}
+                    style={{ borderRadius: 5,width:150 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
+                
                 </div>
               </div>
               <Divider></Divider>
@@ -104,7 +108,7 @@ const TaskCenter = () => {
                   <br />
                   <Progress style={{ width: 439 }} />
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
                     style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
@@ -114,7 +118,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
                   >
-                    Points Earned.
+                    Points
                   </Text>
                 </div>
 
@@ -131,20 +135,25 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      style={{ borderRadius: 5, marginBottom: 10 ,width:150}}
                       size={"large"}
                     >
                       Buy Tokens
                     </Button>
                   </a>
-                  <Button
+                 
+                </div>
+
+                <div className="col-2">
+                <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 }}
+                    style={{ borderRadius: 5,width:150 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
+
                 </div>
               </div>
               <Divider></Divider>
@@ -158,7 +167,7 @@ const TaskCenter = () => {
                   </Text>
                   <Progress style={{ width: 439 }} />
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
                     style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
@@ -168,7 +177,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
                   >
-                    Points Earned.
+                    Points
                   </Text>
                 </div>
                 <div
@@ -184,22 +193,25 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
                       size={"large"}
                     >
                       Report a bug
                     </Button>
                   </a>
-
+                
+                </div>
+                <div className="col-2">
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 }}
+                    style={{ borderRadius: 5,width:150}}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                </div>
+                    </div>
+                
               </div>
               <Divider></Divider>
               <div className="row">
@@ -212,7 +224,7 @@ const TaskCenter = () => {
                   </Text>
                   <Progress style={{ width: 439 }} />
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
                     style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
@@ -222,7 +234,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
                   >
-                    Points Earned.
+                    Points
                   </Text>
                 </div>
                 <div
@@ -238,21 +250,25 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginBottom: 10 }}
+                      style={{ borderRadius: 5, marginBottom: 10,width:150 }}
                       size={"large"}
                     >
                       Fortune daily
                     </Button>
                   </a>
-                  <Button
+                 
+                </div>
+                    <div className="col-2">
+                    <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 }}
+                    style={{ borderRadius: 5 ,width:150}}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                </div>
+                    </div>
+             
               </div>
             </Card>
           </div>
@@ -262,7 +278,7 @@ const TaskCenter = () => {
                 <Button
                   danger
                   type="primary"
-                  style={{ borderRadius: 5, width: 156 }}
+                  style={{ borderRadius: 5, width: 150 }}
                   size={"large"}
                 >
                   How it Works
