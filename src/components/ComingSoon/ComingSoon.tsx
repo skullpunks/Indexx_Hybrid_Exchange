@@ -2,6 +2,7 @@ import React from 'react'
 import Footer from '../Footer/Footer';
 import { useSearchParams } from "react-router-dom";
 import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
+import careersIcon from "../../assets/arts/careersIcon.png";
 
 const ComingSoon = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -10,12 +11,20 @@ const ComingSoon = () => {
     return (
         <>
             <div className='scan-container flex-direction-column'>
-                <img src={fortuneLadyCoin} className="pt-5" alt="Coming soon art" width="400" />
+                {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
+                    :
+                    <img src={fortuneLadyCoin} className="pt-5" alt="Coming soon art" width="400" />
+                }
                 <h1 className='coming_soon  font_60x'>
                     <span className='page_name'>{pageName || "Decentralized"} </span>
                     Coming Soon
                 </h1>
-
+                {pageName === "Careers" ? <div className='pt-4  text-center'>
+                    <span className='font_20x  '>For inquiries, please reach us out at <a href='mailto:hr@indexx.ai' className='text_link ps-1'> hr@indexx.ai</a></span>
+                </div>
+                    :
+                    <></>
+                }
             </div>
 
             <Footer />
