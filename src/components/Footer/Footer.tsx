@@ -4,8 +4,9 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Instagram from "../../assets/arts/instagramIcon.svg";
 import Twitter from "../../assets/arts/twitterIcon.svg";
 import YouTube from "../../assets/arts/youtTubeIcon.svg";
-// import Reddit from "../../assets/arts/redditIcon.svg";
+import Reddit from "../../assets/arts/redditIcon.svg";
 import facebook from "../../assets/arts/fb_logo.png";
+import Telegram from "../../assets/arts/telegram.png";
 import needHelp from "../../assets/arts/needHelp.svg";
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from "../../assets/arts/personFlipCoin.png";
@@ -40,6 +41,16 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
             src: facebook,
             href: "https://www.facebook.com/profile.php?id=100086225564460",
             alt: "facebook",
+        },
+        {
+            src: Reddit,
+            href: "https://www.reddit.com/user/Indexx_ai/",
+            alt: "reddit",
+        },
+        {
+            src: Telegram,
+            href: "https://t.me/indexxai",
+            alt: "reddit",
         },
     ]
 

@@ -15,7 +15,8 @@ const Notification = () => {
 
             <>
 
-                <div className='nav_container' style={{ paddingTop: 120 }}><h2 className='border-bottom padding-b-1x font_40x d-md-flex d-none' style={{ marginBottom: 0 }}>Notifications</h2>
+                <div className='nav_container' style={{ paddingTop: 120 }}>
+                    <h1 className='border-bottom padding-b-1x font_40x d-md-flex d-none top_heading' style={{ marginBottom: 0 }}>Notifications</h1>
                     <div className=" d-flex help_main_page d-md-flex d-none">
 
 

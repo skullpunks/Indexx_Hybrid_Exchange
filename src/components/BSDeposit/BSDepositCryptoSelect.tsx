@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { ArrowRightOutlined, CopyOutlined, LinkOutlined, QrcodeOutlined, CloseCircleFilled } from '@ant-design/icons';
-import { Button, Input, Popover, Select, Table, Tooltip, notification } from 'antd';
+import { ArrowRightOutlined, CopyOutlined, QrcodeOutlined, CloseCircleFilled } from '@ant-design/icons';
+import { Button, Input, Popover, Select, Table, notification } from 'antd';
 // import bsDollar from "../../assets/arts/bsDollar.svg";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 // import IN500 from "../../assets/token-icons/33.png";
@@ -15,6 +15,7 @@ import { decodeJWT, transactionList, getUserWallets, checkAndUpdateDeposit } fro
 import { ColumnsType } from 'antd/lib/table';
 import { QRCodeCanvas } from "qrcode.react";
 import { CheckCircleFilled } from '@ant-design/icons';
+import ShortenText from '../../utils/ShortenText';
 
 interface DataType {
   to: string;
@@ -29,97 +30,6 @@ interface DataType {
   txid: string;
 }
 
-const columns: ColumnsType<DataType> = [
-
-  {
-    title: "Time Type",
-    render: (record) => (
-      <React.Fragment>
-        {record.modified}
-        <br />
-        {record.modified}
-      </React.Fragment>
-    ),
-    responsive: ["xs"]
-  },
-  {
-    title: "Amount",
-    render: (record) => (
-      <React.Fragment>
-        {record.amount}
-
-        {record.currencyRef}
-      </React.Fragment>
-    ),
-    responsive: ["xs"]
-  },
-  {
-    title: 'Time',
-    dataIndex: 'modified',
-    key: 'modified',
-    render: text => <span>{text}</span>,
-    responsive: ["sm"],
-  },
-  {
-    title: 'Asset',
-    dataIndex: 'currencyRef',
-    key: 'currencyRef',
-    render: text => <span>{text}</span>,
-    responsive: ["sm"],
-  },
-  {
-    title: 'Type',
-    dataIndex: 'transactionType',
-    key: 'transactionType',
-    responsive: ["sm"]
-  },
-  {
-    title: 'Deposit Wallet',
-    dataIndex: 'walletType',
-    key: 'walletType',
-    render: text => <span>{text}</span>,
-    responsive: ["sm"],
-  },
-  // {
-  //   title: 'Asset',
-  //   key: 'currencyRef',
-  //   dataIndex: 'asset',
-  //   responsive: ["sm"],
-  // },
-  {
-    title: 'Amount',
-    key: 'amount',
-    dataIndex: 'amount',
-    responsive: ["sm"],
-  },
-  {
-    title: 'TxID',
-    key: 'txId',
-    render: (_, record) => (
-      <span>
-        {record.txId}
-        <span>
-          <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip>
-          <LinkOutlined />
-        </span>
-      </span>
-    ),
-    responsive: ["sm"],
-  },
-  {
-    title: 'Destination',
-    key: 'to',
-    render: (_, record) => (
-      <span>
-        {record.to}
-        <span>
-          <CopyOutlined className='padding-lr-1x' /> <LinkOutlined />
-        </span>
-      </span>
-    ),
-    responsive: ["sm"],
-  },
-];
 
 export const BSDepositCryptoSelect = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
@@ -135,6 +45,105 @@ export const BSDepositCryptoSelect = () => {
 
   const [copiedValue, copy] = useCopyToClipboard();
   console.log(copiedValue);
+
+
+  const columns: ColumnsType<DataType> = [
+
+    {
+      title: "Time Type",
+      render: (record) => (
+        <React.Fragment>
+          {record.modified}
+          <br />
+          {record.modified}
+        </React.Fragment>
+      ),
+      responsive: ["xs"]
+    },
+    {
+      title: "Amount",
+      render: (record) => (
+        <React.Fragment>
+          {record.amount}
+
+          {record.currencyRef}
+        </React.Fragment>
+      ),
+      responsive: ["xs"]
+    },
+    {
+      title: 'Time',
+      dataIndex: 'modified',
+      key: 'modified',
+      render: text => <span>{text}</span>,
+      responsive: ["sm"],
+    },
+    {
+      title: 'Asset',
+      dataIndex: 'currencyRef',
+      key: 'currencyRef',
+      render: text => <span>{text}</span>,
+      responsive: ["sm"],
+    },
+    {
+      title: 'Type',
+      dataIndex: 'transactionType',
+      key: 'transactionType',
+      responsive: ["sm"]
+    },
+    {
+      title: 'Deposit Wallet',
+      dataIndex: 'walletType',
+      key: 'walletType',
+      render: text => <span>{text}</span>,
+      responsive: ["sm"],
+    },
+    // {
+    //   title: 'Asset',
+    //   key: 'currencyRef',
+    //   dataIndex: 'asset',
+    //   responsive: ["sm"],
+    // },
+    {
+      title: 'Amount',
+      key: 'amount',
+      dataIndex: 'amount',
+      responsive: ["sm"],
+    },
+    {
+      title: 'Transaction Hash',
+      key: 'txId',
+      render: (_, record) => (
+        <span>
+          {/* {record.txId} */}
+          {ShortenText(record.txId, 0, 20) + "..."}
+          <span>
+            {/* <Tooltip title="Copied to Clipboard" >
+              &nbsp;
+            </Tooltip> */}
+            <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.txId)} />
+            {/* <LinkOutlined /> */}
+          </span>
+        </span>
+      ),
+      responsive: ["sm"],
+    },
+    {
+      title: 'Destination',
+      key: 'to',
+      render: (_, record) => (
+        <span>
+          {/* {record.to} */}
+          {ShortenText(record.to, 0, 20) + "..."}
+          <span>
+            <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.to)} />
+            {/* <LinkOutlined /> */}
+          </span>
+        </span>
+      ),
+      responsive: ["sm"],
+    },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
