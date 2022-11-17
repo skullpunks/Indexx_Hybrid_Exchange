@@ -36,6 +36,7 @@ const TradeToEarn = () => {
   const [email, setEmail] = useState('');
   const [showTxText, setShowTxTest] = useState(false);
   const [txHash, setTxHash] = useState('');
+  const [loadings, setLoadings] = useState<boolean>(false);
 
 
 
@@ -63,9 +64,11 @@ const TradeToEarn = () => {
       const decoded: any = decodeJWT(access_token);
       const res = await getUserRewardDetails(decoded.email);
       setEmail(decoded.email);
-      setUserRewardDetails(res.data);
       console.log(res.data)
-      setAmount(res.data.rewardTokenBalanceInUSD);
+      if (res.data !== undefined || res.data === null) {
+        setUserRewardDetails(res.data);
+        setAmount(res.data?.rewardTokenBalanceInUSD);
+      }
     } else {
 
     }
@@ -97,15 +100,19 @@ const TradeToEarn = () => {
   const withdrawMyINEX = async () => {
     console.log(withdrawAmount)
     console.log(email)
+    setLoadings(true);
+
     let res = await withdrawINEX(email, withdrawAmount);
     console.log(res);
-    if (res.status === 200) {
-      openNotificationWithIcon('success', res.data.txData.blockHash);
+    if (res.data.txData.status === 200) {
+      setLoadings(false);
+      openNotificationWithIcon('success', res.data.txData.data.transactionHash);
       setShowTxTest(true);
-      setTxHash(res.data.txData.blockHash);
+      setTxHash(res.data.txData.data.transactionHash);
       console.log(txHash, amount)
       console.log(showTxText)
     } else {
+      setLoadings(false);
       openNotificationWithIcon2('error');
     }
   }
@@ -153,12 +160,12 @@ const TradeToEarn = () => {
         {
           window.localStorage.getItem("user") ?
             <>
-             <Image
-              src={tradetoearnlogo}
-              style={{ marginBottom: 30 }}
-              width={"full"}
-              preview={false}
-            ></Image>
+              <Image
+                src={tradetoearnlogo}
+                style={{ marginBottom: 30 }}
+                width={"full"}
+                preview={false}
+              ></Image>
 
               <p className='card__title' style={{ color: "#5F5F5F", fontSize: "50px", lineHeight: "1em", margin: -19 }}>Trade To Earn </p>
               <p style={{ marginLeft: 320 }}>&trade;</p>
@@ -176,7 +183,10 @@ const TradeToEarn = () => {
 
                 </div>
                 <h2 className='centered' style={{ marginBottom: 10, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
-                <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>${Math.floor((userRewardDetails?.rewardTokenBalanceInUSD * 100)) / 100}</h1><br />
+                <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>
+                  {userRewardDetails?.rewardTokenBalanceInUSD > 0 || userRewardDetails?.rewardTokenBalanceInUSD !== undefined ? '$' + (Math.floor((userRewardDetails?.rewardTokenBalanceInUSD * 100) /100)) : '$' + 0} </h1><br />
+
+
                 <Input
                   // value={Math.floor((totalBalanceInUSD * 100)) / 100}
                   onChange={updateAmount}
@@ -193,6 +203,7 @@ const TradeToEarn = () => {
                   borderRadius: "5px",
                 }}
                   disabled={(!withdrawAmount || withdrawAmount < 1000 || withdrawAmount > userRewardDetails?.rewardTokenBalanceInUSD)}
+                  loading={loadings}
                   onClick={() => withdrawMyINEX()}
                 >Withdraw Tokens</Button>
                 {/* { showTxText && 
