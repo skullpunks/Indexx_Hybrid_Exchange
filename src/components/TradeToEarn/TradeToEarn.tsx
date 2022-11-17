@@ -36,6 +36,7 @@ const TradeToEarn = () => {
   const [email, setEmail] = useState('');
   const [showTxText, setShowTxTest] = useState(false);
   const [txHash, setTxHash] = useState('');
+  const [loadings, setLoadings] = useState<boolean>(false);
 
 
 
@@ -97,15 +98,19 @@ const TradeToEarn = () => {
   const withdrawMyINEX = async () => {
     console.log(withdrawAmount)
     console.log(email)
+    setLoadings(true);
+    
     let res = await withdrawINEX(email, withdrawAmount);
     console.log(res);
-    if (res.status === 200) {
-      openNotificationWithIcon('success', res.data.txData.blockHash);
+    if (res.data.txData.status === 200) {
+      setLoadings(false);
+      openNotificationWithIcon('success', res.data.txData.data.transactionHash);
       setShowTxTest(true);
-      setTxHash(res.data.txData.blockHash);
+      setTxHash(res.data.txData.data.transactionHash);
       console.log(txHash, amount)
       console.log(showTxText)
     } else {
+      setLoadings(false);
       openNotificationWithIcon2('error');
     }
   }
@@ -193,7 +198,8 @@ const TradeToEarn = () => {
                   borderRadius: "5px",
                 }}
                   disabled={(!withdrawAmount || withdrawAmount < 1000 || withdrawAmount > userRewardDetails?.rewardTokenBalanceInUSD)}
-                  onClick={() => withdrawMyINEX()}
+                  loading={loadings}
+                  onClick={() => withdrawMyINEX() }
                 >Withdraw Tokens</Button>
                 {/* { showTxText && 
                   <span>
