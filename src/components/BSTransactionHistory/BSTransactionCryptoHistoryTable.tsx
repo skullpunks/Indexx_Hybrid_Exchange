@@ -1,9 +1,11 @@
-import { CopyOutlined, LinkOutlined } from '@ant-design/icons';
-import { Table, Tooltip } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
+import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { decodeJWT, transactionList } from '../../services/api';
+import useCopyToClipboard from '../../utils/useCopyToClipboard';
+import ShortenText from '../../utils/ShortenText';
 
 const { Option } = Select;
 
@@ -33,101 +35,111 @@ interface DataType {
     txid: string;
 }
 
-const columns: ColumnsType<DataType> = [
-
-    {
-        title: "Time Type",
-        render: (record) => (
-            <React.Fragment>
-                {record.modified}
-                <br />
-                {record.modified}
-            </React.Fragment>
-        ),
-        responsive: ["xs"]
-    },
-    {
-        title: "Amount",
-        render: (record) => (
-            <React.Fragment>
-                {record.amount}
-
-                {record.currencyRef}
-            </React.Fragment>
-        ),
-        responsive: ["xs"]
-    },
-    {
-        title: 'Time',
-        dataIndex: 'modified',
-        key: 'modified',
-        render: text => <span>{text}</span>,
-        responsive: ["sm"],
-    },
-    {
-        title: 'Asset',
-        dataIndex: 'currencyRef',
-        key: 'currencyRef',
-        render: text => <span>{text}</span>,
-        responsive: ["sm"],
-    },
-    {
-        title: 'Type',
-        dataIndex: 'transactionType',
-        key: 'transactionType',
-        responsive: ["sm"]
-    },
-    {
-        title: 'Deposit Wallet',
-        dataIndex: 'walletType',
-        key: 'walletType',
-        render: text => <span>{text}</span>,
-        responsive: ["sm"],
-    },
-    {
-        title: 'Asset',
-        key: 'currencyRef',
-        dataIndex: 'asset',
-        responsive: ["sm"],
-    },
-    {
-        title: 'Amount',
-        key: 'amount',
-        dataIndex: 'amount',
-        responsive: ["sm"],
-    },
-    {
-        title: 'TxID',
-        key: 'txId',
-        render: (_, record) => (
-            <span>
-                {record.txId}
-                <span>
-                    <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip>
-                    <LinkOutlined />
-                </span>
-            </span>
-        ),
-        responsive: ["sm"],
-    },
-    {
-        title: 'Destination',
-        key: 'to',
-        render: (_, record) => (
-            <span>
-                {record.to}
-                <span>
-                    <CopyOutlined className='padding-lr-1x' /> <LinkOutlined />
-                </span>
-            </span>
-        ),
-        responsive: ["sm"],
-    },
-];
-
 
 const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [txList, setTxList] = useState() as any;
+    const [copiedValue, copy] = useCopyToClipboard();
+    console.log(copiedValue);
+    const columns: ColumnsType<DataType> = [
+
+        {
+            title: "Time Type",
+            render: (record) => (
+                <React.Fragment>
+                    {record.modified}
+                    <br />
+                    {record.modified}
+                </React.Fragment>
+            ),
+            responsive: ["xs"]
+        },
+        {
+            title: "Amount",
+            render: (record) => (
+                <React.Fragment>
+                    {record.amount}
+
+                    {record.currencyRef}
+                </React.Fragment>
+            ),
+            responsive: ["xs"]
+        },
+        {
+            title: 'Time',
+            dataIndex: 'modified',
+            key: 'modified',
+            render: text => <span>{text}</span>,
+            responsive: ["sm"],
+        },
+        {
+            title: 'Asset',
+            dataIndex: 'currencyRef',
+            key: 'currencyRef',
+            render: text => <span>{text}</span>,
+            responsive: ["sm"],
+        },
+        {
+            title: 'Type',
+            dataIndex: 'transactionType',
+            key: 'transactionType',
+            responsive: ["sm"]
+        },
+        {
+            title: 'Deposit Wallet',
+            dataIndex: 'walletType',
+            key: 'walletType',
+            render: text => <span>{text}</span>,
+            responsive: ["sm"],
+        },
+        {
+            title: 'Asset',
+            key: 'currencyRef',
+            dataIndex: 'asset',
+            responsive: ["sm"],
+        },
+        {
+            title: 'Amount',
+            key: 'amount',
+            dataIndex: 'amount',
+            responsive: ["sm"],
+        },
+        {
+            title: 'Transaction Hash',
+            key: 'txId',
+            render: (_, record) => (
+                <span>
+                    {/* {record.txId} */}
+                    {/* {ShortenText(record.txId, 0, 20) + "..."} */}
+                    {(record.txId.length > 20) ? ShortenText(record.txId, 0, 20) + "..." : record.txId}
+                    <span>
+                        {/* <Tooltip title="Click to copy">
+                        </Tooltip>
+                        <LinkOutlined /> */}
+                        <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.txId)} />
+                    </span>
+                </span>
+            ),
+            responsive: ["sm"],
+        },
+        {
+            title: 'Destination',
+            key: 'to',
+            render: (_, record) => (
+                <span>
+                    {/* {record.to} */}
+                    {/* {ShortenText(record.to, 0, 20) + "..."} */}
+                    {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
+                    <span>
+                        <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.to)} />
+                        {/* <LinkOutlined /> */}
+                    </span>
+                </span>
+            ),
+            responsive: ["sm"],
+        },
+    ];
+
+
     useEffect(() => {
         const token = localStorage.getItem('access_token');
         const decodedToken: any = decodeJWT(String(token)) as any;
@@ -136,8 +148,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             console.log(res.data);
             const results = res.data;
             let finalArr = [];
-            for(let i = 0; i < results.length; i++) {
-                if(results[i].transactionType?.includes('FIAT')) {
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].transactionType?.includes('FIAT')) {
                     console.log(results[i].transactionType);
                 } else {
                     console.log(results[i].transactionType, 'typoe');
@@ -186,7 +198,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>
-                    <label>TxID</label> <br />
+                    <label>Transaction Hash</label> <br />
                     <Select
                         showSearch
                         placeholder="Search transaction id"

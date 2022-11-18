@@ -31,10 +31,14 @@ const MarketsIUSDPable = () => {
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
-    const [fav, setFav] = useState('color-warn font_20x');
-    const [notFav, setNotFav] = useState('font_20x');
+    // const [fav, setFav] = useState('color-warn font_20x');
+    // const [notFav, setNotFav] = useState('color-warn font_20x');
     const [isLoading, setLoadings] = useState(true);
 
+    const tableLoading = {
+        spinning: isLoading,
+        indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="38" height="38" />,
+    }
 
     useEffect(() => {
         if (!calledOnce) {
@@ -56,7 +60,7 @@ const MarketsIUSDPable = () => {
         }
     }, [calledOnce, email]);
 
-    const updateFavCurr = async (row: any) => {
+    const updateFavCurr = async (row: any, index: any) => {
         console.log(row);
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
@@ -65,13 +69,16 @@ const MarketsIUSDPable = () => {
         console.log(email);
         if (row.Favourite === true) {
             row.Favourite = false;
-            setFav('font_20x');
-            setNotFav('color-warn font_20x');
-            
+            // setFav('font_20x');
+            // setNotFav('color-warn font_20x');
+            // setMarketData( (prevState:any) => ( {
+            //      {...prevState, prevState.data.map((x, key) => (key === i ? {...x, starIcon: !x. starIcon} : x) ) }
+            //   }));
+
         } else {
             row.Favourite = true;
-            setFav('color-warn font_20x');
-            setNotFav('font_20x');
+            // setFav('color-warn font_20x');
+            // setNotFav('font_20x');
         }
         // const updateFavCurr = await updateFavCurrencies(email, )
 
@@ -92,8 +99,10 @@ const MarketsIUSDPable = () => {
         {
             title: ' ',
             dataIndex: 'Favourite',
-            render: (_, record) => {
-                return (record?.Favourite === true) ? <StarOutlined className={fav} onClick={() => updateFavCurr(record)} /> : <StarFilled className={notFav} onClick={() => updateFavCurr(record)} />;
+            render: (_, record, index) => {
+                return (record?.Favourite === true) ?
+                    <StarOutlined className="color-warn" onClick={() => updateFavCurr(record, index)} />
+                    : <StarFilled className="color-warn" onClick={() => updateFavCurr(record, index)} />;
             },
             responsive: ["sm"],
         },
@@ -168,6 +177,9 @@ const MarketsIUSDPable = () => {
             sorter: {
                 compare: (a, b) => a.Volume - b.Volume,
                 multiple: 1,
+            },
+            render: (_, record) => {
+                return Math.round(record?.Volume * 1000) / 1000;
             },
             responsive: ["sm"],
         },
@@ -287,7 +299,7 @@ const MarketsIUSDPable = () => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={isLoading}/>
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading} />
             </div>
         </div>
     )
