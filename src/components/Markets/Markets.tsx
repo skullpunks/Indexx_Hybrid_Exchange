@@ -10,7 +10,7 @@ import MarketsIUSDPable from './MarketsIUSDPTable';
 import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
-return (
+  return (
     <div>
       <div className='scan-container market-container'>
         <h1>Cryptocurrency prices, charts, and trends</h1>
@@ -20,7 +20,7 @@ return (
           <Input size="large" placeholder=" Search" prefix={<SearchOutlined />} />
         </div>
         <div className='tabs-container border'>
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="2">
             <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
               <MarketsFavTable />
 

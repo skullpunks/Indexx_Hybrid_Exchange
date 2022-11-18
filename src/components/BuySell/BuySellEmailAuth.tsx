@@ -191,7 +191,7 @@ const BuySellEmailAuth = () => {
                 {/* <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button> */}
                 <Button id="verify_btn" type="primary" onClick={() => verifyCode()}>Verify</Button>
                 {
-                    < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={10} initSecs={0} /> )</div>
+                    < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={1} initSecs={0} /> )</div>
                 }
 
                 <div className="margin-lr-auto padding-tb-2x" style={{ cursor: "pointer" }}><Popover content={content} trigger="click" className="text_link" >Didn’t receive an email?</Popover></div>

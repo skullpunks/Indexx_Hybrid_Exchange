@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ArrowRightOutlined, CopyOutlined, LinkOutlined } from '@ant-design/icons';
-import { Button, Select, Table, Tooltip, RadioChangeEvent, Radio, Space } from 'antd';
+import { ArrowRightOutlined, CopyOutlined } from '@ant-design/icons';
+import { Button, Select, Table, RadioChangeEvent, Radio, Space } from 'antd';
 import { Typography } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { ColumnsType } from 'antd/lib/table';
 import React from 'react';
 import Web3 from 'web3';
+import useCopyToClipboard from '../../utils/useCopyToClipboard';
+import ShortenText from '../../utils/ShortenText';
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 const { Text } = Typography;
@@ -24,6 +26,8 @@ export const BSWithdarwCryptoContent = () => {
   const [receiveAmountt, setReceiveAmount] = useState('');
   const [selectedCoinObj, setSelectedCoinObj] = useState('0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A');
   const [isWalletAddrValid, setIsWalletAddrValid] = useState(true);
+  const [copiedValue, copy] = useCopyToClipboard();
+  console.log(copiedValue);
 
   // const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [values, setValues] = useState() as any;
@@ -124,14 +128,16 @@ export const BSWithdarwCryptoContent = () => {
       responsive: ["sm"],
     },
     {
-      title: 'TxID',
+      title: 'Transaction Hash',
       key: 'txId',
       render: (_, record) => (
         <span>
-          {record.txId}
+          {/* {record.txId} */}
+          {(record.txId.length > 20) ? ShortenText(record.txId, 0, 20) + "..." : record.txId}
           <span>
-            <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip>
-            <LinkOutlined />
+            {/* <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip> */}
+            <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.txId)} />
+            {/* <LinkOutlined /> */}
           </span>
         </span>
       ),
@@ -142,9 +148,11 @@ export const BSWithdarwCryptoContent = () => {
       key: 'to',
       render: (_, record) => (
         <span>
-          {record.to}
+          {/* {record.to} */}
+          {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
           <span>
-            <CopyOutlined className='padding-lr-1x' /> <LinkOutlined />
+            {/* <CopyOutlined className='padding-lr-1x' /> <LinkOutlined /> */}
+            <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.to)} />
           </span>
         </span>
       ),
