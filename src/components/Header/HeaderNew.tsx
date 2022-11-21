@@ -114,7 +114,7 @@ const HeaderNew = () => {
               >
                 <NavDropdown.Item
                   as={Link}
-                  to="/indexx-exchange/buy-sell"
+                  to="/indexx-exchange/buy-sell/get-started"
                   className="dropdown-item"
                 >
                   Centralized
