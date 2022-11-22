@@ -1,14 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, notification } from 'antd';
+import { Button, Checkbox, Form, Input, Modal, notification } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
 
 const BuySellGetStarted: React.FC = () => {
+    //creating IP state
+    const [ip, setIP] = useState('');
+    const [country, setCountry] = useState('');
+    const [countryCode, setCountryCode] = useState('');
+    const [isTransferModalVisible, setIsTransferModalVisible] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const checkUserIp = async () => {
+        setLoading(true);
+        const res = await axios.get('https://geolocation-db.com/json/')
+        console.log(res.data);
+        setIP(res.data.IPv4);
+        setCountry(res.data.country_name);
+        console.log(open);
+        console.log(loading);
+        setCountryCode(res.data.country_code);
+        if (res.data.country_code === 'US') {
+            setIsTransferModalVisible(true);
+            setOpen(true);
+            setLoading(false);
+        }
+    }
+
+    const handleTransferOk = () => {
+        localStorage.setItem('userIp', ip);
+        setIsTransferModalVisible(false);
+    };
+
+    const handleTransferCancel = () => {
+        setIsTransferModalVisible(false);
+    };
+
+
+    const handleOk = () => {
+        setLoading(true);
+    };
+    
+    useEffect(() => {
+        //passing getData method to the lifecycle method
+        checkUserIp();
+    })
+
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
@@ -116,6 +160,30 @@ const BuySellGetStarted: React.FC = () => {
                     <Link to="/indexx-exchange/buy-sell/login" className="text_link"> Log in.</Link>
                 </div>
             </div>
+            {(country === "United States" || countryCode === "US") &&
+                <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} width={850} maskClosable={false} className="buy_purchase_modal"
+                    footer={[
+
+                        <Button
+                            href="https://dex.indexx.ai"
+                            type="primary"
+                            onClick={handleOk}>
+                            Go To Decentralized
+                        </Button>,
+
+                        <Button
+                            type="primary"
+                            onClick={handleTransferCancel}>
+                            Cancel
+                        </Button>,
+
+                    ]}>
+
+                    <div>
+                        <p>Your IP address indicates that you’re attempting to access our services from the USA. As per our Terms and Use, we’re unable to provide services to users from the region. Instead, please register on our partner platform dedicated to American customers. </p>
+                    </div>
+                </Modal>
+            }
         </div>
 
     )

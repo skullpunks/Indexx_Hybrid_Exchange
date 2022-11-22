@@ -9,6 +9,7 @@ import Blockpass from '../Blockpass/Blockpass';
 
 
 const BuySellGetStartedLayout = () => {
+    
     return (
         <>
             <div className='scan-container flex-align-stretch bs_main'>
