@@ -37,7 +37,7 @@ const Section1 = () => {
                         </div>
                     </Tooltip>
                 </Link>
-                <Link className="td-none" to="/indexx-exchange/buy-sell">
+                <Link className="td-none" to="/indexx-exchange/buy-sell/get-started">
                     <div className="login-button cut_button">
                         <div className="login-button_text">Centralized</div>
                     </div>
