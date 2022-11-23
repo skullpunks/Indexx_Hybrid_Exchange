@@ -148,27 +148,27 @@ const ImportTokens = () => {
     return (
         <>
             <div className='scan-container flex-direction-column'>
-                <p><h2> You can import indexx tokens to metamask wallet by clicking on your preferred token </h2></p>
+                <p><h2 style={{marginTop:30}}> You can import indexx tokens to metamask wallet by clicking on your preferred token </h2></p>
+                <br />
+                <br />
+                <br />
+                
+                <Button type="primary" danger onClick={importIN500Token} size="large" style={{width:300,borderRadius:4}}>Import Indexx 500 (IN500)</Button> <br />
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button danger onClick={importIN500Token}>Import Indexx 500(IN500)</Button> <br />
+                <Button type="primary"  danger onClick={importINXCToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx Crypto (INXC)</Button> <br />
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button danger onClick={importINXCToken}>Import Indexx Crypto(INXC)</Button> <br />
+                <Button type="primary"  danger onClick={importIUSPToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx USD+ (IUSD+)</Button> <br />
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button danger onClick={importIUSPToken}>Import Indexx USD+(IUSD+)</Button> <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <Button danger onClick={importINEXToken}>Import Indexx Exchange(INEX)</Button> <br />
+                <Button type="primary"  danger onClick={importINEXToken} size="large" style={{width:300,borderRadius:4}}>Import Indexx Exchange (INEX)</Button> <br />
                 <br />
             </div>
 
