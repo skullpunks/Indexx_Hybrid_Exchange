@@ -585,6 +585,17 @@ export const createStripePaymentIntent = async (
     return e.response.data;
   }
 };
+export const geolocationData = async() => {
+  try {
+    const res = await axios.get('https://geolocation-db.com/json/');
+    return res;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (geolocationData)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
 export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   try {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import Email from "../../assets/arts/Email.svg";
 import lockedimage from "../../assets/arts/locked.png"
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
@@ -8,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input, Modal, notification ,Image} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
-import { signupAPI } from '../../services/api';
+import { signupAPI, geolocationData } from '../../services/api';
 
 const BuySellGetStarted: React.FC = () => {
     //creating IP state
@@ -33,7 +32,8 @@ const BuySellGetStarted: React.FC = () => {
     const [loadings, setLoadings] = useState<boolean>(false);
 
     useEffect(() => {
-        axios.get('https://geolocation-db.com/json/').then((res: any) => {
+        geolocationData().then((res: any) => {
+       // axios.get('https://geolocation-db.com/json/').then((res: any) => {
             console.log(res.data);
             setIP(res.data.IPv4);
             setCountry(res.data.country_name);
