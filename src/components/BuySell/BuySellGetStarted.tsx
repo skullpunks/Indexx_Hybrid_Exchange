@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Email from "../../assets/arts/Email.svg";
+import lockedimage from "../../assets/arts/locked.png"
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, Modal, notification } from 'antd';
+import { Button, Checkbox, Form, Input, Modal, notification ,Image} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
@@ -161,25 +162,31 @@ const BuySellGetStarted: React.FC = () => {
                 </div>
             </div>
             {(country === "United States" || countryCode === "US") &&
-                <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} width={850} maskClosable={false} className="buy_purchase_modal"
+                <Modal centered={true}  visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} width={670} maskClosable={false} 
                     footer={[
 
                         <Button
+                            size='large'
                             href="https://dex.indexx.ai"
+                            style={{marginBottom:20,width:"100%"}}
                             type="primary"
                             onClick={handleOk}>
+                            
                             Go To Decentralized
                         </Button>,
 
                         <Button
-                            type="primary"
+                            className="center"
+                            type="link"
                             onClick={handleTransferCancel}>
                             Cancel
                         </Button>,
 
                     ]}>
-
-                    <div>
+                         
+                    <div className="align-center text-center">
+                        <Image src={lockedimage}></Image>
+                        <p className="text-center" style={{fontSize:30,fontWeight:400,}}>Service Notice</p>
                         <p>Your IP address indicates that you’re attempting to access our services from the USA. As per our Terms and Use, we’re unable to provide services to users from the region. Instead, please register on our partner platform dedicated to American customers. </p>
                     </div>
                 </Modal>
