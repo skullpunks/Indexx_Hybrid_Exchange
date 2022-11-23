@@ -148,7 +148,7 @@ const ImportTokens = () => {
     return (
         <>
             <div className='scan-container flex-direction-column'>
-                <p><h2> You can import indexx tokens to metamask wallet buy clicking on your preferred token </h2></p>
+                <p><h2> You can import indexx tokens to metamask wallet by clicking on your preferred token </h2></p>
                 <br />
                 <br />
                 <br />

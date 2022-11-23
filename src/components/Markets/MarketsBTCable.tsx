@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import { StarFilled, StarOutlined } from '@ant-design/icons';
+// import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { decodeJWT, marketsData } from "../../services/api";
 
@@ -33,6 +33,11 @@ const MarketsBTCTable = () => {
         console.log('params', pagination, filters, sorter, extra);
     };
     const [isLoading, setLoadings] = useState(true);
+
+    const tableLoading = {
+        spinning: isLoading,
+        indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="38" height="38" />,
+    }
 
     useEffect(() => {
         if (!calledOnce) {
@@ -66,14 +71,14 @@ const MarketsBTCTable = () => {
                "HighPrice": 3.88*/
 
     const columns: ColumnsType<DataType> = [
-        {
-            title: ' ',
-            dataIndex: 'Favourite',
-            render: (_, record) => {
-                return (record?.Favourite === true) ? <StarOutlined className='color-warn font_20x' /> : <StarFilled className='font_20x' />;
-            },
-            responsive: ["sm"],
-        },
+        // {
+        //     title: ' ',
+        //     dataIndex: 'Favourite',
+        //     render: (_, record) => {
+        //         return (record?.Favourite === true) ? <StarOutlined className='color-warn font_20x' /> : <StarFilled className='font_20x' />;
+        //     },
+        //     responsive: ["sm"],
+        // },
         {
             title: 'Pair Name',
             dataIndex: 'Symbol',
@@ -148,6 +153,9 @@ const MarketsBTCTable = () => {
                 compare: (a, b) => a.Volume - b.Volume,
                 multiple: 1,
             },
+            render: (_, record) => {
+                return Math.round(record?.Volume * 1000) / 1000;
+            },
             responsive: ["sm"],
         },
         {
@@ -186,75 +194,6 @@ const MarketsBTCTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => x.Symbol.includes('I')));
     }
 
-    // const data: DataType[] = [
-    //     {
-    //         key: '1',
-    //         favourite: false,
-    //         name: 'Indexx Exchange',
-    //         Price: "$10",
-    //         DailyChange: "12.09%",
-    //         DailyHigh: "$10.00",
-    //         DailyLow: "$12.09%",
-    //         Volume: "$100.00M",
-    //         MarketCap: "$100.00B",
-    //     },
-    //     {
-    //         key: '2',
-    //         favourite: false,
-    //         name: 'Index 500',
-    //         Price: "$6",
-    //         DailyChange: "10.09%",
-    //         DailyHigh: "$6.00",
-    //         DailyLow: "$10.00",
-    //         Volume: "$6.00M",
-    //         MarketCap: "$61.00B",
-    //     },
-    //     {
-    //         key: '3',
-    //         favourite: true,
-    //         name: 'Indexx Crypto',
-    //         Price: "$18",
-    //         DailyChange: "-9.09%",
-    //         DailyHigh: "$6.00",
-    //         DailyLow: "$6.00",
-    //         Volume: "$18.00M",
-    //         MarketCap: "$8.00B",
-    //     },
-    //     {
-    //         key: '4',
-    //         favourite: true,
-    //         name: 'Indexx Fortune',
-    //         Price: "$0.019",
-    //         DailyChange: "0.09",
-    //         DailyHigh: "$5.00",
-    //         DailyLow: "$0.019",
-    //         Volume: "$0.009M",
-    //         MarketCap: "$1.019B",
-    //     },
-    //     {
-    //         key: '5',
-    //         favourite: true,
-    //         name: 'Indexx Fortune',
-    //         Price: "$0.019",
-    //         DailyChange: "+2.78%",
-    //         DailyHigh: "$0.09",
-    //         DailyLow: "$0.09",
-    //         Volume: "$0.09M",
-    //         MarketCap: "$2.09B",
-    //     },
-    //     {
-    //         key: '6',
-    //         favourite: false,
-    //         name: 'Indexx Fortune',
-    //         Price: "$0.09",
-    //         DailyChange: "+3.03%",
-    //         DailyHigh: "$1.05",
-    //         DailyLow: "$1.05",
-    //         Volume: "$1.05M",
-    //         MarketCap: "$10.05B",
-    //     },
-    // ];
-
     return (
         <div>
             <div className='grey-strip d-flex market_button_strips'>
@@ -263,10 +202,10 @@ const MarketsBTCTable = () => {
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
                 <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
-                <Button className='white-strip last-item d-md-block d-none'>ID</Button>
+                {/* <Button className='white-strip last-item d-md-block d-none'>ID</Button> */}
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={isLoading}/>
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading}/>
             </div>
         </div>
     )

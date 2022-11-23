@@ -121,7 +121,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
             </div>
             <div className="copyright_bar row">
                 <p className="copyright_text text-center">
-                    Copyright © 2022 All Rights Reserved by Indexx.
+                    Copyright © 2023 All Rights Reserved by Indexx.
                 </p>
                 <br />
             </div>

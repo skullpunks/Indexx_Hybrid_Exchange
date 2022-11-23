@@ -1,13 +1,13 @@
 import React from 'react';
 import './Markets.css';
-import { SearchOutlined, StarFilled } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { Input, Tabs } from 'antd';
 // import type { ColumnsType, TableProps } from 'antd/es/table';
 import MarketsTable from './MarketsTable';
 import Footer from '../Footer/Footer';
 import MarketsBTCTable from './MarketsBTCable';
 import MarketsIUSDPable from './MarketsIUSDPTable';
-import MarketsFavTable from './MarketsFavTable';
+//import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
   return (
@@ -21,10 +21,10 @@ const Markets = () => {
         </div>
         <div className='tabs-container border'>
           <Tabs defaultActiveKey="2">
-            <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
+            {/* <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
               <MarketsFavTable />
 
-            </Tabs.TabPane>
+            </Tabs.TabPane> */}
 
             <Tabs.TabPane tab="Prices " key="1">
               <MarketsTable />
