@@ -3,10 +3,8 @@ import "./sections1.css"
 import BackgroundImage from "../../../assets/background.jpg";
 import IndexxText from "../../../assets/indexxLogo.svg";
 import { Link } from "react-router-dom";
-import { Tooltip } from "antd";
 
 const Section1 = () => {
-    let comingSoonText = <p className="font_13x brand_color">Coming soon 31st Oct</p>;
     return (
         <div style={{ backgroundImage: `url(${BackgroundImage})` }} className="home-container">
             <div>
@@ -30,13 +28,17 @@ const Section1 = () => {
                 </span>
             </div>
             <div className="actions">
-                <Link className="td-none" to="/indexx-exchange/coming-soon?page=Decentralized">
-                    <Tooltip title={comingSoonText} color="#fff" key="#fff" >
-                        <div className="launch-app-button cut_button">
-                            <div className="launch-app-button-text">Decentralized</div>
-                        </div>
-                    </Tooltip>
-                </Link>
+               
+                <a href="https://dex.indexx.ai" target="_blank" rel="noopener noreferrer">
+                    <span  className="td-none">
+                        {/* <Tooltip title={comingSoonText} color="#fff" key="#fff" > */}
+                            <div className="launch-app-button cut_button">
+                                <div className="launch-app-button-text">Decentralized</div>
+                            </div>
+                        {/* </Tooltip> */}
+                    </span>
+                   
+                </a>
                 <Link className="td-none" to="/indexx-exchange/buy-sell/get-started">
                     <div className="login-button cut_button">
                         <div className="login-button_text">Centralized</div>
