@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 // import Footer from '../Footer/Footer';
@@ -15,24 +15,6 @@ const BuySellGetStarted: React.FC = () => {
     const [country, setCountry] = useState('');
     const [countryCode, setCountryCode] = useState('');
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(true);
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    const checkUserIp = async () => {
-        setLoading(true);
-        const res = await axios.get('https://geolocation-db.com/json/')
-        console.log(res.data);
-        setIP(res.data.IPv4);
-        setCountry(res.data.country_name);
-        console.log(open);
-        console.log(loading);
-        setCountryCode(res.data.country_code);
-        if (res.data.country_code === 'US') {
-            setIsTransferModalVisible(true);
-            setOpen(true);
-            setLoading(false);
-        }
-    }
 
     const handleTransferOk = () => {
         localStorage.setItem('userIp', ip);
@@ -43,16 +25,23 @@ const BuySellGetStarted: React.FC = () => {
         setIsTransferModalVisible(false);
     };
 
-
     const handleOk = () => {
-        setLoading(true);
+        // setLoading(true);
     };
-    
-    useEffect(() => {
-        //passing getData method to the lifecycle method
-        checkUserIp();
-    })
 
+    const [loadings, setLoadings] = useState<boolean>(false);
+
+    useEffect(() => {
+        axios.get('https://geolocation-db.com/json/').then((res: any) => {
+            console.log(res.data);
+            setIP(res.data.IPv4);
+            setCountry(res.data.country_name);
+            setCountryCode(res.data.country_code);
+            if (res.data.country_code === 'US') {
+                setIsTransferModalVisible(true);
+            }
+        })
+    }, []);
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
@@ -69,7 +58,6 @@ const BuySellGetStarted: React.FC = () => {
             openNotificationWithIcon('error', res.data);
         }
     };
-    const [loadings, setLoadings] = useState<boolean>(false);
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);

@@ -120,10 +120,10 @@ const HeaderNew = () => {
                   Centralized
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/coming-soon?page=Decentralized"
                   className="dropdown-item"
-                  href="/"
+                  href="https://dex.indexx.ai/"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Decentralized
                 </NavDropdown.Item>
@@ -134,6 +134,13 @@ const HeaderNew = () => {
                   rel="noreferrer"
                 >
                   indexx Tokens
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  className="dropdown-item"
+                  as={Link}
+                  to="/indexx-exchange/import-indexx-tokens"
+                >
+                  Import indexx Tokens
                 </NavDropdown.Item>
               </NavDropdown>
               {localStorage.getItem("user") ? (

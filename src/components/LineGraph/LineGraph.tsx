@@ -123,7 +123,7 @@ const LineGraph = (props: any) => {
         <YAxis
           stroke="#5f5f5f" padding={{ top: 20 }} tick={{ fill: "#5f5f5f" }} />
         <Tooltip labelFormatter={dateFormatter}
-          formatter={function (value: any, name) {
+          formatter={function (value: any) {
             return `${(Math.round(value * 100) / 100).toFixed(3)}`;
           }} />
 

@@ -57,6 +57,7 @@ import Activity from './components/Notifications/Activity';
 import SystemMsg from './components/Notifications/SystemMsg';
 import Career from './components/Careers/Career';
 import WelcomePage from "./components/WelcomePage";
+import ImportTokens from "./components/ImportTokens/ImportTokens";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -104,6 +105,7 @@ function App() {
           <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
           <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
           <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
+          <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
           <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
           <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
           <Route
