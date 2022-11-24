@@ -94,7 +94,12 @@ function App() {
         <ScrollToTop />
         <HeaderNew />
         <Routes>
-          <Route path="/*" element={<Home />} />
+          {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
+            <Route path="/*" element={<BuySellGetStartedLayout />} />
+            :
+            <Route path="/*" element={<BuySell />} />
+          }
+
           <Route path="/indexx-exchange/dashboard" element={<Account />} />
           {/* {
                         // userData?.role === "Standard"
