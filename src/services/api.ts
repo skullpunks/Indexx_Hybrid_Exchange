@@ -2,8 +2,8 @@ import axios from "axios";
 import decode from "jwt-decode";
 let baseURL = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // baseURL =   "https://api.indexx.ngrok.io"; //"http://localhost:3000";
-  baseURL = "http://localhost:3000";
+  //baseURL = "https://api.indexx.ngrok.io"; //"http://localhost:3000";
+  //baseURL = "http://localhost:3000";
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
   baseURL = "https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; //"https://api.indexx.ai" //"http://api.indexx.ai"
@@ -201,21 +201,27 @@ export const getUserWallets = async (email: string) => {
   }
 };
 
-export const checkAndUpdateDeposit = async (email: string, txHash: string, coin : string) => {
+export const checkAndUpdateDeposit = async (
+  email: string,
+  txHash: string,
+  coin: string
+) => {
   try {
     const result = await API.post(`/api/v1/inex/transaction/createTx`, {
       email,
       txHash,
-      coin
+      coin,
     });
     return result.data;
   } catch (e: any) {
-    console.log("FAILED: unable to perform API request (checkAndUpdateDeposit)");
+    console.log(
+      "FAILED: unable to perform API request (checkAndUpdateDeposit)"
+    );
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 // export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
 //   try {
@@ -331,12 +337,12 @@ export const changePassword = async (
   email: string,
   newPassword: string,
   oldPassword: string
- ) => {
+) => {
   try {
     const result = await API.post(`/api/v1/inex/user/changePassword`, {
       email: email,
       newPassword: newPassword,
-      oldPassword: oldPassword
+      oldPassword: oldPassword,
     });
     return result.data;
   } catch (e: any) {
@@ -347,9 +353,7 @@ export const changePassword = async (
   }
 };
 
-export const forgotPassword = async (
-  email: string,
-) => {
+export const forgotPassword = async (email: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/forgotPassword`, {
       email: email,
@@ -363,15 +367,12 @@ export const forgotPassword = async (
   }
 };
 
-export const resetPassword = async (
-  email: string,
-  password: string,
-) => {
+export const resetPassword = async (email: string, password: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/resetPassword`, {
       email: email,
       password: password,
-      code: "123"
+      code: "123",
     });
     return result.data;
   } catch (e: any) {
@@ -424,31 +425,31 @@ export const getAppSettings = async () => {
 };
 
 export const marketsData = async () => {
-  try{
+  try {
     const result = await API.get("/api/v1/inex/basic/marketPrice");
     return result.data;
-  } catch(e :any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (marketPrice)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const updateFavCurrencies = async (email: string, currency: string) => {
-  try{
+  try {
     const result = await API.post("/api/v1/inex/basic/updateFavCurrencies", {
       email: email,
-      currency: currency
+      currency: currency,
     });
     return result.data;
-  } catch(e :any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (updateFavCurrencies)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const createBuyOrder = async (
   basecoin: string,
@@ -662,11 +663,14 @@ export const withdrawINEX = async (email: string, amount: number) => {
   }
 };
 
-export const transactionList = async (email: string, type: string = 'FIAT') => {
+export const transactionList = async (email: string, type: string = "FIAT") => {
   try {
-    const result = await API.post(`/api/v1/inex/user/getTransactions/${email}`, {
-      type: type,
-    });
+    const result = await API.post(
+      `/api/v1/inex/user/getTransactions/${email}`,
+      {
+        type: type,
+      }
+    );
     return result.data;
   } catch (err: any) {
     console.log("FAILED: unable to perform API request (transactionList)");
@@ -676,14 +680,22 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
   }
 };
 
-export const createFiatWithdraw =async (email: string, amount:number, accountDetails: any,  coin: string = 'USD') => {
+export const createFiatWithdraw = async (
+  email: string,
+  amount: number,
+  accountDetails: any,
+  coin: string = "USD"
+) => {
   try {
-    const result = await API.post("/api/v1/inex/transaction/createFiatWithdraw", {
-      email: email,
-      amount: amount,
-      accountDetails: accountDetails,
-      coin: coin
-    });
+    const result = await API.post(
+      "/api/v1/inex/transaction/createFiatWithdraw",
+      {
+        email: email,
+        amount: amount,
+        accountDetails: accountDetails,
+        coin: coin,
+      }
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (createFiatWithdraw)");
@@ -693,14 +705,22 @@ export const createFiatWithdraw =async (email: string, amount:number, accountDet
   }
 };
 
-export const createCryptoWithdraw =async (email: string, amount:number, address: string,  coin: string = 'USD') => {
+export const createCryptoWithdraw = async (
+  email: string,
+  amount: number,
+  address: string,
+  coin: string = "USD"
+) => {
   try {
-    const result = await API.post("/api/v1/inex/transaction/createCryptoWithdraw", {
-      email: email,
-      amount: amount,
-      address: address,
-      coin: coin
-    });
+    const result = await API.post(
+      "/api/v1/inex/transaction/createCryptoWithdraw",
+      {
+        email: email,
+        amount: amount,
+        address: address,
+        coin: coin,
+      }
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (createCryptoWithdraw)");
@@ -710,14 +730,22 @@ export const createCryptoWithdraw =async (email: string, amount:number, address:
   }
 };
 
-export const createFiatDeposit =async (email: string, amount:number, txHash: any,  coin: string = 'USD') => {
+export const createFiatDeposit = async (
+  email: string,
+  amount: number,
+  txHash: any,
+  coin: string = "USD"
+) => {
   try {
-    const result = await API.post("/api/v1/inex/transaction/createFiatDeposit", {
-      email: email,
-      amount: amount,
-      txHash: txHash,
-      coin: coin
-    });
+    const result = await API.post(
+      "/api/v1/inex/transaction/createFiatDeposit",
+      {
+        email: email,
+        amount: amount,
+        txHash: txHash,
+        coin: coin,
+      }
+    );
     return result.data;
   } catch (e: any) {
     console.log("FAILED: unable to perform API request (createFiatWithdraw)");
@@ -727,34 +755,34 @@ export const createFiatDeposit =async (email: string, amount:number, txHash: any
   }
 };
 
-export const resendEmailCode = async(email: string) => {
+export const resendEmailCode = async (email: string) => {
   try {
     const result = await API.post("/api/v1/inex/user/resendEmailCode", {
       email: email,
     });
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (resendEmailCode)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
-export const validateEmail = async(email: string, code: string) => {
+export const validateEmail = async (email: string, code: string) => {
   try {
     const result = await API.post("/api/v1/inex/user/validateEmail", {
       email: email,
-      code: code
+      code: code,
     });
     return result.data;
-  } catch(e: any) {
+  } catch (e: any) {
     console.log("FAILED: unable to perform API request (validateEmail)");
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
 
 export const getOrderDetails = async (email: string, orderId: string) => {
   try {

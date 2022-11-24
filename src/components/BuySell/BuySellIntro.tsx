@@ -31,10 +31,8 @@ const BuySellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             return obj?.key === key;
         });
         if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, orderType: filteredFromArray[0].value });
+            setBSvalue({ ...BSvalue, orderType: filteredFromArray[0].value ,amount:0});
         }
-        // console.log(BSvalue);
-
         navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
     };
 

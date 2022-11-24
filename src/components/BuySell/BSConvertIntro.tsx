@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // import arrowAddress from "../../assets/arts/arrowAddress.svg";
 import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
@@ -24,6 +24,7 @@ interface Props {
 //     });
 // }
 const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
+    const ref = useRef<HTMLInputElement>(null);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
     const navigate = useNavigate();
@@ -32,39 +33,16 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [showUserBalance, setShowUserBalance] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState("");
 
-    // const [flag, setFlag] = useState(false);
-    const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
-        let testVal: string = "";
-        if (e.currentTarget != null) {
-            testVal = e?.currentTarget?.value;
-            console.log('testVal', testVal)
-
-            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
-                e.preventDefault();
-                return;
-            }
-
-            setVal(testVal);
-
-            let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
-            e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
-            e.currentTarget.style.fontSize = charFontSize + "ch";
-        }
-    }
-    const checkPurchase = () => {
-        if (val) {
-            // setScreenName("confirmConvert");
-            console.log(val)
-            console.log(parseFloat(val))
-            navigate("/indexx-exchange/buy-sell/confirm-convert");
-            if (setBSvalue && BSvalue) {
-                setBSvalue({ ...BSvalue, amount: parseFloat(val) });
-            }
-        }
-    }
-
     useEffect(() => {
+        if (setBSvalue && BSvalue) {
+            setBSvalue({ ...BSvalue, amount: parseFloat('0') });
+            console.log(BSvalue);
+        }
+        if (ref.current) {
+          ref.current.value = '';
+        }
+      },[]);
+      useEffect(() => {
         return () => {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
@@ -87,6 +65,38 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             // });
         }
     }, [BSvalue]);
+
+    // const [flag, setFlag] = useState(false);
+    const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
+        let testVal: string = "";
+        if (e.currentTarget != null) {
+            testVal = e?.currentTarget?.value;
+            console.log('testVal', testVal)
+            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
+                e.preventDefault();
+                return;
+            }
+            setVal(testVal);
+            let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+            e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+            e.currentTarget.style.fontSize = charFontSize + "ch";
+            
+            handleChange(String(BSvalue?.fromToken))
+        }
+    }
+    const checkPurchase = () => {
+        if (val) {
+            // setScreenName("confirmConvert");
+            console.log(val)
+            console.log(parseFloat(val))
+            navigate("/indexx-exchange/buy-sell/confirm-convert");
+            if (setBSvalue && BSvalue) {
+                setBSvalue({ ...BSvalue, amount: parseFloat(val) });
+            }
+        }
+    }
+
 
     const getCoinBalance = async (value: string) => {
         const res = await getWalletBalance(email, value);
@@ -141,7 +151,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
 
-                        <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
+                        <input ref={ref} placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
                         <span className="font_20x px-1">{filteredFromArray[0].title}</span>
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>

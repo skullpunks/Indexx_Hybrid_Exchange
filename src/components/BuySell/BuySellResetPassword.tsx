@@ -9,11 +9,11 @@ const BuySellResetPassword = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
-    const onFinish = async(values: any) => {
+    const onFinish = async (values: any) => {
         console.log(values);
         const email = searchParams.get("email");
         console.log(email);
-        await resetPassword(String(email), values.password).then((res)=> {
+        await resetPassword(String(email), values.password).then((res) => {
             console.log(res);
             if (res.status === 200) {
                 openNotificationWithIcon('success');
@@ -83,6 +83,10 @@ const BuySellResetPassword = () => {
                         {
                             required: true,
                             message: 'Please input your password!',
+                        },
+                        {
+                            min: 6,
+                            message: 'Your password must be at least 6 characters long. Please try another.',
                         },
                     ]}
                     hasFeedback

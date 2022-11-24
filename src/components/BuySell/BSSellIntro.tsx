@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import arrowAddress from "../../assets/arts/arrowAddress.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
@@ -26,6 +26,8 @@ interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
+    console.log(setScreenName);
+    const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
     const navigate = useNavigate()
     // const [flag, setFlag] = useState(false);
@@ -36,7 +38,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [userBalance, setUserBalance] = useState(0);
     const [showUserBalance, setShowUserBalance] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState("");
-
+    // useEffect(() => {
+    //     if (ref.current) {
+    //       ref.current.value = '';
+    //     }
+    //   });
     useEffect(() => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
@@ -118,7 +124,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             console.log(isLimitPassed, minMavData)
             await checkMinMaxValue(String(value), parseInt(testVal));
 
-
+            handleChange(String(BSvalue?.fromToken))
 
         }
     }
@@ -164,7 +170,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="padding-lr-1x padding-tb-3x">
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
-                        <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
+                        <input placeholder="0" ref={ref} className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
                         <span className="font_20x px-1">{filteredFromArray[0].title}</span>
 
                         {/* <span className="font_20x">IN500</span> */}
@@ -215,7 +221,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             </div>
             <div className="bs_footer_action ">
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                <button className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
             {showUserBalance &&
@@ -227,3 +233,4 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     )
 }
 export default BSSellIntro;
+
