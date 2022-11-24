@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { decodeJWT, transactionList } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import ShortenText from '../../utils/ShortenText';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -68,7 +69,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             title: 'Time',
             dataIndex: 'modified',
             key: 'modified',
-            render: text => <span>{text}</span>,
+            render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
             responsive: ["sm"],
         },
         {
