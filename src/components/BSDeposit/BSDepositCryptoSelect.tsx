@@ -34,7 +34,7 @@ interface DataType {
 export const BSDepositCryptoSelect = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
   const navigate = useNavigate();
-  // const [network, setNetwork] = useState("");
+  const [network, setNetwork] = useState("");
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   // const { Option } = Select;
   const [txList, setTxList] = useState() as any;
@@ -157,17 +157,15 @@ export const BSDepositCryptoSelect = () => {
     getUserWallets(decodedToken?.email).then((res) => {
       console.log(res.data);
       setUsersWallets(res.data);
-      const userWallet = usersWallets.filter((x: any) => x.coinSymbol === "INEX");
-      setSingleWallet(userWallet[0]);
     })
-  });
+  }, []);
 
 
-  // const handleChange = (value: string) => {
-  //   setNetwork(value)
-  //   const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
-  //   setSingleWallet(userWallet[0]);
-  // };
+  const handleChange = (value: string) => {
+    setNetwork(value)
+    const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
+    setSingleWallet(userWallet[0]);
+  };
 
   const handleChangeCurrency = (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
@@ -273,7 +271,7 @@ export const BSDepositCryptoSelect = () => {
         <div className=''>
           <label>Currency</label>
           <Select className='width-100'
-            onChange={handleChangeCurrency} placeholder="Select a Coin to Deposit">
+            onChange={handleChangeCurrency} value={BSvalue?.fromToken}>
             {
               initialTokens
                 .filter((x: any) => x.title === "BNB" || x.title === "ETH" || x.title === "IN500" || x.title === "INEX" || x.title === "INXC" || x.title === "IUSD+")
@@ -293,19 +291,19 @@ export const BSDepositCryptoSelect = () => {
           </div> */}
           <br />
           <h1 className='font_20x padding-t-2x' >Deposit to</h1>
-          {/* <div className='padding-t-1x'>
+          <div className='padding-t-1x'>
             <label>Network</label>
 
 
             <Select className='width-100' onChange={handleChange} >
               <Select.Option value="BSC"><div className='font_20x'>BSC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Smart Chain (BEP20)</span> </div></Select.Option>
-              <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option>
+              {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
               <Select.Option value="BNB"><div className='font_20x'>BNB <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Binance Beacon Chain (BEP2)</span> </div></Select.Option>
               <Select.Option value="ETH"><div className='font_20x'>ETH <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Ethereum</span> </div></Select.Option>
-              <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option>
+              {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
             </Select>
-          </div> */}
-          {
+          </div>
+          {network &&
             <div className='sensitive_data margin-t-2x'>
               <div>Address</div>
               <div className='margin-t-2x d-flex flex-align-center font_weight_800'>
