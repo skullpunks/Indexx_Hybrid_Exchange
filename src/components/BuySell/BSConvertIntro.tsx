@@ -34,15 +34,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [selectedCoin, setSelectedCoin] = useState("");
 
     useEffect(() => {
-        if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, amount: parseFloat('0') });
-            console.log(BSvalue);
-        }
         if (ref.current) {
-          ref.current.value = '';
+            ref.current.value = '';
         }
-      },[]);
-      useEffect(() => {
+    }, []);
+    useEffect(() => {
         return () => {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
@@ -81,7 +77,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             let charWidth = testVal.length <= 1 ? 1.1 : 0.9
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
-            
+
             handleChange(String(BSvalue?.fromToken))
         }
     }
