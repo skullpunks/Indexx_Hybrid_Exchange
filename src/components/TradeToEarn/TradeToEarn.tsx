@@ -8,10 +8,9 @@ import exgcoin from "../../assets/arts/exgcoin.png";
 import logo from "../../assets/arts/logo.png";
 // import exglady from "../../assets/arts/exglady.png";
 import exghands from "../../assets/arts/exghands.png";
-
-import no1 from "../../assets/arts/no1.png";
-import no2 from "../../assets/arts/no2.png";
-import no3 from "../../assets/arts/no3.png";
+import red2 from "../../assets/red2.png";
+import red from "../../assets/red.png";
+import redv from "../../assets/vector.png"
 import tradetoearnlogo from "../../assets/arts/tradetoearnlogo.png";
 import Footer from '../Footer/Footer';
 import { decodeJWT, getUserRewardDetails, withdrawINEX, updateRewardsWallet } from '../../services/api';
@@ -303,9 +302,51 @@ const TradeToEarn = () => {
 
 
         <Image preview={false} src={exghands} style={{ paddingTop: 100, display: 'flex', justifyContent: 'center', width: 400, alignItems: 'center' }}></Image>
-        <Image preview={false} src={no1} style={{ display: 'flex', justifyContent: 'center', width: 500, alignItems: 'center' }}></Image>
-        <Image preview={false} src={no2} style={{ display: 'flex', justifyContent: 'center', width: 500, alignItems: 'center' }}></Image>
-        <Image preview={false} src={no3} style={{ paddingLeft: 10, display: 'flex', justifyContent: 'center', width: 480, alignItems: 'center' }}></Image>
+
+        <Card className="d-flex justify-content-center" style={{marginTop:40,width: 1008,
+          height: 598,textAlign:"left",justifyContent:"center"}}>
+            <span className="d-flex justify-content-center" style={{textAlign:"center"}}><Image preview={false} className="mx-auto d-block" src={red}></Image></span>
+          
+          <Text className="d-flex justify-content-center" style={{color:'#5F5F5F',fontSize:32,marginBottom:10}}> 
+            How to Earn?<br/>
+          </Text>
+          <Text style={{color:'#5F5F5F',fontSize:20}}>
+          ‍
+1. Each day you trade (buy or sell INDEXX TOKENS) a percentage of  USD worth or more of from our token collection  within the INDEXX protocol will result in INDEXX tokens delivered to your wallet.‍
+<br/>
+2. At the end of each day, you’ll be rewarded INDEXX tokens based upon the proportion of your trading volume to the total trading volume.
+
+<br/>
+3.The daily amount of INDEXX tokens available for distribution will depend on the total transaction volume on that day.
+<br/>
+4.20% of the traded token’s value will be rewarded per transaction.<br/>
+5.The percentage earning will decrease on 100 transactions per user<br/>
+6.The limit to rewards will be added once we reach 1000 transactions.<br/>
+7.While token rewards will be calculated daily, your daily earnings will be distributed cumulatively each week by end of day DAY UTC
+after approval from admin
+
+
+
+          </Text>
+        </Card>
+
+
+        <Card className="d-flex justify-content-center" style={{marginTop:40,width: 1008,
+          height: 450,textAlign:"left",justifyContent:"center"}}>
+            <span className="d-flex justify-content-center" style={{textAlign:"center"}}><Image preview={false} className="mx-auto d-block" src={red2}></Image></span>
+          
+          <Text className="d-flex justify-content-center" style={{color:'#5F5F5F',fontSize:32,marginBottom:10}}> 
+          How much can I be rewarded?<br/>
+          </Text>
+          <Text style={{color:'#5F5F5F',fontSize:20}}>
+          ‍Every day, you’ll be rewarded from a pool of INDEXX tokens based upon the proportion of your trading volume to the total trading volume for the day.
+          See an example for a single day below.
+          <span className="d-flex justify-content-center" ><Image preview={false} src={redv} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginTop:20 }}></Image></span> 
+          </Text>
+        </Card>
+        {/* <Image preview={false} src={no1} style={{ display: 'flex', justifyContent: 'center', width: 500, alignItems: 'center' }}></Image> */}
+        {/* <Image preview={false} src={no2} style={{ display: 'flex', justifyContent: 'center', width: 500, alignItems: 'center' }}></Image>
+        <Image preview={false} src={no3} style={{ paddingLeft: 10, display: 'flex', justifyContent: 'center', width: 480, alignItems: 'center' }}></Image> */}
 
       </div>
 

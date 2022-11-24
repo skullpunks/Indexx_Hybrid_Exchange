@@ -10,7 +10,11 @@ import { Link, useLocation, useNavigate, useSearchParams } from "react-router-do
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
 import Bellicon from "../../assets/arts/Bellicon.png";
-
+import {Typography ,Image }from 'antd';
+import headerstar from "../../assets/arts/headerstar.png";
+import headerdex from "../../assets/arts/headerdex.png";
+import whitetoken from "../../assets/arts/whitetoken.png";
+const {Text} = Typography;
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
   localStorage.removeItem("user"); //remove one item
@@ -117,7 +121,9 @@ const HeaderNew = () => {
                   to="/indexx-exchange/buy-sell/get-started"
                   className="dropdown-item"
                 >
-                  Centralized
+                  <Image preview={false} src={headerstar} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Centralized</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Convert, Buy & Sell</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
@@ -125,7 +131,9 @@ const HeaderNew = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Decentralized
+                  <Image preview={false} src={headerdex} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Decentralized</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Swap, Buy & Sell</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   href="https://tokens.indexx.ai/"
@@ -133,14 +141,19 @@ const HeaderNew = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  indexx Tokens
+                  <Image preview={false} src={whitetoken} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>indexx Tokens</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Know the characteristics of each token</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
                   as={Link}
                   to="/indexx-exchange/import-indexx-tokens"
                 >
-                  Import indexx Tokens
+                   <Image preview={false} src={whitetoken} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Import indexx Tokens</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Bring your tokens to our exchange</Text>
+                  
                 </NavDropdown.Item>
               </NavDropdown>
               {localStorage.getItem("user") ? (

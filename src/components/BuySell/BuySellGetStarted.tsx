@@ -173,7 +173,7 @@ const BuySellGetStarted: React.FC = () => {
                     ]}>
                          
                     <div className="align-center text-center">
-                        <Image src={lockedimage}></Image>
+                        <Image preview={false} src={lockedimage}></Image>
                         <p className="text-center" style={{fontSize:30,fontWeight:400,}}>Service Notice</p>
                         <p>Your IP address indicates that you’re attempting to access our services from the USA. As per our Terms and Use, we’re unable to provide services to users from the region. Instead, please register on our partner platform dedicated to American customers. </p>
                     </div>
