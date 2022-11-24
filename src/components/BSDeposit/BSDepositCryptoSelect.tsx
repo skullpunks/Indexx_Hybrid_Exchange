@@ -34,7 +34,7 @@ interface DataType {
 export const BSDepositCryptoSelect = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [network, setNetwork] = useState("");
+  // const [network, setNetwork] = useState("");
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   // const { Option } = Select;
   const [txList, setTxList] = useState() as any;
@@ -160,7 +160,7 @@ export const BSDepositCryptoSelect = () => {
       const userWallet = usersWallets.filter((x: any) => x.coinSymbol === "INEX");
       setSingleWallet(userWallet[0]);
     })
-  }, []);
+  });
 
 
   // const handleChange = (value: string) => {
