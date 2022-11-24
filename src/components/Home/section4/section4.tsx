@@ -55,7 +55,8 @@ const Section4 = () => {
             heading: "Community",
             info: "Join other Binancians for discussions in our community",
             link: "Explore the Community",
-            url: "/indexx-exchange/blog"
+            //url: "https://linktr.ee/indexx.ai?utm_source=linktree_profile_share&ltsid=0ca5c167-455d-4223-934f-195c15a03f1f"
+            url: "https://linktr.ee/indexx.ai"
 
         },
         {
@@ -63,8 +64,7 @@ const Section4 = () => {
             heading: "Careers",
             info: "Help us to build more opportunities for financial freedom in the United States",
             link: "See Open Positions",
-            url: "/indexx-exchange/blog"
-
+            url: "/indexx-exchange/careers"
         },
     ]
 
@@ -97,7 +97,10 @@ const Section4 = () => {
                             <img className="icon-class" src={item.icon} alt="icon" />
                             <p className="item-heading">{item.heading}</p>
                             <p className="item-info">{item.info}</p>
-                            <Link to={item?.url} className="item-link">{item.link}</Link>
+                            {(item?.heading === "Community") ?
+                                <a href={item?.url} className="item-link" target="_blank" rel="noopener noreferrer">{item.link}</a>
+                                : <Link to={item?.url} className="item-link">{item.link}</Link>
+                            }
                         </div>
                     ))}
                 </div>

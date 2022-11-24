@@ -74,12 +74,6 @@
     text-align: center;
 }
 
-.cut_button:hover {
-    /* box-shadow: #ffffff85 0 5px 7px 0;
-    transform: scale(1.05); */
-    /* text-decoration: underline; */
-}
-
 .login-button {
     border-bottom: 50px solid #F66036;
     border-left: 25px solid transparent;
@@ -93,15 +87,17 @@
 }
 
 .launch-app-button {
-    border-top: 50px solid #00387d;
+    border-top: 50px solid #006DFF;
     border-right: 25px solid transparent;
     margin-bottom: -42px;
     margin-right: -20px;
 }
 
 .launch-app-button:hover {
-    /* border-top-color: #00387d;
-    border-right-color: transparent; */
+    border-top: 50px solid #00387E;
+    border-right: 25px solid transparent;
+    margin-bottom: -42px;
+    margin-right: -20px;
 }
 
 .launch-app-button-text {
