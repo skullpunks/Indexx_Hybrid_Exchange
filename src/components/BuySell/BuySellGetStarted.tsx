@@ -84,8 +84,8 @@ const BuySellGetStarted: React.FC = () => {
 
     return (
         <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
-            <h1 className='text-center margin-lr-auto top_heading'>Get Started</h1>
-            <div className="bs_container bs_form card" >
+            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15}}>Get Started</h1>
+            <div style={{marginTop:-4}} className="bs_container bs_form card" >
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -140,12 +140,12 @@ const BuySellGetStarted: React.FC = () => {
                         </Form.Item>
                     </div>
                     <Form.Item shouldUpdate>
-                        <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" htmlType='submit' block
+                        <Button type="primary" style={{marginTop:-50}} className="atn-btn atn-btn-round " htmlType='submit' block
                             loading={loadings}
                         > Create Account</Button>
                     </Form.Item>
                 </Form>
-                <div className="d-flex justify-center padding-tb-2x" >Already have an account? &nbsp;
+                <div style={{marginTop:-30}} className="d-flex justify-center padding-tb-2x" >Already have an account? &nbsp;
                     <Link to="/indexx-exchange/buy-sell/login" className="text_link"> Log in.</Link>
                 </div>
             </div>
