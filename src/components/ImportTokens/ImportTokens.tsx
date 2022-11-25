@@ -1,7 +1,11 @@
 import React from 'react'
 import Footer from '../Footer/Footer';
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { Button } from 'antd';
+import { Button,Image } from 'antd';
+import IN500 from '../../assets/token-icons/IN500.png';
+import INXC from '../../assets/token-icons/INXC.png';
+import IUSD from '../../assets/token-icons/IUSD+.png';
+import INEX from '../../assets/token-icons/INEX.png';
 // import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 // import careersIcon from "../../assets/arts/careersIcon.png";
 
@@ -152,23 +156,72 @@ const ImportTokens = () => {
                 <br />
                 <br />
                 <br />
+                <div className="row " style={{textAlign:"center",marginLeft:-300}}>
+
+                <div className="col " style={{textAlign:"right"}}>
+                <Image preview={false} style={{width:50,marginTop:-4}} src={IN500}></Image>
+                </div>
+
+                <div className="col " style={{textAlign:"left"}}>
+                <Button type="primary" danger onClick={importIN500Token} size="large" style={{width:300,borderRadius:4}}>Import Indexx 500 (IN500)</Button> <br />    
+                </div>
                 
-                <Button type="primary" danger onClick={importIN500Token} size="large" style={{width:300,borderRadius:4}}>Import Indexx 500 (IN500)</Button> <br />
+                </div>    
+               
+              
+            
+               
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button type="primary"  danger onClick={importINXCToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx Crypto (INXC)</Button> <br />
+                <div className="row " style={{textAlign:"center",marginLeft:-300}}>
+
+                    <div className="col " style={{textAlign:"right"}}>
+                    <Image preview={false} style={{width:50,marginTop:-4}} src={INXC}></Image>
+                    </div>
+
+                    <div className="col " style={{textAlign:"left"}}>
+                    <Button type="primary"  danger onClick={importINXCToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx Crypto (INXC)</Button> <br />
+                    </div>
+
+                    </div>    
+               
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button type="primary"  danger onClick={importIUSPToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx USD+ (IUSD+)</Button> <br />
+                <div className="row " style={{textAlign:"center",marginLeft:-300}}>
+
+<div className="col " style={{textAlign:"right"}}>
+<Image preview={false} style={{width:50,marginTop:-4}} src={IUSD}></Image>
+</div>
+
+<div className="col " style={{textAlign:"left"}}>
+<Button type="primary"  danger onClick={importIUSPToken} size="large"  style={{width:300,borderRadius:4}}>Import Indexx USD+ (IUSD+)</Button> <br />
+</div>
+
+</div> 
+
+
+                
                 <br />
                 <br />
                 <br />
                 <br />
-                <Button type="primary"  danger onClick={importINEXToken} size="large" style={{width:300,borderRadius:4}}>Import Indexx Exchange (INEX)</Button> <br />
+
+                <div className="row " style={{textAlign:"center",marginLeft:-300}}>
+
+<div className="col " style={{textAlign:"right"}}>
+<Image preview={false} style={{width:50,marginTop:-4}} src={INEX}></Image>
+</div>
+
+<div className="col " style={{textAlign:"left"}}>
+<Button type="primary"  danger onClick={importINEXToken} size="large" style={{width:300,borderRadius:4}}>Import Indexx Exchange (INEX)</Button> <br />
+</div>
+
+</div> 
+                
                 <br />
             </div>
 

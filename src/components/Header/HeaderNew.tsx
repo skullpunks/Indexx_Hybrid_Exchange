@@ -183,7 +183,7 @@ const HeaderNew = () => {
                 >
                    <Image preview={false} src={earn} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Trade to Earn</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Earn more while trading</Text>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn more while trading</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
@@ -193,7 +193,7 @@ const HeaderNew = () => {
                 >
                         <Image preview={false} src={bank} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Indexx Bank</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Deposit and invest to earn</Text>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Deposit and invest to earn</Text>
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Pools" className="dropdown-item" href="/">Pools</NavDropdown.Item> */}
               </NavDropdown>
@@ -235,7 +235,7 @@ const HeaderNew = () => {
                   rel="noreferrer"
                 >
                    <Image preview={false} src={affiliate} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}> Affiliate Program</Text><br/>
+                   <Text style={{paddingLeft:4,color:'white'}}>Affiliate Program</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn while sharing</Text>
                 
                 </NavDropdown.Item>
@@ -246,7 +246,7 @@ const HeaderNew = () => {
                   href="/"
                 >
                    <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>  Blog</Text><br/>
+                   <Text style={{paddingLeft:4,color:'white'}}>Blog</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Updates and trends in the crypto world</Text>
                 
                 </NavDropdown.Item>
