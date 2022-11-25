@@ -29,6 +29,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
     const [txListFilter, setTxListFilter] = useState() as any;
     const [copiedValue, copy] = useCopyToClipboard();
+    console.log(copiedValue);
     const columns: ColumnsType<DataType> = [
 
         {
