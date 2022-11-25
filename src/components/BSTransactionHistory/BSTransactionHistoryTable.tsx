@@ -219,9 +219,8 @@ const BSTransactionHistoryTable: React.FC = () => {
                     <label>Type</label> <br />
                     <Select defaultValue="all" onChange={handleChangeType}>
                         <Option value="all">All</Option>
-                        <Option value="deposit">Deposit</Option>
-                        <Option value="withdraw">Withdraw</Option>
-                        <Option value="reward_withdraw">Reward Withdraw</Option>
+                        <Option value="DEPOSIT_FIAT">Deposit</Option>
+                        <Option value="WITHDRAW_FIAT">Withdraw</Option>
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>

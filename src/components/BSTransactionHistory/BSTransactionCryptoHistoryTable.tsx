@@ -29,6 +29,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
     const [txListFilter, setTxListFilter] = useState() as any;
     const [copiedValue, copy] = useCopyToClipboard();
+    console.log(copiedValue);
     const columns: ColumnsType<DataType> = [
 
         {
@@ -226,9 +227,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <label>Type</label> <br />
                     <Select defaultValue="all" onChange={handleChangeType}>
                         <Option value="all">All</Option>
-                        <Option value="deposit">Deposit</Option>
-                        <Option value="withdraw">Withdraw</Option>
-                        <Option value="reward_withdraw">Reward Withdraw</Option>
+                        <Option value="DEPOSIT_CYRPTO">Deposit</Option>
+                        <Option value="WITHDRAW_CYRPTO">Withdraw</Option>
+                        <Option value="WITHDRAW_REWARDS">Reward Withdraw</Option>
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>
