@@ -15,7 +15,7 @@ const BSTransactionHistoryContent = () => {
                     <BSTransactionHistoryTable />
                 </Tabs.TabPane>
             </Tabs>
-            <Button className='disabled_button ant-btn ant-btn-dangerous danger_disabled width_auto margin-r-2x position-absolute reset_button'> reset </Button>
+            <Button className='disabled_button ant-btn ant-btn-dangerous danger_disabled width_auto margin-r-2x position-absolute reset_button' onClick={() => window.location.reload()}> reset </Button>
 
         </div>
     )
