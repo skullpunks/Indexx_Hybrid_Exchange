@@ -71,7 +71,6 @@ const HeaderNew = () => {
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.url);
   console.log(isInsideApp);
-
   useEffect(() => {
 
     (showText[0] !== "") ?
@@ -81,12 +80,12 @@ const HeaderNew = () => {
         document.title = `${pageName} | indexx.ai`
         :
         document.title = "indexx.ai"
-
   }, [showText, pageName]);
 
   console.log("testing",window.location.pathname)
   if (
-    window.location.pathname.includes("/") ||
+    //window.location.pathname.includes("/") ||
+    ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) || 
     window.location.pathname.includes("get-started") ||
     window.location.pathname.includes("login") ||
     window.location.pathname.includes("/indexx-exchange/kyc")

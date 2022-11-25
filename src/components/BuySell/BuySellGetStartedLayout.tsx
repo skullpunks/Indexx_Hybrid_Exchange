@@ -15,8 +15,7 @@ const BuySellGetStartedLayout = () => {
     
     useEffect(() => {
         const userId = localStorage.getItem("user");
-        console.log(userId);
-        if (userId !== null || userId !== undefined) {
+        if (userId !== null && userId !== undefined) {
             navigate('/indexx-exchange/buy-sell/');
         }
     })
