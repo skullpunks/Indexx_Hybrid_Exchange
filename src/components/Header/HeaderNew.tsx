@@ -11,9 +11,21 @@ import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
 import Bellicon from "../../assets/arts/Bellicon.png";
 import {Typography ,Image }from 'antd';
-import headerstar from "../../assets/arts/headerstar.png";
-import headerdex from "../../assets/arts/headerdex.png";
-import whitetoken from "../../assets/arts/whitetoken.png";
+import headerstar from "../../assets/header-icons/Products/CEX.png";
+import headerdex from "../../assets/header-icons/Products/DEX.png";
+import whitetoken from "../../assets/header-icons/Products/IndexxToken.png";
+
+import earn from "../../assets/header-icons/EarnTab/t2e.png";
+import bank from "../../assets/header-icons/EarnTab/bank.png";
+
+import about from "../../assets/header-icons/Company/about.png";
+import affiliate from "../../assets/header-icons/Company/affiliate.png";
+import blog from "../../assets/header-icons/Company/blog.png";
+import career from "../../assets/header-icons/Company/career.png";
+import howitworks from "../../assets/header-icons/Company/howitworks.png";
+import hybrid from "../../assets/header-icons/Company/hybrid.png";
+
+
 const {Text} = Typography;
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
@@ -52,9 +64,6 @@ const HeaderNew = () => {
       setIsInsideApp(location.pathname.includes("/indexx-exchange/"));
     }
   }, [location]);
-
-
-
   const showText: any = Links.filter((link) =>
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.label);
@@ -75,7 +84,9 @@ const HeaderNew = () => {
 
   }, [showText, pageName]);
 
+  console.log("testing",window.location.pathname)
   if (
+    window.location.pathname.includes("/") ||
     window.location.pathname.includes("get-started") ||
     window.location.pathname.includes("login") ||
     window.location.pathname.includes("/indexx-exchange/kyc")
@@ -84,7 +95,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href="/" className="logo__icon">
+            <Navbar.Brand href="https://indexx.ai" className="logo__icon">
               index.ai
             </Navbar.Brand>
           </div>
@@ -100,7 +111,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand as={Link} to="/" href="/" className="logo__icon">
+            <Navbar.Brand  href="https://indexx.ai" className="logo__icon">
               index.ai
             </Navbar.Brand>
             <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
@@ -171,7 +182,9 @@ const HeaderNew = () => {
                   className="dropdown-item"
                   href="/"
                 >
-                  Trade to earn
+                   <Image preview={false} src={earn} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Trade to Earn</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Earn more while trading</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
@@ -179,7 +192,9 @@ const HeaderNew = () => {
                   className="dropdown-item"
                   href="/"
                 >
-                  Indexx Bank
+                        <Image preview={false} src={bank} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Indexx Bank</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Deposit and invest to earn</Text>
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Pools" className="dropdown-item" href="/">Pools</NavDropdown.Item> */}
               </NavDropdown>
@@ -189,29 +204,41 @@ const HeaderNew = () => {
                 className="dark-menu"
                 renderMenuOnMount={true}
               >
-                <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">How it Works</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">
+                <Image preview={false} src={howitworks} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>How it Works</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Know how the different features  work</Text>
+
+                </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
                   to="/indexx-exchange/about"
                   className="dropdown-item"
                   href="/"
                 >
-                  About
+                  <Image preview={false} src={about} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>About</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Background of the company</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/coming-soon?page=Hybrid Exchange"
+                 
+                  rel="noreferrer"
                   className="dropdown-item"
-                  href="/"
+                  href="https://indexx.ai"
                 >
-                  Hybrid Exchange
+                  <Image preview={false} src={hybrid} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Hybrid Exchange</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Centralize and Decentralize Exchange</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   href="https://register.affiliate.indexx.ai/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Affiliate Program
+                   <Image preview={false} src={affiliate} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}> Affiliate Program</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn while sharing</Text>
+                
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
@@ -219,12 +246,22 @@ const HeaderNew = () => {
                   className="dropdown-item"
                   href="/"
                 >
-                  Blog
+                   <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>  Blog</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Updates and trends in the crypto world</Text>
+                
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/indexx-exchange/careers" className="dropdown-item" href="/">Careers</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/indexx-exchange/careers" className="dropdown-item" href="/">
+                <Image preview={false} src={career} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>  Careers</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Find opportunity in indexx.ai</Text>
+
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+             
             <Nav>
+             
               {localStorage.getItem("user") ? (
                 <>
                   <Nav.Link
