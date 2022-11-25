@@ -6,10 +6,22 @@ import BuySellEmailAuth from './/BuySellEmailAuth';
 import BuySellMobiAuth from './/BuySellMobiAuth';
 import BuySellmobiVerfication from './/BuySellmobiVerfication';
 import Blockpass from '../Blockpass/Blockpass';
-
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const BuySellGetStartedLayout = () => {
+
+    const navigate = useNavigate();
     
+    useEffect(() => {
+        const userId = localStorage.getItem("user");
+        console.log(userId);
+        if (userId !== null || userId !== undefined) {
+            navigate('/indexx-exchange/buy-sell/');
+        }
+    })
+
+
     return (
         <>
             <div className='scan-container flex-align-stretch bs_main'>

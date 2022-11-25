@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRightOutlined, CopyOutlined } from '@ant-design/icons';
-import { Button, Select, Table, RadioChangeEvent, Radio, Space } from 'antd';
+import { Button, Select, Table, RadioChangeEvent, Radio, Space, notification } from 'antd';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Typography } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
@@ -26,19 +27,19 @@ export const BSWithdarwCryptoContent = () => {
   const [receiveAmountt, setReceiveAmount] = useState('');
   const [selectedCoinObj, setSelectedCoinObj] = useState('0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A');
   const [isWalletAddrValid, setIsWalletAddrValid] = useState(true);
-  const [copiedValue, copy] = useCopyToClipboard();
-  console.log(copiedValue);
-
+  const [, copy] = useCopyToClipboard();
+  const [loadings, setLoadings] = useState<boolean>(false);
   // const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [values, setValues] = useState() as any;
   const [finalAmount, setFinalAmount] = useState() as any;
   const [walletAddress, setWalletAddre] = useState('');
   //const [max, setMax] = useState();
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
-
+    setEmail(decodedToken.email);
     transactionList(decodedToken?.email).then((res) => {
       let finalArr = res.data.filter((x: any) => x.transactionType === "WITHDRAW_CYRPTO");
       console.log(finalArr);
@@ -48,6 +49,10 @@ export const BSWithdarwCryptoContent = () => {
       console.log(res.data);
       setUsersWallets(res.data);
     })
+    getMinAndMaxOrderValues(String('IN500'), "WITHDRAW_CRYPTO").then((res) => {
+      console.log(res);
+      setValues(res);
+    });
   }, []);
 
   interface DataType {
@@ -234,6 +239,8 @@ export const BSWithdarwCryptoContent = () => {
     setSelectedCoinObj(String(getRequiredCoin?.title));
     console.log(userWallet[0]);
     setSingleWallet(userWallet[0]);
+    // /let res = 
+    // setMinMax()
     //qrcode(userWallet[0].coinWalletAddress);
     // if (setBSvalue && BSvalue) {
     //   setBSvalue({ ...BSvalue, fromToken: value });
@@ -267,6 +274,25 @@ export const BSWithdarwCryptoContent = () => {
     }
   }
 
+  const withdrawCrypto = async () => {
+    setLoadings(true);
+    console.log('i am here', email, finalAmount, walletAddress, selectedCoin)
+    let res = await createCryptoWithdraw(email, Number(finalAmount), walletAddress, selectedCoin);
+    if (res.status === 200) {
+      let txs = await transactionList(email);
+      let message = "Withdraw Successfull. Transaction Id: " + res.data.data.hash;
+      console.log(message);
+      openNotificationWithIcon('success', message);
+      let finalArr = txs.data.filter((x: any) => x.transactionType === "WITHDRAW_CYRPTO");
+      console.log(finalArr);
+      setTxList(finalArr);
+      setLoadings(false);
+    } else {
+      setLoadings(false);
+      openNotificationWithIcon2('error', "Failed to withdraw. Please try again or contact support");
+
+    }
+  }
   //   const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
   //     let testVal: string = "";
   //     if (e.currentTarget != null) {
@@ -276,6 +302,37 @@ export const BSWithdarwCryptoContent = () => {
 
   //     }
   // }
+
+  type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+  const openNotificationWithIcon = (type: NotificationType, message: string) => {
+    notification[type]({
+      message: message,
+      description: '',
+      icon: <CheckCircleFilled className='text_link' />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
+
+    });
+  };
+
+  const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
+    notification[type]({
+      message: message,
+      description: '',
+      icon: <CloseCircleFilled />,
+      style: {
+        border: "1px solid #F66036",
+        boxShadow: "none",
+        borderRadius: 5,
+        top: 100
+      },
+    });
+  };
   return (
     <div className='scan-container bs_main wd_container'>
 
@@ -291,7 +348,7 @@ export const BSWithdarwCryptoContent = () => {
         <div className=''>
           <label>Currency</label>
           <div className=' d-flex flex-justify-between flex-align-center'>
-            <Select className='width-100' onChange={handleChangeCurrency} value={selectedCoinObj}>
+            <Select className='width-100' onChange={handleChangeCurrency} defaultValue="Select a Coin to Withdraw" value={selectedCoinObj}>
               {
                 initialTokens
                   .filter(token => (token.title !== "BTC" && token.title !== "LTC"))
@@ -368,7 +425,10 @@ export const BSWithdarwCryptoContent = () => {
                     <div className='font_weight_800'>({finalAmount}){selectedCoin}</div>
                     <div>{values?.fees} Fee</div>
                   </div>
-                  <Button type="primary" className='disable_icon' onClick={() => withdrawFiat()}>Withdraw</Button>
+                  <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
+                    height: "55px",
+                    borderRadius: "5px",
+                  }} onClick={() => withdrawFiat()} loading={loadings}> Withdraw</Button>
                 </div>
               </div>
             </>
@@ -386,36 +446,39 @@ export const BSWithdarwCryptoContent = () => {
 
 
                 <div className='w_50'>
-                  <div className='brand_opacity_5'>Minimum withrawal  </div>
-                  <div> 0.0015 {selectedCoin} </div>
+                  <div className='brand_opacity_5'> Funding Wallet </div>
+                  <div> {selectedCoin}</div>
                 </div>
               </div>
+
+              <div className='d-flex flex-justify-between padding-t-1x'>
+                <div className='w_50'>
+                  <div className='brand_opacity_5'>Minimum withrawal  </div>
+                  <div> {values?.min} {selectedCoin} </div>
+                </div>
+
+                <div className='w_50'>
+                  <div className='brand_opacity_5'>Maximum withrawal  </div>
+                  <div> {values?.max} {selectedCoin} </div>
+                </div>
+              </div>
+
               <div className='d-flex flex-justify-between padding-t-1x'>
                 <div className='w_50'>
                   <div className='brand_opacity_5'>Network Fee</div>
                   <div> 0.0005 {selectedCoin}</div>
                 </div>
-                <div className='w_50'>
+                <div className='w_50 '>
 
-                  <div className='brand_opacity_5'> Funding Wallet </div>
-                  <div> {selectedCoin}</div>
-
+                  <div className='brand_opacity_5'>Final Recieve Amount</div>
+                  <div className='font_weight_800'>{finalAmount} {selectedCoin}</div>
                 </div>
-
-
               </div>
-
               <br></br>
-
-              <div className='w_50 '>
-
-                <div className='brand_opacity_5'>Final Recieve Amount</div>
-                <div className='font_weight_800'>{finalAmount} {selectedCoin}</div>
-              </div>
-              {parseFloat(finalAmount) <= parseFloat(singleWallet?.coinBalance) && parseFloat(finalAmount) >= 0.001 &&
+              {parseFloat(finalAmount) <= parseFloat(singleWallet?.coinBalance) && (parseFloat(receiveAmountt) >= values?.min) && (parseFloat(receiveAmountt) <= values?.max) &&
                 <div className='d-flex flex-justify-between '>
                   {/* //<Button type="primary" onClick={() => withdrawFiat()} disabled>Withdraw</Button> */}
-                  <Button type="primary" disabled>Withdraw</Button>
+                  <Button type="primary" disabled={!isWalletAddrValid} onClick={() => withdrawCrypto()} loading={loadings}>Withdraw</Button>
 
                 </div>
               }
