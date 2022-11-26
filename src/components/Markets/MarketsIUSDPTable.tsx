@@ -61,7 +61,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
             });
         }
         if (search) {
-            const filterDate = marketDataFixed.filter((data: any) => {
+            const filterDate = marketDataFixed?.filter((data: any) => {
                 return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
             });
             setMarketData(filterDate);
@@ -69,7 +69,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
         else {
             setMarketData(marketDataFixed);
         }
-    }, [calledOnce, email, search]);
+    }, [calledOnce, email, marketDataFixed, search]);
 
     // const updateFavCurr = async (row: any, index: any) => {
     //     console.log(row);

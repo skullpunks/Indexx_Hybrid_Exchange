@@ -11,16 +11,22 @@ import debounce from 'lodash.debounce'
 //import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
+  const [valueInput, setValueInput] = useState('');
   const [valueSearch, setValueSearch] = useState('');
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSave = useCallback(
-    debounce(nextValue => setValueSearch(nextValue), 1000),
+    debounce(nextValue => setValueSearch(nextValue), 300),
     [], // will be created only once initially
   );
   const onChageSearch = (e: any) => {
     let val = e.currentTarget.value;
+    setValueInput(val);
     debouncedSave(val);
   };
+  const tabChange = () => {
+    setValueInput('');
+  }
   return (
     <div>
       <div className='scan-container market-container'>
@@ -28,10 +34,10 @@ const Markets = () => {
 
         <br />
         <div className='search-input-container'>
-          <Input size="large" placeholder="Search" onChange={onChageSearch} maxLength={50} prefix={<SearchOutlined />} />
+          <Input size="large" placeholder="Search" value={valueInput} onChange={onChageSearch} maxLength={50} prefix={<SearchOutlined />} />
         </div>
         <div className='tabs-container border'>
-          <Tabs defaultActiveKey="2">
+          <Tabs defaultActiveKey="2" onChange={tabChange}>
             {/* <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
               <MarketsFavTable />
 
