@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import './Markets.css';
 import { SearchOutlined } from '@ant-design/icons';
 import { Input, Tabs } from 'antd';
@@ -7,9 +7,20 @@ import MarketsTable from './MarketsTable';
 import Footer from '../Footer/Footer';
 import MarketsBTCTable from './MarketsBTCable';
 import MarketsIUSDPable from './MarketsIUSDPTable';
+import debounce from 'lodash.debounce'
 //import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
+  const [valueSearch, setValueSearch] = useState('');
+
+  const debouncedSave = useCallback(
+    debounce(nextValue => setValueSearch(nextValue), 1000),
+    [], // will be created only once initially
+  );
+  const onChageSearch = (e: any) => {
+    let val = e.currentTarget.value;
+    debouncedSave(val);
+  };
   return (
     <div>
       <div className='scan-container market-container'>
@@ -17,7 +28,7 @@ const Markets = () => {
 
         <br />
         <div className='search-input-container'>
-          <Input size="large" placeholder=" Search" prefix={<SearchOutlined />} />
+          <Input size="large" placeholder="Search" onChange={onChageSearch} maxLength={50} prefix={<SearchOutlined />} />
         </div>
         <div className='tabs-container border'>
           <Tabs defaultActiveKey="2">
@@ -27,15 +38,15 @@ const Markets = () => {
             </Tabs.TabPane> */}
 
             <Tabs.TabPane tab="Prices " key="1">
-              <MarketsTable />
+              <MarketsTable search={valueSearch} />
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="USD" key="2">
-              <MarketsIUSDPable />
+              <MarketsIUSDPable search={valueSearch} />
 
             </Tabs.TabPane>
             <Tabs.TabPane tab="BTC Pairs" key="3">
-              <MarketsBTCTable />
+              <MarketsBTCTable search={valueSearch} />
             </Tabs.TabPane>
           </Tabs>
         </div>
