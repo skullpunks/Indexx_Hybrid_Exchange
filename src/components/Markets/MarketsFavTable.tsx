@@ -4,7 +4,7 @@ import { Button, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-import { decodeJWT, marketsData  } from "../../services/api";
+import { decodeJWT, marketsData } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -21,7 +21,10 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsFavTable = () => {
+interface Props {
+    search: string;
+}
+const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -42,13 +45,22 @@ const MarketsFavTable = () => {
                 console.log(email);
             }
             marketsData().then((data) => {
-                const res = data.data.filter((x: any) => x.Favourite === true)
+                const res = data?.data?.filter((x: any) => x.Favourite === true)
                 setMarketData(res);
                 setMarketDataFixed(res);
                 setCalledOnce(true);
             });
         }
-    }, [calledOnce, email]);
+        if (search) {
+            const filterDate = marketDataFixed.filter((data: any) => {
+                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
+            });
+            setMarketData(filterDate);
+        }
+        else {
+            setMarketData(marketDataFixed);
+        }
+    }, [calledOnce, email, search]);
 
     const updateFavCurr = async (row: any) => {
         console.log(row);
@@ -262,7 +274,7 @@ const MarketsFavTable = () => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={true}/>
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={true} />
             </div>
         </div>
     )

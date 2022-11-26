@@ -251,7 +251,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Status</label> <br />
-                    <Select defaultValue="completed" onChange={handleChangeStatus}>
+                    <Select defaultValue="all" onChange={handleChangeStatus}>
                         <Option value="all">All</Option>
                         <Option value="completed">Completed</Option>
                         <Option value="pending">Pending</Option>
