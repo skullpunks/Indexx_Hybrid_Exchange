@@ -14,13 +14,14 @@ import BSWallet from "./components/BuySell/BSWallet";
 // import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
 import BuySellLoggedWelcome from "./components/BuySell/BuySellLoggedWelcome";
 import TradeChart from "./components/TradeChart/TradeChart";
+import BugReport from "./components/TaskCenter/BugReport";
 import Markets from "./components/Markets/Markets";
 import IndexBlog from "./components/IndexBlog/IndexBlog";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
 import HowCentralized from "./components/HowItWorks/howCentralized";
 import HowTokens from "./components/HowItWorks/howTokens";
 import HowTradeToEarn from "./components/HowItWorks/howTradeToEarn";
-
+import TaskCenter from "./components/TaskCenter/TaskCenter";
 import BSWithdrawMain from "./components/BSDepositWithdraw/BSWithdrawMain";
 import BSDepositWithdarwSelect from "./components/BSDepositWithdraw/BSDepositWithdarwSelect";
 import BSWithdrawInfo from "./components/BSDepositWithdraw/BSWithdrawInfo";
@@ -157,6 +158,14 @@ function App() {
           <Route
             path="/indexx-exchange/trade-to-earn"
             element={<TradeToEarn />}
+          />
+           <Route
+            path="/indexx-exchange/task-center"
+            element={<TaskCenter />}
+          />
+          <Route
+            path="/indexx-exchange/report-bug"
+            element={<BugReport />}
           />
           <Route
             path="/indexx-exchange/how-it-works"
