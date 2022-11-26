@@ -52,7 +52,7 @@ const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
             });
         }
         if (search) {
-            const filterDate = marketDataFixed.filter((data: any) => {
+            const filterDate = marketDataFixed?.filter((data: any) => {
                 return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
             });
             setMarketData(filterDate);
