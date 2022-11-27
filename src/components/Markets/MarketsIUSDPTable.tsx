@@ -21,7 +21,10 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsIUSDPable = () => {
+interface Props {
+    search: string;
+}
+const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -50,15 +53,23 @@ const MarketsIUSDPable = () => {
                 console.log(email);
             }
             marketsData().then((data) => {
-                const res = data.data.filter((x: any) => x.Symbol !== 'IUSDP')
-                console.log(res);
+                const res = data?.data?.filter((x: any) => x.Symbol !== 'IUSDP')
                 setMarketData(res);
                 setMarketDataFixed(res);
                 setCalledOnce(true);
                 setLoadings(false)
             });
         }
-    }, [calledOnce, email]);
+        if (search) {
+            const filterDate = marketDataFixed?.filter((data: any) => {
+                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
+            });
+            setMarketData(filterDate);
+        }
+        else {
+            setMarketData(marketDataFixed);
+        }
+    }, [calledOnce, email, marketDataFixed, search]);
 
     // const updateFavCurr = async (row: any, index: any) => {
     //     console.log(row);

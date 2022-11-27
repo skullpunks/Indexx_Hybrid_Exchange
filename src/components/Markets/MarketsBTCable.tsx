@@ -22,7 +22,10 @@ interface DataType {
     Symbol: any;
     BTCPrice: any
 }
-const MarketsBTCTable = () => {
+interface Props {
+    search: string;
+}
+const MarketsBTCTable: React.FC<(Props)> = ({ search }) => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -49,7 +52,7 @@ const MarketsBTCTable = () => {
                 console.log(email);
             }
             marketsData().then((data) => {
-                const res = data.data.filter((x:any) => x.Symbol !== 'BTC')
+                const res = data?.data?.filter((x: any) => x.Symbol !== 'BTC')
                 console.log(res);
                 setMarketData(res);
                 setMarketDataFixed(res);
@@ -57,7 +60,16 @@ const MarketsBTCTable = () => {
                 setLoadings(false);
             });
         }
-    }, [calledOnce, email]);
+        if (search) {
+            const filterDate = marketDataFixed?.filter((data: any) => {
+                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
+            });
+            setMarketData(filterDate);
+        }
+        else {
+            setMarketData(marketDataFixed);
+        }
+    }, [calledOnce, email, marketDataFixed, search]);
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
@@ -91,13 +103,13 @@ const MarketsBTCTable = () => {
             dataIndex: 'BTCPrice',
             sorter: {
                 compare: (a, b) => a.BTCPrice
-                - b.BTCPrice,
+                    - b.BTCPrice,
                 multiple: 3,
             },
             render: (_, record) => {
                 return Math.floor(record?.BTCPrice * 10000000) / 10000000 + ' BTC';
             },
-            
+
         },
         {
             title: 'Daily Change',
@@ -117,7 +129,7 @@ const MarketsBTCTable = () => {
 
                 let classNameLabel = (parseFloat(record.Change) > 0) ? "btn-success" : "btn-warn"
                 return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
-                    {Math.floor(record.Change * 100) /100 } %
+                    {Math.floor(record.Change * 100) / 100} %
                 </Button>
             },
             responsive: ["sm"],
@@ -186,7 +198,7 @@ const MarketsBTCTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => parseFloat(x.Change) < 0));
     }
 
-    const showAll = async() => {
+    const showAll = async () => {
         setMarketData(marketDataFixed);
     }
 
@@ -200,12 +212,12 @@ const MarketsBTCTable = () => {
                 <Button className='white-strip' onClick={() => showAll()}>All</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopGainers()}>Top Gainers</Button>
                 <Button className='white-strip margin-lr-2x' onClick={() => showTopLosers()}>Top Losers</Button>
-                <Button className='white-strip margin-lr-2x'onClick={() => showAll()}>New Listings</Button>
+                <Button className='white-strip margin-lr-2x' onClick={() => showAll()}>New Listings</Button>
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
                 {/* <Button className='white-strip last-item d-md-block d-none'>ID</Button> */}
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading}/>
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading} />
             </div>
         </div>
     )

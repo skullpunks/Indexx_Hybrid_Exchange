@@ -4,7 +4,6 @@ import { Button, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useNavigate } from "react-router-dom";
 import { decodeJWT, marketsData } from "../../services/api";
-
 interface DataType {
     key: React.Key;
     Favourite: boolean;
@@ -20,7 +19,11 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-const MarketsTable = () => {
+
+interface Props {
+    search: string;
+}
+const MarketsTable: React.FC<(Props)> = ({ search }) => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -53,7 +56,18 @@ const MarketsTable = () => {
                 setLoadings(false)
             });
         }
-    }, [calledOnce, email]);
+        if (search) {
+            const filterDate = marketDataFixed?.filter((data: any) => {
+                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
+            });
+            setMarketData(filterDate);
+        }
+        else {
+            setMarketData(marketDataFixed);
+        }
+        // const memoizedValue = useMemo(() => setMarketData(marketDataFixed));
+
+    }, [calledOnce, email, marketDataFixed, search]);
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
