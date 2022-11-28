@@ -308,6 +308,165 @@ const TaskCenter = () => {
                 </div>
 
               </div>
+
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                  Complete KYC on Indexx Exchange
+                  </Text>
+                  <Progress style={{ width: 439 }} />
+                </div>
+                <div className="col-1 d-flex justify-content-center">
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                  >
+                    20
+                  </Text>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
+                  >
+                    Points
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+
+                  }}
+                >
+              
+
+                </div>
+                <div className="col-2">
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={"large"}
+                  >
+                    Complete
+                  </Button>
+                </div>
+
+              </div>
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                 Sign Up on Indexx Exchange
+                  </Text>
+                  <Progress style={{ width: 439 }} />
+                </div>
+                <div className="col-1 d-flex justify-content-center">
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                  >
+                    10
+                  </Text>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
+                  >
+                    Points
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+
+                  }}
+                >
+              
+
+                </div>
+                <div className="col-2">
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={"large"}
+                  >
+                    Complete
+                  </Button>
+                </div>
+
+              </div>
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={exgcoin} width={79}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                  Buy Indexx Tokens
+                  </Text>
+                  <Progress style={{ width: 439 }} />
+                </div>
+                <div className="col-1 d-flex justify-content-center">
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                  >
+                    20
+                  </Text>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
+                  >
+                    Points
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: "end",
+                    alignItems: "end",
+                    paddingLeft: 70,
+
+                  }}
+                >
+             
+                  <a href="/indexx-exchange/buy-sell">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={"large"}
+                      disabled={(completedOrders && completedOrders.length > 0) ? true : false}
+                    >
+                      Buy Tokens
+                    </Button>
+                  </a>
+
+
+                </div>
+                <div className="col-2">
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={"large"}
+                  >
+                    Complete
+                  </Button>
+                </div>
+
+              </div>
+
+      
             </Card>
           </div>
           <div className="row">
