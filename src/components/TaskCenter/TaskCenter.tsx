@@ -1,24 +1,26 @@
 import { Card, Image, Button, Divider, Typography, Progress } from "antd";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import exgcoin from "../../assets/arts/exgcoin.png";
-import { decodeJWT, getUserCompletedOrder, getUserCreatedBugs } from "../../services/api";
+import { decodeJWT, getUserCreatedBugs, getTaskCenterDetails } from "../../services/api";
 import Footer from "../Footer/Footer";
 const { Text } = Typography;
 
 const TaskCenter = () => {
 
-  const [completedOrders, setCompletedOrders] = useState([]);
+  //const [completedOrders, setCompletedOrders] = useState([]);
   const [bugsData, setBugsData] = useState([]);
   const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
+  const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
 
-  const checkUserCompletedOrder = async () => {
-    const access_token = String(localStorage.getItem("access_token"));
-    const decoded: any = await decodeJWT(access_token);
-    let res = await getUserCompletedOrder(String(decoded.email));
-    if (res.status === 200) {
-      setCompletedOrders(res.data);
-    }
-  }
+  // const checkUserCompletedOrder = async () => {
+  //   const access_token = String(localStorage.getItem("access_token"));
+  //   const decoded: any = await decodeJWT(access_token);
+  //   let res = await getUserCompletedOrder(String(decoded.email));
+  //   if (res.status === 200) {
+  //     setCompletedOrders(res.data);
+  //   }
+  // }
 
   const checkUserCreatedBugs = async () => {
     const access_token = String(localStorage.getItem("access_token"));
@@ -27,16 +29,26 @@ const TaskCenter = () => {
     if (res.data.status === 200) {
       setBugsData(res.data.data);
       res.data.data.forEach((element: any) => {
-        if (element.status === 'Open') {
+        if (element.bugStatus === 'Open') {
           sethasOpenedBug(true);
         }
       });
     }
   }
 
+  const getTaskCenterDetailsData = async () => {
+    const access_token = String(localStorage.getItem("access_token"));
+    const decoded: any = await decodeJWT(access_token);
+    let res = await getTaskCenterDetails(String(decoded.email));
+    if (res.status === 200) {
+      setTaskCenterDetails(res.data.data);
+    }
+  } 
+
   useEffect(() => {
-    checkUserCompletedOrder();
+    //checkUserCompletedOrder();
     checkUserCreatedBugs();
+    getTaskCenterDetailsData();
   }, []);
 
   return (
@@ -58,13 +70,13 @@ const TaskCenter = () => {
 
             <br />
             <p style={{ fontSize: 30, textAlign: "center" }}>
-              <strong>0/100</strong>{" "}
+              <strong>{taskCenterDetails?.totalPoints}/100</strong>{" "}
               <span style={{ fontSize: 10 }}>Points</span>
               <span
                 style={{ fontSize: 30, textAlign: "center", paddingLeft: 30 }}
               >
                 {" "}
-                <strong>0</strong>
+                <strong>{taskCenterDetails?.totalPoints}</strong>
                 <span style={{ fontSize: 10 }}> Total Points</span>
               </span>
             </p>
@@ -87,9 +99,9 @@ const TaskCenter = () => {
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 50, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
                   >
-                    35
+                    {taskCenterDetails?.inivitedUserPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -141,14 +153,14 @@ const TaskCenter = () => {
                     Make a transaction on indexx Exchange.
                   </Text>{" "}
                   <br />
-                  <Progress style={{ width: 439 }} percent={((completedOrders && completedOrders.length > 0) ? 100 : 0)} size="small" />
+                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.isTransactionCompletedInExchange) ? 100 : 0)} size="small" />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    30
+                   {taskCenterDetails?.transactionPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -172,7 +184,7 @@ const TaskCenter = () => {
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
-                      disabled={(completedOrders && completedOrders.length > 0) ? true : false}
+                      disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                     >
                       Buy Tokens
                     </Button>
@@ -186,7 +198,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
-                    disabled={(completedOrders && completedOrders.length > 0) ? true : false}
+                    disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                   >
                     Complete
                   </Button>
@@ -207,9 +219,9 @@ const TaskCenter = () => {
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    30
+                   {taskCenterDetails?.reportedBugPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -226,17 +238,17 @@ const TaskCenter = () => {
 
                   }}
                 >
-                  <a href="/indexx-exchange/report-bug">
+                  <Link to="/indexx-exchange/report-bug">
                     <Button
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
-
+                      disabled={(hasOpenedBug ) ? true : false}
                     >
                       Report a bug
                     </Button>
-                  </a>
+                  </Link>
 
                 </div>
                 <div className="col-2">
@@ -245,6 +257,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={(hasOpenedBug ) ? true : false}
                   >
                     Complete
                   </Button>
@@ -265,9 +278,9 @@ const TaskCenter = () => {
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    40
+                    {taskCenterDetails?.lottoPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -290,6 +303,7 @@ const TaskCenter = () => {
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
+                      disabled={true}
                     >
                       Fortune daily
                     </Button>
@@ -302,8 +316,9 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={true}
                   >
-                    Complete
+                    Coming Soon
                   </Button>
                 </div>
 

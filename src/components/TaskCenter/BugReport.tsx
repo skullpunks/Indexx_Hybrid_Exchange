@@ -14,13 +14,13 @@ import { ColumnsType, TableProps } from 'antd/lib/table';
 
 const { TextArea } = Input;
 
-const S3_BUCKET = 'BUCKET-NAME';
-const REGION = 'REGION-NAME';
+const S3_BUCKET = 'indexx-exchange';
+const REGION = 'ap-northeast-1';
 
 
 AWS.config.update({
-  accessKeyId: 'accessKeyId',
-  secretAccessKey: 'secretAccessKey'
+  accessKeyId: 'AKIA5FBFFKSZLHC4SR7P',
+  secretAccessKey: '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'
 })
 
 const myBucket = new AWS.S3({
@@ -43,13 +43,12 @@ interface DataType {
   adminComments: string;
   created: string;
   modified: string;
-  bugFiles: any[],
+  bugFile: any[],
   bugDescription: string,
   bugTitle: string
 }
 
 const BugReport = () => {
-
   const [fileList, setFileList] = useState([{}]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -58,11 +57,12 @@ const BugReport = () => {
   const [bugsData, setBugsData] = useState([]);
   type NotificationType = "success" | "info" | "warning" | "error";
   const [loadings, setLoadings] = useState<boolean>(false);
-
+  const [form] = Form.useForm();
   const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
   const [isLoading, setTableLoadings] = useState(true);
+  const [email, setEmail] = useState('');
 
   const tableLoading = {
     spinning: isLoading,
@@ -94,13 +94,17 @@ const BugReport = () => {
   useEffect(() => {
     const access_token = String(localStorage.getItem("access_token"));
     const decoded: any = decodeJWT(access_token);
+    setEmail(decoded.email);
     getUserCreatedBugs(String(decoded.email)).then((res: any) => {
-      if (res.data) {
+      if (res.data.status === 200) {
         setBugsData(res.data.data);
         setTableLoadings(false)
+      } else {
+        setTableLoadings(false);
       }
     })
   }, []);
+
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -113,15 +117,36 @@ const BugReport = () => {
     }
     else {
       console.log('I else')
-      let res = await createBug(values.email, values.description, values.bugfiles);
+      let bugFiles = [];
+      for (let i = 0; i < values.bugfiles.length; i++) {
+        const file = values.bugfiles[i];
+        const createFileParams = {
+          type: file.type,
+          name: file.name,
+          uid: file.uid,
+        };
+        console.log(createFileParams);
+        bugFiles.push(createFileParams);
+      }
+
+      let res = await createBug(values.email, values.description, bugFiles);
       console.log('res', res);
       if (res.status === 200) {
-        openNotificationWithIcon("success", "Bug Report Submitted");
+        setTableLoadings(true);
+        await getUserCreatedBugs(String(email)).then((res: any) => {
+          if (res.data.status === 200) {
+            setBugsData(res.data.data);
+            setTableLoadings(false);
+            form.resetFields();
+            openNotificationWithIcon("success", "Bug Report Submitted");
+          } else {
+            setTableLoadings(false);
+          }
+        })
       } else {
         openNotificationWithIcon("error", "Bug Report Failed");
       }
     }
-    console.log('Success:', values);
   };
 
 
@@ -152,7 +177,7 @@ const BugReport = () => {
     newFile.fileMode = file.type;
     newFile.title = file.name;
     newFile.uniqueName = file.uid;
-    newFile.original =  + file.name;
+    newFile.original = "https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/indexx-user-bugs-list/" + file.name;;
     let newList = fileList.concat(newFile);
     setFileList(newList);
 
@@ -221,6 +246,25 @@ const BugReport = () => {
         return record?.bugStatus;
       },
       responsive: ["sm"],
+    },
+    {
+      title: 'Bug Files',
+      dataIndex: "bugFile",  // this is the value that is parsed from the DB / server side
+      //render: theImageURL => <img alt={theImageURL} src={theImageURL} />
+      render: (_, record) => {
+        return (
+          <div>
+            {record?.bugFile.map((item: any) => {
+              return (
+                <div>
+                  <img src={item.original} alt="bugfile" style={{ width: '5%' }} />
+                </div>
+              )
+            }
+            )}
+          </div>
+        )
+      }
     }
 
   ];
@@ -247,6 +291,7 @@ const BugReport = () => {
           <p className="opacity-75 " style={{ textAlign: "left", fontSize: 50, fontWeight: 400, paddingLeft: 60 }}> Report a bug on  Indexx.ai <br /></p>
           <div style={{ paddingLeft: 60, width: 700 }}>
             <Form
+              form={form}
               name="basic"
               layout="vertical"
               labelCol={{ span: 15 }}
@@ -261,6 +306,7 @@ const BugReport = () => {
                 label="Enter your Email:"
                 name="email"
                 rules={[{ message: 'Please enter your email!' }]}
+                initialValue={email?.toLowerCase()}
               >
                 <Input />
               </Form.Item>
