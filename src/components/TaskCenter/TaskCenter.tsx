@@ -1,9 +1,44 @@
 import { Card, Image, Button, Divider, Typography, Progress } from "antd";
+import { useEffect, useState } from "react";
 import exgcoin from "../../assets/arts/exgcoin.png";
+import { decodeJWT, getUserCompletedOrder, getUserCreatedBugs } from "../../services/api";
 import Footer from "../Footer/Footer";
 const { Text } = Typography;
 
 const TaskCenter = () => {
+
+  const [completedOrders, setCompletedOrders] = useState([]);
+  const [bugsData, setBugsData] = useState([]);
+  const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
+
+  const checkUserCompletedOrder = async () => {
+    const access_token = String(localStorage.getItem("access_token"));
+    const decoded: any = await decodeJWT(access_token);
+    let res = await getUserCompletedOrder(String(decoded.email));
+    if (res.status === 200) {
+      setCompletedOrders(res.data);
+    }
+  }
+
+  const checkUserCreatedBugs = async () => {
+    const access_token = String(localStorage.getItem("access_token"));
+    const decoded: any = await decodeJWT(access_token);
+    let res = await getUserCreatedBugs(String(decoded.email));
+    if (res.data.status === 200) {
+      setBugsData(res.data.data);
+      res.data.data.forEach((element: any) => {
+        if (element.status === 'Open') {
+          sethasOpenedBug(true);
+        }
+      });
+    }
+  }
+
+  useEffect(() => {
+    checkUserCompletedOrder();
+    checkUserCreatedBugs();
+  }, []);
+
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
@@ -52,12 +87,12 @@ const TaskCenter = () => {
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 80, fontWeight: 50, marginTop: -30 }}
+                    style={{ fontSize: 52, fontWeight: 50, marginTop: -20 }}
                   >
                     35
                   </Text>
                   <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
                     Points
                   </Text>
@@ -68,32 +103,32 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    
+
                   }}
                 >
                   <a href="https://register.affiliate.indexx.ai/">
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
                     >
                       Get Affiliates
                     </Button>
                   </a>
 
-                 
+
                 </div>
-                <div className="col-2"> 
-                <Button
+                <div className="col-2">
+                  <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150 , marginTop: 15 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                
+
                 </div>
               </div>
               <Divider></Divider>
@@ -106,17 +141,17 @@ const TaskCenter = () => {
                     Make a transaction on indexx Exchange.
                   </Text>{" "}
                   <br />
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={((completedOrders && completedOrders.length > 0) ? 100 : 0)} size="small" />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
                   >
                     30
                   </Text>
                   <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
                     Points
                   </Text>
@@ -128,28 +163,30 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    
+
                   }}
                 >
                   <a href="/indexx-exchange/buy-sell">
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15 ,width:150}}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
+                      disabled={(completedOrders && completedOrders.length > 0) ? true : false}
                     >
                       Buy Tokens
                     </Button>
                   </a>
-                 
+
                 </div>
 
                 <div className="col-2">
-                <Button
+                  <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150, marginTop: 15  }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={(completedOrders && completedOrders.length > 0) ? true : false}
                   >
                     Complete
                   </Button>
@@ -165,17 +202,17 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Report a bug on Indexx.ai.
                   </Text>
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={(hasOpenedBug ? 100 : (bugsData.length > 0 ? 50 : 0))} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
                   >
                     30
                   </Text>
                   <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
                     Points
                   </Text>
@@ -186,32 +223,33 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    
+
                   }}
                 >
                   <a href="/indexx-exchange/report-bug">
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
+
                     >
                       Report a bug
                     </Button>
                   </a>
-                
+
                 </div>
                 <div className="col-2">
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width:150, marginTop: 15 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                    </div>
-                
+                </div>
+
               </div>
               <Divider></Divider>
               <div className="row">
@@ -227,12 +265,12 @@ const TaskCenter = () => {
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 80, fontWeight: 100, marginTop: -30 }}
+                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
                   >
                     40
                   </Text>
                   <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 40 }}
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
                     Points
                   </Text>
@@ -243,32 +281,32 @@ const TaskCenter = () => {
                     alignContent: "end",
                     alignItems: "end",
                     paddingLeft: 70,
-                    
+
                   }}
                 >
-                   <a href="/indexx-exchange/fortune-daily">
+                  <a href="/indexx-exchange/fortune-daily">
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15,width:150 }}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
                     >
                       Fortune daily
                     </Button>
                   </a>
-                 
+
                 </div>
-                    <div className="col-2">
-                    <Button
+                <div className="col-2">
+                  <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5 ,width:150, marginTop: 15 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
                   </Button>
-                    </div>
-             
+                </div>
+
               </div>
             </Card>
           </div>
