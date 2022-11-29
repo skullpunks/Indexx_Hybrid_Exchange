@@ -4,7 +4,16 @@ import { Link } from "react-router-dom";
 import exgcoin from "../../assets/arts/exgcoin.png";
 import { decodeJWT, getUserCreatedBugs, getTaskCenterDetails } from "../../services/api";
 import Footer from "../Footer/Footer";
+import { Space, Table, Tag } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+
+
+
 const { Text } = Typography;
+
+
+
+
 
 const TaskCenter = () => {
 
@@ -12,6 +21,98 @@ const TaskCenter = () => {
   const [bugsData, setBugsData] = useState([]);
   const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
   const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
+  const [isLocked] = useState(true);
+
+
+
+
+  interface DataType {
+    key: string;
+    name: string;
+    age: number;
+    address: string;
+    tags: string[];
+  }
+  
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      dataIndex: 'tags',
+      render: (_, { tags }) => (
+        <>
+          {tags.map((tag) => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <a>Invite {record.name}</a>
+         
+        </Space>
+      ),
+    },
+  ];
+  
+  const data: DataType[] = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      tags: ['loser'],
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
+      tags: ['cool', 'teacher'],
+    },
+  ];
+
+
+
+
+
+
+
 
   // const checkUserCompletedOrder = async () => {
   //   const access_token = String(localStorage.getItem("access_token"));
@@ -80,6 +181,18 @@ const TaskCenter = () => {
                 <span style={{ fontSize: 10 }}> Total Points</span>
               </span>
             </p>
+          </div>
+          <div className="d-flex justify-content-center"> 
+          <Button
+                      disabled={isLocked}
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 200 }}
+                      size={"large"}
+                    >
+                      LOCKED
+                    </Button>
+
           </div>
           <div className="d-flex justify-content-center">
             <Card
@@ -460,7 +573,7 @@ const TaskCenter = () => {
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
-                      disabled={(completedOrders && completedOrders.length > 0) ? true : false}
+                      // disabled={(completedOrders && completedOrders.length > 0) ? true : false}
                     >
                       Buy Tokens
                     </Button>
@@ -490,7 +603,7 @@ const TaskCenter = () => {
                 <Button
                   danger
                   type="primary"
-                  style={{ borderRadius: 5, width: 150 }}
+                  style={{ borderRadius: 5, width: 150,marginBottom:50 }}
                   size={"large"}
                 >
                   How it Works
@@ -499,8 +612,13 @@ const TaskCenter = () => {
             </div>
           </div>
         </div>
-      </div>
 
+        <div className="d-flex justify-content-center">
+        <Table style={{margin:20,marginBlock:10,width:1510,marginLeft:80,marginBottom:10}} bordered={true} columns={columns} dataSource={data} />         
+        </div>  
+       
+      </div>
+               
       <Footer></Footer>
     </>
   );
