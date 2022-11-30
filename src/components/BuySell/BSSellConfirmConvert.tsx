@@ -28,7 +28,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [adminFee, setAdminFees] = useState("");
-    const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
+    const [, setTaskCenterDetails] = useState() as any;
 
     //const [isFirstEnabled, setisFirstEnabled] = useState(true);
     // const [isSecondEnabled, setisSecondEnabled] = useState(false);

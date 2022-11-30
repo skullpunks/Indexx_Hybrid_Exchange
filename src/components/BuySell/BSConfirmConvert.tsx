@@ -33,9 +33,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [rateData1, setRateData1] = useState();
     const [rateData3, setRateData3] = useState(0);
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-    const [totalAmountToPayInUSD, setTotalAmountToPayInUSD] = useState(0);
+    const [, setTotalAmountToPayInUSD] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
-    const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
+    const [, setTaskCenterDetails] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
