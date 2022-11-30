@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import { CheckCircleFilled } from '@ant-design/icons';
-import { getAppSettings, getCoinPriceByName, createConvertOrder, confirmConvertOrder } from '../../services/api';
+import { getAppSettings, getCoinPriceByName, createConvertOrder, confirmConvertOrder, decodeJWT, getTaskCenterDetails } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
@@ -35,6 +35,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const [totalAmountToPayInUSD, setTotalAmountToPayInUSD] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+    const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
@@ -50,6 +51,15 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     let priceData2: any = {};
     let appSettingArr: any[] = [];
 
+
+    const getTaskCenterDetailsData = async () => {
+        const access_token = String(localStorage.getItem("access_token"));
+        const decoded: any = await decodeJWT(access_token);
+        let res = await getTaskCenterDetails(String(decoded.email));
+        if (res.status === 200) {
+          setTaskCenterDetails(res.data.data);
+        }
+      } 
 
 
     const getPricesData = async () => {
@@ -93,6 +103,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     useEffect(() => {
         getAllSetting();
         getPricesData();
+        getTaskCenterDetailsData();
         let element = document.getElementById("input_get_value")!;
         let testVal = element.innerText;
         let charFontSize = testVal.length < 6 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
@@ -213,9 +224,9 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                     </div> */}
                 <div className="footer bs_footer_action">
                     <p className='text-center pb-2'>Transaction/Admin Fee: {adminFee || "0.00"} %</p>
-                    {Number(totalAmountToPayInUSD) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * 30 / 100 * 100)) / 100} INEX</h6>
-                    }
+                    {/* {Number(totalAmountToPayInUSD) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPayInUSD) * (taskCenterDetails?.tradeToEarnPercentage) / 100 * 100)) / 100} INEX</h6>
+                    } */}
                     {/* setScreenName("BSConvertInProgress")  rocessSellOrder() ({Math.floor(totalAmountToPayInUSD * 100 ) /  100} USD)*/}
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => navigate("/indexx-exchange/buy-sell/convert-in-progress")}> Confirm Conversion (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round" loading={loadings} block onClick={() => createProcessOrder()}> Confirm Conversion</Button>

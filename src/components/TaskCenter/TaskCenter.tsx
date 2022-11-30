@@ -1,19 +1,13 @@
-import { Card, Image, Button, Divider, Typography, Progress } from "antd";
+import { Button, Card, Divider, Image, Progress, Table, Typography } from "antd";
+import type { ColumnsType } from 'antd/es/table';
+import moment from 'moment';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import exgcoin from "../../assets/arts/exgcoin.png";
-import { decodeJWT, getUserCreatedBugs, getTaskCenterDetails } from "../../services/api";
+import { decodeJWT, getTaskCenterDetails, getUserCreatedBugs } from "../../services/api";
 import Footer from "../Footer/Footer";
-import { Space, Table, Tag } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-
-
 
 const { Text } = Typography;
-
-
-
-
 
 const TaskCenter = () => {
 
@@ -21,92 +15,80 @@ const TaskCenter = () => {
   const [bugsData, setBugsData] = useState([]);
   const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
   const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
-  const [isLocked] = useState(true);
+  const [isLocked, setIsLocked] = useState(true);
+  const [pointsHistory, setPointHistory] = useState() as any;
 
 
-
-
+  /*
+  date
+ : 
+ "2022-11-29T06:51:25.000Z"
+ email
+ : 
+ "nigoke6382@nubotel.com"
+ points
+ : 
+ 10
+ type
+ : 
+ "Sign Up Points"
+  */
   interface DataType {
-    key: string;
-    name: string;
-    age: number;
-    address: string;
-    tags: string[];
+    date: string;
+    type: string;
+    points: string;
   }
-  
+
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <a>{text}</a>,
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+      defaultSortOrder: 'ascend',
+      sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),
+      render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => {
+        return <Text>{text}</Text>
+      }
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-         
-        </Space>
-      ),
-    },
-  ];
-  
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
+      title: 'Points',
+      dataIndex: 'points',
+      key: 'points',
+      render: (text) => {
+        return <Text>{text}</Text>
+      }
+    }
   ];
 
+  // const data: DataType[] = [
+  //   {
+  //     key: '1',
+  //     name: 'John Brown',
+  //     age: 32,
+  //     address: 'New York No. 1 Lake Park',
+  //     tags: ['nice', 'developer'],
+  //   },
+  //   {
+  //     key: '2',
+  //     name: 'Jim Green',
+  //     age: 42,
+  //     address: 'London No. 1 Lake Park',
+  //     tags: ['loser'],
+  //   },
+  //   {
+  //     key: '3',
+  //     name: 'Joe Black',
+  //     age: 32,
+  //     address: 'Sidney No. 1 Lake Park',
+  //     tags: ['cool', 'teacher'],
+  //   },
+  // ];
 
 
 
@@ -114,6 +96,8 @@ const TaskCenter = () => {
 
 
 
+
+  const [email, setEmail] = useState("");
   // const checkUserCompletedOrder = async () => {
   //   const access_token = String(localStorage.getItem("access_token"));
   //   const decoded: any = await decodeJWT(access_token);
@@ -127,6 +111,7 @@ const TaskCenter = () => {
     const access_token = String(localStorage.getItem("access_token"));
     const decoded: any = await decodeJWT(access_token);
     let res = await getUserCreatedBugs(String(decoded.email));
+    setEmail(String(decoded.email));
     if (res.data.status === 200) {
       setBugsData(res.data.data);
       res.data.data.forEach((element: any) => {
@@ -143,8 +128,11 @@ const TaskCenter = () => {
     let res = await getTaskCenterDetails(String(decoded.email));
     if (res.status === 200) {
       setTaskCenterDetails(res.data.data);
+      setPointHistory(res.data.data.pointsHistory);
+      if (res.data.data.totalPoints >= 100)
+        setIsLocked(false)
     }
-  } 
+  }
 
   useEffect(() => {
     //checkUserCompletedOrder();
@@ -166,12 +154,12 @@ const TaskCenter = () => {
 
             <p style={{ fontSize: 20 }}>
               Complete your tasks to get{" "}
-              <span style={{ fontSize: 40 }}>30% </span>Trade Reward
+              <span style={{ fontSize: 40 }}>10% </span>Trade Reward
             </p>
 
             <br />
             <p style={{ fontSize: 30, textAlign: "center" }}>
-              <strong>{taskCenterDetails?.totalPoints}/100</strong>{" "}
+              <strong>{(taskCenterDetails?.totalPoints >= 100) ? (100) : taskCenterDetails?.totalPoints}/100</strong>{" "}
               <span style={{ fontSize: 10 }}>Points</span>
               <span
                 style={{ fontSize: 30, textAlign: "center", paddingLeft: 30 }}
@@ -180,18 +168,19 @@ const TaskCenter = () => {
                 <strong>{taskCenterDetails?.totalPoints}</strong>
                 <span style={{ fontSize: 10 }}> Total Points</span>
               </span>
+
             </p>
           </div>
-          <div className="d-flex justify-content-center"> 
-          <Button
-                      disabled={isLocked}
-                      danger
-                      type="primary"
-                      style={{ borderRadius: 5, marginTop: 15, width: 200 }}
-                      size={"large"}
-                    >
-                      LOCKED
-                    </Button>
+          <div className="d-flex justify-content-center">
+            <Button
+              disabled={isLocked}
+              danger
+              type="primary"
+              style={{ borderRadius: 5, marginTop: 15, width: 200 }}
+              size={"large"}
+            >
+              LOCKED
+            </Button>
 
           </div>
           <div className="d-flex justify-content-center">
@@ -207,7 +196,7 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Invite 3 users using the indexx Affiliate System.
                   </Text>
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={Math.floor(((taskCenterDetails?.inivitedUsersCount / 3) * 100) * 100) / 100} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -273,7 +262,7 @@ const TaskCenter = () => {
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                   {taskCenterDetails?.transactionPoints}
+                    {taskCenterDetails?.transactionPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -334,7 +323,7 @@ const TaskCenter = () => {
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                   {taskCenterDetails?.reportedBugPoints}
+                    {taskCenterDetails?.reportedBugPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -357,7 +346,7 @@ const TaskCenter = () => {
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
-                      disabled={(hasOpenedBug ) ? true : false}
+                      disabled={(hasOpenedBug) ? true : false}
                     >
                       Report a bug
                     </Button>
@@ -370,7 +359,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
-                    disabled={(hasOpenedBug ) ? true : false}
+                    disabled={(hasOpenedBug) ? true : false}
                   >
                     Complete
                   </Button>
@@ -384,7 +373,7 @@ const TaskCenter = () => {
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                    Take part in Indexx Lotto.
+                    Take part in Fortune daily.
                   </Text>
                   <Progress style={{ width: 439 }} />
                 </div>
@@ -444,16 +433,16 @@ const TaskCenter = () => {
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                  Complete KYC on Indexx Exchange
+                    Complete KYC on Indexx Exchange
                   </Text>
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={(taskCenterDetails?.isKYCPass ? 100 : (bugsData.length > 0 ? 50 : 0))} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    20
+                    {taskCenterDetails?.KYCPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -470,7 +459,7 @@ const TaskCenter = () => {
 
                   }}
                 >
-              
+
 
                 </div>
                 <div className="col-2">
@@ -479,6 +468,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={taskCenterDetails?.isKYCPass}
                   >
                     Complete
                   </Button>
@@ -492,14 +482,14 @@ const TaskCenter = () => {
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                 Sign Up on Indexx Exchange
+                    Sign Up on Indexx Exchange
                   </Text>
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={((email) ? 100 : (bugsData.length > 0 ? 50 : 0))} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
                     10
                   </Text>
@@ -518,7 +508,7 @@ const TaskCenter = () => {
 
                   }}
                 >
-              
+
 
                 </div>
                 <div className="col-2">
@@ -527,6 +517,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={taskCenterDetails?.isKYCPass}
                   >
                     Complete
                   </Button>
@@ -540,16 +531,16 @@ const TaskCenter = () => {
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                  Buy Indexx Tokens
+                    Buy Indexx Tokens
                   </Text>
-                  <Progress style={{ width: 439 }} />
+                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.isBuyIndexxTokens ? 100 : 0))} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
                     className="opacity-75"
-                    style={{ fontSize: 52, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    20
+                    {taskCenterDetails?.buyIndexxTokensPoints}
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -566,14 +557,14 @@ const TaskCenter = () => {
 
                   }}
                 >
-             
+
                   <a href="/indexx-exchange/buy-sell">
                     <Button
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
-                      // disabled={(completedOrders && completedOrders.length > 0) ? true : false}
+                      disabled={taskCenterDetails?.isBuyIndexxTokens}
                     >
                       Buy Tokens
                     </Button>
@@ -587,6 +578,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
+                    disabled={taskCenterDetails?.isBuyIndexxTokens}
                   >
                     Complete
                   </Button>
@@ -594,7 +586,7 @@ const TaskCenter = () => {
 
               </div>
 
-      
+
             </Card>
           </div>
           <div className="row">
@@ -603,7 +595,7 @@ const TaskCenter = () => {
                 <Button
                   danger
                   type="primary"
-                  style={{ borderRadius: 5, width: 150,marginBottom:50 }}
+                  style={{ borderRadius: 5, width: 150, marginBottom: 50 }}
                   size={"large"}
                 >
                   How it Works
@@ -613,12 +605,14 @@ const TaskCenter = () => {
           </div>
         </div>
 
+        <Divider><b>Points History</b></Divider>
+
         <div className="d-flex justify-content-center">
-        <Table style={{margin:20,marginBlock:10,width:1510,marginLeft:80,marginBottom:10}} bordered={true} columns={columns} dataSource={data} />         
-        </div>  
-       
+          <Table style={{ margin: 20, marginBlock: 10, width: 1510, marginLeft: 80, marginBottom: 10 }} bordered={true} columns={columns} dataSource={pointsHistory} />
+        </div>
+
       </div>
-               
+
       <Footer></Footer>
     </>
   );
