@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'antd';
+import { Button, Pagination, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 //import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
@@ -25,17 +25,15 @@ interface Props {
     search: string;
 }
 const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
-
     const navigate = useNavigate();
+    const pageSize = 10;
+    const [current, setCurrent] = useState(1);
     const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
-    // const [fav, setFav] = useState('color-warn font_20x');
-    // const [notFav, setNotFav] = useState('color-warn font_20x');
+
+
     const [isLoading, setLoadings] = useState(true);
 
     const tableLoading = {
@@ -218,7 +216,26 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
     const showTredning = async () => {
         setMarketData(marketDataFixed.filter((x: any) => x.Symbol.includes('I')));
     }
-
+    const getData = (current: number, pageSize: number) => {
+        // Normally you should get the data from the server
+        const xx = marketData && marketData.slice((current - 1) * pageSize, current * pageSize);
+        console.log(xx)
+        return xx
+    };
+    const MyPagination = ({ total, onChange, current }: any) => {
+        return (
+            <Pagination
+                onChange={onChange}
+                total={total}
+                current={current}
+                pageSize={pageSize}
+                responsive={true}
+                style={{
+                    padding: '5px', textAlign: 'center'
+                }}
+            />
+        );
+    };
     return (
         <div>
             <div className='grey-strip d-flex market_button_strips'>
@@ -229,7 +246,12 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading} />
+                <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} loading={tableLoading} />
+                <MyPagination
+                    total={marketData && marketData.length}
+                    current={current}
+                    onChange={setCurrent}
+                />
             </div>
         </div>
     )
