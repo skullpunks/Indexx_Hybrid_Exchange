@@ -1,5 +1,5 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { AutoComplete, Table } from 'antd';
+import { AutoComplete, Pagination, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -25,6 +25,8 @@ interface DataType {
 
 
 const BSTransactionCryptoHistoryTable: React.FC = () => {
+    const pageSize = 10;
+    const [current, setCurrent] = useState(1);
     const [txList, setTxList] = useState() as any;
     const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
     const [txListFilter, setTxListFilter] = useState() as any;
@@ -101,13 +103,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     {/* {record.txId} */}
                     {/* {ShortenText(record.txId, 0, 20) + "..."} */}
                     {(record.txId.length > 20) ? ShortenText(record.txId, 0, 20) + "..." : record.txId}
-                    <span>
-                        {/* <Tooltip title="Click to copy">
-                        </Tooltip>
-                        <LinkOutlined /> */}
-                        <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.txId)} />
-                    </span>
+                    <CopyOutlined className='float-left padding-lr-5x hover_icon ' onClick={() => copy(record.txId)} />
                 </span>
+
             ),
             responsive: ["sm"],
         },
@@ -116,10 +114,13 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             key: 'to',
             render: (_, record) => (
                 <span>
-                    {/* {record.to} */}
-                    {/* {ShortenText(record.to, 0, 20) + "..."} */}
-                    {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
                     <span>
+                        {/* {record.to} */}
+                        {/* {ShortenText(record.to, 0, 20) + "..."} */}
+                        {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
+
+                    </span>
+                    <span style={{ textAlign: 'right' }}>
                         <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.to)} />
                         {/* <LinkOutlined /> */}
                     </span>
@@ -219,7 +220,26 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         }
         setOptions(res);
     };
-
+    const getData = (current: number, pageSize: number) => {
+        // Normally you should get the data from the server
+        const xx = txListFilter && txListFilter.slice((current - 1) * pageSize, current * pageSize);
+        console.log(xx)
+        return xx
+    };
+    const MyPagination = ({ total, onChange, current }: any) => {
+        return (
+            <Pagination
+                onChange={onChange}
+                total={total}
+                current={current}
+                pageSize={pageSize}
+                responsive={true}
+                style={{
+                    padding: '5px', textAlign: 'center'
+                }}
+            />
+        );
+    };
     return (
         <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x '>
             <div className='d-flex transaction_filters margin-b-3x'>
@@ -268,7 +288,12 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     />
                 </div>
             </div>
-            <Table columns={columns} pagination={{ position: ['topLeft', 'bottomRight'] }} dataSource={txListFilter} className="transaction_crypto_history" />
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <MyPagination
+                total={txListFilter && txListFilter.length}
+                current={current}
+                onChange={setCurrent}
+            />
         </div>
     )
 }

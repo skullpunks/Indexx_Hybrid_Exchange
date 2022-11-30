@@ -18,8 +18,6 @@
   src: url(./assets/fonts/AvenirBlack.ttf) format("truetype");
 }
 
-@import '~antd/dist/antd.css';
-
 html {
   font-size: 15px;
 }
