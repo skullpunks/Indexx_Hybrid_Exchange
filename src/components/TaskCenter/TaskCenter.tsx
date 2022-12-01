@@ -84,7 +84,7 @@ const TaskCenter = () => {
 
 
 
-  const [email, setEmail] = useState("");
+  const [, setEmail] = useState("");
   // const checkUserCompletedOrder = async () => {
   //   const access_token = String(localStorage.getItem("access_token"));
   //   const decoded: any = await decodeJWT(access_token);
@@ -521,7 +521,7 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Sign Up on Indexx Exchange
                   </Text>
-                  <Progress style={{ width: 439 }} percent={((email) ? 100 : (bugsData.length > 0 ? 50 : 0))} />
+                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.email) ? 100 : 0)} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -554,7 +554,7 @@ const TaskCenter = () => {
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
-                    disabled={taskCenterDetails?.isKYCPass}
+                    disabled={taskCenterDetails?.email}
                   >
                     Complete
                   </Button>
