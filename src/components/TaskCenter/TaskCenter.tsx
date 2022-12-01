@@ -1,10 +1,11 @@
-import { Button, Card, Divider, Image, Progress, Table, Typography } from "antd";
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import { Button, Card, Divider, Image, Progress, Table, Typography, notification } from "antd";
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import exgcoin from "../../assets/arts/exgcoin.png";
-import { decodeJWT, getTaskCenterDetails, getUserCreatedBugs } from "../../services/api";
+import { decodeJWT, getTaskCenterDetails, getUserCreatedBugs, enableTradeToEarn } from "../../services/api";
 import Footer from "../Footer/Footer";
 
 const { Text } = Typography;
@@ -17,22 +18,8 @@ const TaskCenter = () => {
   const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
   const [isLocked, setIsLocked] = useState(true);
   const [pointsHistory, setPointHistory] = useState() as any;
+  const [loadings, setLoadings] = useState<boolean>(false);
 
-
-  /*
-  date
- : 
- "2022-11-29T06:51:25.000Z"
- email
- : 
- "nigoke6382@nubotel.com"
- points
- : 
- 10
- type
- : 
- "Sign Up Points"
-  */
   interface DataType {
     date: string;
     type: string;
@@ -45,14 +32,14 @@ const TaskCenter = () => {
       dataIndex: 'date',
       key: 'date',
       defaultSortOrder: 'ascend',
-      sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),
-      render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
+      sorter: (a :any, b: any) => moment(a.date).unix() - moment(b.date).unix(),
+      render: (text: any) => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
-      render: (text) => {
+      render: (text: any) => {
         return <Text>{text}</Text>
       }
     },
@@ -60,7 +47,7 @@ const TaskCenter = () => {
       title: 'Points',
       dataIndex: 'points',
       key: 'points',
-      render: (text) => {
+      render: (text :any) => {
         return <Text>{text}</Text>
       }
     }
@@ -130,9 +117,57 @@ const TaskCenter = () => {
       setTaskCenterDetails(res.data.data);
       setPointHistory(res.data.data.pointsHistory);
       if (res.data.data.totalPoints >= 100)
-        setIsLocked(false)
+        setIsLocked(false);
     }
   }
+
+  const enableTradetoEarnButton = async() => {
+    setLoadings(true);
+    const access_token = String(localStorage.getItem("access_token"));
+    const decoded: any = await decodeJWT(access_token);
+    let res = await enableTradeToEarn(String(decoded.email));
+    console.log(res)
+    if(res.status === 200) {
+      setLoadings(false);
+      getTaskCenterDetailsData();
+      openNotificationWithIcon('success','Trade to Earn is enabled');
+    } else {
+      setLoadings(false);
+      openNotificationWithIcon2('error','Something went wrong. Please contact admin');
+    }
+  }
+
+  type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+  const openNotificationWithIcon = (type: NotificationType, message: string) => {
+      notification[type]({
+          message: message,
+          description: '',
+          icon: <CheckCircleFilled className='text_link' />,
+          style: {
+              border: "1px solid #F66036",
+              boxShadow: "none",
+              borderRadius: 5,
+              top: 100
+          },
+
+      });
+  };
+
+  const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
+      notification[type]({
+          message: message,
+          description: '',
+          icon: <CloseCircleFilled />,
+          style: {
+              border: "1px solid #F66036",
+              boxShadow: "none",
+              borderRadius: 5,
+              top: 100
+          },
+      });
+  };
+
 
   useEffect(() => {
     //checkUserCompletedOrder();
@@ -173,13 +208,15 @@ const TaskCenter = () => {
           </div>
           <div className="d-flex justify-content-center">
             <Button
-              disabled={isLocked}
+              disabled={isLocked || taskCenterDetails.tradeToEarnPercentage > 0}
               danger
               type="primary"
               style={{ borderRadius: 5, marginTop: 15, width: 200 }}
               size={"large"}
+              onClick={enableTradetoEarnButton}
+              loading={loadings}
             >
-              LOCKED
+              Locked
             </Button>
 
           </div>

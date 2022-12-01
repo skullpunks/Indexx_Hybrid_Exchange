@@ -52,6 +52,20 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
+export const enableTradeToEarn = async(email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/enableTradeToEarn', {
+      email:email,
+    });
+    return result.data;
+  } catch(e: any) {
+    console.log("FAILED: unable to perform API request (enableTradeToEarn)");
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
 export const logoutAPI = async () => {};
 
 export const getCountries = async () => {
