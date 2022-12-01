@@ -353,7 +353,7 @@ const BugReport = () => {
               </Form.Item>
             </Form>
           </div>
-          <div className='tab-body-container'>
+          <div className='tab-body-container' style={{marginLeft:16}}>
             <Table columns={columns} dataSource={bugsData} onChange={onChange} loading={tableLoading} />
           </div>
         </div>
