@@ -42,7 +42,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
             getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    let orderData = res.data;
+                    let orderData = res.data.data;
                    setoutAmt(orderData.breakdown.outAmt) 
                    setoutcurr(orderData.breakdown.outCurrencyName) 
                 }
