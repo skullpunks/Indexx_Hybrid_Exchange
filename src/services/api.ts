@@ -474,6 +474,7 @@ export const createBuyOrder = async (
   basecoin: string,
   quotecoin: string,
   amount: number,
+  outAmount: number,
   price?: number
 ) => {
   try {
@@ -483,6 +484,7 @@ export const createBuyOrder = async (
       amount: amount,
       price: price,
       orderType: 'Buy',
+      outAmount: outAmount,
       email: localStorage.getItem('user'),
     });
     return result.data;

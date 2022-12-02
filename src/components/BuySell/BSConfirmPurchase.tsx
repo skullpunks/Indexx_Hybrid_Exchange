@@ -103,7 +103,8 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
-        const res = await createBuyOrder(basecoin, quotecoin, amount);
+        let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+        const res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
         if (res.status === 200) {
             setLoadings(false);
             console.log(res.data);
