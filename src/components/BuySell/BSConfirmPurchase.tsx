@@ -1,4 +1,4 @@
-import { Button, Modal, notification } from 'antd';
+import { Button, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
@@ -6,14 +6,10 @@ import React, { useEffect, useState } from 'react';
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { CloseCircleFilled } from '@ant-design/icons';
-import {
-    PayPalScriptProvider
-} from "@paypal/react-paypal-js";
 import { useNavigate } from 'react-router-dom';
 import { createBuyOrder, decodeJWT, getAppSettings, getCoinPriceByName, getTaskCenterDetails, oneUSDHelper } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import Paypal from '../Paypal/Paypal';
 import "../Stripe/CheckoutForm.css";
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
@@ -31,6 +27,7 @@ let appSettingArr: any[] = [];
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const [loadings, setLoadings] = useState<boolean>(false);
 
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
@@ -54,24 +51,25 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
         setAdminFees(adminFees.value)
     }
+
     const [adminFee, setAdminFees] = useState("");
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-    const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+   //const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     //const [clientSecret, setClientSecret] = useState("");
     const [rateData, setRateData] = useState();
     const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
 
-    const showTransferModal = () => {
-        setIsTransferModalVisible(true);
-    };
+    // const showTransferModal = () => {
+    //     setIsTransferModalVisible(true);
+    // };
 
-    const handleTransferOk = () => {
-        setIsTransferModalVisible(false);
-    };
+    // const handleTransferOk = () => {
+    //     setIsTransferModalVisible(false);
+    // };
 
-    const handleTransferCancel = () => {
-        setIsTransferModalVisible(false);
-    };
+    // const handleTransferCancel = () => {
+    //     setIsTransferModalVisible(false);
+    // };
 
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -101,14 +99,25 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
 
     const createNewBuyOrder = async () => {
+        setLoadings(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
         const res = await createBuyOrder(basecoin, quotecoin, amount);
         if (res.status === 200) {
-            showTransferModal();
+            setLoadings(false);
+            console.log(res.data);
+            for (let i = 0; i < res.data.links.length; i++) {
+                if (res.data.links[i].rel.includes("approve")) {
+                    window.location.href = res.data.links[i].href;
+                }
+            }
+
+            //showTransferModal();
+            //navigate('/indexx-exchange/buy-sell/paypal')
             //getStripePaymentIntent(res.data.orderId, res.data.user.email);
         } else {
+            setLoadings(false);
             openNotificationWithIcon2('error', res.data);
         }
     }
@@ -193,7 +202,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(BSvalue?.amount) * (taskCenterDetails?.tradeToEarnPercentage) / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()} loading={loadings}> Confirm Purchase</Button>
 
                     {/* <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
                         {clientSecret && (
@@ -203,21 +212,26 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
                         )}
                     </Modal> */}
 
-                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
+                    {/* {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal"> */}
 
-                        <PayPalScriptProvider
-                            options={{
-                                "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
-                                components: "buttons",
-                                currency: "USD"
-                            }}
-                        >
-                            <Paypal
-                                className='w-100 d-flex justify-content-center align-items-center mt-3'
-                                value={String(BSvalue?.amount)}
-                            />
-                        </PayPalScriptProvider>
-                    </Modal>
+                    {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
+                    {/* <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
+                                    components: "buttons",
+                                    currency: "USD"
+                                }}
+                            >
+                                <ButtonWrapper
+                                    currency={"USD"}
+                                    showSpinner={false}
+                                />
+                            </PayPalScriptProvider>
+                        </div> */}
+
+                    {/* </Modal>
+                    } */}
                 </div>
             </div>
 
