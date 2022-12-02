@@ -881,6 +881,18 @@ export const getOrderDetails = async (email: string, orderId: string) => {
   }
 };
 
+export const getPaypalOrder = async(token: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getPaypalOrder/${token}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getPaypalOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 // Use the orders api to create an order
 export async function createOrder(
   currency: string,

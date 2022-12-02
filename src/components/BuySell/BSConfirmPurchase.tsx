@@ -38,10 +38,10 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         priceData = res.data.results.data;
         console.log(priceData);
         setRateData(priceData);
-        let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        let oneUsdValue: any = await oneUSDHelper(priceData, filteredFromArray[0].title);
         console.log('usid oper', oneUsdValue)
         console.log('usid oper1', Number(BSvalue?.amount))
-        const finalPay = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
+        const finalPay: any = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
         setTotalAmountToPay(finalPay);
     }
 
@@ -54,7 +54,7 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
     const [adminFee, setAdminFees] = useState("");
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-   //const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+    //const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     //const [clientSecret, setClientSecret] = useState("");
     const [rateData, setRateData] = useState();
     const [taskCenterDetails, setTaskCenterDetails] = useState() as any;

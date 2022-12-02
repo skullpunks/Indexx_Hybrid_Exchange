@@ -5,6 +5,8 @@ import InProgressClock from "../../assets/arts/InProgressClock.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { getPaypalOrder } from '../../services/api';
+
 // import { BSContext, BSContextType } from '../../utils/SwapContext';
 // import initialTokens from "../../utils/Tokens.json";
 
@@ -23,6 +25,8 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [inAmt, setInAmt] = useState(0);
     const [outcurr, setoutcurr] = useState("");
     const [outAmt, setoutAmt] = useState(0);
+    const [token, setToken] = useState("");
+    const [tokenValue] = useSearchParams();
 
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
@@ -33,11 +37,22 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         setInAmt(Number(orderAmount.get("orderAmount")));
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
-    }, [payAmount, payCurrency, orderAmount, orderCurrency])
+        setToken(String(tokenValue.get("token")));
+        if (tokenValue.get("token") !== undefined) {
+            getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    let orderData = res.data;
+                   setoutAmt(orderData.breakdown.outAmt) 
+                   setoutcurr(orderData.breakdown.outCurrencyName) 
+                }
+            });
+        }
+    }, [payAmount, payCurrency, orderAmount, orderCurrency, token, tokenValue])
     console.log(incurr)
     console.log(inAmt);
 
-    // const filteredFromArray = initialTokens.filter(function (obj) {
+        // const filteredFromArray = initialTokens.filter(function (obj) {
     //     return obj?.address === BSvalue?.fromToken;
     // });
     return (
