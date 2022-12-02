@@ -46,14 +46,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
     "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -71,11 +64,7 @@
     "@types/lodash.debounce": "^4.0.7",
     "@types/numeral": "^2.0.2",
     "@types/qrcode": "^1.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-import-resolver-typescript": "^3.5.2",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
+
     "prettier": "^2.8.0"
   }
 }
