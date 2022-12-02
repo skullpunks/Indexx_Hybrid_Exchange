@@ -43,7 +43,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 console.log(res);
                 if (res.status === 200) {
                     let orderData = res.data.data;
-                   setoutAmt(orderData.breakdown.outAmt) 
+                   setoutAmt(orderData.breakdown.outAmount) 
                    setoutcurr(orderData.breakdown.outCurrencyName) 
                 }
             });
