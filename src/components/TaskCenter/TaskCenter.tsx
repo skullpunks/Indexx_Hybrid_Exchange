@@ -642,10 +642,10 @@ const TaskCenter = () => {
           </div>
         </div>
 
-        <Divider><b>Points History</b></Divider>
+        <Divider style={{width:1430}}><b>Points History</b></Divider>
 
         <div className="d-flex justify-content-center">
-          <Table style={{ margin: 20, marginBlock: 10, width: 1510, marginLeft: 80, marginBottom: 10 }} bordered={true} columns={columns} dataSource={pointsHistory} />
+          <Table style={{ margin: 20, marginBlock: 10, width: 1430, marginLeft: 80, marginBottom: 10 }} bordered={true} columns={columns} dataSource={pointsHistory} />
         </div>
 
       </div>
