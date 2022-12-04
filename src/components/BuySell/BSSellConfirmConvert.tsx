@@ -11,7 +11,7 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import "./BS-Sell.css";
 // import { createSellOrder, getAppSettings } from '../../services/api';
-import { confirmSellOrder, createSellOrder, getAppSettings, getCoinPriceByName, oneUSDHelper } from '../../services/api';
+import { confirmSellOrder, createSellOrder, getAppSettings, getCoinPriceByName, oneUSDHelper, decodeJWT, getTaskCenterDetails } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -28,6 +28,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [adminFee, setAdminFees] = useState("");
+    const [, setTaskCenterDetails] = useState() as any;
 
     //const [isFirstEnabled, setisFirstEnabled] = useState(true);
     // const [isSecondEnabled, setisSecondEnabled] = useState(false);
@@ -42,6 +43,15 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         // setScreenName("");
     }
 
+    const getTaskCenterDetailsData = async () => {
+        const access_token = String(localStorage.getItem("access_token"));
+        const decoded: any = await decodeJWT(access_token);
+        let res = await getTaskCenterDetails(String(decoded.email));
+        if (res.status === 200) {
+            setTaskCenterDetails(res.data.data);
+        }
+    }
+
 
     useEffect(() => {
         let element = document.getElementById("input_get_value")!;
@@ -52,6 +62,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         element.style.fontSize = charFontSize + "ch";
         getAllSetting();
         getPricesData();
+        getTaskCenterDetailsData();
     })
 
     const getPricesData = async () => {
@@ -226,9 +237,13 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
                 <div className="footer bs_footer_action">
-                    {Number(totalAmountToPay) > 50 &&
+                    {/* {Number(totalAmountToPay) > 50 &&
                         <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * 30 / 100 * 100)) / 100} INEX</h6>
                     }
+
+                    {Number(totalAmountToPay) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(totalAmountToPay) * (taskCenterDetails?.tradeToEarnPercentage) / 100 * 100)) / 100} INEX</h6>
+                    } */}
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" block onClick={() => setScreenName("BSSellInprogress")}> Confirm Conversion (11s)</Button> */}
                     <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" loading={loadings} block onClick={() => createNewSellOrder()}> Confirm Sell</Button>
                     {/* <Button type="primary" className="atn-btn atn-btn-round margin-t-3x" hidden={(!isSecondEnabled)} block onClick={() => processSellOrder()}> Confirm Conversion (11s)</Button> */}

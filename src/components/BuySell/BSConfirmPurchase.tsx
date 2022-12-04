@@ -1,20 +1,16 @@
-import { Button, Modal, notification } from 'antd';
+import { Button, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
+import { CloseCircleFilled } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { createBuyOrder, decodeJWT, getAppSettings, getCoinPriceByName, getTaskCenterDetails, oneUSDHelper } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { getCoinPriceByName, getAppSettings, oneUSDHelper, createStripePaymentIntent, createBuyOrder } from '../../services/api';
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "../Stripe/CheckoutForm";
-import "../Stripe/CheckoutForm.css"
-import { useNavigate } from 'react-router-dom';
-import { CloseCircleFilled } from '@ant-design/icons';
-
+import "../Stripe/CheckoutForm.css";
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -24,13 +20,14 @@ let priceData: any = {};
 let appSettingArr: any[] = [];
 
 // This is your test publishable API key.
-// const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
+//const stripePromise = loadStripe("pk_test_ZTI5dPgnBbXxRALEMXe68On600sw5BceTC");
 // This is your live publishable API key.
-const stripePromise = loadStripe("pk_live_zzWqHxo3dd26OcBFKjTHrsNZ00O7B4PcT6");
+//const stripePromise = loadStripe("pk_live_zzWqHxo3dd26OcBFKjTHrsNZ00O7B4PcT6");
 
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const { BSvalue } = React.useContext(BSContext) as BSContextType;
+    const [loadings, setLoadings] = useState<boolean>(false);
 
     const filteredFromArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
@@ -41,10 +38,10 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         priceData = res.data.results.data;
         console.log(priceData);
         setRateData(priceData);
-        let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
+        let oneUsdValue: any = await oneUSDHelper(priceData, filteredFromArray[0].title);
         console.log('usid oper', oneUsdValue)
         console.log('usid oper1', Number(BSvalue?.amount))
-        const finalPay = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
+        const finalPay: any = oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
         setTotalAmountToPay(finalPay);
     }
 
@@ -54,22 +51,25 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
         setAdminFees(adminFees.value)
     }
+
     const [adminFee, setAdminFees] = useState("");
     const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-    const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
-    const [clientSecret, setClientSecret] = useState("");
+    //const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+    //const [clientSecret, setClientSecret] = useState("");
     const [rateData, setRateData] = useState();
-    const showTransferModal = () => {
-        setIsTransferModalVisible(true);
-    };
+    const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
 
-    const handleTransferOk = () => {
-        setIsTransferModalVisible(false);
-    };
+    // const showTransferModal = () => {
+    //     setIsTransferModalVisible(true);
+    // };
 
-    const handleTransferCancel = () => {
-        setIsTransferModalVisible(false);
-    };
+    // const handleTransferOk = () => {
+    //     setIsTransferModalVisible(false);
+    // };
+
+    // const handleTransferCancel = () => {
+    //     setIsTransferModalVisible(false);
+    // };
 
     type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -87,29 +87,52 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         });
     };
 
+    const getTaskCenterDetailsData = async () => {
+        const access_token = String(localStorage.getItem("access_token"));
+        const decoded: any = await decodeJWT(access_token);
+        let res = await getTaskCenterDetails(String(decoded.email));
+        if (res.status === 200) {
+            setTaskCenterDetails(res.data.data);
+        }
+    }
+
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
 
     const createNewBuyOrder = async () => {
+        setLoadings(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
-        const res = await createBuyOrder(basecoin, quotecoin, amount);
+        let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+        const res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
         if (res.status === 200) {
-            getStripePaymentIntent(res.data.orderId, res.data.user.email);
+            setLoadings(false);
+            console.log(res.data);
+            for (let i = 0; i < res.data.links.length; i++) {
+                if (res.data.links[i].rel.includes("approve")) {
+                    window.location.href = res.data.links[i].href;
+                }
+            }
+
+            //showTransferModal();
+            //navigate('/indexx-exchange/buy-sell/paypal')
+            //getStripePaymentIntent(res.data.orderId, res.data.user.email);
         } else {
+            setLoadings(false);
             openNotificationWithIcon2('error', res.data);
         }
     }
 
-    const getStripePaymentIntent = async (orderId: string, email: string) => {
-        const res = await createStripePaymentIntent(Number(BSvalue?.amount), orderId, email);
-        setClientSecret(res.client_secret);
-        showTransferModal();
-    };
+    // const getStripePaymentIntent = async (orderId: string, email: string) => {
+    //     const res = await createStripePaymentIntent(Number(BSvalue?.amount), orderId, email);
+    //     setClientSecret(res.client_secret);
+    //     showTransferModal();
+    // };
 
     useEffect(() => {
         getAllSetting();
         getPricesData();
+        getTaskCenterDetailsData();
         // if(document.getElementById("input_get_value") && document.getElementById("input_get_value")?.innerHTML){
         let element = document.getElementById("input_get_value")!;
         let testVal = element.innerText;
@@ -120,16 +143,16 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
         // }
     })
 
-    const appearance = {
-        theme: String('stripe'),
-    };
-    const options = {
-        clientSecret,
-        appearance
-        // appearance: {
-        //     theme: String('stripe'),
-        // }
-    } as any;
+    // const appearance = {
+    //     theme: String('stripe'),
+    // };
+    // const options = {
+    //     clientSecret,
+    //     appearance
+    //     // appearance: {
+    //     //     theme: String('stripe'),
+    //     // }
+    // } as any;
     // const openStipePayment = async () => {
     //     let res = await createBuyOrder(filteredFromArray[0].title, 'USD', Number(BSvalue?.amount), priceData);
     //     if (res.status === 200) {
@@ -176,19 +199,40 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
 
 
                 <div className="footer bs_footer_action">
-                    {Number(BSvalue?.amount) > 50 &&
-                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(BSvalue?.amount) * 100) / 100) * 30 / 100} INEX</h6>
+                    {Number(BSvalue?.amount) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&
+                        <h6 className='text-center'>Rewards Applied for this order: {(Math.floor(Number(BSvalue?.amount) * (taskCenterDetails?.tradeToEarnPercentage) / 100 * 100)) / 100} INEX</h6>
                     }
                     {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
-                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()}> Confirm Purchase</Button>
+                    <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => createNewBuyOrder()} loading={loadings}> Confirm Purchase</Button>
 
-                    <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
+                    {/* <Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
                         {clientSecret && (
                             <Elements options={options} stripe={stripePromise}>
                                 <CheckoutForm />
                             </Elements>
                         )}
-                    </Modal>
+                    </Modal> */}
+
+                    {/* {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal"> */}
+
+                    {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
+                    {/* <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
+                                    components: "buttons",
+                                    currency: "USD"
+                                }}
+                            >
+                                <ButtonWrapper
+                                    currency={"USD"}
+                                    showSpinner={false}
+                                />
+                            </PayPalScriptProvider>
+                        </div> */}
+
+                    {/* </Modal>
+                    } */}
                 </div>
             </div>
 

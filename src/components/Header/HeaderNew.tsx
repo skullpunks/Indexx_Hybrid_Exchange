@@ -331,6 +331,14 @@ const HeaderNew = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       as={Link}
+                      to="/indexx-exchange/task-center"
+                      className="dropdown-item"
+                      href="/"
+                    >
+                     Task Center
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      as={Link}
                       to="/indexx-exchange/buy-sell/transaction-history"
                       className="dropdown-item"
                       href="/"
