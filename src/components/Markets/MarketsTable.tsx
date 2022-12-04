@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
+import { Button, Pagination, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from "react-router-dom";
 import { decodeJWT, marketsData } from "../../services/api";
 interface DataType {
@@ -24,16 +24,14 @@ interface Props {
     search: string;
 }
 const MarketsTable: React.FC<(Props)> = ({ search }) => {
-
+    const pageSize = 10;
+    const [current, setCurrent] = useState(1);
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
 
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
     const [isLoading, setLoadings] = useState(true);
 
     const tableLoading = {
@@ -65,8 +63,6 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
         else {
             setMarketData(marketDataFixed);
         }
-        // const memoizedValue = useMemo(() => setMarketData(marketDataFixed));
-
     }, [calledOnce, email, marketDataFixed, search]);
     /*
     "Name": "Indexx500",
@@ -193,6 +189,26 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
     const showTredning = async () => {
         setMarketData(marketDataFixed.filter((x: any) => x.Symbol.includes('I')));
     }
+    const getData = (current: number, pageSize: number) => {
+        // Normally you should get the data from the server
+        const xx = marketData && marketData.slice((current - 1) * pageSize, current * pageSize);
+        console.log(xx)
+        return xx
+    };
+    const MyPagination = ({ total, onChange, current }: any) => {
+        return (
+            <Pagination
+                onChange={onChange}
+                total={total}
+                current={current}
+                pageSize={pageSize}
+                responsive={true}
+                style={{
+                    padding: '5px', textAlign: 'center'
+                }}
+            />
+        );
+    };
 
     return (
         <div>
@@ -205,7 +221,12 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading} />
+                <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} loading={tableLoading} />
+                <MyPagination
+                    total={marketData && marketData.length}
+                    current={current}
+                    onChange={setCurrent}
+                />
             </div>
         </div>
     )
