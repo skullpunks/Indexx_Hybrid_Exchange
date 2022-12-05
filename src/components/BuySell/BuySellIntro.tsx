@@ -122,7 +122,6 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
             maskClosable={false}
             footer={[
               <Button
-                className="btn text-white  btn-primary"
                 danger
                 size="large"
                 href="https://dex.indexx.ai"
