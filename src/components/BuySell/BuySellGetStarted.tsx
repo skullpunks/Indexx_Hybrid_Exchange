@@ -124,7 +124,7 @@ const BuySellGetStarted: React.FC = () => {
                 </div>
                 <Space direction="vertical" style={{ width: '100%' }}>
               
-              <Alert message="As per our Terms and Use, we’re unable to provide services to USA residents. Instead, please register on our partner platform dedicated to American customers." type="warning" />
+              <Alert message="As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers." type="warning" />
               
           </Space>
            
