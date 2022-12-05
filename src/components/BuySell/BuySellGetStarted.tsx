@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
-import lockedimage from "../../assets/arts/locked.png"
-// import PasswordEye from "../../assets/arts/PasswordEye.svg";
-// import Footer from '../Footer/Footer';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, Modal, notification ,Image,Alert,Space} from 'antd';
+import { Button, Checkbox, Form, Input, notification ,Alert,Space} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
