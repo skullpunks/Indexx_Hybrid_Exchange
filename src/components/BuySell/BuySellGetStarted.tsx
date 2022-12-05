@@ -56,7 +56,10 @@ const BuySellGetStarted: React.FC = () => {
     return (
         <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started</h1>
-            <div style={{marginTop:-4}} className="bs_container bs_form card" >
+            <div className="bs_container bs_form card" >
+            <div className="d-flex justify-center " >&nbsp;
+                    <Link to="/indexx-exchange/buy-sell/login" className="text_link"> LOG IN</Link>
+                </div>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
