@@ -52,10 +52,15 @@ const HowItWorks = () => {
             </span>
           </div>
           <div className="col-lg-4 text-center">
+          <Link to="/indexx-exchange/how-it-works/centralized">
             <img src={firstcoin} alt="indexxcoin" />
+            </Link>
             <br />
             <span className="employee_name">
-              <strong>
+              <strong
+              onClick={() =>
+                navigateUser("/indexx-exchange/how-it-works/centralized")
+              }>
                 indexx
                 <br />
                 Decentralized

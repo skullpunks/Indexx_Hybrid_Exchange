@@ -34,12 +34,12 @@ body {
     line-height: 1.2;
 }
 
-/* .blog_flipicon_image {
+.blog_flipicon_image {
     flex-basis: calc(62% - 20px);
     background: #E6E6E6;
 
 
-} */
+}
 
 /* .blog_flipicon_image img {
     position: absolute;
