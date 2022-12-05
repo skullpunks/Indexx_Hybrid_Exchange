@@ -181,7 +181,7 @@ const TradeToEarn = () => {
                   <Image src={exgcoin} style={{ marginBottom: 5 }} width={120} preview={false}></Image>
 
                 </div>
-                <h2 className='centered' style={{ marginBottom: 10, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
+                <h2 className='d-flex justify-content-center' style={{ marginBottom: 10, color: "#5F5F5F", fontSize: "25px" }}>indexx Exchange (INEX)</h2>
                 <h1 style={{ display: 'flex', marginTop: 0, justifyContent: 'center', alignItems: 'center', opacity: "20%", color: "#5F5F5F", fontSize: "90px" }}>
                   {userRewardDetails?.rewardTokenBalanceInUSD > 0 || userRewardDetails?.rewardTokenBalanceInUSD !== undefined ? '$' + (Math.floor((userRewardDetails?.rewardTokenBalanceInUSD * 100) /100)) : '$' + 0} </h1><br />
 
@@ -197,21 +197,25 @@ const TradeToEarn = () => {
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>1 INEX = 0.1 USD</Text>
                 <Text className='centered' style={{ marginBottom: 0, color: "#5F5F5F", fontSize: "20px" }}>Earning Percentage = 10%</Text>
                 <br /> <br></br>
-                <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
+                <span className='d-flex justify-content-center'>
+                <Button danger type="primary" block shape="round" size="large" className="btn_xl d-flex justify-content-center" style={{
                   height: "55px",
                   borderRadius: "5px",
+                  width:'100%'
                 }}
                   disabled={(!withdrawAmount || withdrawAmount < 1000 || withdrawAmount > userRewardDetails?.rewardTokenBalanceInUSD)}
                   loading={loadings}
                   onClick={() => withdrawMyINEX()}
                 >Withdraw Tokens</Button>
+                </span>
+              
                 {/* { showTxText && 
                   <span>
                     <h3> Tokens are withdraw successsfully. Your recent withdrawal transaction hash is {txHash}</h3>
                   </span>
                 } */}
 
-                <br /><br />
+  
                 {userRewardDetails?.rewardTokenAddress === "" ?
                   <Input.Group compact style={{ paddingTop: "40px" }}>
                     <Input size={"middle"} style={{ width: '100%', marginBottom: "10px" }} placeholder="Enter Wallet Address" onChange={updateVal} maxLength={42} />
@@ -235,11 +239,14 @@ const TradeToEarn = () => {
                     <span>
                       {isWalletAddrValid ? "" : <Text >Invalid Wallet Address</Text>}
                     </span>
+                    <span className='d-flex justify-content-center'>
                     <Button danger type="primary" block shape="round" size="large" className="btn_xl" style={{
-                      height: "55px", borderRadius: "5px",
+                      height: "55px", borderRadius: "5px", width:'100%'
                     }} onClick={() => updateWalletAddress()}
                       disabled={(!userRewardDetails?.rewardTokenAddress || userRewardDetails?.rewardTokenAddress.length < 42 || !isWalletAddrValid)}
                     >Update Wallet Address</Button>
+                    </span>
+           
 
                   </Input.Group>
                 }
