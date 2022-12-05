@@ -30,6 +30,8 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   const [country, setCountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+
+
   const handleTransferOk = () => {
     localStorage.setItem('userIp', ip);
     setIsTransferModalVisible(false);
@@ -52,9 +54,6 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
       setIP(res.data.IPv4);
       setCountry(res.data.country_name);
       setCountryCode(res.data.country_code);
-      if (res.data.country_code === 'US') {
-        setIsTransferModalVisible(true);
-      }
     });
   }, []);
 
@@ -85,6 +84,9 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
     // console.log(key);
     if (key === '2' && (country === 'United States' || countryCode === 'US')) {
       setIsTransferModalVisible(true);
+    }
+    else{
+      setIsTransferModalVisible(false);
     }
 
     const filteredFromArray = items.filter(function (obj) {
