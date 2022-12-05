@@ -76,7 +76,7 @@ const BuySellGetStarted: React.FC = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }]}>
+                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }, { max: 15, message: 'Password must be maximum 15 characters.' }]}>
                             <div className="control-input">
                                 {/* <input type="password" name="password" id="password" autoComplete='off' onChange={() => handleChange} /> */}
                                 <Input.Password />

@@ -253,28 +253,29 @@ const TaskCenter = () => {
                   style={{
                     alignContent: "end",
                     alignItems: "end",
-                    paddingLeft: 70,
+                    paddingLeft: 50,
 
                   }}
                 >
+                  
                   <a href="https://register.affiliate.indexx.ai/">
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      style={{ borderRadius: 5, fontSize: '100%' , marginTop: 15, width: '100%', paddingLeft: 15, paddingRight:15 }}
                       size={"large"}
                     >
                       Get Affiliates
                     </Button>
                   </a>
 
-
+                  
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    style={{ borderRadius: 5, width: '100%', marginTop: 15, paddingLeft: 15, paddingRight:15 }}
                     size={"large"}
                   >
                     Complete
@@ -313,7 +314,7 @@ const TaskCenter = () => {
                   style={{
                     alignContent: "end",
                     alignItems: "end",
-                    paddingLeft: 70,
+                    paddingLeft: 50,
 
                   }}
                 >
@@ -321,7 +322,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      style={{ borderRadius: 5,  marginTop: 15, width: '100%' }}
                       size={"large"}
                       disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                     >
@@ -331,11 +332,11 @@ const TaskCenter = () => {
 
                 </div>
 
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    style={{ borderRadius: 5, width: '100%', marginTop: 15 }}
                     size={"large"}
                     disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                   >
@@ -475,17 +476,14 @@ const TaskCenter = () => {
                   <Progress style={{ width: 439 }} percent={(taskCenterDetails?.isKYCPass ? 100 : (bugsData.length > 0 ? 50 : 0))} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
-                  <Text
+                 
+                    <span
                     className="opacity-75"
-                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -10 }}
                   >
-                    {taskCenterDetails?.KYCPoints}
-                  </Text>
-                  <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
-                  >
-                    Points
-                  </Text>
+                    10{taskCenterDetails?.KYCPoints}
+                  </span><span style={{marginTop: 30}}>Points</span>
+                  
                 </div>
                 <div
                   className="col-2"
@@ -518,23 +516,21 @@ const TaskCenter = () => {
                   <Image preview={false} src={exgcoin} width={79}></Image>
                 </div>
                 <div className="col-5">
-                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                  <span style={{ fontSize: 20, fontWeight: 100 }}>
                     Sign Up on Indexx Exchange
-                  </Text>
+                  </span>
                   <Progress style={{ width: 439 }} percent={((taskCenterDetails?.email) ? 100 : 0)} />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
-                  <Text
+                  
+                  
+                    <span
                     className="opacity-75"
-                    style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
+                    style={{ fontSize: 50, fontWeight: 100, marginTop: -10 }}
                   >
                     10
-                  </Text>
-                  <Text
-                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
-                  >
-                    Points
-                  </Text>
+                  </span><span style={{marginTop: 30}}>Points</span>
+                  
                 </div>
                 <div
                   className="col-2"
