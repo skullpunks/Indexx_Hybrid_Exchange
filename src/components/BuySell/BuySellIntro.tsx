@@ -6,11 +6,7 @@ import BuyContent from './BuyContent';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import lockedimage from '../../assets/arts/locked.png';
-import {
-  Button,
-  Modal,
-  Image,
-} from 'antd';
+import { Button, Modal, Image } from 'antd';
 import { geolocationData } from '../../services/api';
 import { useState, useEffect } from 'react';
 import './BuySellIntro.css';
@@ -31,7 +27,6 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   const [countryCode, setCountryCode] = useState('');
   const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
 
-
   const handleTransferOk = () => {
     localStorage.setItem('userIp', ip);
     setIsTransferModalVisible(false);
@@ -44,8 +39,6 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   const handleOk = () => {
     // setLoading(true);
   };
-
-
 
   useEffect(() => {
     geolocationData().then((res: any) => {
@@ -84,8 +77,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
     // console.log(key);
     if (key === '2' && (country === 'United States' || countryCode === 'US')) {
       setIsTransferModalVisible(true);
-    }
-    else{
+    } else {
       setIsTransferModalVisible(false);
     }
 
@@ -153,10 +145,9 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
               </p>
               <p>
                 Your IP address indicates that you’re attempting to access our
-                services from the USA. As per our Terms and Use, we’re unable to
-                provide services to users from the region. Instead, please
-                register on our partner platform dedicated to American
-                customers.{' '}
+                services from the US. As per our Terms and Use, we’re unable to
+                provide services to users from the region. Instead, please use
+                our partner platform dedicated to US customers.
               </p>
             </div>
           </Modal>

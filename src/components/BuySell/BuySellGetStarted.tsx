@@ -55,8 +55,14 @@ const BuySellGetStarted: React.FC = () => {
 
     return (
         <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
-            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started</h1>
-            <div style={{marginTop:-4}} className="bs_container bs_form card" >
+            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started <br></br>
+            
+            </h1>
+            <Link to="/indexx-exchange/buy-sell/login" className="text-center text_link"> LOG IN</Link>
+            <div className="bs_container bs_form card" >
+            <div className="d-flex justify-center " >&nbsp;
+                    
+                </div>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -121,7 +127,7 @@ const BuySellGetStarted: React.FC = () => {
                 </div>
                 <Space direction="vertical" style={{ width: '100%' }}>
               
-              <Alert message="As per our Terms and Use, we’re unable to provide services to USA residents. Instead, please register on our partner platform dedicated to American customers." type="warning" />
+              <Alert message="As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers." type="warning" />
               
           </Space>
            
