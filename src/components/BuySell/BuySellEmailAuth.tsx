@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
 import Timer from "../../utils/Timer";
 import { CheckCircleFilled } from '@ant-design/icons';
-import { validateEmail } from "../../services/api";
+import { validateEmail, resendEmailCode,  } from "../../services/api";
 import { useEffect, useState } from "react";
 import React, { ClipboardEvent } from 'react';
 
@@ -116,10 +116,15 @@ const BuySellEmailAuth = () => {
         });
     };
 
-    // const resendEmail = async () => {
-    //     let email = '';
-    //     await resendEmailCode(email);
-    // }
+    const resendEmail = async () => {
+        let res = await resendEmailCode(email);
+        console.log(res);
+        if (res.status === 200) {
+            openNotificationWithIcon('success', res.data);
+        } else {
+            openNotificationWithIcon2('error', res.data);
+        }
+    }
 
     const handleInput1 = (e: any) => {
         let val = e.currentTarget.value;
@@ -195,7 +200,7 @@ const BuySellEmailAuth = () => {
                 {/* <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button> */}
                 {/* <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button> */}
                 <Button id="verify_btn" type="primary" onClick={() => verifyCode()} loading={loadings}>Verify</Button>
-                {
+                { 
                     < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={1} initSecs={0} /> )</div>
                 }
 
