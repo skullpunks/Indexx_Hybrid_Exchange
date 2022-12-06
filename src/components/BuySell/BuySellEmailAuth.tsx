@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import envelop from "../../assets/arts/envelop.svg";
 import Timer from "../../utils/Timer";
 import { CheckCircleFilled } from '@ant-design/icons';
-import { validateEmail, resendEmailCode,  } from "../../services/api";
+import { validateEmail } from "../../services/api";
 import { useEffect, useState } from "react";
 import React, { ClipboardEvent } from 'react';
 
@@ -116,15 +116,15 @@ const BuySellEmailAuth = () => {
         });
     };
 
-    const resendEmail = async () => {
-        let res = await resendEmailCode(email);
-        console.log(res);
-        if (res.status === 200) {
-            openNotificationWithIcon('success', res.data);
-        } else {
-            openNotificationWithIcon2('error', res.data);
-        }
-    }
+    // const resendEmail = async () => {
+    //     let res = await resendEmailCode(email);
+    //     console.log(res);
+    //     if (res.status === 200) {
+    //         openNotificationWithIcon('success', res.data);
+    //     } else {
+    //         openNotificationWithIcon2('error', res.data);
+    //     }
+    // }
 
     const handleInput1 = (e: any) => {
         let val = e.currentTarget.value;
