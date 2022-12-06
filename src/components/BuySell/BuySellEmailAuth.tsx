@@ -12,6 +12,8 @@ import React, { ClipboardEvent } from 'react';
 const BuySellEmailAuth = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [loadings, setLoadings] = useState<boolean>(false);
+
     const otpCode = new Array(6);
     useEffect(() => {
         setEmail(String(localStorage.getItem("tempAuthEmail")));
@@ -68,15 +70,18 @@ const BuySellEmailAuth = () => {
     }
 
     const verifyCode = async () => {
+        setLoadings(true);
         console.log(email);
         console.log((otpCode).join().toString());
         const res = await validateEmail(email, (otpCode).join('').toString());
         if (res.status === 200) {
             openNotificationWithIcon('success', res.data);
-            navigate("/indexx-exchange/kyc")
+            navigate("/indexx-exchange/kyc");
+            setLoadings(false);
         } else {
             console.log("error");
             openNotificationWithIcon2('error', res.data);
+            setLoadings(false);
         }
     }
 
@@ -189,7 +194,7 @@ const BuySellEmailAuth = () => {
                 <br />
                 {/* <Button type="primary" className="ant-btn ant-btn-primary atn-btn atn-btn-round margin-b-1x d-none" onClick={() => navigate("/indexx-exchange/buy-sell/get-started/secure-steps")} >Verify</Button> */}
                 {/* <Button id="verify_btn" type="primary" onClick={() => navigate("/indexx-exchange/kyc")}>Verify</Button> */}
-                <Button id="verify_btn" type="primary" onClick={() => verifyCode()}>Verify</Button>
+                <Button id="verify_btn" type="primary" onClick={() => verifyCode()} loading={loadings}>Verify</Button>
                 {
                     < div className="margin-lr-auto padding-t-2x">Resend Email (<Timer initMins={1} initSecs={0} /> )</div>
                 }
