@@ -76,8 +76,8 @@ const BuySellGetStarted: React.FC = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }, { max: 15, message: 'Password must be maximum 15 characters.' }]}>
-                            <div className="control-input">
+                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }, { max: 15, message: 'Password must be maximum 15 characters.' },{ pattern: new RegExp(/^[a-zA-Z0-9]*$/) , message: 'Only letters and digits allowed!' }]}>
+                            <div className="control-input form-control validate">
                                 {/* <input type="password" name="password" id="password" autoComplete='off' onChange={() => handleChange} /> */}
                                 <Input.Password />
                                 {/* <span className="input_icon"><img src={PasswordEye} alt="PasswordEye" /></span> */}

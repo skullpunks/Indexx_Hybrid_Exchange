@@ -279,7 +279,7 @@ const HeaderNew = () => {
                   <NavDropdown
                     title={title}
                     id="collasible-nav-dropdown"
-                    className="dark-menu "
+                    className="dark-menu text-lowercase"
                   >
                     <NavDropdown.Item
                       as={Link}
