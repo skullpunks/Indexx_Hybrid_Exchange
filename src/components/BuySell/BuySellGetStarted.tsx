@@ -1,48 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
-import lockedimage from "../../assets/arts/locked.png"
-// import PasswordEye from "../../assets/arts/PasswordEye.svg";
-// import Footer from '../Footer/Footer';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, Modal, notification ,Image} from 'antd';
+import { Button, Checkbox, Form, Input, notification ,Alert,Space} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
-import { signupAPI, geolocationData } from '../../services/api';
+import { signupAPI } from '../../services/api';
 
 const BuySellGetStarted: React.FC = () => {
     //creating IP state
-    const [ip, setIP] = useState('');
-    const [country, setCountry] = useState('');
-    const [countryCode, setCountryCode] = useState('');
-    const [isTransferModalVisible, setIsTransferModalVisible] = useState(true);
 
-    const handleTransferOk = () => {
-        localStorage.setItem('userIp', ip);
-        setIsTransferModalVisible(false);
-    };
-
-    const handleTransferCancel = () => {
-        setIsTransferModalVisible(false);
-    };
-
-    const handleOk = () => {
-        // setLoading(true);
-    };
 
     const [loadings, setLoadings] = useState<boolean>(false);
 
-    useEffect(() => {
-        geolocationData().then((res: any) => {
-       // axios.get('https://geolocation-db.com/json/').then((res: any) => {
-            console.log(res.data);
-            setIP(res.data.IPv4);
-            setCountry(res.data.country_name);
-            setCountryCode(res.data.country_code);
-            if (res.data.country_code === 'US') {
-                setIsTransferModalVisible(true);
-            }
-        })
-    }, []);
+  
     const navigate = useNavigate();
     console.log(navigate)
     const onFinish = async (values: any) => {
@@ -84,8 +55,11 @@ const BuySellGetStarted: React.FC = () => {
 
     return (
         <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
-            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15}}>Get Started</h1>
-            <div style={{marginTop:-4}} className="bs_container bs_form card" >
+            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started</h1>
+            <div className="bs_container bs_form card" >
+            <div className="d-flex justify-center " >&nbsp;
+                    <Link to="/indexx-exchange/buy-sell/login" className="text_link"> LOG IN</Link>
+                </div>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -105,7 +79,7 @@ const BuySellGetStarted: React.FC = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }]}>
+                            rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }, { max: 15, message: 'Password must be maximum 15 characters.' }]}>
                             <div className="control-input">
                                 {/* <input type="password" name="password" id="password" autoComplete='off' onChange={() => handleChange} /> */}
                                 <Input.Password />
@@ -148,37 +122,14 @@ const BuySellGetStarted: React.FC = () => {
                 <div style={{marginTop:-30}} className="d-flex justify-center padding-tb-2x" >Already have an account? &nbsp;
                     <Link to="/indexx-exchange/buy-sell/login" className="text_link"> Log in.</Link>
                 </div>
+                <Space direction="vertical" style={{ width: '100%' }}>
+              
+              <Alert message="As per our Terms and Use, we’re unable to provide services to USA residents. Instead, please register on our partner platform dedicated to American customers." type="warning" />
+              
+          </Space>
+           
             </div>
-            {(country === "United States" || countryCode === "US") &&
-                <Modal centered={true}  visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} width={670} maskClosable={false} 
-                    footer={[
-
-                        <Button
-                            size='large'
-                            href="https://dex.indexx.ai"
-                            style={{marginBottom:20,width:"100%"}}
-                            type="primary"
-                            onClick={handleOk}>
-                            
-                            Go To Decentralized
-                        </Button>,
-
-                        <Button
-                            className="center"
-                            type="link"
-                            onClick={handleTransferCancel}>
-                            Cancel
-                        </Button>,
-
-                    ]}>
-                         
-                    <div className="align-center text-center">
-                        <Image preview={false} src={lockedimage}></Image>
-                        <p className="text-center" style={{fontSize:30,fontWeight:400,}}>Service Notice</p>
-                        <p>Your IP address indicates that you’re attempting to access our services from the USA. As per our Terms and Use, we’re unable to provide services to users from the region. Instead, please register on our partner platform dedicated to American customers. </p>
-                    </div>
-                </Modal>
-            }
+          
         </div>
 
     )

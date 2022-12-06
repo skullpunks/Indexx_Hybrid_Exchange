@@ -229,6 +229,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
             }
+
+
+
+
+            
         </div >
     )
 }
