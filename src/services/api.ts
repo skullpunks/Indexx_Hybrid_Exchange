@@ -9,13 +9,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseURL =  "https://api.indexx.ai"; ///"https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; // //"http://api.indexx.ai"
 }
 
-const CLIENT_ID =
-  'AaBpFV3sdckcsvD5_zLb88uD_ps12pCnPq5_XIUW64HvePwjeMVY8RDOB1nz37-Xc31NEA-AFezVkYzW';
-const APP_SECRET =
-  'EOLjziQ0q8n9l6J1JPkAtAFrVQCGbbVPwSzCQqfl0BsAM7wPCv2dycpINq_E6zVX8dpANqpI2xTmLm3Z';
-//const base = "https://api-m.sandbox.paypal.com";
-const base = 'https://api-m.paypal.com';
-
 const API = axios.create({
   baseURL: baseURL,
 });
@@ -894,79 +887,3 @@ export const getPaypalOrder = async(token: string) => {
     return e.response.data;
   }
 };
-
-// Use the orders api to create an order
-export async function createOrder(
-  currency: string,
-  amount: string,
-  email: string
-) {
-  try {
-    console.log('createOrder', currency, amount, email);
-
-    const accessToken = await generateAccessToken();
-
-    const url = `${base}/v2/checkout/orders`;
-    const response = await fetch(url, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        intent: 'CAPTURE',
-        purchase_units: [
-          {
-            amount: {
-              currency_code: currency,
-              value: amount,
-            },
-          },
-        ],
-      }),
-    });
-    console.log(response, 'response');
-    return handleResponse(response);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// Use the orders api to capture payment for an order
-export async function capturePayment(orderId: any) {
-  const accessToken = await generateAccessToken();
-  const url = `${base}/v2/checkout/orders/${orderId}/capture`;
-  const response = await axios.post(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  return handleResponse(response);
-}
-
-export async function generateAccessToken() {
-  const auth = Buffer.from(CLIENT_ID + ':' + APP_SECRET).toString('base64');
-  const response = await fetch(`${base}/v1/oauth2/token`, {
-    method: 'post',
-    body: 'grant_type=client_credentials',
-    headers: {
-      Authorization: `Basic ${auth}`,
-    },
-  });
-
-  const jsonData = await handleResponse(response);
-  console.log('jsonData', jsonData);
-  console.log('jsonData', jsonData.access_token);
-  return jsonData.access_token;
-}
-
-async function handleResponse(response: any) {
-  if (response.status === 200 || response.status === 201) {
-    return response.json();
-  }
-
-  const errorMessage = await response.text();
-  throw new Error(errorMessage);
-}
