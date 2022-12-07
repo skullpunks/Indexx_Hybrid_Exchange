@@ -317,16 +317,16 @@ const TradeToEarn = () => {
           <Text className="d-flex justify-content-center" style={{color:'#5F5F5F',fontSize:32,marginBottom:10}}> 
             How to Earn?<br/>
           </Text>
-          <Text style={{color:'#5F5F5F',fontSize:20}}>1.Please make sure that your trade to earn is unlocked in the task center before you start getting rewards.
+          <Text style={{color:'#5F5F5F',fontSize:20}}>1. Please make sure that your trade to earn is unlocked in the task center before you start getting rewards.
 <br/>
  2. You will be awarded up to 30% of the transaction value you have done in either 
-Buy/Sell or Convert.
+Buy,Sell or Convert.
 
 <br/>
- 3.The limit of withdrawal from trade to earn is set to a minimum of 50$.
+ 3. The limit of withdrawal from trade to earn is set to a minimum of 50$.
 <br/>
- 4.The transaction must include one of the Indexx tokens to get your reward added to the wallet about.<br/>
- 5.The reward will automatically be added in your wallet.
+ 4. The transaction must include one of the Indexx tokens to get your reward added to the wallet.<br/>
+ 5. The reward will automatically be added in your wallet.
 <br/>
 
 
