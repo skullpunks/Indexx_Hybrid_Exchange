@@ -153,6 +153,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         let basecoin: string = filteredFromArray[0].title;
         console.log(order);
         if (basecoin === 'INEX') {
+            setLoadings(false);
             openNotificationWithIcon3('error')
         } else {
             const res = await confirmSellOrder(order.user.email, order.orderId, "Completed", basecoin);
