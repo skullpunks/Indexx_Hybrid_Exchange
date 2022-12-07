@@ -253,7 +253,7 @@ const TaskCenter = () => {
                   style={{
                     alignContent: "end",
                     alignItems: "end",
-                    paddingLeft: 50,
+                    paddingLeft: 70,
 
                   }}
                 >
@@ -262,7 +262,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5, fontSize: '100%' , marginTop: 15, width: '100%', paddingLeft: 15, paddingRight:15 }}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
                     >
                       Get Affiliates
@@ -275,7 +275,7 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, width: '100%', marginTop: 15, paddingLeft: 15, paddingRight:15 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={"large"}
                   >
                     Complete
@@ -310,11 +310,11 @@ const TaskCenter = () => {
                 </div>
 
                 <div
-                  className="col-2"
+                  className="col-2 "
                   style={{
                     alignContent: "end",
                     alignItems: "end",
-                    paddingLeft: 50,
+                    paddingLeft: 70,
 
                   }}
                 >
@@ -322,7 +322,7 @@ const TaskCenter = () => {
                     <Button
                       danger
                       type="primary"
-                      style={{ borderRadius: 5,  marginTop: 15, width: '100%' }}
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={"large"}
                       disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                     >
@@ -336,7 +336,7 @@ const TaskCenter = () => {
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, width: '100%', marginTop: 15 }}
+                    style={{ borderRadius: 5,width: 150, marginTop: 15 }}
                     size={"large"}
                     disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
                   >
@@ -391,7 +391,7 @@ const TaskCenter = () => {
                   </Link>
 
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
@@ -450,7 +450,7 @@ const TaskCenter = () => {
                   </a>
 
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
@@ -497,7 +497,7 @@ const TaskCenter = () => {
 
 
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
@@ -544,7 +544,7 @@ const TaskCenter = () => {
 
 
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"
@@ -605,7 +605,7 @@ const TaskCenter = () => {
 
 
                 </div>
-                <div className="col-2">
+                <div className="col-2" style={{paddingLeft: 50,}}>
                   <Button
                     danger
                     type="primary"

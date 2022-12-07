@@ -317,20 +317,18 @@ const TradeToEarn = () => {
           <Text className="d-flex justify-content-center" style={{color:'#5F5F5F',fontSize:32,marginBottom:10}}> 
             How to Earn?<br/>
           </Text>
-          <Text style={{color:'#5F5F5F',fontSize:20}}>
-          ‍
-1. Each day you trade (buy or sell INDEXX TOKENS) a percentage of  USD worth or more of from our token collection  within the INDEXX protocol will result in INDEXX tokens delivered to your wallet.‍
+          <Text style={{color:'#5F5F5F',fontSize:20}}>1.Please make sure that your trade to earn is unlocked in the task center before you start getting rewards.
 <br/>
-2. At the end of each day, you’ll be rewarded INDEXX tokens based upon the proportion of your trading volume to the total trading volume.
+ 2. You will be awarded up to 30% of the transaction value you have done in either 
+Buy/Sell or Convert.
 
 <br/>
-3.The daily amount of INDEXX tokens available for distribution will depend on the total transaction volume on that day.
+ 3.The limit of withdrawal from trade to earn is set to a minimum of 50$.
 <br/>
-4.20% of the traded token’s value will be rewarded per transaction.<br/>
-5.The percentage earning will decrease on 100 transactions per user<br/>
-6.The limit to rewards will be added once we reach 1000 transactions.<br/>
-7.While token rewards will be calculated daily, your daily earnings will be distributed cumulatively each week by end of day DAY UTC
-after approval from admin
+ 4.The transaction must include one of the Indexx tokens to get your reward added to the wallet about.<br/>
+ 5.The reward will automatically be added in your wallet.
+<br/>
+
 
 
 

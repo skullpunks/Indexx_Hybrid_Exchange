@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
 
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, notification ,Alert,Space} from 'antd';
+import { Typography,Button, Checkbox, Form, Input, notification ,Space} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
 
 const BuySellGetStarted: React.FC = () => {
     //creating IP state
-
+    const {Text} = Typography;
 
     const [loadings, setLoadings] = useState<boolean>(false);
 
@@ -83,11 +83,11 @@ const BuySellGetStarted: React.FC = () => {
                             label="Password"
                             name="password"
                             rules={[{ required: true, message: 'Please input your password!' }, { min: 6, message: 'Password must be minimum 6 characters.' }, { max: 15, message: 'Password must be maximum 15 characters.' },{ pattern: new RegExp(/^[a-zA-Z0-9]*$/) , message: 'Only letters and digits allowed!' }]}>
-                            <div className="control-input form-control validate">
+                         
                                 {/* <input type="password" name="password" id="password" autoComplete='off' onChange={() => handleChange} /> */}
                                 <Input.Password />
                                 {/* <span className="input_icon"><img src={PasswordEye} alt="PasswordEye" /></span> */}
-                            </div>
+                            
                         </Form.Item>
                     </div>
                     <div className="form_element referral">
@@ -125,9 +125,9 @@ const BuySellGetStarted: React.FC = () => {
                 <div style={{marginTop:-30}} className="d-flex justify-center padding-tb-2x" >Already have an account? &nbsp;
                     <Link to="/indexx-exchange/buy-sell/login" className="text_link"> Log in.</Link>
                 </div>
-                <Space direction="vertical" style={{ width: '100%' }}>
+                <Space direction="vertical" className='text-link' style={{ width: '100%' }}>
               
-              <Alert message="As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers." type="warning" />
+               <Text>As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers <a className="text-link" href="https://dex.indexx.ai/" target="_blank">(dex.indexx.ai)</a>.</Text>
               
           </Space>
            
