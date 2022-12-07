@@ -311,7 +311,7 @@ const TradeToEarn = () => {
         <Image preview={false} src={exghands} style={{ paddingTop: 100, display: 'flex', justifyContent: 'center', width: 400, alignItems: 'center' }}></Image>
 
         <Card className="d-flex justify-content-center" style={{marginTop:40,width: 1008,
-          height: 598,textAlign:"left",justifyContent:"center"}}>
+          height: 400,textAlign:"left",justifyContent:"center"}}>
             <span className="d-flex justify-content-center" style={{textAlign:"center"}}><Image preview={false} className="mx-auto d-block" src={red}></Image></span>
           
           <Text className="d-flex justify-content-center" style={{color:'#5F5F5F',fontSize:32,marginBottom:10}}> 
