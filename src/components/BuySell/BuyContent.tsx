@@ -21,6 +21,13 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const navigateUser = () => {
+    console.log(BSvalue?.fromTitle)
+    console.log(BSvalue?.fromToken)
+    let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
+    if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
+        alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for buy");
+        return;
+    }
     if (isLoggedIn()) {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
@@ -204,7 +211,9 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
               onChange={handleChange}
               value={BSvalue?.fromToken}
             >
-              {initialTokens.map((token, index) => {
+              {initialTokens
+              //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
+              .map((token, index) => {
                 return (
                   <Select.Option
                     key={token.address}

@@ -82,6 +82,21 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
     }
     const checkPurchase = () => {
+        let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
+        let getRequiredToCoin = initialTokens.find(x => x.address === BSvalue?.toToken);
+        if (getRequiredCoin?.title === "FTT" && getRequiredToCoin?.title !== "INXP") {
+            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            return;
+        } else if (getRequiredCoin?.title === "INXP") {
+            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            return;
+        } else if(getRequiredToCoin?.title === "INXP" && getRequiredCoin?.title !== "FTT") {
+            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            return;
+        } else if(getRequiredToCoin?.title === "FTT" && getRequiredCoin?.title !== "INXP") {
+            alert("You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
+            return;
+        }
         if (val) {
             // setScreenName("confirmConvert");
             console.log(val)
@@ -188,7 +203,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action ">
-                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={checkPurchase} >Preview Convert </button>
+                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
             {showUserBalance &&

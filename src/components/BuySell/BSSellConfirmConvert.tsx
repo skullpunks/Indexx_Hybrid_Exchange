@@ -82,7 +82,7 @@ const BSSellConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = 'USD';
         let amount: number = Number(BSvalue?.amount);
-        const res = await createSellOrder(basecoin, quotecoin, amount);
+        const res = await createSellOrder(basecoin, quotecoin, amount, totalAmountToPay);
         console.log(res.data, res);
         if (res.status === 200) {
             //setisFirstEnabled(false);

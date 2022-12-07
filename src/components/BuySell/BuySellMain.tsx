@@ -20,6 +20,7 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import BitcoinGraph from '../Graphs/BitcoinGraph';
 import EthereumGraph from '../Graphs/EthereumGraph';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
+import IndexxPhoenixGraph from '../Graphs/IndexxPhoenixGraph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
 import BSBuyInProgress from './BSBuyInProgress';
 import BSConfirmPurchase from './BSConfirmPurchase';
@@ -27,6 +28,7 @@ import IndexxUSDPGraph from '../Graphs/IndexxUSDPGraph';
 import IndexxExchangeGraph from '../Graphs/IndexxExchange';
 import LitecoinGraph from '../Graphs/LitecoinGraph';
 import BinanceGraph from '../Graphs/BinanceGraph';
+import FTTGraph from '../Graphs/FTTGraph';
 // import BuySellGetStarted from './BuySellGetStarted';
 import { Route, Routes } from 'react-router-dom';
 // import { BSProvider } from '../../utils/SwapContext';
@@ -42,8 +44,9 @@ let graphs: any = {
     "IndexxUSDPGraph": IndexxUSDPGraph,
     "BinanceGraph": BinanceGraph,
     "LitecoinGraph": LitecoinGraph,
-    "IndexxExchange": IndexxExchangeGraph
-
+    "IndexxExchange": IndexxExchangeGraph,
+    "IndexxPhoenixGraph": IndexxPhoenixGraph,
+    "FTTGraph": FTTGraph
 }
 
 const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
@@ -54,7 +57,9 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
 
     let ChartCoin: any = Indexx500Graph;
     if (BSvalue && BSvalue.fromGraph && graphs) {
+        console.log("ChartCoin", BSvalue.fromGraph);
         ChartCoin = graphs[BSvalue.fromGraph];
+        console.log("ChartCoin", ChartCoin);
     }
 
     return (

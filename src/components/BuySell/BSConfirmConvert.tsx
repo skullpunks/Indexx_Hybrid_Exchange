@@ -57,18 +57,24 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         const decoded: any = await decodeJWT(access_token);
         let res = await getTaskCenterDetails(String(decoded.email));
         if (res.status === 200) {
-          setTaskCenterDetails(res.data.data);
+            setTaskCenterDetails(res.data.data);
         }
-      } 
+    }
 
 
     const getPricesData = async () => {
-        const res = await getCoinPriceByName(String(filteredFromArray[0].title));
+        let res = await getCoinPriceByName(String(filteredFromArray[0].title));
         priceData1 = res.data;
+        if (String(filteredFromArray[0].title) === "FTT") {
+            res = await getCoinPriceByName('FTT');
+            priceData1 = res.data;
+        }
         console.log(priceData1.results.data);
         setRateData1(priceData1.results.data);
-        const res2 = await getCoinPriceByName(String(filteredToArray[0].title));
+        let res2 = await getCoinPriceByName(String(filteredToArray[0].title));
         priceData2 = res2.data;
+        console.log(filteredToArray[0].title);
+       
         console.log(priceData2);
         console.log(rateData1);
         let finalRate = priceData1.results.data / priceData2.results.data;
@@ -116,7 +122,7 @@ const BSConfirmConvert: React.FC<(Props)> = ({ setScreenName }) => {
         setLoadings(true);
         let basecoin: string = filteredFromArray[0].title;
         let quotecoin: string = filteredToArray[0].title;
-        const res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount));
+        const res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount), totalAmountToPay);
         console.log(res);
         if (res.status === 200) {
             if (setBSvalue && BSvalue) {

@@ -23,7 +23,7 @@ const LineGraph = (props: any) => {
       width = 250;
       height = 250;
     } else {
-      width = 650;
+      width = 700;
       height = 400;
     }
   };
@@ -32,7 +32,6 @@ const LineGraph = (props: any) => {
     <div className='card chart_buy' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
 
       <div className="chart_header d-flex flex-align-center">
-        <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="usdollor" width="30" className='me-1' />
         <img src={require(`../../assets/token-icons/${props.currencySymbol}.png`).default} alt="bitcoin" width="30" />
 
         <h1 className="chart_title">{props.currencyPrice} USD/{props.currencySymbol}</h1>

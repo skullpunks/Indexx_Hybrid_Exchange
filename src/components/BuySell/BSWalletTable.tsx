@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Input, Table, Tabs } from 'antd'
+import { Input, Pagination, Table, Tabs } from 'antd'
 import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react'
@@ -91,6 +91,8 @@ const BSWalletTable = () => {
     ];
 
     const [walletData, setWalletData] = useState() as any;
+    const pageSize = 10;
+    const [current, setCurrent] = useState(1);
     // let data: any[] = [{ "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x9a327efba5e175fb240f1b8b9326bdf10d9297b1", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Binance", "coinSymbol": "BNB", "coinDecimals": 18, "coinBalance": 0.10753, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-19T12:39:57.526Z", "coinLastUsedOn": "2022-10-19T12:39:57.526Z", "isCoinActive": true, "_id": "634ff01d03980b5c11c96f74" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x986081cb3253264f57535056b55673d4674038bf", "coinPrivateKey": "", "coinNetwork": "Ethereum", "coinName": "Ethereum", "coinSymbol": "ETH", "coinDecimals": 18, "coinBalance": 0.095925216001389, "coinBalanceInUSD": 123, "coinBalanceInBTC": 0.0065, "coinCreatedOn": "2022-10-19T17:12:33.087Z", "coinLastUsedOn": "2022-10-19T17:12:33.087Z", "isCoinActive": true, "_id": "63503001204238ba708ec2b2" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x43e4d660fa09b82d5c906d87f775eb6cd215ccff", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Indexx500", "coinSymbol": "IN500", "coinDecimals": 18, "coinBalance": 10, "coinBalanceInUSD": 37, "coinBalanceInBTC": 0.0019, "coinCreatedOn": "2022-10-20T01:27:32.295Z", "coinLastUsedOn": "2022-10-20T01:27:32.295Z", "isCoinActive": true, "_id": "6350a40436c8ac9aa13874ad" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "msT58masPu6racd9XFUHCSibfdwDPjZdgc", "coinPrivateKey": "", "coinNetwork": "Bitcoin", "coinName": "Bitcoin", "coinSymbol": "BTC", "coinDecimals": 8, "coinBalance": 0.0015, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-20T09:49:16.127Z", "coinLastUsedOn": "2022-10-20T09:49:16.127Z", "isCoinActive": true, "_id": "6351199c93823abe5ccbca1d" }];
 
 
@@ -127,13 +129,37 @@ const BSWalletTable = () => {
 
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
-
+    const getData = (current: number, pageSize: number) => {
+        // Normally you should get the data from the server
+        const xx = walletData && walletData.slice((current - 1) * pageSize, current * pageSize);
+        console.log(xx)
+        return xx
+    };
+    const MyPagination = ({ total, onChange, current }: any) => {
+        return (
+            <Pagination
+                onChange={onChange}
+                total={total}
+                current={current}
+                pageSize={pageSize}
+                responsive={true}
+                style={{
+                    padding: '5px', textAlign: 'center'
+                }}
+            />
+        );
+    };
     return (
         <div>
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
                 <Tabs.TabPane tab="Balance" key="1" className='padding-2x'>
                     <div className='border-b-1x margin-b-2x'>
-                        <Table className='custom_table' columns={columns} dataSource={walletData} onChange={onChange} />
+                        <Table className='custom_table' columns={columns}dataSource={getData(current, pageSize)} onChange={onChange} />
+                        <MyPagination
+                    total={walletData && walletData.length}
+                    current={current}
+                    onChange={setCurrent}
+                />
                     </div>
                 </Tabs.TabPane>
                 {/* <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>

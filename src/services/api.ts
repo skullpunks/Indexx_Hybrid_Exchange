@@ -2,7 +2,7 @@ import axios from 'axios';
 import decode from 'jwt-decode';
 let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseURL = 'https://api.indexx.ngrok.io'; //"http://localhost:3000";
+  baseURL = "http://localhost:3000";
   // baseURL = 'http://localhost:3000';
   //baseURL = "https://253f-54-250-16-116.ngrok.io";
 } else {
@@ -493,6 +493,7 @@ export const createSellOrder = async (
   basecoin: string,
   quotecoin: string,
   amount: number,
+  outAmount: number,
   price?: number
 ) => {
   try {
@@ -500,6 +501,7 @@ export const createSellOrder = async (
       currencyOut: quotecoin,
       currencyIn: basecoin,
       amount: amount,
+      outAmount: outAmount,
       price: price,
       orderType: 'Sell',
       email: localStorage.getItem('user'),
@@ -539,6 +541,7 @@ export const createConvertOrder = async (
   basecoin: string,
   quotecoin: string,
   amount: number,
+  outAmount: number,
   price?: number
 ) => {
   try {
@@ -547,6 +550,7 @@ export const createConvertOrder = async (
       currencyIn: basecoin,
       amount: amount,
       price: price,
+      outAmount: outAmount,
       orderType: 'Convert',
       email: localStorage.getItem('user'),
     });

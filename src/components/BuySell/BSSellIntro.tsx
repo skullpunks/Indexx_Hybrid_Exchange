@@ -43,7 +43,10 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     //       ref.current.value = '';
     //     }
     //   });
+
     useEffect(() => {
+
+        // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
         setEmail(decoded.email)
@@ -91,12 +94,16 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     const handleChange = async (value: string) => {
 
+        let getRequiredCoin = initialTokens.find(x => x.address === value);
+        if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
+            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for sell");
+        }
         let getGraphCoin = graphTokens.find(x => x.address === value);
         // setNetwork(value)
+
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
         }
-        let getRequiredCoin = initialTokens.find(x => x.address === value);
         await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(val));
         await getCoinBalance(String(getRequiredCoin?.title));
     };
@@ -153,7 +160,12 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const formSubmit = () => {
-
+        console.log(BSvalue?.fromToken)
+        let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
+        if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
+            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for sell");
+            return;
+        }
         if (val) {
             // setScreenName("BSSellConfirmConvert");
             navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
@@ -197,6 +209,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens
+                            // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 
                                 return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
@@ -233,7 +246,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
 
 
-            
+
         </div >
     )
 }
