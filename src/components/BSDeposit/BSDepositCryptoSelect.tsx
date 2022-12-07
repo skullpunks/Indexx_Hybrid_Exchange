@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import initialTokens from "../../utils/Tokens.json";
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
-import { decodeJWT, transactionList, getUserWallets, checkAndUpdateDeposit } from '../../services/api';
+import { decodeJWT, transactionList, getUserWallets, checkAndUpdateDeposit, getFTTCoreWalletDetails } from '../../services/api';
 import { ColumnsType } from 'antd/lib/table';
 import { QRCodeCanvas } from "qrcode.react";
 import { CheckCircleFilled } from '@ant-design/icons';
@@ -161,10 +161,22 @@ export const BSDepositCryptoSelect = () => {
   }, []);
 
 
-  const handleChange = (value: string) => {
+  const handleChange = async (value: string) => {
     setNetwork(value)
-    const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
-    setSingleWallet(userWallet[0]);
+    console.log(value, selectedCoin)
+    if (selectedCoin === "FTT") {
+      if (value === "ETH") {
+        //alert(value);
+        const coreFTTWallet = await getFTTCoreWalletDetails();
+        console.log(coreFTTWallet)
+        setSingleWallet(coreFTTWallet)
+      } else {
+        alert("Please select ETH network for FTT Deposit")
+      }
+    } else {
+      const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
+      setSingleWallet(userWallet[0]);
+    }
   };
 
   const handleChangeCurrency = (value: string) => {
@@ -200,7 +212,7 @@ export const BSDepositCryptoSelect = () => {
       openNotificationWithIcon('success')
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error', res.message);
+      openNotificationWithIcon2('error', res.data.message);
     }
   }
 
@@ -274,7 +286,7 @@ export const BSDepositCryptoSelect = () => {
             onChange={handleChangeCurrency} value={BSvalue?.fromToken}>
             {
               initialTokens
-                .filter((x: any) => x.title === "BNB" || x.title === "ETH" || x.title === "IN500" || x.title === "INEX" || x.title === "INXC" || x.title === "IUSD+")
+                .filter((x: any) => x.title === "BNB" || x.title === "ETH" || x.title === "IN500" || x.title === "INEX" || x.title === "INXC" || x.title === "IUSD+" || x.title === "FTT")
                 .map((token) => {
                   return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
                     <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
@@ -306,12 +318,20 @@ export const BSDepositCryptoSelect = () => {
           {network &&
             <div className='sensitive_data margin-t-2x'>
               <div>Address</div>
+              {(selectedCoin !== "FTT" ? singleWallet?.coinWalletAddress : singleWallet?.coinAddress)}
               <div className='margin-t-2x d-flex flex-align-center font_weight_800'>
-                {singleWallet?.coinWalletAddress}
                 <img src={copyIcon} alt="copy icon" width="21" height="11" className='padding-l-1x cursor-pointer' onClick={() => copy(singleWallet?.coinWalletAddress)} />
+                {selectedCoin === "FTT" ?
+                  (
+                <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinAddress)} trigger="click">
+                  <QrcodeOutlined className='padding-l-1x' />
+                </Popover>)
+                :
+                (
                 <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinWalletAddress)} trigger="click">
                   <QrcodeOutlined className='padding-l-1x' />
-                </Popover>
+                </Popover>)
+                }
               </div>
 
               <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
@@ -341,7 +361,7 @@ export const BSDepositCryptoSelect = () => {
 
 
               <ul className="margin-t-2x disc_ul">
-                <li>Send only BTC to this deposit address.</li>
+                <li>Send only {singleWallet?.coinSymbol} to this deposit address.</li>
                 <li>
                   Ensure the network is <span className='text_link'>{singleWallet?.coinNetwork}.</span>
                 </li>

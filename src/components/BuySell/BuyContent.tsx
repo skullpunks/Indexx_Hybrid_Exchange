@@ -25,7 +25,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
     console.log(BSvalue?.fromToken)
     let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
     if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-        alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for buy");
+        alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Buy");
         return;
     }
     if (isLoggedIn()) {

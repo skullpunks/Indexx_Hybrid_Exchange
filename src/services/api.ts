@@ -583,6 +583,30 @@ export const confirmConvertOrder = async (
   }
 };
 
+export const getCoreWalletDetails = async(coin :string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/wallet/core/${coin}`);
+    return result.data;
+  } catch(err: any) {
+    console.log('FAILED: unable to perform API request (getCoreWalletDetails)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+}
+
+export const getFTTCoreWalletDetails = async() => {
+  try {
+    const result = await API.get(`/api/v1/inex/wallet/core/wallet/FTT`);
+    return result.data;
+  } catch(err: any) {
+    console.log('FAILED: unable to perform API request (getCoreWalletDetails)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+}
+
 export const createStripePaymentIntent = async (
   amount: number,
   orderId: string,

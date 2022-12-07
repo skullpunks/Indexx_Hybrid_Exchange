@@ -96,7 +96,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
         let getRequiredCoin = initialTokens.find(x => x.address === value);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for sell");
+            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
         }
         let getGraphCoin = graphTokens.find(x => x.address === value);
         // setNetwork(value)
@@ -163,7 +163,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         console.log(BSvalue?.fromToken)
         let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for sell");
+            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
             return;
         }
         if (val) {

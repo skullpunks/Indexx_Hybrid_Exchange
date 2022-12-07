@@ -59,25 +59,25 @@ const LineGraph = (props: any) => {
           <Segmented className="chart_dynamic" options={[
             {
               label: (<span onClick={props.dayClickHandler}>
-                1 Day
+                1D
               </span>),
               value: 1
             },
             {
               label: (<span onClick={props.weekClickHandler}>
-                1 Week
+                1W
               </span>),
               value: 2
             },
             {
               label: (<span onClick={props.monthClickHandler}>
-                1 Month
+                1M
               </span>),
               value: 3
             },
             {
               label: (<span onClick={props.yearClickHandler}>
-                1 Year
+                1Y
               </span>),
               value: 4
             },
