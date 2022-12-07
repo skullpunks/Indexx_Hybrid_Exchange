@@ -127,7 +127,7 @@ const BuySellGetStarted: React.FC = () => {
                 </div>
                 <Space direction="vertical" className='text-link' style={{ width: '100%' }}>
               
-               <Text>As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers <a className="text-link" href="https://dex.indexx.ai/" target="_blank">(dex.indexx.ai)</a>.</Text>
+               <Text>As per our Terms and Use, we’re unable to provide services to US residents. Instead, please register on our partner platform dedicated to the US customers <a className="text-link" href="https://dex.indexx.ai/" rel="noreferrer">(dex.indexx.ai)</a>.</Text>
               
           </Space>
            
