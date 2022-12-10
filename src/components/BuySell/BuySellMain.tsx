@@ -94,7 +94,13 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
 
 
 
-        
+            {
+                (screenName === "" || screenName === "select" || screenName === "create") ?
+                    <></>
+                    :
+                    <></>
+
+            }
         </div >
 
 
