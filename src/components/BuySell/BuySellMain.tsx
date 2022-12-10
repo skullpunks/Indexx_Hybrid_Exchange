@@ -94,15 +94,7 @@ const BuySellMain: React.FC<(Props)> = ({ setStatus }) => {
 
 
 
-            {
-                (screenName === "" || screenName === "select" || screenName === "create") ?
-                    <div className='centered buy_sell_bg'>
-                        {/* <img className='mw-100' src={ladyBuyGoldImage} alt="person Flip Icon Gold" /> */}
-                    </div>
-                    :
-                    <></>
-
-            }
+        
         </div >
 
 

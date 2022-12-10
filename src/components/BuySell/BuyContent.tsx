@@ -149,9 +149,10 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
           >
             <span className="font_20x pe-1">$</span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
+           
             <input
               placeholder="0"
-              className="input_currency"
+              className="input_currency "
               type="number"
               value={buyVal}
               onChange={updateBuyVal}
@@ -188,7 +189,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
           className="bs_token_left d-flex justify-between"
           style={{ height: "55px", padding: "0 11px" }}
         >
-          <div className="bs_token_num d-flex flex-align-center">
+          <div className="bs_token_num d-flex text-start">
             <img
               src={bsDollar}
               alt="Index icon"
@@ -207,9 +208,10 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100">
             <Select
-              className="width-100 border-0"
+              className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
+           
             >
               {initialTokens
               //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))

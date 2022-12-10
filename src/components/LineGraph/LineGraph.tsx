@@ -6,19 +6,19 @@ import { Segmented } from 'antd';
 // } from "recharts";
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
-import moment from "moment";
+import moment from 'moment';
 //0import numeral from "numeral";
-import styles from "./LineGraph.module.css";
+import styles from './LineGraph.module.css';
 
 //const numberFormatter = (item : any) => numeral(item).format("0,00");
-const dateFormatter = (item: any) => moment(item).format("MMM DD");
+const dateFormatter = (item: any) => moment(item).format('MMM DD');
 
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
   let width = 0;
   let height = 0;
   const media = () => {
-    const mobile = window.matchMedia("(max-width: 560px)");
+    const mobile = window.matchMedia('(max-width: 560px)');
     if (mobile.matches) {
       width = 250;
       height = 250;
@@ -29,12 +29,23 @@ const LineGraph = (props: any) => {
   };
   media();
   return (
-    <div className='card chart_buy' style={{ minWidth: 745, maxWidth: 745, marginRight: 20, padding: 21 }}>
-
+    <div
+      className="card chart_buy"
+      style={{ minWidth: 900, maxWidth: 900, padding: 21 }}
+    >
       <div className="chart_header d-flex flex-align-center">
-        <img src={require(`../../assets/token-icons/${props.currencySymbol}.png`).default} alt="bitcoin" width="30" />
+        <img
+          src={
+            require(`../../assets/token-icons/${props.currencySymbol}.png`)
+              .default
+          }
+          alt="bitcoin"
+          width="30"
+        />
 
-        <h1 className="chart_title">{props.currencyPrice} USD/{props.currencySymbol}</h1>
+        <h1 className="chart_title">
+          {props.currencyPrice} USD/{props.currencySymbol}
+        </h1>
         {/* <div className="arrow_container">
           <div><img src={ArrowRight} alt="Arrow Here" /></div>
           <div><img src={ArrowLeft} alt="Arrow Here" /></div>
@@ -56,33 +67,27 @@ const LineGraph = (props: any) => {
           -5.274 (-1.88%)
         </div> */}
         <div className="chart_inner_right">
-          <Segmented className="chart_dynamic" options={[
-            {
-              label: (<span onClick={props.dayClickHandler}>
-                1D
-              </span>),
-              value: 1
-            },
-            {
-              label: (<span onClick={props.weekClickHandler}>
-                1W
-              </span>),
-              value: 2
-            },
-            {
-              label: (<span onClick={props.monthClickHandler}>
-                1M
-              </span>),
-              value: 3
-            },
-            {
-              label: (<span onClick={props.yearClickHandler}>
-                1Y
-              </span>),
-              value: 4
-            },
-          ]} >
-          </Segmented>
+          <Segmented
+            className="chart_dynamic"
+            options={[
+              {
+                label: <span onClick={props.dayClickHandler}>1D</span>,
+                value: 1,
+              },
+              {
+                label: <span onClick={props.weekClickHandler}>1W</span>,
+                value: 2,
+              },
+              {
+                label: <span onClick={props.monthClickHandler}>1M</span>,
+                value: 3,
+              },
+              {
+                label: <span onClick={props.yearClickHandler}>1Y</span>,
+                value: 4,
+              },
+            ]}
+          ></Segmented>
         </div>
       </div>
       <AreaChart
@@ -111,21 +116,24 @@ const LineGraph = (props: any) => {
         />
         <XAxis
           padding={{ right: 20 }}
-          dataKey={"time"}
+          dataKey={'time'}
           stroke="#5f5f5f"
-          tick={{ fill: "#5f5f5f" }}
+          tick={{ fill: '#5f5f5f' }}
           tickFormatter={dateFormatter}
-
           style={{ fontSize: 13 }}
           minTickGap={16}
         />
         <YAxis
-          stroke="#5f5f5f" padding={{ top: 20 }} tick={{ fill: "#5f5f5f" }} />
-        <Tooltip labelFormatter={dateFormatter}
+          stroke="#5f5f5f"
+          padding={{ top: 20 }}
+          tick={{ fill: '#5f5f5f' }}
+        />
+        <Tooltip
+          labelFormatter={dateFormatter}
           formatter={function (value: any) {
             return `${(Math.round(value * 100) / 100).toFixed(3)}`;
-          }} />
-
+          }}
+        />
       </AreaChart>
       {/* <LineChart
         margin={{ left: 17, right: 6, top: 10 }}
@@ -154,9 +162,6 @@ const LineGraph = (props: any) => {
         <Tooltip />
 
       </LineChart> */}
-
-
-
     </div>
   );
 };

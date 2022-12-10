@@ -244,7 +244,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             }
 
 
-
+            
 
 
         </div >
