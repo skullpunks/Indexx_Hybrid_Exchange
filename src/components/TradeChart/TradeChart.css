@@ -27,9 +27,6 @@
     max-width: calc(100% - 350px);
 }
 
-.trade_content {
-    /* max-width: calc(100% - 640px); */
-}
 
 
 .trade_radio .ant-radio-button-wrapper {
