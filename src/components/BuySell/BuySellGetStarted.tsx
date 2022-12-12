@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Email from "../../assets/arts/Email.svg";
 
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Form, Input, notification ,Alert,Space} from 'antd';
+import { Button, Checkbox, Form, Input, notification ,Alert,Space,Image} from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI } from '../../services/api';
+import getstartedtoken from '../../assets/getstartedtokens.png'
 
 const BuySellGetStarted: React.FC = () => {
     //creating IP state
@@ -54,9 +55,10 @@ const BuySellGetStarted: React.FC = () => {
     };
 
     return (
-        <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
-            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started</h1>
+        <div className='d-flex flex-direction-row  flex-align-center responsive_container'>
+           
             <div className="bs_container bs_form card" >
+            <h1 className='text-center margin-lr-auto top_heading' style={{marginTop:-15,marginBottom:5}}>Get Started</h1>
             <div className="d-flex justify-center " >&nbsp;
                     <Link to="/indexx-exchange/buy-sell/login" className="text_link"> LOG IN</Link>
                 </div>
@@ -129,7 +131,13 @@ const BuySellGetStarted: React.FC = () => {
           </Space>
            
             </div>
-          
+            <div style={{marginBottom:"25%",paddingLeft:50}}>
+            <p className='text-center margin-lr-auto' style={{fontWeight:400,fontSize:41}}>Get upto 30% reward in <br/> Trade to Earn</p>
+            <Image preview={false} src={getstartedtoken} style={{paddingLeft:90}}></Image>
+            </div>
+        
+            
+                            
         </div>
 
     )
