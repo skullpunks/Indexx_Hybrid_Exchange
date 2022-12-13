@@ -4,12 +4,10 @@ import Email from '../../assets/arts/Email.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
-  Typography,
   Checkbox,
   Form,
   Input,
   notification,
-  Alert,
   Space,
   Image,
 } from 'antd';
@@ -20,7 +18,6 @@ import hands from '../../assets/hands.png';
 
 const BuySellGetStarted: React.FC = () => {
   //creating IP state
-  const Text = {Typography};
   const [loadings, setLoadings] = useState<boolean>(false);
 
   const navigate = useNavigate();
