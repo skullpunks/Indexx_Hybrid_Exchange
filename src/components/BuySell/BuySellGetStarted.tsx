@@ -217,9 +217,10 @@ const BuySellGetStarted: React.FC = () => {
             Get upto 30% reward in <br/> Trade to Earn
             </p>
             <Image
+            className="text-center"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 90 ,paddingTop:60}}
+              style={{ paddingLeft: 130 ,paddingTop:60}}
             ></Image>
           </div>
         </div>
