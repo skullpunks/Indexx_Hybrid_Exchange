@@ -19,7 +19,7 @@
 }
 
 .select_container {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 5px;
     padding: 8px 16px;
 }
@@ -72,13 +72,13 @@
 
 .W_form input {
     height: 55px;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 5px;
     font-size: 15px;
 }
 
 .W_form input:hover {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
 }
 
 .W_form {
@@ -91,11 +91,11 @@
 }
 
 .border-t-1x {
-    border-top: 1px solid rgba(246, 96, 54, 0.2);
+   border-top: 1px solid #D7D7D7;
 }
 
 .border-1x {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
 }
 
 .max_400 {
@@ -161,7 +161,7 @@
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     height: 55px;
     border-radius: 5px;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
 }
 
 .ant-select-single .ant-select-selector .ant-select-selection-item {
@@ -199,7 +199,7 @@
 }
 
 .ant-popover-inner-content {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 5px;
 
 }

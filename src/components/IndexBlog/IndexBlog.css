@@ -62,7 +62,7 @@ body {
 }
 
 .border-1x.orange {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+    border: 1px solid #D7D7D7;
 }
 
 .flex-wrap {

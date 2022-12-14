@@ -69,7 +69,7 @@ button {
     font-size: 30px;
     padding: 26px;
     color: #5f5f5f;
-    border-bottom: 1px solid rgba(246, 96, 54, 0.2);
+   border-bottom: 1px solid #D7D7D7;
     
 }
 
@@ -79,7 +79,7 @@ button {
 
 .bs_footer_action {
     padding: 26px;
-    border-top: 1px solid rgba(246, 96, 54, 0.2);
+   border-top: 1px solid #D7D7D7;
  
 }
 
@@ -111,7 +111,7 @@ button {
 }
 
 .bs_token {
-    border-top: 1px solid rgba(246, 96, 54, 0.2);
+   border-top: 1px solid #D7D7D7;
   
     padding: 20px;
 
@@ -135,7 +135,7 @@ button {
     text-align: center;
     width: fit-content;
     color: #5f5f5f;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 0px;
     margin: auto;
 }
@@ -159,7 +159,7 @@ button {
 }
 
 input.search {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 0px;
     height: 47px;
     font-size: 17px;
@@ -183,7 +183,7 @@ input+.search_icon {
     position: absolute;
     left: 35px;
     top: 33px;
-    border-right: 1px solid rgba(246, 96, 54, 0.2);
+   border-right: 1px solid #D7D7D7;
     padding-right: 8px;
 }
 
@@ -261,7 +261,7 @@ button.ant-btn-link.btn_link span:hover {
 
 /* .form_element input:not([type="checkbox"]) {
     background: #FFFFFF;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 3px;
     height: 51px;
     width: 100%;
@@ -281,7 +281,7 @@ button.ant-btn-link.btn_link span:hover {
 
 .bs_main input[type="text"],
 .ant-input-password.ant-input-affix-wrapper {
-    border-color: rgba(246, 96, 54, 0.2);
+    border-color: #D7D7D7;
 }
 
 .terms_conditions {
@@ -303,7 +303,7 @@ input[type="checkbox"] {
     height: 38px;
     width: 28px;
     background: #FFFFFF;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 3px;
 }
 
@@ -346,7 +346,7 @@ input[type="checkbox"] {
     width: 50px;
     height: 65.48px;
     background: #FFFFFF;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 0px;
     font-size: 30px;
     text-align: center;
@@ -366,7 +366,7 @@ input[type="checkbox"] {
 .phone_container .ant-input-group-lg .ant-select-single .ant-select-selector,
 .phone_container input {
     background: #FFFFFF;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 0px;
     height: 47px;
 }
@@ -441,13 +441,13 @@ input[type="checkbox"] {
 
 
 .border-default {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 3px;
     padding: 6px 15px;
 }
 
 .border-b-1x {
-    border-bottom: 1px solid rgba(246, 96, 54, 0.2);
+   border-bottom: 1px solid #D7D7D7;
 }
 
 .margin-b-2x {
@@ -471,7 +471,7 @@ input[type="checkbox"] {
 
 
 .border_separator {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     padding: 20px;
     width: 100%;
     height: 2px;
@@ -491,7 +491,7 @@ input[type="checkbox"] {
 }
 
 .ant-input-affix-wrapper {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border-radius: 0px;
     height: 51px;
 }
@@ -598,21 +598,21 @@ button.ant-btn-primary [disabled] {
 
 
 .bs_main .card__header {
-    border-color: rgba(246, 96, 54, 0.2);
+    border-color: #D7D7D7;
     min-height: 87px;
 }
 
 .bs_main .ant-btn-primary:hover, .bs_main .ant-btn-primary:focus,
 .bs_main .footer.ant-btn-primary:hover, .bs_main .footer .ant-btn-primary:focus {
 
-    border-color: rgba(246, 96, 54, 0.2);
+    border-color:#D7D7D7; 
     background-color: #d52f01;
 }
 
 .bs_curreny_left input:hover,
 .bs_curreny_left input:focus,
 .bs_curreny_left input:active {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+   border: 1px solid #D7D7D7;
     border: none;
     outline: none;
 }
