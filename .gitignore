@@ -28,5 +28,4 @@ package.json
 package-lock.json
 src/services/api.ts
 src/services/api.ts
-src/components/BuySell/BuySellGetStarted.tsx
-src/components/BuySell/BuySellGetStarted.tsx
+
