@@ -58,9 +58,9 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
     return (
         <footer className="site_footer position-relative container-fluid">
             {helpIcon &&
-                <Link to="/indexx-exchange/help" className="need_help" style={{ backgroundImage: `url(${needHelp})` }}>
+                <a href={"https://indexx.ai/indexx-exchange/help"} className="need_help" style={{ backgroundImage: `url(${needHelp})` }}>
                     Need Help?
-                </Link>
+                </a>
             }
             <div className="flex-align-center d-flex flex-justify-between site_footer_inner row">
                 <div className=" footercentre col-sm-12 col-md-12">

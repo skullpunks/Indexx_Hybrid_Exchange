@@ -186,10 +186,10 @@ const HeaderNew = () => {
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn more while trading</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/coming-soon?page=Indexx Bank"
                   className="dropdown-item"
-                  href="/"
+                  href="https://indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank"
+                  target="_blank"
+                  
                 >
                         <Image preview={false} src={bank} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Indexx Bank</Text><br/>
@@ -203,17 +203,20 @@ const HeaderNew = () => {
                 className="dark-menu"
                 renderMenuOnMount={true}
               >
-                <NavDropdown.Item as={Link} to="/indexx-exchange/how-it-works" className="dropdown-item" href="/">
+                <NavDropdown.Item 
+                
+                className="dropdown-item"
+                href="https://indexx.ai/indexx-exchange/how-it-works"
+                >
                 <Image preview={false} src={howitworks} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>How it Works</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Know how the different features  work</Text>
 
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/about"
                   className="dropdown-item"
-                  href="/"
+                  href="https://indexx.ai/indexx-exchange/about"
+               
                 >
                   <Image preview={false} src={about} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>About</Text><br/>
@@ -231,7 +234,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   href="https://register.affiliate.indexx.ai/"
-                  target="_blank"
+                
                   rel="noreferrer"
                 >
                    <Image preview={false} src={affiliate} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -240,17 +243,19 @@ const HeaderNew = () => {
                 
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/blog"
                   className="dropdown-item"
-                  href="/"
+                  href="https://indexx.ai/indexx-exchange/blog"
+                 
                 >
                    <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Blog</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Updates and trends in the crypto world</Text>
                 
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/indexx-exchange/careers" className="dropdown-item" href="/">
+                <NavDropdown.Item 
+                  className="dropdown-item"
+                  href="https://indexx.ai/indexx-exchange/careers"
+                  >
                 <Image preview={false} src={career} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>  Careers</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Find opportunity in indexx.ai</Text>

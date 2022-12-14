@@ -104,7 +104,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   }
 
   return (
-    <div className="bs_container card">
+    <div className="bs_container card" style={{borderColor:'#D7D7D7'}}>
       {userId ? (
         <div>
           <Modal

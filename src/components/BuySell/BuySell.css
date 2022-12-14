@@ -1,5 +1,5 @@
 .card.bs_container, .bs_main>.card {
-    border: 1px solid rgba(246, 96, 54, 0.2);
+    border: 1px solid #D7D7D7;
 }
 
 
@@ -19,7 +19,7 @@
 
 .bs_container {
     background: #ffffff;
-    border: 1px solid rgba(246, 96, 54, 0.2);
+    border: 1px solid #D7D7D7;
     border-radius: 0px;
     max-width: 423px;
 }
@@ -432,6 +432,13 @@ input[type="checkbox"] {
 .default-link:hover {
     color: #5F5F5F;
 }
+
+
+.border-always{
+    border-color: #D7D7D7;
+    border: 1px;
+}
+
 
 .border-default {
     border: 1px solid rgba(246, 96, 54, 0.2);

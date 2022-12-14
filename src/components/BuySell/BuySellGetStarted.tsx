@@ -212,7 +212,7 @@ const BuySellGetStarted: React.FC = () => {
           <div style={{ marginBottom: '25%', paddingLeft: 100 }}>
             <p
               className="text-center"
-              style={{ fontWeight: 400, fontSize: 41 }}
+              style={{ fontWeight: 400, fontSize: 41 ,marginTop:85}}
             >
             Get upto 30% reward in <br/> Trade to Earn
             </p>

@@ -31,7 +31,7 @@ const LineGraph = (props: any) => {
   return (
     <div
       className="card chart_buy"
-      style={{ minWidth: 900, maxWidth: 900, padding: 21 }}
+      style={{ minWidth: 900, maxWidth: 900, padding: 21 ,borderColor:'#D7D7D7',borderRight:'none'}}
     >
       <div className="chart_header d-flex flex-align-center">
         <img

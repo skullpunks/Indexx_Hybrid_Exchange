@@ -7,7 +7,7 @@ import BuySellMain from './BuySellMain';
 const BuySell = () => {
   const [status, setStatus] = useState("");
   return (
-    <div className='swap_container' >
+    <div className='swap_container'>
       <BSProvider >
         {status === "" && <BuySellMain setStatus={setStatus} />}
       </BSProvider>
