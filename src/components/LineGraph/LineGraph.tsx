@@ -30,7 +30,7 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 870;
-      height = 400;
+      height = 456;
     }
   };
   const changeValue = (value: number) => {
@@ -59,7 +59,7 @@ const LineGraph = (props: any) => {
         </div>
 
         <div className="chart_inner_right">
-          <Segmented className="chart_dynamic chart_inner_right ant-segmented.color"  options={[
+          <Segmented className="chart_dynamic"  options={[
             {
               label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
                 1H
@@ -124,7 +124,8 @@ const LineGraph = (props: any) => {
             padding={{ right: 20 }}
             dataKey={"time"}
             stroke="#5f5f5f"
-            domain={['auto', 'auto']}
+            // domain={['auto', 'auto']}
+            domain={["dataMin", "dataMax"]}
             interval="preserveStartEnd"
             tick={{ fill: "#5f5f5f" }}
             tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
@@ -135,7 +136,8 @@ const LineGraph = (props: any) => {
             padding={{ right: 20 }}
             dataKey={"time"}
             stroke="#5f5f5f"
-            domain={['auto', 'auto']}
+            // domain={['auto', 'auto']}
+            domain={["dataMin", "dataMax"]}
             interval="preserveStartEnd"
             tick={{ fill: "#5f5f5f" }}
             tickFormatter={value > 2 ? dateFormatter : dateFormatter2}

@@ -57,7 +57,7 @@
 }
 
 .chart_inner_right .ant-segmented {
-
+  background: #ffffff;
   float: right;
   /* background-color:rgba(129, 129, 129, 0.1); */
   font-size: 15px;
@@ -66,8 +66,16 @@
   border-radius: 5px;
 }
 
+.chart_inner_right .ant-segmented:hover {
+  background: #ffffff;
+  float: right;
+  /* background-color:rgba(129, 129, 129, 0.1); */
+  font-size: 15px;
+  /* color:#5f5f5f; */
+  padding: 0;
+  border-radius: 5px;
+}
 .chart_inner_right .ant-segmented-item-label {
-  background-color: #f0f0f0;
   width: 65px;
   font-size: 15px;
   min-height: 37px;
@@ -75,7 +83,10 @@
 }
 
 .chart_inner_right .ant-segmented-item-selected {
-  /* background: #006DFF;
- color:#fff; */
+  background: #ffffff;
+  font-weight: bolder;
+  color: black;
+  /* color:#fff; */
   border-radius: 5px;
 }
+
