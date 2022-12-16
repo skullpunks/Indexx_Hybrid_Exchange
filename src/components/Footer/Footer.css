@@ -45,10 +45,11 @@
 }
 
 .flip_person_icon {
-    top: -267px;
+    top: -227px;
     position: absolute;
     right: 0;
-    max-width: 400px;
+    max-width: 360px;
+    
 }
 
 .flip_woman {
@@ -72,6 +73,7 @@
     background-repeat: no-repeat;
     padding: 10px 14px 22px;
     cursor: pointer;
+  
 }
 
 .need_help:hover {
