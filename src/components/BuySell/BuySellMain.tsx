@@ -138,7 +138,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             ghost={true}
             accordion
             style={{
-              width: 1319,
+              
               textAlign: 'center',
               justifyContent: 'center',
               alignContent: 'center',
@@ -151,6 +151,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               header="Market"
               key="1"
             >
+            <Divider style={{marginTop:-20}}></Divider>
               <p style={{ fontSize: 10 }}>
                 <div className="row">
                   <div className="col" style={{ textAlign: 'left' }}>
@@ -213,7 +214,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               }}
               header="About"
               key="2"
-            >
+            ><Divider style={{marginTop:-20}}></Divider>
               <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
                 <Image preview={false} style={{marginBottom:10}} src={ca}></Image><br />
                 <p style={{ fontSize: 20 }}>Indexx Exchange </p> 

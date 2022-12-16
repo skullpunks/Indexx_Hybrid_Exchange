@@ -659,6 +659,7 @@ button.ant-btn-primary [disabled] {
     border-top: none;
     margin-bottom: 100;
     color:#5F5F5F;
+    width:1319px;
 }
 .coll .ant-collapse > .ant-collapse-item > .ant-collapse-header{
     border-radius: 0 !important;
