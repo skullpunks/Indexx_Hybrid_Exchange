@@ -56,7 +56,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
 
 
     return (
-        <footer className="site_footer position-relative container-fluid">
+        <footer className="site_footer position-relative container-fluid" style={{marginTop:40}}>
            
 
             
