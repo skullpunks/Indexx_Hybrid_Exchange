@@ -6,7 +6,7 @@ import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-desig
 import { Button, InputNumber, Tag, Tooltip } from 'antd';
 import { useState } from 'react';
 // import downArrow from "../../assets/arts/downArrow.svg";
-import Chart from "../Chart/Chart";
+// import Chart from "../Chart/Chart";
 import swapIcon from "../../assets/arts/swapIcon.svg";
 import historyIcon from "../../assets/arts/historyIcon.svg";
 import ladySwapIcon from "../../assets/arts/ladySwapIcon.png";
@@ -81,7 +81,7 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
     return (
         <>
             <div className="scan-container flex-align-stretch">
-                {toggleChart && <Chart />}
+                {toggleChart}
                 <div className='card'>
                     <div className='card__header'>
                         <div className='card__header__inner'>

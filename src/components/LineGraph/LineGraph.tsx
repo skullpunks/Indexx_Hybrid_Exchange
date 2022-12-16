@@ -4,17 +4,23 @@ import { Segmented } from 'antd';
 //   XAxis,
 //   YAxis
 // } from "recharts";
-
-import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
+import { useState } from 'react';
+import { AreaChart, Area, XAxis, Tooltip } from 'recharts';
 import moment from 'moment';
 //0import numeral from "numeral";
 import styles from './LineGraph.module.css';
 
 //const numberFormatter = (item : any) => numeral(item).format("0,00");
 const dateFormatter = (item: any) => moment(item).format('MMM DD');
-
+const dateFormatter2 = (item: any) => {
+  return moment(item).format("HH:mm A")
+};
+const dateFormatter3 = (item: any) => {
+  return moment(item).format("ddd, MMM DD, YYYY, HH:mm A")
+};
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
+  const [value, setValue] = useState(1);
   let width = 0;
   let height = 0;
   const media = () => {
@@ -23,73 +29,72 @@ const LineGraph = (props: any) => {
       width = 250;
       height = 250;
     } else {
-      width = 700;
+      width = 870;
       height = 400;
     }
   };
+  const changeValue = (value: number) => {
+    setValue(value);
+  }
   media();
   return (
     <div
       className="card chart_buy"
-      style={{ minWidth: 900, maxWidth: 900, padding: 21 ,borderColor:'#D7D7D7',borderRight:'none'}}
+      style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
     >
-      <div className="chart_header d-flex flex-align-center">
-        <img
-          src={
-            require(`../../assets/token-icons/${props.currencySymbol}.png`)
-              .default
-          }
-          alt="bitcoin"
-          width="30"
-        />
-
-        <h1 className="chart_title">
-          {props.currencyPrice} USD/{props.currencySymbol}
-        </h1>
-        {/* <div className="arrow_container">
-          <div><img src={ArrowRight} alt="Arrow Here" /></div>
-          <div><img src={ArrowLeft} alt="Arrow Here" /></div>
-        </div> */}
-      </div>
-      <div className="Chart_inner">
-        <div className="chart_inner_left">
-          <div className="chart_inner_left_top d-flex">
-            {/* <div style={{ fontSize: 45, color: "#5f5f5f" }}>{props.currencyPrice} */}
-            {/* <div className="chart_inner_middle">
-                ({props.currencyPriceChange})
-              </div> */}
-            {/* </div> */}
-            {/* <div style={{ fontSize: 30, color: "rgba(95, 95, 95, 0.5)", display: "flex", alignItems: "end" }}>IN500/IUSD+</div> */}
-          </div>
-          {/* <div style={{ color: "#006DFF", fontSize: 13, paddingTop: 2 }}>{formatDate}</div> */}
+      
+        <div className="chart_header d-flex flex-align-center">
+          <img
+            src={
+              require(`../../assets/token-icons/${props.currencySymbol}.png`)
+                .default
+            }
+            alt="bitcoin"
+            width="30"
+          />
+          &emsp;
+          <h1>
+            {props.currencyPrice} USD/{props.currencySymbol}
+          </h1>
         </div>
-        {/* <div className="chart_inner_middle">
-          -5.274 (-1.88%)
-        </div> */}
+
         <div className="chart_inner_right">
-          <Segmented
-            className="chart_dynamic"
-            options={[
-              {
-                label: <span onClick={props.dayClickHandler}>1D</span>,
-                value: 1,
-              },
-              {
-                label: <span onClick={props.weekClickHandler}>1W</span>,
-                value: 2,
-              },
-              {
-                label: <span onClick={props.monthClickHandler}>1M</span>,
-                value: 3,
-              },
-              {
-                label: <span onClick={props.yearClickHandler}>1Y</span>,
-                value: 4,
-              },
-            ]}
+          <Segmented className="chart_dynamic chart_inner_right ant-segmented.color"  options={[
+            {
+              label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
+                1H
+              </span>),
+              value: 1,
+            },
+            {
+              label: (<span onClick={() => { props.dayClickHandler(); changeValue(2) }}>
+                24H
+              </span>),
+              value: 2
+            },
+            {
+              label: (<span onClick={() => { props.weekClickHandler(); changeValue(3) }}>
+                1W
+              </span>),
+              value: 3
+            },
+            {
+              label: (<span onClick={() => { props.monthClickHandler(); changeValue(4) }}>
+                1M
+              </span>),
+              value: 4
+            },
+            {
+              label: (<span onClick={() => { props.yearClickHandler(); changeValue(5) }}>
+                1Y
+              </span>),
+              value: 5
+            },
+          ]}
           ></Segmented>
         </div>
-      </div>
+
+
       <AreaChart
         margin={{ left: 17, right: 6, top: 10 }}
         className={styles.graphBackground}
@@ -114,54 +119,43 @@ const LineGraph = (props: any) => {
           // fill="rgba(246, 96, 54 , 0.09)"
           fill="url(#colorUv)"
         />
-        <XAxis
-          padding={{ right: 20 }}
-          dataKey={'time'}
-          stroke="#5f5f5f"
-          tick={{ fill: '#5f5f5f' }}
-          tickFormatter={dateFormatter}
-          style={{ fontSize: 13 }}
-          minTickGap={16}
-        />
-        <YAxis
+        {value > 2 ?
+          <XAxis
+            padding={{ right: 20 }}
+            dataKey={"time"}
+            stroke="#5f5f5f"
+            domain={['auto', 'auto']}
+            interval="preserveStartEnd"
+            tick={{ fill: "#5f5f5f" }}
+            tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
+            style={{ fontSize: 13 }}
+            minTickGap={75}
+          /> :
+          <XAxis
+            padding={{ right: 20 }}
+            dataKey={"time"}
+            stroke="#5f5f5f"
+            domain={['auto', 'auto']}
+            interval="preserveStartEnd"
+            tick={{ fill: "#5f5f5f" }}
+            tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
+            style={{ fontSize: 13 }}
+            minTickGap={75}
+          />
+
+        }
+        {/* <YAxis
           stroke="#5f5f5f"
           padding={{ top: 20 }}
           tick={{ fill: '#5f5f5f' }}
-        />
+        /> */}
         <Tooltip
-          labelFormatter={dateFormatter}
+          labelFormatter={dateFormatter3}
           formatter={function (value: any) {
-            return `${(Math.round(value * 100) / 100).toFixed(3)}`;
+            return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
           }}
         />
       </AreaChart>
-      {/* <LineChart
-        margin={{ left: 17, right: 6, top: 10 }}
-        className={styles.graphBackground}
-        width={width}
-        height={height}
-        data={props.data}
-      >
-
-        <Line
-          dot={false}
-          type="monotone"
-          dataKey="price"
-          stroke="#f66036"
-          strokeWidth={1.5}
-          isAnimationActive={false}
-        />
-        <XAxis
-          padding={{ right: 40 }}
-          dataKey={"time"}
-          stroke="#5f5f5f"
-          tick={{ fill: "#5f5f5f" }}
-        />
-        <YAxis
-          stroke="#5f5f5f" padding={{ top: 60 }} tick={{ fill: "#5f5f5f" }} />
-        <Tooltip />
-
-      </LineChart> */}
     </div>
   );
 };

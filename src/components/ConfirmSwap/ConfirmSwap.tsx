@@ -8,7 +8,7 @@ import { ReloadOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Button, Tag, InputNumber } from 'antd';
 import swapIcon from "../../assets/arts/swapIcon.svg";
 import historyIcon from "../../assets/arts/historyIcon.svg";
-import Chart from '../Chart/Chart';
+// import Chart from '../Chart/Chart';
 import { Tooltip } from 'antd';
 import initialTokens from "../../utils/Tokens.json";
 import { useFromTokenContext, useToTokenContext } from '../../utils/SwapContext';
@@ -37,7 +37,7 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
     console.log(setStatus);
     return (
         <div className="scan-container flex-align-stretch">
-            {toggleChart && <Chart />}
+            {toggleChart}
             <div className='card'>
                 <div className="card__header">
                     <div className="card_header_inner d-flex flex-justify-between flex-align-center">

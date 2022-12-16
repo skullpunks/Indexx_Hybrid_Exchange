@@ -19,6 +19,7 @@ const EthereumGraph = () => {
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
+    hourClickHandler,
     value: data,
     api,
   } = useFetch();
@@ -46,6 +47,7 @@ const EthereumGraph = () => {
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}
+          hourClickHandler={hourClickHandler}
           data={data}
           date={date}
           currencyPrice={ETHPrice}

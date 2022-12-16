@@ -20,6 +20,7 @@ const IndexxUSDPGraph = () => {
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
+    hourClickHandler,
     value: data,
     api,
   } = useFetch();
@@ -43,10 +44,11 @@ const IndexxUSDPGraph = () => {
       {!error ? (
         <LineGraph
           currencyName={currencyName}
-          // yearClickHandler={yearClickHandler}
+         yearClickHandler={monthClickHandler}
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}
+          hourClickHandler={hourClickHandler}
           data={data}
           date={date}
           currencyPrice={Math.round(IUSDPPrice * 100) / 100}

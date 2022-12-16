@@ -16,10 +16,10 @@ const IndexxCryptoGraph = () => {
   const [INXCPriceChange, setINXCPriceChange] = useState() as any;
   //Custom Hook for Fetching Data using Fetch API
   const {
-    // yearClickHandler,
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
+    hourClickHandler,
     value: data,
     api,
   } = useFetch();
@@ -43,10 +43,11 @@ const IndexxCryptoGraph = () => {
       {!error ? (
         <LineGraph
           currencyName={currencyName}
-          // yearClickHandler={yearClickHandler}
+          yearClickHandler={monthClickHandler}
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}
+          hourClickHandler={hourClickHandler}
           data={data}
           date={date}
           currencyPrice={Math.round(INXCPrice * 100) / 100}

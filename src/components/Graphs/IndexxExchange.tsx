@@ -20,6 +20,7 @@ const IndexxExchangeGraph = () => {
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
+    hourClickHandler,
     value: data,
     api,
   } = useFetch();
@@ -46,6 +47,7 @@ const IndexxExchangeGraph = () => {
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}
+          hourClickHandler={hourClickHandler}
           data={data}
           date={date}
           currencyPrice={Math.round(INEXPrice * 100) / 100}

@@ -16,10 +16,10 @@ const Indexx500Graph = () => {
   const [IN500PriceChange, setIN500PriceChange] = useState() as any;
   //Custom Hook for Fetching Data using Fetch API
   const {
-    // yearClickHandler,
     monthClickHandler,
     weekClickHandler,
     dayClickHandler,
+    hourClickHandler,
     value: data,
     api,
   } = useFetch();
@@ -36,17 +36,18 @@ const Indexx500Graph = () => {
     const res = await getIndexxTokenPrices();
     setIN500Price(res.data?.IN500Price);
     setIN500PriceChange(res.data?.IN500priceChangePercent)
-}
+  }
 
   return (
     <React.Fragment>
       {!error ? (
         <LineGraph
           currencyName={currencyName}
-          // yearClickHandler={yearClickHandler}
+          yearClickHandler={monthClickHandler}
           monthClickHandler={monthClickHandler}
           weekClickHandler={weekClickHandler}
           dayClickHandler={dayClickHandler}
+          hourClickHandler={hourClickHandler}
           data={data}
           date={date}
           currencyPrice={IN500Price}
