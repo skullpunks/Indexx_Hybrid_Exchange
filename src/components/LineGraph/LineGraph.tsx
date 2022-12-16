@@ -30,7 +30,7 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 870;
-      height = 456;
+      height = 556;
     }
   };
   const changeValue = (value: number) => {
@@ -43,7 +43,7 @@ const LineGraph = (props: any) => {
       style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
     >
       
-        <div className="chart_header d-flex flex-align-center">
+        <div className="chart_header d-flex flex-align-center" style={{marginTop:10}}>
           <img
             src={
               require(`../../assets/token-icons/${props.currencySymbol}.png`)
@@ -58,7 +58,7 @@ const LineGraph = (props: any) => {
           </h1>
         </div>
 
-        <div className="chart_inner_right">
+        <div className="chart_inner_right" style={{marginTop:-40}}>
           <Segmented className="chart_dynamic"  options={[
             {
               label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
@@ -96,7 +96,7 @@ const LineGraph = (props: any) => {
 
 
       <AreaChart
-        margin={{ left: 17, right: 6, top: 10 }}
+        margin={{ left: 17, right: 6, top: 150}}
         className={styles.graphBackground}
         width={width}
         height={height}

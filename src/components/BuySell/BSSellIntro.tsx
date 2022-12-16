@@ -179,7 +179,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className='sell_screens'>
 
-            <div className="padding-lr-1x padding-tb-3x">
+            <div className="padding-lr-1x padding-tb-3x" style={{paddingTop:50,paddingBottom:50}}>
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
                         <input placeholder="0" ref={ref} className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
@@ -232,9 +232,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 {/* <div>  <img src={arrowAddress} className="arrow_address" alt="arrow icon" style={{}} /></div> */}
             </div>
-            <div className="bs_footer_action ">
+            <div className="bs_footer_action " >
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                <button style={{marginTop:30}} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
             {showUserBalance &&

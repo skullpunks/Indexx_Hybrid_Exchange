@@ -141,7 +141,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
 
   return (
     <div>
-      <div className="padding-lr-1x padding-tb-3x">
+      <div className="padding-lr-1x padding-tb-3x" style={{paddingTop:50,paddingBottom:50}}>
         <div className="bs_curreny d-flex position-relative ">
           <div
             className="bs_curreny_left padding-2x"
@@ -256,6 +256,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         <button
           onClick={navigateUser}
           className={!isLimitPassed || buyVal === "" ? "disable_icon " : ""}
+          style={{marginTop:30}}
         >
           Preview Purchase{" "}
         </button>
