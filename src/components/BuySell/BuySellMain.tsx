@@ -154,12 +154,52 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               <p style={{ fontSize: 10 }}>
                 <div className="row">
                   <div className="col" style={{ textAlign: 'left' }}>
-                    <p>Market Cap</p> <br />
-                    <p></p>
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>Market Cap</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>$156.6B</p> <br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>Market Cap</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>Not enough data</p><br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (24H)</p> 
+                    <p style={{fontSize:10,color:'red'}}>+1.74%</p><br/>
                   </div>
-                  <div className="col"></div>
-                  <div className="col"></div>
-                  <div className="col"></div>
+                  <div className="col" style={{ textAlign: 'left' }}>
+
+                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>VOLUME (24H)</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>$6.4B</p><br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>POPULARITY</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>#1</p><br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (7D)</p> 
+                    <p style={{fontSize:10,color:'red'}}>+0.61%</p><br/>
+                  </div>
+                  <div className="col" style={{ textAlign: 'left' }}>
+
+
+                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>CIRCULATING SUPPLY</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>112.6M INEX</p><br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>ALL TIME HIGH</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>$3.8 M</p><br/>
+
+            
+
+                  </div>
+                  <div className="col" style={{ textAlign: 'left' }}>
+
+                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>TYPICAL HOLD TIME</p> 
+                    <p style={{fontSize:10,color:'#5F5F5F'}}>120 days</p><br/>
+
+                    <br />
+                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (1H)</p> 
+                    <p style={{fontSize:10,color:'red'}}>-0.06%</p><br/>
+                  </div>
                 </div>
               </p>
             </Panel>
