@@ -63,6 +63,22 @@
 .copyright_text {
     font-size: 12px;
 }
+.logo__icon {
+    background-image: url("../../assets/arts/indexText.svg");
+    font-size: 0;
+    background-repeat: no-repeat;
+    width: 119px;
+    height: 26px;
+    background-size: contain;
+}
+
+.logo__icon:hover {
+    background-image: url("../../assets/arts/indexTextHover.svg");
+    background-repeat: no-repeat;
+    width: 119px;
+    height: 26px;
+    background-size: contain;
+}
 
 .need_help {
     position: absolute;
