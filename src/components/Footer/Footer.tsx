@@ -106,7 +106,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                   <br />
                   <br />
                 </p>
-                <p>Markets</p>
+                
               </span>
             </div>
             <div className="col">

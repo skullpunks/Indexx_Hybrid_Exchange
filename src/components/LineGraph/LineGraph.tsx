@@ -55,14 +55,14 @@ const LineGraph = (props: any) => {
   };
   media();
   return (
-    <div>
+    <div >
       {props.data !== undefined ? (
         <div
           className="card chart_buy"
           style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
         >
 
-          <div className="chart_header d-flex flex-align-center">
+          <div className="chart_header d-flex flex-align-center" style={{marginLeft:2}}>
             <img
               src={
                 require(`../../assets/token-icons/${props.currencySymbol}.png`)
@@ -77,7 +77,7 @@ const LineGraph = (props: any) => {
             </h1>
           </div>
             
-          <div className="chart_inner_right" style={{marginTop:-30}}>
+          <div className="chart_inner_right" style={{marginTop:-35,marginRight:-30}}>
             <Segmented className="chart_dynamic" options={[
               {
                 label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
@@ -117,8 +117,9 @@ const LineGraph = (props: any) => {
           <br></br>
           <br></br>
           <br></br>
+          
           <AreaChart
-            margin={{ left: 17, right: 6, top: 10 }}
+            margin={{ left: -60, right:-19, top: 10 }}
             className={styles.graphBackground}
             width={width}
             height={height}
@@ -132,6 +133,7 @@ const LineGraph = (props: any) => {
             </defs>
 
             <Area
+              
               dot={false}
               type="monotone"
               dataKey="price"
@@ -174,7 +176,7 @@ const LineGraph = (props: any) => {
                 return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
               }}
             /> */}
-             <Tooltip position={{ y: -50 }} content={<CustomTooltip />} />
+             <Tooltip position={{ y: -10 }} content={<CustomTooltip />} />
           </AreaChart>
         </div>
       ) : null
