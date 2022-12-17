@@ -6,7 +6,6 @@ import './BuySell.css';
 //import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 // import { Button, InputNumber, Tag } from 'antd';
 import { useContext, useState } from 'react';
-import { Collapse, Divider, Image } from 'antd';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 // import BuySellSelect from './BuySellSelect';
@@ -18,21 +17,30 @@ import BSSellInprogress from './BSSellInprogress';
 import BSTractionHistory from './BSTractionHistory';
 // import { Route, Routes } from 'react-router-dom';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
+import BinanceGraph from '../Graphs/BinanceGraph';
 import BitcoinGraph from '../Graphs/BitcoinGraph';
 import EthereumGraph from '../Graphs/EthereumGraph';
+import FTTGraph from '../Graphs/FTTGraph';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
-import IndexxPhoenixGraph from '../Graphs/IndexxPhoenixGraph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
+import IndexxExchangeGraph from '../Graphs/IndexxExchange';
+import IndexxPhoenixGraph from '../Graphs/IndexxPhoenixGraph';
+import IndexxUSDPGraph from '../Graphs/IndexxUSDPGraph';
+import LitecoinGraph from '../Graphs/LitecoinGraph';
 import BSBuyInProgress from './BSBuyInProgress';
 import BSConfirmPurchase from './BSConfirmPurchase';
-import IndexxUSDPGraph from '../Graphs/IndexxUSDPGraph';
-import IndexxExchangeGraph from '../Graphs/IndexxExchange';
-import LitecoinGraph from '../Graphs/LitecoinGraph';
-import BinanceGraph from '../Graphs/BinanceGraph';
-import FTTGraph from '../Graphs/FTTGraph';
-import ca from '../../assets/ca.png'
 // import BuySellGetStarted from './BuySellGetStarted';
 import { Route, Routes } from 'react-router-dom';
+import BinanceMarket from '../MarketAbout/BinanceMarket';
+import BitcoinMarket from '../MarketAbout/BitcoinMarket';
+import Indexx500Market from '../MarketAbout/Indexx500Market';
+import IndexxCryptoMarket from '../MarketAbout/IndexxCryptoMarket';
+import IndexxPhoenixMarket from '../MarketAbout/IndexxPhoenixMarket';
+import IndexxUSDPMarket from '../MarketAbout/IndexxUSDPMarket';
+import IndexxExchangeMarket from '../MarketAbout/IndexxExchangeMarket';
+import LitecoinMarket from '../MarketAbout/LitecoinMarket';
+import EthereumMarket from '../MarketAbout/EthereumMarket';
+import FTTTokenMarket from '../MarketAbout/FTTTokenMarket';
 // import { BSProvider } from '../../utils/SwapContext';
 
 interface Props {
@@ -51,15 +59,28 @@ let graphs: any = {
   FTTGraph: FTTGraph,
 };
 
+let markets: any = {
+  BitcoinGraph: BitcoinMarket,
+  Indexx500Graph: Indexx500Market,
+  EthereumGraph: EthereumMarket,
+  IndexxCrypto: IndexxCryptoMarket,
+  IndexxUSDPGraph: IndexxUSDPMarket,
+  BinanceGraph: BinanceMarket,
+  LitecoinGraph: LitecoinMarket,
+  IndexxExchange: IndexxExchangeMarket,
+  IndexxPhoenixGraph: IndexxPhoenixMarket,
+  FTTGraph: FTTTokenMarket,
+};
 const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // const [status, setStatus] = useState("");
   const [toggleChart, setToggleChart] = useState(true);
   const [screenName, setScreenName] = useState('');
   const { BSvalue } = useContext(BSContext) as BSContextType;
-  const { Panel } = Collapse;
   let ChartCoin: any = Indexx500Graph;
+  let MarketCoin: any = Indexx500Market;
   if (BSvalue && BSvalue.fromGraph && graphs) {
     ChartCoin = graphs[BSvalue.fromGraph];
+    MarketCoin = markets[BSvalue.fromGraph];
   }
 
   return (
@@ -127,7 +148,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
           />
         </Routes>
       </div>
-      <div
+      {/* <div
         className="d-flex justify-content-center"
         style={{ marginBottom: 300 }}
       >
@@ -241,7 +262,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             </Panel>
           </Collapse>
         </div>
-      </div>
+      </div> */}
+
+      <MarketCoin />
 
       {screenName === '' ||
         screenName === 'select' ||
