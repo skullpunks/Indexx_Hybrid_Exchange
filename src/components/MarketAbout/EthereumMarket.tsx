@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/ETH.png';
-import { marketsData} from '../../services/api';
+import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const EthereumMarket = () => {
@@ -54,19 +54,19 @@ const EthereumMarket = () => {
                                 <div className="col" style={{ textAlign: 'left' }}>
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Volume}</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
-                                 <br />
+                                    <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
                                     <p style={{ fontSize: 10, color: '#5F5F5F' }}>$0.15</p><br />
 
-                                    
+
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Circulating} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} ETH</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -99,29 +99,26 @@ const EthereumMarket = () => {
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
-                            <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
+                            <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
                             <p style={{ fontSize: 20 }}>Ethereum </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx.ai’s Utility and Reward Token. It will be needed to
-                                participate in all derivatives like Daily Fortune, Casino and
-                                Games. The price is low at the moment but has the highest
-                                potential to increase value because of its characteristics,
-                                demand and need. Today is the best time to hoard Indexx
-                                Exchange since it is only $0.10/INEX and it is predicted to
-                                increase its value within 3 - 6 months time.
+
+                                Ethereum (ETH) is the second-largest cryptocurrency token in terms of market capitalization. This is due to the fact that it has brought a lot of innovation and use-cases within the industry by introducing smart contract functionality, which has paved the way for the decentralized finance industry (DeFi) and decentralized apps, or Dapps.
+                                <br />
+
+                                Ethereum allows users to build and deploy software, commonly in the form of Dapps, which are then powered by a global distributed network of computers all running Ethereum. The Ethereum network is decentralized, making it highly resistant to any form of censorship or downtime.
+                                In addition, Ethereum is an open-source blockchain platform that runs on the usage of its native currency, called Ether or ETH. All network transaction fees, or gas fees, are paid in ETH.
+                                <br />
+
+                                Ethereum or ETH is a token that is specifically used by the Ethereum blockchain to pay for transactions. This token is responsible for powering just about everything that occurs within the network.
+                                <br />
+
+                                The Ethereum network can be used by anybody to create and run smart contracts, which are software programs that run autonomously, without user intervention. Ethereum’s growth can be attributed in part to its smart contract capability, which has enabled a growing ecosystem of Dapps, non-fungible tokens (NFTs) and more.
+                                By default, Ethereum uses the Proof-of-Work (PoW) consensus mechanism, but the network is slowly migrating to a Proof-of-Stake (PoS) as part of its Ethereum 2.0 upgrade. The Ethereum 2.0 upgrade started in December of 2020 with the launch of the Beacon Chain. The ETH community supported this upgrade by staking 1 million ETH in the first week alone.
+
+                                .
                             </p>
                             <br />
-
-                            <p style={{ fontSize: 20 }}>How It Works </p>
-                            <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx Exchange-based apps are built using “smart contracts.”
-                                Smart contracts, like regular paper contracts, establish the
-                                terms of an arrangement between parties. But unlike an
-                                old-fashioned contract, smart contracts automatically execute
-                                when the terms are met without the need for either
-                                participating party to know who is on the other side of the
-                                deal — and without the need for any kind of intermediary.
-                            </p>
                         </div>
                     </Panel>
                 </Collapse>

@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/LTC.png';
-import { marketsData} from '../../services/api';
+import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const LitecoinMarket = () => {
@@ -45,7 +45,7 @@ const LitecoinMarket = () => {
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>POPULARITY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>Not enough data</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>#9</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (7D)</p>
@@ -54,19 +54,19 @@ const LitecoinMarket = () => {
                                 <div className="col" style={{ textAlign: 'left' }}>
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Volume}</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
-                                 <br />
+                                    <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
                                     <p style={{ fontSize: 10, color: '#5F5F5F' }}>$0.15</p><br />
 
-                                    
+
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Circulating} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} LTC</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -99,15 +99,17 @@ const LitecoinMarket = () => {
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
-                        <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
+                            <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
                             <p style={{ fontSize: 20 }}>Litecoin </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                BNB is a cryptocurrency that can be used to trade and pay fees on the Binance cryptocurrency exchange. BNB is also the cryptocurrency coin that powers the BNB Chain ecosystem. As one of the world's most popular utility tokens, BNB is useful to users in a wide range of applications and use cases.
+
+                                Litecoin (LTC) is an alternative cryptocurrency created in October 2011 by Charles "Charlie" Lee, a former Google engineer. Litecoin was adapted from Bitcoin's open-source code but with several modifications. Like Bitcoin, Litecoin is based on an open-source global payment network that is not controlled by any central authority. Litecoin differs from Bitcoin in aspects like faster block generation rate and use of Scrypt as a proof of work scheme.
                             </p>
                             <br />
 
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                BNB was launched through an Initial Coin Offering (or ICO) that took place from June 26th to July 3rd, 2017 - 11 days before the Binance Exchange opened for trading. The issue price was 1 ETH for 2,700 BNB or 1 BTC for 20,000 BNB. Although BNB was launched through an ICO, BNB does not provide users with a claim on Binance profits and does not represent an investment in Binance.
+                                It is considered to be among the first altcoins, derived from Bitcoin's original open-source code.
+                                Initially, it was a strong competitor to Bitcoin. However, as the cryptocurrency market has become much more saturated and competitive in recent years with new offerings, Litecoin's popularity has waned somewhat.
                             </p>
                         </div>
                     </Panel>

@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/FTT.png';
-import { marketsData} from '../../services/api';
+import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const FTTTokenMarket = () => {
@@ -54,19 +54,19 @@ const FTTTokenMarket = () => {
                                 <div className="col" style={{ textAlign: 'left' }}>
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Volume}</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
-                                 <br />
+                                    <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
                                     <p style={{ fontSize: 10, color: '#5F5F5F' }}>$0.15</p><br />
 
-                                    
+
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Circulating} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} FTT</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -99,28 +99,15 @@ const FTTTokenMarket = () => {
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
-                            <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
+                            <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
                             <p style={{ fontSize: 20 }}>FTT Token </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx.ai’s Utility and Reward Token. It will be needed to
-                                participate in all derivatives like Daily Fortune, Casino and
-                                Games. The price is low at the moment but has the highest
-                                potential to increase value because of its characteristics,
-                                demand and need. Today is the best time to hoard Indexx
-                                Exchange since it is only $0.10/INEX and it is predicted to
-                                increase its value within 3 - 6 months time.
+                                FTX is a crypto derivatives exchange built to offer futures, leveraged tokens, and OTC trading. Derivatives are a financial contract between two or more parties that can trade on an exchange. Futures are the derivatives that make the parties obligated to transact an asset at the future date and price. Over-the-counter (OTC) is the process of how securities are traded through a broker-dealer network. These securities are traded directly without being listed on the exchange..
                             </p>
                             <br />
 
-                            <p style={{ fontSize: 20 }}>How It Works </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx Exchange-based apps are built using “smart contracts.”
-                                Smart contracts, like regular paper contracts, establish the
-                                terms of an arrangement between parties. But unlike an
-                                old-fashioned contract, smart contracts automatically execute
-                                when the terms are met without the need for either
-                                participating party to know who is on the other side of the
-                                deal — and without the need for any kind of intermediary.
+                                The mission of FTX is to solve the futures exchanges’ crippling flaws that are holding the space back and move the derivatives space towards becoming institutional-grade. According to the whitepaper summary, FTX wants to be one of the best crypto derivatives exchanges.
                             </p>
                         </div>
                     </Panel>

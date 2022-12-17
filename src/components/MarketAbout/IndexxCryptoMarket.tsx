@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/INXC.png';
-import { marketsData} from '../../services/api';
+import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const IndexxCryptoMarket = () => {
@@ -54,19 +54,19 @@ const IndexxCryptoMarket = () => {
                                 <div className="col" style={{ textAlign: 'left' }}>
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Volume}</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
-                                 <br />
+                                    <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
                                     <p style={{ fontSize: 10, color: '#5F5F5F' }}>$0.15</p><br />
 
-                                    
+
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Circulating} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} INXC</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -99,28 +99,22 @@ const IndexxCryptoMarket = () => {
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
-                        <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
+                            <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
                             <p style={{ fontSize: 20 }}>Indexx Crypto </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx.ai’s Utility and Reward Token. It will be needed to
-                                participate in all derivatives like Daily Fortune, Casino and
-                                Games. The price is low at the moment but has the highest
-                                potential to increase value because of its characteristics,
-                                demand and need. Today is the best time to hoard Indexx
-                                Exchange since it is only $0.10/INEX and it is predicted to
-                                increase its value within 3 - 6 months time.
+
+                                Indexx Crypto
+
+                                IndexxCrypto is a High Velocity, High Risk, High Reward Hyper Token
+                                Long-term Grow
+                                This IndexxCrypto token holds the top 10 blue chip crypto assets, allowing the token price to track movements of the broader crypto market.
+
                             </p>
                             <br />
 
                             <p style={{ fontSize: 20 }}>How It Works </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx Exchange-based apps are built using “smart contracts.”
-                                Smart contracts, like regular paper contracts, establish the
-                                terms of an arrangement between parties. But unlike an
-                                old-fashioned contract, smart contracts automatically execute
-                                when the terms are met without the need for either
-                                participating party to know who is on the other side of the
-                                deal — and without the need for any kind of intermediary.
+                                This indexx crypto token holds the top 10 blue chip cryptoassets, allowing the token price to track movements of the broader crypto market. The token's holdings are re-balanced on a weekly basis (with no asset taking up over 10%). This greatly simplifies the effort required to track the broader market's performance.
                             </p>
                         </div>
                     </Panel>

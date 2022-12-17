@@ -54,7 +54,7 @@ const IndexxExchangeMarket = () => {
                                 <div className="col" style={{ textAlign: 'left' }}>
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Volume}</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
                                  <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
@@ -66,7 +66,7 @@ const IndexxExchangeMarket = () => {
 
 
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.Circulating} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} INEX</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
