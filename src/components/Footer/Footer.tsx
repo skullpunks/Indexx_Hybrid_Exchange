@@ -113,10 +113,10 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
               <span style={{ textAlign: "left" }}>
                 <p>Earn</p>
                 <p className="text-extra-small text-left" style={{color:'#9F9F9F',textDecoration:'none',lineHeight:1.5}}>
-                <a href="https://cex.indexx.ai/indexx-exchange/trade-to-earn" style={{color:'#9F9F9F',textDecoration:'none'}}> Trade to Earn </a>
+                <a href="https://test.cex.indexx.ai/indexx-exchange/trade-to-earn" style={{color:'#9F9F9F',textDecoration:'none'}}> Trade to Earn </a>
                  <br />
 
-                 <a href="https://indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank" style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
+                 <a href="https://test.indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank" style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
                   
                   <br />
                 </p>
@@ -149,7 +149,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
             <div className="col" style={{marginRight:-80}}>
               <span>
                 <h1 className="align-middle" style={{ marginTop: 45, marginRight: -40 }}>
-                  <a href="https://indexx.ai">
+                  <a href="https://test.indexx.ai">
                     <img src={indexText} alt="index logo" />
                   </a>
                 </h1>
