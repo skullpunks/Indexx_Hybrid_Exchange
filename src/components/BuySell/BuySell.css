@@ -654,6 +654,23 @@ button.ant-btn-primary [disabled] {
     margin: 19px;
 
 }
+.coll{
+    border : 1px solid #d7d7d7;
+    border-top: none;
+    margin-bottom: 100;
+    color:#5F5F5F;
+    width:1319px;
+}
+.coll .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    border-radius: 0 !important;
+    color:#5F5F5F;
+    border-top: none;
+    
+}
+.coll .ant-collapse > .ant-collapse-item > .ant-collapse-header:hover{
+   color:#f66036
+    
+}
 
 .index_link_info {
     background-color: #E4E4E4;
@@ -752,4 +769,10 @@ button.ant-btn-primary [disabled] {
         font-size: 60px;
     }
 
-}
+  
+  
+}  
+
+
+
+ 

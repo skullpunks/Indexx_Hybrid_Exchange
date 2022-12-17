@@ -158,7 +158,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div>
 
-            <div className="padding-lr-1x padding-tb-3x">
+            <div className="padding-lr-1x padding-tb-3x"  style={{paddingTop:50,paddingBottom:50}} >
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
 
@@ -202,8 +202,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     }
                 </Select>
             </div>
-            <div className="bs_footer_action ">
-                <button className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
+            <div className="bs_footer_action " >
+                <button style={{marginTop:30}} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
             {showUserBalance &&

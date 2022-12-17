@@ -30,7 +30,7 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 870;
-      height = 456;
+      height = 556;
     }
   };
   const changeValue = (value: number) => {

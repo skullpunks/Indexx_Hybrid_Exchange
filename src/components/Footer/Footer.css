@@ -1,6 +1,7 @@
 .site_footer {
     background-color: #252525;
     color: #fff;
+    
 }
 
 .site_footer_inner {
@@ -89,7 +90,8 @@
 
     .site_footer>div>div {
         display: block;
-        text-align: center
+        text-align: center;
+        margin-top: 50;
     }
 
     .site_footer>div>div.flip_icon_container {
