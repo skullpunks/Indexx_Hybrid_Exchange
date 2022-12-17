@@ -3,7 +3,7 @@ import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/INEX.png';
 import { marketsData} from '../../services/api';
 import { useEffect, useState } from 'react';
-
+import './MarketAbout.css'
 const IndexxExchangeMarket = () => {
     const { Panel } = Collapse;
     const [data, setData] = useState() as any;

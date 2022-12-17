@@ -1,0 +1,17 @@
+.coll{
+    border : 1px solid #d7d7d7;
+    border-top: none;
+    margin-bottom: 100;
+    color:#5F5F5F;
+    width:1321px;
+}
+.coll .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    border-radius: 0 !important;
+    color:#5F5F5F;
+    border-top: none;
+    
+}
+.coll .ant-collapse > .ant-collapse-item > .ant-collapse-header:hover{
+   color:#f66036
+    
+}
