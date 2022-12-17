@@ -11,7 +11,6 @@ import needHelp from "../../assets/arts/needHelp.svg";
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from "../../assets/arts/personFlipCoin.png";
 import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
-import { Link } from "react-router-dom";
 import indexText from "../../assets/arts/indexText.svg";
 import "./Footer.css";
 
@@ -115,7 +114,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
                 <a href="https://cex.indexx.ai/indexx-exchange/trade-to-earn" style={{color:'#9F9F9F',textDecoration:'none'}}> Trade to Earn </a>
                  <br />
 
-                 <a href="https://test.indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank" style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
+                 <a href="https://indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank" style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
                   
                   <br />
                 </p>
@@ -148,9 +147,9 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
             <div className="col" style={{marginRight:-80}}>
               <span>
                 <h1 style={{ marginTop: 45, marginRight: -40 }}>
-                  <Link to="/">
+                  <a href="https://indexx.ai">
                     <img src={indexText} alt="index logo" />
-                  </Link>
+                  </a>
                 </h1>
               </span>
             </div>

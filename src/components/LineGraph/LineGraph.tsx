@@ -30,7 +30,7 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 870;
-      height = 556;
+      height = 570;
     }
   };
   const changeValue = (value: number) => {
@@ -60,7 +60,7 @@ const LineGraph = (props: any) => {
             </h1>
           </div>
 
-          <div className="chart_inner_right">
+          <div className="chart_inner_right" style={{marginTop:-30}}>
             <Segmented className="chart_dynamic" options={[
               {
                 label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
