@@ -21,6 +21,7 @@ const dateFormatter3 = (item: any) => {
 //Checks if max width is 560px and then sets new values to graph width and height
 const LineGraph = (props: any) => {
   const [value, setValue] = useState(1);
+  const [coinValue, setCoinValue] = useState(props?.currencyPrice);
   let width = 0;
   let height = 0;
   const media = () => {
@@ -36,6 +37,18 @@ const LineGraph = (props: any) => {
   const changeValue = (value: number) => {
     setValue(value);
   }
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+    setCoinValue((Math.round(payload[0]?.payload?.price * 100) /100));
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${dateFormatter3(label)}`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
   media();
   return (
     <div>
@@ -56,7 +69,7 @@ const LineGraph = (props: any) => {
             />
             &emsp;
             <h1>
-              {props.currencyPrice} USD/{props.currencySymbol}
+              {coinValue} USD/{props.currencySymbol}
             </h1>
           </div>
 
@@ -154,24 +167,15 @@ const LineGraph = (props: any) => {
                 return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
               }}
             /> */}
-             <Tooltip position={{ y: 0 }} content={<CustomTooltip />}
-        />
+             <Tooltip position={{ y: -5 }} content={<CustomTooltip />} />
           </AreaChart>
         </div>
       ) : null
       }
     </div>
   );
-};
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip">
-        <p className="label">{`${dateFormatter3(label)}`}</p>
-      </div>
-    );
-  }
-  return null;
-};
+
+
+}
 export default LineGraph;
