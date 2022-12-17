@@ -15,8 +15,8 @@ const LitecoinGraph = () => {
   //State to update any fetch errors
   const [error, setError] = useState();
   const [date, setDate] = useState(Date);
-  const [ETHPrice, setETHPrice] = useState() as any;
-  const [ETHPriceChange, setETHPriceChange] = useState() as any;
+  const [LTCPrice, setLTCPrice] = useState() as any;
+  const [LTCPriceChange, setLTCPriceChange] = useState() as any;
   
   //Custom Hook for Fetching Data using Fetch API
   const {
@@ -38,9 +38,9 @@ const LitecoinGraph = () => {
   }, [api]);
 
   const getIUSDPCoinPrice = async () => {
-    const res = await getCryptoPrice('ETH');
-    setETHPrice(res.data.lastPrice);
-    setETHPriceChange(res.data.priceChangePercent)
+    const res = await getCryptoPrice('LTC');
+    setLTCPrice(res.data.lastPrice);
+    setLTCPriceChange(res.data.priceChangePercent)
 }
 
   return (
@@ -55,8 +55,8 @@ const LitecoinGraph = () => {
           hourClickHandler={hourClickHandler}
           data={data}
           date={date}
-          currencyPrice={ETHPrice}
-          currencyPriceChange={ETHPriceChange}
+          currencyPrice={LTCPrice}
+          currencyPriceChange={LTCPriceChange}
           currencySymbol={currencySymbol}
         />
       ) : (

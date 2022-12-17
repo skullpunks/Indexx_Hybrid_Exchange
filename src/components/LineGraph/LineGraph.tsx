@@ -148,22 +148,30 @@ const LineGraph = (props: any) => {
               />
 
             }
-            {/* <YAxis
-          stroke="#5f5f5f"
-          padding={{ top: 20 }}
-          tick={{ fill: '#5f5f5f' }}
-        /> */}
-            <Tooltip
+            {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}
               formatter={function (value: any) {
                 return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
               }}
-            />
+            /> */}
+             <Tooltip position={{ y: 0 }} content={<CustomTooltip />}
+        />
           </AreaChart>
         </div>
       ) : null
       }
     </div>
   );
+};
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${dateFormatter3(label)}`}</p>
+      </div>
+    );
+  }
+  return null;
 };
 export default LineGraph;

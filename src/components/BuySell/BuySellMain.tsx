@@ -6,7 +6,7 @@ import './BuySell.css';
 //import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 // import { Button, InputNumber, Tag } from 'antd';
 import { useContext, useState } from 'react';
-import { Collapse, Divider,Image } from 'antd';
+import { Collapse, Divider, Image } from 'antd';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 // import BuySellSelect from './BuySellSelect';
@@ -59,9 +59,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   const { Panel } = Collapse;
   let ChartCoin: any = Indexx500Graph;
   if (BSvalue && BSvalue.fromGraph && graphs) {
-    console.log('ChartCoin', BSvalue.fromGraph);
     ChartCoin = graphs[BSvalue.fromGraph];
-    console.log('ChartCoin', ChartCoin);
   }
 
   return (
@@ -138,7 +136,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             ghost={true}
             accordion
             style={{
-              
+
               textAlign: 'center',
               justifyContent: 'center',
               alignContent: 'center',
@@ -151,55 +149,55 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               header="Market"
               key="1"
             >
-            <Divider style={{marginTop:-20}}></Divider>
+              <Divider style={{ marginTop: -20 }}></Divider>
               <p style={{ fontSize: 10 }}>
                 <div className="row">
                   <div className="col" style={{ textAlign: 'left' }}>
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>Market Cap</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>$156.6B</p> <br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>Market Cap</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>$156.6B</p> <br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>Market Cap</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>Not enough data</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>Market Cap</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>Not enough data</p><br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (24H)</p> 
-                    <p style={{fontSize:10,color:'red'}}>+1.74%</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (24H)</p>
+                    <p style={{ fontSize: 10, color: 'red' }}>+1.74%</p><br />
                   </div>
                   <div className="col" style={{ textAlign: 'left' }}>
 
-                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>VOLUME (24H)</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>$6.4B</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>$6.4B</p><br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>POPULARITY</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>#1</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>POPULARITY</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>#1</p><br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (7D)</p> 
-                    <p style={{fontSize:10,color:'red'}}>+0.61%</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (7D)</p>
+                    <p style={{ fontSize: 10, color: 'red' }}>+0.61%</p><br />
                   </div>
                   <div className="col" style={{ textAlign: 'left' }}>
 
 
-                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>CIRCULATING SUPPLY</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>112.6M INEX</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>112.6M INEX</p><br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>ALL TIME HIGH</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>$3.8 M</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>$3.8 M</p><br />
 
-            
+
 
                   </div>
                   <div className="col" style={{ textAlign: 'left' }}>
 
-                  <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>TYPICAL HOLD TIME</p> 
-                    <p style={{fontSize:10,color:'#5F5F5F'}}>120 days</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>TYPICAL HOLD TIME</p>
+                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>120 days</p><br />
 
                     <br />
-                    <p style={{fontSize:10,color:'#5F5F5F',opacity:'60%'}}>PRICE CHANGE (1H)</p> 
-                    <p style={{fontSize:10,color:'red'}}>-0.06%</p><br/>
+                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
+                    <p style={{ fontSize: 10, color: 'red' }}>-0.06%</p><br />
                   </div>
                 </div>
               </p>
@@ -214,10 +212,10 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               }}
               header="About"
               key="2"
-            ><Divider style={{marginTop:-20}}></Divider>
+            ><Divider style={{ marginTop: -20 }}></Divider>
               <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
-                <Image preview={false} style={{marginBottom:10}} src={ca}></Image><br />
-                <p style={{ fontSize: 20 }}>Indexx Exchange </p> 
+                <Image preview={false} style={{ marginBottom: 10 }} src={ca}></Image><br />
+                <p style={{ fontSize: 20 }}>Indexx Exchange </p>
                 <p style={{ fontSize: 15, lineHeight: 2 }}>
                   Indexx.ai’s Utility and Reward Token. It will be needed to
                   participate in all derivatives like Daily Fortune, Casino and
@@ -228,8 +226,8 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                   increase its value within 3 - 6 months time.
                 </p>
                 <br />
-               
-                <p style={{ fontSize: 20 }}>How It Works </p> 
+
+                <p style={{ fontSize: 20 }}>How It Works </p>
                 <p style={{ fontSize: 15, lineHeight: 2 }}>
                   Indexx Exchange-based apps are built using “smart contracts.”
                   Smart contracts, like regular paper contracts, establish the
@@ -246,8 +244,8 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       </div>
 
       {screenName === '' ||
-      screenName === 'select' ||
-      screenName === 'create' ? (
+        screenName === 'select' ||
+        screenName === 'create' ? (
         <></>
       ) : (
         <></>
