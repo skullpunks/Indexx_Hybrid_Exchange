@@ -94,7 +94,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href="https://indexx.ai" className="logo__icon">
+            <Navbar.Brand href="https://test.indexx.ai" className="logo__icon">
               index.ai
             </Navbar.Brand>
           </div>
@@ -110,7 +110,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand  href="https://indexx.ai" className="logo__icon">
+            <Navbar.Brand  href="https://test.indexx.ai" className="logo__icon">
               index.ai
             </Navbar.Brand>
             <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
@@ -137,7 +137,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://dex.indexx.ai/"
+                  href="https://test.dex.indexx.ai/"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -187,7 +187,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank"
+                  href="https://test.indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank"
                   target="_blank"
                   
                 >
@@ -206,7 +206,7 @@ const HeaderNew = () => {
                 <NavDropdown.Item 
                 
                 className="dropdown-item"
-                href="https://indexx.ai/indexx-exchange/how-it-works"
+                href="https://test.indexx.ai/indexx-exchange/how-it-works"
                 >
                 <Image preview={false} src={howitworks} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>How it Works</Text><br/>
@@ -215,7 +215,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://indexx.ai/indexx-exchange/about"
+                  href="https://test.indexx.ai/indexx-exchange/about"
                
                 >
                   <Image preview={false} src={about} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -226,7 +226,7 @@ const HeaderNew = () => {
                  
                   rel="noreferrer"
                   className="dropdown-item"
-                  href="https://indexx.ai"
+                  href="https://test.indexx.ai"
                 >
                   <Image preview={false} src={hybrid} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Hybrid Exchange</Text><br/>
@@ -244,7 +244,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://indexx.ai/indexx-exchange/blog"
+                  href="https://test.indexx.ai/indexx-exchange/blog"
                  
                 >
                    <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -254,7 +254,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item 
                   className="dropdown-item"
-                  href="https://indexx.ai/indexx-exchange/careers"
+                  href="https://test.indexx.ai/indexx-exchange/careers"
                   >
                 <Image preview={false} src={career} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>  Careers</Text><br/>

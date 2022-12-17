@@ -84,7 +84,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <p className="w-fit-content py-1 p-2 index_link_info">
           <InfoCircleFilled className="pe-2" style={{ color: "#5F5F5F" }} />
-          <span>https://indexx.ai</span>
+          <span>https://test.indexx.ai</span>
         </p>
         <div className="bs_container bs_form card">
           <Form

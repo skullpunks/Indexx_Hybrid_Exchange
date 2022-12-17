@@ -38,126 +38,131 @@ const LineGraph = (props: any) => {
   }
   media();
   return (
-    <div
-      className="card chart_buy"
-      style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
-    >
-      
-        <div className="chart_header d-flex flex-align-center">
-          <img
-            src={
-              require(`../../assets/token-icons/${props.currencySymbol}.png`)
-                .default
+    <div>
+      {props.data !== undefined ? (
+        <div
+          className="card chart_buy"
+          style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
+        >
+
+          <div className="chart_header d-flex flex-align-center">
+            <img
+              src={
+                require(`../../assets/token-icons/${props.currencySymbol}.png`)
+                  .default
+              }
+              alt="bitcoin"
+              width="30"
+            />
+            &emsp;
+            <h1>
+              {props.currencyPrice} USD/{props.currencySymbol}
+            </h1>
+          </div>
+
+          <div className="chart_inner_right">
+            <Segmented className="chart_dynamic" options={[
+              {
+                label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
+                  1H
+                </span>),
+                value: 1,
+              },
+              {
+                label: (<span onClick={() => { props.dayClickHandler(); changeValue(2) }}>
+                  24H
+                </span>),
+                value: 2
+              },
+              {
+                label: (<span onClick={() => { props.weekClickHandler(); changeValue(3) }}>
+                  1W
+                </span>),
+                value: 3
+              },
+              {
+                label: (<span onClick={() => { props.monthClickHandler(); changeValue(4) }}>
+                  1M
+                </span>),
+                value: 4
+              },
+              {
+                label: (<span onClick={() => { props.yearClickHandler(); changeValue(5) }}>
+                  1Y
+                </span>),
+                value: 5
+              },
+            ]}
+            ></Segmented>
+          </div>
+
+
+          <AreaChart
+            margin={{ left: 17, right: 6, top: 10 }}
+            className={styles.graphBackground}
+            width={width}
+            height={height}
+            data={props.data}
+          >
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#f66036" stopOpacity={0.5} />
+                <stop offset="90%" stopColor="#f66036" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+
+            <Area
+              dot={false}
+              type="monotone"
+              dataKey="price"
+              strokeWidth={1.5}
+              isAnimationActive={false}
+              stroke="rgba(246, 96, 54 , 1)"
+              // fill="rgba(246, 96, 54 , 0.09)"
+              fill="url(#colorUv)"
+            />
+            {value > 2 ?
+              <XAxis
+                padding={{ right: 20 }}
+                dataKey={"time"}
+                stroke="#5f5f5f"
+                // domain={['auto', 'auto']}
+                domain={["dataMin", "dataMax"]}
+                interval="preserveStartEnd"
+                tick={{ fill: "#5f5f5f" }}
+                tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
+                style={{ fontSize: 13 }}
+                minTickGap={75}
+              /> :
+              <XAxis
+                padding={{ right: 20 }}
+                dataKey={"time"}
+                stroke="#5f5f5f"
+                // domain={['auto', 'auto']}
+                domain={["dataMin", "dataMax"]}
+                interval="preserveStartEnd"
+                tick={{ fill: "#5f5f5f" }}
+                tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
+                style={{ fontSize: 13 }}
+                minTickGap={75}
+              />
+
             }
-            alt="bitcoin"
-            width="30"
-          />
-          &emsp;
-          <h1>
-            {props.currencyPrice} USD/{props.currencySymbol}
-          </h1>
-        </div>
-
-        <div className="chart_inner_right">
-          <Segmented className="chart_dynamic"  options={[
-            {
-              label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
-                1H
-              </span>),
-              value: 1,
-            },
-            {
-              label: (<span onClick={() => { props.dayClickHandler(); changeValue(2) }}>
-                24H
-              </span>),
-              value: 2
-            },
-            {
-              label: (<span onClick={() => { props.weekClickHandler(); changeValue(3) }}>
-                1W
-              </span>),
-              value: 3
-            },
-            {
-              label: (<span onClick={() => { props.monthClickHandler(); changeValue(4) }}>
-                1M
-              </span>),
-              value: 4
-            },
-            {
-              label: (<span onClick={() => { props.yearClickHandler(); changeValue(5) }}>
-                1Y
-              </span>),
-              value: 5
-            },
-          ]}
-          ></Segmented>
-        </div>
-
-
-      <AreaChart
-        margin={{ left: 17, right: 6, top: 10 }}
-        className={styles.graphBackground}
-        width={width}
-        height={height}
-        data={props.data}
-      >
-        <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#f66036" stopOpacity={0.5} />
-            <stop offset="90%" stopColor="#f66036" stopOpacity={0} />
-          </linearGradient>
-        </defs>
-
-        <Area
-          dot={false}
-          type="monotone"
-          dataKey="price"
-          strokeWidth={1.5}
-          isAnimationActive={false}
-          stroke="rgba(246, 96, 54 , 1)"
-          // fill="rgba(246, 96, 54 , 0.09)"
-          fill="url(#colorUv)"
-        />
-        {value > 2 ?
-          <XAxis
-            padding={{ right: 20 }}
-            dataKey={"time"}
-            stroke="#5f5f5f"
-            // domain={['auto', 'auto']}
-            domain={["dataMin", "dataMax"]}
-            interval="preserveStartEnd"
-            tick={{ fill: "#5f5f5f" }}
-            tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
-            style={{ fontSize: 13 }}
-            minTickGap={75}
-          /> :
-          <XAxis
-            padding={{ right: 20 }}
-            dataKey={"time"}
-            stroke="#5f5f5f"
-            // domain={['auto', 'auto']}
-            domain={["dataMin", "dataMax"]}
-            interval="preserveStartEnd"
-            tick={{ fill: "#5f5f5f" }}
-            tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
-            style={{ fontSize: 13 }}
-            minTickGap={75}
-          />
-
-        }
-        {/* <YAxis
+            {/* <YAxis
           stroke="#5f5f5f"
           padding={{ top: 20 }}
           tick={{ fill: '#5f5f5f' }}
         /> */}
-        <Tooltip
-          labelFormatter={dateFormatter3}
-          formatter={function (value: any) {
-            return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
-          }}
-        />
-      </AreaChart>
+            <Tooltip
+              labelFormatter={dateFormatter3}
+              formatter={function (value: any) {
+                return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
+              }}
+            />
+          </AreaChart>
+        </div>
+      ) : null
+      }
     </div>
   );
 };

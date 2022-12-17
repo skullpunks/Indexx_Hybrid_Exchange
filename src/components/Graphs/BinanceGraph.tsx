@@ -28,6 +28,7 @@ const BinanceGraph = () => {
     setDate(Date);
     getBNBCoinPrice();
     api(url).catch((error) => {
+      console.log(error);
       setError(error.message);
     });
   }, [api]);

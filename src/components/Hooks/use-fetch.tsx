@@ -12,6 +12,7 @@ const useFetch = () => {
     //Using useCallback because we will run this function in another component with useEffect Hook
     const api = useCallback(
         async (url: string) => {
+            
             //Fetch API
             const response = await fetch(`${url}${fetchDaysValue}`);
             if (!response.ok) {

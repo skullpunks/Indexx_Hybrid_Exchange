@@ -29,7 +29,7 @@ const Section1 = () => {
             </div>
             <div className="actions">
                
-                <a href="https://dex.indexx.ai" target="_blank" rel="noopener noreferrer">
+                <a href="https://test.dex.indexx.ai" target="_blank" rel="noopener noreferrer">
                     <span  className="td-none">
                         {/* <Tooltip title={comingSoonText} color="#fff" key="#fff" > */}
                             <div className="launch-app-button cut_button">

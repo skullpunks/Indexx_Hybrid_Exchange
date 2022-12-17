@@ -118,7 +118,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
               <Button
                 danger
                 size="large"
-                href="https://dex.indexx.ai"
+                href="https://test.dex.indexx.ai"
                 style={{ marginBottom: 20, width: '100%' }}
                 type="primary"
                 onClick={handleOk}
