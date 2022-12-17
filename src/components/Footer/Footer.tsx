@@ -20,6 +20,8 @@ interface FooterProps {
 }
 
 const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
+
+
     const icons = [
         {
             src: Instagram,
@@ -146,7 +148,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
 
             <div className="col" style={{marginRight:-80}}>
               <span>
-                <h1 style={{ marginTop: 45, marginRight: -40 }}>
+                <h1 className="align-middle" style={{ marginTop: 45, marginRight: -40 }}>
                   <a href="https://indexx.ai">
                     <img src={indexText} alt="index logo" />
                   </a>
