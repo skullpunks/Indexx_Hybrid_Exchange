@@ -36,8 +36,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [minMavData, setMinMaxData] = useState() as any;
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [showUserBalance, setShowUserBalance] = useState(false);
-    const [selectedCoin, setSelectedCoin] = useState("");
+    const [, setShowUserBalance] = useState(false);
+    const [, setSelectedCoin] = useState("");
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
@@ -237,11 +237,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button style={{marginTop:30}} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
-            {showUserBalance &&
+            {/* {showUserBalance &&
                 <div>
                     <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            }
+            } */}
 
 
             

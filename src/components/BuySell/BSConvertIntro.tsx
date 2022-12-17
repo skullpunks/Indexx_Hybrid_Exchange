@@ -30,8 +30,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [showUserBalance, setShowUserBalance] = useState(false);
-    const [selectedCoin, setSelectedCoin] = useState("");
+    const [, setShowUserBalance] = useState(false);
+    const [, setSelectedCoin] = useState("");
 
     useEffect(() => {
         if (ref.current) {
@@ -170,11 +170,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
-                {(userBalance < parseFloat(val)) ?
+                {/* {(userBalance < parseFloat(val)) ?
                     <div className='error_message font_15x'>You can only convert a total of {Math.floor(userBalance * 10000) / 10000} </div>
                     :
                     <></>
-                }
+                } */}
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
 
@@ -206,11 +206,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button style={{marginTop:30}} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
-            {showUserBalance &&
+            {/* {showUserBalance &&
                 <div>
                     <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            }
+            } */}
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
         </div >
