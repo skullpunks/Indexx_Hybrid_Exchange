@@ -33,6 +33,7 @@ const IndexxExchangeGraph = () => {
     });
   }, [api]);
 
+  
   const getINEXCoinPrice = async () => {
     const res = await getIndexxTokenPrices();
     setINEXPrice(res.data?.INEXPrice);

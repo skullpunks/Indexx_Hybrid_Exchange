@@ -100,7 +100,7 @@ const LitecoinMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
                         <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>Indexx Exchange </p>
+                            <p style={{ fontSize: 20 }}>Litecoin </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                                 BNB is a cryptocurrency that can be used to trade and pay fees on the Binance cryptocurrency exchange. BNB is also the cryptocurrency coin that powers the BNB Chain ecosystem. As one of the world's most popular utility tokens, BNB is useful to users in a wide range of applications and use cases.
                             </p>

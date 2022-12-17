@@ -100,7 +100,7 @@ const FTTTokenMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
                             <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>Indexx Exchange </p>
+                            <p style={{ fontSize: 20 }}>FTT Token </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                                 Indexx.ai’s Utility and Reward Token. It will be needed to
                                 participate in all derivatives like Daily Fortune, Casino and

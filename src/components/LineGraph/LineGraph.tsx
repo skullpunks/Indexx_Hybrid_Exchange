@@ -4,7 +4,7 @@ import { Segmented } from 'antd';
 //   XAxis,
 //   YAxis
 // } from "recharts";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, Tooltip } from 'recharts';
 import moment from 'moment';
 //0import numeral from "numeral";
@@ -31,12 +31,16 @@ const LineGraph = (props: any) => {
       height = 250;
     } else {
       width = 870;
-      height = 570;
+      height = 500;
     }
   };
   const changeValue = (value: number) => {
     setValue(value);
   }
+
+  useEffect(() => {
+    setCoinValue(props?.currencyPrice);
+  }, [props?.currencyPrice]);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -72,7 +76,7 @@ const LineGraph = (props: any) => {
               {coinValue} USD/{props.currencySymbol}
             </h1>
           </div>
-
+            
           <div className="chart_inner_right" style={{marginTop:-30}}>
             <Segmented className="chart_dynamic" options={[
               {
@@ -109,7 +113,10 @@ const LineGraph = (props: any) => {
             ></Segmented>
           </div>
 
-
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <AreaChart
             margin={{ left: 17, right: 6, top: 10 }}
             className={styles.graphBackground}
@@ -145,7 +152,7 @@ const LineGraph = (props: any) => {
                 tick={{ fill: "#5f5f5f" }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
-                minTickGap={75}
+                minTickGap={92}
               /> :
               <XAxis
                 padding={{ right: 20 }}
@@ -157,7 +164,7 @@ const LineGraph = (props: any) => {
                 tick={{ fill: "#5f5f5f" }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
-                minTickGap={75}
+                minTickGap={90}
               />
 
             }
@@ -167,7 +174,7 @@ const LineGraph = (props: any) => {
                 return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
               }}
             /> */}
-             <Tooltip position={{ y: -5 }} content={<CustomTooltip />} />
+             <Tooltip position={{ y: -50 }} content={<CustomTooltip />} />
           </AreaChart>
         </div>
       ) : null
