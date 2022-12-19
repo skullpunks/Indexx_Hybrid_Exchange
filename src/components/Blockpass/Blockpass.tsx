@@ -1,6 +1,6 @@
 
 import React from 'react';
-import baseURL, { decodeJWT } from '../../services/api';
+import baseAPIURL, { decodeJWT } from '../../services/api';
 
 class Blockpass extends React.Component<{}, any>{
     constructor(props: any) {
@@ -50,7 +50,7 @@ class Blockpass extends React.Component<{}, any>{
             })
         };
 
-        fetch(baseURL + `/address`, requestOptions)
+        fetch(baseAPIURL + `/address`, requestOptions)
             .then(response => response.json())
     }
 

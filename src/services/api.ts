@@ -1,20 +1,27 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
-let baseURL = '';
+let baseAPIURL = '';
+export let baseCEXURL = '';
+export let baseDEXURL = '';
+export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseURL =  "https://test.api.indexx.ai";
-  // baseURL = "http://localhost:3000";
-  // baseURL = 'http://localhost:3000';
-  // baseURL = "https://253f-54-250-16-116.ngrok.io";
+  baseAPIURL =  "https://test.api.indexx.ai";
+  baseCEXURL = "https://test.cex.indexx.ai";
+  baseDEXURL = "https://test.dex.indexx.ai";
+  baseURL = "https://test.indexx.ai";
+  // baseAPIURL = "http://localhost:3000";
 } else {
-  baseURL =  "https://api.indexx.ai"; ///"https://api.indexx.ngrok.io"; //"https://253f-54-250-16-116.ngrok.io"; //"https://indexx-exchange.herokuapp.com"; //; //"http://54.250.16.116"; // //"http://api.indexx.ai"
+  baseCEXURL = "https://test.cex.indexx.ai";
+  baseDEXURL = "https://test.dex.indexx.ai";
+  baseAPIURL =  "https://test.api.indexx.ai"; 
+  baseURL = "https://test.indexx.ai";
 }
 
 const API = axios.create({
-  baseURL: baseURL,
+  baseURL: baseAPIURL,
 });
 
-export default baseURL;
+export default baseAPIURL;
 
 export const signupAPI = async (
   email: string,

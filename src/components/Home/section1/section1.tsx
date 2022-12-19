@@ -3,6 +3,7 @@ import "./sections1.css"
 import BackgroundImage from "../../../assets/background.jpg";
 import IndexxText from "../../../assets/indexxLogo.svg";
 import { Link } from "react-router-dom";
+import { baseDEXURL } from "../../../services/api";
 
 const Section1 = () => {
     return (
@@ -29,7 +30,7 @@ const Section1 = () => {
             </div>
             <div className="actions">
                
-                <a href="https://test.dex.indexx.ai" target="_blank" rel="noopener noreferrer">
+                <a href={baseDEXURL} target="_blank" rel="noopener noreferrer">
                     <span  className="td-none">
                         {/* <Tooltip title={comingSoonText} color="#fff" key="#fff" > */}
                             <div className="launch-app-button cut_button">

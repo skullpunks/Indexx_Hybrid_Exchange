@@ -4,7 +4,7 @@ import Email from "../../assets/arts/Email.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
 import { Button, Form, Input, notification } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { loginAPI, decodeJWT, getUserDetails } from "../../services/api";
+import { loginAPI, decodeJWT, getUserDetails, baseURL } from "../../services/api";
 import {
   CheckCircleFilled,
   InfoCircleFilled,
@@ -84,7 +84,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <p className="w-fit-content py-1 p-2 index_link_info">
           <InfoCircleFilled className="pe-2" style={{ color: "#5F5F5F" }} />
-          <span>https://test.indexx.ai</span>
+          <span>{baseURL}</span>
         </p>
         <div className="bs_container bs_form card">
           <Form

@@ -13,6 +13,7 @@ import personFlipCoin from "../../assets/arts/personFlipCoin.png";
 import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
 import indexText from "../../assets/arts/indexText.svg";
 import "./Footer.css";
+import { baseCEXURL, baseDEXURL, baseURL } from "../../services/api";
 
 interface FooterProps {
     helpIcon?: boolean;
@@ -62,7 +63,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
 
             
             {helpIcon &&
-                <a href={"https://test.indexx.ai/indexx-exchange/help"} className="need_help" style={{ backgroundImage: `url(${needHelp})` ,textDecoration:'none' }}>
+                <a href={`${baseURL}/indexx-exchange/help`} className="need_help" style={{ backgroundImage: `url(${needHelp})` ,textDecoration:'none' }}>
                     Need Help?
                 </a>
             }
@@ -96,13 +97,13 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
               <span style={{ textAlign: "left" }}>
                 <p>Products</p>
                 <p className="text-extra-small text-left" style={{}}>
-                  <a href="https://cex.indexx.ai/" style={{color:'#9F9F9F',textDecoration:'none'}}>Centralized</a>
+                  <a href={baseCEXURL} style={{color:'#9F9F9F',textDecoration:'none'}}>Centralized</a>
                   <br />
-                  <a href="https://test.dex.indexx.ai/"  style={{color:'#9F9F9F',textDecoration:'none'}}>Decentralized</a>
+                  <a href={baseDEXURL}  style={{color:'#9F9F9F',textDecoration:'none'}}>Decentralized</a>
                   <br />
                   <a href="https://tokens.indexx.ai/"  style={{color:'#9F9F9F',textDecoration:'none'}}>indexx Tokens</a>
                   <br />
-                  <a href="https://cex.indexx.ai/indexx-exchange/import-indexx-tokens"  style={{color:'#9F9F9F',textDecoration:'none'}}>Import indexx Tokens</a>
+                  <a href={`${baseCEXURL}/indexx-exchange/import-indexx-tokens`}  style={{color:'#9F9F9F',textDecoration:'none'}}>Import indexx Tokens</a>
                   <br />
                   <br />
                 </p>
@@ -113,10 +114,10 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
               <span style={{ textAlign: "left" }}>
                 <p>Earn</p>
                 <p className="text-extra-small text-left" style={{color:'#9F9F9F',textDecoration:'none',lineHeight:1.5}}>
-                <a href="https://test.cex.indexx.ai/indexx-exchange/trade-to-earn" style={{color:'#9F9F9F',textDecoration:'none'}}> Trade to Earn </a>
+                <a href={`${baseCEXURL}/indexx-exchange/trade-to-earn`} style={{color:'#9F9F9F',textDecoration:'none'}}> Trade to Earn </a>
                  <br />
 
-                 <a href="https://test.indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank" style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
+                 <a href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`} style={{color:'#9F9F9F',textDecoration:'none'}}> indexx Bank </a>
                   
                   <br />
                 </p>
@@ -126,21 +127,21 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
               <span style={{ textAlign: "left" }}>
                 <p>Company</p>
                 <p className="text-extra-small text-left" style={{color:'#9F9F9F',textDecoration:'none',lineHeight:1.5}}>
-                <a href="https://test.indexx.ai/indexx-exchange/how-it-works" style={{color:'#9F9F9F',textDecoration:'none'}}>  How it Works </a>
+                <a href={`${baseURL}/indexx-exchange/how-it-works`} style={{color:'#9F9F9F',textDecoration:'none'}}>  How it Works </a>
                   <br />
-                  <a href="https://test.indexx.ai/indexx-exchange/about" style={{color:'#9F9F9F',textDecoration:'none'}}>About </a>
+                  <a href={`${baseURL}/indexx-exchange/about`} style={{color:'#9F9F9F',textDecoration:'none'}}>About </a>
                  <br />
-                 <a href="https://test.indexx.ai" style={{color:'#9F9F9F',textDecoration:'none'}}>   Hybrid Exchange </a>
+                 <a href={baseURL} style={{color:'#9F9F9F',textDecoration:'none'}}>   Hybrid Exchange </a>
                  <br />
                  <a href="https://register.affiliate.indexx.ai/" style={{color:'#9F9F9F',textDecoration:'none'}}>Affiliate Program  </a>
                   <br />
                 
-                  <a href="https://test.indexx.ai/indexx-exchange/blog" style={{color:'#9F9F9F',textDecoration:'none'}}>Blog   </a>
+                  <a href={`${baseURL}/indexx-exchange/blog`} style={{color:'#9F9F9F',textDecoration:'none'}}>Blog   </a>
                  
                   <br />
-                  <a href="https://test.indexx.ai/indexx-exchange/legal" style={{color:'#9F9F9F',textDecoration:'none'}}>Legal    </a>
+                  <a href={`${baseURL}/indexx-exchange/legal`} style={{color:'#9F9F9F',textDecoration:'none'}}>Legal    </a>
                  <br />
-                 <a href="https://test.indexx.ai/indexx-exchange/careers" style={{color:'#9F9F9F',textDecoration:'none'}}>Careers    </a>
+                 <a href={`${baseURL}/indexx-exchange/careers`} style={{color:'#9F9F9F',textDecoration:'none'}}>Careers    </a>
                  <br />
                 </p>
               </span>
@@ -149,7 +150,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
             <div className="col" style={{marginRight:-80}}>
               <span>
                 <h1 className="align-middle" style={{ marginTop: 45, marginRight: -40 }}>
-                  <a href="https://test.indexx.ai">
+                  <a href={baseURL}>
                     <img src={indexText} alt="index logo" />
                   </a>
                 </h1>

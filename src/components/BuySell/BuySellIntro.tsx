@@ -7,7 +7,7 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import lockedimage from '../../assets/arts/locked.png';
 import { Button, Modal, Image } from 'antd';
-import { geolocationData } from '../../services/api';
+import { baseDEXURL, geolocationData } from '../../services/api';
 import { useState, useEffect } from 'react';
 import './BuySellIntro.css';
 
@@ -118,7 +118,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
               <Button
                 danger
                 size="large"
-                href="https://test.dex.indexx.ai"
+                href={baseDEXURL}
                 style={{ marginBottom: 20, width: '100%' }}
                 type="primary"
                 onClick={handleOk}
