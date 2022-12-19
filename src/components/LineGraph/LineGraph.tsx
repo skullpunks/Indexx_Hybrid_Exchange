@@ -59,7 +59,7 @@ const LineGraph = (props: any) => {
       {props.data !== undefined ? (
         <div
           className="card chart_buy"
-          style={{ minWidth: 900, maxWidth: 900, padding: 21, borderColor: '#D7D7D7', borderRight: 'none' }}
+          style={{ minWidth: 900, maxWidth: 900, padding: 15, borderColor: '#D7D7D7', borderRight: 'none' }}
         >
 
           <div className="chart_header d-flex flex-align-center" style={{marginLeft:2}}>
@@ -77,7 +77,7 @@ const LineGraph = (props: any) => {
             </h1>
           </div>
             
-          <div className="chart_inner_right" style={{marginTop:-35,marginRight:-30}}>
+          <div className="chart_inner_right" style={{marginTop:-35,marginRight:-25}}>
             <Segmented className="chart_dynamic" options={[
               {
                 label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
