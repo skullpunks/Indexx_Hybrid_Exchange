@@ -24,6 +24,7 @@ import blog from "../../assets/header-icons/Company/blog.png";
 import career from "../../assets/header-icons/Company/career.png";
 import howitworks from "../../assets/header-icons/Company/howitworks.png";
 import hybrid from "../../assets/header-icons/Company/hybrid.png";
+import { baseDEXURL, baseURL } from "../../services/api";
 
 
 const {Text} = Typography;
@@ -94,7 +95,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href="https://test.indexx.ai" className="logo__icon">
+            <Navbar.Brand href={baseURL} className="logo__icon">
               index.ai
             </Navbar.Brand>
           </div>
@@ -110,7 +111,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand  href="https://test.indexx.ai" className="logo__icon">
+            <Navbar.Brand  href={baseURL} className="logo__icon">
               index.ai
             </Navbar.Brand>
             <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
@@ -137,7 +138,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://test.dex.indexx.ai/"
+                  href={baseDEXURL}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -187,7 +188,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://test.indexx.ai/indexx-exchange/coming-soon?page=Indexx%20Bank"
+                  href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
                   target="_blank"
                   
                 >
@@ -206,7 +207,7 @@ const HeaderNew = () => {
                 <NavDropdown.Item 
                 
                 className="dropdown-item"
-                href="https://test.indexx.ai/indexx-exchange/how-it-works"
+                href={`${baseURL}/indexx-exchange/how-it-works`}
                 >
                 <Image preview={false} src={howitworks} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>How it Works</Text><br/>
@@ -215,7 +216,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://test.indexx.ai/indexx-exchange/about"
+                  href={`${baseURL}/indexx-exchange/about`}
                
                 >
                   <Image preview={false} src={about} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -226,7 +227,7 @@ const HeaderNew = () => {
                  
                   rel="noreferrer"
                   className="dropdown-item"
-                  href="https://test.indexx.ai"
+                  href={baseURL}
                 >
                   <Image preview={false} src={hybrid} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Hybrid Exchange</Text><br/>
@@ -244,7 +245,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href="https://test.indexx.ai/indexx-exchange/blog"
+                  href={`${baseURL}/indexx-exchange/blog`}
                  
                 >
                    <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -254,7 +255,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item 
                   className="dropdown-item"
-                  href="https://test.indexx.ai/indexx-exchange/careers"
+                  href={`${baseURL}/indexx-exchange/careers`}
                   >
                 <Image preview={false} src={career} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>  Careers</Text><br/>

@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
-import { signupAPI } from '../../services/api';
+import { signupAPI, baseDEXURL } from '../../services/api';
 import hands from '../../assets/hands.png';
 
 const BuySellGetStarted: React.FC = () => {
@@ -203,7 +203,7 @@ const BuySellGetStarted: React.FC = () => {
             </div>
             
             <Space direction="vertical" style={{ width: '100%' }}>
-            <p> As per our Terms and Use, we’re unable to provide services to the US residents. Instead, please register on our partner platform dedicated to the US residents <a className="text-link" href="https://test.dex.indexx.ai/" rel="noreferrer">(test.dex.indexx.ai)</a>.</p>
+            <p> As per our Terms and Use, we’re unable to provide services to the US residents. Instead, please register on our partner platform dedicated to the US residents <a className="text-link" href={baseDEXURL} rel="noreferrer">(test.dex.indexx.ai)</a>.</p>
             </Space>
           </div>
         </div>
