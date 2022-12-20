@@ -85,7 +85,7 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             title: 'Order Rate',
             dataIndex: 'orderRate',
             key: 'orderRate',
-            render: text => <span>{text.rate} {text.currency}</span>,
+            render: text => <span>{text.rate} USD</span>,
             responsive: ["sm"]
         },
         {
@@ -141,7 +141,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                 if (results[i].orderType?.includes('Sell') || results[i].orderType?.includes('Buy')) {
 
                 } else {
-                    console.log(results[i].orderType, 'type');
                     finalArr.push(results[i]);
                 }
             }

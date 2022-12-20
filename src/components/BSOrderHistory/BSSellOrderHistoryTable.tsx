@@ -86,7 +86,7 @@ const BSSellOrderHistoryTable: React.FC = () => {
             title: 'Order Rate',
             dataIndex: 'orderRate',
             key: 'orderRate',
-            render: text => <span>{text.rate} {text.currency}</span>,
+            render: text => <span>{text.rate} USD</span>,
             responsive: ["sm"]
         },
         {
@@ -136,18 +136,15 @@ const BSSellOrderHistoryTable: React.FC = () => {
         const token = localStorage.getItem('access_token');
         const decodedToken: any = decodeJWT(String(token)) as any;
         getUserOrders(decodedToken?.email).then((res) => {
-            console.log(res.data);
             const results = res.data;
             let finalArr = [];
             for (let i = 0; i < results.length; i++) {
                 if (results[i].orderType?.includes('Buy') || results[i].orderType?.includes('Convert')) {
 
                 } else {
-                    console.log(results[i].orderType, 'type');
                     finalArr.push(results[i]);
                 }
             }
-            console.log(finalArr, 'finalArr');
             setOrderList(finalArr);
             setOrderTxListFilter(finalArr);
             setLoadings(false);
