@@ -53,7 +53,7 @@ const Links = [
 ];
 
 const HeaderNew = () => {
-  let title = <>{localStorage.getItem("user")}</>;
+  let title = <>{String(localStorage.getItem("user")).toLowerCase()}</>;
   const [isInsideApp, setIsInsideApp] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -285,7 +285,7 @@ const HeaderNew = () => {
                   <NavDropdown
                     title={title}
                     id="collasible-nav-dropdown"
-                    className="dark-menu text-lowercase"
+                    className="dark-menu"
                   >
                     <NavDropdown.Item
                       as={Link}
