@@ -54,7 +54,7 @@ const Links = [
 
 const HeaderNew = () => {
   let title = <>{String(localStorage.getItem("user")).toLowerCase()}</>;
-  const [isInsideApp, setIsInsideApp] = useState(false);
+  const [, setIsInsideApp] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -71,7 +71,6 @@ const HeaderNew = () => {
   const showUrl: any = Links.filter((link) =>
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.url);
-  console.log(isInsideApp);
   useEffect(() => {
 
     (showText[0] !== "") ?
@@ -83,7 +82,6 @@ const HeaderNew = () => {
         document.title = "indexx.ai"
   }, [showText, pageName]);
 
-  console.log("testing",window.location.pathname)
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) || 
@@ -350,6 +348,14 @@ const HeaderNew = () => {
                       href="/"
                     >
                       Transaction History
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      as={Link}
+                      to="/indexx-exchange/buy-sell/order-history"
+                      className="dropdown-item"
+                      href="/"
+                    >
+                      Order History
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       as={Link}

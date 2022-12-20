@@ -59,6 +59,7 @@ import SystemMsg from './components/Notifications/SystemMsg';
 import Career from './components/Careers/Career';
 import WelcomePage from "./components/WelcomePage";
 import ImportTokens from "./components/ImportTokens/ImportTokens";
+import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -146,7 +147,11 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/transaction-history/*"
             element={<BSTransactionHistoryLayout />}
-          />
+          /> 
+          <Route
+            path="/indexx-exchange/buy-sell/order-history/*"
+            element={<BSOrderHistoryLayout />}
+          /> 
           <Route
             path="/indexx-exchange/buy-sell/get-started/*"
             element={<BuySellGetStartedLayout />}
