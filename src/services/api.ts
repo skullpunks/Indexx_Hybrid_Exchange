@@ -243,6 +243,17 @@ export const checkAndUpdateDeposit = async (
   }
 };
 
+export const getUserOrders = async (email: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/getUserOrders/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserOrders)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
 // export const createBuyOrder = async (basecoin: string, quotecoin: string, amount: number, price: number, email: string) => {
 //   try {
 //     const result = await API.post("/api/v1/inex/order/buy", {

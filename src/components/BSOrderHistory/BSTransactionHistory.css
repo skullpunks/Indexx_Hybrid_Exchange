@@ -1,0 +1,68 @@
+.tabs_button .ant-tabs-tab.ant-tabs-tab-active {
+
+    background: #F66036;
+    border: 1px solid #D7D7D7;
+    border-radius: 5px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
+    margin: 50px 0 0;
+    min-width: 125px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab .ant-tabs-tab-btn {
+    color: #5f5f5f;
+    font-size: 20px;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+}
+
+.tabs_button.ant-tabs-top>.ant-tabs-nav::before {
+    border: none;
+}
+
+.tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-ink-bar {
+    border: none;
+    background: transparent;
+}
+
+.transaction_filters>div {
+    flex: 1 1;
+}
+
+.transaction_filters>div>.ant-select {
+    width: calc(100% - 20px);
+}
+
+.large_card .reset_button {
+    top: 41px;
+    right: 0;
+    margin-top: 50px;
+}
+
+
+
+@media (max-width: 767px) {
+    .transaction_crypto_history th{
+display: none;
+    }
+    .large_card {
+        max-width:90%;
+    }
+
+    .transaction_crypto_history .ant-table-tbody > tr > td:last-child{
+        text-align:end;
+    }
+    .transaction_crypto_history .ant-table-tbody > tr > td {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .tabs_button>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list>.ant-tabs-tab {
+        min-width:97px;
+    }
+}
