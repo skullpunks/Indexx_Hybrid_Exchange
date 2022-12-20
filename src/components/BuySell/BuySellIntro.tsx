@@ -108,6 +108,8 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
       {userId ? (
         <div>
           <Modal
+         
+            maskStyle={{backdropFilter: "blur(2px)"}}
             centered={true}
             visible={isTransferModalVisible}
             onOk={handleTransferOk}

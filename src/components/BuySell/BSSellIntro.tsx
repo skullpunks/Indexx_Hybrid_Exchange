@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import "./BS-Sell.css";
 // import { Link } from 'react-router-dom';
-import { Select } from 'antd';
+import { Select ,Modal,Button} from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
@@ -38,6 +38,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [userBalance, setUserBalance] = useState(0);
     const [, setShowUserBalance] = useState(false);
     const [, setSelectedCoin] = useState("");
+    const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
@@ -91,12 +92,25 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             setShowUserBalance(true);
         }
     }
+    const handleTransferOk = () => {
+     
+        setIsTransferModalVisible(false);
+      };
+    
+      const handleTransferCancel = () => {
+        setIsTransferModalVisible(false);
+      };
+    
+
 
     const handleChange = async (value: string) => {
 
         let getRequiredCoin = initialTokens.find(x => x.address === value);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
+            setIsTransferModalVisible(true);
+
+    
+            // alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
         }
         let getGraphCoin = graphTokens.find(x => x.address === value);
         // setNetwork(value)
@@ -163,7 +177,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         console.log(BSvalue?.fromToken)
         let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-            alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
+            setIsTransferModalVisible(true);
             return;
         }
         if (val) {
@@ -197,6 +211,39 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <></>
                 } */}
 
+<Modal
+         
+         maskStyle={{backdropFilter: "blur(2px)"}}
+         centered={true}
+         visible={isTransferModalVisible}
+         onOk={handleTransferOk}
+         onCancel={handleTransferCancel}
+         width={670}
+         maskClosable={false}
+         footer={[
+          
+           <Button
+             className="center"
+             type="link"
+             onClick={handleTransferCancel}
+           >
+             Ok
+           </Button>,
+         ]}
+       >
+         <div className="align-center text-center">
+           {/* <Image preview={false} src={lockedimage}></Image> */}
+           <p
+             className="text-center"
+             style={{ fontSize: 20, fontWeight: 400 }}
+           >
+             Error Message
+           </p>
+           <p>
+           Indexx Phoenix(INXP) and FTX Token(FTT) are  currently  not available for Sell
+           </p>
+         </div>
+       </Modal>
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 {/* <div className="bs_token_left d-flex justify-between">

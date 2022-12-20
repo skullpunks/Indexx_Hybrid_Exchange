@@ -341,7 +341,7 @@ const BugReport = () => {
                   </Upload>
                 </Form.Item>
 
-                <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                <Modal  maskStyle={{backdropFilter: "blur(2px)"}} open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
                   <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
               </Form.Item>
