@@ -87,7 +87,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     <div className="swap_container">
       <span style={{textAlign:'center'}}>
       <p style={{marginTop:130,fontSize:30}}>Crypto Exchange</p>
-       <p style={{fontSize:15}}>Free from sign-up, limits and complications</p>
+       <p style={{fontSize:15}}>Sign up to easily trade crypto</p>
       </span>
       
 
