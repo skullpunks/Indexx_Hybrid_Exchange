@@ -85,7 +85,14 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   return (
     <div className="swap_container">
-      <div className="scan-container flex-align-stretch bs_main">
+      <span style={{textAlign:'center'}}>
+      <p style={{marginTop:130,fontSize:30}}>Crypto Exchange</p>
+       <p style={{fontSize:15}}>Free from sign-up, limits and complications</p>
+      </span>
+      
+
+      <div className="scan-container flex-align-stretch bs_main" style={{marginTop:-80}}>
+       
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
