@@ -7,7 +7,7 @@ import YouTube from "../../assets/arts/youtTubeIcon.svg";
 import Reddit from "../../assets/arts/redditIcon.svg";
 import facebook from "../../assets/arts/fb_logo.png";
 import Telegram from "../../assets/arts/telegram.png";
-import needHelp from "../../assets/arts/needHelp.svg";
+import needHelp from "../../assets/arts/needhelp.png";
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from "../../assets/arts/personFlipCoin.png";
 import womanFlipCoin from "../../assets/arts/womanFlipCoin.svg";
@@ -58,7 +58,7 @@ const Footer = ({ helpIcon = true, footerArt = "flipMan" }: FooterProps) => {
 
 
     return (
-        <footer className="site_footer position-relative container-fluid" style={{marginTop:40}}>
+        <footer className="site_footer position-relative container-fluid" style={{marginTop:80}}>
            
 
             
