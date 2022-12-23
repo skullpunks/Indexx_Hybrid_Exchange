@@ -48,8 +48,15 @@ const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const getAllSetting = async () => {
         const res = await getAppSettings();
         appSettingArr = res.data;
-        let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
-        setAdminFees(adminFees.value)
+        if (filteredFromArray[0].title.includes('I')) {
+            let adminFees = appSettingArr.find((item: any) => item.key === "IndexxTokensAdminFees");
+            setAdminFees(adminFees.value);
+        } else {
+            let adminFees = appSettingArr.find((item: any) => item.key === "AdminFees");
+            setAdminFees(adminFees.value);
+        }
+        console.log(adminFee);
+        return;
     }
 
     const [adminFee, setAdminFees] = useState("");
