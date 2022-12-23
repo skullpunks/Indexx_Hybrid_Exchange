@@ -5,16 +5,16 @@ export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL =  "https://api.indexx.ai";
-  baseCEXURL = "https://cex.indexx.ai";
-  baseDEXURL = "https://dex.indexx.ai";
-  baseURL = "https://indexx.ai";
+  baseAPIURL =  "https://test.api.indexx.ai";
+  baseCEXURL = "https://test.cex.indexx.ai";
+  baseDEXURL = "https://test.dex.indexx.ai";
+  baseURL = "https://test.indexx.ai";
   // baseAPIURL = "http://localhost:3000";
 } else {
-  baseCEXURL = "https://cex.indexx.ai";
-  baseDEXURL = "https://dex.indexx.ai";
-  baseAPIURL =  "https://api.indexx.ai"; 
-  baseURL = "https://indexx.ai";
+  baseCEXURL = "https://test.cex.indexx.ai";
+  baseDEXURL = "https://test.dex.indexx.ai";
+  baseAPIURL =  "https://test.api.indexx.ai"; 
+  baseURL = "https://test.indexx.ai";
 }
 
 const API = axios.create({

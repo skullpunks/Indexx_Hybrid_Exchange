@@ -5,7 +5,7 @@ import './BuySell.css';
 
 //import { DownOutlined, QuestionCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 // import { Button, InputNumber, Tag } from 'antd';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 // import BuySellSelect from './BuySellSelect';
@@ -75,6 +75,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // const [status, setStatus] = useState("");
   const [toggleChart, setToggleChart] = useState(true);
   const [screenName, setScreenName] = useState('');
+  const [hasEmail, setHasEmail] = useState(false);
   const { BSvalue } = useContext(BSContext) as BSContextType;
   let ChartCoin: any = Indexx500Graph;
   let MarketCoin: any = Indexx500Market;
@@ -83,11 +84,18 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     MarketCoin = markets[BSvalue.fromGraph];
   }
 
+
+  useEffect(() => {
+    const userId = localStorage.getItem('user');
+    if (userId !== undefined && userId !== null) {
+      setHasEmail(true);
+    }
+  },[hasEmail])
   return (
     <div className="swap_container">
       <span style={{textAlign:'center'}}>
       <p style={{marginTop:130,fontSize:30}}>Crypto Exchange</p>
-       <p style={{fontSize:15}}>Sign up to easily trade crypto</p>
+       <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto' : 'Sign up to easily trade and earn crypto'}</p>
       </span>
       
 
