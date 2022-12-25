@@ -1,7 +1,7 @@
 import { apiPosts } from "../components/IndexBlog/IndexBlog";
 
 const axios = require('axios');
-const RapidAPIKey = process.env.RapidAPIKey;
+const RapidAPIKey = "6adb2e53d5mshf8d75bf9c4c0137p16f122jsnc7ce65a877a8";
 
 export async function getUserId(username: string) {
   const options = {
