@@ -109,11 +109,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
             className="col-sm-12 col-md-12 footercentre2 text-center "
             style={{ marginBottom: 45 }}
           >
-            <div className="row text-center">
-              <div className="col text-center">
-                <span style={{ textAlign: 'center' }}>
+            <div className="row text-left">
+              <div className="col text-left">
+                <span style={{ textAlign: 'left' }}>
                   <p>Products</p>
-                  <p className="text-extra-small text-center" style={{}}>
+                  <p className="text-extra-small text-left" style={{}}>
                     <a
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
@@ -147,10 +147,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                 </span>
               </div>
               <div className="col">
-                <span style={{ textAlign: 'center' }}>
+                <span style={{ textAlign: 'left' }}>
                   <p>Earn</p>
                   <p
-                    className="text-extra-small text-center"
+                    className="text-extra-small text-left"
                     style={{
                       color: '#9F9F9F',
                       textDecoration: 'none',
@@ -179,10 +179,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                 </span>
               </div>
               <div className="col">
-                <span style={{ textAlign: 'center' }}>
+                <span style={{ textAlign: 'left' }}>
                   <p>Company</p>
                   <p
-                    className="text-extra-small text-center"
+                    className="text-extra-small text-left"
                     style={{
                       color: '#9F9F9F',
                       textDecoration: 'none',
@@ -225,6 +225,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       Blog{' '}
+                    </a>
+
+                    <br />
+                    <a
+                      href={`${baseURL}/indexx-exchange/vlog`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      Vlog{' '}
                     </a>
 
                     <br />
@@ -277,7 +285,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </div>
         </div>
         <div className="copyright_bar row">
-          <p className="copyright_text text-center">
+          <p className="copyright_text text-left">
             Copyright © 2023 All Rights Reserved.
           </p>
           <br />
@@ -467,6 +475,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       Blog{' '}
+                    </a>
+
+                    <br />
+                    <a
+                      href={`${baseURL}/indexx-exchange/vlog`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      Vlog{' '}
                     </a>
 
                     <br />
