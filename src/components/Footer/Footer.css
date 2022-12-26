@@ -92,10 +92,28 @@
     cursor: pointer;
   
 }
+.need_help_phone {
+    position: absolute;
+    top: -90px;
+    right: 32px;
+    color: #5F5F5F;
+    font-size: 23px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding: 10px 14px 22px;
+    cursor: pointer;
+  
+}
+
 
 .need_help:hover {
     color: #00387d;
 }
+.need_help_phone:hover {
+    color: #00387d;
+}
+
+
 
 @media (max-width: 767px) {
 
@@ -116,11 +134,16 @@
 
     }
 
+    .desktop-display {
+        display: none;
+    }
+   
     .flip_person_icon {
         position: inherit;
         width: 200px;
         height: 200px;
-        top: 0;
+        top:0;
+    
     }
 
     .flip_person_icon.flip_woman {
@@ -131,5 +154,11 @@
     .footercentre2 p,
     .copyright_text {
         font-size: 10px;
+    }
+}
+
+@media (min-width: 767px) { 
+    .mobile-display {
+        display: none;
     }
 }
