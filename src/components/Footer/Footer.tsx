@@ -58,7 +58,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     <>
       <footer
         className="site_footer position-relative container-fluid desktop-display"
-        style={{ marginTop: 40 }}
+        style={{ marginTop: 300 }}
       >
         {helpIcon && (
           <a
