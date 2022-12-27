@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import bsDollar from "../../assets/arts/bsDollar.svg";
 import "./BS-Sell.css";
 // import { Link } from 'react-router-dom';
-import { Select ,Modal,Button} from 'antd';
+import { Select, Modal, Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
@@ -46,7 +46,6 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     //   });
 
     useEffect(() => {
-
         // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
@@ -93,14 +92,14 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
     }
     const handleTransferOk = () => {
-     
+
         setIsTransferModalVisible(false);
-      };
-    
-      const handleTransferCancel = () => {
+    };
+
+    const handleTransferCancel = () => {
         setIsTransferModalVisible(false);
-      };
-    
+    };
+
 
 
     const handleChange = async (value: string) => {
@@ -109,7 +108,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
 
-    
+
             // alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Sell");
         }
         let getGraphCoin = graphTokens.find(x => x.address === value);
@@ -193,7 +192,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className='sell_screens'>
 
-            <div className="padding-lr-1x padding-tb-3x" style={{paddingTop:50,paddingBottom:50}}>
+            <div className="padding-lr-1x padding-tb-3x" style={{ paddingTop: 50, paddingBottom: 50 }}>
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
                         <input placeholder="0" ref={ref} className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
@@ -211,39 +210,38 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     <></>
                 } */}
 
-<Modal
-         
-         maskStyle={{backdropFilter: "blur(2px)"}}
-         centered={true}
-         visible={isTransferModalVisible}
-         onOk={handleTransferOk}
-         onCancel={handleTransferCancel}
-         width={670}
-         maskClosable={false}
-         footer={[
-          
-           <Button
-             className="center"
-             type="link"
-             onClick={handleTransferCancel}
-           >
-             Ok
-           </Button>,
-         ]}
-       >
-         <div className="align-center text-center">
-           {/* <Image preview={false} src={lockedimage}></Image> */}
-           <p
-             className="text-center"
-             style={{ fontSize: 20, fontWeight: 400 }}
-           >
-             Error Message
-           </p>
-           <p>
-           Indexx Phoenix(INXP) and FTX Token(FTT) are  currently  not available for Sell
-           </p>
-         </div>
-       </Modal>
+                <Modal
+                    maskStyle={{ backdropFilter: "blur(2px)" }}
+                    centered={true}
+                    open={isTransferModalVisible}
+                    onOk={handleTransferOk}
+                    onCancel={handleTransferCancel}
+                    width={670}
+                    maskClosable={false}
+                    footer={[
+
+                        <Button
+                            className="center"
+                            type="link"
+                            onClick={handleTransferCancel}
+                        >
+                            Ok
+                        </Button>,
+                    ]}
+                >
+                    <div className="align-center text-center">
+                        {/* <Image preview={false} src={lockedimage}></Image> */}
+                        <p
+                            className="text-center"
+                            style={{ fontSize: 20, fontWeight: 400 }}
+                        >
+                            Error Message
+                        </p>
+                        <p>
+                            Indexx Phoenix(INXP) and FTX Token(FTT) are  currently  not available for Sell
+                        </p>
+                    </div>
+                </Modal>
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 {/* <div className="bs_token_left d-flex justify-between">
@@ -281,7 +279,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             </div>
             <div className="bs_footer_action " >
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button style={{marginTop:30}} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
             {/* {showUserBalance &&
@@ -291,7 +289,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             } */}
 
 
-            
+
 
 
         </div >

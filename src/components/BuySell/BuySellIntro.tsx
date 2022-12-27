@@ -42,8 +42,6 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
 
   useEffect(() => {
     geolocationData().then((res: any) => {
-      // axios.get('https://geolocation-db.com/json/').then((res: any) => {
-      console.log(res.data);
       setIP(res.data.IPv4);
       setCountry(res.data.country_name);
       setCountryCode(res.data.country_code);

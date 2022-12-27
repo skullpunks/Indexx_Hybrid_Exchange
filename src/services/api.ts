@@ -602,29 +602,29 @@ export const confirmConvertOrder = async (
   }
 };
 
-export const getCoreWalletDetails = async(coin :string) => {
+export const getCoreWalletDetails = async (coin: string) => {
   try {
     const result = await API.get(`/api/v1/inex/wallet/core/${coin}`);
     return result.data;
-  } catch(err: any) {
+  } catch (err: any) {
     console.log('FAILED: unable to perform API request (getCoreWalletDetails)');
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
   }
-}
+};
 
-export const getFTTCoreWalletDetails = async() => {
+export const getFTTCoreWalletDetails = async () => {
   try {
     const result = await API.get(`/api/v1/inex/wallet/core/wallet/FTT`);
     return result.data;
-  } catch(err: any) {
+  } catch (err: any) {
     console.log('FAILED: unable to perform API request (getCoreWalletDetails)');
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
   }
-}
+};
 
 export const createStripePaymentIntent = async (
   amount: number,
@@ -923,7 +923,7 @@ export const getOrderDetails = async (email: string, orderId: string) => {
   }
 };
 
-export const getPaypalOrder = async(token: string) => {
+export const getPaypalOrder = async (token: string) => {
   try {
     const result = await API.get(`/api/v1/inex/user/getPaypalOrder/${token}`);
     return result.data;

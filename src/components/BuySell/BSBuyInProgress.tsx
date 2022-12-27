@@ -1,14 +1,8 @@
-// import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
-// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { getPaypalOrder } from '../../services/api';
-
-// import { BSContext, BSContextType } from '../../utils/SwapContext';
-// import initialTokens from "../../utils/Tokens.json";
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -21,36 +15,33 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [orderAmount] = useSearchParams();
     const [payCurrency] = useSearchParams();
     const [payAmount] = useSearchParams();
-    const [incurr, setIncurr] = useState("");
-    const [inAmt, setInAmt] = useState(0);
+    const [, setIncurr] = useState("");
+    const [, setInAmt] = useState(0);
     const [outcurr, setoutcurr] = useState("");
     const [outAmt, setoutAmt] = useState(0);
-    const [token, setToken] = useState("");
-    const [tokenValue] = useSearchParams();
+    // const [token, setToken] = useState("");
+    // const [tokenValue] = useSearchParams();
 
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
-        //setOrderCurrency(orderCurr)
-        console.log(orderCurr)
-        console.log();
         setIncurr(orderCurr)
         setInAmt(Number(orderAmount.get("orderAmount")));
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
-        setToken(String(tokenValue.get("token")));
-        if (tokenValue.get("token") !== undefined) {
-            getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                    let orderData = res.data.data;
-                   setoutAmt(orderData.breakdown.outAmount) 
-                   setoutcurr(orderData.breakdown.outCurrencyName) 
-                }
-            });
-        }
-    }, [payAmount, payCurrency, orderAmount, orderCurrency, token, tokenValue])
-    console.log(incurr)
-    console.log(inAmt);
+        //---Below commented code is for Paypal payments---
+        //setToken(String(tokenValue.get("token")));
+        // if (tokenValue.get("token") !== undefined) {
+        //     getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
+        //         console.log(res);
+        //         if (res.status === 200) {
+        //             let orderData = res.data.data;
+        //            setoutAmt(orderData.breakdown.outAmount) 
+        //            setoutcurr(orderData.breakdown.outCurrencyName) 
+        //         }
+        //     });
+        // }
+    }, [payAmount, payCurrency, orderAmount, orderCurrency])
+   
 
         // const filteredFromArray = initialTokens.filter(function (obj) {
     //     return obj?.address === BSvalue?.fromToken;
