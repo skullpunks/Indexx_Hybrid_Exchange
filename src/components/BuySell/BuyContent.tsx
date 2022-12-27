@@ -21,8 +21,6 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const navigateUser = () => {
-    console.log(BSvalue?.fromTitle)
-    console.log(BSvalue?.fromToken)
     let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
     if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
         alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Buy");
@@ -89,7 +87,6 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
 
   const checkMinMaxValue = async (value: string, buyValue: number) => {
     let minAndMax = await getMinMaxValue(value);
-    console.log("minAndMax", minAndMax);
     if (buyValue > minAndMax.max) {
       setLimitPassed(false);
     } else if (buyValue < minAndMax.min) {
@@ -134,7 +131,6 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       let value = BSvalue?.fromToken;
       // debugger;
       let getRequiredCoin = initialTokens.find((x) => x.address === value);
-      console.log("getRequiredCoin", String(getRequiredCoin?.title));
       await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
     }
   };
