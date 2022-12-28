@@ -170,9 +170,6 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
                 <Button
                 type="primary"
                 className="atn-btn atn-btn-round margin-b-1x"
-                loading={loadings}
-                htmlType="submit"
-                block
                 style={{width:270}}
               >
                 Get Started
