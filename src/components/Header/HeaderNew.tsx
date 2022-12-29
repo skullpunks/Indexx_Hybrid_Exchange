@@ -128,7 +128,7 @@ const HeaderNew = () => {
               >
                 <NavDropdown.Item
                   as={Link}
-                  to="/indexx-exchange/buy-sell/get-started"
+                  to="/indexx-exchange/buy-sell/login"
                   className="dropdown-item"
                 >
                   <Image preview={false} src={headerstar} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>

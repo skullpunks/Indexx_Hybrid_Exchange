@@ -40,7 +40,7 @@ const Section1 = () => {
                     </span>
                    
                 </a>
-                <Link className="td-none" to="/indexx-exchange/buy-sell/get-started">
+                <Link className="td-none" to="/indexx-exchange/buy-sell/login">
                     <div className="login-button cut_button">
                         <div className="login-button_text">Centralized</div>
                     </div>
