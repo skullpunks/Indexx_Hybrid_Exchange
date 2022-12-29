@@ -97,7 +97,7 @@ function App() {
         <HeaderNew />
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
-            <Route path="/*" element={<BuySellGetStartedLayout />} />
+            <Route path="/*" element={<BuySellLogin />} />
             :
             <Route path="/*" element={<BuySell />} />
           }
