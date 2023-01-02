@@ -1,9 +1,9 @@
 
-import { Button, Table } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
+import { Button, Pagination, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { marketsData } from "../../services/api";
+import { marketsData, decodeJWT } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -21,36 +21,49 @@ interface DataType {
     Symbol: any;
     BTCPrice: any
 }
-const MarketsBTCTable = () => {
 
+interface Props {
+    search: string;
+}
+const MarketsBTCTable: React.FC<(Props)> = ({ search }) => {
+    const pageSize = 10;
+    const [current, setCurrent] = useState(1);
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
     //const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
+    // const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+    //     console.log('params', pagination, filters, sorter, extra);
+    // };
     const [isLoading, setLoadings] = useState(true);
 
     useEffect(() => {
         if (!calledOnce) {
-            // let access_token = String(localStorage?.getItem("access_token"));
-            // if (access_token !== "null" || access_token !== undefined) {
-            //     let decoded: any = decodeJWT(access_token);
-            //     console.log(decoded.email);
-            //     setEmail(decoded.email);
-            //     console.log(email);
-            // }
+            let access_token = String(localStorage?.getItem("access_token"));
+            if (access_token !== "null" || access_token !== undefined) {
+                let decoded: any = decodeJWT(access_token);
+                console.log(decoded.email);
+                setEmail(decoded.email);
+            }
             marketsData().then((data) => {
-                const res = data.data.filter((x: any) => x.Symbol !== 'BTC')
-                setMarketData(res);
-                setMarketDataFixed(res);
+                setMarketData(data.data);
+                setMarketDataFixed(data.data);
                 setCalledOnce(true);
-                setLoadings(false);
+                setLoadings(false)
             });
         }
-    }, [calledOnce]);
+        if (search) {
+            const filterDate = marketDataFixed?.filter((data: any) => {
+                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
+            });
+            setMarketData(filterDate);
+        }
+        else {
+            setMarketData(marketDataFixed);
+        }
+    }, [calledOnce, email, marketDataFixed, search]);
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
@@ -197,6 +210,26 @@ const MarketsBTCTable = () => {
         setMarketData(marketDataFixed.filter((x: any) => x.Symbol.includes('I')));
     }
 
+    const getData = (current: number, pageSize: number) => {
+        // Normally you should get the data from the server
+        const xx = marketData && marketData.slice((current - 1) * pageSize, current * pageSize);
+        console.log(xx)
+        return xx
+    };
+    const MyPagination = ({ total, onChange, current }: any) => {
+        return (
+            <Pagination
+                onChange={onChange}
+                total={total}
+                current={current}
+                pageSize={pageSize}
+                responsive={true}
+                style={{
+                    padding: '5px', textAlign: 'center'
+                }}
+            />
+        );
+    };
     // const data: DataType[] = [
     //     {
     //         key: '1',
@@ -276,7 +309,12 @@ const MarketsBTCTable = () => {
                 <Button className='white-strip d-md-block d-none' onClick={() => showTredning()}>Trending</Button>
             </div>
             <div className='tab-body-container'>
-                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={tableLoading} />
+            <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} loading={tableLoading} />
+                <MyPagination
+                    total={marketData && marketData.length}
+                    current={current}
+                    onChange={setCurrent}
+                />
             </div>
         </div>
     )
