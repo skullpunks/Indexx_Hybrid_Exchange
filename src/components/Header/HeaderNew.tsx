@@ -17,7 +17,7 @@ import whitetoken from "../../assets/header-icons/Products/IndexxToken.png";
 
 import earn from "../../assets/header-icons/EarnTab/t2e.png";
 import bank from "../../assets/header-icons/EarnTab/bank.png";
-
+import vlog from "../../assets/arts/cam.png";
 import about from "../../assets/header-icons/Company/about.png";
 import affiliate from "../../assets/header-icons/Company/affiliate.png";
 import blog from "../../assets/header-icons/Company/blog.png";
@@ -45,6 +45,7 @@ const Links = [
   { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
   { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
   { label: "Blog", value: "blog", url: "/indexx-exchange/blog" },
+  { label: "Vlog", value: "vlog", url: "/indexx-exchange/vlog" },
   { label: "About", value: "about", url: "/indexx-exchange/about" },
   { label: "Careers", value: "careers", url: "/indexx-exchange/careers" },
   { label: "Notifications", value: "notification", url: "/indexx-exchange/notification" },
@@ -127,7 +128,7 @@ const HeaderNew = () => {
               >
                 <NavDropdown.Item
                   as={Link}
-                  to="/indexx-exchange/buy-sell/get-started"
+                  to="/indexx-exchange/buy-sell/login"
                   className="dropdown-item"
                 >
                   <Image preview={false} src={headerstar} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
@@ -249,6 +250,16 @@ const HeaderNew = () => {
                    <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
                    <Text style={{paddingLeft:4,color:'white'}}>Blog</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}>Updates and trends in the crypto world</Text>
+                
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  className="dropdown-item"
+                  href={`${baseURL}/indexx-exchange/vlog`}
+                 
+                >
+                   <Image preview={false} src={vlog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
+                   <Text style={{paddingLeft:4,color:'white'}}>Vlog</Text><br/>
+                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Watch our videos to stay up to date</Text>
                 
                 </NavDropdown.Item>
                 <NavDropdown.Item 

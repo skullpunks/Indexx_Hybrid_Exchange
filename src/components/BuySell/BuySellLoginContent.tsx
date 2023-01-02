@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Email from "../../assets/arts/Email.svg";
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from "../../assets/arts/qrCode.svg";
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, notification ,Divider} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAPI, decodeJWT, getUserDetails, baseURL } from "../../services/api";
 import {
@@ -144,17 +144,11 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           </Form>
           <br />
 
-          <div className=" padding-b-2x border-b-1x text-center">
-            Don’t have an account?{" "}
+          <div className=" padding-b-2x text-center">
+            Don’t have an account?{" "}<Link to="/indexx-exchange/buy-sell/get-started" style={{color:"#F66036"}}>Get Started</Link> 
+            <Divider></Divider>
+            <br/>
             <Link
-              to="/indexx-exchange/buy-sell/get-started"
-              className="text_link"
-            >
-              Get Started
-            </Link>
-          </div>
-          <br />
-          <Link
             to=""
             className="default-link border-default text-center margin-t-1_5x disabled"
             style={{
@@ -165,6 +159,27 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           >
             <img src={qrCode} alt="qr-code" /> Log In with QR code (coming soon)
           </Link>
+
+          <br/><br/>
+
+
+            <Link
+              to="/indexx-exchange/buy-sell/get-started"
+              className="text_link"
+            >
+                <Button
+                type="primary"
+                className="atn-btn atn-btn-round margin-b-1x"
+                style={{width:270}}
+              >
+                Get Started
+              </Button>
+            </Link> <br/><br/>
+            <p style={{color:"#F66036", fontSize:15}}> Sign up to be an indexxer</p>
+           
+          </div>
+          <br />
+        
         </div>
       </div>
     </div>
