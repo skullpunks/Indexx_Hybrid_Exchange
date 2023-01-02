@@ -1,10 +1,10 @@
 
 import React, { useEffect, useState } from 'react'
-import { Button, Pagination, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Button, Table } from 'antd';
+import type { ColumnsType, TableProps } from 'antd/es/table';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-import { decodeJWT, marketsData } from "../../services/api";
+import { decodeJWT, marketsData  } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -21,17 +21,16 @@ interface DataType {
     LowPrice: any;
     Symbol: any;
 }
-interface Props {
-    search: string;
-}
-const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
-    const pageSize = 10;
-    const [current, setCurrent] = useState(1);
+const MarketsFavTable = () => {
+
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
+    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+        console.log('params', pagination, filters, sorter, extra);
+    };
 
     useEffect(() => {
         if (!calledOnce) {
@@ -43,22 +42,13 @@ const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
                 console.log(email);
             }
             marketsData().then((data) => {
-                const res = data?.data?.filter((x: any) => x.Favourite === true)
+                const res = data.data.filter((x: any) => x.Favourite === true)
                 setMarketData(res);
                 setMarketDataFixed(res);
                 setCalledOnce(true);
             });
         }
-        if (search) {
-            const filterDate = marketDataFixed?.filter((data: any) => {
-                return data.Symbol?.toLowerCase().includes(search?.toLowerCase()) || data.Price === +search || data.Name?.toLowerCase() === search?.toLowerCase()
-            });
-            setMarketData(filterDate);
-        }
-        else {
-            setMarketData(marketDataFixed);
-        }
-    }, [calledOnce, email, search]);
+    }, [calledOnce, email]);
 
     const updateFavCurr = async (row: any) => {
         console.log(row);
@@ -192,26 +182,75 @@ const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
         setMarketData(marketDataFixed.filter((x: any) => x.Symbol.includes('I')));
     }
 
-    const getData = (current: number, pageSize: number) => {
-        // Normally you should get the data from the server
-        const xx = marketData && marketData.slice((current - 1) * pageSize, current * pageSize);
-        console.log(xx)
-        return xx
-    };
-    const MyPagination = ({ total, onChange, current }: any) => {
-        return (
-            <Pagination
-                onChange={onChange}
-                total={total}
-                current={current}
-                pageSize={pageSize}
-                responsive={true}
-                style={{
-                    padding: '5px', textAlign: 'center'
-                }}
-            />
-        );
-    };
+    // const data: DataType[] = [
+    //     {
+    //         key: '1',
+    //         favourite: false,
+    //         name: 'Indexx Exchange',
+    //         Price: "$10",
+    //         DailyChange: "12.09%",
+    //         DailyHigh: "$10.00",
+    //         DailyLow: "$12.09%",
+    //         Volume: "$100.00M",
+    //         MarketCap: "$100.00B",
+    //     },
+    //     {
+    //         key: '2',
+    //         favourite: false,
+    //         name: 'Index 500',
+    //         Price: "$6",
+    //         DailyChange: "10.09%",
+    //         DailyHigh: "$6.00",
+    //         DailyLow: "$10.00",
+    //         Volume: "$6.00M",
+    //         MarketCap: "$61.00B",
+    //     },
+    //     {
+    //         key: '3',
+    //         favourite: true,
+    //         name: 'Indexx Crypto',
+    //         Price: "$18",
+    //         DailyChange: "-9.09%",
+    //         DailyHigh: "$6.00",
+    //         DailyLow: "$6.00",
+    //         Volume: "$18.00M",
+    //         MarketCap: "$8.00B",
+    //     },
+    //     {
+    //         key: '4',
+    //         favourite: true,
+    //         name: 'Indexx Fortune',
+    //         Price: "$0.019",
+    //         DailyChange: "0.09",
+    //         DailyHigh: "$5.00",
+    //         DailyLow: "$0.019",
+    //         Volume: "$0.009M",
+    //         MarketCap: "$1.019B",
+    //     },
+    //     {
+    //         key: '5',
+    //         favourite: true,
+    //         name: 'Indexx Fortune',
+    //         Price: "$0.019",
+    //         DailyChange: "+2.78%",
+    //         DailyHigh: "$0.09",
+    //         DailyLow: "$0.09",
+    //         Volume: "$0.09M",
+    //         MarketCap: "$2.09B",
+    //     },
+    //     {
+    //         key: '6',
+    //         favourite: false,
+    //         name: 'Indexx Fortune',
+    //         Price: "$0.09",
+    //         DailyChange: "+3.03%",
+    //         DailyHigh: "$1.05",
+    //         DailyLow: "$1.05",
+    //         Volume: "$1.05M",
+    //         MarketCap: "$10.05B",
+    //     },
+    // ];
+
     return (
         <div>
             <div className='grey-strip d-flex market_button_strips'>
@@ -223,12 +262,7 @@ const MarketsFavTable: React.FC<(Props)> = ({ search }) => {
                 <Button className='white-strip last-item d-md-block d-none'>ID</Button>
             </div>
             <div className='tab-body-container'>
-                <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} loading={true} />
-                <MyPagination
-                    total={marketData && marketData.length}
-                    current={current}
-                    onChange={setCurrent}
-                />
+                <Table columns={columns} dataSource={marketData} onChange={onChange} loading={true}/>
             </div>
         </div>
     )

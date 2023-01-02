@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import './Markets.css';
 import { SearchOutlined } from '@ant-design/icons';
 import { Input, Tabs } from 'antd';
@@ -7,27 +7,9 @@ import MarketsTable from './MarketsTable';
 import Footer from '../Footer/Footer';
 import MarketsBTCTable from './MarketsBTCable';
 import MarketsIUSDPable from './MarketsIUSDPTable';
-import debounce from 'lodash.debounce'
-//import MarketsFavTable from './MarketsFavTable';
+// import MarketsFavTable from './MarketsFavTable';
 
 const Markets = () => {
-  const [valueInput, setValueInput] = useState('');
-  const [valueSearch, setValueSearch] = useState('');
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSave = useCallback(
-    debounce(nextValue => setValueSearch(nextValue), 300),
-    [], // will be created only once initially
-  );
-  const onChageSearch = (e: any) => {
-    let val = e.currentTarget.value;
-    setValueInput(val);
-    debouncedSave(val);
-  };
-  const tabChange = (e: any) => {
-    console.log(e)
-    setValueInput('');
-  }
   return (
     <div>
       <div className='scan-container market-container'>
@@ -35,31 +17,30 @@ const Markets = () => {
 
         <br />
         <div className='search-input-container'>
-          <Input size="large" placeholder="Search" value={valueInput} onChange={onChageSearch} maxLength={50} prefix={<SearchOutlined />} />
+          <Input size="large" placeholder=" Search" prefix={<SearchOutlined />} />
         </div>
         <div className='tabs-container border'>
-          <Tabs defaultActiveKey="2" onChange={tabChange}>
+          <Tabs defaultActiveKey="2">
             {/* <Tabs.TabPane tab={<StarFilled className='padding-l-1x d-md-block d-none' />} key="0">
               <MarketsFavTable />
 
             </Tabs.TabPane> */}
 
-            <Tabs.TabPane tab="Prices " key="1">
-              <MarketsTable search={valueSearch} />
-
+            <Tabs.TabPane tab="USD Pairs " key="1">
+              <MarketsTable />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="USD" key="2">
-              <MarketsIUSDPable search={valueSearch} />
-
+            
+            <Tabs.TabPane tab="IUSD+ Pairs" key="2">
+              <MarketsIUSDPable />
             </Tabs.TabPane>
+
             <Tabs.TabPane tab="BTC Pairs" key="3">
-              <MarketsBTCTable search={valueSearch} />
+              <MarketsBTCTable />
             </Tabs.TabPane>
           </Tabs>
         </div>
 
       </div>
-      <br/><br/><br/><br/><br/>
       <Footer />
     </div>
   )
