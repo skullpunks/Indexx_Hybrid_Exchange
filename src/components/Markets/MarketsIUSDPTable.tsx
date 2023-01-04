@@ -27,7 +27,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+    //const [email, setEmail] = useState('');
     // const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     const [marketData, setMarketData] = useState() as any;
@@ -68,7 +68,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
         else {
             setMarketData(marketDataFixed);
         }
-    }, [calledOnce, email, marketDataFixed, search]);
+    }, [calledOnce, marketDataFixed, search]);
 
     // const updateFavCurr = async (row: any, index: any) => {
     //     console.log(row);

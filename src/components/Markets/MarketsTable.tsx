@@ -3,7 +3,7 @@ import { Button, Pagination, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { marketsData,decodeJWT } from "../../services/api";
+import { marketsData } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -28,7 +28,6 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
     const [calledOnce, setCalledOnce] = useState(false);
     //const [email, setEmail] = useState('');
     const [marketData, setMarketData] = useState() as any;
@@ -67,7 +66,7 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
         else {
             setMarketData(marketDataFixed);
         }
-    }, [calledOnce, email, marketDataFixed, search]);
+    }, [calledOnce, marketDataFixed, search]);
     /*
     "Name": "Indexx500",
                "Symbol": "IN500",
