@@ -41,12 +41,12 @@ const MarketsBTCTable: React.FC<(Props)> = ({ search }) => {
 
     useEffect(() => {
         if (!calledOnce) {
-            let access_token = String(localStorage?.getItem("access_token"));
-            if (access_token !== "null" || access_token !== undefined) {
-                let decoded: any = decodeJWT(access_token);
-                console.log(decoded.email);
-                setEmail(decoded.email);
-            }
+            // let access_token = String(localStorage?.getItem("access_token"));
+            // if (access_token !== "null" || access_token !== undefined) {
+            //     let decoded: any = decodeJWT(access_token);
+            //     console.log(decoded.email);
+            //     setEmail(decoded.email);
+            // }
             marketsData().then((data) => {
                 setMarketData(data.data);
                 setMarketDataFixed(data.data);

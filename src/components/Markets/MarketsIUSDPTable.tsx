@@ -3,7 +3,7 @@ import { Button, Pagination, Table } from 'antd';
 import type { ColumnsType} from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { marketsData, decodeJWT } from "../../services/api";
+import { marketsData } from "../../services/api";
 
 interface DataType {
     key: React.Key;
@@ -46,12 +46,12 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
 
     useEffect(() => {
         if (!calledOnce) {
-            let access_token = String(localStorage?.getItem("access_token"));
-            if (access_token !== "null" || access_token !== undefined) {
-                let decoded: any = decodeJWT(access_token);
-                console.log(decoded.email);
-                setEmail(decoded.email);
-            }
+            // let access_token = String(localStorage?.getItem("access_token"));
+            // if (access_token !== "null" || access_token !== undefined) {
+            //     let decoded: any = decodeJWT(access_token);
+            //     console.log(decoded.email);
+            //     setEmail(decoded.email);
+            // }
             marketsData().then((data) => {
                 setMarketData(data.data);
                 setMarketDataFixed(data.data);
@@ -240,6 +240,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
         console.log(xx)
         return xx
     };
+
     const MyPagination = ({ total, onChange, current }: any) => {
         return (
             <Pagination
