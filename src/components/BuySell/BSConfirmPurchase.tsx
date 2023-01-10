@@ -23,9 +23,9 @@ let priceData: any = {};
 let appSettingArr: any[] = [];
 
 // This is your test publishable API key.
-// const stripePromise = loadStripe("pk_test_51MJM8OLRNgju1k3I37ZxdmbiiJHIFWbEwZXIESCKGwlYsOU6VHk1GMrdkB4qdA5helFlHS9x0YVWWEF8bDeI7cX300V45nfTCz");
+ const stripePromise = loadStripe("pk_test_51MJM8OLRNgju1k3I37ZxdmbiiJHIFWbEwZXIESCKGwlYsOU6VHk1GMrdkB4qdA5helFlHS9x0YVWWEF8bDeI7cX300V45nfTCz");
 // This is your live publishable API key.
-const stripePromise = loadStripe("pk_live_51MJM8OLRNgju1k3IG1eMgbxWijny3tiwF3pcAYbwOQpduUbh60g79yxLBjSNsruKaepiAEI76ay3Y27N8cAgnwjz00gofPaXN8");
+//const stripePromise = loadStripe("pk_live_51MJM8OLRNgju1k3IG1eMgbxWijny3tiwF3pcAYbwOQpduUbh60g79yxLBjSNsruKaepiAEI76ay3Y27N8cAgnwjz00gofPaXN8");
 
 const BSConfirmPurchase: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
