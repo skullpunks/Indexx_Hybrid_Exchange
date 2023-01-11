@@ -1,21 +1,16 @@
 import {  Image, Button } from "antd";
 import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+
 import buysell from "../../assets/how-it-works/buysellss.png";
 import sell from "../../assets/how-it-works/sell.png";
 import convert from "../../assets/how-it-works/convert.png";
 import firstcoin from "../../assets/how-it-works/indexxlogo.png";
 import Footer from "../Footer/Footer";
+import { baseDEXURL } from "../../services/api";
 
 const { Text } = Typography;
 
 const HowCentralized = () => {
-  const navigate = useNavigate();
-
-  const navigateUser = (path: any) => {
-    window.localStorage.setItem("redirect", window.location.pathname);
-    navigate(path);
-  };
 
   return (
     <>
@@ -223,16 +218,19 @@ const HowCentralized = () => {
         </div>
 
         <div className="text-center" style={{ width: 300, marginTop: 100 }}>
+          <a href={baseDEXURL}> 
           <Button
             danger
             type="primary"
             shape="round"
             size="large"
             className="btn_xl btn-primary w-100 p-10 "
-            onClick={() => navigateUser("/indexx-exchange/buy-sell")}
+
           >
             Buy Crypto
           </Button>{" "}
+          </a>
+         
           <br />
           <br />
         </div>
