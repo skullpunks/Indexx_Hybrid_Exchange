@@ -5,11 +5,11 @@ export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL =  "https://test.api.indexx.ai";
+  //baseAPIURL =  "https://test.api.indexx.ai";
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";
   baseURL = "https://test.indexx.ai";
-  // baseAPIURL = "http://localhost:3000";
+  baseAPIURL = "http://localhost:3000";
 } else {
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";
@@ -934,3 +934,15 @@ export const getPaypalOrder = async (token: string) => {
     return e.response.data;
   }
 };
+
+export const getIndexxMediumBlogs = async() => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/indexxBlogs');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getIndexxMediumBlogs)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
