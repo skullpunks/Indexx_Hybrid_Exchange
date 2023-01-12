@@ -4,7 +4,7 @@ import useFetch from "../Hooks/use-fetch";
 import styles from "./Graph.module.css";
 import { getIndexxTokenPrices } from "../../services/api";
 
-const url = "https://api.coingecko.com/api/v3/coins/stellar/market_chart?vs_currency=usd&days=";
+const url = "https://api.coingecko.com/api/v3/coins/algorand/market_chart?vs_currency=usd&days=";
 const currencyName = "IndexxExchange";
 const currencySymbol = "INEX";
 

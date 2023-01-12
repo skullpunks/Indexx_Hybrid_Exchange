@@ -5,7 +5,7 @@ import { Segmented } from 'antd';
 //   YAxis
 // } from "recharts";
 import { useState, useEffect } from 'react';
-import { AreaChart, Area, XAxis, Tooltip } from 'recharts';
+import { AreaChart, Area, XAxis, Tooltip, YAxis } from 'recharts';
 import moment from 'moment';
 //0import numeral from "numeral";
 import styles from './LineGraph.module.css';
@@ -44,7 +44,7 @@ const LineGraph = (props: any) => {
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
-    setCoinValue((Math.round(payload[0]?.payload?.price * 100) /100));
+      setCoinValue((Math.round(payload[0]?.payload?.price * 100) / 100));
       return (
         <div className="custom-tooltip">
           <p className="label">{`${dateFormatter3(label)}`}</p>
@@ -62,7 +62,7 @@ const LineGraph = (props: any) => {
           style={{ minWidth: 900, maxWidth: 900, padding: 15, borderColor: '#D7D7D7', borderRight: 'none' }}
         >
 
-          <div className="chart_header d-flex flex-align-center" style={{marginLeft:2}}>
+          <div className="chart_header d-flex flex-align-center" style={{ marginLeft: 2 }}>
             <img
               src={
                 require(`../../assets/token-icons/${props.currencySymbol}.png`)
@@ -76,8 +76,8 @@ const LineGraph = (props: any) => {
               {coinValue} USD/{props.currencySymbol}
             </h1>
           </div>
-            
-          <div className="chart_inner_right" style={{marginTop:-35,marginRight:-25}}>
+
+          <div className="chart_inner_right" style={{ marginTop: -35, marginRight: -25 }}>
             <Segmented className="chart_dynamic" options={[
               {
                 label: (<span onClick={() => { props.hourClickHandler(); changeValue(1) }}>
@@ -117,9 +117,9 @@ const LineGraph = (props: any) => {
           <br></br>
           <br></br>
           <br></br>
-          
+
           <AreaChart
-            margin={{ left: -60, right:-19, top: 10 }}
+            margin={{ left: -60, right: -19, top: 10 }}
             className={styles.graphBackground}
             width={width}
             height={height}
@@ -133,7 +133,7 @@ const LineGraph = (props: any) => {
             </defs>
 
             <Area
-              
+
               dot={false}
               type="monotone"
               dataKey="price"
@@ -170,13 +170,15 @@ const LineGraph = (props: any) => {
               />
 
             }
+            <YAxis
+              stroke="#5f5f5f" padding={{ top: 20 }} tick={{ fill: "#5f5f5f" }} domain={['auto', 'auto']} hide={true} />
             {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}
               formatter={function (value: any) {
                 return `${(Math.round(value * 100) / 100).toFixed(3) + ' USD'}`;
               }}
             /> */}
-             <Tooltip position={{ y: -10 }} content={<CustomTooltip />} />
+            <Tooltip position={{ y: -10 }} content={<CustomTooltip />} />
           </AreaChart>
         </div>
       ) : null
