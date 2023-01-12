@@ -259,7 +259,7 @@ const HowTokens = () => {
               size="large"
               className="btn_xl btn-primary w-100 p-10 "
             >
-              Trade To Earn
+              Tokens Page
             </Button>
           </a>
 
