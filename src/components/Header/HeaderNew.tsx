@@ -146,7 +146,7 @@ const HeaderNew = () => {
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}> Swap, Buy & Sell</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="https://tokens.indexx.ai/"
+                  href="https://indexx.ai/indexx-exchange/token-details"
                   className="dropdown-item"
                   target="_blank"
                   rel="noreferrer"
