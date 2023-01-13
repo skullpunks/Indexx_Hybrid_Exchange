@@ -1,9 +1,8 @@
-import { AutoComplete, Pagination, Table } from 'antd';
+import { Input, Pagination, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Select } from 'antd';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { decodeJWT, getUserOrders } from '../../services/api';
-import moment from 'moment';
 
 const { Option } = Select;
 
@@ -26,9 +25,10 @@ const BSConvertOrderHistoryTable: React.FC = () => {
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [orderList, setOrderList] = useState() as any;
-    const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
     const [orderListFilter, setOrderTxListFilter] = useState() as any;
     const [isLoading, setLoadings] = useState(true);
+    const [valueInput, setValueInput] = useState('');
+
     const tableLoading = {
         spinning: isLoading,
         indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="50" height="50" />,
@@ -190,25 +190,13 @@ const BSConvertOrderHistoryTable: React.FC = () => {
         }
     };
 
-
-    const handleSearchHashId = (value: string) => {
-        const txListFilterData = orderList.filter((data: any) => {
-            return data.txId?.toLowerCase() === value?.toLowerCase()
-        })
-        setOrderTxListFilter(txListFilterData);
-    };
-
-    const handleSearch = (value: string) => {
-        let res: { value: string; label: string }[] = [];
-        if (!value || value.indexOf('@') >= 0) {
-            res = [];
-        } else {
-            res = orderList.map((data: any) => ({
-                value: data.txId,
-                label: `${data.txId}`,
-            }));
-        }
-        setOptions(res);
+    const onChageSearch = (e: any) => {
+        let val = e.currentTarget.value;
+        setValueInput(val)
+        const filterDate = orderList?.filter((data: any) => {
+            return data.orderId?.toLowerCase().includes(val?.toLowerCase());
+        });
+        setOrderTxListFilter(filterDate);
     };
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
@@ -267,13 +255,7 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Order Id</label> <br />
-                    <AutoComplete
-                        onSearch={handleSearch}
-                        placeholder="Search order id"
-                        onSelect={handleSearchHashId}
-                        options={options}
-                        allowClear={true}
-                    />
+                    <Input size="large" placeholder="Search Order Id" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" loading={tableLoading} />
