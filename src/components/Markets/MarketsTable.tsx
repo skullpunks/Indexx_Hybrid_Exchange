@@ -99,7 +99,7 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
             dataIndex: 'Symbol',
             render: (_, record) => {
                 return <div>
-                    <img src={require(`../../assets/token-icons/${record?.Symbol}.png`).default} alt="coin" width="30" height="30" />
+                    <img src={record.isExternal ? record.imageURL : require(`../../assets/token-icons/${record?.Symbol}.png`).default} alt="coin" width="30" height="30" />
                     <p style={{ marginTop: "-33px", marginLeft: "39px" }}>{record?.Name}</p>
                     <p style={{ marginTop: "-6px", marginLeft: "38px" }}>{record?.Symbol + '/USD'}</p>
                 </div>;
