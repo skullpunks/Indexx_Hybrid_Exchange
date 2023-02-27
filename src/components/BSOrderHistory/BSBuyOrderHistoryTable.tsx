@@ -31,7 +31,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     const [selection, setSelection] = useState({
         asset: '',
         status: '',
-        time: '',
+        time: '30',
         orderId: '',
     })
     const tableLoading = {
@@ -156,6 +156,8 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     }, []);
 
     const handleChangeTime = (value: string) => {
+        const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
+        console.log(pastDate);
         if (!isNaN(+value)) {
             setSelection({
                 asset: selection.asset,
@@ -163,12 +165,14 @@ const BSBuyOrderHistoryTable: React.FC = () => {
                 time: value,
                 orderId: selection.orderId,
             });
-            const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
-            console.log(pastDate);
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
                 return moment(pastDate).isSameOrBefore(valueDate)
+                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                &&  (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
+                
             })
             setOrderTxListFilter(txListFilterData);
         }
@@ -179,7 +183,13 @@ const BSBuyOrderHistoryTable: React.FC = () => {
                 time: "",
                 orderId: selection.orderId,
             });
-            setOrderTxListFilter(orderList)
+            const txListFilterData = orderList.filter((data: any) => {
+                return (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                &&  (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
+                
+            })
+            setOrderTxListFilter(txListFilterData);
         }
         console.log("in time of order ", orderListFilter);
         // console.log("in order ",orderListFilter);
