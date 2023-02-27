@@ -248,6 +248,8 @@ const BSBuyOrderHistoryTable: React.FC = () => {
 
     const onChageSearch = (e: any) => {
         let val = e.currentTarget.value;
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         setSelection({
             asset: selection.asset,
             status: selection.status,
@@ -257,7 +259,14 @@ const BSBuyOrderHistoryTable: React.FC = () => {
         console.log(val)
         setValueInput(val)
         const filterDate = orderList?.filter((data: any) => {
-            return data.orderId?.toLowerCase().includes(val?.toLowerCase());
+            let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+            return data.orderId?.toLowerCase().includes(val?.toLowerCase())
+            && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+            && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
+            && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+            
+
         });
         setOrderTxListFilter(filterDate);
         console.log("in search of order ", orderListFilter);
