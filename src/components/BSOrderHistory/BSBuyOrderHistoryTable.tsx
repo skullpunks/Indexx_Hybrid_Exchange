@@ -191,7 +191,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData);
         }
-        console.log("in time of order ", orderListFilter);
+        console.log("in time of buy ", orderListFilter);
         // console.log("in order ",orderListFilter);
     };
     console.log(selection);
@@ -242,7 +242,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in status of order ", orderListFilter);
+        console.log("in status of buy ", orderListFilter);
 
     };
 
@@ -269,7 +269,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
 
         });
         setOrderTxListFilter(filterDate);
-        console.log("in search of order ", orderListFilter);
+        console.log("in search of buy ", orderListFilter);
 
     };
 
@@ -314,7 +314,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in asset of order ", orderListFilter);
+        console.log("in asset of buy ", orderListFilter);
 
     };
 
