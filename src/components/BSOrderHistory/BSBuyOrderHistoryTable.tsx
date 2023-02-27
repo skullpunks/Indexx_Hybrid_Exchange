@@ -28,6 +28,12 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     const [orderListFilter, setOrderTxListFilter] = useState() as any;
     const [isLoading, setLoadings] = useState(true);
     const [valueInput, setValueInput] = useState('');
+    const [selection, setSelection] = useState({
+        asset: '',
+        status: '',
+        time: '',
+        orderId: '',
+    })
     const tableLoading = {
         spinning: isLoading,
         indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="50" height="50" />,
@@ -126,7 +132,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             dataIndex: 'exchangeFees',
             responsive: ["sm"],
         },
-            
+
     ];
 
 
@@ -150,52 +156,129 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     }, []);
 
     const handleChangeTime = (value: string) => {
+
         if (!isNaN(+value)) {
+            setSelection({
+                asset: selection.asset,
+                status: selection.status,
+                time: value,
+                orderId: selection.orderId,
+            });
             const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
+            console.log(pastDate);
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
+
                 return moment(pastDate).isSameOrBefore(valueDate)
             })
             setOrderTxListFilter(txListFilterData);
         }
         else {
+            setSelection({
+                asset: selection.asset,
+                status: selection.status,
+                time: "",
+                orderId: selection.orderId,
+            });
             setOrderTxListFilter(orderList)
         }
-
+        console.log("in time of order ", orderListFilter);
+        // console.log("in order ",orderListFilter);
     };
+    console.log(selection);
+
     const handleChangeStatus = (value: string) => {
+        console.log("Value: ", value);
+        console.log("List: ", orderList)
+
+
+
         if (value !== 'all') {
+            setSelection({
+                asset: selection.asset,
+                status: value,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
+            console.log(":", selection.asset, selection.time);
+            const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+            console.log("Past date", pastDate);
             const txListFilterData = orderList.filter((data: any) => {
+                console.log(data.breakdown.outCurrencyName?.toLowerCase());
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
                 return data.status?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+
             })
             console.log(txListFilterData);
             setOrderTxListFilter(txListFilterData);
         }
         else {
-            setOrderTxListFilter(orderList)
+            setSelection({
+                asset: selection.asset,
+                status: '',
+                time: selection.time,
+                orderId: selection.orderId,
+            });
+            const txListFilterData = orderList.filter((data: any) => {
+                console.log(data.breakdown.outCurrencyName?.toLowerCase());
+                return (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
+                // data.status?.toLowerCase() === value?.toLowerCase() 
+            })
+            setOrderTxListFilter(txListFilterData)
         }
+        console.log("in status of order ", orderListFilter);
+
     };
 
-  const onChageSearch = (e: any) => {
-    let val = e.currentTarget.value;
-    console.log(val)
-    setValueInput(val)
-    const filterDate = orderList?.filter((data: any) => {
-        return data.orderId?.toLowerCase().includes(val?.toLowerCase());
-    });
-    setOrderTxListFilter(filterDate);
-  };
-    
+    const onChageSearch = (e: any) => {
+        let val = e.currentTarget.value;
+        setSelection({
+            asset: selection.asset,
+            status: selection.status,
+            time: selection.time,
+            orderId: val,
+        });
+        console.log(val)
+        setValueInput(val)
+        const filterDate = orderList?.filter((data: any) => {
+            return data.orderId?.toLowerCase().includes(val?.toLowerCase());
+        });
+        setOrderTxListFilter(filterDate);
+        console.log("in search of order ", orderListFilter);
+
+    };
+
     const handleChangeAsset = (value: string) => {
+        console.log("Status in asset selection ");
+
         if (value !== 'all') {
+            setSelection({
+                asset: value,
+                status: selection.status,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
             const txListFilterData = orderList.filter((data: any) => {
                 return data.breakdown.outCurrencyName?.toLowerCase() === value?.toLowerCase()
             })
             setOrderTxListFilter(txListFilterData);
         }
         else {
+            setSelection({
+                asset: '',
+                status: selection.status,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
             setOrderTxListFilter(orderList)
         }
+        console.log("in asset of order ", orderListFilter);
+
     };
 
 
@@ -256,7 +339,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Order Id</label> <br />
-                    <Input size="large" placeholder="Search Order Id" style={{height:"55px"}} value={valueInput} onChange={onChageSearch} maxLength={50}  />
+                    <Input size="large" placeholder="Search Order Id" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" loading={tableLoading} />
