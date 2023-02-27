@@ -265,8 +265,6 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
             && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
             && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-            
-
         });
         setOrderTxListFilter(filterDate);
         console.log("in search of buy ", orderListFilter);
