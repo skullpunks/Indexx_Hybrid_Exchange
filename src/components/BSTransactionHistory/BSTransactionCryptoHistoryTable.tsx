@@ -1,5 +1,5 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Input, Pagination, Select, Skeleton, Table } from 'antd';
+import { Input, Pagination, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -184,7 +184,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                let valueDate = moment(data.created).format('YYYY-MM-DD')
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
