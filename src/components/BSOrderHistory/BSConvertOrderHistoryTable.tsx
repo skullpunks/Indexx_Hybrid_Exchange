@@ -157,7 +157,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
 
     const handleChangeTime = (value: string) => {
         const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
-        console.log(pastDate);
         if (!isNaN(+value)) {
             setSelection({
                 asset: selection.asset,
@@ -190,7 +189,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData);
         }
-        console.log("in time of convert ", orderListFilter);
     };
     const handleChangeStatus = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
@@ -202,10 +200,8 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                 time: selection.time,
                 orderId: selection.orderId,
             });
-            console.log(":", selection.asset, selection.time);
 
             const txListFilterData = orderList.filter((data: any) => {
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
                 return data.status?.toLowerCase() === value?.toLowerCase()
@@ -214,7 +210,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
 
             })
-            console.log(txListFilterData);
             setOrderTxListFilter(txListFilterData);
         }
         else {
@@ -227,7 +222,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
                 return (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
                     && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
@@ -236,7 +230,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in status of convert ", orderListFilter);
 
     };
 
@@ -271,7 +264,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
                 return (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
                     && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
@@ -280,7 +272,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in asset of convert ", orderListFilter);
 
     };
 
@@ -303,7 +294,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                 && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         });
         setOrderTxListFilter(filterDate);
-        console.log("in search of buy ", orderListFilter);
 
     };
     const getData = (current: number, pageSize: number) => {
