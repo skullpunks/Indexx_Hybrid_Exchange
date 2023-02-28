@@ -168,7 +168,6 @@ const TaskCenter = () => {
       });
   };
 
-
   useEffect(() => {
     //checkUserCompletedOrder();
     checkUserCreatedBugs();
@@ -481,7 +480,7 @@ const TaskCenter = () => {
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -10 }}
                   >
-                    10{taskCenterDetails?.KYCPoints}
+                    {taskCenterDetails?.KYCPoints}
                   </span><span style={{marginTop: 30}}>Points</span>
                   
                 </div>
