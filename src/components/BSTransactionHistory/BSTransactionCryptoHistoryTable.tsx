@@ -1,5 +1,5 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Input, Pagination, Select, Table } from 'antd';
+import { Input, Pagination, Select, Skeleton, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -24,6 +24,13 @@ interface DataType {
 
 
 const BSTransactionCryptoHistoryTable: React.FC = () => {
+    const [selection, setSelection] = useState({
+        type: '',
+        asset: '',
+        status: '',
+        time: '30',
+        transactionHash: '',
+    })
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [txList, setTxList] = useState() as any;
@@ -149,6 +156,13 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
 
     const handleChangeTime = (value: string) => {
         if (!isNaN(+value)) {
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: selection.status,
+                time: value,
+                transactionHash: selection.transactionHash,
+            });
             const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
@@ -157,42 +171,114 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             setTxListFilter(txListFilterData);
         }
         else {
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: selection.status,
+                time: '',
+                transactionHash: selection.transactionHash,
+            });
             setTxListFilter(txList)
         }
 
     };
     const handleChangeStatus = (value: string) => {
+        
         if (value !== 'all') {
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: value,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
                 return data.status?.toLowerCase() === value?.toLowerCase()
             })
             setTxListFilter(txListFilterData);
         }
         else {
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: '',
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             setTxListFilter(txList)
         }
     };
-
+    console.log(selection);
     const handleChangeType = (value: string) => {
         if (value !== 'all') {
+            setSelection({
+                type: value,
+                asset: selection.asset,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
+            console.log(value);
+            console.log("List,", txList)
             const txListFilterData = txList.filter((data: any) => {
+                console.log(data);
+                console.log(data.transactionType);
                 return data.transactionType?.toLowerCase() === value?.toLowerCase()
+                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
             })
             setTxListFilter(txListFilterData);
+            // WITHDRAW_CYRPTO WITHDRAW_CRYPTO
         }
+
         else {
+            setSelection({
+                type: '',
+                asset: selection.asset,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             setTxListFilter(txList)
         }
     };
     const handleChangeAsset = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
         if (value !== 'all') {
+            setSelection({
+                type: selection.type,
+                asset: value,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                console.log(data);
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
+                && (!selection.time || moment(pastDate).isSameOrBefore(valueDate) )
+                && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
         else {
-            setTxListFilter(txList)
+            setSelection({
+                type: selection.type,
+                asset: '',
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
+            const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                console.log("N: ",data);
+                return  (!selection.time || moment(pastDate).isSameOrBefore(valueDate) )
+                && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
     };
 
@@ -206,6 +292,13 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const onChageSearch = (e: any) => {
         let val = e.currentTarget.value;
         setValueInput(val)
+        setSelection({
+            type: selection.type,
+            asset: selection.asset,
+            status: selection.status,
+            time: selection.time,
+            transactionHash: val,
+        });
         const filterDate = txList?.filter((data: any) => {
             return data.txId?.toLowerCase().includes(val?.toLowerCase());
         });
@@ -233,7 +326,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <Select defaultValue="all" onChange={handleChangeType}>
                         <Option value="all">All</Option>
                         <Option value="DEPOSIT_CYRPTO">Deposit</Option>
-                        <Option value="WITHDRAW_CYRPTO">Withdraw</Option>
+                        <Option value="WITHDRAW_CRYPTO">Withdraw</Option>
                         <Option value="WITHDRAW_REWARDS">Reward Withdraw</Option>
                     </Select>
                 </div>
@@ -249,22 +342,31 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 <div className='d-md-block d-none'>
                     <label>Asset</label> <br />
                     <Select defaultValue="all" onChange={handleChangeAsset}>
-                        <Option value="all">All</Option>
+                    <Option value="all">All</Option>
                         <Option value="IN500">IN500 <span>Indexx 500</span></Option>
+                        <Option value="INXC">INXC <span>Indexx Crypto</span></Option>
+                        <Option value="INEX">INEX <span>Indexx Exchange</span></Option>
+                        <Option value="IUSD+">IUSD+ <span>Indexx USD+</span></Option>
+                        <Option value="INXP">INXP <span>Indexx Phoenix</span></Option>
+                        <Option value="BNB">BNB <span>Binance</span></Option>
+                        <Option value="FTT">FTT <span>FTX Token</span></Option>
+                        <Option value="ETH">ETH <span>Ethereum</span></Option>
                         <Option value="BTC">BTC <span>Bitcoin</span></Option>
+                        <Option value="LTC">LTC <span>Litecoin</span></Option>
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Status</label> <br />
                     <Select defaultValue="all" onChange={handleChangeStatus}>
                         <Option value="all">All</Option>
-                        <Option value="completed">Completed</Option>
-                        <Option value="pending">Pending</Option>
+                        <Option value="Completed">Completed</Option> 
+                        {/* ask */}
+                        <Option value="Pending">Pending</Option>
                     </Select>
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Transaction Hash</label> <br />
-                    <Input size="large" placeholder="Search Order Id" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
+                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
