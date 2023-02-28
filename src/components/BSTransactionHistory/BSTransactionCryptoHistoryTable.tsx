@@ -155,6 +155,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }, []);
 
     const handleChangeTime = (value: string) => {
+
+        const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
         if (!isNaN(+value)) {
             setSelection({
                 type: selection.type,
@@ -163,10 +165,13 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: value,
                 transactionHash: selection.transactionHash,
             });
-            const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 return moment(pastDate).isSameOrBefore(valueDate)
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
@@ -178,12 +183,20 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: '',
                 transactionHash: selection.transactionHash,
             });
-            setTxListFilter(txList)
+            const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
 
     };
     const handleChangeStatus = (value: string) => {
-        
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         if (value !== 'all') {
             setSelection({
                 type: selection.type,
@@ -193,7 +206,14 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
                 return data.status?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
             })
             setTxListFilter(txListFilterData);
         }
@@ -205,11 +225,22 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: selection.time,
                 transactionHash: selection.transactionHash,
             });
-            setTxListFilter(txList)
+            const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
+            })
+            setTxListFilter(txListFilterData);
         }
     };
     console.log(selection);
     const handleChangeType = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         if (value !== 'all') {
             setSelection({
                 type: value,
@@ -223,10 +254,17 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             const txListFilterData = txList.filter((data: any) => {
                 console.log(data);
                 console.log(data.transactionType);
-                return data.transactionType?.toLowerCase() === value?.toLowerCase()
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
+                return data.transactionType?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
             })
             setTxListFilter(txListFilterData);
+
             // WITHDRAW_CYRPTO WITHDRAW_CRYPTO
         }
 
@@ -238,7 +276,17 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: selection.time,
                 transactionHash: selection.transactionHash,
             });
-            setTxListFilter(txList)
+            const txListFilterData = txList.filter((data: any) => {
+                console.log(data);
+                console.log(data.transactionType);
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
     };
     const handleChangeAsset = (value: string) => {
@@ -255,10 +303,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 console.log(data);
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
-                && (!selection.time || moment(pastDate).isSameOrBefore(valueDate) )
-                && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
-                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
-                && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
@@ -272,11 +320,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                console.log("N: ",data);
-                return  (!selection.time || moment(pastDate).isSameOrBefore(valueDate) )
-                && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
-                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
-                && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+                console.log("N: ", data);
+                return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
@@ -299,8 +347,16 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             time: selection.time,
             transactionHash: val,
         });
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         const filterDate = txList?.filter((data: any) => {
-            return data.txId?.toLowerCase().includes(val?.toLowerCase());
+            let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+            return data.txId?.toLowerCase().includes(val?.toLowerCase())
+                && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
         });
         setTxListFilter(filterDate);
     };
@@ -342,7 +398,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 <div className='d-md-block d-none'>
                     <label>Asset</label> <br />
                     <Select defaultValue="all" onChange={handleChangeAsset}>
-                    <Option value="all">All</Option>
+                        <Option value="all">All</Option>
                         <Option value="IN500">IN500 <span>Indexx 500</span></Option>
                         <Option value="INXC">INXC <span>Indexx Crypto</span></Option>
                         <Option value="INEX">INEX <span>Indexx Exchange</span></Option>
@@ -359,7 +415,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <label>Status</label> <br />
                     <Select defaultValue="all" onChange={handleChangeStatus}>
                         <Option value="all">All</Option>
-                        <Option value="Completed">Completed</Option> 
+                        <Option value="Completed">Completed</Option>
                         {/* ask */}
                         <Option value="Pending">Pending</Option>
                     </Select>
