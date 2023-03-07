@@ -41,7 +41,7 @@ export const BSDepositCryptoSelect = () => {
   const [usersWallets, setUsersWallets] = useState() as any;
   const [singleWallet, setSingleWallet] = useState() as any;
   const [depositHash, setDepositHash] = useState('');
-  const [selectedCoin, setSelectedCoin] = useState('');
+  const [selectedCoin, setSelectedCoin] = useState('INEX');
 
   const [copiedValue, copy] = useCopyToClipboard();
   console.log(copiedValue);
@@ -173,16 +173,25 @@ export const BSDepositCryptoSelect = () => {
       } else {
         alert("Please select ETH network for FTT Deposit")
       }
-    } else {
+    } else if(selectedCoin === "ETH" || selectedCoin === "LTC" || selectedCoin === "BTC") {
       const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
       setSingleWallet(userWallet[0]);
+    } 
+    else {
+      const userWallet = usersWallets.filter((x: any) => x.coinSymbol === value);
+      if (value === "ETH") {
+        console.log(userWallet[0])
+        alert(`Please select BNB network for ${selectedCoin} Deposit`)
+      } else {
+        setSingleWallet(userWallet[0]);
+      }
     }
   };
 
   const handleChangeCurrency = (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter((x: any) => x.coinSymbol === getRequiredCoin?.title);
-    console.log(getRequiredCoin?.title);
+    console.log(getRequiredCoin?.title, userWallet[0]);
     setSelectedCoin(String(getRequiredCoin?.title));
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
@@ -205,7 +214,7 @@ export const BSDepositCryptoSelect = () => {
     const decodedToken: any = decodeJWT(String(token)) as any;
     console.log(decodedToken)
     console.log(decodedToken.email, depositHash, String(BSvalue?.fromTitle))
-    const res = await checkAndUpdateDeposit(decodedToken.email, depositHash, String(selectedCoin))
+    const res = await checkAndUpdateDeposit(decodedToken.email, depositHash, String(selectedCoin), String(network))
     console.log(res);
     if (res.status === 200) {
       setLoadings(false);
@@ -323,14 +332,14 @@ export const BSDepositCryptoSelect = () => {
                 <img src={copyIcon} alt="copy icon" width="21" height="11" className='padding-l-1x cursor-pointer' onClick={() => copy(singleWallet?.coinWalletAddress)} />
                 {selectedCoin === "FTT" ?
                   (
-                <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinAddress)} trigger="click">
-                  <QrcodeOutlined className='padding-l-1x' />
-                </Popover>)
-                :
-                (
-                <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinWalletAddress)} trigger="click">
-                  <QrcodeOutlined className='padding-l-1x' />
-                </Popover>)
+                    <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinAddress)} trigger="click">
+                      <QrcodeOutlined className='padding-l-1x' />
+                    </Popover>)
+                  :
+                  (
+                    <Popover placement="bottom" content={content(singleWallet?.coinSymbol, singleWallet?.coinNetwork, singleWallet?.coinWalletAddress)} trigger="click">
+                      <QrcodeOutlined className='padding-l-1x' />
+                    </Popover>)
                 }
               </div>
 

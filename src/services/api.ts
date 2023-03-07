@@ -5,11 +5,11 @@ export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL =  "https://test.api.indexx.ai";
+  //baseAPIURL =  "https://test.api.indexx.ai";
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";
   baseURL = "https://test.indexx.ai";
-  //baseAPIURL = "http://localhost:3000";
+  baseAPIURL = "http://localhost:3000";
 } else {
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";
@@ -224,13 +224,15 @@ export const getUserWallets = async (email: string) => {
 export const checkAndUpdateDeposit = async (
   email: string,
   txHash: string,
-  coin: string
+  coin: string,
+  coinNetwork: string
 ) => {
   try {
     const result = await API.post(`/api/v1/inex/transaction/createTx`, {
       email,
       txHash,
       coin,
+      coinNetwork
     });
     return result.data;
   } catch (e: any) {
