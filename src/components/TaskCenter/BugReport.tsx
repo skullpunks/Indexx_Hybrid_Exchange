@@ -2,14 +2,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Upload, notification, Table } from 'antd';
 import AWS from 'aws-sdk';
 import { useEffect, useState } from 'react';
-import Footer from "../Footer/Footer";
+import Footer from '../Footer/Footer';
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from "@ant-design/icons";
-import { createBug, decodeJWT, getUserCreatedBugs } from "../../services/api";
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import { createBug, decodeJWT, getUserCreatedBugs } from '../../services/api';
 import { ColumnsType, TableProps } from 'antd/lib/table';
 
 const { TextArea } = Input;
@@ -17,16 +14,15 @@ const { TextArea } = Input;
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 
-
 AWS.config.update({
   accessKeyId: 'AKIA5FBFFKSZLHC4SR7P',
-  secretAccessKey: '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'
-})
+  secretAccessKey: '6O6wFGWfZ1/sqAAlcwTjgXiUIY3ntT0FLd1YmjJH',
+});
 
 const myBucket = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
-})
+});
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -43,9 +39,9 @@ interface DataType {
   adminComments: string;
   created: string;
   modified: string;
-  bugFile: any[],
-  bugDescription: string,
-  bugTitle: string
+  bugFile: any[];
+  bugDescription: string;
+  bugTitle: string;
 }
 
 const BugReport = () => {
@@ -55,10 +51,15 @@ const BugReport = () => {
   const [previewTitle, setPreviewTitle] = useState('');
   const handleCancel = () => setPreviewOpen(false);
   const [bugsData, setBugsData] = useState([]);
-  type NotificationType = "success" | "info" | "warning" | "error";
+  type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
   const [form] = Form.useForm();
-  const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+  const onChange: TableProps<DataType>['onChange'] = (
+    pagination,
+    filters,
+    sorter,
+    extra
+  ) => {
     console.log('params', pagination, filters, sorter, extra);
   };
   const [isLoading, setTableLoadings] = useState(true);
@@ -66,25 +67,32 @@ const BugReport = () => {
 
   const tableLoading = {
     spinning: isLoading,
-    indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="38" height="38" />,
-  }
+    indicator: (
+      <img
+        src={require(`../../assets/arts/loaderIcon.gif`).default}
+        alt="loader"
+        width="38"
+        height="38"
+      />
+    ),
+  };
   const openNotificationWithIcon = (
     type: NotificationType,
     message: string
   ) => {
     const Icon =
-      type === "error" ? (
+      type === 'error' ? (
         <CloseCircleFilled />
       ) : (
         <CheckCircleFilled className="text_link" />
       );
     notification[type]({
       message: message,
-      description: "",
+      description: '',
       icon: Icon,
       style: {
-        border: "1px solid #F66036",
-        boxShadow: "none",
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
         borderRadius: 5,
         top: 100,
       },
@@ -92,31 +100,35 @@ const BugReport = () => {
   };
 
   useEffect(() => {
-    const access_token = String(localStorage.getItem("access_token"));
+    const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = decodeJWT(access_token);
     setEmail(decoded.email);
     getUserCreatedBugs(String(decoded.email)).then((res: any) => {
       if (res.data.status === 200) {
         setBugsData(res.data.data);
-        setTableLoadings(false)
+        setTableLoadings(false);
       } else {
         setTableLoadings(false);
       }
-    })
+    });
   }, []);
 
-
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   const onFinish = async (values: any) => {
-    if (values.description === undefined || values.email === undefined || values.bugfiles === undefined ||
-      !values.description || !values.email || !values.bugfiles) {
-      alert("All fields are required");
-    }
-    else {
-      console.log('I else')
+    if (
+      values.description === undefined ||
+      values.email === undefined ||
+      values.bugfiles === undefined ||
+      !values.description ||
+      !values.email ||
+      !values.bugfiles
+    ) {
+      alert('All fields are required');
+    } else {
+      console.log('I else');
       let bugFiles = [];
       for (let i = 0; i < values.bugfiles.length; i++) {
         const file = values.bugfiles[i];
@@ -138,17 +150,16 @@ const BugReport = () => {
             setBugsData(res.data.data);
             setTableLoadings(false);
             form.resetFields();
-            openNotificationWithIcon("success", "Bug Report Submitted");
+            openNotificationWithIcon('success', 'Bug Report Submitted');
           } else {
             setTableLoadings(false);
           }
-        })
+        });
       } else {
-        openNotificationWithIcon("error", "Bug Report Failed");
+        openNotificationWithIcon('error', 'Bug Report Failed');
       }
     }
   };
-
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -157,10 +168,10 @@ const BugReport = () => {
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    setPreviewTitle(
+      file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1)
+    );
   };
-
-
 
   const uploadFile = (file: any) => {
     setLoadings(true);
@@ -173,23 +184,26 @@ const BugReport = () => {
     };
 
     let newFile = {} as any;
-    newFile.fileType = "Standard";
+    newFile.fileType = 'Standard';
     newFile.fileMode = file.type;
     newFile.title = file.name;
     newFile.uniqueName = file.uid;
-    newFile.original = "https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/indexx-user-bugs-list/" + file.name;;
+    newFile.original =
+      'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/indexx-user-bugs-list/' +
+      file.name;
     let newList = fileList.concat(newFile);
     setFileList(newList);
 
-    myBucket.putObject(params)
+    myBucket
+      .putObject(params)
       .on('success', (evt) => {
         console.log(evt);
         setLoadings(false);
       })
       .send((err) => {
-        if (err) console.log(err)
-      })
-  }
+        if (err) console.log(err);
+      });
+  };
 
   const columns: ColumnsType<DataType> = [
     // {
@@ -205,14 +219,14 @@ const BugReport = () => {
       dataIndex: 'bugDescription',
       render: (_, record) => {
         return record?.bugDescription;
-      }
+      },
     },
     {
       title: 'Bug Title',
       dataIndex: 'bugTitle',
       render: (_, record) => {
         return record?.bugTitle;
-      }
+      },
     },
     {
       title: 'Created on',
@@ -221,7 +235,7 @@ const BugReport = () => {
         return record?.created;
       },
 
-      responsive: ["sm"],
+      responsive: ['sm'],
     },
     {
       title: 'Modified on',
@@ -229,7 +243,7 @@ const BugReport = () => {
       render: (_, record) => {
         return record?.modified;
       },
-      responsive: ["sm"],
+      responsive: ['sm'],
     },
     {
       title: 'Admin Comments',
@@ -237,7 +251,7 @@ const BugReport = () => {
       render: (_, record) => {
         return record?.adminComments;
       },
-      responsive: ["sm"],
+      responsive: ['sm'],
     },
     {
       title: 'Bug status',
@@ -245,11 +259,11 @@ const BugReport = () => {
       render: (_, record) => {
         return record?.bugStatus;
       },
-      responsive: ["sm"],
+      responsive: ['sm'],
     },
     {
       title: 'Bug Files',
-      dataIndex: "bugFile",  // this is the value that is parsed from the DB / server side
+      dataIndex: 'bugFile', // this is the value that is parsed from the DB / server side
       //render: theImageURL => <img alt={theImageURL} src={theImageURL} />
       render: (_, record) => {
         return (
@@ -257,23 +271,27 @@ const BugReport = () => {
             {record?.bugFile.map((item: any) => {
               return (
                 <div>
-                  <img src={item.original} alt="bugfile" style={{ width: '5%' }} />
+                  <img
+                    src={item.original}
+                    alt="bugfile"
+                    style={{ width: '5%' }}
+                  />
                 </div>
-              )
-            }
-            )}
+              );
+            })}
           </div>
-        )
-      }
-    }
-
+        );
+      },
+    },
   ];
 
   const removeFile = async (e: any) => {
     console.log(e);
-    let newList = fileList.filter((file: any) => file.uniqueName !== e.uniqueName);
+    let newList = fileList.filter(
+      (file: any) => file.uniqueName !== e.uniqueName
+    );
     setFileList(newList);
-  }
+  };
 
   const getFile = (e: any) => {
     console.log('Upload event:', e);
@@ -284,11 +302,21 @@ const BugReport = () => {
   };
 
   return (
-
     <>
       <div className="scan-container flex-direction-column text-left">
         <div className="row">
-          <p className="opacity-75 " style={{ textAlign: "left", fontSize: 50, fontWeight: 400, paddingLeft: 60 }}> Report a bug on  Indexx.ai <br /></p>
+          <p
+            className="opacity-75 "
+            style={{
+              textAlign: 'left',
+              fontSize: 50,
+              fontWeight: 400,
+              paddingLeft: 60,
+            }}
+          >
+            {' '}
+            Report a bug on Indexx.ai <br />
+          </p>
           <div style={{ paddingLeft: 60, width: 700 }}>
             <Form
               form={form}
@@ -300,7 +328,8 @@ const BugReport = () => {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
-            ><br />
+            >
+              <br />
               <Form.Item
                 required={true}
                 label="Enter your Email:"
@@ -311,29 +340,45 @@ const BugReport = () => {
                 <Input />
               </Form.Item>
 
-              <Form.Item required={true} label="Give a brief description of the bug/problem you faced:" name="description">
+              <Form.Item
+                required={true}
+                label="Give a brief description of the bug/problem you faced:"
+                name="description"
+              >
                 <TextArea rows={4} />
               </Form.Item>
 
-
-
-              <Form.Item label="Upload screenshots of the bug:" rules={[
-                {
-                  required: true,
-                  message: 'Bug Screenshot is required',
-                },
-              ]}>
-                <Form.Item name="bugfiles" valuePropName="fileList" getValueFromEvent={getFile} noStyle>
+              <Form.Item
+                label="Upload screenshots of the bug:"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Bug Screenshot is required',
+                  },
+                ]}
+              >
+                <Form.Item
+                  name="bugfiles"
+                  valuePropName="fileList"
+                  getValueFromEvent={getFile}
+                  noStyle
+                >
                   <Upload
                     listType="picture-card"
                     name="files"
                     onPreview={handlePreview}
-                    showUploadList={{ showRemoveIcon: true, showPreviewIcon: true }} accept=".png,.jpeg,.jpg"
-                    onRemove={removeFile} beforeUpload={(file) => {
+                    showUploadList={{
+                      showRemoveIcon: true,
+                      showPreviewIcon: true,
+                    }}
+                    accept=".png,.jpeg,.jpg"
+                    onRemove={removeFile}
+                    beforeUpload={(file) => {
                       uploadFile(file);
                       console.log(file);
                       return false;
-                    }}>
+                    }}
+                  >
                     <div>
                       <PlusOutlined />
                       <div style={{ marginTop: 8 }}>Upload</div>
@@ -341,28 +386,47 @@ const BugReport = () => {
                   </Upload>
                 </Form.Item>
 
-                <Modal  maskStyle={{backdropFilter: "blur(2px)"}} open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-                  <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                <Modal
+                  maskStyle={{ backdropFilter: 'blur(2px)' }}
+                  open={previewOpen}
+                  title={previewTitle}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    alt="example"
+                    style={{ width: '100%' }}
+                    src={previewImage}
+                  />
                 </Modal>
               </Form.Item>
 
-              <Form.Item >
-                <Button danger type="primary" htmlType="submit" style={{ width: 200 }} loading={loadings}>
+              <Form.Item>
+                <Button
+                  danger
+                  type="primary"
+                  htmlType="submit"
+                  style={{ width: 200 }}
+                  loading={loadings}
+                >
                   Submit
                 </Button>
               </Form.Item>
             </Form>
           </div>
-          <div className='tab-body-container' style={{marginLeft:16}}>
-            <Table columns={columns} dataSource={bugsData} onChange={onChange} loading={tableLoading} />
+          <div className="tab-body-container" style={{ marginLeft: 16 }}>
+            <Table
+              columns={columns}
+              dataSource={bugsData}
+              onChange={onChange}
+              loading={tableLoading}
+            />
           </div>
         </div>
       </div>
       <Footer></Footer>
     </>
-
-  )
-}
-
+  );
+};
 
 export default BugReport;

@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
-import { Select } from "antd";
+import { Select } from 'antd';
 // import { Option } from 'antd/lib/mentions';
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import bsDollar from '../../assets/arts/bsDollar.svg';
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-import initialTokens from "../../utils/Tokens.json";
-import graphTokens from "../../utils/graphs.json";
+import initialTokens from '../../utils/Tokens.json';
+import graphTokens from '../../utils/graphs.json';
 // import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
-import { getMinAndMaxOrderValues, isLoggedIn } from "../../services/api";
-import { BSContext, BSContextType } from "../../utils/SwapContext";
-import "./BS-Sell.css";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
+import { BSContext, BSContextType } from '../../utils/SwapContext';
+import './BS-Sell.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -21,24 +21,28 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const navigateUser = () => {
-    let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
-    if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
-        alert("Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Buy");
-        return;
+    let getRequiredCoin = initialTokens.find(
+      (x) => x.address === BSvalue?.fromToken
+    );
+    if (getRequiredCoin?.title === 'INXP' || getRequiredCoin?.title === 'FTT') {
+      alert(
+        'Indexx Phoenix(INXP) and FTX Token(FTT) are not available for Buy'
+      );
+      return;
     }
     if (isLoggedIn()) {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
       }
-      navigate("/indexx-exchange/buy-sell/confirm-purchase");
+      navigate('/indexx-exchange/buy-sell/confirm-purchase');
       // setScreenName("confirmPurchase");
     } else {
       // setScreenName("create");
-      navigate("/indexx-exchange/buy-sell/create");
+      navigate('/indexx-exchange/buy-sell/create');
     }
   };
 
-  const [buyVal, setBuyVal] = useState("");
+  const [buyVal, setBuyVal] = useState('');
   const [isLimitPassed, setLimitPassed] = useState(true);
   const [minMavData, setMinMaxData] = useState() as any;
 
@@ -48,21 +52,21 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       let amount = BSvalue?.amount.toString();
       let charFontSize =
         amount.length < 7
-          ? "1.1"
+          ? '1.1'
           : amount.length < 9
-          ? "0.9"
+          ? '0.9'
           : amount.length < 12
-          ? "0.8"
+          ? '0.8'
           : amount.length < 15
-          ? "0.6"
-          : "0.4";
+          ? '0.6'
+          : '0.4';
       let charWidth = amount.length <= 1 ? 1.2 : 0.9;
-      if (document.getElementsByClassName("input_currency")[0]) {
+      if (document.getElementsByClassName('input_currency')[0]) {
         let element = document.getElementsByClassName(
-          "input_currency"
+          'input_currency'
         )[0] as HTMLBodyElement;
-        element.style.width = (amount.length + 1) * charWidth + "ch";
-        element.style.fontSize = charFontSize + "ch";
+        element.style.width = (amount.length + 1) * charWidth + 'ch';
+        element.style.fontSize = charFontSize + 'ch';
       }
     }
     getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
@@ -97,12 +101,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   };
 
   const getMinMaxValue = async (value: string) => {
-    let res = await getMinAndMaxOrderValues(value, "BUY");
+    let res = await getMinAndMaxOrderValues(value, 'BUY');
     return res;
   };
 
   const updateBuyVal = async (e: React.FormEvent<HTMLInputElement>) => {
-    let testVal: string = "";
+    let testVal: string = '';
     if (e.currentTarget != null) {
       testVal = e?.currentTarget?.value;
 
@@ -116,17 +120,17 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       // let charFontSize = (testVal.length > 7) ? 0.9 : 1.1;
       let charFontSize =
         testVal.length < 7
-          ? "1.1"
+          ? '1.1'
           : testVal.length < 9
-          ? "0.9"
+          ? '0.9'
           : testVal.length < 12
-          ? "0.8"
+          ? '0.8'
           : testVal.length < 15
-          ? "0.6"
-          : "0.4";
+          ? '0.6'
+          : '0.4';
       let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
-      e.currentTarget.style.width = (testVal.length + 1) * charWidth + "ch";
-      e.currentTarget.style.fontSize = charFontSize + "ch";
+      e.currentTarget.style.width = (testVal.length + 1) * charWidth + 'ch';
+      e.currentTarget.style.fontSize = charFontSize + 'ch';
 
       let value = BSvalue?.fromToken;
       // debugger;
@@ -137,22 +141,25 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
 
   return (
     <div>
-      <div className="padding-lr-1x padding-tb-3x" style={{paddingTop:50,paddingBottom:50}}>
+      <div
+        className="padding-lr-1x padding-tb-3x"
+        style={{ paddingTop: 50, paddingBottom: 50 }}
+      >
         <div className="bs_curreny d-flex position-relative ">
           <div
             className="bs_curreny_left padding-2x"
-            style={{ transform: "scale(1)" }}
+            style={{ transform: 'scale(1)' }}
           >
             <span className="font_20x pe-1">$</span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
-           
+
             <input
               placeholder="0"
               className="input_currency "
               type="number"
               value={buyVal}
               onChange={updateBuyVal}
-              style={{ width: "1.2ch" }}
+              style={{ width: '1.2ch' }}
             />
           </div>
           {/* <div className='swap_Arrow_icon'>
@@ -169,7 +176,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         )}
         {/* <div className="bs_purchase d-flex">
                 <Dropdown overlay={menu} trigger={['click']} >
-                    <Space style={{ color: "#F66036" }}>
+                    <Space style={{ color: "#11be6a" }}>
                         <ReloadOutlined className='swap_icons' style={{ fontSize: 16, marginRight: 10 }} />
                         One-time purchase
                     </Space>
@@ -179,11 +186,11 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       </div>
       <div
         className="bs_token d-flex cursor-pointer py-3"
-        style={{ alignItems: "center" }}
+        style={{ alignItems: 'center' }}
       >
         <div
           className="bs_token_left d-flex justify-between"
-          style={{ height: "55px", padding: "0 11px" }}
+          style={{ height: '55px', padding: '0 11px' }}
         >
           <div className="bs_token_num d-flex text-start">
             <img
@@ -199,7 +206,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       </div>
       <div
         className="bs_token d-flex cursor-pointer py-3"
-        style={{ alignItems: "center" }}
+        style={{ alignItems: 'center' }}
       >
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100">
@@ -207,41 +214,40 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
               className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
-           
             >
               {initialTokens
-              //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
-              .map((token, index) => {
-                return (
-                  <Select.Option
-                    key={token.address}
-                    value={token.address}
-                    className="common__token d-flex bs_token_container"
-                    data-address={token.address}
-                  >
-                    <div className="d-flex bs_token_num">
-                      <img
-                        src={
-                          require(`../../assets/token-icons/${token.image}.png`)
-                            .default
-                        }
-                        alt="IN500"
-                        width="38"
-                        height="38"
-                      />
-                      <div className=" padding-l-1x d-flex flex-align-center">
-                        {token.title}{" "}
-                        <span
-                          style={{ color: "rgba(95, 95, 95, 0.5)" }}
-                          className="margin-l-0_5x"
-                        >
-                          {token.subTitle}
-                        </span>{" "}
+                //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
+                .map((token, index) => {
+                  return (
+                    <Select.Option
+                      key={token.address}
+                      value={token.address}
+                      className="common__token d-flex bs_token_container"
+                      data-address={token.address}
+                    >
+                      <div className="d-flex bs_token_num">
+                        <img
+                          src={
+                            require(`../../assets/token-icons/${token.image}.png`)
+                              .default
+                          }
+                          alt="IN500"
+                          width="38"
+                          height="38"
+                        />
+                        <div className=" padding-l-1x d-flex flex-align-center">
+                          {token.title}{' '}
+                          <span
+                            style={{ color: 'rgba(95, 95, 95, 0.5)' }}
+                            className="margin-l-0_5x"
+                          >
+                            {token.subTitle}
+                          </span>{' '}
+                        </div>
                       </div>
-                    </div>
-                  </Select.Option>
-                );
-              })}
+                    </Select.Option>
+                  );
+                })}
             </Select>
           </div>
         </div>
@@ -251,10 +257,10 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         {/* disabled={(!isLimitPassed)} */}
         <button
           onClick={navigateUser}
-          className={!isLimitPassed || buyVal === "" ? "disable_icon " : ""}
-          style={{marginTop:30}}
+          className={!isLimitPassed || buyVal === '' ? 'disable_icon ' : ''}
+          style={{ marginTop: 30 }}
         >
-          Preview Purchase{" "}
+          Preview Purchase{' '}
         </button>
       </div>
     </div>

@@ -118,14 +118,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      Centralized
+                      Exchange
                     </a>
                     <br />
                     <a
                       href={baseDEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      Decentralized
+                      Swap
                     </a>
                     <br />
                     <a
@@ -368,14 +368,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      Centralized
+                      Exchange
                     </a>
                     <br />
                     <a
                       href={baseDEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      Decentralized
+                      Swap
                     </a>
                     <br />
                     <a

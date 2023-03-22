@@ -1,10 +1,10 @@
-import React from "react";
-import Email from "../../assets/arts/Email.svg";
-import PasswordEye from "../../assets/arts/PasswordEye.svg";
-import qrCode from "../../assets/arts/qrCode.svg";
-import completedCheck from "../../assets/arts/completedCheck.svg";
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Email from '../../assets/arts/Email.svg';
+import PasswordEye from '../../assets/arts/PasswordEye.svg';
+import qrCode from '../../assets/arts/qrCode.svg';
+import completedCheck from '../../assets/arts/completedCheck.svg';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -26,8 +26,8 @@ const BuySellSuccess: React.FC<Props> = ({ setScreenName }) => {
         />
         <div
           style={{
-            paddingLeft: "20px",
-            paddingTop: "5px",
+            paddingLeft: '20px',
+            paddingTop: '5px',
           }}
         >
           Send SMS success.
@@ -71,7 +71,7 @@ const BuySellSuccess: React.FC<Props> = ({ setScreenName }) => {
           <Link
             to=""
             className="default-link text-underline"
-            onClick={() => setScreenName("TwoFactorAuth")}
+            onClick={() => setScreenName('TwoFactorAuth')}
           >
             Forgot password
           </Link>
@@ -82,9 +82,9 @@ const BuySellSuccess: React.FC<Props> = ({ setScreenName }) => {
             className="atn-btn atn-btn-round margin-b-1x"
             style={{
               height: 55,
-              borderColor: "#F66036",
-              backgroundColor: "#F66036",
-              color: "#fff",
+              borderColor: '#11be6a',
+              backgroundColor: '#11be6a',
+              color: '#fff',
               fontSize: 20,
               borderRadius: 5,
             }}
@@ -95,7 +95,7 @@ const BuySellSuccess: React.FC<Props> = ({ setScreenName }) => {
           <br />
 
           <div className=" padding-b-2x border-b-1x text-center">
-            Don’t have an account?{" "}
+            Don’t have an account?{' '}
             <Link to="" className="text_link">
               Get Started
             </Link>
