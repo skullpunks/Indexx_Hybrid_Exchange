@@ -43,7 +43,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   const [minMavData, setMinMaxData] = useState() as any;
 
   useEffect(() => {
-    if (BSvalue && BSvalue.amount !== 0) {
+    if (BSvalue.amount !== 0) {
       setBuyVal(BSvalue?.amount.toString());
       let amount = BSvalue?.amount.toString();
       let charFontSize =
@@ -69,7 +69,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       // console.log(x);
       setMinMaxData(x);
     });
-  }, [BSvalue]);
+  }, [BSvalue.fromTitle, BSvalue.amount]);
 
   const handleChange = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x) => x.address === value);

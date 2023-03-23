@@ -6,7 +6,7 @@ import { getCryptoPrice}  from "../../services/api";
 
 const url = "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=";
 const currencyName = "Bitcoin";
-const currencySymbol = "BTCB";
+const currencySymbol = "BTC";
 
 const BitcoinGraph = () => {
   //State to update any fetch errors

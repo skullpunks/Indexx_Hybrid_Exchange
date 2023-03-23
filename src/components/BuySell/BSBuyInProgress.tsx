@@ -51,7 +51,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
                     {/* onClick={() => setScreenName("confirmPurchase")} */}
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell/confirm-purchase")}>&#60;</span>
+                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell")}>&#60;</span>
                     Purchase in Progress
                 </h1>
             </div>
@@ -69,7 +69,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </div> */}
                 <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline" }}>
 
-                    <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >{Math.floor(outAmt * 100) / 100}</span>
+                    <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >{Math.floor(outAmt * 10000) / 10000}</span>
                     <span className="font_20x" style={{
                         color: "rgba(96, 96, 96,.5)", paddingLeft: 10
                     }} >{outcurr}</span>
