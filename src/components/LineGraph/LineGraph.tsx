@@ -186,7 +186,7 @@ const LineGraph = (props: any) => {
               dataKey="price"
               strokeWidth={1.5}
               isAnimationActive={false}
-              stroke="rgba(246, 96, 54 , 1)"
+              stroke="lightgreen"
               // fill="rgba(246, 96, 54 , 0.09)"
               fill="url(#colorUv)"
             />
