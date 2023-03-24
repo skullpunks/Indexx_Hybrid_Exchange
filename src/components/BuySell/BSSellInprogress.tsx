@@ -20,7 +20,7 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate()
     const navigateBak = () => {
         // setScreenName("BSSellConfirmConvert");
-        navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
+        navigate("/indexx-exchange/buy-sell");
     }
     console.log(BSvalue)
     console.log(filteredFromArray)

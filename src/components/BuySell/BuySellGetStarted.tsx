@@ -58,7 +58,7 @@ const BuySellGetStarted: React.FC = () => {
       description: '',
       icon: Icon,
       style: {
-        border: '1px solid #F66036',
+        border: '1px solid #11be6a',
         boxShadow: 'none',
         borderRadius: 5,
         top: 100,
@@ -70,11 +70,11 @@ const BuySellGetStarted: React.FC = () => {
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
       <div className="row">
         <div className="col-5">
-          <div className="text-center justify-center" style={{paddingLeft:50}}>
-
-            <h1 className="top_heading" >
-              Get Started
-            </h1>
+          <div
+            className="text-center justify-center"
+            style={{ paddingLeft: 50 }}
+          >
+            <h1 className="top_heading">Get Started</h1>
             <Link to="/indexx-exchange/buy-sell/login" className="text_link">
               LOG IN
             </Link>
@@ -201,9 +201,18 @@ const BuySellGetStarted: React.FC = () => {
                 Log in.
               </Link>
             </div>
-            
+
             <Space direction="vertical" style={{ width: '100%' }}>
-            <p> As per our Terms and Use, we’re unable to provide services to the US residents. Instead, please register on our partner platform dedicated to the US residents <a className="text-link" href={baseDEXURL} rel="noreferrer">(test.dex.indexx.ai)</a>.</p>
+              <p>
+                {' '}
+                As per our Terms and Use, we’re unable to provide services to
+                the US residents. Instead, please register on our partner
+                platform dedicated to the US residents{' '}
+                <a className="text-link" href={baseDEXURL} rel="noreferrer">
+                  (test.dex.indexx.ai)
+                </a>
+                .
+              </p>
             </Space>
           </div>
         </div>
@@ -212,15 +221,15 @@ const BuySellGetStarted: React.FC = () => {
           <div style={{ marginBottom: '25%', paddingLeft: 100 }}>
             <p
               className="text-center"
-              style={{ fontWeight: 400, fontSize: 41 ,marginTop:85}}
+              style={{ fontWeight: 400, fontSize: 41, marginTop: 85 }}
             >
-            Get upto 30% reward in <br/> Trade to Earn
+              Get upto 30% reward in <br /> Trade to Earn
             </p>
             <Image
-            className="text-center"
+              className="text-center"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 130 ,paddingTop:60}}
+              style={{ paddingLeft: 130, paddingTop: 60 }}
             ></Image>
           </div>
         </div>

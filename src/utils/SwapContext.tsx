@@ -41,7 +41,7 @@ export type BuySellData = {
 }
 
 export type BSContextType = {
-  BSvalue: BuySellData | null,
+  BSvalue: BuySellData,
   setBSvalue: React.Dispatch<React.SetStateAction<BuySellData>>
 }
 

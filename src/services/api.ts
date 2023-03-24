@@ -224,13 +224,15 @@ export const getUserWallets = async (email: string) => {
 export const checkAndUpdateDeposit = async (
   email: string,
   txHash: string,
-  coin: string
+  coin: string,
+  coinNetwork: string
 ) => {
   try {
     const result = await API.post(`/api/v1/inex/transaction/createTx`, {
       email,
       txHash,
       coin,
+      coinNetwork
     });
     return result.data;
   } catch (e: any) {

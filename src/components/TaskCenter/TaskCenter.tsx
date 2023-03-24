@@ -1,17 +1,30 @@
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { Button, Card, Divider, Image, Progress, Table, Typography, notification } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Image,
+  Progress,
+  Table,
+  Typography,
+  notification,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import exgcoin from "../../assets/arts/exgcoin.png";
-import { decodeJWT, getTaskCenterDetails, getUserCreatedBugs, enableTradeToEarn } from "../../services/api";
-import Footer from "../Footer/Footer";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import exgcoin from '../../assets/arts/exgcoin.png';
+import {
+  decodeJWT,
+  getTaskCenterDetails,
+  getUserCreatedBugs,
+  enableTradeToEarn,
+} from '../../services/api';
+import Footer from '../Footer/Footer';
 
 const { Text } = Typography;
 
 const TaskCenter = () => {
-
   //const [completedOrders, setCompletedOrders] = useState([]);
   const [bugsData, setBugsData] = useState([]);
   const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
@@ -32,25 +45,27 @@ const TaskCenter = () => {
       dataIndex: 'date',
       key: 'date',
       defaultSortOrder: 'ascend',
-      sorter: (a :any, b: any) => moment(a.date).unix() - moment(b.date).unix(),
-      render: (text: any) => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
+      sorter: (a: any, b: any) => moment(a.date).unix() - moment(b.date).unix(),
+      render: (text: any) => (
+        <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>
+      ),
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
       render: (text: any) => {
-        return <Text>{text}</Text>
-      }
+        return <Text>{text}</Text>;
+      },
     },
     {
       title: 'Points',
       dataIndex: 'points',
       key: 'points',
-      render: (text :any) => {
-        return <Text>{text}</Text>
-      }
-    }
+      render: (text: any) => {
+        return <Text>{text}</Text>;
+      },
+    },
   ];
 
   // const data: DataType[] = [
@@ -77,14 +92,7 @@ const TaskCenter = () => {
   //   },
   // ];
 
-
-
-
-
-
-
-
-  const [, setEmail] = useState("");
+  const [, setEmail] = useState('');
   // const checkUserCompletedOrder = async () => {
   //   const access_token = String(localStorage.getItem("access_token"));
   //   const decoded: any = await decodeJWT(access_token);
@@ -95,7 +103,7 @@ const TaskCenter = () => {
   // }
 
   const checkUserCreatedBugs = async () => {
-    const access_token = String(localStorage.getItem("access_token"));
+    const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
     let res = await getUserCreatedBugs(String(decoded.email));
     setEmail(String(decoded.email));
@@ -107,67 +115,73 @@ const TaskCenter = () => {
         }
       });
     }
-  }
+  };
 
   const getTaskCenterDetailsData = async () => {
-    const access_token = String(localStorage.getItem("access_token"));
+    const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
     let res = await getTaskCenterDetails(String(decoded.email));
     if (res.status === 200) {
       setTaskCenterDetails(res.data.data);
       setPointHistory(res.data.data.pointsHistory);
-      if (res.data.data.totalPoints >= 100)
-        setIsLocked(false);
+      if (res.data.data.totalPoints >= 100) setIsLocked(false);
     }
-  }
+  };
 
-  const enableTradetoEarnButton = async() => {
+  const enableTradetoEarnButton = async () => {
     setLoadings(true);
-    const access_token = String(localStorage.getItem("access_token"));
+    const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
     let res = await enableTradeToEarn(String(decoded.email));
-    console.log(res)
-    if(res.status === 200) {
+    console.log(res);
+    if (res.status === 200) {
       setLoadings(false);
       getTaskCenterDetailsData();
-      openNotificationWithIcon('success','Trade to Earn is enabled');
+      openNotificationWithIcon('success', 'Trade to Earn is enabled');
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error','Something went wrong. Please contact admin');
+      openNotificationWithIcon2(
+        'error',
+        'Something went wrong. Please contact admin'
+      );
     }
-  }
+  };
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-  const openNotificationWithIcon = (type: NotificationType, message: string) => {
-      notification[type]({
-          message: message,
-          description: '',
-          icon: <CheckCircleFilled className='text_link' />,
-          style: {
-              border: "1px solid #F66036",
-              boxShadow: "none",
-              borderRadius: 5,
-              top: 100
-          },
-
-      });
+  const openNotificationWithIcon = (
+    type: NotificationType,
+    message: string
+  ) => {
+    notification[type]({
+      message: message,
+      description: '',
+      icon: <CheckCircleFilled className="text_link" />,
+      style: {
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
+        borderRadius: 5,
+        top: 100,
+      },
+    });
   };
 
-  const openNotificationWithIcon2 = (type: NotificationType, message: string) => {
-      notification[type]({
-          message: message,
-          description: '',
-          icon: <CloseCircleFilled />,
-          style: {
-              border: "1px solid #F66036",
-              boxShadow: "none",
-              borderRadius: 5,
-              top: 100
-          },
-      });
+  const openNotificationWithIcon2 = (
+    type: NotificationType,
+    message: string
+  ) => {
+    notification[type]({
+      message: message,
+      description: '',
+      icon: <CloseCircleFilled />,
+      style: {
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
+        borderRadius: 5,
+        top: 100,
+      },
+    });
   };
-
 
   useEffect(() => {
     //checkUserCompletedOrder();
@@ -188,22 +202,26 @@ const TaskCenter = () => {
             <br />
 
             <p style={{ fontSize: 20 }}>
-              Complete your tasks to get{" "}
+              Complete your tasks to get{' '}
               <span style={{ fontSize: 40 }}>10% </span>Trade Reward
             </p>
 
             <br />
-            <p style={{ fontSize: 30, textAlign: "center" }}>
-              <strong>{(taskCenterDetails?.totalPoints >= 100) ? (100) : taskCenterDetails?.totalPoints}/100</strong>{" "}
+            <p style={{ fontSize: 30, textAlign: 'center' }}>
+              <strong>
+                {taskCenterDetails?.totalPoints >= 100
+                  ? 100
+                  : taskCenterDetails?.totalPoints}
+                /100
+              </strong>{' '}
               <span style={{ fontSize: 10 }}>Points</span>
               <span
-                style={{ fontSize: 30, textAlign: "center", paddingLeft: 30 }}
+                style={{ fontSize: 30, textAlign: 'center', paddingLeft: 30 }}
               >
-                {" "}
+                {' '}
                 <strong>{taskCenterDetails?.totalPoints}</strong>
                 <span style={{ fontSize: 10 }}> Total Points</span>
               </span>
-
             </p>
           </div>
           <div className="d-flex justify-content-center">
@@ -212,13 +230,12 @@ const TaskCenter = () => {
               danger
               type="primary"
               style={{ borderRadius: 5, marginTop: 15, width: 200 }}
-              size={"large"}
+              size={'large'}
               onClick={enableTradetoEarnButton}
               loading={loadings}
             >
               Locked
             </Button>
-
           </div>
           <div className="d-flex justify-content-center">
             <Card
@@ -233,7 +250,14 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Invite 3 users using the indexx Affiliate System.
                   </Text>
-                  <Progress style={{ width: 439 }} percent={Math.floor(((taskCenterDetails?.inivitedUsersCount / 3) * 100) * 100) / 100} />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={
+                      Math.floor(
+                        (taskCenterDetails?.inivitedUsersCount / 3) * 100 * 100
+                      ) / 100
+                    }
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -251,36 +275,31 @@ const TaskCenter = () => {
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
                 >
-                  
                   <a href="https://register.affiliate.indexx.ai/">
                     <Button
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                      size={"large"}
+                      size={'large'}
                     >
                       Get Affiliates
                     </Button>
                   </a>
-
-                  
                 </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
+                    size={'large'}
                   >
                     Complete
                   </Button>
-
                 </div>
               </div>
               <Divider></Divider>
@@ -291,9 +310,17 @@ const TaskCenter = () => {
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Make a transaction on indexx Exchange.
-                  </Text>{" "}
+                  </Text>{' '}
                   <br />
-                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.isTransactionCompletedInExchange) ? 100 : 0)} size="small" />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={
+                      taskCenterDetails?.isTransactionCompletedInExchange
+                        ? 100
+                        : 0
+                    }
+                    size="small"
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -312,10 +339,9 @@ const TaskCenter = () => {
                 <div
                   className="col-2 "
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
                 >
                   <a href="/indexx-exchange/buy-sell">
@@ -323,26 +349,32 @@ const TaskCenter = () => {
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                      size={"large"}
-                      disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
+                      size={'large'}
+                      disabled={
+                        taskCenterDetails?.isTransactionCompletedInExchange
+                          ? true
+                          : false
+                      }
                     >
                       Buy Tokens
                     </Button>
                   </a>
-
                 </div>
 
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5,width: 150, marginTop: 15 }}
-                    size={"large"}
-                    disabled={(taskCenterDetails?.isTransactionCompletedInExchange) ? true : false}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                    disabled={
+                      taskCenterDetails?.isTransactionCompletedInExchange
+                        ? true
+                        : false
+                    }
                   >
                     Complete
                   </Button>
-
                 </div>
               </div>
               <Divider></Divider>
@@ -354,7 +386,10 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Report a bug on Indexx.ai.
                   </Text>
-                  <Progress style={{ width: 439 }} percent={(hasOpenedBug ? 100 : (bugsData.length > 0 ? 50 : 0))} />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={hasOpenedBug ? 100 : bugsData.length > 0 ? 50 : 0}
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -372,10 +407,9 @@ const TaskCenter = () => {
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
                 >
                   <Link to="/indexx-exchange/report-bug">
@@ -383,26 +417,24 @@ const TaskCenter = () => {
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                      size={"large"}
-                      disabled={(hasOpenedBug) ? true : false}
+                      size={'large'}
+                      disabled={hasOpenedBug ? true : false}
                     >
                       Report a bug
                     </Button>
                   </Link>
-
                 </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
-                    disabled={(hasOpenedBug) ? true : false}
+                    size={'large'}
+                    disabled={hasOpenedBug ? true : false}
                   >
                     Complete
                   </Button>
                 </div>
-
               </div>
               <Divider></Divider>
               <div className="row">
@@ -431,10 +463,9 @@ const TaskCenter = () => {
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
                 >
                   <a href="/indexx-exchange/fortune-daily">
@@ -442,26 +473,24 @@ const TaskCenter = () => {
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                      size={"large"}
+                      size={'large'}
                       disabled={true}
                     >
                       Fortune daily
                     </Button>
                   </a>
-
                 </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
+                    size={'large'}
                     disabled={true}
                   >
                     Coming Soon
                   </Button>
                 </div>
-
               </div>
 
               <Divider></Divider>
@@ -473,42 +502,45 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Complete KYC on Indexx Exchange
                   </Text>
-                  <Progress style={{ width: 439 }} percent={(taskCenterDetails?.isKYCPass ? 100 : (bugsData.length > 0 ? 50 : 0))} />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={
+                      taskCenterDetails?.isKYCPass
+                        ? 100
+                        : bugsData.length > 0
+                        ? 50
+                        : 0
+                    }
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
-                 
-                    <span
+                  <span
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -10 }}
                   >
-                    10{taskCenterDetails?.KYCPoints}
-                  </span><span style={{marginTop: 30}}>Points</span>
-                  
+                    {taskCenterDetails?.KYCPoints}
+                  </span>
+                  <span style={{ marginTop: 30 }}>Points</span>
                 </div>
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
-                >
-
-
-                </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                ></div>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
+                    size={'large'}
                     disabled={taskCenterDetails?.isKYCPass}
                   >
                     Complete
                   </Button>
                 </div>
-
               </div>
               <Divider></Divider>
               <div className="row">
@@ -519,43 +551,39 @@ const TaskCenter = () => {
                   <span style={{ fontSize: 20, fontWeight: 100 }}>
                     Sign Up on Indexx Exchange
                   </span>
-                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.email) ? 100 : 0)} />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={taskCenterDetails?.email ? 100 : 0}
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
-                  
-                  
-                    <span
+                  <span
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -10 }}
                   >
                     10
-                  </span><span style={{marginTop: 30}}>Points</span>
-                  
+                  </span>
+                  <span style={{ marginTop: 30 }}>Points</span>
                 </div>
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
-                >
-
-
-                </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                ></div>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
+                    size={'large'}
                     disabled={taskCenterDetails?.email}
                   >
                     Complete
                   </Button>
                 </div>
-
               </div>
               <Divider></Divider>
               <div className="row">
@@ -566,7 +594,10 @@ const TaskCenter = () => {
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
                     Buy Indexx Tokens
                   </Text>
-                  <Progress style={{ width: 439 }} percent={((taskCenterDetails?.isBuyIndexxTokens ? 100 : 0))} />
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={taskCenterDetails?.isBuyIndexxTokens ? 100 : 0}
+                  />
                 </div>
                 <div className="col-1 d-flex justify-content-center">
                   <Text
@@ -584,42 +615,35 @@ const TaskCenter = () => {
                 <div
                   className="col-2"
                   style={{
-                    alignContent: "end",
-                    alignItems: "end",
+                    alignContent: 'end',
+                    alignItems: 'end',
                     paddingLeft: 70,
-
                   }}
                 >
-
                   <a href="/indexx-exchange/buy-sell">
                     <Button
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                      size={"large"}
+                      size={'large'}
                       disabled={taskCenterDetails?.isBuyIndexxTokens}
                     >
                       Buy Tokens
                     </Button>
                   </a>
-
-
                 </div>
-                <div className="col-2" style={{paddingLeft: 50,}}>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
                     danger
                     type="primary"
                     style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                    size={"large"}
+                    size={'large'}
                     disabled={taskCenterDetails?.isBuyIndexxTokens}
                   >
                     Complete
                   </Button>
                 </div>
-
               </div>
-
-
             </Card>
           </div>
           <div className="row">
@@ -629,7 +653,7 @@ const TaskCenter = () => {
                   danger
                   type="primary"
                   style={{ borderRadius: 5, width: 150, marginBottom: 50 }}
-                  size={"large"}
+                  size={'large'}
                 >
                   How it Works
                 </Button>
@@ -638,12 +662,24 @@ const TaskCenter = () => {
           </div>
         </div>
 
-        <Divider style={{width:1430}}><b>Points History</b></Divider>
+        <Divider style={{ width: 1430 }}>
+          <b>Points History</b>
+        </Divider>
 
         <div className="d-flex justify-content-center">
-          <Table style={{ margin: 20, marginBlock: 10, width: 1430, marginLeft: 80, marginBottom: 10 }} bordered={true} columns={columns} dataSource={pointsHistory} />
+          <Table
+            style={{
+              margin: 20,
+              marginBlock: 10,
+              width: 1430,
+              marginLeft: 80,
+              marginBottom: 10,
+            }}
+            bordered={true}
+            columns={columns}
+            dataSource={pointsHistory}
+          />
         </div>
-
       </div>
 
       <Footer></Footer>

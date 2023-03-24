@@ -84,7 +84,7 @@
     position: absolute;
     top: -176px;
     right: 32px;
-    color: #5F5F5F;
+    color: #3ac04c;
     font-size: 23px;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -96,7 +96,7 @@
     position: absolute;
     top: -90px;
     right: 32px;
-    color: #5F5F5F;
+    color: #3ac04c;
     font-size: 23px;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -107,10 +107,10 @@
 
 
 .need_help:hover {
-    color: #00387d;
+    color: #0c7e32;
 }
 .need_help_phone:hover {
-    color: #00387d;
+    color: #098d35;
 }
 
 

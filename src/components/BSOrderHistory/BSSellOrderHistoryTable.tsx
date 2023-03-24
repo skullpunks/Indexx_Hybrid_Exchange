@@ -28,6 +28,12 @@ const BSSellOrderHistoryTable: React.FC = () => {
     const [orderListFilter, setOrderTxListFilter] = useState() as any;
     const [isLoading, setLoadings] = useState(true);
     const [valueInput, setValueInput] = useState('');
+    const [selection, setSelection] = useState({
+        asset: '',
+        status: '',
+        time: '30',
+        orderId: '',
+    })
     const tableLoading = {
         spinning: isLoading,
         indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="50" height="50" />,
@@ -151,53 +157,150 @@ const BSSellOrderHistoryTable: React.FC = () => {
     }, []);
 
     const handleChangeTime = (value: string) => {
+        const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
+
         if (!isNaN(+value)) {
-            const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
+            setSelection({
+                asset: selection.asset,
+                status: selection.status,
+                time: value,
+                orderId: selection.orderId,
+            });
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 return moment(pastDate).isSameOrBefore(valueDate)
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.inCurrenyName?.toLowerCase() === selection.asset?.toLowerCase())
             })
             setOrderTxListFilter(txListFilterData);
         }
         else {
-            setOrderTxListFilter(orderList)
+            setSelection({
+                asset: selection.asset,
+                status: selection.status,
+                time: "",
+                orderId: selection.orderId,
+            });
+            const txListFilterData = orderList.filter((data: any) => {
+                return (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.inCurrenyName?.toLowerCase() === selection.asset?.toLowerCase())
+
+            })
+            setOrderTxListFilter(txListFilterData);
+
         }
+
 
     };
     const handleChangeStatus = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         if (value !== 'all') {
+            setSelection({
+                asset: selection.asset,
+                status: value,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
+
             const txListFilterData = orderList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
                 return data.status?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.inCurrenyName?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
             })
-            console.log(txListFilterData);
             setOrderTxListFilter(txListFilterData);
         }
         else {
-            setOrderTxListFilter(orderList)
+            setSelection({
+                asset: selection.asset,
+                status: '',
+                time: selection.time,
+                orderId: selection.orderId,
+            });
+            const txListFilterData = orderList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+                return (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.asset || data.breakdown.inCurrenyName?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+
+                // data.status?.toLowerCase() === value?.toLowerCase() 
+            })
+            setOrderTxListFilter(txListFilterData)
+
         }
+
     };
 
 
     const handleChangeAsset = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         if (value !== 'all') {
+            setSelection({
+                asset: value,
+                status: selection.status,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
             const txListFilterData = orderList.filter((data: any) => {
-                return data.breakdown.outCurrencyName?.toLowerCase() === value?.toLowerCase()
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+                return data.breakdown.inCurrenyName?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
             })
             setOrderTxListFilter(txListFilterData);
         }
         else {
-            setOrderTxListFilter(orderList)
+            setSelection({
+                asset: '',
+                status: selection.status,
+                time: selection.time,
+                orderId: selection.orderId,
+            });
+            const txListFilterData = orderList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+                return (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+
+                // data.status?.toLowerCase() === value?.toLowerCase() 
+            })
+            setOrderTxListFilter(txListFilterData)
         }
+
     };
 
 
     const onChageSearch = (e: any) => {
         let val = e.currentTarget.value;
         setValueInput(val)
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
+        setSelection({
+            asset: selection.asset,
+            status: selection.status,
+            time: selection.time,
+            orderId: val,
+        });
         const filterDate = orderList?.filter((data: any) => {
-            return data.orderId?.toLowerCase().includes(val?.toLowerCase());
+            let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+            return data.orderId?.toLowerCase().includes(val?.toLowerCase())
+                && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                && (!selection.asset || data.breakdown.inCurrenyName?.toLowerCase() === selection.asset?.toLowerCase())
+                && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         });
         setOrderTxListFilter(filterDate);
+
     };
 
     const getData = (current: number, pageSize: number) => {

@@ -1,126 +1,125 @@
 .section3-container {
-    display: flex;
-    padding: 20px;
-    margin: 20px;
+  display: flex;
+  padding: 20px;
+  margin: 20px;
 }
 
 .data-container {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  cursor: pointer;
 }
 
 .label-container {
-    font-family: AvenirHeavy, serif;
-    font-size: 40px;
-    font-weight: 600;
-    text-align: right;
-    padding: 20px 0;
-    color: rgba(0, 0, 0, 0.15);
-    line-height: 55px;
+  font-family: AvenirHeavy, serif;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: right;
+  padding: 20px 0;
+  color: rgba(0, 0, 0, 0.15);
+  line-height: 55px;
 }
 
 .selected-data {
-    padding: 20px 0 20px 20px;
+  padding: 20px 0 20px 20px;
 }
 
 .selected-data-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .selected-circle {
-    height: 12px;
-    width: 12px;
-    margin-right: 10px;
-    border: 3px solid hsl(13deg 85% 57%);
-    border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  margin-right: 10px;
+  border: 3px solid hsl(13deg 85% 57%);
+  border-radius: 50%;
 }
 
 .selected-header {
-    font-family: AvenirHeavy, serif;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 0;
-    text-align: left;
-    color: #5A5858;
+  font-family: AvenirHeavy, serif;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: left;
+  color: #5a5858;
 }
 
 .help-text {
-    color: #5A5858;
-    font-family: AvenirRegular, serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0;
-    text-align: left;
-    margin-left: 30px;
-    padding-top: 15px;
+  color: #5a5858;
+  font-family: AvenirRegular, serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: left;
+  margin-left: 30px;
+  padding-top: 15px;
 }
 
 .data-right-container {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-left: 50px;
 }
 
 .selected {
-    color: #5f5f5f;
+  color: #5f5f5f;
 }
 
 .label-container:hover {
-    color: #5f5f5f;
+  color: #5f5f5f;
 }
 
 .actionLink {
-    font-family: AvenirRegular, serif;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    color: #F66036;
+  font-family: AvenirRegular, serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  color: #11be6a;
 }
 
 .actionButtonContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionButton {
-    min-width: 260px;
-    font-size: 20px;
-    font-weight: 400;
-    font-family: AvenirRegular, serif;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    border: 1px solid #F66036;
-    border-radius: 10px;
-    color: #5A5858;
-    width: fit-content;
+  min-width: 260px;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: AvenirRegular, serif;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  border: 1px solid #11be6a;
+  border-radius: 10px;
+  color: #5a5858;
+  width: fit-content;
 }
 
+@media (max-width: 767px) {
+  .section3-container {
+    flex-direction: column;
+  }
 
-@media (max-width:767px) {
-    .section3-container {
-        flex-direction: column;
-    }
+  .section3-container > div {
+    width: 100%;
+  }
 
-    .section3-container>div {
-        width: 100%;
-    }
+  .selected-data,
+  .data-right-container {
+    padding-left: 0;
+  }
 
-    .selected-data,
-    .data-right-container {
-        padding-left: 0;
-    }
-
-    .label-container {
-        text-align:left;
-    }
+  .label-container {
+    text-align: left;
+  }
 }

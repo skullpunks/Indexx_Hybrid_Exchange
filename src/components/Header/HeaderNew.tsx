@@ -40,7 +40,7 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
 };
 
 const Links = [
-  { label: "Centralized", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
+  { label: "Exchange", value: "buy-sell", url: "/indexx-exchange/buy-sell" },
   { label: "Trade To Earn", value: "trade-to-earn", url: "/indexx-exchange/trade-to-earn" },
   { label: "Markets", value: "markets", url: "/indexx-exchange/markets" },
   { label: "Tokens", value: "tokens", url: "/indexx-exchange/tokens" },
@@ -132,7 +132,7 @@ const HeaderNew = () => {
                   className="dropdown-item"
                 >
                   <Image preview={false} src={headerstar} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Centralized</Text><br/>
+                   <Text style={{paddingLeft:4,color:'white'}}>Exchange</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}> Convert, Buy & Sell</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item
@@ -142,7 +142,7 @@ const HeaderNew = () => {
                   rel="noreferrer"
                 >
                   <Image preview={false} src={headerdex} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Decentralized</Text><br/>
+                   <Text style={{paddingLeft:4,color:'white'}}>Swap</Text><br/>
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}> Swap, Buy & Sell</Text>
                 </NavDropdown.Item>
                 <NavDropdown.Item

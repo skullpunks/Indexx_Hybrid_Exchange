@@ -24,6 +24,13 @@ interface DataType {
 
 
 const BSTransactionHistoryTable: React.FC = () => {
+    const [selection, setSelection] = useState({
+        type: '',
+        asset: '',
+        status: '',
+        time: '30',
+        transactionHash: '',
+    })
     const [txList, setTxList] = useState() as any;
     const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
     const [txListFilter, setTxListFilter] = useState() as any;
@@ -146,51 +153,169 @@ const BSTransactionHistoryTable: React.FC = () => {
     }, []);
 
     const handleChangeTime = (value: string) => {
+        const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
         if (!isNaN(+value)) {
-            const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: selection.status,
+                time: value,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 return moment(pastDate).isSameOrBefore(valueDate)
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
         else {
-            setTxListFilter(txList)
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: selection.status,
+                time: '',
+                transactionHash: selection.transactionHash,
+            });
+            const txListFilterData = txList.filter((data: any) => {
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
-
     };
     const handleChangeStatus = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+        console.log(value, 'value')
         if (value !== 'all') {
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: value,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
                 return data.status?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
             })
             setTxListFilter(txListFilterData);
         }
         else {
-            setTxListFilter(txList)
+            setSelection({
+                type: selection.type,
+                asset: selection.asset,
+                status: '',
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
+            const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
+            })
+            setTxListFilter(txListFilterData);
         }
     };
-
     const handleChangeType = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
+
         if (value !== 'all') {
+            setSelection({
+                type: value,
+                asset: selection.asset,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return data.transactionType?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+
             })
             setTxListFilter(txListFilterData);
+
+            // WITHDRAW_CYRPTO WITHDRAW_CRYPTO
         }
+
         else {
-            setTxListFilter(txList)
+            setSelection({
+                type: '',
+                asset: selection.asset,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
+            const txListFilterData = txList.filter((data: any) => {
+                
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
+                return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
     };
     const handleChangeAsset = (value: string) => {
+        const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
         if (value !== 'all') {
+            setSelection({
+                type: selection.type,
+                asset: value,
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
             const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                console.log(data);
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
+                    && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
             })
             setTxListFilter(txListFilterData);
         }
         else {
-            setTxListFilter(txList)
+            setSelection({
+                type: selection.type,
+                asset: '',
+                status: selection.status,
+                time: selection.time,
+                transactionHash: selection.transactionHash,
+            });
+            const txListFilterData = txList.filter((data: any) => {
+                let valueDate = moment(data.created).format('YYYY-MM-DD')
+                console.log("N: ", data);
+                return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
+                    && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
+                    && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
+            })
+            setTxListFilter(txListFilterData);
         }
     };
 

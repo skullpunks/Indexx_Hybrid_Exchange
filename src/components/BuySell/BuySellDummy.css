@@ -1,112 +1,105 @@
 .bs_container.medium_card {
-    min-width: 700px;
+  min-width: 700px;
 }
 
 .medium_card .light_button {
-    padding: 6px 15px 10px 40px;
-    background-repeat: no-repeat;
-    background-position: left 10px center;
+  padding: 6px 15px 10px 40px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
 }
 
-
-
 .bs_wallet_top {
-    background: #F66036;
+  background: #11be6a;
 
-    max-width: calc(100% - 160px);
-    margin: 0 auto 20px;
-    padding: 20px;
-    border-radius: 5px;
-
+  max-width: calc(100% - 160px);
+  margin: 0 auto 20px;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .margin-l-0_5x {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .margin-r-0_5x {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .color_white {
-    color: #fff;
+  color: #fff;
 }
 
-
-
 .large_card {
-    margin: 0 auto;
-    max-width: calc(100% - 160px);
-    margin-bottom: 300px;
-    padding-top: 0;
+  margin: 0 auto;
+  max-width: calc(100% - 160px);
+  margin-bottom: 300px;
+  padding-top: 0;
 }
 
 .full_width_tabs {
-    width: calc(100% - 160px);
-
+  width: calc(100% - 160px);
 }
 
-.custom_table tr>td.ant-table-cell:nth-child(3) {
-    text-align: right;
+.custom_table tr > td.ant-table-cell:nth-child(3) {
+  text-align: right;
 }
 
 .orange_input.ant-input-affix-wrapper,
 .orange_input.ant-input-affix-wrapper:hover,
-.orange_input input, .orange_input input:hover {
-    border-color: rgba(246, 96, 54, 0.3);
-
+.orange_input input,
+.orange_input input:hover {
+  border-color: rgba(246, 96, 54, 0.3);
 }
 
 .orange_input.ant-input-affix-wrapper {
-    height: 30px;
+  height: 30px;
 }
 
 .bs_wallet .ant-input-prefix {
-    border-color: rgba(246, 96, 54, 0.3);
+  border-color: rgba(246, 96, 54, 0.3);
 }
 
 .bs_wallet .ant-tabs-extra-content {
-    margin-right: 20px;
-    margin-bottom: 10px;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 .bs_wallet .ant-tabs-nav-wrap {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 .bs_wallet_top_banner {
-    background-position-y: bottom 0;
-    padding-bottom: 320px;
-    background-image: url("../../assets/arts/graphWave.svg");
-    background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: calc(100% - 50px);
+  background-position-y: bottom 0;
+  padding-bottom: 320px;
+  background-image: url('../../assets/arts/graphWave.svg');
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: calc(100% - 50px);
 }
 
 .bs_wallet_buttons {
-    position: absolute;
-    right: 0;
-    top: 20px;
+  position: absolute;
+  right: 0;
+  top: 20px;
 }
 
 @media (max-width: 767px) {
-    .bs_wallet_top{
-        max-width:90%;
-        display: block !important;
-    }
-    .bs_wallet_top div:nth-child(2) a{
-        margin-left: 0;
-    }
-    .bs_wallet_buttons {
-        position: inherit;
-       
-    }
-    .bs_wallet_table table th,
-    .bs_wallet_table table td{
-        padding:16px 8px;
-    }
-    h1{
-        font-size:25px;
-    }
+  .bs_wallet_top {
+    max-width: 90%;
+    display: block !important;
+  }
+  .bs_wallet_top div:nth-child(2) a {
+    margin-left: 0;
+  }
+  .bs_wallet_buttons {
+    position: inherit;
+  }
+  .bs_wallet_table table th,
+  .bs_wallet_table table td {
+    padding: 16px 8px;
+  }
+  h1 {
+    font-size: 25px;
+  }
 }

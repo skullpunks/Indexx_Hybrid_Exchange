@@ -47,7 +47,7 @@ const HowItWorks = () => {
               >
                 indexx
                 <br />
-                Centralized
+                Exchange
               </strong>
             </span>
           </div>

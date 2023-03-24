@@ -1,15 +1,20 @@
-import React, { useState } from "react";
-import Email from "../../assets/arts/Email.svg";
+import React, { useState } from 'react';
+import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
-import qrCode from "../../assets/arts/qrCode.svg";
-import { Button, Form, Input, notification ,Divider} from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import { loginAPI, decodeJWT, getUserDetails, baseURL } from "../../services/api";
+import qrCode from '../../assets/arts/qrCode.svg';
+import { Button, Form, Input, notification, Divider } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  loginAPI,
+  decodeJWT,
+  getUserDetails,
+  baseURL,
+} from '../../services/api';
 import {
   CheckCircleFilled,
   InfoCircleFilled,
   CloseCircleFilled,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -20,33 +25,33 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
 
   const onFinish = async (values: any) => {
     setLoadings(true);
-    console.log("Success:", values);
-    console.log("Success:", values);
+    console.log('Success:', values);
+    console.log('Success:', values);
     let res = await loginAPI(values.email, values.password);
     console.log(res.data);
     if (res.status === 200) {
       setLoadings(false);
-      openNotificationWithIcon("success", "Login Successful");
-      localStorage.setItem("user", values.email);
-      localStorage.setItem("access_token", res.data.access_token);
-      localStorage.setItem("refresh_token", res.data.refresh_token);
+      openNotificationWithIcon('success', 'Login Successful');
+      localStorage.setItem('user', values.email);
+      localStorage.setItem('access_token', res.data.access_token);
+      localStorage.setItem('refresh_token', res.data.refresh_token);
       let resObj = await decodeJWT(res.data.access_token);
       console.log(resObj);
-      let redirectUrl = window.localStorage.getItem("redirect");
-      window.localStorage.removeItem("redirect");
+      let redirectUrl = window.localStorage.getItem('redirect');
+      window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(values.email);
       console.log(userDetails.data);
       redirectUrl
         ? navigate(redirectUrl)
-        : (window.location.href = "/indexx-exchange/buy-sell"); // navigate("/indexx-exchange/buy-sell")
+        : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
       console.log(res.data);
       setLoadings(false);
-      openNotificationWithIcon("error", res.data);
+      openNotificationWithIcon('error', res.data);
     }
   };
 
-  type NotificationType = "success" | "info" | "warning" | "error";
+  type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
 
   const openNotificationWithIcon = (
@@ -54,18 +59,18 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     message: string
   ) => {
     const Icon =
-      type === "error" ? (
+      type === 'error' ? (
         <CloseCircleFilled />
       ) : (
         <CheckCircleFilled className="text_link" />
       );
     notification[type]({
       message: message,
-      description: "",
+      description: '',
       icon: Icon,
       style: {
-        border: "1px solid #F66036",
-        boxShadow: "none",
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
         borderRadius: 5,
         top: 100,
       },
@@ -73,7 +78,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
   return (
     <div className="">
@@ -83,7 +88,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           Please make sure you are visiting the correct URL
         </div>
         <p className="w-fit-content py-1 p-2 index_link_info">
-          <InfoCircleFilled className="pe-2" style={{ color: "#5F5F5F" }} />
+          <InfoCircleFilled className="pe-2" style={{ color: '#5F5F5F' }} />
           <span>{baseURL}</span>
         </p>
         <div className="bs_container bs_form card">
@@ -98,8 +103,8 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
                 label="Email"
                 name="email"
                 rules={[
-                  { required: true, message: "Email Id Required" },
-                  { type: "email", message: "Please Enter Valid Email Id" },
+                  { required: true, message: 'Email Id Required' },
+                  { type: 'email', message: 'Please Enter Valid Email Id' },
                 ]}
               >
                 <div className="control-input">
@@ -115,7 +120,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
                 label="Password"
                 name="password"
                 rules={[
-                  { required: true, message: "Please input your password!" },
+                  { required: true, message: 'Please input your password!' },
                 ]}
               >
                 <div className="">
@@ -145,41 +150,49 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           <br />
 
           <div className=" padding-b-2x text-center">
-            Don’t have an account?{" "}<Link to="/indexx-exchange/buy-sell/get-started" style={{color:"#F66036"}}>Get Started</Link> 
-            <Divider></Divider>
-            <br/>
+            Don’t have an account?{' '}
             <Link
-            to=""
-            className="default-link border-default text-center margin-t-1_5x disabled"
-            style={{
-              cursor: "not-allowed",
-              pointerEvents: "none",
-              opacity: "0.6",
-            }}
-          >
-            <img src={qrCode} alt="qr-code" /> Log In with QR code (coming soon)
-          </Link>
-
-          <br/><br/>
-
-
+              to="/indexx-exchange/buy-sell/get-started"
+              style={{ color: '#11be6a' }}
+            >
+              Get Started
+            </Link>
+            <Divider></Divider>
+            <br />
+            <Link
+              to=""
+              className="default-link border-default text-center margin-t-1_5x disabled"
+              style={{
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+                opacity: '0.6',
+              }}
+            >
+              <img src={qrCode} alt="qr-code" /> Log In with QR code (coming
+              soon)
+            </Link>
+            <br />
+            <br />
             <Link
               to="/indexx-exchange/buy-sell/get-started"
               className="text_link"
             >
-                <Button
+              <Button
                 type="primary"
                 className="atn-btn atn-btn-round margin-b-1x"
-                style={{width:270}}
+                style={{ width: 270 }}
               >
                 Get Started
               </Button>
-            </Link> <br/><br/>
-            <p style={{color:"#F66036", fontSize:15}}> Sign up to be an indexxer</p>
-           
+            </Link>{' '}
+            <br />
+            <br />
+            <p style={{ color: '#11be6a', fontSize: 15 }}>
+              {' '}
+              Sign up to be an indexxer
+            </p>
           </div>
           <br />
-        
         </div>
       </div>
     </div>
