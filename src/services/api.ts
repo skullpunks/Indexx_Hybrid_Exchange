@@ -5,11 +5,11 @@ export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  //baseAPIURL =  "https://test.api.indexx.ai";
+  baseAPIURL =  "https://test.api.indexx.ai";
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";
   baseURL = "https://test.indexx.ai";
-  baseAPIURL = "http://localhost:3000";
+  //baseAPIURL = "http://localhost:3000";
 } else {
   baseCEXURL = "https://test.cex.indexx.ai";
   baseDEXURL = "https://test.dex.indexx.ai";

@@ -236,7 +236,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             setTxListFilter(txListFilterData);
         }
     };
-    console.log(selection);
     const handleChangeType = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
 
