@@ -222,7 +222,7 @@ const LineGraph = (props: any) => {
               padding={{ top: 20 }}
               tick={{ fill: '#5f5f5f' }}
               domain={['auto', 'auto']}
-              hide={false}
+              hide={true}
             />
             {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}
