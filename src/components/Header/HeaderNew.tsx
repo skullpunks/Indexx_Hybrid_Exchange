@@ -137,7 +137,7 @@ const HeaderNew = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   className="dropdown-item"
-                  href={baseDEXURL}
+                  href="https://test.swap.indexx.ai"
                   target="_blank"
                   rel="noreferrer"
                 >
