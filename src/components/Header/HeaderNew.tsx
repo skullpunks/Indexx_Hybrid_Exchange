@@ -24,7 +24,7 @@ import blog from "../../assets/header-icons/Company/blog.png";
 import career from "../../assets/header-icons/Company/career.png";
 import howitworks from "../../assets/header-icons/Company/howitworks.png";
 import hybrid from "../../assets/header-icons/Company/hybrid.png";
-import { baseDEXURL, baseURL } from "../../services/api";
+import {  baseURL } from "../../services/api";
 
 
 const {Text} = Typography;
