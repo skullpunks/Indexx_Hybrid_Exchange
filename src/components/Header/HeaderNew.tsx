@@ -272,6 +272,9 @@ const HeaderNew = () => {
 
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="https://test.wallet2.indexx.ai">Wallet</Nav.Link>
+              <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="https://test.swap.indexx.ai/ai-engine">Ai Engine</Nav.Link>
+              <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link>
             </Nav>
              
             <Nav>
