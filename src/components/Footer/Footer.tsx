@@ -1,17 +1,18 @@
 import React from 'react';
 // import { Navigation } from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
-import Instagram from "../../assets/arts/instagramIcon.svg";
-import Twitter from "../../assets/arts/twitterIcon.svg";
-import YouTube from "../../assets/arts/youtTubeIcon.svg";
-import Reddit from "../../assets/arts/redditIcon.svg";
-import facebook from "../../assets/arts/fb_logo.png";
-import Telegram from "../../assets/arts/telegram.png";
-import needHelp from "../../assets/arts/needhelp.png";
+import Instagram from '../../assets/arts/instagramIcon.svg';
+import Twitter from '../../assets/arts/twitterIcon.svg';
+import YouTube from '../../assets/arts/youtTubeIcon.svg';
+import Reddit from '../../assets/arts/redditIcon.svg';
+import facebook from '../../assets/arts/fb_logo.png';
+import Telegram from '../../assets/arts/telegram.png';
+import needHelp from '../../assets/arts/needhelp.png';
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
-import personFlipCoin from '../../assets/arts/personFlipCoin.png';
+import personFlipCoin from '../../assets/arts/personFlip.png';
+
 import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
-import indexText from '../../assets/arts/indexText.svg';
+import indexText from '../../assets/indexx.ai white.png';
 import './Footer.css';
 import { baseCEXURL, baseDEXURL, baseURL } from '../../services/api';
 
@@ -58,7 +59,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     <>
       <footer
         className="site_footer position-relative container-fluid desktop-display"
-        style={{ marginTop: 300 }}
+     
       >
         {helpIcon && (
           <a
@@ -129,7 +130,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href="https://tokens.indexx.ai/"
+                       href={`${baseURL}/indexx-exchange/token-details`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       indexx Tokens
@@ -140,6 +141,20 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       Import indexx Tokens
+                    </a>
+                    <br />
+                    <a
+                      href="https://test.xnftmarketplace.indexx.ai/"
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      XNFT Marketplace
+                    </a>
+                    <br />
+                    <a
+                      href="https://test.wallet2.indexx.ai/wallets/crypto-wallet"
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      Wallet 2.0
                     </a>
                     <br />
                     <br />
@@ -204,6 +219,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       About{' '}
                     </a>
                     <br />
+
+                    <a
+                      href={`${baseURL}/indexx-exchange/nfts`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      NFT{' '}
+                    </a>
+                    <br />
                     <a
                       href={baseURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
@@ -254,14 +277,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                 </span>
               </div>
 
-              <div className="col" style={{ marginRight: -80 }}>
+              <div className="col" style={{ marginRight: -40 }}>
                 <span>
                   <h1
                     className="align-middle"
                     style={{ marginTop: 45, marginRight: -40 }}
                   >
                     <a href={baseURL}>
-                      <img src={indexText} alt="index logo" />
+                      <img src={indexText} alt="index logo" width={"119px"} />
                     </a>
                   </h1>
                 </span>
@@ -269,23 +292,24 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
             </div>
           </div>
           <div className="col-xs-6 col-md-4 flip_icon_container">
-            {footerArt === 'flipWoman' ? (
+            {/* {footerArt === 'flipWoman' ? (
               <img
                 src={womanFlipCoin}
                 alt="Index flip coin art"
-                className="flip_person_icon flip_woman"
+                className="flip_person_icon flip_woman hideicon"
               />
-            ) : (
+            ) : ( */}
               <img
                 src={personFlipCoin}
                 alt="Index flip coin art"
-                className="flip_person_icon"
+                className="flip_person_icon hide-img"
+                style={{marginTop:"-33px"}}
               />
-            )}
+            {/* )} */}
           </div>
         </div>
         <div className="copyright_bar row">
-          <p className="copyright_text text-left">
+          <p className="copyright_text text-center">
             Copyright © 2023 All Rights Reserved.
           </p>
           <br />
@@ -308,20 +332,20 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
               <img
                 src={womanFlipCoin}
                 alt="Index flip coin art"
-                className="flip_person_icon flip_woman"
+                className="flip_person_icon_mobile flip_woman"
               />
             ) : (
               <img
                 src={personFlipCoin}
                 alt="Index flip coin art"
-                className="flip_person_icon"
+                className="flip_person_icon_mobile"
               />
             )}
           </div>
                   
           
 
-        <div className="flex-align-center d-flex flex-justify-between site_footer_inner row">
+        <div className="flex-align-center d-flex flex-justify-between site_footer_inner row" style={{marginLeft:"15px"}}>
           <div className=" footercentre col-sm-12 col-md-12">
             {/* <a href="/" id="1067941554">
                            <img src="https://lirp.cdn-website.com/5afbaf73/dms3rep/multi/opt/index-38-238w.png"
@@ -453,6 +477,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     >
                       About{' '}
                     </a>
+
+                    <br />
+                    <a
+                      href={`${baseURL}/indexx-exchange/nfts`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      NFT{' '}
+                    </a>
+
+
+                    
+                   
+
                     <br />
                     <a
                       href={baseURL}
@@ -508,10 +545,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                 <span>
                   <h1
                     className="align-middle"
-                    style={{ marginTop: 45, marginRight: -40 }}
+                    style={{ marginTop: 45,}}
                   >
                     <a href={baseURL}>
-                      <img src={indexText} alt="index logo" />
+                      <img src={indexText} alt="index logo"  width={"119px"} />
                     </a>
                   </h1>
                 </span>

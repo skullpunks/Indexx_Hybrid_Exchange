@@ -30,6 +30,10 @@
 }
 */
 
+a.nav-link:hover {
+  color: #1890ff !important;
+}
+
 .dark-menu .dropdown-menu {
   background-color: #171717;
 }
@@ -137,20 +141,22 @@
 }
 
 .logo__icon {
-  background-image: url("../../assets/iw.svg");
+  background-image: url("../../assets/indexx.ai\ white.png");
   font-size: 0;
   background-repeat: no-repeat;
   width: 119px;
-  height: 26px;
+  height: 36px;
   background-size: contain;
 }
 
 .logo__icon:hover {
-  background-image: url("../../assets/ig.svg");
+  background-image: url("../../assets/indexx.ai\ white.png");
   background-repeat: no-repeat;
   width: 119px;
-  height: 26px;
+  height: 36px;
   background-size: contain;
+  transform: scale(1.1);
+  transition: transform 330ms ease-in-out;
 }
 
 .logo__text {
@@ -279,7 +285,7 @@
 }
 
 a.link.text-white:hover {
-  color: #c8c5c5 !important;
+  color: #1890ff !important;
 }
 
 .main_navigation .nav-link {

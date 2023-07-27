@@ -24,7 +24,18 @@ import blog from "../../assets/header-icons/Company/blog.png";
 import career from "../../assets/header-icons/Company/career.png";
 import howitworks from "../../assets/header-icons/Company/howitworks.png";
 import hybrid from "../../assets/header-icons/Company/hybrid.png";
-import {  baseURL } from "../../services/api";
+import giftcard from "../../assets/header-icons/Shop/gift card white.png";
+import greetcard from "../../assets/header-icons/Shop/greeting card white.png";
+import redeem from "../../assets/header-icons/Shop/redeem white.png";
+import store from "../../assets/header-icons/Shop/shop.png";
+import walletweb from "../../assets/header-icons/Wallet/wallet web white.png";
+import walletext from "../../assets/header-icons/Wallet/wallet extension white.png";
+import nft from "../../assets/header-icons/Products/nft icon.svg";
+import xusd from "../../assets/header-icons/Products/xusd icon.svg";
+import xnft from "../../assets/header-icons/Products/xnft.png";
+import fortune from "../../assets/header-icons/for.png";
+
+import {  baseURL, baseDEXURL } from "../../services/api";
 
 
 const {Text} = Typography;
@@ -120,7 +131,256 @@ const HeaderNew = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown
+            <NavDropdown
+                    title="Platforms"
+                    id="collasible-nav-dropdown"
+                    className="dark-menu"
+                    renderMenuOnMount={true}
+                  >
+                    <NavDropdown.Item
+                    className="dropdown-item"
+                    href="https://test.xnftmarketplace.indexx.ai/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Image
+                      preview={false}
+                      src={xnft}
+                      style={{
+                        width: 18,
+                        height: 22,
+                        marginBottom: 3,
+                        marginRight: 7,
+                      }}
+                    ></Image>
+                    
+                    <Text style={{ paddingLeft: 4, color: "white" }}>XNFT Market</Text>
+                    <br />
+                    <Text
+                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                    >
+                      {" "}
+                      Buy, Sell & Trade XNFT
+                    </Text>
+                  </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      href="/"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        preview={false}
+                        src={headerstar}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Exchange
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        {" "}
+                        Convert, Buy & Sell
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      href={baseDEXURL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        preview={false}
+                        src={headerdex}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Swap
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        {" "}
+                        Swap, Buy & Sell
+                      </Text>
+                    </NavDropdown.Item>
+
+                  <NavDropdown.Item
+                    className="dropdown-item"
+                    href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
+                    target="_blank"
+                  >
+                    <Image
+                      preview={false}
+                      src={bank}
+                      style={{
+                        width: 15,
+                        height: 15,
+                        marginBottom: 3,
+                        marginRight: 7,
+                      }}
+                    ></Image>
+                    <Text style={{ paddingLeft: 4, color: "white" }}>
+                      Indexx Bank
+                    </Text>
+                    <br />
+                    <Text
+                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                    >
+                      Deposit and invest to earn
+                    </Text>
+                  </NavDropdown.Item>
+                  </NavDropdown>
+
+                  <NavDropdown
+                    title="Products"
+                    id="collasible-nav-dropdown"
+                    className="dark-menu"
+                    renderMenuOnMount={true}
+                  >
+                    <NavDropdown.Item
+                      href="https://indexx.ai/indexx-exchange/token-details"
+                      className="dropdown-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        preview={false}
+                        src={whitetoken}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Tokens
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        {" "}
+                        Know the characteristics of each token
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      href="/indexx-exchange/nfts"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        preview={false}
+                        src={nft}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        NFT
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        {" "}
+                        Convert, Buy & Sell
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    className="dropdown-item"
+                    href="https://test.xnftmarketplace.indexx.ai/collections?type=all"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Image
+                      preview={false}
+                      src={xnft}
+                      style={{
+                        width: 18,
+                        height: 22,
+                        marginBottom: 3,
+                        marginRight: 7,
+                      }}
+                    ></Image>
+                    <Text style={{ paddingLeft: 4, color: "white" }}>XNFT</Text>
+                    <br />
+                    <Text
+                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                    >
+                      {" "}
+                      Buy, Sell & Trade XNFT
+                    </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      href="https://shop.indexx.ai/collections/xusd"
+                    >
+                      <Image
+                        preview={false}
+                        src={xusd}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        XUSD
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        {" "}
+                        The stable USD
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      as={Link}
+                      to="https://fortune.daily.indexx.ai/"
+                    >
+                      <Image
+                        preview={false}
+                        src={fortune}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Fortune Daily
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Win daily in Lottery
+                      </Text>
+                  </NavDropdown.Item>
+                  </NavDropdown>
+              {/* <NavDropdown
                 title="Products"
                 id="collasible-nav-dropdown"
                 className="dark-menu"
@@ -165,7 +425,7 @@ const HeaderNew = () => {
                   <Text style={{fontSize:10,color:'white',marginLeft:26}}> Bring your tokens to our exchange</Text>
                   
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
               {localStorage.getItem("user") ? (
                 <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
               ) : <></>}
@@ -272,9 +532,193 @@ const HeaderNew = () => {
 
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link  className='text-white link' href="https://test.wallet2.indexx.ai">Wallet</Nav.Link>
+              <NavDropdown
+                    title="Wallet"
+                    id="collasible-nav-dropdown"
+                    className="dark-menu"
+                    renderMenuOnMount={true}
+                  >
+                    <a
+                      href="https://test.wallet2.indexx.ai/wallets/crypto-wallet"
+                      className="dropdown-item"
+                    >
+                      <Image
+                        preview={false}
+                        src={walletweb}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Wallet Web
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Connect to Indexx Wallet web
+                      </Text>
+                    </a>
+                    <NavDropdown.Item
+                      className="dropdown-item"
+                      href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en"
+                    >
+                      <Image
+                        preview={false}
+                        src={walletext}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Wallet extension
+                      </Text>
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Download the web extension now
+                      </Text>
+                    </NavDropdown.Item>
+                   
+                </NavDropdown>
+
+                <NavDropdown
+                    title="Shop"
+                    id="collasible-nav-dropdown"
+                    className="dark-menu"
+                    renderMenuOnMount={true}
+                  >
+                    <NavDropdown
+                      title={<span><img src={giftcard} alt="icon" width={"15px"} height={"15px"} style={{margin:"0 7px 3px 0"}}/> <span style={{paddingLeft:"4px "}}  >Gift Cards</span></span>}
+                      id="collasible-nav-dropdown"
+                      className="dark-menu"
+                      renderMenuOnMount={true}
+                      style={{width:"204.5px"}}
+                    >
+
+                    <NavDropdown.Item
+                      href="https://test.xnftmarketplace.indexx.ai/redeem-gift"
+                      className="dropdown-item"
+                    >
+                      <Image
+                        preview={false}
+                        src={redeem}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Redeem Card
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Redeem card and buy XNFT now
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      href="https://shop.indexx.ai/collections/gift-cards-1"
+                      className="dropdown-item"
+                    >
+                      <Image
+                        preview={false}
+                        src={store}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Store
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Buy more Gift Cards
+                      </Text>
+                    </NavDropdown.Item>
+                    </NavDropdown>
+
+                    <NavDropdown
+                      title={<span><img src={greetcard} alt="icon" width={"15px"} height={"15px"} style={{margin:"0 7px 3px 0"}}/> <span style={{paddingLeft:"4px "}}  >Greeting Cards</span></span>}
+                      id="collasible-nav-dropdown"
+                      className="dark-menu"
+                      renderMenuOnMount={true}
+                    >
+
+                    <NavDropdown.Item
+                      href="https://test.xnftmarketplace.indexx.ai/redeem-greeting"
+                      className="dropdown-item"
+                    >
+                      <Image
+                        preview={false}
+                        src={redeem}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Redeem Card
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Redeem card and buy XNFT now
+                      </Text>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      href="https://shop.indexx.ai/collections/greeting-cards"
+                      className="dropdown-item"
+                    >
+                      <Image
+                        preview={false}
+                        src={store}
+                        style={{
+                          width: 15,
+                          height: 15,
+                          marginBottom: 3,
+                          marginRight: 7,
+                        }}
+                      ></Image>
+                      <Text style={{ paddingLeft: 4, color: "white" }}>
+                        Store
+                      </Text>
+
+                      <br />
+                      <Text
+                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
+                      >
+                        Buy more Greeting Cards
+                      </Text>
+                    </NavDropdown.Item>
+                    </NavDropdown>
+
+                </NavDropdown>
+              {/* <Nav.Link  className='text-white link' href="https://test.wallet2.indexx.ai">Wallet</Nav.Link>
               <Nav.Link  className='text-white link' href="https://test.swap.indexx.ai/ai-engine">Ai Engine</Nav.Link>
-              <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link>
+              <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
             </Nav>
              
             <Nav>

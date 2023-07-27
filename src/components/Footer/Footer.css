@@ -1,7 +1,7 @@
 .site_footer {
     background-color: #252525;
     color: #fff;
-    
+   
 }
 
 .site_footer_inner {
@@ -46,18 +46,18 @@
 }
 
 .flip_person_icon {
-    top: -220px;
+    top: -212px;
     position: absolute;
-    right: 0;
-    max-width: 360px;
+    right: -10px;
+    max-width: 400px;
     
 }
 
 .flip_woman {
     /* top: -279px; */
 
-    top: -221px;
-    max-width: 470px;
+    top: -212px;
+    max-width: 400px;
 }
 
 .copyright_text {
@@ -113,7 +113,31 @@
     color: #098d35;
 }
 
+@media (max-width: 1347px) { 
 
+   
+
+    .flip_person_icon {
+        top: -159px;
+        position: absolute;
+        right: -10px;
+        max-width: 340px;
+        
+    }
+    
+
+
+}
+
+@media (max-width: 1200px) { 
+
+
+    .hide-img {
+        display: none;
+    }
+
+
+}
 
 @media (max-width: 767px) {
 
@@ -138,15 +162,16 @@
         display: none;
     }
    
-    .flip_person_icon {
+    .flip_person_icon_mobile {
         position: inherit;
-        width: 200px;
-        height: 200px;
-        top:0;
+        width: 230px;
+   
+        top:-110px;
+        scale:1.2
     
     }
 
-    .flip_person_icon.flip_woman {
+    .flip_person_icon_mobile.flip_woman {
 
         top: 26px;
     }
