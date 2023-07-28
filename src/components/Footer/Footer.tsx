@@ -119,42 +119,54 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Exchange
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseDEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Swap
+                      </span>
                     </a>
                     <br />
                     <a
                        href={`${baseURL}/indexx-exchange/token-details`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       indexx Tokens
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseCEXURL}/indexx-exchange/import-indexx-tokens`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Import indexx Tokens
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://test.xnftmarketplace.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       XNFT Marketplace
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://test.wallet2.indexx.ai/wallets/crypto-wallet"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Wallet 2.0
+                      </span>
                     </a>
                     <br />
                     <br />
@@ -176,8 +188,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseCEXURL}/indexx-exchange/trade-to-earn`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       Trade to Earn{' '}
+                      </span>
                     </a>
                     <br />
 
@@ -185,8 +199,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       indexx Bank{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -208,15 +224,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/how-it-works`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       How it Works{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/about`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       About{' '}
+                      </span>
                     </a>
                     <br />
 
@@ -224,22 +244,28 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/nfts`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       NFT{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       Hybrid Exchange{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://register.affiliate.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Affiliate Program{' '}
+                      </span>
                     </a>
                     <br />
 
@@ -247,7 +273,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/blog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Blog{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -255,7 +283,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/vlog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Vlog{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -263,14 +293,18 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/legal`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Legal{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/careers`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Careers{' '}
+                      </span>
                     </a>
                     <br />
                   </p>
@@ -284,7 +318,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     style={{ marginTop: 45, marginRight: -40 }}
                   >
                     <a href={baseURL}>
-                      <img src={indexText} alt="index logo" width={"119px"} />
+                      <img src={indexText} alt="index logo" width={"119px"} className='logo_ind'/>
                     </a>
                   </h1>
                 </span>
@@ -392,28 +426,36 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Exchange
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseDEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Swap
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://tokens.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       indexx Tokens
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseCEXURL}/indexx-exchange/import-indexx-tokens`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Import indexx Tokens
+                      </span>
                     </a>
                     <br />
                     <br />
@@ -435,8 +477,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseCEXURL}/indexx-exchange/trade-to-earn`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       Trade to Earn{' '}
+                      </span>
                     </a>
                     <br />
 
@@ -444,8 +488,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       indexx Bank{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -467,15 +513,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/how-it-works`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       How it Works{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/about`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       About{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -483,7 +533,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/nfts`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       NFT{' '}
+                      </span>
                     </a>
 
 
@@ -495,15 +547,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       {' '}
                       Hybrid Exchange{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://register.affiliate.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Affiliate Program{' '}
+                      </span>
                     </a>
                     <br />
 
@@ -511,7 +567,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/blog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Blog{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -519,7 +577,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/vlog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Vlog{' '}
+                      </span>
                     </a>
 
                     <br />
@@ -527,14 +587,18 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/legal`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Legal{' '}
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/careers`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
+                      <span className='link_sty'>
                       Careers{' '}
+                      </span>
                     </a>
                     <br />
                   </p>
@@ -548,7 +612,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     style={{ marginTop: 45,}}
                   >
                     <a href={baseURL}>
-                      <img src={indexText} alt="index logo"  width={"119px"} />
+                      <img src={indexText} alt="index logo"  width={"119px"}  className='logo_ind'/>
                     </a>
                   </h1>
                 </span>

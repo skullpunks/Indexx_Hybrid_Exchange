@@ -80,6 +80,30 @@
     background-size: contain;
 }
 
+.social-connect-icons{
+    transition: transform 330ms ease-in-out;
+}
+
+.social-connect-icons:hover{
+   
+    transform: scale(1.2);
+    transition: transform 330ms ease-in-out;
+}
+
+.logo_ind {
+    width: 119px;
+    transition: transform 330ms ease-in-out;
+}
+
+.logo_ind:hover {
+    transform: scale(1.1);
+    transition: transform 330ms ease-in-out;
+}
+
+.link_sty:hover{
+    color: white;
+}
+
 .need_help {
     position: absolute;
     top: -176px;
