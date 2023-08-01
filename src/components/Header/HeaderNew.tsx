@@ -355,8 +355,8 @@ const HeaderNew = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="dropdown-item"
-                      as={Link}
-                      to="https://fortune.daily.indexx.ai/"
+                      // as={Link}
+                      href="https://fortune.daily.indexx.ai/"
                     >
                       <Image
                         preview={false}
