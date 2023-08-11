@@ -78,3 +78,16 @@
     height: 30px;
     width: auto;
 }
+
+
+.common__token {
+    color: var(--body_color);
+    background-color: var(--body_background);
+    border-color: var(--border-color);
+  }
+  
+  .common__token:hover {
+    color: var(--body_color);
+    background-color: var(--disabled-btn);
+  }
+  

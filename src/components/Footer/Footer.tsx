@@ -11,7 +11,7 @@ import needHelp from '../../assets/arts/needhelp.png';
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from '../../assets/arts/personFlip.png';
 
-import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
+// import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
 import indexText from '../../assets/indexx.ai white.png';
 import './Footer.css';
 import { baseCEXURL, baseDEXURL, baseURL } from '../../services/api';
@@ -59,6 +59,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     <>
       <footer
         className="site_footer position-relative container-fluid desktop-display"
+        style={{marginTop:"250px"}}
      
       >
         {helpIcon && (
@@ -249,7 +250,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a>
                     <br />
-                    <a
+                    {/* <a
                       href={baseURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
@@ -257,8 +258,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       {' '}
                       Hybrid Exchange{' '}
                       </span>
-                    </a>
-                    <br />
+                    </a> */}
                     <a
                       href="https://register.affiliate.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
@@ -307,6 +307,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a>
                     <br />
+                    <br />
                   </p>
                 </span>
               </div>
@@ -352,7 +353,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
       <footer
         className="site_footer position-relative container-fluid mobile-display"
-       
+        // style={{marginTop:"100px"}}
       >
         
            
@@ -362,19 +363,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         <a href={`${baseURL}/indexx-exchange/help`} className="need_help_phone" style={{ backgroundImage: `url(${needHelp})` ,textDecoration:'none' }}>
                    Need Help?
                </a>
-            {footerArt === 'flipWoman' ? (
+            {/* {footerArt === 'flipWoman' ? (
               <img
                 src={womanFlipCoin}
                 alt="Index flip coin art"
                 className="flip_person_icon_mobile flip_woman"
               />
-            ) : (
+            ) : ( */}
               <img
                 src={personFlipCoin}
                 alt="Index flip coin art"
                 className="flip_person_icon_mobile"
               />
-            )}
+            {/* )} */}
           </div>
                   
           
@@ -543,7 +544,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                    
 
                     <br />
-                    <a
+                    {/* <a
                       href={baseURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
@@ -551,7 +552,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       {' '}
                       Hybrid Exchange{' '}
                       </span>
-                    </a>
+                    </a> */}
                     <br />
                     <a
                       href="https://register.affiliate.indexx.ai/"

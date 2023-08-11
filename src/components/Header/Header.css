@@ -336,7 +336,7 @@ a.link.text-white:hover {
 }
 
 .color_general {
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .width_auto {

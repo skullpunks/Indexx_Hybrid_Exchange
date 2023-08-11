@@ -63,7 +63,7 @@ const LineGraph = (props: any) => {
             minWidth: 900,
             maxWidth: 900,
             padding: 15,
-            borderColor: '#D7D7D7',
+            borderColor: 'var(--border-color)',
             borderRight: 'none',
           }}
         >
@@ -194,11 +194,11 @@ const LineGraph = (props: any) => {
               <XAxis
                 padding={{ right: 20 }}
                 dataKey={'time'}
-                stroke="#5f5f5f"
+                stroke="var(--body_color)"
                 // domain={['auto', 'auto']}
                 domain={['dataMin', 'dataMax']}
                 interval="preserveStartEnd"
-                tick={{ fill: '#5f5f5f' }}
+                tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
                 minTickGap={92}
@@ -207,20 +207,20 @@ const LineGraph = (props: any) => {
               <XAxis
                 padding={{ right: 20 }}
                 dataKey={'time'}
-                stroke="#5f5f5f"
+                stroke="var(--body_color)"
                 // domain={['auto', 'auto']}
                 domain={['dataMin', 'dataMax']}
                 interval="preserveStartEnd"
-                tick={{ fill: '#5f5f5f' }}
+                tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
                 minTickGap={90}
               />
             )}
             <YAxis
-              stroke="#5f5f5f"
+              stroke="var(--body_color)"
               padding={{ top: 20 }}
-              tick={{ fill: '#5f5f5f' }}
+              tick={{ fill: 'var(--body_color)' }}
               domain={['auto', 'auto']}
               hide={true}
             />

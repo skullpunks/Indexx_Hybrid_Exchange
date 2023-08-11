@@ -36,6 +36,7 @@ import xnft from "../../assets/header-icons/Products/xnft.png";
 import fortune from "../../assets/header-icons/for.png";
 
 import {  baseURL, baseDEXURL } from "../../services/api";
+import DarkMode from "../DarkMode/DarkMode";
 
 
 const {Text} = Typography;
@@ -109,6 +110,7 @@ const HeaderNew = () => {
               index.ai
             </Navbar.Brand>
           </div>
+        <DarkMode/>
         </Container>
         <div className="loader" id="loaderLayer">
           {" "}
@@ -119,7 +121,7 @@ const HeaderNew = () => {
   } else
     return (
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
-        <Container>
+        <Container style={{maxWidth:"1360px"}}>
           <div className="d-flex logo__holder">
             <Navbar.Brand  href={baseURL} className="logo__icon">
               index.ai
@@ -131,7 +133,7 @@ const HeaderNew = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-            <NavDropdown
+              <NavDropdown
                     title="Platforms"
                     id="collasible-nav-dropdown"
                     className="dark-menu"
@@ -847,6 +849,7 @@ const HeaderNew = () => {
                 </>
               )}
             </Nav>
+            <DarkMode/>
           </Navbar.Collapse>
         </Container>
         <div className="loader" id="loaderLayer">

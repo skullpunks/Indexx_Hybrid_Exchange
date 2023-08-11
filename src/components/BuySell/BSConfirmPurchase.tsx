@@ -221,7 +221,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
             className="bs_curreny_left flex-align-center padding-b-2x"
             style={{ alignItems: 'baseline', padding: '50px 20px' }}
           >
-            <span className="font_20x" style={{ lineHeight: 4 }}>
+            <span className="font_20x" style={{ lineHeight: 4, color:"var(--body_color)" }}>
               $
             </span>
             <span
@@ -244,7 +244,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <div
           className="bs_token d-flex cursor-pointer justify-between font_20x"
-          style={{ alignItems: 'center' }}
+          style={{ alignItems: 'center', color:"var(--body_color)" }}
         >
           <span>Rate</span>
           <span>
@@ -253,7 +253,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <div
           className="bs_token d-flex cursor-pointer justify-between font_20x"
-          style={{ alignItems: 'center' }}
+          style={{ alignItems: 'center', color:"var(--body_color)" }}
         >
           <span>Total</span>
           <span>

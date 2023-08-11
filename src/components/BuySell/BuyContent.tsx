@@ -150,7 +150,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
             className="bs_curreny_left padding-2x"
             style={{ transform: 'scale(1)' }}
           >
-            <span className="font_20x pe-1">$</span>
+            <span className="font_20x pe-1" style={{color:"var(--body_color)"}}>$</span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
 
             <input
@@ -209,11 +209,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         style={{ alignItems: 'center' }}
       >
         <div className="bs_token_left d-flex justify-between">
-          <div className=" d-flex flex-justify-between flex-align-center width-100">
+          <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
             <Select
               className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
+              dropdownStyle={{backgroundColor: "var(--body_background)",}}                                                            
             >
               {initialTokens
                 //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
@@ -238,7 +239,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                         <div className=" padding-l-1x d-flex flex-align-center">
                           {token.title}{' '}
                           <span
-                            style={{ color: 'rgba(95, 95, 95, 0.5)' }}
+                            style={{ color: 'var(--body_color)' }}
                             className="margin-l-0_5x"
                           >
                             {token.subTitle}

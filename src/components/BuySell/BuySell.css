@@ -1,6 +1,6 @@
 .card.bs_container,
 .bs_main > .card {
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--border-color);
 }
 
 .card.bs_container {
@@ -16,8 +16,11 @@
 }
 
 .bs_container {
-  background: #ffffff;
-  border: 1px solid #d7d7d7;
+  background: var(--body_background);
+  color: var(--body_color);
+  /* background: #ffffff; */
+
+  border: 1px solid var(--border-color);
   border-radius: 0px;
   max-width: 423px;
 }
@@ -67,7 +70,7 @@ button {
   font-size: 30px;
   padding: 26px;
   color: #5f5f5f;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .d-flex {
@@ -76,7 +79,7 @@ button {
 
 .bs_footer_action {
   padding: 26px;
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid var(--border-color);
 }
 
 .bs_footer_action button {
@@ -102,17 +105,17 @@ button {
 
 .bs_token_num {
   font-size: 25px;
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .bs_token {
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid var(--border-color);
 
   padding: 20px;
 }
 
 .token_grey {
-  color: rgba(18, 18, 18, 0.2);
+  color: var(--light-gr-color);
   padding-left: 5px;
 }
 
@@ -126,7 +129,7 @@ button {
   text-align: center;
   width: fit-content;
   color: #5f5f5f;
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--border-color);
   border-radius: 0px;
   margin: auto;
 }
@@ -149,7 +152,7 @@ button {
 }
 
 input.search {
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--border-color);
   border-radius: 0px;
   height: 47px;
   font-size: 17px;
@@ -177,7 +180,7 @@ input + .search_icon {
   position: absolute;
   left: 35px;
   top: 33px;
-  border-right: 1px solid #d7d7d7;
+  border-right: 1px solid var(--border-color);
   padding-right: 8px;
 }
 
@@ -269,7 +272,7 @@ button.ant-btn-link.btn_link span:hover {
 
 .bs_main input[type='text'],
 .ant-input-password.ant-input-affix-wrapper {
-  border-color: #d7d7d7;
+  border-color: var(--border-color);
 }
 
 .terms_conditions {
@@ -425,18 +428,18 @@ input[type='checkbox'] {
 }
 
 .border-always {
-  border-color: #d7d7d7;
+  border-color: var(--border-color);
   border: 1px;
 }
 
 .border-default {
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--border-color);
   border-radius: 3px;
   padding: 6px 15px;
 }
 
 .border-b-1x {
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .margin-b-2x {
@@ -528,6 +531,7 @@ button.ant-btn-primary [disabled] {
   margin: 0 19px;
   padding: 20px 10px;
   font-size: 30px;
+  color: var(--body_color);
 }
 
 .bs_tab_item
@@ -550,7 +554,7 @@ button.ant-btn-primary [disabled] {
   > .ant-tabs-nav-list
   > .ant-tabs-tab.ant-tabs-tab-active
   .ant-tabs-tab-btn {
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .bs_tab_item
@@ -626,10 +630,13 @@ a.bs_link:hover {
   max-width: 275px;
   font-size: 60px;
   font-size: 1.1ch;
+  background-color: var(--body_background);
+  color: var(--body_color);
 }
 
 .error_message {
-  background: rgba(246, 96, 54, 0.2);
+  background: var(--err-clr);
+  color: var(--body_color);
   border-radius: 0px;
   margin-left: auto;
   margin-right: auto;
