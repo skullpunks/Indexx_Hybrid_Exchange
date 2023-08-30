@@ -1,11 +1,10 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Checkbox, Input, Pagination, Table, Tabs } from 'antd'
+import { Input, Pagination, Table, Tabs } from 'antd'
 import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { decodeJWT, getUserWallets } from '../../services/api';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 interface DataType {
     key: React.Key;
@@ -25,22 +24,11 @@ interface DataType {
     coinBalanceInBTC: any;
 }
 const BSWalletTable = () => {
-    const [hideZeroBalance, setHideZeroBalance] = useState(false);
+
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
-    
-    const handleCheckboxChange = (e: CheckboxChangeEvent) => {
-        setHideZeroBalance(e.target.checked);
-    };
-    
-
-    // const handleCheckboxChange = (e) => {
-    //     setHideZeroBalance(e.target.checked);
-    // };
-
-    
     const columns: ColumnsType<DataType> = [
         {
             title: 'Asset',
@@ -141,13 +129,9 @@ const BSWalletTable = () => {
 
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
- 
-    
-    const filteredWalletData = walletData ? walletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [];
-
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
-        const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
+        const xx = walletData && walletData.slice((current - 1) * pageSize, current * pageSize);
         console.log(xx)
         return xx
     };
@@ -165,23 +149,14 @@ const BSWalletTable = () => {
             />
         );
     };
-
-   console.log("WD",walletData);
-   console.log("FD",filteredWalletData);
     return (
         <div>
-           
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
                 <Tabs.TabPane tab="Balance" key="1" className='padding-2x'>
                     <div className='border-b-1x margin-b-2x'>
-                    <div className='checkbox-container' style={{textAlign:"right"}}>
-                            <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
-                                Hide rows with 0 balance
-                            </Checkbox>
-                        </div>
                         <Table className='custom_table' columns={columns}dataSource={getData(current, pageSize)} onChange={onChange} />
                         <MyPagination
-                    total={filteredWalletData && filteredWalletData.length}
+                    total={walletData && walletData.length}
                     current={current}
                     onChange={setCurrent}
                 />
