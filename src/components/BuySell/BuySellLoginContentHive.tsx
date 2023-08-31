@@ -82,6 +82,10 @@ const BuySellLoginContentHive: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+
+  const handleClick = () => {
+    window.location.href = "https://hive.indexx.ai/sign-up"
+  }
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
@@ -157,8 +161,10 @@ const BuySellLoginContentHive: React.FC = () => {
           <div className=" padding-b-2x text-center">
             Don’t have an account?{' '}
             <Link
-              to="/indexx-exchange/buy-sell/get-started"
+              // to="https://hive.indexx.ai/sign-up"
+              to=""
               style={{ color: '#ffb300' }}
+              onClick={handleClick}
             >
               Get Started
             </Link>
@@ -179,9 +185,11 @@ const BuySellLoginContentHive: React.FC = () => {
             <br />
             <br />
             <Link
-              to="/indexx-exchange/buy-sell/get-started"
+              // to="https://hive.indexx.ai/sign-up"
+              to=""
               className="text_link"
-            >
+              onClick={handleClick}
+>
               <Button
                 type="primary"
                 className="atn-btn atn-btn-round margin-b-1x hive-btn"
@@ -194,7 +202,7 @@ const BuySellLoginContentHive: React.FC = () => {
             <br />
             <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
-              Sign up to be an indexxer
+              Sign up for Captain Bee
             </p>
           </div>
           <br />
