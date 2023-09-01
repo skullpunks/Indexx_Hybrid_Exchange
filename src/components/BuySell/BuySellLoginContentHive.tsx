@@ -192,7 +192,7 @@ const BuySellLoginContentHive: React.FC = () => {
 >
               <Button
                 type="primary"
-                className="atn-btn atn-btn-round margin-b-1x hive-btn"
+                className="atn-btn atn-btn-round margin-b-1x hive-btn-2"
                 // style={{ width: 270 }}
               >
                 Get Started

@@ -11,6 +11,21 @@
   background-color: #ff9d00 !important;
   border-color: #ff9d00!important;
 }
+
+.hive-btn-2 {
+  background-color: #14D477;
+  border-color: #14D477!important;
+  font-size: 20px;
+  height: 55px;
+  color: #fff;
+  border-radius: 0;
+}
+
+.hive-btn-2:hover {
+  background-color: #0EA55A !important;
+  border-color: #0EA55A!important;
+}
+
 .text-underline:hover {
   color: #ffb300;
   text-decoration: underline;
