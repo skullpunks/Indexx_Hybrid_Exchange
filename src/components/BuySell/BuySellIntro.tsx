@@ -114,6 +114,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
             onCancel={handleTransferCancel}
             width={670}
             maskClosable={false}
+            className='custom-modal'
             footer={[
               <Button
                 danger
@@ -134,6 +135,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
                 Cancel
               </Button>,
             ]}
+            bodyStyle={{background:"var(--body_background)", color:"var(--body_color)"}}
           >
             <div className="align-center text-center">
               <Image preview={false} src={lockedimage}></Image>

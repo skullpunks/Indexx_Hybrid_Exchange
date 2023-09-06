@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 import { Select } from 'antd';
 // import { Option } from 'antd/lib/mentions';
-import bsDollar from '../../assets/arts/bsDollar.svg';
+import bsDollar from '../../assets/arts/usd icon 1.svg';
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from '../../utils/Tokens.json';
 import graphTokens from '../../utils/graphs.json';
@@ -214,7 +214,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
               className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
-              dropdownStyle={{backgroundColor: "var(--body_background)",}}                                                            
+              dropdownStyle={{backgroundColor: "var(--body_background)", color:"var(--body_color)"}}                                                            
             >
               {initialTokens
                 //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
@@ -226,7 +226,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                       className="common__token d-flex bs_token_container"
                       data-address={token.address}
                     >
-                      <div className="d-flex bs_token_num">
+                      <div className="d-flex bs_token_num select-drop">
                         <img
                           src={
                             require(`../../assets/token-icons/${token.image}.png`)

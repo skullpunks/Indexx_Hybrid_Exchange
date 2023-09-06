@@ -32,8 +32,8 @@ const BuySellLoggedVerfication: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <br />
         <div className="form_element email position-relative">
-          <label>Last 4 digits of your SSN</label>
-          <div className="control-input">
+          <label  style={{color:"var(--body_color)"}}>Last 4 digits of your SSN</label>
+          <div className="control-input ssn_container">
             <input type="Number" name="SSN" value="XXX-XX-" />
           </div>
         </div>

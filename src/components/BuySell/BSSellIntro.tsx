@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // import arrowAddress from "../../assets/arts/arrowAddress.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import bsDollar from "../../assets/arts/usd icon 1.svg";
 import "./BS-Sell.css";
 // import { Link } from 'react-router-dom';
 import { Select, Modal, Button } from 'antd';
@@ -218,6 +218,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onCancel={handleTransferCancel}
                     width={670}
                     maskClosable={false}
+                    className='custom-modal'
                     footer={[
 
                         <Button
@@ -228,8 +229,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                             Ok
                         </Button>,
                     ]}
+                    bodyStyle={{background:"var(--body_background)", color:"var(--body_color)"}}
                 >
-                    <div className="align-center text-center">
+                    <div className="align-center text-center" style={{backgroundColor:"var(--body_background)"}}>
                         {/* <Image preview={false} src={lockedimage}></Image> */}
                         <p
                             className="text-center"
@@ -251,14 +253,16 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </div>
                 </div> */}
                 <Select className='width-100 border-0'
-                    onChange={handleChange} value={BSvalue?.fromToken}>
+                    onChange={handleChange} value={BSvalue?.fromToken}
+              dropdownStyle={{backgroundColor: "var(--body_background)",}}                                                            
+                    >
                     {
                         initialTokens
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 
                                 return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                 </Option>
                             })
                     }

@@ -69,7 +69,7 @@ button {
   margin: 0;
   font-size: 30px;
   padding: 26px;
-  color: #5f5f5f;
+  color: var(--body_color);
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -222,7 +222,7 @@ input::-webkit-input-placeholder {
 
 .bs_container_create_main div {
   font-size: 25px;
-  color: #5f5f5f;
+  color: var(--body_color);
   padding: 25px 0;
 }
 
@@ -330,14 +330,24 @@ input[type='checkbox'] {
 .verfication_text {
   width: 280px;
   font-size: 15px;
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .otp_container input {
   width: 50px;
   height: 65.48px;
-  background: #ffffff;
-  border: 1px solid #d7d7d7;
+  background: var(--disabled-btn);
+  border: 1px solid var(--border-color);
+  border-radius: 0px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.ssn_container input{
+  width: 160px;
+  height: 28px;
+  background: var(--disabled-btn);
+  border: 1px solid var(--border-color);
   border-radius: 0px;
   font-size: 30px;
   text-align: center;
@@ -416,7 +426,7 @@ input[type='checkbox'] {
 .default-link {
   font-size: 15px;
   line-height: 20px;
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .w-fit-content {
@@ -663,9 +673,12 @@ a.bs_link:hover {
 }
 
 .index_link_info {
-  background-color: #e4e4e4;
+  background-color: var(--body_background);
 }
 
+.ant-form-item-required {
+  color: var(--body_color) !important;
+}
 @media (max-width: 767px) {
   .responsive_container .card,
   .responsive_container .bs_container,

@@ -186,7 +186,7 @@ a.nav-link:hover {
 .font_20x,
 .default-link.font_20x {
   font-size: 20px;
-  color: #5f5f5f;
+  color: var(--body_color);
 }
 
 .padding-l-2x {
@@ -323,7 +323,7 @@ a.link.text-white:hover {
 }
 
 .disable_icon {
-  opacity: 0.5;
+  opacity: 0.8;
   pointer-events: none;
 }
 

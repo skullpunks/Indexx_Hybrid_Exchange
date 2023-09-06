@@ -2,6 +2,26 @@
   min-width: 700px;
 }
 
+.custom-select .ant-select-dropdown-menu-item {
+  color: white; /* Set your desired text color */
+}
+
+.custom-select .ant-select-dropdown-menu-item:hover {
+  background-color: #1890ff; /* Set your desired hover background color */
+  color: white; /* Set your desired hover text color */
+}
+
+.common__token {
+  color: var(--body_color);
+  background-color: var(--body_background);
+  border-color: var(--border-color);
+}
+
+.common__token:hover {
+  color: var(--body_color);
+  background-color: var(--disabled-btn);
+}
+
 .medium_card .light_button {
   padding: 6px 15px 10px 40px;
   background-repeat: no-repeat;
@@ -84,6 +104,36 @@
   top: 20px;
 }
 
+.custom_table 
+.ant-table-tbody 
+.ant-table-cell
+{
+  background-color: var(--body_background);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-thead > tr > th {
+  background-color: var(--body_background);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-thead > tr > th:hover {
+  background-color: var(--disabled-btn);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-cell-row-hover{
+  background-color: var(--disabled-btn) !important;
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
 @media (max-width: 767px) {
   .bs_wallet_top {
     max-width: 90%;
@@ -103,3 +153,4 @@
     font-size: 25px;
   }
 }
+

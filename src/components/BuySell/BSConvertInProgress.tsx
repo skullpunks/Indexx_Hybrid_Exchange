@@ -67,7 +67,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
 
                     <span placeholder="0" className="font_20x " > <span className='dummy'>{Math.floor(orderData?.breakdown?.outAmount * 100000) / 100000}</span>  </span>
                     <span className="font_20x" style={{
-                        color: "rgba(96, 96, 96,.5)", paddingLeft: 10
+                        color: "var(--conf_purchase)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>
 
                 </div>
