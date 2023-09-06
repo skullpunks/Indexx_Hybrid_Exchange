@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../BSDepositWithdraw/BSWithdraw.css';
 
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import bsDollar from "../../assets/arts/usd icon 1.svg";
 import doubleArrow from "../../assets/arts/doubleArrow.svg";
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Radio } from 'antd';

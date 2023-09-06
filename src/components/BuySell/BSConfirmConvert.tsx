@@ -284,7 +284,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
         <div className="footer bs_footer_action">
-          <p className="text-center pb-2">
+          <p className="text-center pb-2" style={{color:"var(--body_color)"}}>
             Transaction/Admin Fee: {adminFee || '0.00'} %
           </p>
           {/* {Number(totalAmountToPayInUSD) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&

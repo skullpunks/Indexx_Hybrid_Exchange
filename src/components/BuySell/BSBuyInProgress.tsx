@@ -49,7 +49,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
-                <h1 className='centered' style={{ color: "#5f5f5f" }}>
+                <h1 className='centered' style={{ color: "var(--body_color)" }}>
                     {/* onClick={() => setScreenName("confirmPurchase")} */}
                     <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell")}>&#60;</span>
                     Purchase in Progress
@@ -67,11 +67,11 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
                     </div>
                 </div> */}
-                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline" }}>
+                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline", color:"var(--body_color)" }}>
 
                     <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >{Math.floor(outAmt * 10000) / 10000}</span>
                     <span className="font_20x" style={{
-                        color: "rgba(96, 96, 96,.5)", paddingLeft: 10
+                        color: "var(--conf-purchase)", paddingLeft: 10
                     }} >{outcurr}</span>
 
                 </div>

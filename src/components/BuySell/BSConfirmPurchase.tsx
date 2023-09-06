@@ -305,7 +305,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
             footer={null}
             width={850}
             maskClosable={false}
-            className="buy_purchase_modal"
+            className="buy_purchase_modal custom-modal"
+            bodyStyle={{background:"var(--body_background)", color:"var(--body_color)"}}
+
           >
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>

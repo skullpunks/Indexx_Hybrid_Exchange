@@ -6,7 +6,7 @@ import {
   CopyFilled,
   InfoCircleFilled,
 } from '@ant-design/icons';
-import bsDollar from '../../assets/arts/bsDollar.svg';
+import bsDollar from '../../assets/arts/usd icon 1.svg';
 import { Button, Tooltip, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { DialogContext, DialogCtxState } from './BSDepositFiatLayout';

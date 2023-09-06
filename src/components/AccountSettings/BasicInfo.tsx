@@ -57,7 +57,7 @@ const BasicInfo = () => {
                 </div>
             </div>
 
-            <div className="basic_info container margin-t-2x padding-t-3x">
+            <div className="basic_info container margin-t-2x padding-t-3x margin-b-2x">
 
                 <div>
                     <header className="font_18x border-b-1x padding-lr-2x padding-tb-1x">Verification & Limits</header>

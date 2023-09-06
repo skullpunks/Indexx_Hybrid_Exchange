@@ -29,7 +29,7 @@ const BuySellLoggedTwoFactor: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
                 <div className="otp_container">
-                    <label className="padding-b-1x">Code</label>
+                    <label className="padding-b-1x"  style={{color:"var(--body_color)"}}>Code</label>
                     <div className="d-flex justify-between">
                         <input type="number" />
                         <input type="number" />

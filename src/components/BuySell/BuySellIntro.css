@@ -1,3 +1,13 @@
 .ant-btn-primary:hover {
   background: rgba(214, 1, 1, 0.87)!important;
 }
+
+.custom-modal .ant-modal-close-x {
+  color: var(--body_color); /* Your desired color */
+}
+  
+.custom-modal .ant-modal-footer{
+    color: var(--body_color);
+    background-color: var(--body_background);  
+    border-color: var(--border-color);
+}

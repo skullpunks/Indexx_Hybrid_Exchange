@@ -4,8 +4,15 @@ import Verification from "../../assets/arts/Verification.svg";
 
 export const PaymentMethod = () => {
   return (
-    <div style={{minWidth:300,
-    margin:"auto",marginTop:60}} className="border card bs_main padding-lr-2x padding-b-2x">
+    <div 
+      style={{minWidth:300,
+        margin:"auto",
+        marginTop:60, 
+        borderColor:"var(--border-color)", 
+        borderRadius:"5px",
+        marginBottom:20
+      }} 
+      className="card bs_main padding-lr-2x padding-b-2x margin-b-2x">
         <br/>
         <br/>
         <br/>
