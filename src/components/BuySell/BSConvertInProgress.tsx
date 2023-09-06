@@ -30,7 +30,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
             setOrderData(order.data);
         });
 
-    }, [orderData, BSvalue])
+    }, [])
     // }
 
     // const getOrder = async () => {

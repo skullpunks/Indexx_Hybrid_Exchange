@@ -787,6 +787,14 @@ const HeaderNew = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       as={Link}
+                      to="/indexx-exchange/redeem-stock"
+                      className="dropdown-item"
+                      href="/"
+                    >
+                      Redeem Stock
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      as={Link}
                       to="/indexx-exchange/trade-to-earn"
                       className="dropdown-item"
                       href="/"

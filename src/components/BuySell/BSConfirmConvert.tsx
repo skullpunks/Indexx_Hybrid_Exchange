@@ -138,7 +138,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
-  });
+  },  []);
 
   const createProcessOrder = async () => {
     setLoadings(true);

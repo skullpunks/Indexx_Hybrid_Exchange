@@ -61,6 +61,7 @@ import WelcomePage from "./components/WelcomePage";
 import ImportTokens from "./components/ImportTokens/ImportTokens";
 import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
 import BuySellLoginContentHive from "./components/BuySell/BuySellLoginContentHive";
+import RedeemStock from "./components/RedeemStock/RedeemStock";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -144,6 +145,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/deposit-crypto/*"
             element={<BSDepositCryproLayout />}
+          />
+          <Route
+            path="/indexx-exchange/redeem-stock"
+            element={<RedeemStock />}
           />
           <Route
             path="/indexx-exchange/buy-sell/deposit-fiat/*"

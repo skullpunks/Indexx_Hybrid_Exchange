@@ -79,7 +79,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     getAllSetting();
     getPricesData();
     getTaskCenterDetailsData();
-  });
+  }, []);
 
   const getPricesData = async () => {
     const res = await getCoinPriceByName(

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
-import qrCode from '../../assets/arts/qrCode.svg';
-import { Button, Form, Input, notification, Divider } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  loginAPI,
-  decodeJWT,
-  getUserDetails,
-  baseURL,
-} from '../../services/api';
 import {
   CheckCircleFilled,
-  InfoCircleFilled,
   CloseCircleFilled,
+  InfoCircleFilled,
 } from '@ant-design/icons';
+import { Button, Divider, Form, Input, notification } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import hive from "../../assets/Welcometohive.svg";
-import "./BuySellLoginContentHive.css"
+import qrCode from '../../assets/arts/qrCode.svg';
+import {
+  baseURL,
+  decodeJWT,
+  getUserDetails,
+  loginHive
+} from '../../services/api';
+import "./BuySellLoginContentHive.css";
 
 // interface Props {
 //   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -28,20 +28,21 @@ const BuySellLoginContentHive: React.FC = () => {
   const onFinish = async (values: any) => {
     setLoadings(true);
     console.log('Success:', values);
-    console.log('Success:', values);
-    let res = await loginAPI(values.email, values.password);
+    console.log('Success:', values.email_or_username);
+    let res = await loginHive(values.email_or_username, values.password);
     console.log(res.data);
     if (res.status === 200) {
+      console.log(res.data);
       setLoadings(false);
       openNotificationWithIcon('success', 'Login Successful');
-      localStorage.setItem('user', values.email);
+      let resObj = await decodeJWT(res.data.access_token);
+      console.log(resObj?.email);
+      localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
-      let resObj = await decodeJWT(res.data.access_token);
-      console.log(resObj);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
-      let userDetails = await getUserDetails(values.email);
+      let userDetails = await getUserDetails(resObj?.email);
       console.log(userDetails.data);
       redirectUrl
         ? navigate(redirectUrl)
@@ -108,18 +109,17 @@ const BuySellLoginContentHive: React.FC = () => {
             autoComplete="off"
           >
             <div className="form_element email position-relative">
-              <Form.Item
-                label="Email"
-                name="email"
+            <Form.Item
+                label="Email / Username"
+                name="email_or_username"
                 rules={[
-                  { required: true, message: 'Email Id Required' },
-                  { type: 'email', message: 'Please Enter Valid Email Id' },
+                  { required: true, message: 'Email or Username is required' },
                 ]}
               >
                 <div className="control-input">
-                  <Input placeholder="Email id" className="input_height" />
+                  <Input placeholder="Email id or Username" className="input_height" />
                   <span className="input_icon">
-                    <img src={Email} alt="emailIcon" />
+                    <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
                   </span>
                 </div>
               </Form.Item>

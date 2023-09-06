@@ -5,16 +5,16 @@ export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL =  "https://test.api.indexx.ai";
-  baseCEXURL = "https://test.cex.indexx.ai";
-  baseDEXURL = "https://test.dex.indexx.ai";
-  baseURL = "https://test.indexx.ai";
-  //baseAPIURL = "http://localhost:3000";
+  baseAPIURL = 'https://test.api.indexx.ai';
+  baseCEXURL = 'https://test.cex.indexx.ai';
+  baseDEXURL = 'https://test.dex.indexx.ai';
+  baseURL = 'https://test.indexx.ai';
+  baseAPIURL = 'http://localhost:5000';
 } else {
-  baseCEXURL = "https://test.cex.indexx.ai";
-  baseDEXURL = "https://test.dex.indexx.ai";
-  baseAPIURL =  "https://test.api.indexx.ai"; 
-  baseURL = "https://test.indexx.ai";
+  baseCEXURL = 'https://test.cex.indexx.ai';
+  baseDEXURL = 'https://test.dex.indexx.ai';
+  baseAPIURL = 'https://test.api.indexx.ai';
+  baseURL = 'https://test.indexx.ai';
 }
 
 const API = axios.create({
@@ -45,11 +45,20 @@ export const signupAPI = async (
 
 export const loginAPI = async (email: string, password: string) => {
   try {
-    const result = await API.post('/api/v1/inex/user/login', {
-      email,
-      password,
-    });
-    return result.data;
+    let isEmailProvided = isEmail(email);
+    if (isEmailProvided) {
+      const result = await API.post('/api/v1/inex/user/login', {
+        email,
+        password,
+      });
+      return result.data;
+    } else {
+      const result = await API.post('/api/v1/inex/user/login', {
+        username: email,
+        password,
+      });
+      return result.data;
+    }
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (loginAPI)');
     console.log(e);
@@ -57,6 +66,42 @@ export const loginAPI = async (email: string, password: string) => {
     return e.response.data;
   }
 };
+
+export const loginHive = async (email: string, password: string) => {
+  try {
+    let isEmailProvided = isEmail(email);
+    if (isEmailProvided) {
+      const result = await API.post('/api/v1/inex/user/hivelogin', {
+        email,
+        password,
+      });
+      return result.data;
+    } else {
+      const result = await API.post('/api/v1/inex/user/hivelogin', {
+        username: email,
+        password,
+      });
+      return result.data;
+    }
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (loginAPI)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+function isEmail(input: string) {
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return emailPattern.test(input);
+}
+
+const userInput = 'exampleUserInput'; // Replace with the actual user input
+
+if (isEmail(userInput)) {
+  console.log('The user provided an email.');
+} else {
+  console.log('The user provided a username.');
+}
 
 export const enableTradeToEarn = async (email: string) => {
   try {
@@ -205,7 +250,7 @@ export const getAllCountries = async (email: string, coin: string) => {
 };
 
 export function decodeJWT(access_token: string) {
-  let userObj = decode(access_token);
+  let userObj: any= decode(access_token);
   return userObj;
 }
 
@@ -232,7 +277,7 @@ export const checkAndUpdateDeposit = async (
       email,
       txHash,
       coin,
-      coinNetwork
+      coinNetwork,
     });
     return result.data;
   } catch (e: any) {
@@ -682,6 +727,22 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INEX') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IAMZN') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IAAPL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IGOOGL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IMSFT') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IMETA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IPEP') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'ITELA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'INVDA') {
+      oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0.1;
     }
@@ -798,6 +859,39 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
         type: type,
       }
     );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const redeemValue = async (voucher: string, email: string) => {
+  try {
+    const result = await API.post(
+      `/api/v1/xnft/giftcards/validateStockVoucher`,
+      {
+        voucher: voucher,
+        email: email,
+      }
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const redeemStockCoupon = async (voucher: string, email: string) => {
+  try {
+    const result = await API.post(`/api/v1/xnft/giftcards/redeemStockCoupon`, {
+      voucher: voucher,
+      email: email,
+    });
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (transactionList)');
@@ -937,7 +1031,19 @@ export const getPaypalOrder = async (token: string) => {
   }
 };
 
-export const getIndexxMediumBlogs = async() => {
+export const createPaypalOrder = async (token: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/createPayment/${token}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getPaypalOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getIndexxMediumBlogs = async () => {
   try {
     const result = await API.get('/api/v1/inex/basic/indexxBlogs');
     return result.data;
@@ -947,4 +1053,4 @@ export const getIndexxMediumBlogs = async() => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};
