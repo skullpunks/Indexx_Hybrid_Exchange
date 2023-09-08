@@ -29,3 +29,5 @@ package-lock.json
 src/services/api.ts
 src/services/api.ts
 
+package.json
+yarn.lock

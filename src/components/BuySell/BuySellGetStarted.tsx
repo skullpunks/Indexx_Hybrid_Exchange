@@ -39,17 +39,19 @@ const BuySellGetStarted: React.FC = () => {
 
   const [form] = Form.useForm();
 
+
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const referral = params.get('referral');
-    console.log("referral", referral);
+    console.log("referral::", referral); // Check if referral is present in the URL
     if (referral) {
+      localStorage.setItem('tempAuthReferral', referral); // Store referral in localStorage
       setTimeout(() => {
-        form.setFieldsValue({ referral });
+        form.setFieldsValue({ referral }); // Set referral value in the form
       }, 0);
     }
   }, [form]);
-  
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -97,12 +99,17 @@ const BuySellGetStarted: React.FC = () => {
           <div className="bs_container bs_form card">
             <div className="d-flex justify-center"></div>
             <Form
-              form={form}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              layout="vertical"
-              autoComplete="off"
-            >
+         form={form}
+         onFinish={onFinish}
+         onFinishFailed={onFinishFailed}
+         layout="vertical"
+         autoComplete="off"
+         initialValues={{
+           referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
+         }}
+       >
+
+            
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
@@ -166,18 +173,24 @@ const BuySellGetStarted: React.FC = () => {
                 </Form.Item>
               </div>
               <div className="form_element referral">
-                <Form.Item
-                  label="Referral Code (Optional)"
+                          <Form.Item
+              label="Referral Code (Optional)"
+              name="referral"
+              rules={[
+                { required: false, message: 'Referral Id Required' },
+              ]}
+              initialValue={localStorage.getItem('tempAuthReferral') || ''}
+            >
+              <div className="control-input">
+                <Input
                   name="referral"
-                  rules={[
-                    { required: false, message: 'Referral Id Required' },
-                  ]}
-                  initialValue=""
-                >
-                  <div className="control-input">
-                    <Input name="referral" className="input_height" readOnly={!!form.getFieldValue('referral')} />
-                  </div>
-                </Form.Item>
+                  className="input_height"
+                  readOnly={!!form.getFieldValue('referral')}
+                  value={localStorage.getItem('tempAuthReferral') || ''}
+                />
+              </div>
+            </Form.Item>
+
               </div>
               <div className="form_element d-flex terms_conditions_container">
                 <Form.Item
