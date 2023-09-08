@@ -45,6 +45,10 @@ const BuySellGetStarted: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
     const referral = params.get('referral');
     console.log("referral::", referral); // Check if referral is present in the URL
+    
+// Clear the previous referral code from localStorage
+    localStorage.removeItem('tempAuthReferral');
+
     if (referral) {
       localStorage.setItem('tempAuthReferral', referral); // Store referral in localStorage
       setTimeout(() => {
