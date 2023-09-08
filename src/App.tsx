@@ -61,6 +61,9 @@ import WelcomePage from "./components/WelcomePage";
 import ImportTokens from "./components/ImportTokens/ImportTokens";
 import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
 import BuySellLoginContentHive from "./components/BuySell/BuySellLoginContentHive";
+import CaptainDash from "./components/Dashboard/Captainbee/CaptainDash";
+import CaptainProfile from "./components/Dashboard/Captainbee/CaptainProfile";
+import MyBees from "./components/Dashboard/Captainbee/MyBees/MyBees";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -103,7 +106,11 @@ function App() {
             <Route path="/*" element={<BuySell />} />
           }
 
-          <Route path="/indexx-exchange/dashboard" element={<Account />} />
+          <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
+
+
           {/* {
                         // userData?.role === "Standard"
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
