@@ -101,7 +101,7 @@ const SubHeader = () => {
                 <Typography
                 component='p'
                 sx={
-                  location.pathname === '/sign-up'
+                  location.pathname === '/indexx-exchange/coming-soon-honeycomb'
                     ? {
                       height: '0.3px',
                       width: '58px',

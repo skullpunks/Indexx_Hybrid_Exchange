@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 import careersIcon from "../../assets/arts/careersIcon.png";
 import honeycomb from "../../assets/hive-dashboard/honeycomb.svg";
+import SubHeader from '../Dashboard/Captainbee/SubHeader/SubHeader';
 
 const HoneyCombComingSoon = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -11,7 +12,8 @@ const HoneyCombComingSoon = () => {
     console.log(setSearchParams);
     return (
         <>
-            <div className='scan-container flex-direction-column'>
+            <SubHeader/>
+            <div className='hive-container'>
                 <img src={honeycomb} alt='comingsoon'/>
                 {/* {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
                     :
