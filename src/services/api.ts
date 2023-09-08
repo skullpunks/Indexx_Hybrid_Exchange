@@ -26,12 +26,14 @@ export default baseAPIURL;
 export const signupAPI = async (
   email: string,
   password: string,
+  username: string,
   referralCode: string
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/register', {
       email,
       password,
+      username,
       referralCode,
     });
     return result.data;

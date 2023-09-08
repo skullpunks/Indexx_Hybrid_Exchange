@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ const BuySellGetStarted: React.FC = () => {
   const onFinish = async (values: any) => {
     setLoadings(true);
     localStorage.setItem('tempAuthEmail', values.email);
-    const res = await signupAPI(values.email, values.password, values.referral);
+    const res = await signupAPI(values.email, values.password, values.username, values.referral);
     console.log(res);
     if (res.status === 200) {
       setLoadings(false);
@@ -36,6 +36,20 @@ const BuySellGetStarted: React.FC = () => {
       openNotificationWithIcon('error', res.data);
     }
   };
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const referral = params.get('referral');
+    console.log("referral", referral);
+    if (referral) {
+      setTimeout(() => {
+        form.setFieldsValue({ referral });
+      }, 0);
+    }
+  }, [form]);
+  
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -83,6 +97,7 @@ const BuySellGetStarted: React.FC = () => {
           <div className="bs_container bs_form card">
             <div className="d-flex justify-center"></div>
             <Form
+              form={form}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               layout="vertical"
@@ -91,7 +106,7 @@ const BuySellGetStarted: React.FC = () => {
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
-                  label="username"
+                  label="Username"
                   name="username"
                   rules={[
                     { required: true, message: 'Please input your username!' },
@@ -126,7 +141,7 @@ const BuySellGetStarted: React.FC = () => {
                   </div>
                 </Form.Item>
               </div>
-              
+
               <div className="form_element password position-relative">
                 <Form.Item
                   label="Password"
@@ -155,11 +170,12 @@ const BuySellGetStarted: React.FC = () => {
                   label="Referral Code (Optional)"
                   name="referral"
                   rules={[
-                    { required: false, message: 'Referral  Id Required' },
+                    { required: false, message: 'Referral Id Required' },
                   ]}
+                  initialValue=""
                 >
                   <div className="control-input">
-                    <Input name="" className="input_height" />
+                    <Input name="referral" className="input_height" readOnly={!!form.getFieldValue('referral')} />
                   </div>
                 </Form.Item>
               </div>
@@ -173,8 +189,8 @@ const BuySellGetStarted: React.FC = () => {
                         value
                           ? Promise.resolve()
                           : Promise.reject(
-                              new Error('Should accept terms and policy')
-                            ),
+                            new Error('Should accept terms and policy')
+                          ),
                     },
                   ]}
                 >
