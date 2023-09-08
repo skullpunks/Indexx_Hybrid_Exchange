@@ -69,6 +69,32 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
+
+export const getCaptainBeeStatics = async (username: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updateCaptainBeeProfile = async (email: string, username: string, updateData: any) => {
+  try {
+    const result = await API.post(
+      `/api/v1/affiliate/updateaffiliateuser/`
+    , {
+      email,
+      username,
+      updateData
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
 export const loginHive = async (email: string, password: string) => {
   try {
     let isEmailProvided = isEmail(email);

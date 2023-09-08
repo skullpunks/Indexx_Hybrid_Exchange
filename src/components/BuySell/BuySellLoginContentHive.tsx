@@ -37,9 +37,13 @@ const BuySellLoginContentHive: React.FC = () => {
       openNotificationWithIcon('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
       console.log(resObj?.email);
+      console.log(resObj);
+      debugger;
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
+      localStorage.setItem('userType', resObj?.userType);
+      localStorage.setItem('username', resObj?.username);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
