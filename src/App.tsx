@@ -65,6 +65,12 @@ import RedeemStock from "./components/RedeemStock/RedeemStock";
 import CaptainDash from "./components/Dashboard/Captainbee/CaptainDash";
 import CaptainProfile from "./components/Dashboard/Captainbee/CaptainProfile";
 import MyBees from "./components/Dashboard/Captainbee/MyBees/MyBees";
+import BeeDash from "./components/Dashboard/Captainbee/MyBees/BeeDash";
+import CaptainResource from "./components/Dashboard/Captainbee/CaptainResource/CaptainResource";
+import CaptainResourceManagement from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceManagement";
+import CaptainResourceTechnical from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceTechnical";
+import CaptainResourceLegal from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal";
+import CaptainResourceAccounting from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -110,6 +116,14 @@ function App() {
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees/:id" element={<BeeDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
+
+
 
 
           {/* {

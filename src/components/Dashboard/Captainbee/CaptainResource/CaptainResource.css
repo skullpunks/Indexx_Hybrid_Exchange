@@ -1,0 +1,10 @@
+.folder{
+    background-image: url('../../../../assets/hive-dashboard/folder1.svg');
+    width: 89px;
+    height: 75px;
+}
+
+.folder:hover{
+    background-image: url('../../../../assets/hive-dashboard/folder2.svg');
+
+}

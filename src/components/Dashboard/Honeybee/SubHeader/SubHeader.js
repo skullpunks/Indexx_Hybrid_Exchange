@@ -31,7 +31,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/'
                     ? {
-                      height: '2px',
+                      height: '0.3px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -53,7 +53,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/'
                     ? {
-                      height: '2px',
+                      height: '0.3px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -76,7 +76,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/'
                     ? {
-                      height: '2px',
+                      height: '0.3px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -102,7 +102,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/sign-up'
                     ? {
-                      height: '2px',
+                      height: '0.3px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -124,7 +124,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/'
                     ? {
-                      height: '2px',
+                      height: '0.3px',
                       width: '58px',
                       backgroundColor: '#000',
                     }

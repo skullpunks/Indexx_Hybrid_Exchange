@@ -137,6 +137,7 @@ const MyBees = () => {
                         <Button
                           variant="outlined"
                           // onClick={handleSubmit}
+                          href={`/indexx-exchange/dashboard/capt-mybees/${item.username}`}
                           disableTouchRipple
                           // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
                           sx={{

@@ -105,11 +105,11 @@ const CaptainDash = () => {
                     />
                   </div>
                 </div>
-                <div className="font_20x fw-bold mt-4 mb-3 lh_32x">
+              </div>
+                <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
-              </div>
-              <div className="align-items-start ms-4 lh_32x">
+              <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">
                   <img alt="man" src={man} className="me-2" />
                   @{staticsData?.affiliateUserProfile?.Username}
@@ -126,9 +126,9 @@ const CaptainDash = () => {
                   <img alt="man" src={clock} className="me-2" />
                   {staticsData?.formatedAccountCreationDate}
                 </div>
-              </div>
+            </div>
 
-              <div className="align-items-start ms-4 lh_32x mt-4">
+              <div className="align-items-start lh_32x mt-4">
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   <img alt="Discord" src={discord} className="me-3" />
                 </a>

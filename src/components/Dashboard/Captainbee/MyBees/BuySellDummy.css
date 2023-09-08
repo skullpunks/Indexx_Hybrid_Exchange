@@ -1,0 +1,163 @@
+.bs_container.medium_card {
+  min-width: 700px;
+}
+
+.custom-select .ant-select-dropdown-menu-item {
+  color: white; /* Set your desired text color */
+}
+
+.custom-select .ant-select-dropdown-menu-item:hover {
+  background-color: #1890ff; /* Set your desired hover background color */
+  color: white; /* Set your desired hover text color */
+}
+
+.common__token {
+  color: var(--body_color);
+  background-color: var(--body_background);
+  border-color: var(--border-color);
+}
+
+.common__token:hover {
+  color: var(--body_color);
+  background-color: var(--disabled-btn);
+}
+
+.medium_card .light_button {
+  padding: 6px 15px 10px 40px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+
+.bs_wallet_top {
+  background: #11be6a;
+
+  max-width: calc(100% - 160px);
+  margin: 0 auto 20px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.margin-l-0_5x {
+  margin-left: 5px;
+}
+
+.margin-r-0_5x {
+  margin-right: 5px;
+}
+
+.color_white {
+  color: #fff;
+}
+
+.large_card {
+  margin: 0 auto;
+  max-width: calc(120% - 160px);
+  /* margin-bottom: 300px; */
+  padding-top: 0;
+}
+
+.full_width_tabs {
+  width: calc(100% - 160px);
+}
+
+.custom_table tr > td.ant-table-cell:nth-child(3) {
+  text-align: right;
+}
+
+.orange_input.ant-input-affix-wrapper,
+.orange_input.ant-input-affix-wrapper:hover,
+.orange_input input,
+.orange_input input:hover {
+  border-color: rgba(246, 96, 54, 0.3);
+}
+
+.orange_input.ant-input-affix-wrapper {
+  height: 30px;
+}
+
+.bs_wallet .ant-input-prefix {
+  border-color: rgba(246, 96, 54, 0.3);
+}
+
+.bs_wallet .ant-tabs-extra-content {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.bs_wallet .ant-tabs-nav-wrap {
+  padding-left: 20px;
+}
+
+.bs_wallet_top_banner {
+  /* background-position-y: bottom 0; */
+  /* padding-bottom: 320px; */
+  /* background-image: url('../../assets/coming_soon.png');
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  width: calc(100% - 50px);
+}
+
+.bs_wallet_buttons {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+
+.small-btn{
+  width: auto;
+  height: 25px;
+  padding: 1px 7px 0px 40px !important;
+  /* padding: 4px 15px 6px 40px !important; */
+}
+
+.custom_table 
+.ant-table-tbody 
+.ant-table-cell
+{
+  background-color: var(--body_background);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-thead > tr > th {
+  background-color: var(--body_background);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-thead > tr > th:hover {
+  background-color: var(--disabled-btn);
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+.custom_table 
+.ant-table-cell-row-hover{
+  background-color: var(--disabled-btn) !important;
+  color: var(--body_color);
+  border-color: var(--border-color);
+}
+
+@media (max-width: 767px) {
+  .bs_wallet_top {
+    max-width: 90%;
+    display: block !important;
+  }
+  .bs_wallet_top div:nth-child(2) a {
+    margin-left: 0;
+  }
+  .bs_wallet_buttons {
+    position: inherit;
+  }
+  .bs_wallet_table table th,
+  .bs_wallet_table table td {
+    padding: 16px 8px;
+  }
+  h1 {
+    font-size: 25px;
+  }
+}
+
