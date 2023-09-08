@@ -1,7 +1,8 @@
 .folder{
     background-image: url('../../../../assets/hive-dashboard/folder1.svg');
-    width: 89px;
-    height: 75px;
+    background-repeat: no-repeat;
+    min-width: 89px;
+    min-height: 75px;
 }
 
 .folder:hover{

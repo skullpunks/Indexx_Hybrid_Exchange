@@ -3,6 +3,7 @@ import Footer from '../Footer/Footer';
 import { useSearchParams } from "react-router-dom";
 import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 import careersIcon from "../../assets/arts/careersIcon.png";
+import honeycomb from "../../assets/hive-dashboard/honeycomb.svg";
 
 const HoneyCombComingSoon = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -11,11 +12,8 @@ const HoneyCombComingSoon = () => {
     return (
         <>
             <div className='scan-container flex-direction-column'>
-                <br />
-                <br />
-                <br />
-                <br />
-                {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
+                <img src={honeycomb} alt='comingsoon'/>
+                {/* {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
                     :
                     <img src={fortuneLadyCoin} className="pt-5" alt="Coming soon art" width="400" />
                 }
@@ -27,7 +25,7 @@ const HoneyCombComingSoon = () => {
                 </div>
                     :
                     <></>
-                }
+                } */}
             </div>
 
             <Footer />
