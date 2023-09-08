@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import frame from '../../../../assets/hive-dashboard/silverframe.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -7,16 +7,6 @@ import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 
-import twitter from '../../../../assets/hive-dashboard/sidebar/Twiter-02 1.svg';
-import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
-import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
-import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
-
-import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
-
-import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
-
-import { LineChart } from '@mui/x-charts/LineChart';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -30,8 +20,6 @@ import { LineChart } from '@mui/x-charts/LineChart';
 
 import SubHeader from '../SubHeader/SubHeader';
 import '../CaptainDash.css';
-import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import Growth from './Growth';
 import BeeTabs from './BeeTabs';
 
 const BeeDash = () => {

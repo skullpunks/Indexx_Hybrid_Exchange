@@ -71,6 +71,7 @@ import CaptainResourceManagement from "./components/Dashboard/Captainbee/Captain
 import CaptainResourceTechnical from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceTechnical";
 import CaptainResourceLegal from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal";
 import CaptainResourceAccounting from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting";
+import HoneyCombComingSoon from "./components/ComingSoon/HoneyCombComingSoon";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -122,6 +123,8 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
+          <Route path="/indexx-exchange/coming-soon-honeycomb" element={<HoneyCombComingSoon />} />
+
 
 
 

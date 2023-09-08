@@ -91,7 +91,7 @@ const SubHeader = () => {
 
 
         <div className="col">
-        <a href="/">
+        <a href="/indexx-exchange/coming-soon-honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
                 width:"auto"

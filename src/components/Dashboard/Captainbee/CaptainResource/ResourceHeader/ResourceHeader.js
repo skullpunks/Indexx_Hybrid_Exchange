@@ -43,7 +43,7 @@ const ResourceHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col">
+        {/* <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-resource-tech">
             <div className="card">
             <img src={setting} className="card-img-top" alt="..." />
@@ -89,7 +89,6 @@ const ResourceHeader = () => {
         </a>
         </div>
 
-
         <div className="col">
         <a href="/indexx-exchange/dashboard/capt-resource-mgmt">
             <div className="card">
@@ -113,7 +112,8 @@ const ResourceHeader = () => {
             </div>
             </div>
         </a>
-        </div>
+        </div> */}
+
         <div className="col">
         <a href="/indexx-exchange/dashboard/capt-resource-leg">
             <div className="card">

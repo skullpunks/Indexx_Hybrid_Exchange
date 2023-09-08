@@ -142,7 +142,7 @@ const BuySellLoginContentHive: React.FC = () => {
               </Form.Item>
             </div>
             {/* setScreenName("TwoFactorAuth") */}
-            <Link to="forgot-password" className="default-link text-underline">
+            <Link to="forgot-password" className="default-link text-underline-forgot">
               Forgot password
             </Link>
             <br />
@@ -160,10 +160,10 @@ const BuySellLoginContentHive: React.FC = () => {
               </Button>
             </Form.Item>
           </Form>
-          <br />
+          {/* <br /> */}
 
           <div className=" padding-b-2x text-center">
-            Don’t have an account?{' '}
+            {/* Don’t have an account?{' '}
             <Link
               // to="https://hive.indexx.ai/sign-up"
               to=""
@@ -203,7 +203,7 @@ const BuySellLoginContentHive: React.FC = () => {
               </Button>
             </Link>{' '}
             <br />
-            <br />
+            <br /> */}
             <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
               Sign up for Captain Bee
