@@ -61,6 +61,7 @@ import WelcomePage from "./components/WelcomePage";
 import ImportTokens from "./components/ImportTokens/ImportTokens";
 import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
 import BuySellLoginContentHive from "./components/BuySell/BuySellLoginContentHive";
+import RedeemStock from "./components/RedeemStock/RedeemStock";
 import CaptainDash from "./components/Dashboard/Captainbee/CaptainDash";
 import CaptainProfile from "./components/Dashboard/Captainbee/CaptainProfile";
 import MyBees from "./components/Dashboard/Captainbee/MyBees/MyBees";
@@ -151,6 +152,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/deposit-crypto/*"
             element={<BSDepositCryproLayout />}
+          />
+          <Route
+            path="/indexx-exchange/redeem-stock"
+            element={<RedeemStock />}
           />
           <Route
             path="/indexx-exchange/buy-sell/deposit-fiat/*"

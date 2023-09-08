@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { getPaypalOrder } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -19,8 +20,8 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [, setInAmt] = useState(0);
     const [outcurr, setoutcurr] = useState("");
     const [outAmt, setoutAmt] = useState(0);
-    // const [token, setToken] = useState("");
-    // const [tokenValue] = useSearchParams();
+    const [, setToken] = useState("");
+    const [tokenValue] = useSearchParams();
 
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
@@ -29,21 +30,21 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
         //---Below commented code is for Paypal payments---
-        //setToken(String(tokenValue.get("token")));
-        // if (tokenValue.get("token") !== undefined) {
-        //     getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
-        //         console.log(res);
-        //         if (res.status === 200) {
-        //             let orderData = res.data.data;
-        //            setoutAmt(orderData.breakdown.outAmount) 
-        //            setoutcurr(orderData.breakdown.outCurrencyName) 
-        //         }
-        //     });
-        // }
-    }, [payAmount, payCurrency, orderAmount, orderCurrency])
-   
+        setToken(String(tokenValue.get("token")));
+        if (tokenValue.get("token") !== undefined) {
+            getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    let orderData = res.data.data;
+                    setoutAmt(orderData.breakdown.outAmount)
+                    setoutcurr(orderData.breakdown.outCurrencyName)
+                }
+            });
+        }
+    }, [payAmount, payCurrency, orderAmount, orderCurrency, tokenValue])
 
-        // const filteredFromArray = initialTokens.filter(function (obj) {
+
+    // const filteredFromArray = initialTokens.filter(function (obj) {
     //     return obj?.address === BSvalue?.fromToken;
     // });
     return (

@@ -89,12 +89,12 @@
 }
 
 .bs_wallet_top_banner {
-  background-position-y: bottom 0;
-  padding-bottom: 320px;
-  background-image: url('../../assets/arts/graphWave.svg');
+  /* background-position-y: bottom 0; */
+  /* padding-bottom: 320px; */
+  /* background-image: url('../../assets/coming_soon.png');
   background-position-x: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   width: calc(100% - 50px);
 }
 

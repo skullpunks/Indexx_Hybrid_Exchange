@@ -91,6 +91,23 @@ const BuySellGetStarted: React.FC = () => {
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
+                  label="username"
+                  name="username"
+                  rules={[
+                    { required: true, message: 'Please input your username!' },
+                  ]}
+                >
+                  <div className="control-input">
+                    <Input
+                      placeholder="Enter username"
+                      className="input_height"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+              <div className="form_element email position-relative">
+                {/* <label>Email</label> */}
+                <Form.Item
                   label="Email"
                   name="email"
                   rules={[
@@ -109,6 +126,7 @@ const BuySellGetStarted: React.FC = () => {
                   </div>
                 </Form.Item>
               </div>
+              
               <div className="form_element password position-relative">
                 <Form.Item
                   label="Password"

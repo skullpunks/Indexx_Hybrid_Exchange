@@ -22,6 +22,7 @@ import '../Stripe/CheckoutForm.css';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Stripe/CheckoutForm';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -50,6 +51,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     const res = await getCoinPriceByName(String(filteredFromArray[0].title));
     priceData = res.data.results.data;
     setRateData(priceData);
+    console.log("priceData", priceData);
     let oneUsdValue: any = await oneUSDHelper(
       priceData,
       filteredFromArray[0].title
@@ -134,12 +136,12 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
-      // console.log(res.data);
-      // for (let i = 0; i < res.data.links.length; i++) {
-      //     if (res.data.links[i].rel.includes("approve")) {
-      //         window.location.href = res.data.links[i].href;
-      //     }
-      // }
+      console.log(res.data);
+      for (let i = 0; i < res.data.links.length; i++) {
+        if (res.data.links[i].rel.includes("approve")) {
+          window.location.href = res.data.links[i].href;
+        }
+      }
       getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
@@ -168,17 +170,17 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       testVal.length < 6
         ? '1.1'
         : testVal.length < 9
-        ? '0.9'
-        : testVal.length < 12
-        ? '0.8'
-        : testVal.length < 15
-        ? '0.6'
-        : '0.4';
+          ? '0.9'
+          : testVal.length < 12
+            ? '0.8'
+            : testVal.length < 15
+              ? '0.6'
+              : '0.4';
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
     // }
-  });
+  },  [getAllSetting, getPricesData, getTaskCenterDetailsData])
 
   const appearance = {
     theme: String('stripe'),
@@ -280,7 +282,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
                   ((Number(BSvalue?.amount) *
                     taskCenterDetails?.tradeToEarnPercentage) /
                     100) *
-                    100
+                  100
                 ) / 100}{' '}
                 INEX
               </h6>
@@ -316,26 +318,25 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
             )}
           </Modal>
 
-          {/* {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal"> */}
+          {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
 
-          {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
-          {/* <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-                            <PayPalScriptProvider
-                                options={{
-                                    "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
-                                    components: "buttons",
-                                    currency: "USD"
-                                }}
-                            >
-                                <ButtonWrapper
-                                    currency={"USD"}
-                                    showSpinner={false}
-                                />
-                            </PayPalScriptProvider>
-                        </div> */}
+            {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
+            <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+              <PayPalScriptProvider
+                options={{
+                  "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
+                  components: "buttons",
+                  currency: "USD"
+                }}
+              >
+                {/* <Button
+                  currency={"USD"}
+                  showSpinner={false}
+                /> */}
+              </PayPalScriptProvider>
+            </div>
+          </Modal>}
 
-          {/* </Modal>
-                    } */}
         </div>
       </div>
     </div>

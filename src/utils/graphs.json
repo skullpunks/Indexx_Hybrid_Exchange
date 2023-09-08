@@ -38,5 +38,45 @@
   {
     "address": "0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9",
     "graph": "FTTGraph"
+  },
+  {
+    "address": "0x80ef9E9183c69E4330854FBC9B302eCa43e9FE01",
+    "graph": "IndexxAPPLGraph"
+  },
+  {
+    "address": "0xBE8E41E3b6D4640B73082f0fE6A58A810a72523C",
+    "graph": "IndexxAMZNGraph"
+  },
+  {
+    "address": "0xe77a82B603D4d6c2dE023cE32108e4eB1DfD54fA",
+    "graph": "IndexxBCMGraph"
+  },
+  {
+    "address": "0xC920C3A331dDa7C3c83A395F203a87F7c2BFC167",
+    "graph": "IndexxGOOGLGraph"
+  },
+  {
+    "address": "0xeA53DDF82F65d74C8c1D403e70827948A4403fb1",
+    "graph": "IndexxMETAGraph"
+  },
+  {
+    "address": "0x9ef61B800f2B1911d4516Fc81df4f421727A2A16",
+    "graph": "IndexxMSFTGraph"
+  },
+  {
+    "address": "0xbFb1354C170d1916BEE232DcE3dda02fb4D65ae2",
+    "graph": "IndexxNVDAGraph"
+  },
+  {
+    "address": "0x08f88235034ef59BDF1BbDc000d5A7411b23c4D8",
+    "graph": "IndexxPEPGraph"
+  },
+  {
+    "address": "0x504F90b4df7ff29DA696311e64402C765CB02009",
+    "graph": "IndexxSP500Graph"
+  },
+  {
+    "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110cAC11",
+    "graph": "IndexxTLSAGraph"
   }
 ]
