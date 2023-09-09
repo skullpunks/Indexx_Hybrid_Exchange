@@ -30,3 +30,9 @@
   color: #ffb300;
   text-decoration: underline;
 }
+
+.email-icon {
+  position: absolute;
+  right: 21px;
+  transform: translate(50%, 50%);
+}

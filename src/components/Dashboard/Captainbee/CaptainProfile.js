@@ -9,7 +9,6 @@ import AWS from 'aws-sdk';
 import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 import {
   CheckCircleFilled,
-  InfoCircleFilled,
   CloseCircleFilled,
 } from '@ant-design/icons';
 

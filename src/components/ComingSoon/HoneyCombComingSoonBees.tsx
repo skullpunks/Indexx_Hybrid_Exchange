@@ -4,15 +4,15 @@ import Footer from '../Footer/Footer';
 // import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 // import careersIcon from "../../assets/arts/careersIcon.png";
 import honeycomb from "../../assets/hive-dashboard/honeycomb.svg";
-import SubHeader from '../Dashboard/Captainbee/SubHeader/SubHeader';
+import BeeHeader from '../Dashboard/Honeybee/BeeHeader/BeeHeader';
 
-const HoneyCombComingSoon = () => {
+const HoneyCombComingSoonBees = () => {
     // const [searchParams, setSearchParams] = useSearchParams();
     // let pageName = searchParams.get("page");
     // console.log(setSearchParams);
     return (
         <>
-            <SubHeader/>
+            <BeeHeader />
             <div className='hive-container'>
                 <img src={honeycomb} alt='comingsoon'/>
                 {/* {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
@@ -35,4 +35,4 @@ const HoneyCombComingSoon = () => {
     )
 }
 
-export default HoneyCombComingSoon
+export default HoneyCombComingSoonBees

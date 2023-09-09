@@ -3,13 +3,12 @@ import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg
 import hat from "../../../../assets/hive-dashboard/subheader/hat BW 1.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
-import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
 
-import './SubHeader.css'
+import './BeeHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
 
-const SubHeader = () => {
+const BeeHeader = () => {
   const location = useLocation();
 
   return (
@@ -21,15 +20,15 @@ const SubHeader = () => {
     <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
     
         <div className="col">
-        <Link to="/">
+        <Link to="/indexx-exchange/bee-dashboard">
             <div className="card">
             <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
             <div className="card-body">
                 <h5 className="card-title">Dashboard</h5>
                 <Typography
                 component='p'
-                sx={
-                  location.pathname === '/'
+                style={
+                  location.pathname === '/indexx-exchange/bee-dashboard'
                     ? {
                       height: '0.3px',
                       width: '58px',
@@ -43,15 +42,15 @@ const SubHeader = () => {
         </Link>
         </div>
         <div className="col">
-        <Link to="/">
+        <Link to="/indexx-exchange/bee-dashboard/bee-captain">
             <div className="card">
             <img src={hat} className="card-img-top" alt="..."/>
             <div className="card-body">
-                <h5 className="card-title">Captain Bees</h5>
+                <h5 className="card-title">Captain Bee</h5>
             <Typography
                 component='p'
-                sx={
-                  location.pathname === '/'
+                style={
+                  location.pathname === '/indexx-exchange/bee-dashboard/bee-captain'
                     ? {
                       height: '0.3px',
                       width: '58px',
@@ -66,15 +65,15 @@ const SubHeader = () => {
         </div>
         
         <div className="col">
-        <a href="/">
+        <a href="/indexx-exchange/bee-dashboard/bee-profile">
             <div className="card">
             <img src={pen} className="card-img-top " alt="..." />
             <div className="card-body">
                 <h5 className="card-title">Edit Profile</h5>
                 <Typography
                 component='p'
-                sx={
-                  location.pathname === '/'
+                style={
+                  location.pathname === '/indexx-exchange/bee-dashboard/bee-profile'
                     ? {
                       height: '0.3px',
                       width: '58px',
@@ -90,7 +89,7 @@ const SubHeader = () => {
 
 
         <div className="col">
-        <a href="/">
+        <a href="/indexx-exchange/bee-dashboard/honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
                 width:"auto"
@@ -99,30 +98,8 @@ const SubHeader = () => {
                 <h5 className="card-title">Honeycomb</h5>
                 <Typography
                 component='p'
-                sx={
-                  location.pathname === '/sign-up'
-                    ? {
-                      height: '0.3px',
-                      width: '58px',
-                      backgroundColor: '#000',
-                    }
-                    : null
-                }
-              ></Typography>
-            </div>
-            </div>
-        </a>
-        </div>
-        <div className="col">
-        <a href="/">
-            <div className="card">
-            <img src={calendar} className="card-img-top" alt="..."/>
-            <div className="card-body">
-                <h5 className="card-title">Resources</h5>
-                <Typography
-                component='p'
-                sx={
-                  location.pathname === '/'
+                style={
+                  location.pathname === '/indexx-exchange/bee-dashboard/honeycomb'
                     ? {
                       height: '0.3px',
                       width: '58px',
@@ -143,4 +120,4 @@ const SubHeader = () => {
   )
 }
 
-export default SubHeader
+export default BeeHeader

@@ -75,7 +75,7 @@ const CaptainResource = () => {
               <Grid item xs={1} sm={6} md={2} >
                 <div className="d-flex flex-direction-column">
                   <div className="d-flex flex-direction-column align-items-center">
-                    <a href={item.link} className='d-flex flex-direction-column align-items-center' target='_blank' style={{color:"#000"}}>
+                    <a href={item.link} className='d-flex flex-direction-column align-items-center' target='_blank' rel="noreferrer" style={{color:"#000"}}>
                       <div className='folder'>
                       </div>
                       <div className="font_15x d-flex align-items-center">

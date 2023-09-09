@@ -7,7 +7,7 @@ import man from '../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../assets/hive-dashboard/sidebar/clock 1.svg';
 
-import twitter from '../../../assets/hive-dashboard/sidebar/Twiter-02 1.svg';
+import twitter from '../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
 import insta from '../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../assets/hive-dashboard/sidebar/discord.svg';
@@ -143,7 +143,7 @@ const CaptainDash = () => {
                 </a>
 
               </div>
-              <div className="d-flex  flex-direction-column align-items-center mt-5">
+              <div className="d-flex  flex-direction-column align-items-start mt-5">
                 <div className="font_13x ">
                   Your Rating
                 </div>

@@ -72,6 +72,10 @@ import CaptainResourceTechnical from "./components/Dashboard/Captainbee/CaptainR
 import CaptainResourceLegal from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal";
 import CaptainResourceAccounting from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting";
 import HoneyCombComingSoon from "./components/ComingSoon/HoneyCombComingSoon";
+import BeeProfile from "./components/Dashboard/Honeybee/BeeProfile";
+import MyCaptain from "./components/Dashboard/Honeybee/MyCaptain/MyCaptain";
+import HoneyCombComingSoonBees from "./components/ComingSoon/HoneyCombComingSoonBees";
+import BeeDash2 from "./components/Dashboard/Honeybee/MyBees/BeeDash2";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -125,7 +129,11 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
           <Route path="/indexx-exchange/coming-soon-honeycomb" element={<HoneyCombComingSoon />} />
 
-
+          {/* Routes for Honey Bee DashBoard   */}
+          <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
+          <Route path="/indexx-exchange/bee-dashboard/bee-profile" element={<BeeProfile />} />
+          <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
+          <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
 
 
 

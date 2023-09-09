@@ -6,10 +6,10 @@ import {
   CloseCircleFilled,
   InfoCircleFilled,
 } from '@ant-design/icons';
-import { Button, Divider, Form, Input, notification } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import hive from "../../assets/Welcometohive.svg";
-import qrCode from '../../assets/arts/qrCode.svg';
+// import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
   decodeJWT,
@@ -88,9 +88,9 @@ const BuySellLoginContentHive: React.FC = () => {
     console.log('Failed:', errorInfo);
   };
 
-  const handleClick = () => {
-    window.location.href = "https://hive.indexx.ai/sign-up"
-  }
+  // const handleClick = () => {
+  //   window.location.href = "https://hive.indexx.ai/sign-up"
+  // }
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
@@ -122,7 +122,7 @@ const BuySellLoginContentHive: React.FC = () => {
               >
                 <div className="control-input">
                   <Input placeholder="Email id or Username" className="input_height" />
-                  <span className="input_icon">
+                  <span className="email-icon">
                     <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
                   </span>
                 </div>
