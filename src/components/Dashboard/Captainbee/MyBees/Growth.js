@@ -5,7 +5,7 @@ import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
-import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
+import { Box, MenuItem, Select, Typography } from '@mui/material';
 
 const Growth = () => {
     const [platform, setPlatform] = useState('Exchange');

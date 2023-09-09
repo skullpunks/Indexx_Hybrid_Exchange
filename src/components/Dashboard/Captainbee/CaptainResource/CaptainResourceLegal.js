@@ -71,7 +71,7 @@ const CaptainResourceLegal = () => {
             rowSpacing={8}
           >
             {resource?.map((item) => (
-              <Grid item xs={1} sm={6} md={2} >
+              <Grid item xs={1} sm={6} md={3} >
                 <div className="d-flex flex-direction-column">
                   <div className="d-flex flex-direction-column align-items-center">
                      <a href={item.link} className='d-flex flex-direction-column align-items-center' target='_blank' style={{color:"#000"}}>

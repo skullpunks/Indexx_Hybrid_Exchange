@@ -1,11 +1,11 @@
 .folder{
-    background-image: url('../../../../assets/hive-dashboard/folder1.svg');
+    background-image: url('../../../../assets/hive-dashboard/folder3.svg');
     background-repeat: no-repeat;
     min-width: 89px;
     min-height: 75px;
 }
 
 .folder:hover{
-    background-image: url('../../../../assets/hive-dashboard/folder2.svg');
+    background-image: url('../../../../assets/hive-dashboard/mouse\ over\ 1.svg');
 
 }

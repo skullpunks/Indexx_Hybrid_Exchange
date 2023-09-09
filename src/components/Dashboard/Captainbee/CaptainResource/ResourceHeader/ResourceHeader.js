@@ -1,9 +1,9 @@
 import React from 'react'
-import acc from "../../../../../assets/hive-dashboard/resource-header/acc 1.svg";
-import affiliate from "../../../../../assets/hive-dashboard/resource-header/affiliate icon 2.svg";
+// import acc from "../../../../../assets/hive-dashboard/resource-header/acc 1.svg";
+// import affiliate from "../../../../../assets/hive-dashboard/resource-header/affiliate icon 2.svg";
 import hammer from "../../../../../assets/hive-dashboard/resource-header/hfhfhf 1.svg";
-import sales from "../../../../../assets/hive-dashboard/resource-header/marketing icon 1.svg";
-import setting from "../../../../../assets/hive-dashboard/resource-header/technicalb 1.svg";
+import sales from "../../../../../assets/hive-dashboard/resource-header/megaphone 1.svg";
+// import setting from "../../../../../assets/hive-dashboard/resource-header/technicalb 1.svg";
 
 import './ResourceHeader.css'
 import { Link, useLocation } from 'react-router-dom';
