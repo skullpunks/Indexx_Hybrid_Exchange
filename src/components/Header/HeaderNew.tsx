@@ -126,598 +126,613 @@ const HeaderNew = () => {
             <Navbar.Brand  href={baseURL} className="logo__icon">
               index.ai
             </Navbar.Brand>
-            <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
+            {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
               {pageName || showText[0]}
-            </Nav.Link>
+            </Nav.Link> */}
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown
-                    title="Platforms"
-                    id="collasible-nav-dropdown"
-                    className="dark-menu"
-                    renderMenuOnMount={true}
-                  >
-                    <NavDropdown.Item
-                    className="dropdown-item"
-                    href="https://test.xnftmarketplace.indexx.ai/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      preview={false}
-                      src={xnft}
-                      style={{
-                        width: 18,
-                        height: 22,
-                        marginBottom: 3,
-                        marginRight: 7,
-                      }}
-                    ></Image>
-                    
-                    <Text style={{ paddingLeft: 4, color: "white" }}>XNFT Market</Text>
-                    <br />
-                    <Text
-                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                    >
-                      {" "}
-                      Buy, Sell & Trade XNFT
-                    </Text>
-                  </NavDropdown.Item>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      href="/"
-                      rel="noreferrer"
-                    >
-                      <Image
-                        preview={false}
-                        src={headerstar}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Exchange
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        {" "}
-                        Convert, Buy & Sell
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      href={baseDEXURL}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Image
-                        preview={false}
-                        src={headerdex}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Swap
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        {" "}
-                        Swap, Buy & Sell
-                      </Text>
-                    </NavDropdown.Item>
 
-                  <NavDropdown.Item
-                    className="dropdown-item"
-                    href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
-                    target="_blank"
-                  >
-                    <Image
-                      preview={false}
-                      src={bank}
-                      style={{
-                        width: 15,
-                        height: 15,
-                        marginBottom: 3,
-                        marginRight: 7,
-                      }}
-                    ></Image>
-                    <Text style={{ paddingLeft: 4, color: "white" }}>
-                      Indexx Bank
-                    </Text>
-                    <br />
-                    <Text
-                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                    >
-                      Deposit and invest to earn
-                    </Text>
-                  </NavDropdown.Item>
-                  </NavDropdown>
+              
+            <NavDropdown title="Platforms" id="basic-nav-dropdown" className="my-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
 
-                  <NavDropdown
-                    title="Products"
-                    id="collasible-nav-dropdown"
-                    className="dark-menu"
-                    renderMenuOnMount={true}
-                  >
-                    <NavDropdown.Item
-                      href="https://indexx.ai/indexx-exchange/token-details"
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Image
-                        preview={false}
-                        src={whitetoken}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Tokens
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        {" "}
-                        Know the characteristics of each token
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      href="/indexx-exchange/nfts"
-                      rel="noreferrer"
-                    >
-                      <Image
-                        preview={false}
-                        src={nft}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        NFT
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        {" "}
-                        Convert, Buy & Sell
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    className="dropdown-item"
-                    href="https://test.xnftmarketplace.indexx.ai/collections?type=all"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      preview={false}
-                      src={xnft}
-                      style={{
-                        width: 18,
-                        height: 22,
-                        marginBottom: 3,
-                        marginRight: 7,
-                      }}
-                    ></Image>
-                    <Text style={{ paddingLeft: 4, color: "white" }}>XNFT</Text>
-                    <br />
-                    <Text
-                      style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                    >
-                      {" "}
-                      Buy, Sell & Trade XNFT
-                    </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      href="https://shop.indexx.ai/collections/xusd"
-                    >
-                      <Image
-                        preview={false}
-                        src={xusd}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        XUSD
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        {" "}
-                        The stable USD
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      // as={Link}
-                      href="https://fortune.daily.indexx.ai/"
-                    >
-                      <Image
-                        preview={false}
-                        src={fortune}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Fortune Daily
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Win daily in Lottery
-                      </Text>
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu">
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                  <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Platforms
+                  </div>
+                  <NavDropdown.Item href="https://cex.indexx.ai/" className="link-div">
+                    <Link to="https://cex.indexx.ai/" className="link-style">
+                      Exchange
+                    </Link> 
                   </NavDropdown.Item>
-                  </NavDropdown>
-              {/* <NavDropdown
-                title="Products"
-                id="collasible-nav-dropdown"
-                className="dark-menu"
-                renderMenuOnMount={true}
-              >
-                <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/buy-sell/login"
-                  className="dropdown-item"
-                >
-                  <Image preview={false} src={headerstar} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Exchange</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Convert, Buy & Sell</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  href="https://test.swap.indexx.ai"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image preview={false} src={headerdex} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Swap</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Swap, Buy & Sell</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="https://indexx.ai/indexx-exchange/token-details"
-                  className="dropdown-item"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image preview={false} src={whitetoken} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>indexx Tokens</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Know the characteristics of each token</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  as={Link}
-                  to="/indexx-exchange/import-indexx-tokens"
-                >
-                   <Image preview={false} src={whitetoken} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Import indexx Tokens</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}> Bring your tokens to our exchange</Text>
-                  
-                </NavDropdown.Item>
-              </NavDropdown> */}
-              {localStorage.getItem("user") ? (
+                  <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="link-div">
+                    <Link to="https://fortune.daily.indexx.ai/" className="link-style">
+                      Fortune Daily
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/" className="link-div">
+                    <Link to="https://shop.indexx.ai/" className="link-style">
+                      Shop
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://swap.indexx.ai/" className="link-div">
+                    <Link to="https://swap.indexx.ai/" className="link-style">
+                      Swap
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="link-div">
+                    <Link to="https://wallstreet.indexx.ai/" className="link-style">
+                      Wall Street
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/home" className="link-div">
+                    <Link to="https://xnftmarketplace.indexx.ai/home" className="link-style">
+                      Market
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                    Action
+                  </div>
+                  <NavDropdown.Item href="https://cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
+                    <Link to="https://cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-style">
+                      Sign Up in Exchange
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
+                    <Link to="https://cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
+                    Sign In in Exchange
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="action-link-div">
+                    <Link to="https://fortune.daily.indexx.ai/" className="action-link-style">
+                    Buy Lottery tickets
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+                    Buy Gift Cards
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+                    Buy Greeting Cards
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+                    Buy Stock Certificates
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-style">
+                    Buy Stock Tokens
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://swap.indexx.ai/" className="action-link-div">
+                    <Link to="https://swap.indexx.ai/" className="action-link-style">
+                    Trade in swap
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="action-link-div">
+                    <Link to="https://wallstreet.indexx.ai/" className="action-link-style">
+                      Walk on Wall Street
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/collections?type=all" className="action-link-div">
+                    <Link to="https://xnftmarketplace.indexx.ai/collections?type=all" className="action-link-style">
+                      Buy XNFTs
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                      Support
+                      </div>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/centralized" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works/centralized" className="action-link-style">
+                      How to use Exchange
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://fortune.daily.indexx.ai/how-to-play" className="action-link-div">
+                    <Link to="https://fortune.daily.indexx.ai/how-to-play" className="action-link-style">
+                    Know how to play the lottery
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://hive.indexx.ai/" className="action-link-div">
+                    <Link to="https://hive.indexx.ai/" className="action-link-style">
+                    Walk through the Hive
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/" className="action-link-style">
+                    Know how to buy in the Shop
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/decentralized" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works/decentralized" className="action-link-style">
+                    How to use Swap
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="action-link-div">
+                    <Link to="https://wallstreet.indexx.ai/" className="action-link-style">
+                    Go through Wall Street
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/" className="action-link-div">
+                    <Link to="https://xnftmarketplace.indexx.ai/" className="action-link-style">
+                    How to buy XNFTs
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+              </div>
+              <div className="back"> </div>
+              </div>
+              </NavDropdown>
+
+              <NavDropdown title="Products" id="basic-nav-dropdown" className="my-menu prod-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
+
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu" >
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Products
+                  </div>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="link-div">
+                    <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="link-style">
+                    Gift Cards
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="link-div">
+                    <Link to="https://shop.indexx.ai/collections/greeting-cards" className="link-style">
+    Greeting Cards
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/nfts" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/nfts" className="link-style">
+NFT
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallstreet.indexx.ai/certificates" className="link-div">
+                    <Link to="https://wallstreet.indexx.ai/certificates" className="link-style">
+Stock Certificates
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallstreet.indexx.ai/details" className="link-div">
+                    <Link to="https://wallstreet.indexx.ai/details" className="link-style">
+Stock Tokens
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/token-details" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/token-details" className="link-style">
+Tokens
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnft.indexx.ai/" className="link-div">
+                    <Link to="https://xnft.indexx.ai/" className="link-style">
+XNFT
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnft.indexx.ai/#fiat-cur" className="link-div">
+                    <Link to="https://xnft.indexx.ai/#fiat-cur" className="link-style">
+
+                    XUSD
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="link-style">
+                    $1 Bitcoin
+
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+
+                    Action
+                  </div>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+
+                      Shop Gift Cards
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+Shop Greeting Cards
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://opensea.io/collection/skullpunksog" className="action-link-div">
+                    <Link to="https://opensea.io/collection/skullpunksog" className="action-link-style">
+Shop NFTs
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+Shop Stock Certificates
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-style">
+Shop Stock Tokens
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/token-details" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/token-details" className="action-link-style">
+Shop Tokens
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/xnft" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/xnft" className="action-link-style">
+Shop XNFTs
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/collections/xusd-nft/3" className="action-link-div">
+                    <Link to="https://xnftmarketplace.indexx.ai/collections/xusd-nft/3" className="action-link-style">
+Shop XUSDs
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+Buy $1 Bitcoin
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+
+                      Support
+                    </div>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+
+                      How to buy Gift Cards
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+How to buy Greeting Cards
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/nfts" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/nfts" className="action-link-style">
+How to buy NFTs
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
+                    <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+How to buy Stock Certificates
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/tokens" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works/tokens" className="action-link-style">
+Learn about indexx Tokens
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnft.indexx.ai/" className="action-link-div">
+                    <Link to="https://xnft.indexx.ai/" className="action-link-style">
+How to buy XNFTs
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://xnft.indexx.ai/#fiat-cur" className="action-link-div">
+                    <Link to="https://xnft.indexx.ai/#fiat-cur" className="action-link-style">
+                    How to buy XUSDs
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+                    Know how to buy $1 Bitcoin
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+              </div>
+              <div className="back prod-back"> </div>
+              </div>
+              </NavDropdown>
+
+
+
+<NavDropdown title="Program" id="basic-nav-dropdown" className="my-menu prog-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
+
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu">
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Program
+                  </div>
+                  <NavDropdown.Item href="https://register.affiliate.indexx.ai/" className="link-div">
+                    <Link to="https://register.affiliate.indexx.ai/" className="link-style">
+                    Affiliate Program
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://hive.indexx.ai/" className="link-div">
+                    <Link to="https://hive.indexx.ai/" className="link-style">
+Hive
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/trade-to-earn" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/trade-to-earn" className="link-style">
+Trade to Earn
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+
+                    Action
+                    </div>
+                  <NavDropdown.Item href="https://register.affiliate.indexx.ai/about" className="action-link-div">
+                    <Link to="https://register.affiliate.indexx.ai/about" className="action-link-style">
+                      Sign up as an Afilliate
+
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://hive.indexx.ai/sign-up" className="action-link-div">
+                    <Link to="https://hive.indexx.ai/sign-up" className="action-link-style">
+Captain Bee Sign Up
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+Honeycomb Build Up
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-style">
+                    Trade to Earn Sign Up 
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
+Trade to Earn Sign In
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+
+                      Support
+                  </div>
+                  <NavDropdown.Item href="https://register.affiliate.indexx.ai/about" className="action-link-div">
+                    <Link to="https://register.affiliate.indexx.ai/about" className="action-link-style">
+                      Benefit of an Affiliate
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/tradetoearn" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works/tradetoearn" className="action-link-style">
+                    How to Trade to Earn
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+              </div>
+              <div className="back prog-back"> </div>
+              </div>
+              </NavDropdown>
+
+
+              <NavDropdown title="Wallet" id="basic-nav-dropdown" className="my-menu wallet-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
+
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu" >
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Wallet
+                  </div>
+                  <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="link-div">
+                    <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="link-style">
+                    Extension
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="link-div">
+                    <Link to="https://wallet.indexx.ai/login/sign-in" className="link-style">
+                    Web
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+
+                    Action
+                  </div>
+                  <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-div">
+                    <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
+                      Install Extension
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="action-link-div">
+                    <Link to="https://wallet.indexx.ai/login/sign-in" className="action-link-style">
+                    Sign up Web-2 Wallet
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="action-link-div">
+                    <Link to="https://wallet.indexx.ai/login/sign-in" className="action-link-style">
+Sign Up Web-3 Wallet
+
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                      Support
+                      </div>
+                  <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-div">
+                    <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
+                    How to install and use wallet extension
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://wallet.indexx.ai/Indexx-wallet/wallet-whitepaper" className="action-link-div">
+                    <Link to="https://wallet.indexx.ai/Indexx-wallet/wallet-whitepaper" className="action-link-style">
+How to use wallet Web
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+              </div>
+              <div className="back wallet-back"> </div>
+              </div>
+              </NavDropdown>
+              
+
+              <NavDropdown title="Company" id="basic-nav-dropdown" className="my-menu comp-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
+
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu">
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Company
+                  </div>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/about" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/about" className="link-style">
+                    About
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/blog" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/blog" className="link-style">
+Blog
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/careers" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/careers" className="link-style">
+Careers
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works" className="link-style">
+How it Works
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/markets" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/markets" className="link-style">
+Markets
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/vlog" className="link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/vlog" className="link-style">
+Vlog
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="link-style">
+Document
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                    Action
+                  </div>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/about" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/about" className="action-link-style">
+                    Know the company
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/blog" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/blog" className="action-link-style">
+Read updates
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/careers" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/careers" className="action-link-style">
+Find opportunity
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/how-it-works" className="action-link-style">
+Features
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/markets" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/markets" className="action-link-style">
+Crypto trends
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/vlog" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/vlog" className="action-link-style">
+Watch videos
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                      Support
+                  </div>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+                    Government Certificates
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="https://indexx.ai/indexx-exchange/legal" className="action-link-div">
+                    <Link to="https://indexx.ai/indexx-exchange/legal" className="action-link-style">
+Legal docs
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+Patent documents
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
+                    <Link to="/indexx-exchange/coming-soon" className="action-link-style">
+Whitepapers
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+              </div>
+              <div className="back comp-back"> </div>
+              </div>
+              </NavDropdown>
+
+              {/* {localStorage.getItem("user") ? (
                 <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
-              ) : <></>}
-              <NavDropdown
-                title="Earn"
-                id="collasible-nav-dropdown"
-                className="dark-menu"
-                renderMenuOnMount={true}
-              >
-                <NavDropdown.Item
-                  as={Link}
-                  to="/indexx-exchange/trade-to-earn"
-                  className="dropdown-item"
-                  href="/"
-                >
-                   <Image preview={false} src={earn} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Trade to Earn</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn more while trading</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
-                  target="_blank"
-                  
-                >
-                        <Image preview={false} src={bank} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Indexx Bank</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Deposit and invest to earn</Text>
-                </NavDropdown.Item>
-                {/* <NavDropdown.Item as={Link} to="/indexx-exchange/coming-soon?page=Pools" className="dropdown-item" href="/">Pools</NavDropdown.Item> */}
-              </NavDropdown>
-              <NavDropdown
-                title="Company"
-                id="collasible-nav-dropdown"
-                className="dark-menu"
-                renderMenuOnMount={true}
-              >
-                <NavDropdown.Item 
-                
-                className="dropdown-item"
-                href={`${baseURL}/indexx-exchange/how-it-works`}
-                >
-                <Image preview={false} src={howitworks} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>How it Works</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Know how the different features  work</Text>
+              ) : <></>} */}
 
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  href={`${baseURL}/indexx-exchange/about`}
-               
-                >
-                  <Image preview={false} src={about} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>About</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Background of the company</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                 
-                  rel="noreferrer"
-                  className="dropdown-item"
-                  href={baseURL}
-                >
-                  <Image preview={false} src={hybrid} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Hybrid Exchange</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Centralize and Decentralize Exchange</Text>
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="https://register.affiliate.indexx.ai/"
-                
-                  rel="noreferrer"
-                >
-                   <Image preview={false} src={affiliate} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Affiliate Program</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Earn while sharing</Text>
-                
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  href={`${baseURL}/indexx-exchange/blog`}
-                 
-                >
-                   <Image preview={false} src={blog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Blog</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Updates and trends in the crypto world</Text>
-                
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className="dropdown-item"
-                  href={`${baseURL}/indexx-exchange/vlog`}
-                 
-                >
-                   <Image preview={false} src={vlog} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>Vlog</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Watch our videos to stay up to date</Text>
-                
-                </NavDropdown.Item>
-                <NavDropdown.Item 
-                  className="dropdown-item"
-                  href={`${baseURL}/indexx-exchange/careers`}
-                  >
-                <Image preview={false} src={career} style={{width:15,height:15,marginBottom:3,marginRight:7}}></Image>
-                   <Text style={{paddingLeft:4,color:'white'}}>  Careers</Text><br/>
-                  <Text style={{fontSize:10,color:'white',marginLeft:26}}>Find opportunity in indexx.ai</Text>
-
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown
-                    title="Wallet"
-                    id="collasible-nav-dropdown"
-                    className="dark-menu"
-                    renderMenuOnMount={true}
-                  >
-                    <a
-                      href="https://test.wallet2.indexx.ai/wallets/crypto-wallet"
-                      className="dropdown-item"
-                    >
-                      <Image
-                        preview={false}
-                        src={walletweb}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Wallet Web
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Connect to Indexx Wallet web
-                      </Text>
-                    </a>
-                    <NavDropdown.Item
-                      className="dropdown-item"
-                      href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en"
-                    >
-                      <Image
-                        preview={false}
-                        src={walletext}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Wallet extension
-                      </Text>
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Download the web extension now
-                      </Text>
-                    </NavDropdown.Item>
-                   
-                </NavDropdown>
-
-                <NavDropdown
-                    title="Shop"
-                    id="collasible-nav-dropdown"
-                    className="dark-menu"
-                    renderMenuOnMount={true}
-                  >
-                    <NavDropdown
-                      title={<span><img src={giftcard} alt="icon" width={"15px"} height={"15px"} style={{margin:"0 7px 3px 0"}}/> <span style={{paddingLeft:"4px "}}  >Gift Cards</span></span>}
-                      id="collasible-nav-dropdown"
-                      className="dark-menu"
-                      renderMenuOnMount={true}
-                      style={{width:"204.5px"}}
-                    >
-
-                    <NavDropdown.Item
-                      href="https://test.xnftmarketplace.indexx.ai/redeem-gift"
-                      className="dropdown-item"
-                    >
-                      <Image
-                        preview={false}
-                        src={redeem}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Redeem Card
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Redeem card and buy XNFT now
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      href="https://shop.indexx.ai/collections/gift-cards-1"
-                      className="dropdown-item"
-                    >
-                      <Image
-                        preview={false}
-                        src={store}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Store
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Buy more Gift Cards
-                      </Text>
-                    </NavDropdown.Item>
-                    </NavDropdown>
-
-                    <NavDropdown
-                      title={<span><img src={greetcard} alt="icon" width={"15px"} height={"15px"} style={{margin:"0 7px 3px 0"}}/> <span style={{paddingLeft:"4px "}}  >Greeting Cards</span></span>}
-                      id="collasible-nav-dropdown"
-                      className="dark-menu"
-                      renderMenuOnMount={true}
-                    >
-
-                    <NavDropdown.Item
-                      href="https://test.xnftmarketplace.indexx.ai/redeem-greeting"
-                      className="dropdown-item"
-                    >
-                      <Image
-                        preview={false}
-                        src={redeem}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Redeem Card
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Redeem card and buy XNFT now
-                      </Text>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      href="https://shop.indexx.ai/collections/greeting-cards"
-                      className="dropdown-item"
-                    >
-                      <Image
-                        preview={false}
-                        src={store}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginBottom: 3,
-                          marginRight: 7,
-                        }}
-                      ></Image>
-                      <Text style={{ paddingLeft: 4, color: "white" }}>
-                        Store
-                      </Text>
-
-                      <br />
-                      <Text
-                        style={{ fontSize: 10, color: "white", marginLeft: 26 }}
-                      >
-                        Buy more Greeting Cards
-                      </Text>
-                    </NavDropdown.Item>
-                    </NavDropdown>
-
-                </NavDropdown>
               {/* <Nav.Link  className='text-white link' href="https://test.wallet2.indexx.ai">Wallet</Nav.Link>
               <Nav.Link  className='text-white link' href="https://test.swap.indexx.ai/ai-engine">Ai Engine</Nav.Link>
               <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
@@ -740,7 +755,120 @@ const HeaderNew = () => {
                     style={{ maxHeight: 26, alignSelf: "center" }}
                     onClick={() => navigate("/indexx-exchange/notification")}
                   />
-                  <NavDropdown
+
+<NavDropdown title={title} id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
+                <div style={{width:"200vw"}}>
+
+                <div style={{height:"26px", background:"black"}}></div>
+              <div className="d-flex flex-row my-menu main-menu">
+                <div style={{justifyContent:"center", fontSize:"13px"}}>
+                <div className="action-link-div" style={{paddingBottom:"18px"}}>
+                  Explore Profile
+                  </div>
+                  <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
+                    <Link to="/indexx-exchange/dashboard" className="link-style">
+                    Dashboard
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/order-history" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/order-history" className="link-style">
+                    Order History
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/wallet" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/wallet" className="link-style">
+                    Wallet
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/task-center" className="link-div">
+                    <Link to="/indexx-exchange/task-center" className="link-style">
+                    Task Center
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/trade-to-earn" className="link-div">
+                    <Link to="/indexx-exchange/trade-to-earn" className="link-style">
+                    Trade to Earn
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/transaction-history" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/transaction-history" className="link-style">
+                    Transaction History
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/" className="link-div" onClick={logOutUser}>
+                    <Link to="/" className="link-style">
+                    Logout
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"80px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                    Action
+                  </div>
+                  <NavDropdown.Item href="/indexx-exchange/dashboard" className="action-link-div">
+                    <Link to="/indexx-exchange/dashboard" className="action-link-style">
+                    Sales
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-div">
+                    <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-style">
+                    Deposit
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-div">
+                    <Link to="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-style">
+                    Withdraw
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/trade-to-earn" className="action-link-div">
+                    <Link to="/indexx-exchange/trade-to-earn" className="action-link-style">
+                    Trade and Earn
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/task-center" className="action-link-div">
+                    <Link to="/indexx-exchange/task-center" className="action-link-style">
+                    Complete Tasks
+
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/transaction-history" className="action-link-div">
+                    <Link to="/indexx-exchange/buy-sell/transaction-history" className="action-link-style">
+                    Recent Transactions
+
+                    </Link> 
+                  </NavDropdown.Item>
+                </div>
+                <div style={{justifyContent:"center", fontSize:"13px", paddingInline:"20px"}}>
+                <div className="action-link-div" style={{paddingBottom:"23px"}}>
+                      Support
+                  </div>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-div">
+                    <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-style">
+                    How to deposit
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-div">
+                    <Link to="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-style">
+                    Know how to withdraw
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  
+                </div>
+              </div>
+              <div className="back profile-back"> </div>
+              </div>
+              </NavDropdown>
+
+                  {/* <NavDropdown
                     title={title}
                     id="collasible-nav-dropdown"
                     className="dark-menu"
@@ -834,7 +962,7 @@ const HeaderNew = () => {
                     >
                       Logout
                     </NavDropdown.Item>
-                  </NavDropdown>
+                  </NavDropdown> */}
                 </>
               ) : (
                 <>
