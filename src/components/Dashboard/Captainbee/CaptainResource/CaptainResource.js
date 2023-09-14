@@ -7,44 +7,24 @@ import './CaptainResource.css'
 const resourceData = [
   {
     id: '1',
-    link: "https://drive.google.com/drive/folders/1Trjd54mpaHo8Ziyag5sWhsN0dMZAPlIx?usp=drive_link",
-    name: 'Gift Cards',
+    link: "https://drive.google.com/drive/folders/1RS8UhIQ6NGyWAat9d_zIKkhjYSZ6qLKq?usp=drive_link",
+    name: 'Icons & Graphics',
   },
   {
     id: '2',
-    link: "https://drive.google.com/drive/folders/1tchH3-yDWv0d5qrqG-MS9chcrNhX5QZh?usp=drive_link",
-    name: 'Greeting Cards',
+    link: "https://drive.google.com/drive/folders/1DptEHl3DxcJ2xiYP2esNQxK0nKR1FdyU?usp=drive_link",
+    name: 'Indexx Tokens',
   },
   {
     id: '3',
-    link: "https://drive.google.com/drive/folders/1fGIx1tpYJavXKW19OHCyLSVu3AGqV4MA?usp=drive_link",
-    name: 'Hive',
+    link: "https://drive.google.com/drive/folders/1oYpa99dlIlXeytsA1VC8e1aN9Z4HhjYg?usp=drive_link",
+    name: 'Posters',
   },
   {
     id: '4',
-    link: "https://drive.google.com/drive/folders/1M4Vp7I8-3U2g34lkMUNDUZbRhKflloIW?usp=drive_link",
-    name: 'NFT',
-  },
-  {
-    id: '5',
-    link: "https://drive.google.com/drive/folders/1BRLXjZBTxacKyQQJFDmu7N15l-SYyeW1?usp=drive_link",
-    name: 'Stock Certificate',
-  },
-  {
-    id: '6',
-    link: "https://drive.google.com/drive/folders/1MwLdr_X19-JWNjk_svp_kjptiMbKI4kk?usp=drive_link",
-    name: 'Stock Token',
-  },
-  {
-    id: '7',
-    link: "https://drive.google.com/drive/folders/1wjia-0cXoenHvBxiC-rIZyWjeThMksNv?usp=drive_link",
-    name: 'Wall Street',
-  },
-  {
-    id: '8',
-    link: "https://drive.google.com/drive/folders/1PxYZhahfeqXeWdVYXezIrxwdp-qvqSxf?usp=drive_link",
-    name: 'XNFT',
-  },
+    link: "https://drive.google.com/drive/folders/1PfnRcGRpN23JObWV3fMzJttN29jk6NJf?usp=drive_link",
+    name: 'Videos',
+  }
 ];
 
 const CaptainResource = () => {
@@ -72,7 +52,7 @@ const CaptainResource = () => {
             rowSpacing={8}
           >
             {resource?.map((item) => (
-              <Grid item xs={1} sm={6} md={2} >
+              <Grid item xs={1} sm={6} md={3} >
                 <div className="d-flex flex-direction-column">
                   <div className="d-flex flex-direction-column align-items-center">
                     <a href={item.link} className='d-flex flex-direction-column align-items-center' target='_blank' rel="noreferrer" style={{color:"#000"}}>

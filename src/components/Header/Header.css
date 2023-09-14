@@ -596,7 +596,7 @@ button.navbar-toggler {
 }
 
 .profile-menu .dropdown-menu .profile-back {
-  top: 400px;
+  top: 500px;
 }
 /* .dropdown-toggle::after {
   display: none;
@@ -777,3 +777,10 @@ button.navbar-toggler {
   }
   
 } 
+
+.profile-menu .dropdown-toggle.nav-link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0;
+}

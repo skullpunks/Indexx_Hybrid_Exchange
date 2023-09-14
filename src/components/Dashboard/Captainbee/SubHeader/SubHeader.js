@@ -1,6 +1,6 @@
 import React from 'react'
 import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
-import hat from "../../../../assets/hive-dashboard/subheader/hat BW 1.svg";
+import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";

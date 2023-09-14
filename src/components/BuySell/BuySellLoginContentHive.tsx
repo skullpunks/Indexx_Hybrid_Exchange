@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Form, Input, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/Welcometohive.svg";
+import hive from "../../assets/welcomehive.svg";
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
@@ -88,9 +88,9 @@ const BuySellLoginContentHive: React.FC = () => {
     console.log('Failed:', errorInfo);
   };
 
-  // const handleClick = () => {
-  //   window.location.href = "https://hive.indexx.ai/sign-up"
-  // }
+  const handleClick = () => {
+    window.location.href = "https://hive.indexx.ai/sign-up"
+  }
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
@@ -204,10 +204,18 @@ const BuySellLoginContentHive: React.FC = () => {
             </Link>{' '}
             <br />
             <br /> */}
+            <Link
+              // to="https://hive.indexx.ai/sign-up"
+              to=""
+              style={{ color: '#ffb300' }}
+              onClick={handleClick}
+            >
+
             <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
               Sign up for Captain Bee
             </p>
+            </Link>
           </div>
           <br />
         </div>

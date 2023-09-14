@@ -9,31 +9,34 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
-import Bellicon from "../../assets/arts/Bellicon.png";
+// import Bellicon from "../../assets/arts/Bellicon.png";
 import {Typography ,Image }from 'antd';
-import headerstar from "../../assets/header-icons/Products/CEX.png";
-import headerdex from "../../assets/header-icons/Products/DEX.png";
-import whitetoken from "../../assets/header-icons/Products/IndexxToken.png";
+// import headerstar from "../../assets/header-icons/Products/CEX.png";
+// import headerdex from "../../assets/header-icons/Products/DEX.png";
+// import whitetoken from "../../assets/header-icons/Products/IndexxToken.png";
 
-import earn from "../../assets/header-icons/EarnTab/t2e.png";
-import bank from "../../assets/header-icons/EarnTab/bank.png";
-import vlog from "../../assets/arts/cam.png";
-import about from "../../assets/header-icons/Company/about.png";
-import affiliate from "../../assets/header-icons/Company/affiliate.png";
-import blog from "../../assets/header-icons/Company/blog.png";
-import career from "../../assets/header-icons/Company/career.png";
-import howitworks from "../../assets/header-icons/Company/howitworks.png";
-import hybrid from "../../assets/header-icons/Company/hybrid.png";
-import giftcard from "../../assets/header-icons/Shop/gift card white.png";
-import greetcard from "../../assets/header-icons/Shop/greeting card white.png";
-import redeem from "../../assets/header-icons/Shop/redeem white.png";
-import store from "../../assets/header-icons/Shop/shop.png";
-import walletweb from "../../assets/header-icons/Wallet/wallet web white.png";
-import walletext from "../../assets/header-icons/Wallet/wallet extension white.png";
-import nft from "../../assets/header-icons/Products/nft icon.svg";
-import xusd from "../../assets/header-icons/Products/xusd icon.svg";
-import xnft from "../../assets/header-icons/Products/xnft.png";
-import fortune from "../../assets/header-icons/for.png";
+// import earn from "../../assets/header-icons/EarnTab/t2e.png";
+// import bank from "../../assets/header-icons/EarnTab/bank.png";
+// import vlog from "../../assets/arts/cam.png";
+// import about from "../../assets/header-icons/Company/about.png";
+// import affiliate from "../../assets/header-icons/Company/affiliate.png";
+// import blog from "../../assets/header-icons/Company/blog.png";
+// import career from "../../assets/header-icons/Company/career.png";
+// import howitworks from "../../assets/header-icons/Company/howitworks.png";
+// import hybrid from "../../assets/header-icons/Company/hybrid.png";
+// import giftcard from "../../assets/header-icons/Shop/gift card white.png";
+// import greetcard from "../../assets/header-icons/Shop/greeting card white.png";
+// import redeem from "../../assets/header-icons/Shop/redeem white.png";
+// import store from "../../assets/header-icons/Shop/shop.png";
+// import walletweb from "../../assets/header-icons/Wallet/wallet web white.png";
+// import walletext from "../../assets/header-icons/Wallet/wallet extension white.png";
+// import nft from "../../assets/header-icons/Products/nft icon.svg";
+// import xusd from "../../assets/header-icons/Products/xusd icon.svg";
+// import xnft from "../../assets/header-icons/Products/xnft.png";
+// import fortune from "../../assets/header-icons/for.png";
+
+import frame from '../../assets/hive-dashboard/frame.svg';
+import dummy from '../../assets/hive-dashboard/dummy.jpeg';
 
 import {  baseURL, baseDEXURL } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
@@ -738,7 +741,7 @@ Whitepapers
               <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
             </Nav>
              
-            <Nav>
+            <Nav className="align-items-center">
              
               {localStorage.getItem("user") ? (
                 <>
@@ -747,38 +750,89 @@ Whitepapers
                     to="/indexx-exchange/buy-sell/"
                     href="/"
                     className="btn btn-danger text-white"
+                    style={{height:"41px"}}
                   >
                     Buy Crypto
                   </Nav.Link>
-                  <img src={Bellicon} alt="Notifications"
+                  {/* <img src={Bellicon} alt="Notifications"
                     className="ms-3 my-2 text-white cursor-pointer"
                     style={{ maxHeight: 26, alignSelf: "center" }}
                     onClick={() => navigate("/indexx-exchange/notification")}
-                  />
+                  /> */}
 
-<NavDropdown title={title} id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
+<NavDropdown title={
+<div className="d-flex align-items-center justify-content-center">
+{/* <div style={{marginTop:"20px"}}> */}
+
+<div
+style={{
+  width: '80px',
+  height: '80px',
+  backgroundImage: `url(${frame})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'contain',
+  backgroundPosition: 'center',
+  position: 'relative',
+  cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  alignSelf: 'center',
+  // border:"none"
+}}
+>
+<div
+  className="bee-hexagon"
+  // style={{ marginBottom: '7px' }}
+>
+  <img
+    alt=""
+    src={dummy}
+    width={'63px'}
+    height={'66px'}
+    style={{
+      border:"none"
+    }}
+  />
+</div>
+</div>
+{/* </div> */}
+
+{title}
+</div>
+
+} id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
                 <div style={{width:"200vw"}}>
 
-                <div style={{height:"26px", background:"black"}}></div>
+                {/* <div style={{height:"26px", background:"black"}}></div> */}
               <div className="d-flex flex-row my-menu main-menu">
                 <div style={{justifyContent:"center", fontSize:"13px"}}>
                 <div className="action-link-div" style={{paddingBottom:"18px"}}>
                   Explore Profile
                   </div>
+                  <NavDropdown.Item href="/indexx-exchange/account" className="link-div">
+                    <Link to="/indexx-exchange/account" className="link-style">
+                    Account & Settings
+                    </Link> 
+                  </NavDropdown.Item>
                   <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
                     <Link to="/indexx-exchange/dashboard" className="link-style">
                     Dashboard
                     </Link> 
                   </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="link-style">
+                    Deposit
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/notification" className="link-div">
+                    <Link to="/indexx-exchange/notification" className="link-style">
+                    Notification
+                    </Link> 
+                  </NavDropdown.Item>
                   <NavDropdown.Item href="/indexx-exchange/buy-sell/order-history" className="link-div">
                     <Link to="/indexx-exchange/buy-sell/order-history" className="link-style">
                     Order History
-
-                    </Link> 
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/indexx-exchange/buy-sell/wallet" className="link-div">
-                    <Link to="/indexx-exchange/buy-sell/wallet" className="link-style">
-                    Wallet
 
                     </Link> 
                   </NavDropdown.Item>
@@ -797,6 +851,18 @@ Whitepapers
                   <NavDropdown.Item href="/indexx-exchange/buy-sell/transaction-history" className="link-div">
                     <Link to="/indexx-exchange/buy-sell/transaction-history" className="link-style">
                     Transaction History
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/wallet" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/wallet" className="link-style">
+                    Wallet
+
+                    </Link> 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/indexx-exchange/buy-sell/withdraw-crypto" className="link-div">
+                    <Link to="/indexx-exchange/buy-sell/withdraw-crypto" className="link-style">
+                    Withdraw
 
                     </Link> 
                   </NavDropdown.Item>
