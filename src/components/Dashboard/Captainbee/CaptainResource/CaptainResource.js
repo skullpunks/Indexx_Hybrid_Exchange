@@ -28,7 +28,7 @@ const resourceData = [
 ];
 
 const CaptainResource = () => {
-  const [resource, setResource] = useState(resourceData);
+  const [resource ] = useState(resourceData);
 
   return (
     <>

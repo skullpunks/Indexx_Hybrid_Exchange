@@ -48,7 +48,8 @@ const resourceData = [
 ];
 
 const CaptainResourceLegal = () => {
-  const [resource, setResource] = useState(resourceData)
+  const [resource ] = useState(resourceData);
+
   return (
     <>
       <SubHeader />

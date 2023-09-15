@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';

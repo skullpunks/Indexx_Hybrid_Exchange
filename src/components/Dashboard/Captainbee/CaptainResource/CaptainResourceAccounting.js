@@ -48,7 +48,7 @@ const resourceData = [
 ];
 
 const CaptainResourceAccounting = () => {
-  const [resource, setResource] = useState(resourceData)
+  const [resource ] = useState(resourceData)
   return (
     <>
       <SubHeader />

@@ -6,11 +6,10 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
 // import Bellicon from "../../assets/arts/Bellicon.png";
-import {Typography ,Image }from 'antd';
 // import headerstar from "../../assets/header-icons/Products/CEX.png";
 // import headerdex from "../../assets/header-icons/Products/DEX.png";
 // import whitetoken from "../../assets/header-icons/Products/IndexxToken.png";
@@ -36,13 +35,14 @@ import {Typography ,Image }from 'antd';
 // import fortune from "../../assets/header-icons/for.png";
 
 import frame from '../../assets/hive-dashboard/frame.svg';
+import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
+
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
 
-import {  baseURL, baseDEXURL } from "../../services/api";
+import {  baseURL, baseCEXURL } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
 
 
-const {Text} = Typography;
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
   localStorage.removeItem("user"); //remove one item
@@ -71,7 +71,6 @@ const Links = [
 const HeaderNew = () => {
   let title = <>{String(localStorage.getItem("user")).toLowerCase()}</>;
   const [, setIsInsideApp] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   let pageName = searchParams.get("page");
@@ -84,9 +83,9 @@ const HeaderNew = () => {
   const showText: any = Links.filter((link) =>
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.label);
-  const showUrl: any = Links.filter((link) =>
-    window.location.pathname.includes(link.value)
-  ).map((obj) => obj.url);
+  // const showUrl: any = Links.filter((link) =>
+  //   window.location.pathname.includes(link.value)
+  // ).map((obj) => obj.url);
   useEffect(() => {
 
     (showText[0] !== "") ?
@@ -98,6 +97,7 @@ const HeaderNew = () => {
         document.title = "indexx.ai"
   }, [showText, pageName]);
 
+  const isCaptain = true;
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) || 
@@ -147,8 +147,8 @@ const HeaderNew = () => {
                   <div className="action-link-div" style={{paddingBottom:"18px"}}>
                   Explore Platforms
                   </div>
-                  <NavDropdown.Item href="https://cex.indexx.ai/" className="link-div">
-                    <Link to="https://cex.indexx.ai/" className="link-style">
+                  <NavDropdown.Item href="https://test.cex.indexx.ai/" className="link-div">
+                    <Link to="https://test.cex.indexx.ai/" className="link-style">
                       Exchange
                     </Link> 
                   </NavDropdown.Item>
@@ -182,14 +182,15 @@ const HeaderNew = () => {
                 <div className="action-link-div" style={{paddingBottom:"23px"}}>
                     Action
                   </div>
-                  <NavDropdown.Item href="https://cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
-                    <Link to="https://cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-style">
+                  
+                  <NavDropdown.Item href="https://test.cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
+                    <Link to={`${baseCEXURL}/buy-sell/get-started`} className="action-link-style">
                       Sign Up in Exchange
 
                     </Link> 
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="https://cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
-                    <Link to="https://cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
+                  <NavDropdown.Item href="https://test.cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
+                    <Link to="https://test.cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
                     Sign In in Exchange
                     </Link> 
                   </NavDropdown.Item>
@@ -750,7 +751,7 @@ Whitepapers
                     to="/indexx-exchange/buy-sell/"
                     href="/"
                     className="btn btn-danger text-white"
-                    style={{height:"41px"}}
+                    style={{height:"41px", zIndex:"10000"}}
                   >
                     Buy Crypto
                   </Nav.Link>
@@ -762,13 +763,14 @@ Whitepapers
 
 <NavDropdown title={
 <div className="d-flex align-items-center justify-content-center">
-{/* <div style={{marginTop:"20px"}}> */}
+<div style={{marginBottom:"-60px", zIndex:"10000"}}>
 
 <div
 style={{
   width: '80px',
   height: '80px',
-  backgroundImage: `url(${frame})`,
+  backgroundImage: `url(${isCaptain === true ? frame : beeframe})`,
+  // backgroundImage: `url(${frame})`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
   backgroundPosition: 'center',
@@ -783,7 +785,7 @@ style={{
 >
 <div
   className="bee-hexagon"
-  // style={{ marginBottom: '7px' }}
+  style={{ marginBottom: `${isCaptain === true ? 0 : "7px" }` }}
 >
   <img
     alt=""
@@ -796,15 +798,17 @@ style={{
   />
 </div>
 </div>
-{/* </div> */}
+</div>
+<div>
 
 {title}
 </div>
+</div>
 
 } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
-                <div style={{width:"200vw"}}>
+                <div style={{width:"200vw", marginBottom:"-10px"}}>
 
-                {/* <div style={{height:"26px", background:"black"}}></div> */}
+                <div style={{height:"16px", background:"black"}}></div>
               <div className="d-flex flex-row my-menu main-menu">
                 <div style={{justifyContent:"center", fontSize:"13px"}}>
                 <div className="action-link-div" style={{paddingBottom:"18px"}}>
@@ -879,17 +883,6 @@ style={{
                   <NavDropdown.Item href="/indexx-exchange/dashboard" className="action-link-div">
                     <Link to="/indexx-exchange/dashboard" className="action-link-style">
                     Sales
-                    </Link> 
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-div">
-                    <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="action-link-style">
-                    Deposit
-
-                    </Link> 
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-div">
-                    <Link to="/indexx-exchange/buy-sell/withdraw-crypto" className="action-link-style">
-                    Withdraw
                     </Link> 
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/indexx-exchange/trade-to-earn" className="action-link-div">
