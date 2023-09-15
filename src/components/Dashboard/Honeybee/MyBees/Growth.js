@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -6,12 +6,17 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
 
 const Growth = () => {
     const [platform, setPlatform] = useState('Exchange');
     const [Order, setOrder] = useState('buysell');
     const [selectedDate, setSelectedDate] = useState('aug-sept');
-  
+    const [userType, setUserType] = useState("");
+    const [staticsData, setStaticsData] = useState();
+    const [userData, setUserData] = useState();
+    const [loadings, setLoadings] = useState(false);
+    const [email, setEmail] = useState('');
     const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
     const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
     const xLabels = [
@@ -23,6 +28,26 @@ const Growth = () => {
       'Page F',
       'Page G',
     ];
+
+    useEffect(() => {
+      const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+      const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+      console.log(username, userType);
+      if (userType === "CaptainBee") {
+        getCaptainBeeStatics(username).then((data) => {
+          console.log("captainbee data", data.data);
+          setStaticsData(data.data);
+        });
+      } else {
+        console.log("user", user)
+        getHoneyUserDetails(user).then((data) => {
+          console.log("user.data", data.data?._doc);
+          setUserData(data.data?._doc);
+          setEmail(data.data?._doc?.email);
+        })
+      }
+    }, [])
 
   return (
     <div style={{paddingTop:"10px"}}>

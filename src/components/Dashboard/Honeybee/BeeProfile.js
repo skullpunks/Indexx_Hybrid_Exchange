@@ -1,24 +1,125 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import frame from '../../../assets/hive-dashboard/silverframe.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import BeeHeader from './BeeHeader/BeeHeader';
+import { getCaptainBeeStatics, getHoneyUserDetails, updateHoneyBeeProfile } from '../../../services/api';
+import AWS from 'aws-sdk';
+import { notification } from 'antd';
+import {
+  CheckCircleFilled,
+  CloseCircleFilled,
+} from '@ant-design/icons';
 
-
+const S3_BUCKET = 'indexx-exchange';
+const REGION = 'ap-northeast-1';
+AWS.config.update({
+  accessKeyId: 'AKIA5FBFFKSZD76C64G6',
+  secretAccessKey: 'mQ9QeNpkLL8EcFOOpe+kbc+KZDWhRItfTZ54sSWD',
+  region: REGION,
+});
+var s3 = new AWS.S3();
 
 const BeeProfile = () => {
   const [photo, setPhoto] = useState(dummy);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [Email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
+  const [userType, setUserType] = useState("");
+  const [staticsData, setStaticsData] = useState();
+  const [userData, setUserData] = useState();
+  const [loadings, setLoadings] = useState(false);
 
-  console.log(firstname, lastname, Email);
   const handlePhotoChange = (event) => {
     console.log('clicked');
     const file = event.target.files[0];
-    setPhoto(URL.createObjectURL(file));
+    uploadToS3(file, 'photoId');
   };
 
+  const openNotificationWithIcon = (
+    type,
+    message
+  ) => {
+    const Icon =
+      type === 'error' ? (
+        <CloseCircleFilled />
+      ) : (
+        <CheckCircleFilled className="text_link" />
+      );
+    notification[type]({
+      message: message,
+      description: '',
+      icon: Icon,
+      style: {
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
+        borderRadius: 5,
+        top: 100,
+      },
+    });
+  };
+
+  const uploadToS3 = async (file, fileType) => {
+    const params = {
+      Bucket: S3_BUCKET,
+      Key: file.name,
+      Body: file,
+      ContentType: file.type
+    };
+
+    try {
+      await s3.putObject(params).promise();
+      // Construct and set the file URL
+      const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
+      console.log("I am here in photo");
+      setPhoto(url);
+    } catch (error) {
+      alert('Error uploading file:', error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoadings(true);
+    console.log( photo, lastname, firstname, email);
+    let updateData = {
+      photo, lastname, firstname, email
+    }
+    updateHoneyBeeProfile(email, updateData).then((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        console.log(data.data);
+        setLoadings(false);
+        openNotificationWithIcon('success', 'Profile data updated Successfully');
+      } else {
+        setLoadings(false);
+        openNotificationWithIcon('error', 'Failed to updated. Please try again.');
+      }
+    }
+    )
+  }
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    console.log(username, userType);
+    setUserType(userType);
+    if (userType === "CaptainBee") {
+      getCaptainBeeStatics(username).then((data) => {
+        console.log("captainbee data", data.data);
+        setStaticsData(data.data);
+      });
+    } else {
+      console.log("user", user)
+      getHoneyUserDetails(user).then((data) => {
+        console.log("user.data", data.data?._doc);
+        setUserData(data.data?._doc);
+        setEmail(data.data?._doc?.email);
+        setFirstname(data.data?._doc?.firstName);
+        setLastname(data.data?._doc?.lastName);
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -157,7 +258,7 @@ const BeeProfile = () => {
                     variant="outlined"
                     sx={{ mb: 2, width: '64%' }}
                     size="small" // Make the input box smaller
-                    value={Email}
+                    value={email}
                     //  error={emailError !== ''}
                     // helperText={emailError}
                     // onBlur={validateEmail}

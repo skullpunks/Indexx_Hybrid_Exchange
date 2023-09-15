@@ -1,6 +1,6 @@
 import { Button, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
 // import IUSD from "../../assets/token-icons/35.png";
 // import downArrow from "../../assets/arts/downArrow.svg";
@@ -19,6 +19,7 @@ import {
   oneUSDHelper,
   decodeJWT,
   getTaskCenterDetails,
+  getHoneyBeeDataByUsername,
 } from '../../services/api';
 
 interface Props {
@@ -32,11 +33,15 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
   const [rateData, setRateData] = useState();
   const [loadings, setLoadings] = useState<boolean>(false);
-
+  const { id } = useParams();
+  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [userData, setUserData] = useState();
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [adminFee, setAdminFees] = useState('');
   const [, setTaskCenterDetails] = useState() as any;
+  const [permissionData, setPermissionData] = useState() as any;
 
   //const [isFirstEnabled, setisFirstEnabled] = useState(true);
   // const [isSecondEnabled, setisSecondEnabled] = useState(false);
@@ -47,7 +52,10 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   let priceData: any = {};
 
   const navigateBak = () => {
-    navigate('/indexx-exchange/buy-sell?type=sell');
+    if (honeyBeeId === "undefined" || honeyBeeId === "")
+      navigate(`/indexx-exchange/buy-sell?type=sell`);
+    else
+      navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=sell`);
     // setScreenName("");
   };
 
@@ -67,15 +75,32 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       testVal.length < 6
         ? '1.1'
         : testVal.length < 9
-        ? '0.9'
-        : testVal.length < 12
-        ? '0.8'
-        : testVal.length < 15
-        ? '0.6'
-        : '0.4';
+          ? '0.9'
+          : testVal.length < 12
+            ? '0.8'
+            : testVal.length < 15
+              ? '0.6'
+              : '0.4';
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
+
+    console.log('ID:', id);
+    if (id) {
+      setHoneyBeeId(String(id));
+      getHoneyBeeDataByUsername(String(id)).then((data) => {
+        setUserData(data.data);
+        console.log(data.data, data.data.userFullData?.email);
+        setHoneyBeeEmail(data.data.userFullData?.email);
+        let captainbeePermissions = data.data.referredUserData?.data.relationships;
+        console.log(data.data.userFullData?.email)
+        console.log(captainbeePermissions);
+        let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
+        console.log(c);
+        setPermissionData(c)
+      });
+
+    }
     getAllSetting();
     getPricesData();
     getTaskCenterDetailsData();
@@ -95,7 +120,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     console.log('usid oper1', Number(BSvalue?.amount));
     setTotalAmountToPay(
       priceData * Number(BSvalue?.amount) -
-        (priceData * Number(BSvalue?.amount) * Number(adminFee)) / 100
+      (priceData * Number(BSvalue?.amount) * Number(adminFee)) / 100
     );
   };
 
@@ -104,12 +129,24 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let basecoin: string = filteredFromArray[0].title;
     let quotecoin: string = 'USD';
     let amount: number = Number(BSvalue?.amount);
-    const res = await createSellOrder(
-      basecoin,
-      quotecoin,
-      amount,
-      totalAmountToPay
-    );
+    let res;
+    if (id) {
+      console.log("Placing honey bee order");
+      console.log(permissionData?.permissions?.sell)
+      if (!permissionData?.permissions?.sell) {
+        setLoadings(false);
+        openNotificationWithIcon2('error', "As Captain bee, Please apply for sell approval from honey bee");
+        return;
+      }
+      res = await createSellOrder(basecoin, quotecoin, amount, totalAmountToPay, 0, honeyBeeEmail, true);
+    } else {
+      res = await createSellOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        totalAmountToPay
+      );
+    }
     console.log(res.data, res);
     if (res.status === 200) {
       //setisFirstEnabled(false);
@@ -123,7 +160,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       }
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error');
+      openNotificationWithIcon2('error', "Failed to Process Sell Order. Please check balance on the wallet");
     }
     //getStripePaymentIntent(res.data.orderId, res.data.user.email);
   };
@@ -144,10 +181,10 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     });
   };
 
-  const openNotificationWithIcon2 = (type: NotificationType) => {
+  const openNotificationWithIcon2 = (type: NotificationType, message?: string) => {
     notification[type]({
       message:
-        'Failed to Process Sell Order. Please check balance on the wallet',
+        message,
       description: '',
       icon: <CloseCircleFilled />,
       style: {
@@ -190,7 +227,10 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         setLoadings(false);
         openNotificationWithIcon('success');
         // setScreenName("BSSellInprogress");
-        navigate('/indexx-exchange/buy-sell/sell-in-progress');
+        if (honeyBeeId === "undefined" || honeyBeeId === "")
+          navigate("/indexx-exchange/buy-sell/sell-in-progress");
+        else
+          navigate(`/indexx-exchange/buy-sell/sell-in-progress/${honeyBeeId}`);
       } else {
         setLoadings(false);
         openNotificationWithIcon2('error');

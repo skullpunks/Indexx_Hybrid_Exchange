@@ -8,10 +8,10 @@ import initialTokens from '../../utils/Tokens.json';
 import graphTokens from '../../utils/graphs.json';
 // import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
+import { getHoneyBeeDataByUsername, getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import './BS-Sell.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -34,19 +34,34 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
       }
-      navigate('/indexx-exchange/buy-sell/confirm-purchase');
+      if (honeyBeeId === "undefined" || honeyBeeId === "")
+        navigate('/indexx-exchange/buy-sell/confirm-purchase');
+      else
+        navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase`);
       // setScreenName("confirmPurchase");
     } else {
       // setScreenName("create");
-      navigate('/indexx-exchange/buy-sell/create');
+      if (honeyBeeId === "undefined" || honeyBeeId === "")
+        navigate('/indexx-exchange/buy-sell/create');
+      else
+        navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/create`);
     }
+
   };
 
   const [buyVal, setBuyVal] = useState('');
   const [isLimitPassed, setLimitPassed] = useState(true);
   const [minMavData, setMinMaxData] = useState() as any;
+  const { id } = useParams();
+  const [honeyBeeId, setHoneyBeeId] = useState("");
 
   useEffect(() => {
+    console.log('ID:', id);
+
+    if (id) {
+      setHoneyBeeId(String(id));
+    }
+
     if (BSvalue.amount !== 0) {
       setBuyVal(BSvalue?.amount.toString());
       let amount = BSvalue?.amount.toString();
@@ -54,12 +69,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         amount.length < 7
           ? '1.1'
           : amount.length < 9
-          ? '0.9'
-          : amount.length < 12
-          ? '0.8'
-          : amount.length < 15
-          ? '0.6'
-          : '0.4';
+            ? '0.9'
+            : amount.length < 12
+              ? '0.8'
+              : amount.length < 15
+                ? '0.6'
+                : '0.4';
       let charWidth = amount.length <= 1 ? 1.2 : 0.9;
       if (document.getElementsByClassName('input_currency')[0]) {
         let element = document.getElementsByClassName(
@@ -73,7 +88,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       // console.log(x);
       setMinMaxData(x);
     });
-  }, [BSvalue.fromTitle, BSvalue.amount]);
+  }, [BSvalue.fromTitle, BSvalue.amount, id]);
 
   const handleChange = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x) => x.address === value);
@@ -122,12 +137,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         testVal.length < 7
           ? '1.1'
           : testVal.length < 9
-          ? '0.9'
-          : testVal.length < 12
-          ? '0.8'
-          : testVal.length < 15
-          ? '0.6'
-          : '0.4';
+            ? '0.9'
+            : testVal.length < 12
+              ? '0.8'
+              : testVal.length < 15
+                ? '0.6'
+                : '0.4';
       let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
       e.currentTarget.style.width = (testVal.length + 1) * charWidth + 'ch';
       e.currentTarget.style.fontSize = charFontSize + 'ch';
@@ -150,7 +165,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
             className="bs_curreny_left padding-2x"
             style={{ transform: 'scale(1)' }}
           >
-            <span className="font_20x pe-1" style={{color:"var(--body_color)"}}>$</span>
+            <span className="font_20x pe-1" style={{ color: "var(--body_color)" }}>$</span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
 
             <input
@@ -214,7 +229,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
               className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
-              dropdownStyle={{backgroundColor: "var(--body_background)", color:"var(--body_color)"}}                                                            
+              dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
             >
               {initialTokens
                 //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))

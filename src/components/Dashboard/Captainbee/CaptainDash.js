@@ -33,6 +33,7 @@ import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
 import { getCaptainBeeStatics } from '../../../services/api';
+import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
@@ -466,7 +467,7 @@ const CaptainDash = () => {
             </div>
           </div>
         </div>) :
-        <><HoneyBeeComingSoon />
+        <><BeeDash2 />
         </>
       }
     </>

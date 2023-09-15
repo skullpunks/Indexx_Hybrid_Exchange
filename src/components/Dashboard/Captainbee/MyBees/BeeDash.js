@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import frame from '../../../../assets/hive-dashboard/silverframe.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -21,10 +21,23 @@ import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 import SubHeader from '../SubHeader/SubHeader';
 import '../CaptainDash.css';
 import BeeTabs from './BeeTabs';
-
+import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../services/api';
+import { useParams } from 'react-router-dom';
 const BeeDash = () => {
+  const { id } = useParams();
 
+  const [userData, setUserData] = useState();
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
 
+  useEffect(() => {
+
+    console.log('ID:', id);
+
+    getHoneyBeeDataByUsername(id).then((data) => {
+      setUserData(data.data);
+      setHoneyBeeEmail(data?.data?.userFullData?.email);
+    });
+  }, [id])
   return (
     <>
       <SubHeader />
@@ -53,8 +66,8 @@ const BeeDash = () => {
                 }}
               >
                 <div className="hexagon"
-                        style={{ marginBottom: '16px' }}
-                
+                  style={{ marginBottom: '16px' }}
+
                 >
                   <img
                     alt=""
@@ -67,34 +80,34 @@ const BeeDash = () => {
                 </div>
               </div>
             </div>
-              <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                Honey Bee Ana
-              </div>
-              <div className="font_10x mb-3 lh_32x align-items-start">
-                Honey Bee of Captain Willie’s Team
-              </div>
+            <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
+              Honey Bee {id}
+            </div>
+            <div className="font_10x mb-3 lh_32x align-items-start">
+              Honey Bee of Captain {userData?.referredUserData?.data2?.Username} Team
+            </div>
             <div className="align-items-start lh_32x">
               <div className="font_13x d-flex align-items-center ">
                 <img alt="man" src={man} className="me-2" />
-                @ana
+                @{id}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={pin} className="me-2" />
-                United States of America
+                {userData?.userFullData?.country === undefined ? "NA" : userData?.userFullData?.country}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={house} className="me-2" />
-                New York
+                {userData?.userFullData?.city === undefined ? "NA" : userData?.userFullData?.city}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={clock} className="me-2" />
-                August 10, 2023
+                {userData?.formatedAccountCreationDate}
               </div>
             </div>
 
           </div>
           <div className="honeybee-container">
-            <BeeTabs/>
+            <BeeTabs honeyBeeEmail={honeyBeeEmail}/>
           </div>
         </div>
       </div>

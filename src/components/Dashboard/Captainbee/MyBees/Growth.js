@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -6,6 +6,8 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { getHoneyBeeDataByUsername } from '../../../../services/api';
 
 const Growth = () => {
     const [platform, setPlatform] = useState('Exchange');
@@ -23,7 +25,19 @@ const Growth = () => {
       'Page F',
       'Page G',
     ];
+    const { id } = useParams();
 
+    const [userData, setUserData] = useState();
+  
+    useEffect(() => {
+  
+      console.log('ID:', id);
+  
+      getHoneyBeeDataByUsername(id).then((data) => {
+        setUserData(data.data);
+        console.log("userData",data.data);
+      });
+    }, [id])
   return (
     <div style={{paddingTop:"10px"}}>
         <Typography
@@ -246,7 +260,7 @@ const Growth = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      30
+                      0
                     </Typography>
                     <Typography
                       variant="text"
@@ -261,7 +275,7 @@ const Growth = () => {
                         gap: 1,
                       }}
                     >
-                      <img alt="up" src={arrow} /> 30%
+                      <img alt="up" src={arrow} /> 0%
                     </Typography>
                   </Box>
                   <Box
@@ -290,7 +304,7 @@ const Growth = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      50
+                      {userData?.ordersCount}
                     </Typography>
                     <Typography
                       variant="text"
@@ -305,7 +319,7 @@ const Growth = () => {
                         gap: 1,
                       }}
                     >
-                      <img alt="up" src={arrow} /> 20%
+                      <img alt="up" src={arrow} /> 0%
                     </Typography>
                   </Box>
                 </Box>

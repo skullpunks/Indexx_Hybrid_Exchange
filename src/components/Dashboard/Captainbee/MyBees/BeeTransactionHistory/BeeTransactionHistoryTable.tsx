@@ -23,7 +23,11 @@ interface DataType {
 }
 
 
-const BeeTransactionHistoryTable: React.FC = () => {
+interface BeeWalletTableProps {
+    BeeEmail: string;
+}
+
+const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
     const [selection, setSelection] = useState({
         type: '',
         asset: '',
@@ -133,23 +137,41 @@ const BeeTransactionHistoryTable: React.FC = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken: any = decodeJWT(String(token)) as any;
-        transactionList(decodedToken?.email).then((res) => {
-            console.log(res.data);
-            const results = res.data;
-            let finalArr = [];
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].transactionType?.includes('FIAT')) {
-                    console.log(results[i].transactionType);
-                    finalArr.push(results[i]);
-                } else {
-                    console.log(results[i].transactionType, 'typoe');
+        if (BeeEmail !== undefined) {
+            transactionList(BeeEmail).then((res) => {
+                console.log(res.data);
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                        console.log(results[i].transactionType);
+                        finalArr.push(results[i]);
+                    } else {
+                        console.log(results[i].transactionType, 'typoe');
+                    }
                 }
-            }
-            setTxList(finalArr);
-            setTxListFilter(finalArr);
-        });
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        } else {
+            const token = localStorage.getItem('access_token');
+            const decodedToken: any = decodeJWT(String(token)) as any;
+            transactionList(decodedToken?.email).then((res) => {
+                console.log(res.data);
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                        console.log(results[i].transactionType);
+                        finalArr.push(results[i]);
+                    } else {
+                        console.log(results[i].transactionType, 'typoe');
+                    }
+                }
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        }
     }, []);
 
     const handleChangeTime = (value: string) => {
@@ -267,7 +289,7 @@ const BeeTransactionHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                
+
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
@@ -401,7 +423,7 @@ const BeeTransactionHistoryTable: React.FC = () => {
                         onSelect={handleSearchHashId}
                         options={options}
                         allowClear={true}
-                        style={{fontSize:"15px", width:"100%"}}
+                        style={{ fontSize: "15px", width: "100%" }}
                     />
                 </div>
             </div>

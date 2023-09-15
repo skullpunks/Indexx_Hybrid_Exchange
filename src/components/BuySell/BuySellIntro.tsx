@@ -4,10 +4,10 @@ import BSConvertIntro from './BSConvertIntro';
 import BSSellIntro from './BSSellIntro';
 import BuyContent from './BuyContent';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import lockedimage from '../../assets/arts/locked.png';
 import { Button, Modal, Image } from 'antd';
-import { baseDEXURL, geolocationData } from '../../services/api';
+import { baseDEXURL, geolocationData, getHoneyBeeDataByUsername } from '../../services/api';
 import { useState, useEffect } from 'react';
 import './BuySellIntro.css';
 
@@ -21,12 +21,17 @@ const filteredArray = (items: any, keyName: any, key: any) => {
   });
 };
 
+
+
 const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
+  const { id } = useParams();
   const [ip, setIP] = useState('');
   const [country, setCountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
-
+  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [userData, setUserData] = useState();
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
   const handleTransferOk = () => {
     localStorage.setItem('userIp', ip);
     setIsTransferModalVisible(false);
@@ -41,12 +46,22 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   };
 
   useEffect(() => {
+    console.log('ID:', id);
+
+    if (id) {
+      setHoneyBeeId(String(id))
+      getHoneyBeeDataByUsername(String(id)).then((data) => {
+        setUserData(data.data);
+        console.log(data.data, data.data.userFullData?.email);
+        setHoneyBeeEmail(data.data.userFullData?.email)
+      });
+    }
     geolocationData().then((res: any) => {
       setIP(res.data.IPv4);
       setCountry(res.data.country_name);
       setCountryCode(res.data.country_code);
     });
-  }, []);
+  }, [id]);
 
   const userId = localStorage.getItem('user');
   const navigate = useNavigate();
@@ -89,12 +104,15 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
         amount: 0,
       });
     }
-    navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
+    console.log("honeyBeeId", honeyBeeId)
+    if (honeyBeeId === "undefined" || honeyBeeId === "")
+      navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
+    else
+      navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=${filteredFromArray[0].value}`);
   };
 
   let activeKey = '1';
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(setSearchParams);
   let orderType = searchParams.get('type');
   if (orderType) {
     let fileteredArrayWithItem = filteredArray(items, 'value', orderType);
@@ -102,12 +120,12 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   }
 
   return (
-    <div className="bs_container card" style={{borderColor:'var(--border-color)'}}>
+    <div className="bs_container card" style={{ borderColor: 'var(--border-color)' }}>
       {userId ? (
         <div>
           <Modal
-         
-            maskStyle={{backdropFilter: "blur(2px)"}}
+
+            maskStyle={{ backdropFilter: "blur(2px)" }}
             centered={true}
             visible={isTransferModalVisible}
             onOk={handleTransferOk}
@@ -135,7 +153,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
                 Cancel
               </Button>,
             ]}
-            bodyStyle={{background:"var(--body_background)", color:"var(--body_color)"}}
+            bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
           >
             <div className="align-center text-center">
               <Image preview={false} src={lockedimage}></Image>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import frame from '../../../../assets/hive-dashboard/silverframe.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -21,9 +21,46 @@ import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 import '../../Captainbee/CaptainDash.css';
 import BeeTabs from './BeeTabs';
 import BeeHeader from '../BeeHeader/BeeHeader';
+import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 
 const BeeDash2 = () => {
+  const [userType, setUserType] = useState("");
+  const [staticsData, setStaticsData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
+  const [captainBeeData, setRefferedUserData] = useState();
+  const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
+  const [captainbeeOrders, setCaptainbeeOrders] = useState();
+  const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    console.log(username, userType);
+    setUserType(userType);
+    if (userType === "CaptainBee") {
+      getCaptainBeeStatics(username).then((data) => {
+        console.log("captainbee data", data.data);
+        setStaticsData(data.data);
+      });
+    } else {
+      console.log("user", user)
+      getHoneyUserDetails(user).then((data) => {
+        console.log("user.data", data.data);
+        setHoneybeeCreateDate(data.data.accountCreationDate);
+        setHoneyBeeData(data?.data?._doc);
+      })
 
+      getReferredUserDetails(user).then((data) => {
+        console.log("d", data.data);
+        setRefferedUserData(data.data)
+        console.log("d", data.data.accountCreationDate);
+        setCaptainbeeCreateDate(data.data.accountCreationDate);
+        setCaptainbeeOrders(data.data.totalOrder);
+        setCaptainbeeUsers(data.data.honeyBeesCount);
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -53,8 +90,8 @@ const BeeDash2 = () => {
                 }}
               >
                 <div className="hexagon"
-                        style={{ marginBottom: '16px' }}
-                
+                  style={{ marginBottom: '16px' }}
+
                 >
                   <img
                     alt=""
@@ -67,34 +104,34 @@ const BeeDash2 = () => {
                 </div>
               </div>
             </div>
-              <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                Honey Bee Ana
-              </div>
-              <div className="font_10x mb-3 lh_32x align-items-start">
-                Honey Bee of Captain Willie’s Team
-              </div>
+            <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
+              Honey Bee {honeyBeeData?.username}
+            </div>
+            <div className="font_10x mb-3 lh_32x align-items-start">
+              Honey Bee of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
+            </div>
             <div className="align-items-start lh_32x">
               <div className="font_13x d-flex align-items-center ">
                 <img alt="man" src={man} className="me-2" />
-                @ana
+                {honeyBeeData?.accname ? `@${honeyBeeData?.accname}` : "NA"}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={pin} className="me-2" />
-                United States of America
+                {honeyBeeData?.country ? honeyBeeData?.country : "NA"}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={house} className="me-2" />
-                New York
+                {honeyBeeData?.city ? `@${honeyBeeData?.city}` : "NA"}
               </div>
               <div className="font_13x d-flex align-items-center">
                 <img alt="man" src={clock} className="me-2" />
-                August 10, 2023
+                {honeybeeCreateDate}
               </div>
             </div>
 
           </div>
           <div className="honeybee-container">
-            <BeeTabs/>
+            <BeeTabs />
           </div>
         </div>
       </div>

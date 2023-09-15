@@ -6,12 +6,12 @@ import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import bsDollar from "../../assets/arts/bsDollar.svg";
 // import { Link } from 'react-router-dom';
 import { Select } from 'antd';
-import { decodeJWT, getWalletBalance } from '../../services/api';
+import { decodeJWT, getHoneyBeeDataByUsername, getWalletBalance } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
 
 interface Props {
@@ -32,6 +32,9 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [userBalance, setUserBalance] = useState(0);
     const [, setShowUserBalance] = useState(false);
     const [, setSelectedCoin] = useState("");
+    const [honeyBeeId, setHoneyBeeId] = useState("");
+    const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+    const { id } = useParams();
 
     useEffect(() => {
         if (ref.current) {
@@ -59,6 +62,15 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             // getCoinBalance(String(filteredFromArray[0].title)).then((x) => {
             //     setUserBalance(x);
             // });
+
+            if (id) {
+                setHoneyBeeId(String(id));
+                getHoneyBeeDataByUsername(String(id)).then((data) => {
+                    console.log(data.data, data.data.userFullData?.email);
+                    setHoneyBeeEmail(data.data.userFullData?.email);
+                });
+
+            }
         }
     }, [BSvalue]);
 
@@ -81,6 +93,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             handleChange(String(BSvalue?.fromToken))
         }
     }
+
     const checkPurchase = () => {
         let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = initialTokens.find(x => x.address === BSvalue?.toToken);
@@ -90,10 +103,10 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         } else if (getRequiredCoin?.title === "INXP") {
             alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
-        } else if(getRequiredToCoin?.title === "INXP" && getRequiredCoin?.title !== "FTT") {
+        } else if (getRequiredToCoin?.title === "INXP" && getRequiredCoin?.title !== "FTT") {
             alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
-        } else if(getRequiredToCoin?.title === "FTT" && getRequiredCoin?.title !== "INXP") {
+        } else if (getRequiredToCoin?.title === "FTT" && getRequiredCoin?.title !== "INXP") {
             alert("You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
             return;
         }
@@ -101,26 +114,42 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             // setScreenName("confirmConvert");
             console.log(val)
             console.log(parseFloat(val))
-            navigate("/indexx-exchange/buy-sell/confirm-convert");
+            if (honeyBeeId === "undefined" || honeyBeeId === "")
+                navigate("/indexx-exchange/buy-sell/confirm-convert");
+            else
+                navigate(`/indexx-exchange/buy-sell/confirm-convert/${honeyBeeId}`);
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) });
             }
         }
     }
 
-
     const getCoinBalance = async (value: string) => {
-        const res = await getWalletBalance(email, value);
-        console.log(res);
-        setSelectedCoin(value);
-        if (res.status === 200) {
-            setUserBalance(res.data.balance);
-            setShowUserBalance(true);
-            return Number(res.data.balance);
+        console.log(honeyBeeId && honeyBeeEmail, honeyBeeId, honeyBeeEmail);
+        if (honeyBeeId && honeyBeeEmail) {
+            const res = await getWalletBalance(honeyBeeEmail, value);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+                return 0;
+            }
         } else {
-            setUserBalance(0);
-            setShowUserBalance(true);
-            return 0;
+            const res = await getWalletBalance(email, value);
+            console.log(res);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+                return Number(res.data.balance);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+                return 0;
+            }
         }
     }
 
@@ -158,7 +187,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     return (
         <div>
 
-            <div className="padding-lr-1x padding-tb-3x"  style={{paddingTop:50,paddingBottom:50}} >
+            <div className="padding-lr-1x padding-tb-3x" style={{ paddingTop: 50, paddingBottom: 50 }} >
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
 
@@ -203,7 +232,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action " >
-                <button style={{marginTop:30}} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
+                <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
             {/* {showUserBalance &&

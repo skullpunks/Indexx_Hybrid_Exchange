@@ -4,8 +4,9 @@ import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { decodeJWT, getUserWallets } from '../../../../services/api';
+import { decodeJWT, getHoneyBeeDataByUsername, getUserWallets } from '../../../../services/api';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { useParams } from 'react-router-dom';
 
 interface DataType {
     key: React.Key;
@@ -24,23 +25,29 @@ interface DataType {
     coinBalanceInUSD: any;
     coinBalanceInBTC: any;
 }
-const BeeWalletTable = () => {
+interface BeeWalletTableProps {
+    BeeEmail: string;
+  }
+
+const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
+
+
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
-    
+
     const handleCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroBalance(e.target.checked);
     };
-    
+
 
     // const handleCheckboxChange = (e) => {
     //     setHideZeroBalance(e.target.checked);
     // };
 
-    
+
     const columns: ColumnsType<DataType> = [
         {
             title: 'Asset',
@@ -105,25 +112,38 @@ const BeeWalletTable = () => {
     const [walletData, setWalletData] = useState() as any;
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
+    const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+
     // let data: any[] = [{ "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x9a327efba5e175fb240f1b8b9326bdf10d9297b1", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Binance", "coinSymbol": "BNB", "coinDecimals": 18, "coinBalance": 0.10753, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-19T12:39:57.526Z", "coinLastUsedOn": "2022-10-19T12:39:57.526Z", "isCoinActive": true, "_id": "634ff01d03980b5c11c96f74" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x986081cb3253264f57535056b55673d4674038bf", "coinPrivateKey": "", "coinNetwork": "Ethereum", "coinName": "Ethereum", "coinSymbol": "ETH", "coinDecimals": 18, "coinBalance": 0.095925216001389, "coinBalanceInUSD": 123, "coinBalanceInBTC": 0.0065, "coinCreatedOn": "2022-10-19T17:12:33.087Z", "coinLastUsedOn": "2022-10-19T17:12:33.087Z", "isCoinActive": true, "_id": "63503001204238ba708ec2b2" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x43e4d660fa09b82d5c906d87f775eb6cd215ccff", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Indexx500", "coinSymbol": "IN500", "coinDecimals": 18, "coinBalance": 10, "coinBalanceInUSD": 37, "coinBalanceInBTC": 0.0019, "coinCreatedOn": "2022-10-20T01:27:32.295Z", "coinLastUsedOn": "2022-10-20T01:27:32.295Z", "isCoinActive": true, "_id": "6350a40436c8ac9aa13874ad" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "msT58masPu6racd9XFUHCSibfdwDPjZdgc", "coinPrivateKey": "", "coinNetwork": "Bitcoin", "coinName": "Bitcoin", "coinSymbol": "BTC", "coinDecimals": 8, "coinBalance": 0.0015, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-20T09:49:16.127Z", "coinLastUsedOn": "2022-10-20T09:49:16.127Z", "isCoinActive": true, "_id": "6351199c93823abe5ccbca1d" }];
 
+    const { id } = useParams();
 
     useEffect(() => {
-        // let access_token = String(localStorage.getItem("access_token"));
-        // let decoded: any = decodeJWT(access_token);
-        // getUserWallets(decoded.email).then((userWallets) => {
-        //     //console.log("userWallets", userWallets);
-        //     setWalletData(userWallets.data);
-        // });
-        getAllUserWallet();
-    }, []);
+
+        console.log('ID:', id, BeeEmail);
+        if (id) {
+            console.log("I amhere")
+            getAllUserWallet();
+        }
+        else {
+            getAllUserWallet();
+        }
+    }, [id])
 
     const getAllUserWallet = async () => {
-        let access_token = String(localStorage.getItem("access_token"));
-        let decoded: any = decodeJWT(access_token);
-        let userWallets = await getUserWallets(decoded.email);
-        console.log("userWallets", userWallets);
-        setWalletData(userWallets.data);
+        console.log(BeeEmail);
+        if (id && BeeEmail !== "undefined") {
+            let userWallets = await getUserWallets(BeeEmail);
+            console.log("userWallets of honeybee", userWallets);
+            setWalletData(userWallets.data);
+        } else {
+            console.log(" a m here in wallet tab")
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            let userWallets = await getUserWallets(decoded.email);
+            console.log("userWallets", userWallets);
+            setWalletData(userWallets.data);
+        }
         // let usersWallet = userWallets.data;
         // let totalBalInUSD = 0;
         // for (let i = 0; i < usersWallet.length; i++) {
@@ -141,8 +161,8 @@ const BeeWalletTable = () => {
 
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
- 
-    
+
+
     const filteredWalletData = walletData ? walletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [];
 
     const getData = (current: number, pageSize: number) => {
@@ -166,25 +186,25 @@ const BeeWalletTable = () => {
         );
     };
 
-   console.log("WD",walletData);
-   console.log("FD",filteredWalletData);
+    console.log("WD", walletData);
+    console.log("FD", filteredWalletData);
     return (
         <div>
-           
+
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
                 <Tabs.TabPane tab="Balance" key="1" className=''>
                     <div className='border-b-1x margin-b-2x'>
-                    <div className='checkbox-container my-2' style={{textAlign:"right"}}>
+                        <div className='checkbox-container my-2' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns}dataSource={getData(current, pageSize)} onChange={onChange} />
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
                         <MyPagination
-                    total={filteredWalletData && filteredWalletData.length}
-                    current={current}
-                    onChange={setCurrent}
-                />
+                            total={filteredWalletData && filteredWalletData.length}
+                            current={current}
+                            onChange={setCurrent}
+                        />
                     </div>
                 </Tabs.TabPane>
                 {/* <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>

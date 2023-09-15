@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "../../../BuySell/BS-Sell.css";
 import "./BuySellDummy.css";
 // import Footer from '../../../Footer/Footer';
@@ -9,7 +9,15 @@ import BeeWalletTop from './BeeWalletTop';
 
 // import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
-const BeeWallet = () => {
+
+
+interface BeeWalletTableProps {
+    honeyBeeEmail: string;
+}
+
+const BeeWallet: React.FC<(BeeWalletTableProps)> = ({ honeyBeeEmail }) => {
+
+    console.log(honeyBeeEmail, "IN wallet")
     return (
         <div className=''>
             {/* <div className='d-flex bs_wallet_top'>
@@ -27,7 +35,8 @@ const BeeWallet = () => {
                 <BeeWalletTop />
 
                 <div className='width-100 bs_wallet_table'>
-                    <BeeWalletTable />
+                    <BeeWalletTable BeeEmail={honeyBeeEmail} />
+
                 </div>
             </div>
             {/* <Footer footerArt="flipWoman" /> */}
