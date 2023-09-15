@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -21,6 +21,9 @@ const BuySellGetStarted: React.FC = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const [referral] = useSearchParams();
+
+
   console.log(navigate);
   const onFinish = async (values: any) => {
     setLoadings(true);
@@ -41,21 +44,20 @@ const BuySellGetStarted: React.FC = () => {
 
 
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const referral = params.get('referral');
-    console.log("referral::", referral); // Check if referral is present in the URL
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const referral = params.get('referral');
+  //   console.log("referral::", referral); // Check if referral is present in the URL
     
-// Clear the previous referral code from localStorage
-    localStorage.removeItem('tempAuthReferral');
+  //   localStorage.removeItem('tempAuthReferral');
 
-    if (referral) {
-      localStorage.setItem('tempAuthReferral', referral); // Store referral in localStorage
-      setTimeout(() => {
-        form.setFieldsValue({ referral }); // Set referral value in the form
-      }, 0);
-    }
-  }, [form]);
+  //   if (referral) {
+  //     localStorage.setItem('tempAuthReferral', referral); // Store referral in localStorage
+  //     setTimeout(() => {
+  //       form.setFieldsValue({ referral }); // Set referral value in the form
+  //     }, 0);
+  //   }
+  // }, [form]);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -183,14 +185,14 @@ const BuySellGetStarted: React.FC = () => {
               rules={[
                 { required: false, message: 'Referral Id Required' },
               ]}
-              initialValue={localStorage.getItem('tempAuthReferral') || ''}
+              initialValue={String(referral.get("referral")) || ''}
             >
               <div className="control-input">
                 <Input
                   name="referral"
                   className="input_height"
                   readOnly={!!form.getFieldValue('referral')}
-                  value={localStorage.getItem('tempAuthReferral') || ''}
+                  value={String(referral.get("referral")) || ''}
                 />
               </div>
             </Form.Item>

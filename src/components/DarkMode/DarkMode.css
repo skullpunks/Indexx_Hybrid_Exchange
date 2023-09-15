@@ -1,11 +1,11 @@
 .dark_mode {
-    margin-top: -45px;
-    margin-left: 10px;
+    margin-top: -67px;
+    /* margin-left: 10px; */
 }
 
 .dark_mode_label {
-    width: 45px;
-    height: 22px;
+    width: 0;
+    height: 0;
     position: relative;
     display: block;
     background: #ebebeb;
@@ -13,7 +13,7 @@
     /* box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
         inset 0px -5px 15px rgba(255, 255, 255, 0.4); */
     cursor: pointer;
-    transition: 0.3s;
+    /* transition: 0.3s; */
 }
 
 .dark_mode_label:after {
@@ -22,10 +22,10 @@
     height: 22px;
     position: absolute;
     /* top: 3px; */
-    left: 2px;
+    /* left: 2px; */
     /* background: linear-gradient(180deg, #ffcc89, #d8860b); */
     /* background: linear-gradient(180deg,#e8dfdf, #adadad); */
-    background-image: url("./white.png");
+    background-image: url("./light\ 2.svg");
     background-repeat: no-repeat;
     background-size: contain;
     border-radius: 180px;
@@ -38,14 +38,14 @@
     visibility: hidden;
 }
 .dark_mode_input:checked + .dark_mode_label {
-    background-image: url("./black.png");
+    background-image: url("./dark\ 2.svg");
     background: #242424;
 }
 .dark_mode_input:checked + .dark_mode_label:after {
-    left: 42px;
-    transform: translateX(-100%);
+    /* left: 42px; */
+    /* transform: translateX(-100%); */
     /* background: linear-gradient(180deg, #777, #3a3a3a); */
-    background-image: url("./black.png");
+    background-image: url("./dark\ 2.svg");
     background-size: contain;
 }
 .dark_mode_label:active:after {
@@ -66,7 +66,7 @@
 .dark_mode_label svg.moon {
     left: 40px;
     fill: #7e7e7e;
-    transition: 0.3s;
+    transition: 0.3s ;
 }
 .dark_mode_input:checked + .dark_mode_label svg.sun {
     fill: #7e7e7e;
