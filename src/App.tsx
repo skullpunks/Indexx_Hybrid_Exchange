@@ -149,6 +149,7 @@ function App() {
           <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
           <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
           <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
+          <Route path="/indexx-exchange/buy-sell/for-honeybee/:id/*" element={<BuySell />} />
           <Route
             path="/indexx-exchange/buy-sell/login/*"
             element={<BuySellLogin />}

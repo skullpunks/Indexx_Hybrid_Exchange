@@ -1,9 +1,10 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { getHoneyBeePermissions, updatePermissionsByHoneyBee } from '../../../../services/api';
 
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -47,7 +48,7 @@ const IOSSwitch = styled((props) => (
     boxSizing: 'border-box',
     width: 19,
     // 22,
-    height: 19, 
+    height: 19,
     // 22,
   },
   '& .MuiSwitch-track': {
@@ -62,75 +63,163 @@ const IOSSwitch = styled((props) => (
 
 
 const GivePermissions = () => {
+  const [, setPermissionsData] = useState();
+  const [buyPermissionData, setBuyPermissionsData] = useState();
+  const [sellPermissionData, setSellPermissionsData] = useState();
+  const [convertPermissionData, setConvertPermissionsData] = useState();
+  const [email, setEmail] = useState();
+  const [loadings, setLoadings] = useState(false);
+
+  const savePermissions = async () => {
+    console.log(email, buyPermissionData, sellPermissionData, convertPermissionData);
+    const updatePermissions = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
+    //console.log(updatePermissions);
+  }
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    console.log(username, userType);
+    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    setEmail(email);
+    console.log(email);
+    getHoneyBeePermissions(email).then((data) => {
+      console.log("d", data.data);
+      console.log("d", data.data.permissions.buy);
+      setPermissionsData(data.data);
+      setBuyPermissionsData(data.data.permissions.buy)
+      setSellPermissionsData(data.data.permissions.sell)
+      setConvertPermissionsData(data.data.permissions.convert)
+    })
+
+  }, []);
+
   return (
     <div>
-      <div className='pt-2' style={{background:"#FFB300"}}></div>
-    <div className="px-5 pt-4 pb-5" style={{background:"white"}}>
-      <div className="font_15x fw-bold">
-        You can give permissions to Buy/Sell/Convert to your CaptainBee Willie here.
-      </div>
-      <div
-        className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
-        style={{ gap: '20px' }}
-      >
-        <div
-          className="d-flex justify-content-center align-items-center "
-          style={{ gap: '100px' }}
-        >
-          <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
-              Enable Captain Bee to Buy
-            </Typography>
-          </div>
-          <div>
-            <FormGroup>
-      <FormControlLabel
-        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-        // label="Buy"
-      />
-    </FormGroup>
-          </div>
+      <div className='pt-2' style={{ background: "#FFB300" }}></div>
+      <div className="px-5 pt-4 pb-5" style={{ background: "white" }}>
+        <div className="font_15x fw-bold">
+          You can give permissions to Buy/Sell/Convert to your CaptainBee Willie here.
         </div>
+        <div
+          className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
+          style={{ gap: '20px' }}
+        >
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{ gap: '100px' }}
+          >
+            <div>
+              <Typography variant="text" component="p" fontSize={'15px'}>
+                Enable Captain Bee to Buy
+              </Typography>
+            </div>
+            <div>
+              <FormGroup>
+                <FormControlLabel
+                  control={<IOSSwitch sx={{ m: 1 }} checked={buyPermissionData}  />}
+                  value={buyPermissionData}
+                  onChange={(e) => {
+                    console.log("Here in buy")
+                    if (!buyPermissionData && e.target.checked === true) {
+                      setBuyPermissionsData(true)
+                    } else {
+                      setBuyPermissionsData(false)
+                    }
+                  }}
+                // label="Buy"
+                />
+              </FormGroup>
+            </div>
+          </div>
 
-        <div
-          className="d-flex justify-content-center align-items-center "
-          style={{ gap: '100px' }}
-        >
-          <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
-              Enable Captain Bee to Sell
-            </Typography>
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{ gap: '100px' }}
+          >
+            <div>
+              <Typography variant="text" component="p" fontSize={'15px'}>
+                Enable Captain Bee to Sell
+              </Typography>
+            </div>
+            <div>
+              <FormGroup>
+                <FormControlLabel
+                  control={<IOSSwitch sx={{ m: 1 }} checked={sellPermissionData}  />}
+                  onChange={(e) => {
+                    console.log("Here in Sell")
+                    if (!sellPermissionData && e.target.checked === true) {
+                      setSellPermissionsData(true)
+                    } else {
+                      setSellPermissionsData(false)
+                    }
+                  }}
+                // label="Buy"
+                />
+              </FormGroup>
+            </div>
           </div>
-          <div>
-          <FormGroup>
-      <FormControlLabel
-        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-        // label="Buy"
-      />
-    </FormGroup>
-          </div>
-        </div>
 
-        <div
-          className="d-flex justify-content-center align-items-center "
-          style={{ gap: '70px' }}
-        >
-          <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
-              Enable Captain Bee to Convert
-            </Typography>
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{ gap: '70px' }}
+          >
+            <div>
+              <Typography variant="text" component="p" fontSize={'15px'}>
+                Enable Captain Bee to Convert
+              </Typography>
+            </div>
+            <div>
+              <FormGroup>
+                <FormControlLabel
+                  control={<IOSSwitch sx={{ m: 1 }} checked={convertPermissionData}  />}
+                  onChange={(e) => {
+                    console.log("Here in Convert", e.target.checked, convertPermissionData)
+                    if (!convertPermissionData && e.target.checked === true) {
+                      setConvertPermissionsData(true)
+                    } else {
+                      setConvertPermissionsData(false)
+                    }
+                  }}
+                // label="Buy"
+                />
+              </FormGroup>
+            </div>
           </div>
-          <div>
-          <FormGroup>
-      <FormControlLabel
-        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-        // label="Buy"
-      />
-    </FormGroup>
+
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{ marginTop: '20px' }}
+          >
+            <Button
+              loading={loadings}
+              variant="contained"
+              onClick={savePermissions}
+              disableTouchRipple
+              // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
+              sx={{
+                backgroundColor: '#FFB300',
+                borderRadius: '2px',
+                color: '#282828',
+                width: '49%',
+                px: 10,
+                py: 1,
+                textTransform: 'none',
+                fontSize: '15px',
+                fontWeight: 500,
+                boxShadow: 'none',
+                //   mt:3,
+                '&:hover': {
+                  backgroundColor: '#FFB300',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              Save
+            </Button>
           </div>
         </div>
       </div>
-    </div>
     </div>
 
   );

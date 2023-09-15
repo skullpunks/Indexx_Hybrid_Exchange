@@ -23,7 +23,11 @@ interface DataType {
 }
 
 
-const BeeTransactionCryptoHistoryTable: React.FC = () => {
+interface BeeWalletTableProps {
+    BeeEmail: string;
+}
+
+const BeeTransactionCryptoHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
     const [selection, setSelection] = useState({
         type: '',
         asset: '',
@@ -137,21 +141,36 @@ const BeeTransactionCryptoHistoryTable: React.FC = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken: any = decodeJWT(String(token)) as any;
-
-        transactionList(decodedToken?.email, '').then((res) => {
-            const results = res.data;
-            let finalArr = [];
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].transactionType?.includes('FIAT')) {
-                } else {
-                    finalArr.push(results[i]);
+        if (BeeEmail !== undefined) {
+            transactionList(BeeEmail, '').then((res) => {
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                    } else {
+                        finalArr.push(results[i]);
+                    }
                 }
-            }
-            setTxList(finalArr);
-            setTxListFilter(finalArr);
-        });
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        } else {
+            const token = localStorage.getItem('access_token');
+            const decodedToken: any = decodeJWT(String(token)) as any;
+
+            transactionList(decodedToken?.email, '').then((res) => {
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                    } else {
+                        finalArr.push(results[i]);
+                    }
+                }
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        }
     }, []);
 
     const handleChangeTime = (value: string) => {
@@ -420,7 +439,7 @@ const BeeTransactionCryptoHistoryTable: React.FC = () => {
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Transaction Hash</label> <br />
-                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius:"4px", border:"2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
+                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius: "4px", border: "2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />

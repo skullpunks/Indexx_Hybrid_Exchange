@@ -29,6 +29,7 @@ const CaptainProfile = () => {
   const [Username, setUsername] = useState('');
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
+  const [referralCode, setReferralCode] = useState('');
   const [accname, setAccname] = useState('');
   const [discord, setDiscord] = useState("");
   const [insta, setInsta] = useState("");
@@ -75,11 +76,12 @@ const CaptainProfile = () => {
 
         const profile = data.data.affiliateUserProfile || {};
         const socialMediaLink = profile.socialMediaLink || {};
-
+        const fullUserData = data.data.userFullData || {};
         setFirstname(profile.firstname || '');
         setLastname(profile.lastname || '');
         setPhoto(profile.photoIdFileurl || '');
         setPhone(profile.Phone || '');
+        setReferralCode(fullUserData.referralCode || '');
         setAccname(profile.accname || '');
         setDiscord(socialMediaLink.discord || '');
         setInsta(socialMediaLink.instagram || '');
@@ -93,9 +95,9 @@ const CaptainProfile = () => {
 
   const handleSubmit = async () => {
     setLoadings(true);
-    console.log(twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, Email, Username);
+    console.log(twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, Email, Username, referralCode);
     let updateData = {
-      twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone,
+      twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, referralCode
     }
     updateCaptainBeeProfile(Email, Username, updateData).then((data) => {
       console.log(data);
@@ -335,21 +337,6 @@ const CaptainProfile = () => {
                   >
                     Phone Number
                   </Typography>
-                  {/* <Select
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-            }}
-            sx={{ mb: 2, width: '15%' }}
-            size="small"
-          >
-            <MenuItem value="">Select Country Code</MenuItem>
-            {countryCodes.map((item) => (
-              <MenuItem key={item.code} value={item.code}>
-                {item.country} ({item.code})
-              </MenuItem>
-            ))}
-          </Select> */}
                   <TextField
                     //   label="Phone Number"
                     variant="outlined"
@@ -364,6 +351,38 @@ const CaptainProfile = () => {
                     }}
                     inputProps={{
                       maxLength: 10, // Limit input to 10 characters
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    mb: 2,
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'18px'}
+                    fontWeight={400}
+                    width={'35%'}
+                    textAlign={'left'}
+                  >
+                   Referral Code
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    placeholder="referralcode"
+                    type="text"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ mb: 2, width: '64%' }}
+                    size="small" // Make the input box smaller
+                    value={referralCode}
+                    onChange={(e) => {
+                      setReferralCode(e.target.value);
                     }}
                   />
                 </Box>

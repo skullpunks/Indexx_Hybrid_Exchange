@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import frame from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -26,10 +26,34 @@ import '../../Captainbee/CaptainDash.css';
 import MyCaptainTabs from './MyCaptainTabs';
 import BeeHeader from '../BeeHeader/BeeHeader';
 import { Rating } from '@mui/material';
+import { getReferredUserDetails } from '../../../../services/api';
 
 
 const MyCaptain = () => {
+  const [captainBeeData, setRefferedUserData] = useState();
+  const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
+  const [captainbeeOrders, setCaptainbeeOrders] = useState();
+  const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [email, setEmail] = useState();
 
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    console.log(username, userType);
+    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    setEmail(email);
+    console.log(email);
+    getReferredUserDetails(email).then((data) => {
+      console.log("d", data.data);
+      console.log("d", data.data._doc);
+      setRefferedUserData(data.data._doc)
+      console.log("d", data.data.accountCreationDate);
+      setCaptainbeeCreateDate(data.data.accountCreationDate);
+      setCaptainbeeOrders(data.data.totalOrder);
+      setCaptainbeeUsers(data.data.honeyBeesCount);
+    })
+
+  }, []);
 
   return (
     <>
@@ -71,38 +95,38 @@ const MyCaptain = () => {
                 </div>
               </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">
-                  Captain Bee Willie A
+                  Captain Bee {captainBeeData?.username}
                 </div>
               <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">
                   <img alt="man" src={man} className="me-2" />
-                  @willie
+                  @{captainBeeData?.accname}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   <img alt="man" src={pin} className="me-2" />
-                  United States of America
+                  {captainBeeData?.country}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   <img alt="man" src={house} className="me-2" />
-                  New York
+                  {captainBeeData?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   <img alt="man" src={clock} className="me-2" />
-                  August 10, 2023
+                  {captainbeeCreateDate}
                 </div>
             </div>
 
               <div className="align-items-start lh_32x mt-4">
-                <a href="/" >
+                <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   <img alt="Discord" src={discord} className="me-3" />
                 </a>
-                <a href="/" >
+                <a href={captainBeeData?.socialMediaLink?.instagram ? captainBeeData?.socialMediaLink?.instagram : "#"} target={captainBeeData?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
                   <img alt="Instagram" src={insta} className="me-3" />
                 </a>
-                <a href="/" >
+                <a href={captainBeeData?.socialMediaLink?.linkedin ? captainBeeData?.socialMediaLink?.linkedin : "#"} target={captainBeeData?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
                   <img alt="LinkedIn" src={linkedin} className="me-3" />
                 </a>
-                <a href="/" >
+                <a href={captainBeeData?.socialMediaLink?.twitter ? captainBeeData?.socialMediaLink?.twitter : "#"} target={captainBeeData?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
                   <img alt="Twitter" src={twitter} />
                 </a>
 

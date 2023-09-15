@@ -10,7 +10,7 @@ import BeeTransactionHistoryLayout from './BeeTransactionHistory/BeeTransactionH
 import Permissions from './Permissions';
 
 
-const BeeTabs = () => {
+const BeeTabs = ({honeyBeeEmail}) => {
     return (
         <div 
         // style={{ paddingTop: 90 }} 
@@ -21,13 +21,13 @@ const BeeTabs = () => {
                    <Growth/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Wallet" key="2">
-                  <BeeWallet />
+                  <BeeWallet honeyBeeEmail={honeyBeeEmail}/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Permissions" key="3">
                   <Permissions/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Transactions" key="4">
-                <BeeTransactionHistoryLayout/>
+                <BeeTransactionHistoryLayout honeyBeeEmail={honeyBeeEmail}/>
                 </Tabs.TabPane>
             </Tabs>
         </div>

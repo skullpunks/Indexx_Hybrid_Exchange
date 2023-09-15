@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react';
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -6,6 +6,7 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { getReferredUserDetails } from '../../../../services/api';
 
 const CaptGrowth = () => {
     const [platform, setPlatform] = useState('Exchange');
@@ -24,6 +25,30 @@ const CaptGrowth = () => {
       'Page G',
     ];
 
+  const [captainBeeData, setRefferedUserData] = useState();
+  const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
+  const [captainbeeOrders, setCaptainbeeOrders] = useState();
+  const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [email, setEmail] = useState();
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    console.log(username, userType);
+    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    setEmail(email);
+    console.log(email);
+    getReferredUserDetails(email).then((data) => {
+      console.log("d", data.data);
+      console.log("d", data.data._doc);
+      setRefferedUserData(data.data._doc)
+      console.log("d", data.data.accountCreationDate);
+      setCaptainbeeCreateDate(data.data.accountCreationDate);
+      setCaptainbeeOrders(data.data.totalOrder);
+      setCaptainbeeUsers(data.data.honeyBeesCount);
+    })
+
+  }, []);
   return (
     <div style={{paddingTop:"10px"}}>
         <Typography
@@ -246,7 +271,7 @@ const CaptGrowth = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      30
+                      {captainbeesUsers}
                     </Typography>
                     <Typography
                       variant="text"
@@ -261,7 +286,7 @@ const CaptGrowth = () => {
                         gap: 1,
                       }}
                     >
-                      <img alt="up" src={arrow} /> 30%
+                      <img alt="up" src={arrow} /> {captainbeesUsers > 0 ?  "30%" : "0%" }
                     </Typography>
                   </Box>
                   <Box
@@ -290,7 +315,7 @@ const CaptGrowth = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      50
+                      {captainbeeOrders > 0 ? captainbeeOrders : 0}
                     </Typography>
                     <Typography
                       variant="text"
@@ -305,7 +330,7 @@ const CaptGrowth = () => {
                         gap: 1,
                       }}
                     >
-                      <img alt="up" src={arrow} /> 20%
+                      <img alt="up" src={arrow} /> {captainbeeOrders > 0 ? "20%" : "0%"}
                     </Typography>
                   </Box>
                 </Box>

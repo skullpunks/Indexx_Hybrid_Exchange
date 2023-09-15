@@ -169,6 +169,14 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="convert-in-progress"
             element={<BSConvertInProgress setScreenName={setScreenName} />}
           />
+           <Route
+            path="confirm-convert/:id"
+            element={<BSConfirmConvert setScreenName={setScreenName} />}
+          />
+          <Route
+            path="convert-in-progress/:id"
+            element={<BSConvertInProgress setScreenName={setScreenName} />}
+          />
           <Route
             path="convert-in-progress-process"
             element={
@@ -190,6 +198,14 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
           />
           <Route
             path="sell-in-progress"
+            element={<BSSellInprogress setScreenName={setScreenName} />}
+          />
+           <Route
+            path="sell-confirm-convert/:id"
+            element={<BSSellConfirmConvert setScreenName={setScreenName} />}
+          />
+          <Route
+            path="sell-in-progress/:id"
             element={<BSSellInprogress setScreenName={setScreenName} />}
           />
         </Routes>

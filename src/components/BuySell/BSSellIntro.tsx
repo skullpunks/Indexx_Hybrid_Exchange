@@ -11,8 +11,8 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
-import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT, getHoneyBeeDataByUsername } from '../../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
 export interface TokensObj {
     title: string;
     subTitle: string;
@@ -29,7 +29,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     console.log(setScreenName);
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { id } = useParams();
     // const [flag, setFlag] = useState(false);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [isLimitPassed, setLimitPassed] = useState(true);
@@ -39,6 +40,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [, setShowUserBalance] = useState(false);
     const [, setSelectedCoin] = useState("");
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+    const [honeyBeeId, setHoneyBeeId] = useState("");
+    const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
@@ -74,6 +77,15 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             //     }
             // });
         });
+
+        if (id) {
+            setHoneyBeeId(String(id));
+            getHoneyBeeDataByUsername(String(id)).then((data) => {
+                console.log(data.data, data.data.userFullData?.email);
+                setHoneyBeeEmail(data.data.userFullData?.email);
+            });
+
+        }
         //removing INEX for sell
         //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
         //    setUpdateInitialTokens(filteredPeople);
@@ -81,14 +93,27 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }, [email, BSvalue])
 
     const getCoinBalance = async (value: string) => {
-        const res = await getWalletBalance(email, value);
-        setSelectedCoin(value);
-        if (res.status === 200) {
-            setUserBalance(res.data.balance);
-            setShowUserBalance(true);
+        console.log(honeyBeeId && honeyBeeEmail, honeyBeeId, honeyBeeEmail);
+        if (honeyBeeId && honeyBeeEmail) {
+            const res = await getWalletBalance(honeyBeeEmail, value);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+            }
         } else {
-            setUserBalance(0);
-            setShowUserBalance(true);
+            const res = await getWalletBalance(email, value);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+            }
         }
     }
     const handleTransferOk = () => {
@@ -180,8 +205,12 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             return;
         }
         if (val) {
+            if (honeyBeeId === "undefined" || honeyBeeId === "")
+                navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
+            else
+                navigate(`/indexx-exchange/buy-sell/sell-confirm-convert/${honeyBeeId}`);
             // setScreenName("BSSellConfirmConvert");
-            navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
+
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) });
             }
@@ -229,9 +258,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                             Ok
                         </Button>,
                     ]}
-                    bodyStyle={{background:"var(--body_background)", color:"var(--body_color)"}}
+                    bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
                 >
-                    <div className="align-center text-center" style={{backgroundColor:"var(--body_background)"}}>
+                    <div className="align-center text-center" style={{ backgroundColor: "var(--body_background)" }}>
                         {/* <Image preview={false} src={lockedimage}></Image> */}
                         <p
                             className="text-center"
@@ -254,8 +283,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </div> */}
                 <Select className='width-100 border-0'
                     onChange={handleChange} value={BSvalue?.fromToken}
-              dropdownStyle={{backgroundColor: "var(--body_background)",}}                                                            
-                    >
+                    dropdownStyle={{ backgroundColor: "var(--body_background)", }}
+                >
                     {
                         initialTokens
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))

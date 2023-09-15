@@ -1,11 +1,33 @@
-import React from 'react';
 import { Button, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../services/api';
 
 const Permissions = () => {
+
+  const { id } = useParams();
+  const [userData, setUserData] = useState();
+  const [permissionData, setPermissionData] = useState();
+  useEffect(() => {
+    console.log('ID:', id);
+
+    getHoneyBeeDataByUsername(id).then((data) => {
+      setUserData(data.data);
+      console.log(data.data);
+      let currentUserEmail = data.data.userFullData.email;
+      let captainbeePermissions = data.data.referredUserData?.data.relationships;
+      console.log(currentUserEmail)
+      console.log(captainbeePermissions);
+      let c = captainbeePermissions.find(x => x.honeybeeEmail === currentUserEmail);
+      console.log(c);
+      setPermissionData(c)
+    });
+  }, [id])
+
   return (
     <div className="pt-5">
       <div className="font_15x fw-bold">
-        Permissions given by honeybee Ana to captainbee Willie
+        Permissions given by honeybee {id} to captainbee {userData?.referredUserData?.data2?.Username}
       </div>
       <div
         className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
@@ -24,13 +46,13 @@ const Permissions = () => {
             <Button
               variant="contained"
               disableTouchRipple
-              // disabled={true} 
+              disabled={!permissionData?.permissions?.buy}
               sx={{
                 backgroundColor: '#FFB300',
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: "217px",
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -41,7 +63,7 @@ const Permissions = () => {
                 },
               }}
             >
-              Approved
+              {permissionData?.permissions?.buy ? "Approved" : "Declined"}
             </Button>
           </div>
         </div>
@@ -59,13 +81,13 @@ const Permissions = () => {
             <Button
               variant="contained"
               disableTouchRipple
-              disabled={true} // Disable if frontFile is null
+              disabled={!permissionData?.permissions?.sell}
               sx={{
                 backgroundColor: '#FFB300',
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: "217px",
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -76,7 +98,7 @@ const Permissions = () => {
                 },
               }}
             >
-              Declined
+              {permissionData?.permissions?.sell ? "Approved" : "Declined"}
             </Button>
           </div>
         </div>
@@ -94,13 +116,13 @@ const Permissions = () => {
             <Button
               variant="contained"
               disableTouchRipple
-              disabled={true} // Disable if frontFile is null
+              disabled={!permissionData?.permissions?.convert}
               sx={{
                 backgroundColor: '#FFB300',
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: "217px",
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -111,7 +133,7 @@ const Permissions = () => {
                 },
               }}
             >
-              Declined
+              {permissionData?.permissions?.convert ? "Approved" : "Declined"}
             </Button>
           </div>
         </div>

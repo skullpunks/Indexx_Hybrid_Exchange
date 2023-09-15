@@ -20,6 +20,7 @@ const MyBees = () => {
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
         setStaticsData(data.data);
+        console.log(data.data);
       });
     }
   }, [])
@@ -110,7 +111,7 @@ const MyBees = () => {
                       >
                         <Button
                           variant="outlined"
-                          href='/'
+                          href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
                           // onClick={handleSubmit}
                           disableTouchRipple
                           // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null

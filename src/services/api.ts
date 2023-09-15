@@ -9,7 +9,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -69,7 +69,6 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-
 export const getCaptainBeeStatics = async (username: string) => {
   try {
     const result = await API.get(
@@ -81,20 +80,74 @@ export const getCaptainBeeStatics = async (username: string) => {
   }
 };
 
-export const updateCaptainBeeProfile = async (email: string, username: string, updateData: any) => {
+export const getHoneyBeeDataByUsername = async (username: string) => {
   try {
-    const result = await API.post(
-      `/api/v1/affiliate/updateaffiliateuser/`
-    , {
+    const result = await API.get(
+      `/api/v1/inex/user/getHoneyUserDashbaord/${username}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updateCaptainBeeProfile = async (
+  email: string,
+  username: string,
+  updateData: any
+) => {
+  try {
+    const result = await API.post(`/api/v1/affiliate/updateaffiliateuser/`, {
       email,
       username,
-      updateData
+      updateData,
     });
     return result.data;
   } catch (e: any) {
     return e.response.data;
   }
 };
+
+export const updateHoneyBeeProfile = async (email: string, updateData: any) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/updateprofile/`, {
+      email,
+      updateData,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getHoneyBeePermissions = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getpermissions/${email}`);
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updatePermissionsByHoneyBee = async (
+  email: string,
+  convertPermission: any,
+  buyPermission: any,
+  sellPermission: any
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/updatepermissions/`, {
+      email,
+      convertPermission,
+      buyPermission,
+      sellPermission,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
 export const loginHive = async (email: string, password: string) => {
   try {
     let isEmailProvided = isEmail(email);
@@ -278,7 +331,7 @@ export const getAllCountries = async (email: string, coin: string) => {
 };
 
 export function decodeJWT(access_token: string) {
-  let userObj: any= decode(access_token);
+  let userObj: any = decode(access_token);
   return userObj;
 }
 
@@ -501,6 +554,36 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const getHoneyUserDetails = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getHoneyUserDetails/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getHoneyUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getReferredUserDetails = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getReferredUserDetails/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (getReferredUserDetails)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getCoinPriceByName = async (
   coin: string,
   type: string = 'Buy'
@@ -562,7 +645,9 @@ export const createBuyOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -572,7 +657,8 @@ export const createBuyOrder = async (
       price: price,
       orderType: 'Buy',
       outAmount: outAmount,
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
@@ -588,7 +674,9 @@ export const createSellOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -598,7 +686,8 @@ export const createSellOrder = async (
       outAmount: outAmount,
       price: price,
       orderType: 'Sell',
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
@@ -636,7 +725,9 @@ export const createConvertOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -646,7 +737,8 @@ export const createConvertOrder = async (
       price: price,
       outAmount: outAmount,
       orderType: 'Convert',
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
