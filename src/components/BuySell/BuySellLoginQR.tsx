@@ -11,7 +11,7 @@ interface Props {
 
 const BuySellLoginQR: React.FC<(Props)> = ({ setScreenName }) => {
 
-    console.log(setScreenName);
+    
 
     return (
 

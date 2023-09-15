@@ -26,7 +26,7 @@ interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
-    console.log(setScreenName);
+    
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
     const navigate = useNavigate();
@@ -37,8 +37,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [minMavData, setMinMaxData] = useState() as any;
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [, setShowUserBalance] = useState(false);
-    const [, setSelectedCoin] = useState("");
+    const [showUserBalance, setShowUserBalance] = useState(false);
+    const [selectedCoin, setSelectedCoin] = useState("");
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
@@ -66,7 +66,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
-            console.log(String(BSvalue?.fromTitle))
+            
             // getWalletBalance(decoded.email, 'INEX').then((res) => {
             //     if (res.status === 200) {
             //         setUserBalance(res.data.balance);
@@ -81,7 +81,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         if (id) {
             setHoneyBeeId(String(id));
             getHoneyBeeDataByUsername(String(id)).then((data) => {
-                console.log(data.data, data.data.userFullData?.email);
+                
                 setHoneyBeeEmail(data.data.userFullData?.email);
             });
 
@@ -93,7 +93,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }, [email, BSvalue])
 
     const getCoinBalance = async (value: string) => {
-        console.log(honeyBeeId && honeyBeeEmail, honeyBeeId, honeyBeeEmail);
+        
         if (honeyBeeId && honeyBeeEmail) {
             const res = await getWalletBalance(honeyBeeEmail, value);
             setSelectedCoin(value);
@@ -162,11 +162,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
             let value = BSvalue?.fromTitle;
-            console.log(filteredFromArray[0].title)
-            console.log(value)
+            
+            
             //let getRequiredCoin = initialTokens.find(x => x.address === value);
-            //console.log(String(getRequiredCoin?.title));
-            console.log(isLimitPassed, minMavData)
+            //
+            
             await checkMinMaxValue(String(value), parseInt(testVal));
 
             handleChange(String(BSvalue?.fromToken))
@@ -180,7 +180,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     const getMinMaxValue = async (value: string) => {
         let res = await getMinAndMaxOrderValues(value, "SELL");
-        console.log(res);
+        
         return res;
     }
 
@@ -198,7 +198,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const formSubmit = () => {
-        console.log(BSvalue?.fromToken)
+        
         let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
@@ -216,7 +216,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             }
         }
     }
-    // console.log(checkPurchase);
+    // 
     // debugger;
     return (
         <div className='sell_screens'>
@@ -315,11 +315,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
-            {/* {showUserBalance &&
+            {showUserBalance &&
                 <div>
                     <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            } */}
+            }
 
 
 

@@ -9,7 +9,7 @@ import SubHeader from '../Dashboard/Captainbee/SubHeader/SubHeader';
 const HoneyCombComingSoon = () => {
     // const [searchParams, setSearchParams] = useSearchParams();
     // let pageName = searchParams.get("page");
-    // console.log(setSearchParams);
+    // 
     return (
         <>
             <SubHeader/>

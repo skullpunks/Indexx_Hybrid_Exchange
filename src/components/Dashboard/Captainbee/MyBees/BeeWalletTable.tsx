@@ -34,7 +34,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
 
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+        
     };
 
 
@@ -120,9 +120,9 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
 
     useEffect(() => {
 
-        console.log('ID:', id, BeeEmail);
+        
         if (id) {
-            console.log("I amhere")
+            
             getAllUserWallet();
         }
         else {
@@ -131,24 +131,24 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
     }, [id])
 
     const getAllUserWallet = async () => {
-        console.log(BeeEmail);
+        
         if (id && BeeEmail !== "undefined") {
             let userWallets = await getUserWallets(BeeEmail);
-            console.log("userWallets of honeybee", userWallets);
+            
             setWalletData(userWallets.data);
         } else {
-            console.log(" a m here in wallet tab")
+            
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
             let userWallets = await getUserWallets(decoded.email);
-            console.log("userWallets", userWallets);
+            
             setWalletData(userWallets.data);
         }
         // let usersWallet = userWallets.data;
         // let totalBalInUSD = 0;
         // for (let i = 0; i < usersWallet.length; i++) {
         //     if(usersWallet[i].coinType === "Crypto") {
-        //         console.log(usersWallet[i]?.coinSymbol)
+        //         
         //        let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
         //        let price = res.data.results.data;
         //        totalBalInUSD += userWallets[i]?.coinBalance * price;
@@ -168,7 +168,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
         const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
-        console.log(xx)
+        
         return xx
     };
     const MyPagination = ({ total, onChange, current }: any) => {
@@ -186,8 +186,8 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
         );
     };
 
-    console.log("WD", walletData);
-    console.log("FD", filteredWalletData);
+    
+    
     return (
         <div>
 

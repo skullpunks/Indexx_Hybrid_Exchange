@@ -25,7 +25,7 @@ export default function CheckoutForm() {
         }
 
         stripe.retrievePaymentIntent(clientSecret).then((paymentIntent: any) => {
-            console.log(paymentIntent);
+            
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");

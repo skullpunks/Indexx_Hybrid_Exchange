@@ -9,17 +9,17 @@ const Permissions = () => {
   const [userData, setUserData] = useState();
   const [permissionData, setPermissionData] = useState();
   useEffect(() => {
-    console.log('ID:', id);
+    
 
     getHoneyBeeDataByUsername(id).then((data) => {
       setUserData(data.data);
-      console.log(data.data);
+      
       let currentUserEmail = data.data.userFullData.email;
       let captainbeePermissions = data.data.referredUserData?.data.relationships;
-      console.log(currentUserEmail)
-      console.log(captainbeePermissions);
+      
+      
       let c = captainbeePermissions.find(x => x.honeybeeEmail === currentUserEmail);
-      console.log(c);
+      
       setPermissionData(c)
     });
   }, [id])

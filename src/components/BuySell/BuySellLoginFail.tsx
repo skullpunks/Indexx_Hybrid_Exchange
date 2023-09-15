@@ -8,7 +8,7 @@ interface Props {
 }
 
 const BuySellLoginFail: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
   const navigate = useNavigate();
   return (
     <div className="bs_container bs_form card card_s col-md-12 flex-align-center responsive_container">

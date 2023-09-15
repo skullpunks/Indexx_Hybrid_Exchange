@@ -54,20 +54,20 @@ const App: React.FC<(Props)> = ({ setStatus, setTokenType }) => {
     }
 
 
-    // console.log(filteredArray[0]);
+    // 
 
     const onChangeFromToken = (value: any) => {
-        // console.log('changed', value);
+        // 
         setFromTokenVal(value);
     };
     const onChangeToToken = (value: any) => {
-        // console.log('changed', value);
+        // 
         setToTokenVal(value);
     };
 
 
     const connectWallet = () => {
-        console.log("wallet clicked");
+        
         setStatus("ConfirmSwap");
     }
     const changeFromIcon = () => {

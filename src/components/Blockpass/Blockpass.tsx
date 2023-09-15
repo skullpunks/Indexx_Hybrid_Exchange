@@ -38,7 +38,7 @@ class Blockpass extends React.Component<{}, any>{
 
     async handleSubmit(event: any) {
         event.preventDefault()
-        console.log(this.state.walletAddress);
+        
 
         const requestOptions = {
             method: 'POST',

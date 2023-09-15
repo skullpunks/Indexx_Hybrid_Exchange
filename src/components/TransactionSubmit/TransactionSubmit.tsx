@@ -8,7 +8,7 @@ interface Props {
 }
 
 const TransactionSubmit: React.FC<(Props)> = ({ setStatus }) => {
-    console.log(setStatus);
+    
     return (
         <div className='scan-container'>
             <div className='card card-s '>

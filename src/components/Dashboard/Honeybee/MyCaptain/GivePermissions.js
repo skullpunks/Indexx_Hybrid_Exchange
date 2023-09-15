@@ -71,21 +71,21 @@ const GivePermissions = () => {
   const [loadings, setLoadings] = useState(false);
 
   const savePermissions = async () => {
-    console.log(email, buyPermissionData, sellPermissionData, convertPermissionData);
+    
     const updatePermissions = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
-    //console.log(updatePermissions);
+    //
   }
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    console.log(username, userType);
+    
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
     setEmail(email);
-    console.log(email);
+    
     getHoneyBeePermissions(email).then((data) => {
-      console.log("d", data.data);
-      console.log("d", data.data.permissions.buy);
+      
+      
       setPermissionsData(data.data);
       setBuyPermissionsData(data.data.permissions.buy)
       setSellPermissionsData(data.data.permissions.sell)
@@ -120,7 +120,7 @@ const GivePermissions = () => {
                   control={<IOSSwitch sx={{ m: 1 }} checked={buyPermissionData}  />}
                   value={buyPermissionData}
                   onChange={(e) => {
-                    console.log("Here in buy")
+                    
                     if (!buyPermissionData && e.target.checked === true) {
                       setBuyPermissionsData(true)
                     } else {
@@ -147,7 +147,7 @@ const GivePermissions = () => {
                 <FormControlLabel
                   control={<IOSSwitch sx={{ m: 1 }} checked={sellPermissionData}  />}
                   onChange={(e) => {
-                    console.log("Here in Sell")
+                    
                     if (!sellPermissionData && e.target.checked === true) {
                       setSellPermissionsData(true)
                     } else {
@@ -174,7 +174,7 @@ const GivePermissions = () => {
                 <FormControlLabel
                   control={<IOSSwitch sx={{ m: 1 }} checked={convertPermissionData}  />}
                   onChange={(e) => {
-                    console.log("Here in Convert", e.target.checked, convertPermissionData)
+                    
                     if (!convertPermissionData && e.target.checked === true) {
                       setConvertPermissionsData(true)
                     } else {

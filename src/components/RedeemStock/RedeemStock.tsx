@@ -26,7 +26,7 @@ export const RedeemStock = () => {
 
     const onChangeVoucherUpdate = (e: any) => {
         // if (e.currentTarget.value) {
-        console.log(e.currentTarget.value);
+        
         let val = e.currentTarget.value;
         setVoucher(val);
         // }
@@ -38,7 +38,7 @@ export const RedeemStock = () => {
             voucher,
             email,
         );
-        console.log("res", res);
+        
         if (res?.result?.status === 200) {
             setLoadings(false);
             openNotificationWithIcon2(
@@ -76,17 +76,17 @@ export const RedeemStock = () => {
         try {
             setIsLoading(true);
             let walletAddress;
-            console.log(walletAddress);
+            
             const token = localStorage.getItem('access_token');
             const decodedToken: any = decodeJWT(String(token)) as any;
             let results = await redeemValue(voucher, decodedToken?.email);
-            console.log("results.data", results)
+            
             if (results?.status === 200) {
                 setRedeemData(results.data);
                 setIsRedeem(true);
                 setIsLoading(false);
             } else {
-                console.log("Result", results?.error);
+                
                 openNotificationWithIcon2(
                     'error',
                     results?.error
@@ -94,7 +94,7 @@ export const RedeemStock = () => {
                 setIsLoading(false);
             }
         } catch (err) {
-            console.log('err', err);
+            
             setIsLoading(false);
         }
     }

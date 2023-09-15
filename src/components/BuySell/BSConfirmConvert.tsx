@@ -34,7 +34,7 @@ interface Props {
 }
 const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   // const BSConfirmConvert: React.FC = () => {
-  // console.log(setStatus);
+  // 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean>(false);
   const [rateData1, setRateData1] = useState();
@@ -78,26 +78,26 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       res = await getCoinPriceByName('FTT');
       priceData1 = res.data;
     }
-    console.log(priceData1.results.data);
+    
     setRateData1(priceData1.results.data);
     let res2 = await getCoinPriceByName(String(filteredToArray[0].title));
     priceData2 = res2.data;
-    console.log(filteredToArray[0].title);
+    
 
-    console.log(priceData2);
-    console.log(rateData1);
+    
+    
     let finalRate = priceData1.results.data / priceData2.results.data;
-    console.log(finalRate);
+    
     setRateData3(finalRate);
-    console.log(BSvalue?.amount);
-    console.log(finalRate * Number(BSvalue?.amount));
+    
+    
     //setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
     setTotalAmountToPayInUSD(
       finalRate * Number(BSvalue?.amount) * priceData2.results.data
     );
     // let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
-    // console.log('usid oper', oneUsdValue)
-    // console.log('usid oper1', Number(BSvalue?.amount))
+    // 
+    // 
     setTotalAmountToPay(
       finalRate * Number(BSvalue?.amount) -
       (finalRate * Number(BSvalue?.amount) * Number(adminFee)) / 100
@@ -119,7 +119,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       );
       setAdminFees(adminFees.value);
     }
-    console.log(adminFee);
+    
     return;
   };
   const [adminFee, setAdminFees] = useState('');
@@ -128,13 +128,13 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
-        console.log(data.data, data.data.userFullData?.email);
+        
         setHoneyBeeEmail(data.data.userFullData?.email);
         let captainbeePermissions = data.data.referredUserData?.data.relationships;
-        console.log(data.data.userFullData?.email)
-        console.log(captainbeePermissions);
+        
+        
         let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-        console.log(c);
+        
         setPermissionData(c)
       });
 
@@ -165,8 +165,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let quotecoin: string = filteredToArray[0].title;
     let res;
     if (id) {
-      console.log("Placing honey bee order");
-      console.log(permissionData?.permissions?.convert)
+      
+      
       if (!permissionData?.permissions?.convert) {
         setLoadings(false);
         openNotificationWithIcon2('error', "As Captain bee, Please apply for convert approval from honey bee");
@@ -181,7 +181,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         totalAmountToPay
       );
     }
-    console.log(res);
+    
     if (res.status === 200) {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
@@ -225,7 +225,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   };
   const processConvertOrder = async (order: any) => {
     const res = await confirmConvertOrder(order.user.email, order.orderId);
-    console.log(res);
+    
     if (res.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success');

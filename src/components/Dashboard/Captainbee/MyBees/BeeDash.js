@@ -31,7 +31,7 @@ const BeeDash = () => {
 
   useEffect(() => {
 
-    console.log('ID:', id);
+    
 
     getHoneyBeeDataByUsername(id).then((data) => {
       setUserData(data.data);

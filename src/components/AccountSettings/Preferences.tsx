@@ -4,7 +4,7 @@ import React from 'react'
 
 const Preferences = () => {
     const onChange = (checked: boolean) => {
-        console.log(`switch to ${checked}`);
+        
       };
   return (
     <div className="container  margin-b-2x" style={{marginTop:"30px"}}>

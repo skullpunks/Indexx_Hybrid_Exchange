@@ -21,7 +21,7 @@ AWS.config.update({
 var s3 = new AWS.S3();
 
 const BeeProfile = () => {
-  const [photo, setPhoto] = useState(dummy);
+  const [profilePic, setPhoto] = useState(dummy);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ const BeeProfile = () => {
   const [loadings, setLoadings] = useState(false);
 
   const handlePhotoChange = (event) => {
-    console.log('clicked');
+    
     const file = event.target.files[0];
     uploadToS3(file, 'photoId');
   };
@@ -71,7 +71,7 @@ const BeeProfile = () => {
       await s3.putObject(params).promise();
       // Construct and set the file URL
       const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-      console.log("I am here in photo");
+      
       setPhoto(url);
     } catch (error) {
       alert('Error uploading file:', error);
@@ -80,14 +80,14 @@ const BeeProfile = () => {
 
   const handleSubmit = async () => {
     setLoadings(true);
-    console.log( photo, lastname, firstname, email);
+    
     let updateData = {
-      photo, lastname, firstname, email
+      profilePic, lastname, firstname, email
     }
     updateHoneyBeeProfile(email, updateData).then((data) => {
-      console.log(data);
+      
       if (data.status === 200) {
-        console.log(data.data);
+        
         setLoadings(false);
         openNotificationWithIcon('success', 'Profile data updated Successfully');
       } else {
@@ -102,21 +102,19 @@ const BeeProfile = () => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
     const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    console.log(username, userType);
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        console.log("captainbee data", data.data);
         setStaticsData(data.data);
       });
     } else {
-      console.log("user", user)
+      
       getHoneyUserDetails(user).then((data) => {
-        console.log("user.data", data.data?._doc);
         setUserData(data.data?._doc);
         setEmail(data.data?._doc?.email);
         setFirstname(data.data?._doc?.firstName);
         setLastname(data.data?._doc?.lastName);
+        setPhoto(data.data?._doc?.profilePic);
       })
     }
   }, [])
@@ -149,7 +147,7 @@ const BeeProfile = () => {
               <div className="profile-hexagon" style={{marginBottom:"20px"}}>
                 <img
                   alt=""
-                  src={(photo !== undefined) ? photo : dummy}
+                  src={(profilePic !== undefined) ? profilePic : dummy}
                   width={'63px'}
                   height={'66px'}
                   ml={'-6px'}
@@ -306,7 +304,7 @@ const BeeProfile = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  // onClick={handleSubmit}
+                  onClick={handleSubmit}
                   disableTouchRipple
                   sx={{
                     backgroundColor: '#FFB300',

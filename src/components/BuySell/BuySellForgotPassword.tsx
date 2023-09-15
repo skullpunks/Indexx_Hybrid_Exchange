@@ -5,16 +5,16 @@ import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 const BuySellForgotPassword = () => {
   const onFinish = (values: any) => {
-    console.log(values);
+    
     localStorage.setItem('tempEmail', values.email);
     forgotPassword(values.email).then((res) => {
-      console.log(res);
+      
       if (res.status === 200) {
         openNotificationWithIcon('success');
       } else {
         openNotificationWithIcon2('error');
       }
-      //console.log(navigate("/indexx-exchange/buy-sell/login/email-auth"));
+      //
     });
   };
 
@@ -49,7 +49,7 @@ const BuySellForgotPassword = () => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
   return (
     <div className="d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center">

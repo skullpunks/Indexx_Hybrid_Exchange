@@ -10,11 +10,11 @@ const BuySellResetPassword = () => {
   const [searchParams] = useSearchParams();
 
   const onFinish = async (values: any) => {
-    console.log(values);
+    
     const email = searchParams.get('email');
-    console.log(email);
+    
     await resetPassword(String(email), values.password).then((res) => {
-      console.log(res);
+      
       if (res.status === 200) {
         openNotificationWithIcon('success');
         navigate('/indexx-exchange/buy-sell/login');
@@ -55,7 +55,7 @@ const BuySellResetPassword = () => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
 
   return (

@@ -46,13 +46,13 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
   };
 
   useEffect(() => {
-    console.log('ID:', id);
+    
 
     if (id) {
       setHoneyBeeId(String(id))
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
-        console.log(data.data, data.data.userFullData?.email);
+        
         setHoneyBeeEmail(data.data.userFullData?.email)
       });
     }
@@ -87,7 +87,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
     },
   ];
   const callback = function (key: any) {
-    // console.log(key);
+    // 
     if (key === '2' && (country === 'United States' || countryCode === 'US')) {
       setIsTransferModalVisible(true);
     } else {
@@ -104,7 +104,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
         amount: 0,
       });
     }
-    console.log("honeyBeeId", honeyBeeId)
+    
     if (honeyBeeId === "undefined" || honeyBeeId === "")
       navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
     else

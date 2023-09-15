@@ -33,16 +33,16 @@ const Growth = () => {
       const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
       const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
       const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-      console.log(username, userType);
+      
       if (userType === "CaptainBee") {
         getCaptainBeeStatics(username).then((data) => {
-          console.log("captainbee data", data.data);
+          
           setStaticsData(data.data);
         });
       } else {
-        console.log("user", user)
+        
         getHoneyUserDetails(user).then((data) => {
-          console.log("user.data", data.data?._doc);
+          
           setUserData(data.data?._doc);
           setEmail(data.data?._doc?.email);
         })

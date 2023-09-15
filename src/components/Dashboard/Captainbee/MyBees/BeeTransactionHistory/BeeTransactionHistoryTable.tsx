@@ -41,7 +41,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [copiedValue, copy] = useCopyToClipboard();
-    console.log(copiedValue);
+    
     const columns: ColumnsType<DataType> = [
 
         {
@@ -139,15 +139,15 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
     useEffect(() => {
         if (BeeEmail !== undefined) {
             transactionList(BeeEmail).then((res) => {
-                console.log(res.data);
+                
                 const results = res.data;
                 let finalArr = [];
                 for (let i = 0; i < results.length; i++) {
                     if (results[i].transactionType?.includes('FIAT')) {
-                        console.log(results[i].transactionType);
+                        
                         finalArr.push(results[i]);
                     } else {
-                        console.log(results[i].transactionType, 'typoe');
+                        
                     }
                 }
                 setTxList(finalArr);
@@ -157,15 +157,15 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
             const token = localStorage.getItem('access_token');
             const decodedToken: any = decodeJWT(String(token)) as any;
             transactionList(decodedToken?.email).then((res) => {
-                console.log(res.data);
+                
                 const results = res.data;
                 let finalArr = [];
                 for (let i = 0; i < results.length; i++) {
                     if (results[i].transactionType?.includes('FIAT')) {
-                        console.log(results[i].transactionType);
+                        
                         finalArr.push(results[i]);
                     } else {
-                        console.log(results[i].transactionType, 'typoe');
+                        
                     }
                 }
                 setTxList(finalArr);
@@ -213,7 +213,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
     };
     const handleChangeStatus = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-        console.log(value, 'value')
+        
         if (value !== 'all') {
             setSelection({
                 type: selection.type,
@@ -312,7 +312,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                console.log(data);
+                
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
@@ -331,7 +331,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                console.log("N: ", data);
+                
                 return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
@@ -363,7 +363,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
         const xx = txListFilter && txListFilter.slice((current - 1) * pageSize, current * pageSize);
-        console.log(xx)
+        
         return xx
     };
     const MyPagination = ({ total, onChange, current }: any) => {

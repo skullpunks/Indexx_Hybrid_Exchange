@@ -21,9 +21,9 @@ const Dropdown: React.FC<(DropdownProps)> = ({ label, items }) => {
     // document.addEventListener("click", (event) => {
     //     const concernedElement = document.querySelector(".open,.dropdown-container");
     //     if (concernedElement && concernedElement.contains(event.target as Element)) {
-    //         console.log("Clicked Inside");
+    //         
     //     } else {
-    //         console.log("Clicked Outside / Elsewhere");
+    //         
     //         setToggleStateMenu(false);
     //     }
     // });

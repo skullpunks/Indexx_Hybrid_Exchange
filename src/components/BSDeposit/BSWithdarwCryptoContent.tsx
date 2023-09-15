@@ -60,15 +60,15 @@ export const BSWithdarwCryptoContent = () => {
       let finalArr = res.data.filter(
         (x: any) => x.transactionType === 'WITHDRAW_CYRPTO'
       );
-      console.log(finalArr);
+      
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-      console.log(res.data);
+      
       setUsersWallets(res.data);
     });
     getMinAndMaxOrderValues(String('IN500'), 'WITHDRAW_CRYPTO').then((res) => {
-      console.log(res);
+      
       setValues(res);
     });
   }, []);
@@ -222,18 +222,18 @@ export const BSWithdarwCryptoContent = () => {
 
   // const handleChange = (value: string) => {
   //   setNetwork(value)
-  //   console.log(`selected ${value}`);
+  //   
   // };
 
   const checkWalletAddress = async (address: string) => {
     const res = web3.utils.checkAddressChecksum(address);
-    console.log(res);
+    
     setIsWalletAddrValid(res);
   };
 
   const onChangeReceiveAmt = (e: any) => {
     // if (e.currentTarget.value) {
-    console.log(e.currentTarget.value);
+    
     let val = e.currentTarget.value;
     setReceiveAmount(val + '');
     setNetwork('');
@@ -245,13 +245,13 @@ export const BSWithdarwCryptoContent = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
+    
     setValue(e.target.value);
   };
 
   const onChageAdd = (e: any) => {
     let val = e.currentTarget.value;
-    console.log('radio checked', val);
+    
     setWalletAddre(val);
     checkWalletAddress(val);
   };
@@ -261,11 +261,11 @@ export const BSWithdarwCryptoContent = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-    console.log(getRequiredCoin?.title);
-    console.log(getRequiredCoin);
+    
+    
     setSelectedCoin(String(getRequiredCoin?.title));
     setSelectedCoinObj(String(getRequiredCoin?.title));
-    console.log(userWallet[0]);
+    
     setSingleWallet(userWallet[0]);
     // /let res =
     // setMinMax()
@@ -278,12 +278,12 @@ export const BSWithdarwCryptoContent = () => {
       String(getRequiredCoin?.title),
       'WITHDRAW_CRYPTO'
     );
-    console.log(res);
+    
     setValues(res);
   };
 
   const withdrawFiat = async () => {
-    console.log(' iam her');
+    
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
     let reqObj = {
@@ -294,14 +294,14 @@ export const BSWithdarwCryptoContent = () => {
       walletType: 'WALLET',
       userId: decodedToken?.email,
     };
-    console.log(reqObj);
+    
     let res = await createCryptoWithdraw(
       decodedToken?.email,
       Number(finalAmount),
       walletAddress,
       selectedCoin
     );
-    console.log(res);
+    
     if (res.status === 200) {
       alert('Withdrawal request submitted successfully');
     } else {
@@ -311,7 +311,7 @@ export const BSWithdarwCryptoContent = () => {
 
   const withdrawCrypto = async () => {
     setLoadings(true);
-    console.log('i am here', email, finalAmount, walletAddress, selectedCoin);
+    
     let res = await createCryptoWithdraw(
       email,
       Number(finalAmount),
@@ -322,12 +322,12 @@ export const BSWithdarwCryptoContent = () => {
       let txs = await transactionList(email);
       let message =
         'Withdraw Successfull. Transaction Id: ' + res.data.data.hash;
-      console.log(message);
+      
       openNotificationWithIcon('success', message);
       let finalArr = txs.data.filter(
         (x: any) => x.transactionType === 'WITHDRAW_CYRPTO'
       );
-      console.log(finalArr);
+      
       setTxList(finalArr);
       setLoadings(false);
     } else {
@@ -342,7 +342,7 @@ export const BSWithdarwCryptoContent = () => {
   //     let testVal: string = "";
   //     if (e.currentTarget != null) {
   //         testVal = e?.currentTarget?.value;
-  //         console.log('testVal', testVal)
+  //         
   //         setFinalAmount(testVal);
 
   //     }

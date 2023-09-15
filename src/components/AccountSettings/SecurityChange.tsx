@@ -7,7 +7,7 @@ import { decodeJWT, changePassword } from '../../services/api';
 
 const SecurityChange = () => {
   // const onFinish = (values: any) => {
-  //     console.log('Success:', values);
+  //     
   // }
   const [loadings, setLoadings] = useState<boolean>(false);
 
@@ -69,7 +69,7 @@ const SecurityChange = () => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
 
   return (

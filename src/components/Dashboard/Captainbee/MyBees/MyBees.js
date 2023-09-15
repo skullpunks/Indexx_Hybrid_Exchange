@@ -20,7 +20,6 @@ const MyBees = () => {
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
         setStaticsData(data.data);
-        console.log(data.data);
       });
     }
   }, [])
@@ -74,7 +73,7 @@ const MyBees = () => {
                           >
                             <img
                               alt=""
-                              src={dummy}
+                              src={item?.profilePic === undefined ? dummy : item?.profilePic}
                               width={'63px'}
                               height={'66px'}
                               ml={'-6px'}

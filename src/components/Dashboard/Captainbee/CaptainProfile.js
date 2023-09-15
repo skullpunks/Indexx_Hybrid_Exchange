@@ -66,12 +66,12 @@ const CaptainProfile = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    console.log(username, userType);
+    
     setUserType(userType);
 
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        console.log("captainbee data", data.data);
+        
         setStaticsData(data.data);
 
         const profile = data.data.affiliateUserProfile || {};
@@ -95,14 +95,14 @@ const CaptainProfile = () => {
 
   const handleSubmit = async () => {
     setLoadings(true);
-    console.log(twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, Email, Username, referralCode);
+    
     let updateData = {
       twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, referralCode
     }
     updateCaptainBeeProfile(Email, Username, updateData).then((data) => {
-      console.log(data);
+      
       if (data.status === 200) {
-        console.log(data.data);
+        
         setLoadings(false);
         openNotificationWithIcon('success', 'Profile data updated Successfully');
       } else {
@@ -114,7 +114,7 @@ const CaptainProfile = () => {
   }
 
   const handlePhotoChange = (event) => {
-    console.log('clicked');
+    
     const file = event.target.files[0];
     uploadToS3(file, 'photoId');
   };
@@ -132,7 +132,7 @@ const CaptainProfile = () => {
       await s3.putObject(params).promise();
       // Construct and set the file URL
       const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-      console.log("I am here in photo");
+      
       setPhoto(url);
     } catch (error) {
       alert('Error uploading file:', error);

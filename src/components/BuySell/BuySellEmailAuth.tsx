@@ -65,15 +65,15 @@ const BuySellEmailAuth = () => {
 
   const verifyCode = async () => {
     setLoadings(true);
-    console.log(email);
-    console.log(otpCode.join().toString());
+    
+    
     const res = await validateEmail(email, otpCode.join('').toString());
     if (res.status === 200) {
       openNotificationWithIcon('success', res.data);
       navigate('/indexx-exchange/kyc');
       setLoadings(false);
     } else {
-      console.log('error');
+      
       openNotificationWithIcon2('error', res.data);
       setLoadings(false);
     }
@@ -117,7 +117,7 @@ const BuySellEmailAuth = () => {
 
   // const resendEmail = async () => {
   //     let res = await resendEmailCode(email);
-  //     console.log(res);
+  //     
   //     if (res.status === 200) {
   //         openNotificationWithIcon('success', res.data);
   //     } else {
@@ -127,7 +127,7 @@ const BuySellEmailAuth = () => {
 
   const handleInput1 = (e: any) => {
     let val = e.currentTarget.value;
-    console.log(val, 'val;');
+    
     otpCode[0] = val[0];
   };
 

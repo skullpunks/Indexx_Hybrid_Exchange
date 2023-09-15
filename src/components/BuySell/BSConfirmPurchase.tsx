@@ -52,7 +52,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     const res = await getCoinPriceByName(String(filteredFromArray[0].title));
     priceData = res.data.results.data;
     setRateData(priceData);
-    console.log("priceData", priceData);
+    
     let oneUsdValue: any = await oneUSDHelper(
       priceData,
       filteredFromArray[0].title
@@ -139,8 +139,8 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
     if (id) {
-      console.log("Placing honey bee order");
-      console.log(permissionData?.permissions?.buy)
+      
+      
       if(!permissionData?.permissions?.buy) {
         openNotificationWithIcon2('error', "As Captain bee, Please apply for buy approval from honey bee");
         setLoadings(false);
@@ -153,7 +153,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
-      console.log(res.data);
+      
       for (let i = 0; i < res.data.links.length; i++) {
         if (res.data.links[i].rel.includes("approve")) {
           window.location.href = res.data.links[i].href;
@@ -177,18 +177,18 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   };
 
   useEffect(() => {
-    console.log('ID:', id);
+    
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
-        console.log(data.data, data.data.userFullData?.email);
+        
         setHoneyBeeEmail(data.data.userFullData?.email);
         let captainbeePermissions = data.data.referredUserData?.data.relationships;
-        console.log(data.data.userFullData?.email)
-        console.log(captainbeePermissions);
+        
+        
         let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-        console.log(c);
+        
         setPermissionData(c)
       });
      

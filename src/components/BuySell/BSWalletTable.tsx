@@ -27,7 +27,7 @@ interface DataType {
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+        
     };
 
     
@@ -112,7 +112,7 @@ const BSWalletTable = () => {
         // let access_token = String(localStorage.getItem("access_token"));
         // let decoded: any = decodeJWT(access_token);
         // getUserWallets(decoded.email).then((userWallets) => {
-        //     //console.log("userWallets", userWallets);
+        //     //
         //     setWalletData(userWallets.data);
         // });
         getAllUserWallet();
@@ -122,13 +122,13 @@ const BSWalletTable = () => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
         let userWallets = await getUserWallets(decoded.email);
-        console.log("userWallets", userWallets);
+        
         setWalletData(userWallets.data);
         // let usersWallet = userWallets.data;
         // let totalBalInUSD = 0;
         // for (let i = 0; i < usersWallet.length; i++) {
         //     if(usersWallet[i].coinType === "Crypto") {
-        //         console.log(usersWallet[i]?.coinSymbol)
+        //         
         //        let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
         //        let price = res.data.results.data;
         //        totalBalInUSD += userWallets[i]?.coinBalance * price;
@@ -148,7 +148,7 @@ const BSWalletTable = () => {
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
         const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
-        console.log(xx)
+        
         return xx
     };
     const MyPagination = ({ total, onChange, current }: any) => {
@@ -166,8 +166,8 @@ const BSWalletTable = () => {
         );
     };
 
-   console.log("WD",walletData);
-   console.log("FD",filteredWalletData);
+   
+   
     return (
         <div>
            

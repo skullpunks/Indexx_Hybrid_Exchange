@@ -18,30 +18,30 @@ const Permissions = () => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
     const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    console.log(username, userType);
+    
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        console.log("captainbee data", data.data);
+        
         setStaticsData(data.data);
       });
     } else {
-      console.log("user", user)
+      
       getHoneyUserDetails(user).then((data) => {
-        console.log("user.data", data.data);
+        
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
       })
 
       getReferredUserDetails(user).then((data) => {
-        console.log("d", data.data);
+        
         setRefferedUserData(data.data)
-        console.log("d", data.data.accountCreationDate);
+        
         let captainbeePermissions = data.data.referredUserData?.relationships;
-        console.log("captainbeePermissions", captainbeePermissions)
-        console.log(user)
+        
+        
         let c = captainbeePermissions.find(x => x.honeybeeEmail === user);
-        console.log(c);
+        
         setPermissionData(c)
         setCaptainbeeCreateDate(data.data.accountCreationDate);
         setCaptainbeeOrders(data.data.totalOrder);

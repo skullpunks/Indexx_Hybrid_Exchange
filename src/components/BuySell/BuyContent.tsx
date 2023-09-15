@@ -56,7 +56,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   const [honeyBeeId, setHoneyBeeId] = useState("");
 
   useEffect(() => {
-    console.log('ID:', id);
+    
 
     if (id) {
       setHoneyBeeId(String(id));
@@ -85,7 +85,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       }
     }
     getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
-      // console.log(x);
+      // 
       setMinMaxData(x);
     });
   }, [BSvalue.fromTitle, BSvalue.amount, id]);

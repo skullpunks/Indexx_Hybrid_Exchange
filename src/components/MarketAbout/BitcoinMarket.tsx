@@ -10,7 +10,7 @@ const BitcoinMarket = () => {
     useEffect(() => {
         marketsData().then((res) => {
             let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "BTC");
-            console.log(requiredData);
+            
             setData(requiredData);
         });
     }, []);

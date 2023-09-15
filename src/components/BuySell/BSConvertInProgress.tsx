@@ -30,7 +30,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         if (id) {
             setHoneyBeeId(String(id));
             getHoneyBeeDataByUsername(String(id)).then((data) => {
-                console.log(data.data, data.data.userFullData?.email);
+                
                 setHoneyBeeEmail(data.data.userFullData?.email);
                 getOrderDetails(data.data.userFullData?.email, String(BSvalue?.orderId)).then((order) => {
                     setOrderData(order.data);
@@ -52,7 +52,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     //     let access_token = String(localStorage.getItem("access_token"));
     //     let decoded: any = decodeJWT(access_token);
     //     const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
-    //     console.log(order);
+    //     
     //     setOrderData(order.data);
     // }
 

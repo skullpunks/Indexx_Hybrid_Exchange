@@ -31,11 +31,11 @@ const Growth = () => {
   
     useEffect(() => {
   
-      console.log('ID:', id);
+      
   
       getHoneyBeeDataByUsername(id).then((data) => {
         setUserData(data.data);
-        console.log("userData",data.data);
+        
       });
     }, [id])
   return (

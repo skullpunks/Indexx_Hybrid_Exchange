@@ -30,8 +30,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [, setShowUserBalance] = useState(false);
-    const [, setSelectedCoin] = useState("");
+    const [showUserBalance, setShowUserBalance] = useState(false);
+    const [selectedCoin, setSelectedCoin] = useState("");
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
     const { id } = useParams();
@@ -66,7 +66,6 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             if (id) {
                 setHoneyBeeId(String(id));
                 getHoneyBeeDataByUsername(String(id)).then((data) => {
-                    console.log(data.data, data.data.userFullData?.email);
                     setHoneyBeeEmail(data.data.userFullData?.email);
                 });
 
@@ -79,7 +78,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
-            console.log('testVal', testVal)
+            
             if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
                 e.preventDefault();
                 return;
@@ -112,8 +111,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
         if (val) {
             // setScreenName("confirmConvert");
-            console.log(val)
-            console.log(parseFloat(val))
+            
+            
             if (honeyBeeId === "undefined" || honeyBeeId === "")
                 navigate("/indexx-exchange/buy-sell/confirm-convert");
             else
@@ -125,7 +124,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const getCoinBalance = async (value: string) => {
-        console.log(honeyBeeId && honeyBeeEmail, honeyBeeId, honeyBeeEmail);
+        
         if (honeyBeeId && honeyBeeEmail) {
             const res = await getWalletBalance(honeyBeeEmail, value);
             setSelectedCoin(value);
@@ -139,7 +138,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             }
         } else {
             const res = await getWalletBalance(email, value);
-            console.log(res);
+            
             setSelectedCoin(value);
             if (res.status === 200) {
                 setUserBalance(res.data.balance);
@@ -175,8 +174,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const swapCoin = () => {
         let temp = BSvalue?.fromToken;
         let getRequiredCoin = initialTokens.find(x => x.address === temp);
-        console.log('temp', temp, BSvalue?.fromTitle, getRequiredCoin);
-        console.log(BSvalue?.toToken, BSvalue?.toTitle);
+        
+        
         if (BSvalue && temp) {
             setBSvalue({ ...BSvalue, fromToken: BSvalue?.toToken, toToken: temp });
             //getCoinBalance(BSvalue?.fromTitle)
@@ -235,11 +234,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
-            {/* {showUserBalance &&
+            {showUserBalance &&
                 <div>
                     <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            } */}
+            }
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
         </div >

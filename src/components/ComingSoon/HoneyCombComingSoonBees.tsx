@@ -9,7 +9,7 @@ import BeeHeader from '../Dashboard/Honeybee/BeeHeader/BeeHeader';
 const HoneyCombComingSoonBees = () => {
     // const [searchParams, setSearchParams] = useSearchParams();
     // let pageName = searchParams.get("page");
-    // console.log(setSearchParams);
+    // 
     return (
         <>
             <BeeHeader />

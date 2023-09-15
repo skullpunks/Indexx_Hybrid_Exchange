@@ -12,7 +12,7 @@ export const BSDepositCryptoWallet = () => {
   const [value, setValue] = useState("funding");
   const navigate = useNavigate();
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
+    
     setValue(e.target.value);
   };
 

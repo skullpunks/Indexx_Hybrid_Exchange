@@ -20,33 +20,33 @@ interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     setLoadings(true);
-    console.log('Success:', values);
-    console.log('Success:', values.email_or_username);
+    
+    
     let res = await loginAPI(values.email_or_username, values.password);
-    console.log(res.data);
+    
     if (res.status === 200) {
-      console.log(res.data);
+      
       setLoadings(false);
       openNotificationWithIcon('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
-      console.log(resObj?.email);
+      
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
-      console.log(userDetails.data);
+      
       redirectUrl
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
-      console.log(res.data);
+      
       setLoadings(false);
       openNotificationWithIcon('error', res.data);
     }
@@ -79,7 +79,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
   return (
     <div className="">

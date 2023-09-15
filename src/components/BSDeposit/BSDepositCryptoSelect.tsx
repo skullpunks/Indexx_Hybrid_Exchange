@@ -54,7 +54,7 @@ export const BSDepositCryptoSelect = () => {
   const [selectedCoin, setSelectedCoin] = useState('INEX');
 
   const [copiedValue, copy] = useCopyToClipboard();
-  console.log(copiedValue);
+  
 
   const columns: ColumnsType<DataType> = [
     {
@@ -167,23 +167,23 @@ export const BSDepositCryptoSelect = () => {
       let finalArr = res.data.filter(
         (x: any) => x.transactionType === 'DEPOSIT_CYRPTO'
       );
-      console.log(finalArr);
+      
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-      console.log(res.data);
+      
       setUsersWallets(res.data);
     });
   }, []);
 
   const handleChange = async (value: string) => {
     setNetwork(value);
-    console.log(value, selectedCoin);
+    
     if (selectedCoin === 'FTT') {
       if (value === 'ETH') {
         //alert(value);
         const coreFTTWallet = await getFTTCoreWalletDetails();
-        console.log(coreFTTWallet);
+        
         setSingleWallet(coreFTTWallet);
       } else {
         alert('Please select ETH network for FTT Deposit');
@@ -202,7 +202,7 @@ export const BSDepositCryptoSelect = () => {
         (x: any) => x.coinSymbol === value
       );
       if (value === 'ETH') {
-        console.log(userWallet[0]);
+        
         alert(`Please select BNB network for ${selectedCoin} Deposit`);
       } else {
         setSingleWallet(userWallet[0]);
@@ -215,7 +215,7 @@ export const BSDepositCryptoSelect = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-    console.log(getRequiredCoin?.title, userWallet[0]);
+    
     setSelectedCoin(String(getRequiredCoin?.title));
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
@@ -236,15 +236,15 @@ export const BSDepositCryptoSelect = () => {
     setLoadings(true);
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
-    console.log(decodedToken);
-    console.log(decodedToken.email, depositHash, String(BSvalue?.fromTitle));
+    
+    
     const res = await checkAndUpdateDeposit(
       decodedToken.email,
       depositHash,
       String(selectedCoin),
       String(network)
     );
-    console.log(res);
+    
     if (res.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success');

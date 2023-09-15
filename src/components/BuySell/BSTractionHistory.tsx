@@ -27,13 +27,13 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
   //     userWallets.data.map((wallet: any) => {
   //         totalBalanceInUSD += parseFloat(wallet.coinWalletBalanceInUSD);
   //     })
-  //     console.log("data", data);
+  //     
   // })
 
   getAllTransactions(decoded.email).then((userTxs) => {
-    console.log("userRewards", userTxs);
+    
     allTxsdata = userTxs.data;
-    console.log("allTxsdata", allTxsdata);
+    
   })
 
   const { Option } = Select;

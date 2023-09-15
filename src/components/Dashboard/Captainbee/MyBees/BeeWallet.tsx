@@ -17,7 +17,7 @@ interface BeeWalletTableProps {
 
 const BeeWallet: React.FC<(BeeWalletTableProps)> = ({ honeyBeeEmail }) => {
 
-    console.log(honeyBeeEmail, "IN wallet")
+    
     return (
         <div className=''>
             {/* <div className='d-flex bs_wallet_top'>

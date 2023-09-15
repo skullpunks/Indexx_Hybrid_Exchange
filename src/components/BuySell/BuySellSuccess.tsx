@@ -11,7 +11,7 @@ interface Props {
 }
 
 const BuySellSuccess: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
   return (
     <div className="">
       <Link

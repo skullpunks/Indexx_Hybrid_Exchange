@@ -36,7 +36,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
     // const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-    //     console.log('params', pagination, filters, sorter, extra);
+    //     
     // };
     // const [fav, setFav] = useState('color-warn font_20x');
     // const [notFav, setNotFav] = useState('color-warn font_20x');
@@ -52,7 +52,7 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
             // let access_token = String(localStorage?.getItem("access_token"));
             // if (access_token !== "null" || access_token !== undefined) {
             //     let decoded: any = decodeJWT(access_token);
-            //     console.log(decoded.email);
+            //     
             //     setEmail(decoded.email);
             // }
             marketsData().then(async(data) => {
@@ -77,12 +77,12 @@ const MarketsIUSDPable: React.FC<(Props)> = ({ search }) => {
     }, [calledOnce, marketDataFixed, search]);
 
     // const updateFavCurr = async (row: any, index: any) => {
-    //     console.log(row);
+    //     
     //     let access_token = String(localStorage.getItem("access_token"));
     //     let decoded: any = decodeJWT(access_token);
-    //     console.log(decoded.email);
+    //     
     //     setEmail(decoded.email);
-    //     console.log(email);
+    //     
     //     if (row.Favourite === true) {
     //         row.Favourite = false;
     //         // setFav('font_20x');

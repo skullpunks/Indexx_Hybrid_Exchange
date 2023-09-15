@@ -87,20 +87,20 @@ function App() {
     useEffect(() => {
         return () => {
             const access_token = localStorage.getItem("access_token") !== undefined ? String(localStorage.getItem("access_token")) : undefined;
-            console.log(access_token)
+            
             if (access_token !== undefined || access_token !== null) {
                 let access_token = String(localStorage.getItem("access_token"));
                 let decoded: any = decodeJWT(access_token);
                 setEmail(decoded.email)
                 getUserDetails(decoded.email).then((res: any) => {
-                    console.log(res);
+                    
                     if (res.status === 200) {
-                        console.log(res.data);
+                        
                         setUserData(res.data);
                     }
                 });
             } else {
-                console.log('token not found')
+                
             }
         }
     }, [email]);
@@ -266,7 +266,7 @@ function App() {
 }
 
 // function External() {
-//     console.log(' IAM HERE')
+//     
 //     window.location.href = 'http://localhost:3002/';
 //     return null;
 // }

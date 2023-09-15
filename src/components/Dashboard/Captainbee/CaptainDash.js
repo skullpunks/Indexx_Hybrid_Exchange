@@ -57,11 +57,11 @@ const CaptainDash = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    console.log(username, userType);
+    
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        console.log("captainbee data", data.data);
+        
         setStaticsData(data.data);
       });
     }

@@ -24,12 +24,12 @@ const BuySellGetStarted: React.FC = () => {
   const [referral] = useSearchParams();
 
 
-  console.log(navigate);
+  
   const onFinish = async (values: any) => {
     setLoadings(true);
     localStorage.setItem('tempAuthEmail', values.email);
     const res = await signupAPI(values.email, values.password, values.username, values.referral);
-    console.log(res);
+    
     if (res.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success', 'Successfully registered');
@@ -47,7 +47,7 @@ const BuySellGetStarted: React.FC = () => {
   // useEffect(() => {
   //   const params = new URLSearchParams(window.location.search);
   //   const referral = params.get('referral');
-  //   console.log("referral::", referral); // Check if referral is present in the URL
+  //   
     
   //   localStorage.removeItem('tempAuthReferral');
 
@@ -60,7 +60,7 @@ const BuySellGetStarted: React.FC = () => {
   // }, [form]);
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';

@@ -247,11 +247,11 @@ const CaptTransactionCryptoHistoryTable: React.FC = () => {
                 time: selection.time,
                 transactionHash: selection.transactionHash,
             });
-            console.log(value);
-            console.log("List,", txList)
+            
+            
             const txListFilterData = txList.filter((data: any) => {
-                console.log(data);
-                console.log(data.transactionType);
+                
+                
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return data.transactionType?.toLowerCase() === value?.toLowerCase()
@@ -275,8 +275,8 @@ const CaptTransactionCryptoHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                console.log(data);
-                console.log(data.transactionType);
+                
+                
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
@@ -299,7 +299,7 @@ const CaptTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                console.log(data);
+                
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
@@ -318,7 +318,7 @@ const CaptTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                console.log("N: ", data);
+                
                 return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())

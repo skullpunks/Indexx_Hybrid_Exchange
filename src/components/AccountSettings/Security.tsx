@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Security = () => {
     const navigate = useNavigate();
-    console.log(navigate);
+    
     return (
         <div className="container border-1x security_container margin-t-3x margin-b-2x padding-0 ">
             <h1 className="font_25x padding-tb-1x padding-lr-2x border-b-1x">Security</h1>

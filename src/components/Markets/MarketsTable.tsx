@@ -37,7 +37,7 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
 
     // const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-    //     console.log('params', pagination, filters, sorter, extra);
+    //     
     // };
     const [isLoading, setLoadings] = useState(true);
 
@@ -50,7 +50,7 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
             // let access_token = String(localStorage?.getItem("access_token"));
             // if (access_token !== "null" || access_token !== undefined) {
             //     let decoded: any = decodeJWT(access_token);
-            //     console.log(decoded.email);
+            //     
             //     setEmail(decoded.email);
             // }
             marketsData().then(async(data) => {

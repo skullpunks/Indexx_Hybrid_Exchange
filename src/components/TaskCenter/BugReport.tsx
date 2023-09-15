@@ -60,7 +60,7 @@ const BugReport = () => {
     sorter,
     extra
   ) => {
-    console.log('params', pagination, filters, sorter, extra);
+    
   };
   const [isLoading, setTableLoadings] = useState(true);
   const [email, setEmail] = useState('');
@@ -114,7 +114,7 @@ const BugReport = () => {
   }, []);
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
 
   const onFinish = async (values: any) => {
@@ -128,7 +128,7 @@ const BugReport = () => {
     ) {
       alert('All fields are required');
     } else {
-      console.log('I else');
+      
       let bugFiles = [];
       for (let i = 0; i < values.bugfiles.length; i++) {
         const file = values.bugfiles[i];
@@ -137,12 +137,12 @@ const BugReport = () => {
           name: file.name,
           uid: file.uid,
         };
-        console.log(createFileParams);
+        
         bugFiles.push(createFileParams);
       }
 
       let res = await createBug(values.email, values.description, bugFiles);
-      console.log('res', res);
+      
       if (res.status === 200) {
         setTableLoadings(true);
         await getUserCreatedBugs(String(email)).then((res: any) => {
@@ -175,7 +175,7 @@ const BugReport = () => {
 
   const uploadFile = (file: any) => {
     setLoadings(true);
-    console.log(file);
+    
     let params = {
       ACL: 'public-read',
       Body: file,
@@ -197,7 +197,7 @@ const BugReport = () => {
     myBucket
       .putObject(params)
       .on('success', (evt) => {
-        console.log(evt);
+        
         setLoadings(false);
       })
       .send((err) => {
@@ -286,7 +286,7 @@ const BugReport = () => {
   ];
 
   const removeFile = async (e: any) => {
-    console.log(e);
+    
     let newList = fileList.filter(
       (file: any) => file.uniqueName !== e.uniqueName
     );
@@ -294,7 +294,7 @@ const BugReport = () => {
   };
 
   const getFile = (e: any) => {
-    console.log('Upload event:', e);
+    
     if (Array.isArray(e)) {
       return e;
     }
@@ -375,7 +375,7 @@ const BugReport = () => {
                     onRemove={removeFile}
                     beforeUpload={(file) => {
                       uploadFile(file);
-                      console.log(file);
+                      
                       return false;
                     }}
                   >

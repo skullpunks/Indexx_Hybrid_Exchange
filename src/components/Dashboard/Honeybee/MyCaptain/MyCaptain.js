@@ -37,17 +37,10 @@ const MyCaptain = () => {
   const [email, setEmail] = useState();
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    console.log(username, userType);
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
     setEmail(email);
-    console.log(email);
     getReferredUserDetails(email).then((data) => {
-      console.log("d", data.data);
-      console.log("d", data.data._doc);
-      setRefferedUserData(data.data._doc)
-      console.log("d", data.data.accountCreationDate);
+      setRefferedUserData(data.data.refferedUserAffilateData)
       setCaptainbeeCreateDate(data.data.accountCreationDate);
       setCaptainbeeOrders(data.data.totalOrder);
       setCaptainbeeUsers(data.data.honeyBeesCount);
@@ -85,7 +78,7 @@ const MyCaptain = () => {
                   <div className="hexagon">
                     <img
                       alt=""
-                      src={dummy}
+                      src={captainBeeData?.photoIdFileurl === undefined ? dummy : captainBeeData?.photoIdFileurl}
                       width={'63px'}
                       height={'66px'}
                       ml={'-6px'}
@@ -95,7 +88,7 @@ const MyCaptain = () => {
                 </div>
               </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">
-                  Captain Bee {captainBeeData?.username}
+                  Captain Bee {captainBeeData?.Username}
                 </div>
               <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">
