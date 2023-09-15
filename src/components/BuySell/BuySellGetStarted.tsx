@@ -14,7 +14,7 @@ import {
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI, baseDEXURL } from '../../services/api';
-import hands from '../../assets/hands.png';
+import hands from '../../assets/signin.svg';
 
 const BuySellGetStarted: React.FC = () => {
   //creating IP state
@@ -271,13 +271,8 @@ const BuySellGetStarted: React.FC = () => {
         </div>
 
         <div className="col">
-          <div style={{ marginBottom: '25%', paddingLeft: 100 }}>
-            <p
-              className="text-center"
-              style={{ fontWeight: 400, fontSize: 41, marginTop: 85 }}
-            >
-              Get upto 30% reward in <br /> Trade to Earn
-            </p>
+          <div style={{  marginBottom:-100,paddingLeft: 100 }}>
+                    <br/>  <br/>  <br/>
             <Image
               className="text-center"
               preview={false}
