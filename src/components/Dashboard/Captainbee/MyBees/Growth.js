@@ -79,7 +79,7 @@ const Growth = () => {
                       justifyContent: 'center',
                       alignItems: 'baseline',
                       width: '31%',
-                      background: 'white',
+                      background: 'var(--body_background)',
                       pl: 1,
                       pt: 0.4,
                     }}
@@ -102,7 +102,8 @@ const Growth = () => {
                       sx={{
                         width: '100%',
                         borderRadius: 0,
-                        background: 'white',
+                        background: 'var(--body_background)',
+                        color:"var(--body_color)",
                         border: 'none',
                         outline: 'none',
                         padding: 0,
@@ -124,7 +125,7 @@ const Growth = () => {
                       justifyContent: 'center',
                       alignItems: 'baseline',
                       width: '29%',
-                      background: 'white',
+                      background: 'var(--body_background)',
                       pl: 1,
                       pt: 0.4,
                     }}
@@ -147,7 +148,8 @@ const Growth = () => {
                       sx={{
                         width: '100%',
                         borderRadius: 0,
-                        background: 'white',
+                        background: 'var(--body_background)',
+                        color:"var(--body_color)",
                         border: 'none',
                         outline: 'none',
                         padding: 0,
@@ -171,7 +173,7 @@ const Growth = () => {
                       justifyContent: 'center',
                       alignItems: 'baseline',
                       width: '40%',
-                      background: 'white',
+                      background: 'var(--body_background)',
                       pl: 1,
                       pt: 0.4,
                     }}
@@ -195,7 +197,8 @@ const Growth = () => {
                       sx={{
                         width: '100%',
                         borderRadius: 0,
-                        background: 'white',
+                        background: 'var(--body_background)',
+                        color:"var(--body_color)",
                         border: 'none',
                         outline: 'none',
                         padding: 0,
@@ -237,7 +240,7 @@ const Growth = () => {
                   <Box
                     sx={{
                       width: '50%',
-                      background: 'white',
+                      background: 'var(--body_background)',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
@@ -281,7 +284,7 @@ const Growth = () => {
                   <Box
                     sx={{
                       width: '50%',
-                      background: 'white',
+                      background: 'var(--body_background)',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
@@ -325,7 +328,8 @@ const Growth = () => {
                 </Box>
                 <Box
                   sx={{
-                    background: 'white',
+                    background: 'var(--body_background)',
+                    color:"var(--body_color)"
                   }}
                 >
                   <LineChart
@@ -336,6 +340,9 @@ const Growth = () => {
                       { data: uData, label: 'uv' },
                     ]}
                     xAxis={[{ scaleType: 'point', data: xLabels }]}
+                    sx={{
+                      color:"var(--body_color)"
+                    }}
                   />
                 </Box>
               </Box>

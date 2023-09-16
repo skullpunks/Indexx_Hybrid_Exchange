@@ -117,7 +117,7 @@ const MyBees = () => {
                           sx={{
                             borderColor: '#FFB300',
                             borderRadius: '2px',
-                            color: '#282828',
+                            color: 'var(--body_color)',
                             width: '120px',
                             height: '32px',
                             textTransform: 'none',
@@ -128,7 +128,8 @@ const MyBees = () => {
                               backgroundColor: '#FFB300',
                               borderColor: '#FFB300',
                               boxShadow: 'none',
-                              color: '#282828',
+                              color: 'var(--body_color)',
+                              // color: '#282828',
                             },
                           }}
                         >
@@ -143,7 +144,8 @@ const MyBees = () => {
                           sx={{
                             borderColor: '#FFB300',
                             borderRadius: '2px',
-                            color: '#282828',
+                            color: 'var(--body_color)',
+                            // color: '#282828',
                             width: '120px',
                             height: '32px',
                             textTransform: 'none',
@@ -154,7 +156,8 @@ const MyBees = () => {
                             '&:hover': {
                               backgroundColor: '#FFB300',
                               borderColor: '#FFB300',
-                              color: '#282828',
+                              // color: '#282828',
+                              color: 'var(--body_color)',
                               boxShadow: 'none',
                             },
                           }}

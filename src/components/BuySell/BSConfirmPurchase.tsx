@@ -24,6 +24,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Stripe/CheckoutForm';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import NeedPermission from './Notification/NeedPermission';
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -90,6 +91,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
   const [permissionData, setPermissionData] = useState() as any;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState<String>();
+
   const showTransferModal = () => {
     setIsTransferModalVisible(true);
   };
@@ -142,7 +146,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       
       
       if(!permissionData?.permissions?.buy) {
-        openNotificationWithIcon2('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // openNotificationWithIcon2('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setIsModalOpen(true);
+        setMessage("As Captain bee, Please apply for buy approval from honey bee");
         setLoadings(false);
         return;
       }
@@ -162,7 +168,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error', res.data);
+      // openNotificationWithIcon2('error', res.data);
+      setIsModalOpen(true);
+      setMessage(res.data);      
     }
   };
 
@@ -236,6 +244,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   // }
 
   return (
+    <>
     <div className="bs_container card">
       <div className="card__header flex-justify-between d-flex flex-align-center">
         <h1 className="centered" style={{ color: '#5f5f5f' }}>
@@ -379,6 +388,15 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
         </div>
       </div>
     </div>
+    <div>
+          <NeedPermission
+            isVisible={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            message={message}
+            id={id}
+          />
+        </div>
+    </>
   );
 };
 

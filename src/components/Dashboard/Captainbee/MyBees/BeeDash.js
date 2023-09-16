@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import framecapt from '../../../../assets/hive-dashboard/frame.svg';
 import frame from '../../../../assets/hive-dashboard/silverframe.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -44,10 +45,38 @@ const BeeDash = () => {
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
-          style={{ width: '76%', maxWidth: '1140px' }}
+          // style={{ width: '86%', maxWidth: '1140px' }}
         >
-          <div className="d-flex flex-direction-column mt-1">
-            <div className="d-flex  flex-direction-column align-items-center">
+          <div className="d-flex flex-direction-column align-items-center mt-1">
+            <div className="d-flex  flex-direction-row align-items-center">
+            <div
+                  style={{
+                    width: '193px',
+                    height: '193px',
+                    backgroundImage: `url(${framecapt})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    // border:"none"
+                  }}
+                >
+                  <div className="hexagon">
+                    <img
+                      alt=""
+                      src={dummy}
+                      width={'63px'}
+                      height={'66px'}
+                      ml={'-6px'}
+                      border={'none'}
+                    />
+                  </div>
+                </div>
               <div
                 style={{
                   width: '193px',
@@ -80,13 +109,14 @@ const BeeDash = () => {
                 </div>
               </div>
             </div>
+            
+            <div className="align-items-start lh_32x">
             <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
               Honey Bee {id}
             </div>
             <div className="font_10x mb-3 lh_32x align-items-start">
               Honey Bee of Captain {userData?.referredUserData?.data2?.Username} Team
             </div>
-            <div className="align-items-start lh_32x">
               <div className="font_13x d-flex align-items-center ">
                 <img alt="man" src={man} className="me-2" />
                 @{id}

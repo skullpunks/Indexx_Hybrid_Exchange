@@ -65,6 +65,33 @@ const Permissions = () => {
             >
               {permissionData?.permissions?.buy ? "Approved" : "Declined"}
             </Button>
+
+            {permissionData?.permissions?.buy === false ?
+
+              <Button
+                variant="contained"
+                disableTouchRipple
+                disabled={permissionData?.permissions?.buy}
+                sx={{
+                  backgroundColor: '#FFB300',
+                  borderRadius: '2px',
+                  color: '#282828',
+                  height: '40px',
+                  width: "217px",
+                  ml:2,
+                  px: 8,
+                  textTransform: 'none',
+                  fontSize: '15px',
+                  boxShadow: 'none',
+                  '&:hover': {
+                    backgroundColor: '#FFB300',
+                    boxShadow: 'none',
+                  },
+                }}
+              >
+              Request
+              </Button>
+            :null}
           </div>
         </div>
 
@@ -100,6 +127,32 @@ const Permissions = () => {
             >
               {permissionData?.permissions?.sell ? "Approved" : "Declined"}
             </Button>
+            {permissionData?.permissions?.sell === false ?
+
+            <Button
+              variant="contained"
+              disableTouchRipple
+              disabled={permissionData?.permissions?.sell}
+              sx={{
+                backgroundColor: '#FFB300',
+                borderRadius: '2px',
+                color: '#282828',
+                height: '40px',
+                width: "217px",
+                ml:2,
+                px: 8,
+                textTransform: 'none',
+                fontSize: '15px',
+                boxShadow: 'none',
+                '&:hover': {
+                  backgroundColor: '#FFB300',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+            Request
+            </Button>
+            :null}
           </div>
         </div>
 
@@ -135,6 +188,33 @@ const Permissions = () => {
             >
               {permissionData?.permissions?.convert ? "Approved" : "Declined"}
             </Button>
+
+            {permissionData?.permissions?.convert === false ?
+
+              <Button
+                variant="contained"
+                disableTouchRipple
+                disabled={permissionData?.permissions?.convert}
+                sx={{
+                  backgroundColor: '#FFB300',
+                  borderRadius: '2px',
+                  color: '#282828',
+                  height: '40px',
+                  width: "217px",
+                  ml:2,
+                  px: 8,
+                  textTransform: 'none',
+                  fontSize: '15px',
+                  boxShadow: 'none',
+                  '&:hover': {
+                    backgroundColor: '#FFB300',
+                    boxShadow: 'none',
+                  },
+                }}
+              >
+              Request
+              </Button>
+            :null}
           </div>
         </div>
       </div>

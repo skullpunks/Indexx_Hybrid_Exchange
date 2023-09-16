@@ -1,0 +1,77 @@
+.main-box{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+}
+
+.second-box{
+    position: relative;
+    top: 28px;
+    width: 488px;
+    background-color: var(--body_background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-box-2 {
+    color: var(--dark_text);
+    padding-left: 1.5rem;
+    padding-bottom: 0.5rem;
+    padding-top: 1.5rem;
+    font-size: 20px;
+    font-family: "Inter";
+    width: 80%;
+    text-align: center;
+}
+
+.button-box {
+    color: var(--dark_text);
+    margin-left: 1.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    font-family: "Inter";
+    font-size: 13px;
+}
+
+.button-btn {
+    background-color: #FFB300;
+    padding-left: 4.2rem;
+    padding-right: 4.2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    /* border-radius: 0.125rem;  */
+    border: 0;
+    border-radius: 2px;
+    color: var(--dark_text);
+}
+
+.button-btn:hover {
+    background-color: #ffa200;
+}
+
+.close-button {
+    position: relative;
+    top: -13%;
+    /* right: 35%; */
+    left: 31%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: grey;
+    z-index: 1000;
+}
