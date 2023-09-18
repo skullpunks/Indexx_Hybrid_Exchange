@@ -84,7 +84,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
   return (
     <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
-        <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
+        <h1 className="text-center margin-lr-auto top_heading">HoneyBee Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
         </div>
@@ -153,13 +153,13 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
           <div className=" padding-b-2x text-center">
             Don’t have an account?{' '}
             <Link
-              to="/indexx-exchange/buy-sell/get-started"
+              to="/indexx-exchange/buy-sell/get-started-honeybee"
               // style={{ color: '#11be6a' }}
               className='hive_link'
             >
               Get Started
             </Link>
-            <Divider></Divider>
+            {/* <Divider></Divider>
             <br />
             <Link
               to=""
@@ -195,7 +195,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
             >
               {' '}
               Sign up to be an indexxer
-            </p>
+            </p> */}
           </div>
           <br />
         </div>
