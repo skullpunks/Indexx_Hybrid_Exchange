@@ -14,9 +14,9 @@ import {
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI, baseDEXURL } from '../../services/api';
-import hands from '../../assets/arts/normal_login.svg';
+import hands from '../../assets/arts/honeybee_signup.svg';
 
-const BuySellGetStarted: React.FC = () => {
+const BuySellGetStartedHoneyBee: React.FC = () => {
   //creating IP state
   const [loadings, setLoadings] = useState<boolean>(false);
 
@@ -76,7 +76,7 @@ console.log(refcode === "null");
       type === 'error' ? (
         <CloseCircleFilled />
       ) : (
-        <CheckCircleFilled className="text_link" />
+        <CheckCircleFilled className="hive_link" />
       );
     notification[type]({
       message: message,
@@ -99,8 +99,9 @@ console.log(refcode === "null");
             className="text-center justify-center"
             style={{ paddingLeft: 50 }}
           >
-            <h1 className="top_heading">Get Started</h1>
-            <Link to="/indexx-exchange/buy-sell/login" className="text_link">
+            <h3 className='mb-0'>Get Started as</h3>
+            <h1 className="top_heading mb-2">HoneyBee</h1>
+            <Link to="/indexx-exchange/buy-sell/login-honeybee" className="hive_link">
               LOG IN
             </Link>
           </div>
@@ -221,12 +222,12 @@ console.log(refcode === "null");
                     <span className="terms_conditions">
                       I am over 18 years old and I have read, understand and
                       agree to the
-                      <Link to="" className="text_link">
+                      <Link to="" className="hive_link">
                         {' '}
                         indexx.ai Terms of Use, Privacy Policy,{' '}
                       </Link>
                       and{' '}
-                      <Link to="" className="text_link">
+                      <Link to="" className="hive_link">
                         {' '}
                         Biometric Data Policy.
                       </Link>{' '}
@@ -238,7 +239,7 @@ console.log(refcode === "null");
                 <Button
                   type="primary"
                   style={{ marginTop: -50 }}
-                  className="atn-btn atn-btn-round "
+                  className="atn-btn atn-btn-round hive-btn"
                   htmlType="submit"
                   block
                   loading={loadings}
@@ -253,7 +254,7 @@ console.log(refcode === "null");
               className="d-flex justify-center padding-tb-2x"
             >
               Already have an account? &nbsp;
-              <Link to="/indexx-exchange/buy-sell/login" className="text_link">
+              <Link to="/indexx-exchange/buy-sell/login-honeybee" className="hive_link">
                 {' '}
                 Log in.
               </Link>
@@ -290,4 +291,4 @@ console.log(refcode === "null");
   );
 };
 
-export default BuySellGetStarted;
+export default BuySellGetStartedHoneyBee;

@@ -76,6 +76,8 @@ import BeeProfile from "./components/Dashboard/Honeybee/BeeProfile";
 import MyCaptain from "./components/Dashboard/Honeybee/MyCaptain/MyCaptain";
 import HoneyCombComingSoonBees from "./components/ComingSoon/HoneyCombComingSoonBees";
 import BeeDash2 from "./components/Dashboard/Honeybee/MyBees/BeeDash2";
+import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStartedLayoutHoneyBee";
+import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -121,7 +123,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
-          <Route path="/indexx-exchange/dashboard/capt-mybees/:id" element={<BeeDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab" element={<BeeDash />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
@@ -153,6 +155,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/login/*"
             element={<BuySellLogin />}
+          />
+          <Route
+            path="/indexx-exchange/buy-sell/login-honeybee/*"
+            element={<BuySellLoginHoneyBee />}
           />
           <Route
             path="/indexx-exchange/buy-sell/hive-login"
@@ -198,6 +204,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/get-started/*"
             element={<BuySellGetStartedLayout />}
+          />
+          <Route
+            path="/indexx-exchange/buy-sell/get-started-honeybee/*"
+            element={<BuySellGetStartedLayoutHoneyBee />}
           />
           <Route
             path="/indexx-exchange/buy-sell/welcome"

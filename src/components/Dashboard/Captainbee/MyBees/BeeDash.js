@@ -64,6 +64,7 @@ const BeeDash = () => {
                     alignItems: 'center',
                     alignSelf: 'center',
                     // border:"none"
+                    marginTop:"-15px"
                   }}
                 >
                   <div className="hexagon">

@@ -768,3 +768,28 @@ a.bs_link:hover {
     font-size: 60px;
   }
 }
+
+.bs_main .hive-btn {
+  background-color: #FFD000 !important;
+  border-color: #FFD000!important;
+  font-size: 20px;
+  height: 55px;
+  color: #fff;
+  border-radius: 0;
+}
+
+.bs_main .hive-btn:hover,
+.bs_main .hive-btn:focus,
+.bs_main .hive-btn:active
+{
+  background-color: #FFB300 !important;
+  border-color: #FFB300!important;
+}
+
+.hive_link {
+  color: #FFD000;
+}
+
+.hive_link:hover {
+  color: #FFB300;
+}

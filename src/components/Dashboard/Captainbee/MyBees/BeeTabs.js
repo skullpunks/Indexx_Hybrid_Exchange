@@ -8,15 +8,21 @@ import Growth from './Growth';
 import BeeWallet from './BeeWallet';
 import BeeTransactionHistoryLayout from './BeeTransactionHistory/BeeTransactionHistoryLayout';
 import Permissions from './Permissions';
+import { useParams } from 'react-router-dom';
 
 
 const BeeTabs = ({honeyBeeEmail}) => {
+
+  const { tab } = useParams();
+
+  const finaltab = tab > 4 ? 1 :tab;
+
     return (
         <div 
         // style={{ paddingTop: 90 }} 
         className="my-tabs"
         >
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey={finaltab}>
                 <Tabs.TabPane tab="Growth" key="1">
                    <Growth/>
                 </Tabs.TabPane>

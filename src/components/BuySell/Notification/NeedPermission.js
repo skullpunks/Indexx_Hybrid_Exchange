@@ -7,7 +7,7 @@ const NeedPermission = ({ isVisible, onClose, message, id }) => {
     console.log(id, "id");
     if (!isVisible) return null;
     const handleClick = () => {
-        navigate(`/indexx-exchange/dashboard/capt-mybees/${id}`, { replace: true }); 
+        navigate(`/indexx-exchange/dashboard/capt-mybees/${id}/3`, { replace: true }); 
         onClose();
     }
     return (

@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-  InfoCircleFilled,
-} from '@ant-design/icons';
-import { Button, Form, Input, notification } from 'antd';
+import qrCode from '../../assets/arts/qrCode.svg';
+import { Button, Form, Input, notification, Divider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/welcomehive.svg";
-// import qrCode from '../../assets/arts/qrCode.svg';
 import {
-  baseURL,
+  loginAPI,
   decodeJWT,
   getUserDetails,
-  loginHive
+  baseURL,
 } from '../../services/api';
-import "./BuySellLoginContentHive.css";
+import {
+  CheckCircleFilled,
+  InfoCircleFilled,
+  CloseCircleFilled,
+} from '@ant-design/icons';
 
-// interface Props {
-//   setScreenName: (value: string | ((prevVar: string) => string)) => void;
-// }
-const BuySellLoginContentHive: React.FC = () => {
-  // 
+interface Props {
+  setScreenName: (value: string | ((prevVar: string) => string)) => void;
+}
+const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
+  
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     setLoadings(true);
     
     
-    let res = await loginHive(values.email_or_username, values.password);
+    let res = await loginAPI(values.email_or_username, values.password);
     
     if (res.status === 200) {
       
@@ -37,13 +35,9 @@ const BuySellLoginContentHive: React.FC = () => {
       openNotificationWithIcon('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
       
-      
-      debugger;
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
-      localStorage.setItem('userType', resObj?.userType);
-      localStorage.setItem('username', resObj?.username);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -69,7 +63,7 @@ const BuySellLoginContentHive: React.FC = () => {
       type === 'error' ? (
         <CloseCircleFilled />
       ) : (
-        <CheckCircleFilled className="text_link" />
+        <CheckCircleFilled className="hive_link" />
       );
     notification[type]({
       message: message,
@@ -87,17 +81,10 @@ const BuySellLoginContentHive: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     
   };
-
-  const handleClick = () => {
-    window.location.href = "https://hive.indexx.ai/sign-up"
-  }
   return (
-    <div className="scan-container flex-align-stretch">
-      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
-        <img alt='' src={hive} width={"70%"}/>
-      </div>
-      <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
-        <h1 className="text-center margin-lr-auto top_heading">CaptainBee Log In</h1>
+    <div className="">
+      <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
+        <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
         </div>
@@ -113,7 +100,7 @@ const BuySellLoginContentHive: React.FC = () => {
             autoComplete="off"
           >
             <div className="form_element email position-relative">
-            <Form.Item
+              <Form.Item
                 label="Email / Username"
                 name="email_or_username"
                 rules={[
@@ -122,12 +109,13 @@ const BuySellLoginContentHive: React.FC = () => {
               >
                 <div className="control-input">
                   <Input placeholder="Email id or Username" className="input_height" />
-                  <span className="email-icon">
+                  <span className="input_icon">
                     <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
                   </span>
                 </div>
               </Form.Item>
             </div>
+
             <div className=" password ">
               <Form.Item
                 label="Password"
@@ -142,7 +130,7 @@ const BuySellLoginContentHive: React.FC = () => {
               </Form.Item>
             </div>
             {/* setScreenName("TwoFactorAuth") */}
-            <Link to="forgot-password" className="default-link text-underline-forgot">
+            <Link to="forgot-password" className="default-link text-underline">
               Forgot password
             </Link>
             <br />
@@ -160,15 +148,14 @@ const BuySellLoginContentHive: React.FC = () => {
               </Button>
             </Form.Item>
           </Form>
-          {/* <br /> */}
+          <br />
 
           <div className=" padding-b-2x text-center">
-            {/* Don’t have an account?{' '}
+            Don’t have an account?{' '}
             <Link
-              // to="https://hive.indexx.ai/sign-up"
-              to=""
-              style={{ color: '#ffb300' }}
-              onClick={handleClick}
+              to="/indexx-exchange/buy-sell/get-started"
+              // style={{ color: '#11be6a' }}
+              className='hive_link'
             >
               Get Started
             </Link>
@@ -189,33 +176,26 @@ const BuySellLoginContentHive: React.FC = () => {
             <br />
             <br />
             <Link
-              // to="https://hive.indexx.ai/sign-up"
-              to=""
-              className="text_link"
-              onClick={handleClick}
->
+              to="/indexx-exchange/buy-sell/get-started"
+              className="hive_link"
+            >
               <Button
                 type="primary"
-                className="atn-btn atn-btn-round margin-b-1x hive-btn-2"
-                // style={{ width: 270 }}
+                className="atn-btn atn-btn-round margin-b-1x hive-btn"
+                style={{ width: 270 }}
               >
                 Get Started
               </Button>
             </Link>{' '}
             <br />
-            <br /> */}
-            <Link
-              // to="https://hive.indexx.ai/sign-up"
-              to=""
-              style={{ color: '#ffb300' }}
-              onClick={handleClick}
+            <br />
+            <p 
+            style={{ fontSize: 15 }}
+            className='hive_link'
             >
-
-            <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
-              Sign up for Captain Bee
+              Sign up to be an indexxer
             </p>
-            </Link>
           </div>
           <br />
         </div>
@@ -224,4 +204,4 @@ const BuySellLoginContentHive: React.FC = () => {
   );
 };
 
-export default BuySellLoginContentHive;
+export default BuySellLoginContentHoneyBee;

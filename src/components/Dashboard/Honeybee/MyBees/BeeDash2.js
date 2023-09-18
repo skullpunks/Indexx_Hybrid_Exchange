@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import frame from '../../../../assets/hive-dashboard/silverframe.svg';
+import framecapt from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
 import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
@@ -68,10 +69,10 @@ const BeeDash2 = () => {
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
-          style={{ width: '76%', maxWidth: '1140px' }}
+          // style={{ width: '76%', maxWidth: '1140px' }}
         >
-          <div className="d-flex flex-direction-column mt-1">
-            <div className="d-flex  flex-direction-column align-items-center">
+          <div className="d-flex flex-direction-column align-items-center mt-1">
+            <div className="d-flex  flex-direction-row align-items-center">
               <div
                 style={{
                   width: '193px',
@@ -103,7 +104,37 @@ const BeeDash2 = () => {
                   />
                 </div>
               </div>
+              <div
+                  style={{
+                    width: '193px',
+                    height: '193px',
+                    backgroundImage: `url(${framecapt})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    // border:"none"
+                    marginTop:"-15px"
+                  }}
+                >
+                  <div className="hexagon">
+                    <img
+                      alt=""
+                      src={dummy}
+                      width={'63px'}
+                      height={'66px'}
+                      ml={'-6px'}
+                      border={'none'}
+                    />
+                  </div>
+                </div>
             </div>
+            <div className="align-items-start lh_32x">
             <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
               Honey Bee {honeyBeeData?.username}
             </div>
@@ -128,7 +159,7 @@ const BeeDash2 = () => {
                 {honeybeeCreateDate}
               </div>
             </div>
-
+            </div>
           </div>
           <div className="honeybee-container">
             <BeeTabs />
