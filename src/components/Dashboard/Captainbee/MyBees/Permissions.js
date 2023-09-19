@@ -26,7 +26,7 @@ const Permissions = () => {
 
   return (
     <div className="pt-5">
-      <div className="font_15x fw-bold">
+      <div className="font_15x fw-bold" style={{color:"#393939"}}>
         Permissions given by honeybee {id} to captainbee {userData?.referredUserData?.data2?.Username}
       </div>
       <div
@@ -38,7 +38,7 @@ const Permissions = () => {
           style={{ gap: '100px' }}
         >
           <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
+            <Typography variant="text" component="p" fontSize={'15px'}  style={{color:"#393939"}}>
               Permission to BUY
             </Typography>
           </div>
@@ -100,7 +100,7 @@ const Permissions = () => {
           style={{ gap: '98px' }}
         >
           <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
+            <Typography variant="text" component="p" fontSize={'15px'} style={{color:"#393939"}}>
               Permission to SELL
             </Typography>
           </div>
@@ -161,7 +161,7 @@ const Permissions = () => {
           style={{ gap: '60px' }}
         >
           <div>
-            <Typography variant="text" component="p" fontSize={'15px'}>
+            <Typography variant="text" component="p" fontSize={'15px'} style={{color:"#393939"}}>
               Permission to CONVERT
             </Typography>
           </div>

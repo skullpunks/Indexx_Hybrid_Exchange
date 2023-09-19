@@ -51,6 +51,10 @@ const MyCaptain = () => {
   return (
     <>
       <BeeHeader />
+      <div style={{paddingTop:"220px"}}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-390px"}}>
+          Your Captain Bee’s  Dashboard
+        </div>  
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
@@ -140,6 +144,7 @@ const MyCaptain = () => {
             <MyCaptainTabs/>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

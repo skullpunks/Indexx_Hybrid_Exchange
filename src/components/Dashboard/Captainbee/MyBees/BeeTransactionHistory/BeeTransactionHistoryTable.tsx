@@ -427,7 +427,7 @@ const BeeTransactionHistoryTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail 
                     />
                 </div>
             </div>
-            <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} className="transaction_crypto_history custom_table" />
             <MyPagination
                 total={txListFilter && txListFilter.length}
                 current={current}

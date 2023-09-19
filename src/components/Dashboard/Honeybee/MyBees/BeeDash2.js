@@ -66,6 +66,10 @@ const BeeDash2 = () => {
   return (
     <>
       <BeeHeader />
+      <div style={{paddingTop:"220px"}}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-475px"}}>
+        My Dashboard
+        </div>  
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
@@ -106,8 +110,8 @@ const BeeDash2 = () => {
               </div>
               <div
                   style={{
-                    width: '193px',
-                    height: '193px',
+                    width: '104px',
+                    height: '107px',
                     backgroundImage: `url(${framecapt})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'contain',
@@ -117,12 +121,12 @@ const BeeDash2 = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    alignSelf: 'center',
+                    alignSelf: 'end',
                     // border:"none"
-                    marginTop:"-15px"
+                    marginBottom:"8px"
                   }}
                 >
-                  <div className="hexagon">
+                  <div className="side-hexagon">
                     <img
                       alt=""
                       src={dummy}
@@ -165,6 +169,7 @@ const BeeDash2 = () => {
             <BeeTabs />
           </div>
         </div>
+      </div>
       </div>
     </>
   );

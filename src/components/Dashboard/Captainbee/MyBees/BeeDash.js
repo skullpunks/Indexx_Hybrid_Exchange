@@ -8,6 +8,10 @@ import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 
+import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
+import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
+import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
+import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -39,9 +43,31 @@ const BeeDash = () => {
       setHoneyBeeEmail(data?.data?.userFullData?.email);
     });
   }, [id])
+
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "dark"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
       <SubHeader />
+      <div style={{paddingTop:"220px"}}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-389px"}}>
+        Honey Bee’s  Dashboard
+        </div>  
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
@@ -80,8 +106,8 @@ const BeeDash = () => {
                 </div>
               <div
                 style={{
-                  width: '193px',
-                  height: '193px',
+                  width: '104px',
+                  height: '107px',
                   backgroundImage: `url(${frame})`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'contain',
@@ -91,12 +117,13 @@ const BeeDash = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  alignSelf: 'center',
-                  // border:"none"
+                  alignSelf: 'end',
+                  // border:"none",
+                  marginBottom:"-4.5px"
                 }}
               >
-                <div className="hexagon"
-                  style={{ marginBottom: '16px' }}
+                <div className="side-hexagon"
+                  style={{ marginBottom: '12px' }}
 
                 >
                   <img
@@ -119,19 +146,35 @@ const BeeDash = () => {
               Honey Bee of Captain {userData?.referredUserData?.data2?.Username} Team
             </div>
               <div className="font_13x d-flex align-items-center ">
+              {theme === "dark" ?
+              <img alt="man" src={man_dark} className="me-2" />
+              :
                 <img alt="man" src={man} className="me-2" />
+              }
                 @{id}
               </div>
               <div className="font_13x d-flex align-items-center">
+              {theme === "dark" ?
+              <img alt="man" src={pin_dark} className="me-2" />
+              :
                 <img alt="man" src={pin} className="me-2" />
+              }
                 {userData?.userFullData?.country === undefined ? "NA" : userData?.userFullData?.country}
               </div>
               <div className="font_13x d-flex align-items-center">
+              {theme === "dark" ?
+              <img alt="man" src={house_dark} className="me-2" />
+              :
                 <img alt="man" src={house} className="me-2" />
+              }
                 {userData?.userFullData?.city === undefined ? "NA" : userData?.userFullData?.city}
               </div>
               <div className="font_13x d-flex align-items-center">
+              {theme === "dark" ?
+              <img alt="man" src={clock_dark} className="me-2" />
+              :
                 <img alt="man" src={clock} className="me-2" />
+              }
                 {userData?.formatedAccountCreationDate}
               </div>
             </div>
@@ -141,6 +184,7 @@ const BeeDash = () => {
             <BeeTabs honeyBeeEmail={honeyBeeEmail}/>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

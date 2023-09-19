@@ -143,7 +143,7 @@ const CaptainProfile = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div className="hive-container">
+        (<div className="hive-container" style={{paddingTop:"280px"}}>
           <div
             className="d-flex flex-direction-column justify-content-center"
             style={{ width: '74%', maxWidth: '1140px' }}
@@ -308,9 +308,13 @@ const CaptainProfile = () => {
                   <TextField
                     //   label="Username"
                     variant="outlined"
+                    // color='var(--body_color)'
                     placeholder="Username"
                     InputLabelProps={{ shrink: true, readOnly: true, }}
-                    sx={{ mb: 2, width: '64%' }}
+                    sx={{ mb: 2, width: '64%',
+                    color:"var(--body_color)",
+                    borderColor:"var(--body_color)"
+                     }}
                     size="small" // Make the input box smaller
                     value={staticsData?.affiliateUserProfile.Username}
                     onChange={(e) => {

@@ -7,10 +7,21 @@ import man from '../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../assets/hive-dashboard/sidebar/clock 1.svg';
 
+import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
+import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
+import house_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
+import clock_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
+
 import twitter from '../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
 import insta from '../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../assets/hive-dashboard/sidebar/discord.svg';
+
+import twitter_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/twitter logo.svg';
+import insta_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
+import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
+import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
+
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -67,11 +78,33 @@ const CaptainDash = () => {
     }
   }, [])
 
+  
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "dark"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div className="hive-container">
+        (<div style={{paddingTop:"220px"}}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-496px"}}>
+        My Dashboard
+        </div>  
+        <div className="hive-container">
           <div
             className="d-flex justify-content-between"
             style={{ width: '74%', maxWidth: '1140px' }}
@@ -112,35 +145,67 @@ const CaptainDash = () => {
                 </div>
               <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">
+                {theme === "dark" ?
+              <img alt="man" src={man_dark} className="me-2" />
+              :
                   <img alt="man" src={man} className="me-2" />
+                }
                   @{staticsData?.affiliateUserProfile?.Username}
                 </div>
                 <div className="font_13x d-flex align-items-center">
+                {theme === "dark" ?
+              <img alt="man" src={pin_dark} className="me-2" />
+              :
                   <img alt="man" src={pin} className="me-2" />
+                }
                   {staticsData?.affiliateUserProfile?.country}
                 </div>
                 <div className="font_13x d-flex align-items-center">
+                {theme === "dark" ?
+              <img alt="man" src={house_dark} className="me-2" />
+              :
                   <img alt="man" src={house} className="me-2" />
+                }
                   {staticsData?.affiliateUserProfile?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
+                {theme === "dark" ?
+              <img alt="man" src={clock_dark} className="me-2" />
+              :
                   <img alt="man" src={clock} className="me-2" />
+                }
                   {staticsData?.formatedAccountCreationDate}
                 </div>
             </div>
 
               <div className="align-items-start lh_32x mt-4">
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
+                {theme === "dark" ?
+              <img alt="man" src={discord_dark} className="me-3" />
+              :
                   <img alt="Discord" src={discord} className="me-3" />
+                }
                 </a>
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="Instagram" src={insta} className="me-3" />
+                {theme === "dark" ?
+              <img alt="man" src={insta_dark} className="me-3" />
+              :
+              <img alt="Instagram" src={insta} className="me-3" />
+                }
                 </a>
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="LinkedIn" src={linkedin} className="me-3" />
+                {theme === "dark" ?
+              <img alt="man" src={linkedin_dark} className="me-3" />
+              :
+              <img alt="LinkedIn" src={linkedin} className="me-3" />
+                }
                 </a>
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
+                {theme === "dark" ?
+              <img alt="man" src={twitter_dark}/>
+              :
                   <img alt="Twitter" src={twitter} />
+                }
                 </a>
 
               </div>
@@ -164,6 +229,10 @@ const CaptainDash = () => {
                 fontWeight={700}
                 textAlign={'left'}
                 mb={2}
+                sx={{
+                color:"#393939",
+                }}
+
               >
                 Sales Dashboard
               </Typography>
@@ -196,7 +265,7 @@ const CaptainDash = () => {
                         justifyContent: 'center',
                         alignItems: 'baseline',
                         width: '31%',
-                        background: 'white',
+                        background: 'var(--body_background)',
                         pl: 1,
                         pt: 0.4,
                       }}
@@ -219,7 +288,8 @@ const CaptainDash = () => {
                         sx={{
                           width: '100%',
                           borderRadius: 0,
-                          background: 'white',
+                          background: 'var(--body_background)',
+                          color:"var(--body_color)",
                           border: 'none',
                           outline: 'none',
                           padding: 0,
@@ -241,7 +311,7 @@ const CaptainDash = () => {
                         justifyContent: 'center',
                         alignItems: 'baseline',
                         width: '29%',
-                        background: 'white',
+                        background: 'var(--body_background)',
                         pl: 1,
                         pt: 0.4,
                       }}
@@ -264,7 +334,8 @@ const CaptainDash = () => {
                         sx={{
                           width: '100%',
                           borderRadius: 0,
-                          background: 'white',
+                          background: 'var(--body_background)',
+                          color:"var(--body_color)",
                           border: 'none',
                           outline: 'none',
                           padding: 0,
@@ -288,7 +359,7 @@ const CaptainDash = () => {
                         justifyContent: 'center',
                         alignItems: 'baseline',
                         width: '40%',
-                        background: 'white',
+                        background: 'var(--body_background)',
                         pl: 1,
                         pt: 0.4,
                       }}
@@ -312,7 +383,8 @@ const CaptainDash = () => {
                         sx={{
                           width: '100%',
                           borderRadius: 0,
-                          background: 'white',
+                          background: 'var(--body_background)',
+                          color:"var(--body_color)",
                           border: 'none',
                           outline: 'none',
                           padding: 0,
@@ -354,7 +426,7 @@ const CaptainDash = () => {
                     <Box
                       sx={{
                         width: '50%',
-                        background: 'white',
+                        background: 'var(--body_background)',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -398,7 +470,7 @@ const CaptainDash = () => {
                     <Box
                       sx={{
                         width: '50%',
-                        background: 'white',
+                        background: 'var(--body_background)',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -442,7 +514,7 @@ const CaptainDash = () => {
                   </Box>
                   <Box
                     sx={{
-                      background: 'white',
+                      background: 'var(--body_background)',
                     }}
                   >
                     <LineChart
@@ -466,6 +538,7 @@ const CaptainDash = () => {
               </Box>
             </div>
           </div>
+        </div>
         </div>) :
         <><BeeDash2 />
         </>

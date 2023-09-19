@@ -97,12 +97,13 @@ console.log(refcode === "null");
         <div className="col-5">
           <div
             className="text-center justify-center"
-            style={{ paddingLeft: 50 }}
+            style={{ paddingLeft: 26 }}
           >
-            <h1 className="top_heading">Get Started</h1>
-            <Link to="/indexx-exchange/buy-sell/login" className="text_link">
+            <h3 className='mb-0'>Get Started for</h3>
+            <h1 className="top_heading mb-2">Indexx Exchange</h1>
+            {/* <Link to="/indexx-exchange/buy-sell/login" className="text_link">
               LOG IN
-            </Link>
+            </Link> */}
           </div>
 
           <div className="bs_container bs_form card">
@@ -281,7 +282,7 @@ console.log(refcode === "null");
               className="text-center"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 130, paddingTop: 60 }}
+              style={{ paddingLeft: 0, paddingTop: 70 }}
             ></Image>
           </div>
         </div>

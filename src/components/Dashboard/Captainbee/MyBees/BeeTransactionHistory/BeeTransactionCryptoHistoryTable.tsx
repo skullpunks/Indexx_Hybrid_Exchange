@@ -439,10 +439,13 @@ const BeeTransactionCryptoHistoryTable: React.FC<(BeeWalletTableProps)> = ({ Bee
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Transaction Hash</label> <br />
-                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius: "4px", border: "2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
+                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius: "4px", border: "2px solid #d7d7d7", 
+                    backgroundColor:"var(--body_background)",
+                    color:"var(--body_color)",
+                    }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
-            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history custom_table" />
             <MyPagination
                 total={txListFilter && txListFilter.length}
                 current={current}

@@ -58,7 +58,7 @@ const CaptainResource = () => {
                     <a href={item.link} className='d-flex flex-direction-column align-items-center' target='_blank' rel="noreferrer" style={{color:"#000"}}>
                       <div className='folder'>
                       </div>
-                      <div className="font_15x d-flex align-items-center">
+                      <div className="font_15x d-flex align-items-center" style={{color:"var( --body_color)"}}>
                         {item.name}
                       </div>
                     </a>

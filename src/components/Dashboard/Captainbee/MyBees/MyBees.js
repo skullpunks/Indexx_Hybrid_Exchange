@@ -28,7 +28,13 @@ const MyBees = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div className="hive-container d-flex">
+        (<div style={{paddingTop:"220px"}}>
+        <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
+          <div style={{width:"30%", textAlign:"center"}}>
+          These are the Honey Bees that are part of your honeycomb. Select one to guide them
+          </div>
+        </div>  
+        <div className="hive-container d-flex">
           <Box
             sx={{
               width: '73%',
@@ -169,14 +175,15 @@ const MyBees = () => {
                   </Grid>
                 ))) :
                 <>
-                  <div className="d-flex flex-direction-column">
-                    <div className="d-flex align-items-center">
-                      <h2> No Honey Bees Avalible to list </h2>
+                  <div className="d-flex flex-direction-column justify-content-center" style={{paddingTop:"140px"}}>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <h2 style={{color:"var( --body_color)"}}> No Honey Bees Avalible to list </h2>
                     </div>
                   </div>
                 </>}
             </Grid>
           </Box>
+        </div>
         </div>) :
         <><HoneyBeeComingSoon />
         </>

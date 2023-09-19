@@ -20,12 +20,17 @@
     color: var(--body_color) !important;
 }
 
+.withdraw_btn{
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
+}
+
 .deposit_btn:hover,
 .deposit_btn:focus,
 .deposit_btn:active
 {
     background-color: var(--body_background);
-    color: "#ff4d4f" !important;
+    color: var(--body_color) !important;
 }
 
 .withdraw_btn,
@@ -33,7 +38,8 @@
 .withdraw_btn:focus,
 .withdraw_btn:active {
     background-image: url("../../assets/arts/rocketIcon.svg");
-
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
 }
 
 .sell_screens .bs_token {

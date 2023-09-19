@@ -40,21 +40,12 @@ const Growth = () => {
     }, [id])
   return (
     <div style={{paddingTop:"10px"}}>
-        <Typography
-              variant="text"
-              component="p"
-              fontSize={'15px'}
-              fontWeight={700}
-              textAlign={'left'}
-              mb={2}
-            >
-              Sales Dashboard
-            </Typography>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 gap: 2,
+                mt:2
               }}
             >
               <Box

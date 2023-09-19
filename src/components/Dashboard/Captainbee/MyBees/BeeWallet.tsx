@@ -29,7 +29,7 @@ const BeeWallet: React.FC<(BeeWalletTableProps)> = ({ honeyBeeEmail }) => {
                 </div>
             </div> */}
 
-            <div className='scan-container d-flex flex-direction-column card large_card orange pb-0'>
+            <div className='scan-container d-flex flex-direction-column card large_card orange pb-0 wallet-bee'>
 
 
                 <BeeWalletTop />

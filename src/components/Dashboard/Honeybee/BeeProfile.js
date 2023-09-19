@@ -122,7 +122,7 @@ const BeeProfile = () => {
   return (
     <>
       <BeeHeader />
-      <div className="hive-container">
+      <div className="hive-container" style={{paddingTop:"280px"}}>
           <div
             className="d-flex flex-direction-column justify-content-center"
             style={{ width: '74%', maxWidth: '1140px' }}
