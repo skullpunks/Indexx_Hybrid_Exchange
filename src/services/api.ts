@@ -9,7 +9,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  //baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -85,6 +85,23 @@ export const getHoneyBeeDataByUsername = async (username: string) => {
     const result = await API.get(
       `/api/v1/inex/user/getHoneyUserDashbaord/${username}`
     );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const requestPermissionsByEmail = async (
+  captainBeeEmail: string,
+  honeyBeeEmail: string,
+  requestType: string
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/requestpermssions/`, {
+      captainBeeEmail,
+      honeyBeeEmail,
+      requestType,
+    });
     return result.data;
   } catch (e: any) {
     return e.response.data;

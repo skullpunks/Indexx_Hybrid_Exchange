@@ -31,16 +31,16 @@ import { useParams } from 'react-router-dom';
 const BeeDash = () => {
   const { id } = useParams();
 
-  const [userData, setUserData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [captainBeeData, setCaptainBeeData] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
 
   useEffect(() => {
 
-    
-
     getHoneyBeeDataByUsername(id).then((data) => {
-      setUserData(data.data);
+      setHoneyBeeData(data.data);
       setHoneyBeeEmail(data?.data?.userFullData?.email);
+      setCaptainBeeData(data?.data?.referredUserData?.data2)
     });
   }, [id])
 
@@ -93,10 +93,12 @@ const BeeDash = () => {
                     marginTop:"-15px"
                   }}
                 >
+
+
                   <div className="hexagon">
                     <img
                       alt=""
-                      src={dummy}
+                      src={captainBeeData?.photoIdFileurl !== undefined ? captainBeeData?.photoIdFileurl  : dummy}
                       width={'63px'}
                       height={'66px'}
                       ml={'-6px'}
@@ -128,7 +130,7 @@ const BeeDash = () => {
                 >
                   <img
                     alt=""
-                    src={dummy}
+                    src={honeyBeeData?.userFullData?.profilePic !== undefined ? honeyBeeData?.userFullData?.profilePic : dummy}
                     width={'63px'}
                     height={'66px'}
                     ml={'-6px'}
@@ -143,7 +145,7 @@ const BeeDash = () => {
               Honey Bee {id}
             </div>
             <div className="font_10x mb-3 lh_32x align-items-start">
-              Honey Bee of Captain {userData?.referredUserData?.data2?.Username} Team
+              Honey Bee of Captain {honeyBeeData?.referredUserData?.data2?.Username} Team
             </div>
               <div className="font_13x d-flex align-items-center ">
               {theme === "dark" ?
@@ -159,7 +161,7 @@ const BeeDash = () => {
               :
                 <img alt="man" src={pin} className="me-2" />
               }
-                {userData?.userFullData?.country === undefined ? "NA" : userData?.userFullData?.country}
+                {honeyBeeData?.userFullData?.country === undefined ? "NA" : honeyBeeData?.userFullData?.country}
               </div>
               <div className="font_13x d-flex align-items-center">
               {theme === "dark" ?
@@ -167,7 +169,7 @@ const BeeDash = () => {
               :
                 <img alt="man" src={house} className="me-2" />
               }
-                {userData?.userFullData?.city === undefined ? "NA" : userData?.userFullData?.city}
+                {honeyBeeData?.userFullData?.city === undefined ? "NA" : honeyBeeData?.userFullData?.city}
               </div>
               <div className="font_13x d-flex align-items-center">
               {theme === "dark" ?
@@ -175,7 +177,7 @@ const BeeDash = () => {
               :
                 <img alt="man" src={clock} className="me-2" />
               }
-                {userData?.formatedAccountCreationDate}
+                {honeyBeeData?.formatedAccountCreationDate}
               </div>
             </div>
 
