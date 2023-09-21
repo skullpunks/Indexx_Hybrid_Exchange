@@ -22,24 +22,33 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   const navigate = useNavigate();
   const [referral] = useSearchParams();
-  const refcode = String(referral.get("referral")) 
-  
-console.log(refcode === "null");
+  const refcode = String(referral.get("referral"))
+
+  console.log(refcode === "null");
 
 
-  
+
   const onFinish = async (values: any) => {
-    setLoadings(true);
-    localStorage.setItem('tempAuthEmail', values.email);
-    const res = await signupAPI(values.email, values.password, values.username, values.referral);
-    
-    if (res.status === 200) {
+    try {
+      setLoadings(true);
+      localStorage.setItem('tempAuthEmail', values.email);
+      let referralCode = refcode === "null" || refcode === "" || refcode === "undefined" || refcode === undefined ? "" : refcode
+      console.log(values.email, values.password, values.username, referralCode)
+
+      const res = await signupAPI(values.email, values.password, values.username, referralCode);
+
+      if (res.status === 200) {
+        setLoadings(false);
+        openNotificationWithIcon('success', 'Successfully registered');
+        navigate('email-auth');
+      } else {
+        setLoadings(false);
+        openNotificationWithIcon('error', res.data);
+      }
+    }
+    catch (err) {
       setLoadings(false);
-      openNotificationWithIcon('success', 'Successfully registered');
-      navigate('email-auth');
-    } else {
-      setLoadings(false);
-      openNotificationWithIcon('error', res.data);
+      openNotificationWithIcon('error', "Something went wrong. Please try again later.");
     }
   };
 
@@ -51,7 +60,7 @@ console.log(refcode === "null");
   //   const params = new URLSearchParams(window.location.search);
   //   const referral = params.get('referral');
   //   
-    
+
   //   localStorage.removeItem('tempAuthReferral');
 
   //   if (referral) {
@@ -63,7 +72,7 @@ console.log(refcode === "null");
   // }, [form]);
 
   const onFinishFailed = (errorInfo: any) => {
-    
+
   };
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -109,17 +118,17 @@ console.log(refcode === "null");
           <div className="bs_container bs_form card">
             <div className="d-flex justify-center"></div>
             <Form
-         form={form}
-         onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-         layout="vertical"
-         autoComplete="off"
-         initialValues={{
-           referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
-         }}
-       >
+              form={form}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              layout="vertical"
+              autoComplete="off"
+              initialValues={{
+                referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
+              }}
+            >
 
-            
+
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
@@ -183,24 +192,24 @@ console.log(refcode === "null");
                 </Form.Item>
               </div>
               <div className="form_element referral">
-                          <Form.Item
-              label="Referral Code (Optional)"
-              name="referral"
-              // rules={[
-              //   { required: false, message: 'Referral Id Required' },
-              // ]}
-              initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
-            >
-              <div className="control-input">
-                <Input
+                <Form.Item
+                  label="Referral Code (Optional)"
                   name="referral"
-                  className="input_height"
-                  placeholder="Enter Referal Code"
-                  readOnly={refcode !== "null"}
-                  defaultValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
-                />
-              </div>
-            </Form.Item>
+                  // rules={[
+                  //   { required: false, message: 'Referral Id Required' },
+                  // ]}
+                  initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
+                >
+                  <div className="control-input">
+                    <Input
+                      name="referral"
+                      className="input_height"
+                      placeholder="Enter Referal Code"
+                      readOnly={refcode !== "null"}
+                      defaultValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
+                    />
+                  </div>
+                </Form.Item>
 
               </div>
               <div className="form_element d-flex terms_conditions_container">
@@ -276,8 +285,8 @@ console.log(refcode === "null");
         </div>
 
         <div className="col">
-          <div style={{  marginBottom:-100,paddingLeft: 100 }}>
-                    <br/>  <br/>  <br/>
+          <div style={{ marginBottom: -100, paddingLeft: 100 }}>
+            <br />  <br />  <br />
             <Image
               className="text-center"
               preview={false}
