@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import {
+  CheckCircleFilled,
+  CloseCircleFilled,
+} from '@ant-design/icons';
 import { Button, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
+import { styled } from '@mui/material/styles';
+import { notification } from 'antd';
+import { useEffect, useState } from 'react';
 import { getHoneyBeePermissions, updatePermissionsByHoneyBee } from '../../../../services/api';
 
 const IOSSwitch = styled((props) => (
@@ -70,9 +75,42 @@ const GivePermissions = () => {
   const [email, setEmail] = useState();
   const [loadings, setLoadings] = useState(false);
 
+  const openNotificationWithIcon = (
+    type,
+    message
+  ) => {
+    const Icon =
+      type === 'error' ? (
+        <CloseCircleFilled />
+      ) : (
+        <CheckCircleFilled className="text_link" />
+      );
+    notification[type]({
+      message: message,
+      description: '',
+      icon: Icon,
+      style: {
+        border: '1px solid #11be6a',
+        boxShadow: 'none',
+        borderRadius: 5,
+        top: 100,
+      },
+    });
+  };
   const savePermissions = async () => {
-    
-    const updatePermissions = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
+    try {
+      setLoadings(true);
+      const res = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
+      if (res.status === 200) {
+        setLoadings(false);
+        openNotificationWithIcon('success', "Permissions updated successfully");
+      } else {
+        setLoadings(false);
+        openNotificationWithIcon('error', "Failed to update permissions");
+      }
+    } catch (err) {
+      console.log(err);
+    }
     //
   }
 
