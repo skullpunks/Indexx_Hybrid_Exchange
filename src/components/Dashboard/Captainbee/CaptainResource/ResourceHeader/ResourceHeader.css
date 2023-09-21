@@ -18,7 +18,7 @@
     height: 80px;
     border: none;
     border-radius: 0;
-    background-color: #fff;
+    background-color: var(--main-body);
 }
 
 .cover-page .card-body{
@@ -26,20 +26,20 @@
 }
 
 
-.cover-page  h5{
+.resc .cover-page  h5{
     width: auto !important;
     background-color: transparent;
     border: none;
     font-size: 10px !important;
     margin-top: 8px;
-    color: #000 !important;
+    color: var(--body_color) !important;
     /* color: var(--body_color); */
 }
 
 .cover-page .card-text{
     justify-content: center;
     text-align: center;
-    color: #000 !important;
+    color: var(--body_color) !important;
     /* color: var(--body_color); */
 }
 

@@ -39,7 +39,15 @@ import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
 
-import { baseURL, baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails } from "../../services/api";
+import { baseURL, baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails,
+baseDEXURL,
+baseHiveURL,
+baseMktplaceURL,
+baseShopURL,
+baseWSURL,
+baseWalletURL,
+baseXnftURL
+} from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
 
 
@@ -177,35 +185,35 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Platforms
                       </div>
-                      <NavDropdown.Item href="https://test.cex.indexx.ai/" className="link-div">
-                        <Link to="https://test.cex.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseCEXURL} className="link-div">
+                        <a href={baseCEXURL} className="link-style">
                           Exchange
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="link-div">
-                        <Link to="https://fortune.daily.indexx.ai/" className="link-style">
+                        <a href="https://fortune.daily.indexx.ai/" className="link-style">
                           Fortune Daily
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/" className="link-div">
-                        <Link to="https://shop.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseShopURL} className="link-div">
+                        <a href={baseShopURL} className="link-style">
                           Shop
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://swap.indexx.ai/" className="link-div">
-                        <Link to="https://swap.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseDEXURL} className="link-div">
+                        <a href={baseDEXURL} className="link-style">
                           Swap
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="link-div">
-                        <Link to="https://wallstreet.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseWSURL} className="link-div">
+                        <a href={baseWSURL} className="link-style">
                           Wall Street
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/home" className="link-div">
-                        <Link to="https://xnftmarketplace.indexx.ai/home" className="link-style">
+                      <NavDropdown.Item href={baseMktplaceURL} className="link-div">
+                        <a href={baseMktplaceURL} className="link-style">
                           Market
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "80px" }}>
@@ -213,110 +221,110 @@ const HeaderNew = () => {
                         Action
                       </div>
 
-                      <NavDropdown.Item href="https://test.cex.indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
-                        <Link to={`${baseCEXURL}/buy-sell/get-started`} className="action-link-style">
+                      <NavDropdown.Item href="/indexx-exchange/buy-sell/get-started" className="action-link-div">
+                        <a href="/indexx-exchange/buy-sell/get-started" className="action-link-style">
                           Sign Up in Exchange
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://test.cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
-                        <Link to="https://test.cex.indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
+                      <NavDropdown.Item href="/indexx-exchange/buy-sell/login" className="action-link-div">
+                        <a href="/indexx-exchange/buy-sell/login" className="action-link-style">
                           Sign In in Exchange
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="action-link-div">
-                        <Link to="https://fortune.daily.indexx.ai/" className="action-link-style">
+                        <a href="https://fortune.daily.indexx.ai/" className="action-link-style">
                           Buy Lottery tickets
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
                           Buy Gift Cards
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/greeting-cards`} className="action-link-style">
                           Buy Greeting Cards
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">
                           Buy Stock Certificates
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-style">
                           Buy Stock Tokens
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://swap.indexx.ai/" className="action-link-div">
-                        <Link to="https://swap.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseDEXURL} className="action-link-div">
+                        <a href={baseDEXURL} className="action-link-style">
                           Trade in swap
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="action-link-div">
-                        <Link to="https://wallstreet.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseWSURL} className="action-link-div">
+                        <a href={baseWSURL} className="action-link-style">
                           Walk on Wall Street
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/collections?type=all" className="action-link-div">
-                        <Link to="https://xnftmarketplace.indexx.ai/collections?type=all" className="action-link-style">
+                      <NavDropdown.Item href={`${baseMktplaceURL}/collections?type=all`} className="action-link-div">
+                        <a href={`${baseMktplaceURL}/collections?type=all`} className="action-link-style">
                           Buy XNFTs
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "23px" }}>
                         Support
                       </div>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/centralized" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works/centralized" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/centralized`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works/centralized`} className="action-link-style">
                           How to use Exchange
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="https://fortune.daily.indexx.ai/how-to-play" className="action-link-div">
-                        <Link to="https://fortune.daily.indexx.ai/how-to-play" className="action-link-style">
+                        <a href="https://fortune.daily.indexx.ai/how-to-play" className="action-link-style">
                           Know how to play the lottery
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://hive.indexx.ai/" className="action-link-div">
-                        <Link to="https://hive.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseHiveURL} className="action-link-div">
+                        <a href={baseHiveURL} className="action-link-style">
                           Walk through the Hive
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseShopURL} className="action-link-div">
+                        <a href={baseShopURL} className="action-link-style">
                           Know how to buy in the Shop
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/decentralized" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works/decentralized" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/decentralized`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works/decentralized`} className="action-link-style">
                           How to use Swap
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallstreet.indexx.ai/" className="action-link-div">
-                        <Link to="https://wallstreet.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseWSURL} className="action-link-div">
+                        <a href={baseWSURL} className="action-link-style">
                           Go through Wall Street
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/" className="action-link-div">
-                        <Link to="https://xnftmarketplace.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseMktplaceURL} className="action-link-div">
+                        <a href={baseMktplaceURL} className="action-link-style">
                           How to buy XNFTs
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                   </div>
@@ -333,46 +341,46 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Products
                       </div>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="link-div">
-                        <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="link-div">
+                        <a href={`${baseShopURL}/collections/gift-cards-1`} className="link-style">
                           Gift Cards
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="link-div">
-                        <Link to="https://shop.indexx.ai/collections/greeting-cards" className="link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="link-div">
+                        <a href={`${baseShopURL}/collections/greeting-cards`} className="link-style">
                           Greeting Cards
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/nfts" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/nfts" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/nfts`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/nfts`} className="link-style">
                           NFT
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallstreet.indexx.ai/certificates" className="link-div">
-                        <Link to="https://wallstreet.indexx.ai/certificates" className="link-style">
+                      <NavDropdown.Item href={`${baseWSURL}/certificates`} className="link-div">
+                        <a href={`${baseWSURL}/certificates`} className="link-style">
                           Stock Certificates
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallstreet.indexx.ai/details" className="link-div">
-                        <Link to="https://wallstreet.indexx.ai/details" className="link-style">
+                      <NavDropdown.Item href={`${baseWSURL}/details`} className="link-div">
+                        <a href={`${baseWSURL}/details`} className="link-style">
                           Stock Tokens
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/token-details" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/token-details" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/token-details`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/token-details`} className="link-style">
                           Tokens
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnft.indexx.ai/" className="link-div">
-                        <Link to="https://xnft.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseXnftURL} className="link-div">
+                        <a href={baseXnftURL} className="link-style">
                           XNFT
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnft.indexx.ai/#fiat-cur" className="link-div">
-                        <Link to="https://xnft.indexx.ai/#fiat-cur" className="link-style">
+                      <NavDropdown.Item href={`${baseXnftURL}/#fiat-cur`} className="link-div">
+                        <a href={`${baseXnftURL}/#fiat-cur`} className="link-style">
 
                           XUSD
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="/indexx-exchange/coming-soon" className="link-div">
                         <Link to="/indexx-exchange/coming-soon" className="link-style">
@@ -386,53 +394,53 @@ const HeaderNew = () => {
 
                         Action
                       </div>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
 
                           Shop Gift Cards
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/greeting-cards`} className="action-link-style">
                           Shop Greeting Cards
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="https://opensea.io/collection/skullpunksog" className="action-link-div">
-                        <Link to="https://opensea.io/collection/skullpunksog" className="action-link-style">
+                        <a href="https://opensea.io/collection/skullpunksog" className="action-link-style">
                           Shop NFTs
 
-                        </Link>
+                        </a>  
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">
                           Shop Stock Certificates
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/stock-gift-cards" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-style">
                           Shop Stock Tokens
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/token-details" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/token-details" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/token-details`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/token-details`} className="action-link-style">
                           Shop Tokens
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/xnft" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/xnft" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/xnft`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/xnft`} className="action-link-style">
                           Shop XNFTs
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnftmarketplace.indexx.ai/collections/xusd-nft/3" className="action-link-div">
-                        <Link to="https://xnftmarketplace.indexx.ai/collections/xusd-nft/3" className="action-link-style">
+                      <NavDropdown.Item href={`${baseMktplaceURL}/collections/xusd-nft/3`} className="action-link-div">
+                        <a href={`${baseMktplaceURL}/collections/xusd-nft/3`} className="action-link-style">
                           Shop XUSDs
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
                         <Link to="/indexx-exchange/coming-soon" className="action-link-style">
@@ -445,51 +453,51 @@ const HeaderNew = () => {
 
                         Support
                       </div>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/gift-cards-1" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
 
                           How to buy Gift Cards
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/greeting-cards" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/greeting-cards" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/greeting-cards`} className="action-link-style">
                           How to buy Greeting Cards
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/nfts" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/nfts" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/nfts`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/nfts`} className="action-link-style">
                           How to buy NFTs
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-div">
-                        <Link to="https://shop.indexx.ai/collections/indexx-stock-token-tickets" className="action-link-style">
+                      <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
+                        <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">
                           How to buy Stock Certificates
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/tokens" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works/tokens" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/tokens`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works/tokens`} className="action-link-style">
                           Learn about indexx Tokens
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnft.indexx.ai/" className="action-link-div">
-                        <Link to="https://xnft.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href={baseXnftURL} className="action-link-div">
+                        <a href={baseXnftURL} className="action-link-style">
                           How to buy XNFTs
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://xnft.indexx.ai/#fiat-cur" className="action-link-div">
-                        <Link to="https://xnft.indexx.ai/#fiat-cur" className="action-link-style">
+                      <NavDropdown.Item href={`${baseXnftURL}/#fiat-cur`} className="action-link-div">
+                        <a href={`${baseXnftURL}/#fiat-cur`} className="action-link-style">
                           How to buy XUSDs
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
                         <Link to="/indexx-exchange/coming-soon" className="action-link-style">
@@ -514,19 +522,19 @@ const HeaderNew = () => {
                         Explore Program
                       </div>
                       <NavDropdown.Item href="https://register.affiliate.indexx.ai/" className="link-div">
-                        <Link to="https://register.affiliate.indexx.ai/" className="link-style">
+                        <a href="https://register.affiliate.indexx.ai/" className="link-style">
                           Affiliate Program
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://hive.indexx.ai/" className="link-div">
-                        <Link to="https://hive.indexx.ai/" className="link-style">
+                      <NavDropdown.Item href={baseHiveURL} className="link-div">
+                        <a href={baseHiveURL} className="link-style">
                           Hive
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/trade-to-earn" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/trade-to-earn" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/trade-to-earn`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/trade-to-earn`} className="link-style">
                           Trade to Earn
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "80px" }}>
@@ -535,32 +543,32 @@ const HeaderNew = () => {
                         Action
                       </div>
                       <NavDropdown.Item href="https://register.affiliate.indexx.ai/about" className="action-link-div">
-                        <Link to="https://register.affiliate.indexx.ai/about" className="action-link-style">
+                        <a href="https://register.affiliate.indexx.ai/about" className="action-link-style">
                           Sign up as an Afilliate
 
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://hive.indexx.ai/sign-up" className="action-link-div">
-                        <Link to="https://hive.indexx.ai/sign-up" className="action-link-style">
+                      <NavDropdown.Item href={`${baseHiveURL}/sign-up`} className="action-link-div">
+                        <a href={`${baseHiveURL}/sign-up`} className="action-link-style">
                           Captain Bee Sign Up
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="/indexx-exchange/coming-soon" className="action-link-div">
                         <Link to="/indexx-exchange/coming-soon" className="action-link-style">
                           Honeycomb Build Up
                         </Link>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/buy-sell/get-started" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-style">
                           Trade to Earn Sign Up
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/buy-sell/login" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/buy-sell/login" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-style">
                           Trade to Earn Sign In
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
@@ -569,14 +577,14 @@ const HeaderNew = () => {
                         Support
                       </div>
                       <NavDropdown.Item href="https://register.affiliate.indexx.ai/about" className="action-link-div">
-                        <Link to="https://register.affiliate.indexx.ai/about" className="action-link-style">
+                        <a href="https://register.affiliate.indexx.ai/about" className="action-link-style">
                           Benefit of an Affiliate
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works/tradetoearn" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works/tradetoearn" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/tradetoearn`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works/tradetoearn`} className="action-link-style">
                           How to Trade to Earn
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                   </div>
@@ -595,14 +603,14 @@ const HeaderNew = () => {
                         Explore Wallet
                       </div>
                       <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="link-div">
-                        <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="link-style">
+                        <a href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="link-style">
                           Extension
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="link-div">
-                        <Link to="https://wallet.indexx.ai/login/sign-in" className="link-style">
+                      <NavDropdown.Item href={baseWalletURL} className="link-div">
+                        <a href={baseWalletURL} className="link-style">
                           Web
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "80px" }}>
@@ -611,22 +619,22 @@ const HeaderNew = () => {
                         Action
                       </div>
                       <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-div">
-                        <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
+                        <a href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
                           Install Extension
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="action-link-div">
-                        <Link to="https://wallet.indexx.ai/login/sign-in" className="action-link-style">
+                      <NavDropdown.Item href={baseWalletURL} className="action-link-div">
+                        <a href={baseWalletURL} className="action-link-style">
                           Sign up Web-2 Wallet
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallet.indexx.ai/login/sign-in" className="action-link-div">
-                        <Link to="https://wallet.indexx.ai/login/sign-in" className="action-link-style">
+                      <NavDropdown.Item href={baseWalletURL} className="action-link-div">
+                        <a href={baseWalletURL} className="action-link-style">
                           Sign Up Web-3 Wallet
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
@@ -634,16 +642,16 @@ const HeaderNew = () => {
                         Support
                       </div>
                       <NavDropdown.Item href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-div">
-                        <Link to="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
+                        <a href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en" className="action-link-style">
                           How to install and use wallet extension
 
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://wallet.indexx.ai/Indexx-wallet/wallet-whitepaper" className="action-link-div">
-                        <Link to="https://wallet.indexx.ai/Indexx-wallet/wallet-whitepaper" className="action-link-style">
+                      <NavDropdown.Item href={`${baseWalletURL}/Indexx-wallet/wallet-whitepaper`} className="action-link-div">
+                        <a href={`${baseWalletURL}/Indexx-wallet/wallet-whitepaper`} className="action-link-style">
                           How to use wallet Web
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                   </div>
@@ -661,35 +669,35 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Company
                       </div>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/about" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/about" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/about`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/about`} className="link-style">
                           About
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/blog" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/blog" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/blog`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/blog`} className="link-style">
                           Blog
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/careers" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/careers" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/careers`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/careers`} className="link-style">
                           Careers
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works`} className="link-style">
                           How it Works
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/markets" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/markets" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/markets`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/markets`} className="link-style">
                           Markets
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/vlog" className="link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/vlog" className="link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/vlog`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/vlog`} className="link-style">
                           Vlog
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="/indexx-exchange/coming-soon" className="link-div">
                         <Link to="/indexx-exchange/coming-soon" className="link-style">
@@ -701,36 +709,36 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "23px" }}>
                         Action
                       </div>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/about" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/about" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/about`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/about`} className="action-link-style">
                           Know the company
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/blog" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/blog" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/blog`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/blog`} className="action-link-style">
                           Read updates
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/careers" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/careers" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/careers`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/careers`} className="action-link-style">
                           Find opportunity
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/how-it-works" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/how-it-works" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/how-it-works`} className="action-link-style">
                           Features
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/markets" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/markets" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/markets`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/markets`} className="action-link-style">
                           Crypto trends
 
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/vlog" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/vlog" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/vlog`} className="action-link-div">
+                        <a href={`${baseURL}/indexx-exchange/vlog`} className="action-link-style">
                           Watch videos
-                        </Link>
+                        </a>
                       </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
@@ -742,8 +750,8 @@ const HeaderNew = () => {
                           Government Certificates
                         </Link>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://indexx.ai/indexx-exchange/legal" className="action-link-div">
-                        <Link to="https://indexx.ai/indexx-exchange/legal" className="action-link-style">
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/legal`} className="action-link-div">
+                        <Link to={`${baseURL}/indexx-exchange/legal`} className="action-link-style">
                           Legal docs
                         </Link>
                       </NavDropdown.Item>

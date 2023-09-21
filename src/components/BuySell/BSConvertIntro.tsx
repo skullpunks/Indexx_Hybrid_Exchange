@@ -198,6 +198,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div>
                 </div>
+                <div className="font_20x opacity-75 justify-content-center d-flex" style={{ color: "var(--body_color)" }}>Enter Amount</div>
                 {/* {(userBalance < parseFloat(val)) ?
                     <div className='error_message font_15x'>You can only convert a total of {Math.floor(userBalance * 10000) / 10000} </div>
                     :

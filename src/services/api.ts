@@ -4,17 +4,36 @@ let baseAPIURL = '';
 export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
+export let baseHiveURL = '';
+export let baseWSURL = '';
+export let baseWalletURL = '';
+export let baseShopURL = '';
+export let baseXnftURL = '';
+export let baseMktplaceURL = '';
+
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseAPIURL = 'https://test.api.indexx.ai';
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
+  baseHiveURL = 'https://hive.indexx.ai';
+  baseWSURL = 'https://wallstreet.indexx.ai';
+  baseWalletURL = 'https://wallet.indexx.ai';
+  baseShopURL = 'https://shop.indexx.ai';
+  baseXnftURL = 'https://xnft.indexx.ai';
+  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseAPIURL = 'https://test.api.indexx.ai';
   baseURL = 'https://test.indexx.ai';
+  baseHiveURL = 'https://hive.indexx.ai';
+  baseWSURL = 'https://wallstreet.indexx.ai';
+  baseWalletURL = 'https://wallet.indexx.ai';
+  baseShopURL = 'https://shop.indexx.ai';
+  baseXnftURL = 'https://xnft.indexx.ai';
+  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
 }
 
 const API = axios.create({
