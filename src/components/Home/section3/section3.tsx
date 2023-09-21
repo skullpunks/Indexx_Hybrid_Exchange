@@ -70,7 +70,7 @@ const Section3 = () => {
             return null
         }
 
-        // console.log(actionLink)
+        // 
         return (
             <div className="data-right-container">
                 {action[1].map((item, key) => (

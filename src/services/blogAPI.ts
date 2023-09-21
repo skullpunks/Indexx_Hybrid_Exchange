@@ -23,7 +23,7 @@ export async function getUserId(username: string) {
       };
     }
   } catch (err) {
-    console.log(err);
+    
     return err;
   }
 }
@@ -48,7 +48,7 @@ export async function getPosts(userId: string) {
       };
     }
   } catch (err) {
-    console.log(err);
+    
     return err;
   }
 }
@@ -72,7 +72,7 @@ export async function getPost(postId: string) {
       };
     }
   } catch (err) {
-    console.log(err);
+    
     return;
   }
 }

@@ -27,12 +27,12 @@ const IndexxPhoenixMarket = () => {
                         textAlign: 'center',
                         justifyContent: 'center',
                         alignContent: 'center',
-                        color: '#5f5f5f',
+                        color: 'var(--body_color)',
                     }}
                 >
                     <Panel
                         showArrow={false}
-                        style={{ backgroundColor: 'white', fontSize: 30, color: '' }}
+                        style={{ backgroundColor: 'var(--body_background)', fontSize: 30, color: '' }}
                         header="Market"
                         key="1"
                     >
@@ -40,36 +40,36 @@ const IndexxPhoenixMarket = () => {
                         <p style={{ fontSize: 10 }}>
                             <div className="row">
                                 <div className="col" style={{ textAlign: 'left' }}>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>Market Cap</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.MarketCap}</p> <br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>Market Cap</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.MarketCap}</p> <br />
 
                                     <br />
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>POPULARITY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>Not enough data</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>POPULARITY</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>Not enough data</p><br />
 
                                     <br />
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (7D)</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>PRICE CHANGE (7D)</p>
                                     <p style={{ fontSize: 10, color: 'red' }}>0%</p><br />
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>VOLUME (24H)</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>VOLUME (24H)</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{Math.floor(data?.Volume * 100) / 100}</p><br />
 
                                     <br />
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>ALL TIME HIGH</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>$0.15</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>ALL TIME HIGH</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>$0.15</p><br />
 
 
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
 
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>{data?.CirculatingSupply} INXP</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>CIRCULATING SUPPLY</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.CirculatingSupply} INXP</p><br />
 
                                     <br />
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (1H)</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>PRICE CHANGE (1H)</p>
                                     <p style={{ fontSize: 10, color: 'red' }}>0%</p><br />
 
 
@@ -77,11 +77,11 @@ const IndexxPhoenixMarket = () => {
                                 </div>
                                 <div className="col" style={{ textAlign: 'left' }}>
 
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>TYPICAL HOLD TIME</p>
-                                    <p style={{ fontSize: 10, color: '#5F5F5F' }}>1 Year</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>TYPICAL HOLD TIME</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>1 Year</p><br />
 
                                     <br />
-                                    <p style={{ fontSize: 10, color: '#5F5F5F', opacity: '60%' }}>PRICE CHANGE (24H)</p>
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>PRICE CHANGE (24H)</p>
                                     <p style={{ fontSize: 10, color: 'red' }}>0%</p><br />
                                 </div>
                             </div>
@@ -91,14 +91,14 @@ const IndexxPhoenixMarket = () => {
                     <Panel
                         showArrow={false}
                         style={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'var(--body_background)',
                             fontSize: 30,
-                            color: '#5F5F5F',
+                            color: 'var(--body_color)',
                         }}
                         header="About"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
-                        <div style={{ textAlign: 'left', color: '#5F5F5F' }}>
+                        <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
                             <p style={{ fontSize: 20 }}>Indexx Phoenix </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>

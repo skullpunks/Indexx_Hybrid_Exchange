@@ -6,7 +6,7 @@ import {
   CopyFilled,
   InfoCircleFilled,
 } from '@ant-design/icons';
-import bsDollar from '../../assets/arts/bsDollar.svg';
+import bsDollar from '../../assets/arts/usd icon 1.svg';
 import { Button, Tooltip, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { DialogContext, DialogCtxState } from './BSDepositFiatLayout';
@@ -20,11 +20,11 @@ export const BSDepositFiatInfo = () => {
   useEffect(() => {
     let access_token = String(localStorage.getItem('access_token'));
     let decoded: any = decodeJWT(access_token);
-    console.log(decoded.email);
+    
     setEmail(decoded.email);
     getUserDetails(decoded.email).then((res) => {
       if (res.status === 200) {
-        console.log(res.data);
+        
         setUserData(res.data);
       }
     });

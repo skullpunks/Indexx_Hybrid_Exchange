@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: var(--body_background);
+  color: var(--body_color);
 }
 
 .App-logo {
@@ -57,41 +59,48 @@
 }
 
 .chart_inner_right .ant-segmented {
-  background: #ffffff;
+  background: var(--body_background);
   float: right;
-  /* background-color:rgba(129, 129, 129, 0.1); */
   font-size: 15px;
-  /* color:#5f5f5f; */
   padding: 0;
   border-radius: 5px;
 }
 
 .chart_inner_right .ant-segmented:hover {
-  background: #ffffff;
+  background: var(--body_background);
   float: right;
-  /* background-color:rgba(129, 129, 129, 0.1); */
   font-size: 15px;
-  /* color:#5f5f5f; */
   padding: 0;
   border-radius: 5px;
+  /* color: rgba(var(--body_color), var(--alpha)) !important; */
 }
+
 .chart_inner_right .ant-segmented-item-label {
   width: 65px;
   font-size: 15px;
   min-height: 37px;
   line-height: 37px;
-  background: #ffffff;
+  background: var(--body_background);
+  color: rgba(var(--body_color), var(--alpha)) !important;
+}
+
+.chart_inner_right .ant-segmented-item{
+  background: var(--body_background);
+  color: var(--body_color);
+  opacity: 0.5;
+}
+
+.chart_inner_right .ant-segmented-thumb {
+  background: var(--body_background) !important;
+  opacity: 1;
 }
 
 .chart_inner_right .ant-segmented-item-selected {
-  background: #ffffff;
+  background: var(--dark-text);
   font-weight: bolder;
-  color: black;
-  /* color:#fff; */
-  border-radius: -px;
+  color: var(--body_color);
   border:none;
   box-shadow: none;
-
+  opacity: 1;
 }
-
 

@@ -4,17 +4,36 @@ let baseAPIURL = '';
 export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
+export let baseHiveURL = '';
+export let baseWSURL = '';
+export let baseWalletURL = '';
+export let baseShopURL = '';
+export let baseXnftURL = '';
+export let baseMktplaceURL = '';
+
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL =  "https://api.indexx.ai";
-  baseCEXURL = "https://cex.indexx.ai";
-  baseDEXURL = "https://dex.indexx.ai";
-  baseURL = "https://indexx.ai";
-  //baseAPIURL = "http://localhost:3000";
+  baseAPIURL = 'https://api.indexx.ai';
+  baseCEXURL = 'https://cex.indexx.ai';
+  baseDEXURL = 'https://dex.indexx.ai';
+  baseURL = 'https://indexx.ai';
+  baseHiveURL = 'https://hive.indexx.ai';
+  baseWSURL = 'https://wallstreet.indexx.ai';
+  baseWalletURL = 'https://wallet.indexx.ai';
+  baseShopURL = 'https://shop.indexx.ai';
+  baseXnftURL = 'https://xnft.indexx.ai';
+  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
+  baseAPIURL = 'http://localhost:5000';
 } else {
-  baseCEXURL = "https://cex.indexx.ai";
-  baseDEXURL = "https://dex.indexx.ai";
-  baseAPIURL =  "https://api.indexx.ai"; 
-  baseURL = "https://indexx.ai";
+  baseCEXURL = 'https://cex.indexx.ai';
+  baseDEXURL = 'https://dex.indexx.ai';
+  baseAPIURL = 'https://api.indexx.ai';
+  baseURL = 'https://indexx.ai';
+  baseHiveURL = 'https://hive.indexx.ai';
+  baseWSURL = 'https://wallstreet.indexx.ai';
+  baseWalletURL = 'https://wallet.indexx.ai';
+  baseShopURL = 'https://shop.indexx.ai';
+  baseXnftURL = 'https://xnft.indexx.ai';
+  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
 }
 
 const API = axios.create({
@@ -26,12 +45,14 @@ export default baseAPIURL;
 export const signupAPI = async (
   email: string,
   password: string,
+  username: string,
   referralCode: string
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/register', {
       email,
       password,
+      username,
       referralCode,
     });
     return result.data;
@@ -45,11 +66,20 @@ export const signupAPI = async (
 
 export const loginAPI = async (email: string, password: string) => {
   try {
-    const result = await API.post('/api/v1/inex/user/login', {
-      email,
-      password,
-    });
-    return result.data;
+    let isEmailProvided = isEmail(email);
+    if (isEmailProvided) {
+      const result = await API.post('/api/v1/inex/user/login', {
+        email,
+        password,
+      });
+      return result.data;
+    } else {
+      const result = await API.post('/api/v1/inex/user/login', {
+        username: email,
+        password,
+      });
+      return result.data;
+    }
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (loginAPI)');
     console.log(e);
@@ -57,6 +87,138 @@ export const loginAPI = async (email: string, password: string) => {
     return e.response.data;
   }
 };
+
+export const getCaptainBeeStatics = async (username: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getHoneyBeeDataByUsername = async (username: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getHoneyUserDashbaord/${username}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const requestPermissionsByEmail = async (
+  captainBeeEmail: string,
+  honeyBeeEmail: string,
+  requestType: string
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/requestpermssions/`, {
+      captainBeeEmail,
+      honeyBeeEmail,
+      requestType,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updateCaptainBeeProfile = async (
+  email: string,
+  username: string,
+  updateData: any
+) => {
+  try {
+    const result = await API.post(`/api/v1/affiliate/updateaffiliateuser/`, {
+      email,
+      username,
+      updateData,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updateHoneyBeeProfile = async (email: string, updateData: any) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/updateprofile/`, {
+      email,
+      updateData,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getHoneyBeePermissions = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getpermissions/${email}`);
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const updatePermissionsByHoneyBee = async (
+  email: string,
+  convertPermission: any,
+  buyPermission: any,
+  sellPermission: any
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/updatepermissions/`, {
+      email,
+      convertPermission,
+      buyPermission,
+      sellPermission,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const loginHive = async (email: string, password: string) => {
+  try {
+    let isEmailProvided = isEmail(email);
+    if (isEmailProvided) {
+      const result = await API.post('/api/v1/inex/user/hivelogin', {
+        email,
+        password,
+      });
+      return result.data;
+    } else {
+      const result = await API.post('/api/v1/inex/user/hivelogin', {
+        username: email,
+        password,
+      });
+      return result.data;
+    }
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (loginAPI)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+function isEmail(input: string) {
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return emailPattern.test(input);
+}
+
+const userInput = 'exampleUserInput'; // Replace with the actual user input
+
+if (isEmail(userInput)) {
+  console.log('The user provided an email.');
+} else {
+  console.log('The user provided a username.');
+}
 
 export const enableTradeToEarn = async (email: string) => {
   try {
@@ -205,7 +367,7 @@ export const getAllCountries = async (email: string, coin: string) => {
 };
 
 export function decodeJWT(access_token: string) {
-  let userObj = decode(access_token);
+  let userObj: any = decode(access_token);
   return userObj;
 }
 
@@ -232,7 +394,7 @@ export const checkAndUpdateDeposit = async (
       email,
       txHash,
       coin,
-      coinNetwork
+      coinNetwork,
     });
     return result.data;
   } catch (e: any) {
@@ -428,6 +590,36 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const getHoneyUserDetails = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getHoneyUserDetails/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getHoneyUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getReferredUserDetails = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getReferredUserDetails/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (getReferredUserDetails)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getCoinPriceByName = async (
   coin: string,
   type: string = 'Buy'
@@ -489,7 +681,9 @@ export const createBuyOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -499,7 +693,8 @@ export const createBuyOrder = async (
       price: price,
       orderType: 'Buy',
       outAmount: outAmount,
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
@@ -515,7 +710,9 @@ export const createSellOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -525,7 +722,8 @@ export const createSellOrder = async (
       outAmount: outAmount,
       price: price,
       orderType: 'Sell',
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
@@ -563,7 +761,9 @@ export const createConvertOrder = async (
   quotecoin: string,
   amount: number,
   outAmount: number,
-  price?: number
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -573,7 +773,8 @@ export const createConvertOrder = async (
       price: price,
       outAmount: outAmount,
       orderType: 'Convert',
-      email: localStorage.getItem('user'),
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
     });
     return result.data;
   } catch (e: any) {
@@ -681,6 +882,22 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
     } else if (coinType === 'LTC') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INEX') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IAMZN') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IAAPL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IGOOGL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IMSFT') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IMETA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'IPEP') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'ITELA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'INVDA') {
       oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0.1;
@@ -798,6 +1015,39 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
         type: type,
       }
     );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const redeemValue = async (voucher: string, email: string) => {
+  try {
+    const result = await API.post(
+      `/api/v1/xnft/giftcards/validateStockVoucher`,
+      {
+        voucher: voucher,
+        email: email,
+      }
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const redeemStockCoupon = async (voucher: string, email: string) => {
+  try {
+    const result = await API.post(`/api/v1/xnft/giftcards/redeemStockCoupon`, {
+      voucher: voucher,
+      email: email,
+    });
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (transactionList)');
@@ -937,7 +1187,19 @@ export const getPaypalOrder = async (token: string) => {
   }
 };
 
-export const getIndexxMediumBlogs = async() => {
+export const createPaypalOrder = async (token: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/createPayment/${token}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getPaypalOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getIndexxMediumBlogs = async () => {
   try {
     const result = await API.get('/api/v1/inex/basic/indexxBlogs');
     return result.data;
@@ -947,4 +1209,4 @@ export const getIndexxMediumBlogs = async() => {
     console.log(e.response.data);
     return e.response.data;
   }
-}
+};

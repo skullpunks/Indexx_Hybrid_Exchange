@@ -11,7 +11,7 @@ interface Props {
 }
 
 const BuySellLoggedTwoFactor: React.FC<(Props)> = ({ setScreenName }) => {
-    console.log(setScreenName);
+    
     return (
         <div className='d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container'>
             <h1 className='text-center margin-lr-auto'>Two-Factor Authentication</h1>
@@ -29,7 +29,7 @@ const BuySellLoggedTwoFactor: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
                 <div className="otp_container">
-                    <label className="padding-b-1x">Code</label>
+                    <label className="padding-b-1x"  style={{color:"var(--body_color)"}}>Code</label>
                     <div className="d-flex justify-between">
                         <input type="number" />
                         <input type="number" />

@@ -10,16 +10,16 @@ const BasicInfo = () => {
     const [email, setEmail] = useState('');
     const [userData, setUserData] = useState() as any;
     const [copiedValue, copy] = useCopyToClipboard();
-    console.log(copiedValue);
+    
 
     useEffect(() => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
-        console.log(decoded.email);
+        
         setEmail(decoded.email)
         getUserDetails(decoded.email).then((res) => {
             if (res.status === 200) {
-                console.log(res.data);
+                
                 setUserData(res.data);
             }
         });
@@ -57,7 +57,7 @@ const BasicInfo = () => {
                 </div>
             </div>
 
-            <div className="basic_info container margin-t-2x padding-t-3x">
+            <div className="basic_info container margin-t-2x padding-t-3x margin-b-2x">
 
                 <div>
                     <header className="font_18x border-b-1x padding-lr-2x padding-tb-1x">Verification & Limits</header>

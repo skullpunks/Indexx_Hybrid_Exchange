@@ -12,7 +12,7 @@ interface Props {
     setStatus: (value: string | ((prevVar: string) => string)) => void;
 }
 const ConfirmSwapTwo: React.FC<(Props)> = ({ setStatus }) => {
-    console.log(setStatus);
+    
     return (
         <div className='scan-container'>
             <div className="card">

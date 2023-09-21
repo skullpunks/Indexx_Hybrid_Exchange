@@ -6,7 +6,7 @@ interface Props {
 }
 
 const BuySellLoggedContent: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
 
   return (
     <div className="bs_container bs_form card card_s col-lg-5 col-md-12 flex-align-center responsive_container">

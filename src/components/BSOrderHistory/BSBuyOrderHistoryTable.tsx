@@ -157,7 +157,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
 
     const handleChangeTime = (value: string) => {
         const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
-        console.log(pastDate);
+        
         if (!isNaN(+value)) {
             setSelection({
                 asset: selection.asset,
@@ -191,17 +191,17 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData);
         }
-        console.log("in time of buy ", orderListFilter);
-        // console.log("in order ",orderListFilter);
+        
+        // 
     };
-    console.log(selection);
+    
 
     const handleChangeStatus = (value: string) => {
-        console.log("Value: ", value);
-        console.log("List: ", orderList)
+        
+        
 
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-        console.log("Past date", pastDate);
+        
         if (value !== 'all') {
             setSelection({
                 asset: selection.asset,
@@ -209,9 +209,9 @@ const BSBuyOrderHistoryTable: React.FC = () => {
                 time: selection.time,
                 orderId: selection.orderId,
             });
-            console.log(":", selection.asset, selection.time);
+            
             const txListFilterData = orderList.filter((data: any) => {
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
+                
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
                 return data.status?.toLowerCase() === value?.toLowerCase()
@@ -220,7 +220,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
 
             })
-            console.log(txListFilterData);
+            
             setOrderTxListFilter(txListFilterData);
         }
         else {
@@ -233,7 +233,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
+                
                 return (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
                     && (!selection.asset || data.breakdown.outCurrencyName?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
@@ -242,7 +242,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in status of buy ", orderListFilter);
+        
 
     };
 
@@ -256,7 +256,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             time: selection.time,
             orderId: val,
         });
-        console.log(val)
+        
         setValueInput(val)
         const filterDate = orderList?.filter((data: any) => {
             let valueDate = moment(data.created).format('YYYY-MM-DD')
@@ -267,14 +267,14 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         });
         setOrderTxListFilter(filterDate);
-        console.log("in search of buy ", orderListFilter);
+        
 
     };
 
     const handleChangeAsset = (value: string) => {
-        console.log("Status in asset selection ");
+        
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-        console.log("Past date", pastDate);
+        
         if (value !== 'all') {
             setSelection({
                 asset: value,
@@ -303,7 +303,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             const txListFilterData = orderList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
 
-                console.log(data.breakdown.outCurrencyName?.toLowerCase());
+                
                 return (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
                     && (!selection.orderId || data.orderId?.toLowerCase().includes(selection.orderId?.toLowerCase()))
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
@@ -312,7 +312,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             })
             setOrderTxListFilter(txListFilterData)
         }
-        console.log("in asset of buy ", orderListFilter);
+        
 
     };
 

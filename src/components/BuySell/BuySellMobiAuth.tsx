@@ -18,7 +18,7 @@ let countriesArr: any[] = [];
 const getAllCountries = async () => {
   const res = await getCountries();
   countriesArr = res.data;
-  console.log(countriesArr)
+  
 }
 
 const BuySellMobiAuth = () => {

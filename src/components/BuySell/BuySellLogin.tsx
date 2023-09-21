@@ -14,7 +14,7 @@ import BuySellResetPassword from './BuySellResetPassword';
 
 const BuySellLogin = () => {
     const [screenName, setScreenName] = useState("");
-    console.log(screenName);
+    
     return (
         <>
             <div className='scan-container flex-align-stretch bs_main'>

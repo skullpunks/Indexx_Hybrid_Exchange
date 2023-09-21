@@ -15,13 +15,31 @@
     background-image: url("../../assets/arts/depositIcon.svg");
 }
 
+.deposit_btn{
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
+}
+
+.withdraw_btn{
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
+}
+
+.deposit_btn:hover,
+.deposit_btn:focus,
+.deposit_btn:active
+{
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
+}
 
 .withdraw_btn,
 .withdraw_btn:hover,
 .withdraw_btn:focus,
 .withdraw_btn:active {
     background-image: url("../../assets/arts/rocketIcon.svg");
-
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
 }
 
 .sell_screens .bs_token {
@@ -77,4 +95,47 @@
     background-size: contain;
     height: 30px;
     width: auto;
+    /* background-color: var(--body_background) !important; */
+}
+
+.ant-modal-header{
+    background-color: var(--body_background) !important;
+    border-color: var(--border-color);
+}
+
+.ant-select-dropdown, .ant-select-selector, .ant-select {
+    background-color: var(--body_background) !important;
+}
+
+
+.bs_token_left:hover .ant-select-dropdown:not(:hover) 
+{
+    background-color: var(--body_background) !important;
+
+}
+.ant-select-item-option-selected {
+    background-color: var(--disabled-btn) !important;
+    color: var(--body_color); 
+}
+
+
+.common__token {
+    color: var(--body_color);
+    background-color: var(--body_background);
+    border-color: var(--border-color);
+  }
+  
+  .common__token:hover {
+    color: var(--body_color);
+    background-color: var(--disabled-btn);
+}
+
+.custom-modal .ant-modal-close-x {
+  color: var(--body_color); /* Your desired color */
+}
+  
+.custom-modal .ant-modal-footer{
+    color: var(--body_color);
+    background-color: var(--body_background);  
+    border-color: var(--border-color);
 }

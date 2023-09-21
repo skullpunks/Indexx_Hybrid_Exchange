@@ -1,5 +1,5 @@
 import { RadioChangeEvent, Space } from 'antd';
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import bsDollar from "../../assets/arts/usd icon 1.svg";
 import { ArrowRightOutlined, CloseOutlined, LinkOutlined } from '@ant-design/icons';
 import { Button, Radio } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const BSDepositCryptoWallet = () => {
   const [value, setValue] = useState("funding");
   const navigate = useNavigate();
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
+    
     setValue(e.target.value);
   };
 

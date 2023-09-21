@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import openEye from "../../assets/arts/openEye.svg";
+import comingSoon from "../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/api';
 
 const BSWalletTop = () => {
@@ -61,6 +62,10 @@ const BSWalletTop = () => {
                     <h1 className='margin-b-0'>{Math.floor(totalBalanceInUSD * 100) / 100}</h1>
                     <img className='padding-l-1x' src={openEye} alt="eye" />
                 </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                    <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  objectFit: 'cover' }} />
+                </div>
+
                 <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}
                     {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}

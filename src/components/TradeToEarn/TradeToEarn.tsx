@@ -51,11 +51,11 @@ const TradeToEarn = () => {
     const decoded: any = decodeJWT(access_token);
     setEmail(decoded.email);
     const res = await updateRewardsWallet(decoded.email, walletAddress);
-    console.log(res);
+    
     if (res.status === 200) {
       await getUserDetails();
     } else {
-      console.log('err');
+      
     }
   };
 
@@ -65,7 +65,7 @@ const TradeToEarn = () => {
       const decoded: any = decodeJWT(access_token);
       const res = await getUserRewardDetails(decoded.email);
       setEmail(decoded.email);
-      console.log(res.data);
+      
       if (res.data !== undefined || res.data === null) {
         setUserRewardDetails(res.data);
         setAmount(res.data?.rewardTokenBalanceInUSD);
@@ -93,24 +93,24 @@ const TradeToEarn = () => {
 
   const checkWalletAddress = async (address: string) => {
     const res = web3.utils.checkAddressChecksum(address);
-    console.log(res);
+    
     setIsWalletAddrValid(res);
   };
 
   const withdrawMyINEX = async () => {
-    console.log(withdrawAmount);
-    console.log(email);
+    
+    
     setLoadings(true);
 
     let res = await withdrawINEX(email, withdrawAmount);
-    console.log(res);
+    
     if (res.data.txData.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success', res.data.txData.data.transactionHash);
       setShowTxTest(true);
       setTxHash(res.data.txData.data.transactionHash);
-      console.log(txHash, amount);
-      console.log(showTxText);
+      
+      
     } else {
       setLoadings(false);
       openNotificationWithIcon2('error');

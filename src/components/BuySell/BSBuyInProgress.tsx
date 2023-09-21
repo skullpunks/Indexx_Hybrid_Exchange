@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { getPaypalOrder } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -19,8 +20,8 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [, setInAmt] = useState(0);
     const [outcurr, setoutcurr] = useState("");
     const [outAmt, setoutAmt] = useState(0);
-    // const [token, setToken] = useState("");
-    // const [tokenValue] = useSearchParams();
+    const [, setToken] = useState("");
+    const [tokenValue] = useSearchParams();
 
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
@@ -29,27 +30,27 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
         //---Below commented code is for Paypal payments---
-        //setToken(String(tokenValue.get("token")));
-        // if (tokenValue.get("token") !== undefined) {
-        //     getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
-        //         console.log(res);
-        //         if (res.status === 200) {
-        //             let orderData = res.data.data;
-        //            setoutAmt(orderData.breakdown.outAmount) 
-        //            setoutcurr(orderData.breakdown.outCurrencyName) 
-        //         }
-        //     });
-        // }
-    }, [payAmount, payCurrency, orderAmount, orderCurrency])
-   
+        setToken(String(tokenValue.get("token")));
+        if (tokenValue.get("token") !== undefined) {
+            getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
+                
+                if (res.status === 200) {
+                    let orderData = res.data.data;
+                    setoutAmt(orderData.breakdown.outAmount)
+                    setoutcurr(orderData.breakdown.outCurrencyName)
+                }
+            });
+        }
+    }, [payAmount, payCurrency, orderAmount, orderCurrency, tokenValue])
 
-        // const filteredFromArray = initialTokens.filter(function (obj) {
+
+    // const filteredFromArray = initialTokens.filter(function (obj) {
     //     return obj?.address === BSvalue?.fromToken;
     // });
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">
-                <h1 className='centered' style={{ color: "#5f5f5f" }}>
+                <h1 className='centered' style={{ color: "var(--body_color)" }}>
                     {/* onClick={() => setScreenName("confirmPurchase")} */}
                     <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell")}>&#60;</span>
                     Purchase in Progress
@@ -67,11 +68,11 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
                     </div>
                 </div> */}
-                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline" }}>
+                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline", color:"var(--body_color)" }}>
 
                     <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >{Math.floor(outAmt * 10000) / 10000}</span>
                     <span className="font_20x" style={{
-                        color: "rgba(96, 96, 96,.5)", paddingLeft: 10
+                        color: "var(--conf-purchase)", paddingLeft: 10
                     }} >{outcurr}</span>
 
                 </div>

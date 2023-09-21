@@ -7,7 +7,7 @@ import careersIcon from "../../assets/arts/careersIcon.png";
 const ComingSoon = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     let pageName = searchParams.get("page");
-    console.log(setSearchParams);
+    
     return (
         <>
             <div className='scan-container flex-direction-column'>

@@ -27,13 +27,13 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
   //     userWallets.data.map((wallet: any) => {
   //         totalBalanceInUSD += parseFloat(wallet.coinWalletBalanceInUSD);
   //     })
-  //     console.log("data", data);
+  //     
   // })
 
   getAllTransactions(decoded.email).then((userTxs) => {
-    console.log("userRewards", userTxs);
+    
     allTxsdata = userTxs.data;
-    console.log("allTxsdata", allTxsdata);
+    
   })
 
   const { Option } = Select;
@@ -47,7 +47,7 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
       </div>
       <div className='card__body' >
         <div className="bs_token_num d-flex flex-align-center" >
-          <img src={require(`../../assets/arts/bsDollar.svg`).default} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
+          <img src={require(`../../assets/arts/usd icon 1.svg`).default} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
           USD  <span className="token_grey">US Dollar</span>
         </div>
         <div className="color_general" style={{ transform: "scale(1)", padding: "10px" }}>
@@ -63,19 +63,22 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
           <div className='border-b-1x d-flex flex-align-center flex-justify-between font_20x padding-b-1x'>
             <div className='flex_1'>Previous Transactions</div>
             <div className='margin-l-2x flex_1'>
-              <label>Date</label><br />
-              <DatePicker size="large" />
+              <label  style={{color:"var(--light-gr-color)"}}>Date</label><br />
+              <DatePicker size="large" style={{backgroundColor:"var(--body_background)", color:"var(--body_color)"}}
+              popupStyle={{backgroundColor:"var(--body_background)", color:"var(--body_color)"}}
+              />
             </div>
-            <div className='margin-l-2x flex_1'>
-              <label>Type</label><br />
+            <div className='margin-l-2x flex_1 custom-select'>
+              <label style={{color:"var(--light-gr-color)"}}>Type</label><br />
               <Select
                 placeholder="Select a option "
                 onChange={() => { }}
+                dropdownStyle={{backgroundColor: "var(--body_background)", color:"var(--body_color)"}}                                                            
                 allowClear
               >
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+                <Option value="male" className="common_token">male</Option>
+                <Option value="female" className="common_token">female</Option>
+                <Option value="other" className="common_token">other</Option>
               </Select>
             </div>
           </div>

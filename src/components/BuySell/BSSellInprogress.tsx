@@ -22,9 +22,9 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
         // setScreenName("BSSellConfirmConvert");
         navigate("/indexx-exchange/buy-sell");
     }
-    console.log(BSvalue)
-    console.log(filteredFromArray)
-    console.log(filteredToArray)
+    
+    
+    
     return (
         <div className='bs_container card'>
             <div className="card__header flex-justify-between d-flex flex-align-center">

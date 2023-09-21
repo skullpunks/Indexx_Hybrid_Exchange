@@ -9,7 +9,7 @@ interface Props {
 }
 
 const BuySellLoggedVerfication: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
   return (
     <div className="d-flex flex-direction-column col-lg-5 col-md-12 flex-align-center responsive_container">
       <h1 className="text-center margin-lr-auto">Verify Identity</h1>
@@ -32,8 +32,8 @@ const BuySellLoggedVerfication: React.FC<Props> = ({ setScreenName }) => {
         </div>
         <br />
         <div className="form_element email position-relative">
-          <label>Last 4 digits of your SSN</label>
-          <div className="control-input">
+          <label  style={{color:"var(--body_color)"}}>Last 4 digits of your SSN</label>
+          <div className="control-input ssn_container">
             <input type="Number" name="SSN" value="XXX-XX-" />
           </div>
         </div>

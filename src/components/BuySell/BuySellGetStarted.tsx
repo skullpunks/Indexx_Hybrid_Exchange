@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -14,19 +14,25 @@ import {
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI, baseDEXURL } from '../../services/api';
-import hands from '../../assets/hands.png';
+import hands from '../../assets/arts/normal_login.svg';
 
 const BuySellGetStarted: React.FC = () => {
   //creating IP state
   const [loadings, setLoadings] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  console.log(navigate);
+  const [referral] = useSearchParams();
+  const refcode = String(referral.get("referral")) 
+  
+console.log(refcode === "null");
+
+
+  
   const onFinish = async (values: any) => {
     setLoadings(true);
     localStorage.setItem('tempAuthEmail', values.email);
-    const res = await signupAPI(values.email, values.password, values.referral);
-    console.log(res);
+    const res = await signupAPI(values.email, values.password, values.username, values.referral);
+    
     if (res.status === 200) {
       setLoadings(false);
       openNotificationWithIcon('success', 'Successfully registered');
@@ -37,8 +43,27 @@ const BuySellGetStarted: React.FC = () => {
     }
   };
 
+  const [form] = Form.useForm();
+
+
+
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const referral = params.get('referral');
+  //   
+    
+  //   localStorage.removeItem('tempAuthReferral');
+
+  //   if (referral) {
+  //     localStorage.setItem('tempAuthReferral', referral); // Store referral in localStorage
+  //     setTimeout(() => {
+  //       form.setFieldsValue({ referral }); // Set referral value in the form
+  //     }, 0);
+  //   }
+  // }, [form]);
+
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -72,22 +97,46 @@ const BuySellGetStarted: React.FC = () => {
         <div className="col-5">
           <div
             className="text-center justify-center"
-            style={{ paddingLeft: 50 }}
+            style={{ paddingLeft: 26 }}
           >
-            <h1 className="top_heading">Get Started</h1>
-            <Link to="/indexx-exchange/buy-sell/login" className="text_link">
+            <h3 className='mb-0'>Get Started for</h3>
+            <h1 className="top_heading mb-2">Indexx Exchange</h1>
+            {/* <Link to="/indexx-exchange/buy-sell/login" className="text_link">
               LOG IN
-            </Link>
+            </Link> */}
           </div>
 
           <div className="bs_container bs_form card">
             <div className="d-flex justify-center"></div>
             <Form
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              layout="vertical"
-              autoComplete="off"
-            >
+         form={form}
+         onFinish={onFinish}
+         onFinishFailed={onFinishFailed}
+         layout="vertical"
+         autoComplete="off"
+         initialValues={{
+           referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
+         }}
+       >
+
+            
+              <div className="form_element email position-relative">
+                {/* <label>Email</label> */}
+                <Form.Item
+                  label="Username"
+                  name="username"
+                  rules={[
+                    { required: true, message: 'Please input your username!' },
+                  ]}
+                >
+                  <div className="control-input">
+                    <Input
+                      placeholder="Enter username"
+                      className="input_height"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
@@ -109,6 +158,7 @@ const BuySellGetStarted: React.FC = () => {
                   </div>
                 </Form.Item>
               </div>
+
               <div className="form_element password position-relative">
                 <Form.Item
                   label="Password"
@@ -133,17 +183,25 @@ const BuySellGetStarted: React.FC = () => {
                 </Form.Item>
               </div>
               <div className="form_element referral">
-                <Form.Item
-                  label="Referral Code (Optional)"
+                          <Form.Item
+              label="Referral Code (Optional)"
+              name="referral"
+              // rules={[
+              //   { required: false, message: 'Referral Id Required' },
+              // ]}
+              initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
+            >
+              <div className="control-input">
+                <Input
                   name="referral"
-                  rules={[
-                    { required: false, message: 'Referral  Id Required' },
-                  ]}
-                >
-                  <div className="control-input">
-                    <Input name="" className="input_height" />
-                  </div>
-                </Form.Item>
+                  className="input_height"
+                  placeholder="Enter Referal Code"
+                  readOnly={refcode !== "null"}
+                  defaultValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
+                />
+              </div>
+            </Form.Item>
+
               </div>
               <div className="form_element d-flex terms_conditions_container">
                 <Form.Item
@@ -155,8 +213,8 @@ const BuySellGetStarted: React.FC = () => {
                         value
                           ? Promise.resolve()
                           : Promise.reject(
-                              new Error('Should accept terms and policy')
-                            ),
+                            new Error('Should accept terms and policy')
+                          ),
                     },
                   ]}
                 >
@@ -209,7 +267,7 @@ const BuySellGetStarted: React.FC = () => {
                 the US residents. Instead, please register on our partner
                 platform dedicated to the US residents{' '}
                 <a className="text-link" href={baseDEXURL} rel="noreferrer">
-                  (test.dex.indexx.ai)
+                  (dex.indexx.ai)
                 </a>
                 .
               </p>
@@ -218,18 +276,13 @@ const BuySellGetStarted: React.FC = () => {
         </div>
 
         <div className="col">
-          <div style={{ marginBottom: '25%', paddingLeft: 100 }}>
-            <p
-              className="text-center"
-              style={{ fontWeight: 400, fontSize: 41, marginTop: 85 }}
-            >
-              Get upto 30% reward in <br /> Trade to Earn
-            </p>
+          <div style={{  marginBottom:-100,paddingLeft: 100 }}>
+                    <br/>  <br/>  <br/>
             <Image
               className="text-center"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 130, paddingTop: 60 }}
+              style={{ paddingLeft: 0, paddingTop: 70 }}
             ></Image>
           </div>
         </div>

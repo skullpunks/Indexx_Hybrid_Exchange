@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 import { Select } from 'antd';
 // import { Option } from 'antd/lib/mentions';
-import bsDollar from '../../assets/arts/bsDollar.svg';
+import bsDollar from '../../assets/arts/usd icon 1.svg';
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from '../../utils/Tokens.json';
 import graphTokens from '../../utils/graphs.json';
 // import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
+import { getHoneyBeeDataByUsername, getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import './BS-Sell.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -34,19 +34,34 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
       }
-      navigate('/indexx-exchange/buy-sell/confirm-purchase');
+      if (honeyBeeId === "undefined" || honeyBeeId === "")
+        navigate('/indexx-exchange/buy-sell/confirm-purchase');
+      else
+        navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase`);
       // setScreenName("confirmPurchase");
     } else {
       // setScreenName("create");
-      navigate('/indexx-exchange/buy-sell/create');
+      if (honeyBeeId === "undefined" || honeyBeeId === "")
+        navigate('/indexx-exchange/buy-sell/create');
+      else
+        navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/create`);
     }
+
   };
 
   const [buyVal, setBuyVal] = useState('');
   const [isLimitPassed, setLimitPassed] = useState(true);
   const [minMavData, setMinMaxData] = useState() as any;
+  const { id } = useParams();
+  const [honeyBeeId, setHoneyBeeId] = useState("");
 
   useEffect(() => {
+    
+
+    if (id) {
+      setHoneyBeeId(String(id));
+    }
+
     if (BSvalue.amount !== 0) {
       setBuyVal(BSvalue?.amount.toString());
       let amount = BSvalue?.amount.toString();
@@ -54,12 +69,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         amount.length < 7
           ? '1.1'
           : amount.length < 9
-          ? '0.9'
-          : amount.length < 12
-          ? '0.8'
-          : amount.length < 15
-          ? '0.6'
-          : '0.4';
+            ? '0.9'
+            : amount.length < 12
+              ? '0.8'
+              : amount.length < 15
+                ? '0.6'
+                : '0.4';
       let charWidth = amount.length <= 1 ? 1.2 : 0.9;
       if (document.getElementsByClassName('input_currency')[0]) {
         let element = document.getElementsByClassName(
@@ -70,10 +85,10 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
       }
     }
     getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
-      // console.log(x);
+      // 
       setMinMaxData(x);
     });
-  }, [BSvalue.fromTitle, BSvalue.amount]);
+  }, [BSvalue.fromTitle, BSvalue.amount, id]);
 
   const handleChange = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x) => x.address === value);
@@ -122,12 +137,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         testVal.length < 7
           ? '1.1'
           : testVal.length < 9
-          ? '0.9'
-          : testVal.length < 12
-          ? '0.8'
-          : testVal.length < 15
-          ? '0.6'
-          : '0.4';
+            ? '0.9'
+            : testVal.length < 12
+              ? '0.8'
+              : testVal.length < 15
+                ? '0.6'
+                : '0.4';
       let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
       e.currentTarget.style.width = (testVal.length + 1) * charWidth + 'ch';
       e.currentTarget.style.fontSize = charFontSize + 'ch';
@@ -150,7 +165,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
             className="bs_curreny_left padding-2x"
             style={{ transform: 'scale(1)' }}
           >
-            <span className="font_20x pe-1">$</span>
+            <span className="font_20x pe-1" style={{ color: "var(--body_color)" }}>$</span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
 
             <input
@@ -166,6 +181,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                     <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                 </div> */}
         </div>
+        <div className="font_20x opacity-75 justify-content-center d-flex" style={{ color: "var(--body_color)" }}>Enter Amount</div>
         {!isLimitPassed ? (
           <div className="error_message font_15x">
             You can only Buy a minimum of {String(minMavData?.min)} USD or
@@ -209,11 +225,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         style={{ alignItems: 'center' }}
       >
         <div className="bs_token_left d-flex justify-between">
-          <div className=" d-flex flex-justify-between flex-align-center width-100">
+          <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
             <Select
               className="width-150 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
+              dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
             >
               {initialTokens
                 //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
@@ -225,7 +242,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                       className="common__token d-flex bs_token_container"
                       data-address={token.address}
                     >
-                      <div className="d-flex bs_token_num">
+                      <div className="d-flex bs_token_num select-drop">
                         <img
                           src={
                             require(`../../assets/token-icons/${token.image}.png`)
@@ -238,7 +255,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                         <div className=" padding-l-1x d-flex flex-align-center">
                           {token.title}{' '}
                           <span
-                            style={{ color: 'rgba(95, 95, 95, 0.5)' }}
+                            style={{ color: 'var(--body_color)' }}
                             className="margin-l-0_5x"
                           >
                             {token.subTitle}

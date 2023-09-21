@@ -41,6 +41,17 @@ import IndexxExchangeMarket from '../MarketAbout/IndexxExchangeMarket';
 import LitecoinMarket from '../MarketAbout/LitecoinMarket';
 import EthereumMarket from '../MarketAbout/EthereumMarket';
 import FTTTokenMarket from '../MarketAbout/FTTTokenMarket';
+import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
+import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
+import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
+import IndexxMETAGraph from '../Graphs/IndexxMETAGraph';
+import IndexxMSFTGraph from '../Graphs/IndexxMSFTGraph';
+import IndexxNVDAGraph from '../Graphs/IndexxNVDAGraph';
+import IndexxPEPGraph from '../Graphs/IndexxPEPGraph';
+import IndexxTLSAGraph from '../Graphs/IndexxTSLAGraph';
+import IndexxBCMGraph from '../Graphs/IndexxBCMGraph';
+import IndexxSP500Graph from '../Graphs/IndexxSP500Graph';
+
 // import { BSProvider } from '../../utils/SwapContext';
 
 interface Props {
@@ -57,6 +68,16 @@ let graphs: any = {
   IndexxExchange: IndexxExchangeGraph,
   IndexxPhoenixGraph: IndexxPhoenixGraph,
   FTTGraph: FTTGraph,
+  IndexxAMZNGraph: IndexxAMZNGraph,
+  IndexxBCMGraph: IndexxBCMGraph,
+  IndexxSP500Graph: IndexxSP500Graph,
+  IndexxGOOGLGraph: IndexxGOOGLGraph,
+  IndexxAPPLGraph: IndexxAPPLGraph,
+  IndexxMETAGraph: IndexxMETAGraph,
+  IndexxMSFTGraph: IndexxMSFTGraph,
+  IndexxNVDAGraph: IndexxNVDAGraph,
+  IndexxPEPGraph: IndexxPEPGraph,
+  IndexxTLSAGraph: IndexxTLSAGraph,
 };
 
 let markets: any = {
@@ -70,6 +91,16 @@ let markets: any = {
   IndexxExchange: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
   FTTGraph: FTTTokenMarket,
+  IndexxAMZNGraph: FTTTokenMarket,
+  IndexxBCMGraph: FTTTokenMarket,
+  IndexxSP500Graph: FTTTokenMarket,
+  IndexxGOOGLGraph: FTTTokenMarket,
+  IndexxAPPLGraph: FTTTokenMarket,
+  IndexxMETAGraph: FTTTokenMarket,
+  IndexxMSFTGraph: FTTTokenMarket,
+  IndexxNVDAGraph: FTTTokenMarket,
+  IndexxPEPGraph: FTTTokenMarket,
+  IndexxTLSAGraph: FTTTokenMarket,
 };
 const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // const [status, setStatus] = useState("");
@@ -94,8 +125,8 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   return (
     <div className="swap_container">
       <span style={{textAlign:'center'}}>
-      <p style={{marginTop:130,fontSize:30}}>Crypto Exchange</p>
-       <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto' : 'Sign up to easily trade and earn crypto'}</p>
+      <p style={{marginTop:130,fontSize:30}}>Indexx Exchange</p>
+       <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
       
 
@@ -138,6 +169,14 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="convert-in-progress"
             element={<BSConvertInProgress setScreenName={setScreenName} />}
           />
+           <Route
+            path="confirm-convert/:id"
+            element={<BSConfirmConvert setScreenName={setScreenName} />}
+          />
+          <Route
+            path="convert-in-progress/:id"
+            element={<BSConvertInProgress setScreenName={setScreenName} />}
+          />
           <Route
             path="convert-in-progress-process"
             element={
@@ -159,6 +198,14 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
           />
           <Route
             path="sell-in-progress"
+            element={<BSSellInprogress setScreenName={setScreenName} />}
+          />
+           <Route
+            path="sell-confirm-convert/:id"
+            element={<BSSellConfirmConvert setScreenName={setScreenName} />}
+          />
+          <Route
+            path="sell-in-progress/:id"
             element={<BSSellInprogress setScreenName={setScreenName} />}
           />
         </Routes>

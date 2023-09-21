@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // import arrowAddress from "../../assets/arts/arrowAddress.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import ethereum from "../../assets/arts/ethereum.svg";
-import bsDollar from "../../assets/arts/bsDollar.svg";
+import bsDollar from "../../assets/arts/usd icon 1.svg";
 import "./BS-Sell.css";
 // import { Link } from 'react-router-dom';
 import { Select, Modal, Button } from 'antd';
@@ -11,8 +11,8 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
-import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT } from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT, getHoneyBeeDataByUsername } from '../../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
 export interface TokensObj {
     title: string;
     subTitle: string;
@@ -26,19 +26,22 @@ interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
-    console.log(setScreenName);
+    
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { id } = useParams();
     // const [flag, setFlag] = useState(false);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [isLimitPassed, setLimitPassed] = useState(true);
     const [minMavData, setMinMaxData] = useState() as any;
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [, setShowUserBalance] = useState(false);
-    const [, setSelectedCoin] = useState("");
+    const [showUserBalance, setShowUserBalance] = useState(false);
+    const [selectedCoin, setSelectedCoin] = useState("");
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+    const [honeyBeeId, setHoneyBeeId] = useState("");
+    const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
@@ -63,7 +66,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
-            console.log(String(BSvalue?.fromTitle))
+            
             // getWalletBalance(decoded.email, 'INEX').then((res) => {
             //     if (res.status === 200) {
             //         setUserBalance(res.data.balance);
@@ -74,6 +77,15 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             //     }
             // });
         });
+
+        if (id) {
+            setHoneyBeeId(String(id));
+            getHoneyBeeDataByUsername(String(id)).then((data) => {
+                
+                setHoneyBeeEmail(data.data.userFullData?.email);
+            });
+
+        }
         //removing INEX for sell
         //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
         //    setUpdateInitialTokens(filteredPeople);
@@ -81,14 +93,27 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }, [email, BSvalue])
 
     const getCoinBalance = async (value: string) => {
-        const res = await getWalletBalance(email, value);
-        setSelectedCoin(value);
-        if (res.status === 200) {
-            setUserBalance(res.data.balance);
-            setShowUserBalance(true);
+        
+        if (honeyBeeId && honeyBeeEmail) {
+            const res = await getWalletBalance(honeyBeeEmail, value);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+            }
         } else {
-            setUserBalance(0);
-            setShowUserBalance(true);
+            const res = await getWalletBalance(email, value);
+            setSelectedCoin(value);
+            if (res.status === 200) {
+                setUserBalance(res.data.balance);
+                setShowUserBalance(true);
+            } else {
+                setUserBalance(0);
+                setShowUserBalance(true);
+            }
         }
     }
     const handleTransferOk = () => {
@@ -137,11 +162,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
             let value = BSvalue?.fromTitle;
-            console.log(filteredFromArray[0].title)
-            console.log(value)
+            
+            
             //let getRequiredCoin = initialTokens.find(x => x.address === value);
-            //console.log(String(getRequiredCoin?.title));
-            console.log(isLimitPassed, minMavData)
+            //
+            
             await checkMinMaxValue(String(value), parseInt(testVal));
 
             handleChange(String(BSvalue?.fromToken))
@@ -155,7 +180,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     const getMinMaxValue = async (value: string) => {
         let res = await getMinAndMaxOrderValues(value, "SELL");
-        console.log(res);
+        
         return res;
     }
 
@@ -173,21 +198,25 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const formSubmit = () => {
-        console.log(BSvalue?.fromToken)
+        
         let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
             return;
         }
         if (val) {
+            if (honeyBeeId === "undefined" || honeyBeeId === "")
+                navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
+            else
+                navigate(`/indexx-exchange/buy-sell/sell-confirm-convert/${honeyBeeId}`);
             // setScreenName("BSSellConfirmConvert");
-            navigate("/indexx-exchange/buy-sell/sell-confirm-convert");
+
             if (setBSvalue && BSvalue) {
                 setBSvalue({ ...BSvalue, amount: parseFloat(val) });
             }
         }
     }
-    // console.log(checkPurchase);
+    // 
     // debugger;
     return (
         <div className='sell_screens'>
@@ -204,6 +233,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div> */}
                 </div>
+                <div className="font_20x opacity-75 justify-content-center d-flex" style={{ color: "var(--body_color)" }}>Enter Amount</div>
+
                 {/* {((!isLimitPassed) && )?
                     <div className='error_message font_15x'>You can only Sell a minimum of {String(minMavData?.min)} USD or maximum of {String(minMavData?.max)} USD </div>
                     :
@@ -218,6 +249,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onCancel={handleTransferCancel}
                     width={670}
                     maskClosable={false}
+                    className='custom-modal'
                     footer={[
 
                         <Button
@@ -228,8 +260,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                             Ok
                         </Button>,
                     ]}
+                    bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
                 >
-                    <div className="align-center text-center">
+                    <div className="align-center text-center" style={{ backgroundColor: "var(--body_background)" }}>
                         {/* <Image preview={false} src={lockedimage}></Image> */}
                         <p
                             className="text-center"
@@ -251,14 +284,16 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     </div>
                 </div> */}
                 <Select className='width-100 border-0'
-                    onChange={handleChange} value={BSvalue?.fromToken}>
+                    onChange={handleChange} value={BSvalue?.fromToken}
+                    dropdownStyle={{ backgroundColor: "var(--body_background)", }}
+                >
                     {
                         initialTokens
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 
                                 return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                 </Option>
                             })
                     }
@@ -282,11 +317,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
-            {/* {showUserBalance &&
+            {showUserBalance &&
                 <div>
                     <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            } */}
+            }
 
 
 

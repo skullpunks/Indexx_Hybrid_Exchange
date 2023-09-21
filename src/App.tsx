@@ -60,6 +60,24 @@ import Career from './components/Careers/Career';
 import WelcomePage from "./components/WelcomePage";
 import ImportTokens from "./components/ImportTokens/ImportTokens";
 import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
+import BuySellLoginContentHive from "./components/BuySell/BuySellLoginContentHive";
+import RedeemStock from "./components/RedeemStock/RedeemStock";
+import CaptainDash from "./components/Dashboard/Captainbee/CaptainDash";
+import CaptainProfile from "./components/Dashboard/Captainbee/CaptainProfile";
+import MyBees from "./components/Dashboard/Captainbee/MyBees/MyBees";
+import BeeDash from "./components/Dashboard/Captainbee/MyBees/BeeDash";
+import CaptainResource from "./components/Dashboard/Captainbee/CaptainResource/CaptainResource";
+import CaptainResourceManagement from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceManagement";
+import CaptainResourceTechnical from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceTechnical";
+import CaptainResourceLegal from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal";
+import CaptainResourceAccounting from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting";
+import HoneyCombComingSoon from "./components/ComingSoon/HoneyCombComingSoon";
+import BeeProfile from "./components/Dashboard/Honeybee/BeeProfile";
+import MyCaptain from "./components/Dashboard/Honeybee/MyCaptain/MyCaptain";
+import HoneyCombComingSoonBees from "./components/ComingSoon/HoneyCombComingSoonBees";
+import BeeDash2 from "./components/Dashboard/Honeybee/MyBees/BeeDash2";
+import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStartedLayoutHoneyBee";
+import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -71,20 +89,20 @@ function App() {
     useEffect(() => {
         return () => {
             const access_token = localStorage.getItem("access_token") !== undefined ? String(localStorage.getItem("access_token")) : undefined;
-            console.log(access_token)
+            
             if (access_token !== undefined || access_token !== null) {
                 let access_token = String(localStorage.getItem("access_token"));
                 let decoded: any = decodeJWT(access_token);
                 setEmail(decoded.email)
                 getUserDetails(decoded.email).then((res: any) => {
-                    console.log(res);
+                    
                     if (res.status === 200) {
-                        console.log(res.data);
+                        
                         setUserData(res.data);
                     }
                 });
             } else {
-                console.log('token not found')
+                
             }
         }
     }, [email]);
@@ -102,7 +120,25 @@ function App() {
             <Route path="/*" element={<BuySell />} />
           }
 
-          <Route path="/indexx-exchange/dashboard" element={<Account />} />
+          <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab" element={<BeeDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
+          <Route path="/indexx-exchange/coming-soon-honeycomb" element={<HoneyCombComingSoon />} />
+
+          {/* Routes for Honey Bee DashBoard   */}
+          <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
+          <Route path="/indexx-exchange/bee-dashboard/bee-profile" element={<BeeProfile />} />
+          <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
+          <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
+
+
+
           {/* {
                         // userData?.role === "Standard"
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
@@ -115,9 +151,18 @@ function App() {
           <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
           <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
           <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
+          <Route path="/indexx-exchange/buy-sell/for-honeybee/:id/*" element={<BuySell />} />
           <Route
             path="/indexx-exchange/buy-sell/login/*"
             element={<BuySellLogin />}
+          />
+          <Route
+            path="/indexx-exchange/buy-sell/login-honeybee/*"
+            element={<BuySellLoginHoneyBee />}
+          />
+          <Route
+            path="/indexx-exchange/buy-sell/hive-login"
+            element={<BuySellLoginContentHive />}
           />
           <Route
             path="/indexx-exchange/buy-sell/wallet"
@@ -141,6 +186,10 @@ function App() {
             element={<BSDepositCryproLayout />}
           />
           <Route
+            path="/indexx-exchange/redeem-stock"
+            element={<RedeemStock />}
+          />
+          <Route
             path="/indexx-exchange/buy-sell/deposit-fiat/*"
             element={<BSDepositFiatLayout />}
           />
@@ -155,6 +204,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/get-started/*"
             element={<BuySellGetStartedLayout />}
+          />
+          <Route
+            path="/indexx-exchange/buy-sell/get-started-honeybee/*"
+            element={<BuySellGetStartedLayoutHoneyBee />}
           />
           <Route
             path="/indexx-exchange/buy-sell/welcome"
@@ -223,7 +276,7 @@ function App() {
 }
 
 // function External() {
-//     console.log(' IAM HERE')
+//     
 //     window.location.href = 'http://localhost:3002/';
 //     return null;
 // }

@@ -20,32 +20,33 @@ interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
-  console.log(setScreenName);
+  
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     setLoadings(true);
-    console.log('Success:', values);
-    console.log('Success:', values);
-    let res = await loginAPI(values.email, values.password);
-    console.log(res.data);
+    
+    
+    let res = await loginAPI(values.email_or_username, values.password);
+    
     if (res.status === 200) {
+      
       setLoadings(false);
       openNotificationWithIcon('success', 'Login Successful');
-      localStorage.setItem('user', values.email);
+      let resObj = await decodeJWT(res.data.access_token);
+      
+      localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
-      let resObj = await decodeJWT(res.data.access_token);
-      console.log(resObj);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
-      let userDetails = await getUserDetails(values.email);
-      console.log(userDetails.data);
+      let userDetails = await getUserDetails(resObj?.email);
+      
       redirectUrl
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
-      console.log(res.data);
+      
       setLoadings(false);
       openNotificationWithIcon('error', res.data);
     }
@@ -78,11 +79,12 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    
   };
   return (
     <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
+      <h3 className="text-center margin-lr-auto">Indexx Exchange</h3>
         <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -100,21 +102,21 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           >
             <div className="form_element email position-relative">
               <Form.Item
-                label="Email"
-                name="email"
+                label="Email / Username"
+                name="email_or_username"
                 rules={[
-                  { required: true, message: 'Email Id Required' },
-                  { type: 'email', message: 'Please Enter Valid Email Id' },
+                  { required: true, message: 'Email or Username is required' },
                 ]}
               >
                 <div className="control-input">
-                  <Input placeholder="Email id" className="input_height" />
+                  <Input placeholder="Email id or Username" className="input_height" />
                   <span className="input_icon">
-                    <img src={Email} alt="emailIcon" />
+                    <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
                   </span>
                 </div>
               </Form.Item>
             </div>
+
             <div className=" password ">
               <Form.Item
                 label="Password"

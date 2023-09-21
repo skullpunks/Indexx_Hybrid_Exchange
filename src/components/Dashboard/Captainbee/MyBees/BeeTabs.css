@@ -1,0 +1,33 @@
+.my-tabs .ant-tabs-tab {
+    padding: 0;
+}
+
+.my-tabs .ant-tabs-ink-bar {
+    background: #000;
+  }
+
+  .MuiSelect-icon {
+    color: var(--body_color) !important;
+  }
+
+  .MuiMenu-list{
+    background: var(--body_background);
+    color: var(--body_color);
+    border: none;
+  }
+
+  .MuiPaper-root.MuiPopover-paper.MuiMenu-paper
+  {
+    background: var(--body_background);
+
+  }
+
+  .MuiChartsAxis-tickLabel, .MuiChartsLegend-label {
+    fill: var(--body_color) !important;
+  }
+
+
+  .MuiChartsAxis-line, .MuiChartsAxis-tick {
+    stroke: var(--body_color) !important;
+
+  }

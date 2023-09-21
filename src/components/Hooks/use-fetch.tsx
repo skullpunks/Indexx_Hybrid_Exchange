@@ -16,7 +16,7 @@ const useFetch = () => {
             //Fetch API
             const response = await fetch(`${url}${fetchDaysValue}`);
             if (!response.ok) {
-                console.log('i am here')
+                
                 throw new Error("Couldn't fetch Graph");
             }
             const responseData = await response.json();
@@ -53,7 +53,7 @@ const useFetch = () => {
     const hourClickHandler = () => {
         setDay(0.04);
     };
-    //console.log(hour)
+    //
     //Values to return to respective components where useFetch custom hook is being used
     return {
         yearClickHandler: yearClickHandler,

@@ -4,8 +4,8 @@ import InProgressClock from "../../assets/arts/InProgressClock.svg";
 import { Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
-import { Link, useNavigate } from 'react-router-dom';
-import { decodeJWT, getOrderDetails } from '../../services/api';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { decodeJWT, getHoneyBeeDataByUsername, getOrderDetails } from '../../services/api';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -21,23 +21,38 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const filteredToArray = initialTokens.filter(function (obj) {
         return obj?.address === BSvalue?.toToken;
     });
+    const [honeyBeeId, setHoneyBeeId] = useState("");
+    const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+    const { id } = useParams();
 
     useEffect(() => {
         //getOrder();
-        let access_token = String(localStorage.getItem("access_token"));
-        let decoded: any = decodeJWT(access_token);
-        getOrderDetails(decoded.email, String(BSvalue?.orderId)).then((order) => {
-            setOrderData(order.data);
-        });
+        if (id) {
+            setHoneyBeeId(String(id));
+            getHoneyBeeDataByUsername(String(id)).then((data) => {
+                
+                setHoneyBeeEmail(data.data.userFullData?.email);
+                getOrderDetails(data.data.userFullData?.email, String(BSvalue?.orderId)).then((order) => {
+                    setOrderData(order.data);
+                });
+            });
 
-    }, [orderData, BSvalue])
+        } else {
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            getOrderDetails(decoded.email, String(BSvalue?.orderId)).then((order) => {
+                setOrderData(order.data);
+            });
+        }
+
+    }, [])
     // }
 
     // const getOrder = async () => {
     //     let access_token = String(localStorage.getItem("access_token"));
     //     let decoded: any = decodeJWT(access_token);
     //     const order = await getOrderDetails(decoded.email, String(BSvalue?.orderId));
-    //     console.log(order);
+    //     
     //     setOrderData(order.data);
     // }
 
@@ -46,7 +61,13 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
             <div className="card__header flex-justify-between d-flex flex-align-center">
                 <h1 className='centered' style={{ color: "#5f5f5f" }}>
                     {/* setScreenName("confirmConvert") */}
-                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => navigate("/indexx-exchange/buy-sell")}>&#60;</span>
+                    <span className='cursor-pointer' style={{ fontSize: 20, paddingRight: 10 }} onClick={() => {
+                        if (honeyBeeId === "undefined" || honeyBeeId === "")
+                            navigate('/indexx-exchange/buy-sell/');
+                        else
+                            navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}`);
+                    }
+                    }>&#60;</span>
 
                     Convert in Progress
                 </h1>
@@ -67,7 +88,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
 
                     <span placeholder="0" className="font_20x " > <span className='dummy'>{Math.floor(orderData?.breakdown?.outAmount * 100000) / 100000}</span>  </span>
                     <span className="font_20x" style={{
-                        color: "rgba(96, 96, 96,.5)", paddingLeft: 10
+                        color: "var(--conf_purchase)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>
 
                 </div>

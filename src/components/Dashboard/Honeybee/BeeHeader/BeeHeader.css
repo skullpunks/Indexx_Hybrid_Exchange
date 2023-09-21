@@ -1,0 +1,52 @@
+.cover-page .card-img-top{
+    width: 45px;
+    height: 40.86px;
+    transition: trasnform 330ms ease-in-out !important;
+}
+
+.cover-page .card-img-top:hover{
+    transform: scale(1.3);
+    transition: trasnform 330ms ease-in-out !important;
+}
+
+.cover-page .card{
+    min-width: auto !important;
+    min-height: auto;
+    align-items: center;
+    padding: 10px 10px 10px;
+    width: 100px;
+    height: 80px;
+    border: none;
+    border-radius: 0;
+    background-color: #FFB300;
+}
+
+.cover-page .card-body{
+    padding: 0;
+}
+
+
+.cover-page  h5{
+    width: auto !important;
+    background-color: transparent;
+    border: none;
+    font-size: 10px !important;
+    margin-top: 8px;
+    color: #000 !important;
+    /* color: var(--body_color); */
+}
+
+.cover-page .card-text{
+    justify-content: center;
+    text-align: center;
+    color: #000 !important;
+    /* color: var(--body_color); */
+}
+
+.up-logos .col{
+    width: 7%;
+}
+
+.cover-page a{
+    text-decoration: none !important;
+}

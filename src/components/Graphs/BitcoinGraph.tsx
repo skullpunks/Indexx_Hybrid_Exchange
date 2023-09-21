@@ -37,7 +37,7 @@ const BitcoinGraph = () => {
     const res = await getCryptoPrice('BTC');
     setBTCPrice(res.data.lastPrice);
     setBTCPriceChange(res.data.priceChangePercent)
-    console.log(res.data)
+    
 }
   return (
     <React.Fragment>

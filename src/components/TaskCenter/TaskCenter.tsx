@@ -133,7 +133,7 @@ const TaskCenter = () => {
     const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
     let res = await enableTradeToEarn(String(decoded.email));
-    console.log(res);
+    
     if (res.status === 200) {
       setLoadings(false);
       getTaskCenterDetailsData();

@@ -25,7 +25,7 @@ const Markets = () => {
     debouncedSave(val);
   };
   const tabChange = (e: any) => {
-    console.log(e)
+    
     setValueInput('');
   }
   return (

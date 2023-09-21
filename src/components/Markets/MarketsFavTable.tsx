@@ -29,7 +29,7 @@ const MarketsFavTable = () => {
     const [marketData, setMarketData] = useState() as any;
     const [marketDataFixed, setMarketDataFixed] = useState() as any;
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+        
     };
 
     useEffect(() => {
@@ -37,9 +37,9 @@ const MarketsFavTable = () => {
             let access_token = String(localStorage?.getItem("access_token"));
             if (access_token !== "null" || access_token !== undefined) {
                 let decoded: any = decodeJWT(access_token);
-                console.log(decoded.email);
+                
                 setEmail(decoded.email);
-                console.log(email);
+                
             }
             marketsData().then((data) => {
                 const res = data.data.filter((x: any) => x.Favourite === true)
@@ -51,12 +51,12 @@ const MarketsFavTable = () => {
     }, [calledOnce, email]);
 
     const updateFavCurr = async (row: any) => {
-        console.log(row);
+        
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
-        console.log(decoded.email);
+        
         setEmail(decoded.email);
-        console.log(email);
+        
         // const updateFavCurr = await updateFavCurrencies(email, )
 
     }

@@ -12,7 +12,7 @@ const BuySellmobiVerfication = () => {
     const verifyCode = async () => {
 
         //      let res = await verifyPhoneCode("123456");
-        //    console.log(res);
+        //    
     }
 
     return (

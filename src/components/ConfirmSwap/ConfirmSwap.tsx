@@ -34,7 +34,7 @@ const ConfirmSwap: React.FC<(Props)> = ({ setStatus }) => {
 
     const [toggleChart, setToggleChart] = useState(false);
     let chartIconVisible = toggleChart ? "cursor-pointer disable_icon" : "cursor-pointer ";
-    console.log(setStatus);
+    
     return (
         <div className="scan-container flex-align-stretch">
             {toggleChart}

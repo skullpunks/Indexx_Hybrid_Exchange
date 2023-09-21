@@ -20,9 +20,9 @@ const BSDashhboard = () => {
             let decoded: any = decodeJWT(access_token);
             setEmail(decoded.email)
             getUserDetails(decoded.email).then((res) => {
-                console.log(res);
+                
                 if (res.status === 200) {
-                    console.log(res.data);
+                    
                     setUserData(res.data);
                 }
             });

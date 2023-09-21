@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Security = () => {
     const navigate = useNavigate();
-    console.log(navigate);
+    
     return (
         <div className="container border-1x security_container margin-t-3x margin-b-2x padding-0 ">
             <h1 className="font_25x padding-tb-1x padding-lr-2x border-b-1x">Security</h1>
@@ -29,7 +29,7 @@ const Security = () => {
                         <h6 className="font_18x col-lg-6">Google Athenticator</h6>
                         <div className="col-lg-6">
                             <div className="row d-flex flex-justify-between">
-                                <Button className="w-auto height_28x col-lg-6">disabled</Button>
+                                <Button className="w-auto height_28x col-lg-6 dis-btn">disabled</Button>
                                 <Button type="primary" className="w-auto font_15x btn-primary  height_28x col-lg-6">enabled</Button>
                             </div>
                         </div>
@@ -40,7 +40,7 @@ const Security = () => {
                             <div className="row d-flex flex-justify-between">
 
                                 <Button type="primary" className="w-auto font_15x btn-primary  height_28x col-lg-6">enabled</Button>
-                                <Button className="w-auto height_28x col-lg-6">disabled</Button>
+                                <Button className="w-auto height_28x col-lg-6 dis-btn">disabled</Button>
                             </div>
                         </div>
                     </div>

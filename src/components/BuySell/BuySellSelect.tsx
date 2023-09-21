@@ -25,7 +25,7 @@ const BuySellSelect: React.FC<(Props)> = ({ setScreenName }) => {
 
     const handleChange = (value: any) => {
         setNetwork(value)
-        console.log(`selected ${value}`);
+        
       };
     
 
