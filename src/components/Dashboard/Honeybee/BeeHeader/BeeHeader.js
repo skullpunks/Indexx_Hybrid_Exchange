@@ -20,7 +20,7 @@ const BeeHeader = () => {
     <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
     
         <div className="col">
-        <Link to="/indexx-exchange/bee-dashboard">
+        <Link to="/indexx-exchange/dashboard">
             <div className="card">
             <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
             <div className="card-body">
@@ -28,7 +28,7 @@ const BeeHeader = () => {
                 <Typography
                 component='p'
                 style={
-                  location.pathname === '/indexx-exchange/bee-dashboard'
+                  location.pathname === '/indexx-exchange/dashboard'
                     ? {
                       height: '0.3px',
                       width: '58px',

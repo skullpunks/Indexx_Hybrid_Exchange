@@ -110,6 +110,23 @@ export const getHoneyBeeDataByUsername = async (username: string) => {
   }
 };
 
+export const requestPermissionsByEmail = async (
+  captainBeeEmail: string,
+  honeyBeeEmail: string,
+  requestType: string
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/requestpermssions/`, {
+      captainBeeEmail,
+      honeyBeeEmail,
+      requestType,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
 export const updateCaptainBeeProfile = async (
   email: string,
   username: string,
