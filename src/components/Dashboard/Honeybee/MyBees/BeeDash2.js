@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import frame from '../../../../assets/hive-dashboard/silverframe.svg';
+import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import framecapt from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
@@ -94,7 +94,6 @@ const BeeDash2 = () => {
                 >
                   <div className="hexagon"
                     style={{ marginBottom: '16px' }}
-
                   >
                     <img
                       alt=""

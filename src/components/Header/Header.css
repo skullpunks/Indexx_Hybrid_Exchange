@@ -594,6 +594,9 @@ button.navbar-toggler {
 .profile-menu .dropdown-menu{
   margin-left: -77vw;
 }
+.profile-menu .main-menu{
+  padding-left: 15vw;
+}
 
 .profile-menu .dropdown-menu .profile-back {
   top: 510px;
@@ -616,6 +619,10 @@ button.navbar-toggler {
     padding-left: 894px;
   }
   
+  .profile-menu .main-menu{
+    padding-left: 30vw;
+  }
+
   .prod-menu .dropdown-menu{
     margin-left: -1108px;
   }
@@ -651,7 +658,11 @@ button.navbar-toggler {
   .main-menu{
     padding-left: 516px;
   }
-  
+
+  .profile-menu .main-menu{
+    padding-left: 28vw;
+  }
+
   .prod-menu .dropdown-menu{
     margin-left: -730px;
   }
@@ -686,6 +697,10 @@ button.navbar-toggler {
     padding-left: 390px;
   }
   
+  .profile-menu .main-menu{
+    padding-left: 25vw;
+  }
+
   .prod-menu .dropdown-menu{
     margin-left: -605px;
   }
@@ -719,6 +734,11 @@ button.navbar-toggler {
 
   .main-menu{
     padding-left: 328px;
+  }
+
+  .profile-menu .main-menu{
+    padding-left: 23vw;
+
   }
   
   .prod-menu .dropdown-menu{
@@ -772,12 +792,55 @@ button.navbar-toggler {
     margin-left: -723px;
   }
   
+  .profile-menu .main-menu{
+    padding-left: 23vw;
+  }
+
   .profile-menu .dropdown-menu{
     margin-left: -73.6vw;
   }
   
 } 
 
+@media screen and (min-width: 768px) and (max-width: 1050px) {
+  .my-menu .dropdown-menu {
+    width: auto;
+    margin-left: -330px;
+    padding-top: 0;
+    border-radius: 0;
+    border: none;
+  }
+
+  .main-menu{
+    padding-left: 222px;
+  }
+  
+  .prod-menu .dropdown-menu{
+    margin-left: -436px;
+  }
+
+  .prog-menu .dropdown-menu{
+    margin-left: -539px;
+  }
+  
+  .wallet-menu .dropdown-menu{
+    margin-left: -638px;
+  }
+  
+  .comp-menu .dropdown-menu{
+    margin-left: -723px;
+  }
+  
+  
+  .profile-menu .main-menu{
+    padding-left: 120px;
+  }
+
+  .profile-menu .dropdown-menu{
+    margin-left: -800px;
+  }
+  
+}
 .profile-menu .dropdown-toggle.nav-link{
   display: flex;
   justify-content: center;

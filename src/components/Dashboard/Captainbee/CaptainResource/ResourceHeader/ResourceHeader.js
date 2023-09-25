@@ -15,7 +15,7 @@ import { Typography } from '@mui/material';
 const ResourceHeader = () => {
   const location = useLocation();
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "dark"
+    localStorage.getItem('selectedTheme') || "light"
   );
 
   useEffect(() => {
