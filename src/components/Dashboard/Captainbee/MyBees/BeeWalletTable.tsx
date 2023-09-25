@@ -53,8 +53,14 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
             title: 'Asset',
             dataIndex: 'coinSymbol',
             render: (_, record) => {
-                return record.coinSymbol + " " + record.coinName;
-            },
+                const imageSrc = require(`../../../../assets/token-icons/${record.coinSymbol}.png`).default;
+                return (
+                    <>
+                        <img src={imageSrc} alt={record.coinSymbol} width={30} height={30} style={{ marginRight: '8px' }} />
+                        {record.coinSymbol} {record.coinName}
+                    </>
+                );
+            }
         },
         // {
         //     title: 'Allocations',

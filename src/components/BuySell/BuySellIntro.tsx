@@ -127,7 +127,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
 
             maskStyle={{ backdropFilter: "blur(2px)" }}
             centered={true}
-            visible={isTransferModalVisible}
+            open={false}
             onOk={handleTransferOk}
             onCancel={handleTransferCancel}
             width={670}
