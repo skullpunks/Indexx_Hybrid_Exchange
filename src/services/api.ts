@@ -1059,9 +1059,14 @@ export const redeemStockCoupon = async (voucher: string, email: string) => {
 
 export const createFiatWithdraw = async (
   email: string,
-  amount: number,
-  accountDetails: any,
-  coin: string = 'USD'
+  coin: string = 'USD',
+  beneficiaryName: string,
+  accountNumber: string,
+  bankName: string,
+  swiftCode: string,
+  addressLine1: string,
+  addressLine2: string,
+  amount: string
 ) => {
   try {
     const result = await API.post(
@@ -1069,7 +1074,12 @@ export const createFiatWithdraw = async (
       {
         email: email,
         amount: amount,
-        accountDetails: accountDetails,
+        beneficiaryName: beneficiaryName,
+        accountNumber: accountNumber,
+        bankName: bankName,
+        swiftCode: swiftCode,
+        addressLine1: addressLine1,
+        addressLine2: addressLine2,
         coin: coin,
       }
     );
