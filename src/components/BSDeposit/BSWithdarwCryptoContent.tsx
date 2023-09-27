@@ -60,15 +60,15 @@ export const BSWithdarwCryptoContent = () => {
       let finalArr = res.data.filter(
         (x: any) => x.transactionType === 'WITHDRAW_CYRPTO'
       );
-      
+
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-      
+
       setUsersWallets(res.data);
     });
     getMinAndMaxOrderValues(String('IN500'), 'WITHDRAW_CRYPTO').then((res) => {
-      
+
       setValues(res);
     });
   }, []);
@@ -227,13 +227,13 @@ export const BSWithdarwCryptoContent = () => {
 
   const checkWalletAddress = async (address: string) => {
     const res = web3.utils.checkAddressChecksum(address);
-    
+
     setIsWalletAddrValid(res);
   };
 
   const onChangeReceiveAmt = (e: any) => {
     // if (e.currentTarget.value) {
-    
+
     let val = e.currentTarget.value;
     setReceiveAmount(val + '');
     setNetwork('');
@@ -245,13 +245,13 @@ export const BSWithdarwCryptoContent = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    
+
     setValue(e.target.value);
   };
 
   const onChageAdd = (e: any) => {
     let val = e.currentTarget.value;
-    
+
     setWalletAddre(val);
     checkWalletAddress(val);
   };
@@ -261,11 +261,11 @@ export const BSWithdarwCryptoContent = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-    
-    
+
+
     setSelectedCoin(String(getRequiredCoin?.title));
     setSelectedCoinObj(String(getRequiredCoin?.title));
-    
+
     setSingleWallet(userWallet[0]);
     // /let res =
     // setMinMax()
@@ -278,12 +278,12 @@ export const BSWithdarwCryptoContent = () => {
       String(getRequiredCoin?.title),
       'WITHDRAW_CRYPTO'
     );
-    
+
     setValues(res);
   };
 
   const withdrawFiat = async () => {
-    
+
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
     let reqObj = {
@@ -294,14 +294,14 @@ export const BSWithdarwCryptoContent = () => {
       walletType: 'WALLET',
       userId: decodedToken?.email,
     };
-    
+
     let res = await createCryptoWithdraw(
       decodedToken?.email,
       Number(finalAmount),
       walletAddress,
       selectedCoin
     );
-    
+
     if (res.status === 200) {
       alert('Withdrawal request submitted successfully');
     } else {
@@ -311,7 +311,7 @@ export const BSWithdarwCryptoContent = () => {
 
   const withdrawCrypto = async () => {
     setLoadings(true);
-    
+
     let res = await createCryptoWithdraw(
       email,
       Number(finalAmount),
@@ -322,12 +322,12 @@ export const BSWithdarwCryptoContent = () => {
       let txs = await transactionList(email);
       let message =
         'Withdraw Successfull. Transaction Id: ' + res.data.data.hash;
-      
+
       openNotificationWithIcon('success', message);
       let finalArr = txs.data.filter(
         (x: any) => x.transactionType === 'WITHDRAW_CYRPTO'
       );
-      
+
       setTxList(finalArr);
       setLoadings(false);
     } else {
@@ -407,6 +407,7 @@ export const BSWithdarwCryptoContent = () => {
           <label>Currency</label>
           <div className=" d-flex flex-justify-between flex-align-center">
             <Select
+              dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
               className="width-100"
               onChange={handleChangeCurrency}
               defaultValue="Select a Coin to Withdraw"

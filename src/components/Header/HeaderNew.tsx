@@ -39,27 +39,38 @@ import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
 
-import { baseURL, baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails,
-baseDEXURL,
-baseHiveURL,
-baseMktplaceURL,
-baseShopURL,
-baseWSURL,
-baseWalletURL,
-baseXnftURL
+import {
+  baseURL, baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails,
+  baseDEXURL,
+  baseHiveURL,
+  baseMktplaceURL,
+  baseShopURL,
+  baseWSURL,
+  baseWalletURL,
+  baseXnftURL
 } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
 
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
+  const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
   localStorage.removeItem("user"); //remove one item
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
+  localStorage.removeItem("refresh_token");
   localStorage.clear(); //clear all localstorage
-  if (window.location.pathname.includes("trade-to-earn"))
-    window.location.reload();
-  else window.location.href = "/indexx-exchange/buy-sell/login";
+  console.log(userType);
+  debugger;
+  if (userType === "CaptainBee") {
+    window.location.href = "/indexx-exchange/buy-sell/hive-login"
+  } else if (userType === "HoneyBee") {
+    window.location.href = "/indexx-exchange/buy-sell/login-honeybee/"
+  } else {
+    if (window.location.pathname.includes("trade-to-earn"))
+      window.location.reload();
+    else window.location.href = "/indexx-exchange/buy-sell/login";
+  }
 };
 
 const Links = [
@@ -113,23 +124,23 @@ const HeaderNew = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    
+
     const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
 
     if (userType === "CaptainBee") {
       setisCaptain(true);
 
       getCaptainBeeStatics(String(username)).then((data) => {
-        
+
         setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
         setStaticsData(data.data);
       });
     } else {
       setisCaptain(false);
 
-      
+
       getHoneyUserDetails(String(user)).then((data) => {
-        
+
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
         setUserProfile(data?.data?._doc?.profilePic);
@@ -411,7 +422,7 @@ const HeaderNew = () => {
                         <a href="https://opensea.io/collection/skullpunksog" className="action-link-style">
                           Shop NFTs
 
-                        </a>  
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">

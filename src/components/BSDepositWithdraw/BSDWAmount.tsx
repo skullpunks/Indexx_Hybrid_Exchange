@@ -1,17 +1,137 @@
-import React, { useState } from 'react';
-import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { Button, notification } from 'antd';
+import { useEffect, useState } from 'react';
 // import RecordedIcon from "../../assets/arts/RecordedIcon.svg";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { createFiatWithdraw, decodeJWT, getUserWallets } from '../../services/api';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+
+function debounce(func: Function, wait: number) {
+    let timeout: NodeJS.Timeout | null;
+    return function executedFunction(...args: any[]) {
+        const later = () => {
+            clearTimeout(timeout!);
+            func(...args);
+        };
+
+        clearTimeout(timeout!);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 export const BSDWAmount = () => {
+    const location = useLocation();
     const navigate = useNavigate();
+    const { beneficiaryName,
+        accountNumber,
+        bankName,
+        swiftCode,
+        addressLine1,
+        addressLine2 } = location.state || {};
+    const [email, setEmail] = useState('');
+    const [singleWallet, setSingleWallet] = useState() as any;
     const [amount, setAmount] = useState('');
-    const onchange = (e: any) => {
-        // if (e.currentTarget.value) {
-        let val = e.currentTarget.value;
-        setAmount(val + "");
-        // }
+    const [finalAmount, setFinalAmount] = useState('');
+    const [loadings, setLoadings] = useState<boolean>(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        const decodedToken: any = decodeJWT(String(token)) as any;
+        setEmail(decodedToken.email);
+        getUserWallets(decodedToken?.email).then((res) => {
+            let requiredCoin = res.data.find((x: any) => x.coinSymbol === "USD");
+            console.log("requiredCoin", requiredCoin)
+            setSingleWallet(requiredCoin)
+        });
+
+    }, []);
+
+    type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+    const openNotificationWithIcon = (
+        type: NotificationType,
+        message: string
+    ) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CheckCircleFilled className="text_link" />,
+            style: {
+                border: '1px solid #11be6a',
+                boxShadow: 'none',
+                borderRadius: 5,
+                top: 100,
+            },
+        });
+    };
+
+    const openNotificationWithIcon2 = (
+        type: NotificationType,
+        message: string
+    ) => {
+        notification[type]({
+            message: message,
+            description: '',
+            icon: <CloseCircleFilled />,
+            style: {
+                border: '1px solid #11be6a',
+                boxShadow: 'none',
+                borderRadius: 5,
+                top: 100,
+            },
+        });
+    };
+
+    const handleSubmit = async () => {
+        const res = await createFiatWithdraw(email, "USD", beneficiaryName,
+            accountNumber,
+            bankName,
+            swiftCode,
+            addressLine1,
+            addressLine2, finalAmount);
+        if (res.status === 200) {
+            openNotificationWithIcon('success', res.data.message);
+            setLoadings(false);
+        } else {
+            setLoadings(false);
+            openNotificationWithIcon2(
+                'error',
+                'Failed to withdraw. Please try again or contact support'
+            );
+        }
+
+        navigate("/indexx-exchange/buy-sell/withdraw/recorded");
     }
+
+    const handleEdit = () => {
+        navigate("/indexx-exchange/buy-sell/withdraw/info", {
+            state: {
+                beneficiaryName,
+                accountNumber,
+                bankName,
+                swiftCode,
+                addressLine1,
+                addressLine2
+            }
+        });
+    };
+    const performSubtraction = (inputValue: any) => {
+        if (inputValue === '') {
+            setFinalAmount(''); // Reset the amount if the input is empty
+            return;
+        }
+        let val = Number(inputValue) - 5; // Subtract 5
+        setFinalAmount(val.toString());
+    };
+
+    const debouncedSubtraction = debounce(performSubtraction, 2000); // 2 seconds delay
+
+    const onchange = (e: any) => {
+        const inputValue = e.currentTarget.value;
+        setAmount(inputValue);   // store raw input
+        debouncedSubtraction(inputValue);  // process and update displayAmount after a delay
+    };
+
     return (
         <div className='scan-container bs_main wd_container'>
             <div className='d-flex w_fiat flex-justify-between flex-align-center deposit_ontainer'>
@@ -28,34 +148,31 @@ export const BSDWAmount = () => {
                     <div className='d-flex flex-justify-between border-1x flex-align-center padding-1x'>
                         {/* <div className='font_23x flex-align-center brand_opacity_5'>Enter 20-50000</div> */}
                         <input type="number" placeholder="Enter 20-50000" className='no-outline brand_color border-0 w-50 font_23x' value={amount} onChange={onchange} />
-                        <div className="font_13x">Balance:  <span className='text_link'>0.00 iUSD+</span>
+                        <div className="font_13x">Balance:  <span className='text_link'>{Math.floor(singleWallet?.coinBalance * 100) / 100} USD</span>
                         </div>
                     </div>
                 </div>
 
                 <div className='margin-t-2x padding-tb-2x'>
                     <div className='font_!3x'>You receive:</div>
-                    <div className='font_23x'>{amount} iUSD+</div>
+                    <div className='font_23x'>{finalAmount} USD</div>
                 </div>
                 <div className='d-flex padding-tb-2x'>
                     <div>
-                        <div className='font_13x brand_opacity_5'>Bank Account:</div>
-                        <div className='font_13x brand_opacity_5 padding-tb-1x'>Transaction method:</div>
-                        <div className='font_13x brand_opacity_5'>Transaction Fee:   </div>
-                    </div>
-                    <div className='padding-l-1x'>
-                        <div className='font_13x brand_opacity_5'>412*****123 <span className='text_link'>Edit Account</span></div>
-                        <div className='font_13x brand_opacity_5 padding-tb-1x'>Bank Transfer(SWIFT)</div>
-                        <div className='font_13x brand_opacity_5'>0.00 iUSD+  </div>
+                        <div className='font_13x brand_opacity_5'>Bank Account: {accountNumber} {" "}
+                            <span className='text_link' onClick={handleEdit}>Edit Account</span></div>
+                        <div className='font_13x brand_opacity_5'>Transaction method: Bank Transfer(SWIFT) - {swiftCode}</div>
+                        <div className='font_13x brand_opacity_5'>Transaction Fee:  5.00 USD </div>
+                        <div className='font_13x brand_opacity_5'>Maximum withdraw:  50.00 USD </div>
                     </div>
                 </div>
                 <div className='d-flex flex_buttons flex-justify-between margin-b-2x margin-t-auto'>
-                    <Button disabled className='disabled_button font_23x'>
+                    <Button type="primary" onClick={handleEdit}>
                         Previous
                     </Button>
 
-                    <Button type="primary"  >
-                        <Link to="/indexx-exchange/buy-sell/withdraw/recorded">Continue</Link>
+                    <Button type="primary" disabled={!(Number(finalAmount) >= 50 && Number(finalAmount) <= (singleWallet?.coinBalance || 0))} className={!(Number(finalAmount) >= 50 && Number(finalAmount) <= (singleWallet?.coinBalance || 0)) ? 'disabled_button font_23x' : 'font_23x'} onClick={handleSubmit} loading={loadings}>
+                        Continue
                     </Button>
                 </div>
             </div>
