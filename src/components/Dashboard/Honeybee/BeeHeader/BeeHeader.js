@@ -24,14 +24,14 @@ const BeeHeader = () => {
             <div className="card">
             <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
             <div className="card-body">
-                <h5 className="card-title">Dashboard</h5>
+                <h5 className="card-title">Waggle Dance</h5>
                 <Typography
                 component='p'
                 style={
                   location.pathname === '/indexx-exchange/dashboard'
                     ? {
-                      height: '0.3px',
-                      width: '58px',
+                      height: '0.07px',
+                      width: '66px',
                       backgroundColor: '#000',
                     }
                     : null
@@ -52,7 +52,7 @@ const BeeHeader = () => {
                 style={
                   location.pathname === '/indexx-exchange/bee-dashboard/bee-captain'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -75,7 +75,7 @@ const BeeHeader = () => {
                 style={
                   location.pathname === '/indexx-exchange/bee-dashboard/bee-profile'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -101,7 +101,7 @@ const BeeHeader = () => {
                 style={
                   location.pathname === '/indexx-exchange/bee-dashboard/honeycomb'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }

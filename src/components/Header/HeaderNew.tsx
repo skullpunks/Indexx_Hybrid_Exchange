@@ -859,7 +859,7 @@ const HeaderNew = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
                             <Link to="/indexx-exchange/dashboard" className="link-style">
-                              Dashboard
+                              Waggle Dance / Dashboard
                             </Link>
                           </NavDropdown.Item>
                           <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
