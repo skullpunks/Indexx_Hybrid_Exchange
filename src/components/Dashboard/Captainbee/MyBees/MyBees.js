@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SubHeader from '../SubHeader/SubHeader';
 
-import frame from '../../../../assets/hive-dashboard/silverframe.svg';
+import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Grid, Button } from '@mui/material';
 import { getCaptainBeeStatics } from '../../../../services/api';
@@ -92,11 +92,14 @@ const MyBees = () => {
                           className=" d-flex justify-content-center"
                           sx={{
                             display: "flex",
+                            flexDirection:"column",
                             justifyContent: "center",
+                            alignItems:"baseline",
                             backgroundColor: 'transparent',
                             border: "1.5px solid #E1E1E1",
                             height: '50px',
                             marginLeft: '-35px',
+                            pl: 4,
                             width: '211px',
                             transition: "0.3s ease-in-out",
                             '&:hover': {
@@ -106,7 +109,10 @@ const MyBees = () => {
                           }}
                         >
                           <div className="font_15x d-flex align-items-center">
-                            Honey Bee {item.username}
+                            Honey Bee 
+                          </div>
+                          <div className="font_15x d-flex align-items-center">
+                            {item.username}
                           </div>
                         </Box>
                       </div>
@@ -177,7 +183,7 @@ const MyBees = () => {
                 <>
                   <div className="d-flex flex-direction-column justify-content-center" style={{paddingTop:"140px"}}>
                     <div className="d-flex align-items-center justify-content-center">
-                      <h2 style={{color:"var( --body_color)"}}> No Honey Bees Avalible to list </h2>
+                      <h2 style={{color:"var( --body_color)"}}> No Honey Bees Available to list </h2>
                     </div>
                   </div>
                 </>}

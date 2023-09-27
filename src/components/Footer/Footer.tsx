@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Navigation } from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Instagram from '../../assets/arts/instagramIcon.svg';
@@ -12,7 +12,8 @@ import needHelp from '../../assets/arts/needhelp.png';
 import personFlipCoin from '../../assets/arts/personFlip.png';
 
 // import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
-import indexText from '../../assets/indexx.ai_black.svg';
+import indexText_dark from '../../assets/indexx.ai_black.svg';
+import indexText from '../../assets/indexx.ai white.png';
 import arrow from '../../assets/arrow-.svg';
 import './Footer.css';
 import { baseCEXURL, baseDEXURL, baseURL, baseHiveURL, baseWSURL, baseWalletURL, baseShopURL, baseXnftURL, baseMktplaceURL } from '../../services/api';
@@ -56,6 +57,23 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     },
   ];
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event:any) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
       <footer
@@ -63,7 +81,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         style={{marginTop:"250px"}}
      
       >
-        {helpIcon && (
+        {/* {helpIcon && (
           <a
             href={`${baseURL}/indexx-exchange/help`}
             className="need_help"
@@ -74,7 +92,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           >
             Need Help?
           </a>
-        )}
+        )} */}
 
         <div className="flex-align-center d-flex flex-justify-between site_footer_inner row mx-auto">
         <span style={{ marginBottom:"18px", marginTop:"18px"}}>
@@ -82,8 +100,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     className="align-middle"
                   >
                     <a href={baseURL}>
-                      <img src={indexText} alt="index logo" width={"60px"} className='logo_ind'/>
-                    </a>
+                    {theme === "dark" ?
+                    <img src={indexText} alt="index logo" width={"60px"} className='logo_ind'/>
+
+                    :
+                      <img src={indexText_dark} alt="index logo" width={"60px"} className='logo_ind'/>
+                    }
+                      </a>
                     {/* <img src={arrow} alt="index logo" width={"19px"} /> */}
                   </h1>
                 </span>
