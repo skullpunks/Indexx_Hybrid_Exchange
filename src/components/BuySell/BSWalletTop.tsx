@@ -62,9 +62,9 @@ const BSWalletTop = () => {
                     <h1 className='margin-b-0'>{Math.floor(totalBalanceInUSD * 100) / 100}</h1>
                     <img className='padding-l-1x' src={openEye} alt="eye" />
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
                     <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  objectFit: 'cover' }} />
-                </div>
+                </div> */}
 
                 <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}

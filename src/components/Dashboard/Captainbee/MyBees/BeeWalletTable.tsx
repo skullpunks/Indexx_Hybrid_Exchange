@@ -24,6 +24,7 @@ interface DataType {
     coinBalance: any;
     coinBalanceInUSD: any;
     coinBalanceInBTC: any;
+    coinPrice: any;
 }
 interface BeeWalletTableProps {
     BeeEmail: string;
@@ -50,8 +51,12 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
 
     const columns: ColumnsType<DataType> = [
         {
-            title: 'Asset',
             dataIndex: 'coinSymbol',
+            sorter: {
+                compare: (a, b) => a.coinSymbol.localeCompare(b.coinSymbol),
+                multiple: 1,
+            },
+            title: 'Asset',
             render: (_, record) => {
                 const imageSrc = require(`../../../../assets/token-icons/${record.coinSymbol}.png`).default;
                 return (
@@ -60,7 +65,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
                         {record.coinSymbol} {record.coinName}
                     </>
                 );
-            }
+            },
         },
         // {
         //     title: 'Allocations',
@@ -70,19 +75,41 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
         //     },
         // },
         {
-            title: 'Balance',
             dataIndex: 'coinBalance',
             sorter: {
-                compare: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
+                compare: (a, b) => a.coinBalance - b.coinBalance,
+                multiple: 2,
+            },
+            title: 'Balance',
+            // dataIndex: 'coinBalance',
+            // sorter: {
+            //     compare: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
+            //     multiple: 3,
+            // },
+        },
+        {
+            title: 'Coin Rate',
+            dataIndex: 'coinPrice',
+            sorter: {
+                compare: (a, b) => a.coinPrice - b.coinPrice,
                 multiple: 3,
             },
+        },
+        {
+            title: 'Total Value in USD',
+            dataIndex: 'coinBalanceInUSD',
+            sorter: {
+                compare: (a, b) => (a.coinBalance * a.coinPrice) - (b.coinBalance * b.coinPrice),
+                multiple: 4,
+            },
+            render: (_, record) => record.coinBalance * record.coinPrice
         },
         {
             title: 'Available Balance',
             dataIndex: 'coinBalance',
             sorter: {
-                compare: (a, b) => parseFloat(a.coinBalanceInBTC) - parseFloat(b.coinBalanceInBTC),
-                multiple: 2,
+                compare: (a, b) => parseFloat(a.coinBalance) - parseFloat(b.coinBalance),
+                multiple: 5,
             },
             responsive: ["sm"],
             // render: (_, record) => {
@@ -108,14 +135,14 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
             },
             sorter: {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
-                multiple: 1,
+                multiple: 6,
             },
             responsive: ["sm"],
         },
 
     ];
 
-    const [walletData, setWalletData] = useState() as any;
+    const [walletData, setWalletData] = useState<DataType[]>([]);
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
@@ -148,7 +175,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
             let decoded: any = decodeJWT(access_token);
             let userWallets = await getUserWallets(decoded.email);
             
-            setWalletData(userWallets.data);
+            setWalletData(userWallets.data.map((item: any) => ({ ...item, key: item._id })));
         }
         // let usersWallet = userWallets.data;
         // let totalBalInUSD = 0;

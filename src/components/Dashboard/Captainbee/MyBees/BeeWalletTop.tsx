@@ -62,9 +62,9 @@ const BeeWalletTop = () => {
                     <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}</h1>
                     <img className='padding-l-1x ' src={openEye} alt="eye" />
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>
+                {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>
                     <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  width:"650px", height:"150px", objectFit: 'cover' }} />
-                </div>
+                </div> */}
 
                 <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}

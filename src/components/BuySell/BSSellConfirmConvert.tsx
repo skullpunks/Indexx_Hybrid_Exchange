@@ -312,7 +312,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
           <div className="d-flex flex-justify-between">
             <span> Price</span>
             <span className="font_w_800">
-              {rateData} USD / {filteredFromArray[0].title}{' '}
+              {rateData} {filteredFromArray[0].title}{' '} / USD
             </span>
           </div>
           <div className="d-flex flex-justify-between">
