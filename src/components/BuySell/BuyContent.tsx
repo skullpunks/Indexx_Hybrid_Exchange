@@ -275,7 +275,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         <button
           onClick={navigateUser}
           className={!isLimitPassed || buyVal === '' ? 'disable_icon ' : ''}
-          style={{ marginTop: 30 }}
+          style={{ marginTop: 18 }}
         >
           Preview Purchase{' '}
         </button>

@@ -54,7 +54,7 @@ const ResourceHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-mkt'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#FFB300',
                     }
@@ -76,7 +76,7 @@ const ResourceHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-tech'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#FFB300',
                     }
@@ -99,7 +99,7 @@ const ResourceHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-acc'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#FFB300',
                     }
@@ -124,7 +124,7 @@ const ResourceHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-mgmt'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#FFB300',
                     }
@@ -151,7 +151,7 @@ const ResourceHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-leg'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#FFB300',
                     }

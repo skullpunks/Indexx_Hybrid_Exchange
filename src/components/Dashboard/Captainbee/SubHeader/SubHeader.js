@@ -26,14 +26,14 @@ const SubHeader = () => {
             <div className="card">
             <img src={hat} className="card-img-top" alt="..."/>
             <div className="card-body">
-                <h5 className="card-title">Dashboard</h5>
+                <h5 className="card-title">Waggle Dance</h5>
                 <Typography
                 component='p'
                 sx={
                   location.pathname === '/indexx-exchange/dashboard'
                     ? {
-                      height: '0.3px',
-                      width: '58px',
+                      height: '0.07px',
+                      width: '66px',
                       backgroundColor: '#000',
                     }
                     : null
@@ -54,7 +54,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-mybees'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -77,7 +77,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-profile'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -103,7 +103,7 @@ const SubHeader = () => {
                 sx={
                   location.pathname === '/indexx-exchange/coming-soon-honeycomb'
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
@@ -129,7 +129,7 @@ const SubHeader = () => {
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-leg' ||
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-mgmt' 
                     ? {
-                      height: '0.3px',
+                      height: '0.07px',
                       width: '58px',
                       backgroundColor: '#000',
                     }
