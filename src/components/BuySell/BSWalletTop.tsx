@@ -1,8 +1,9 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import openEye from "../../assets/arts/openEye.svg";
-import comingSoon from "../../assets/coming_soon.png";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+// import comingSoon from "../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/api';
 
 const BSWalletTop = () => {
@@ -50,6 +51,13 @@ const BSWalletTop = () => {
         setTotalBalanceInUSD(totalBalInUSD)
     }
 
+    const [isVisible, setIsVisible] = useState(true);
+
+    const toggleVisibility = () => {
+      setIsVisible(!isVisible);
+    };
+  
+
     return (
         <>
             <div className='border-b-1x orange width-100 padding-t-2x'>
@@ -59,12 +67,19 @@ const BSWalletTop = () => {
                 <h2>Estimated Balance</h2>
                 <div className='d-flex flex-align-center color_general'>
                     <h2 className='margin-b-0'>$</h2>
-                    <h1 className='margin-b-0'>{Math.floor(totalBalanceInUSD * 100) / 100}</h1>
-                    <img className='padding-l-1x' src={openEye} alt="eye" />
+                    {isVisible ? 
+                    <h1 className='margin-b-0 '>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
+                    :
+                    <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                    }
+                    <div onClick={toggleVisibility}>
+                        {isVisible ? <VisibilityIcon/> : <VisibilityOffIcon />} 
+                    </div>
+
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
                     <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  objectFit: 'cover' }} />
-                </div>
+                </div> */}
 
                 <div className='bs_wallet_buttons d-flex d-md-flex d-none'>
                     {/* <Button type="primary" danger>Withdraw</Button> */}

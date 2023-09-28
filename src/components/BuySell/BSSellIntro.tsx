@@ -314,14 +314,14 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             </div>
             <div className="bs_footer_action " >
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                <button style={{ marginTop: 0 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
-            {showUserBalance &&
+            {/* {showUserBalance && */}
                 <div>
-                    <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
+                    <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            }
+            {/* } */}
 
 
 
