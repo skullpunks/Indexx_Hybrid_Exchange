@@ -84,6 +84,9 @@ const BeeWalletTop = () => {
                     {/* <Button type="primary" danger>Withdraw</Button> */}
                     {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
                     <Button type="primary" className='margin-r-1x buy_crypto_btn font_15x small-btn' danger onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button>
+                    <Button type="primary" className='margin-r-1x buy_crypto_btn font_15x small-btn' danger onClick={() => navigate("/indexx-exchange/buy-sell?type=sell")}>Sell Crypto</Button>
+                    <Button type="primary" className='margin-r-1x buy_crypto_btn font_15x small-btn' danger onClick={() => navigate("/indexx-exchange/buy-sell?type=convert")}>Convert Crypto</Button>
+
                     {/* <Link to="/indexx-exchange/buy-sell/withdraw-crypto"></Link> */}
                     <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn margin-r-1x font_15x small-btn' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}> Deposit </Button>
                     <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto withdraw_btn font_15x small-btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}> Withdraw </Button>

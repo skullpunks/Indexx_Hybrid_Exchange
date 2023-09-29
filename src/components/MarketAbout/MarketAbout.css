@@ -1,9 +1,10 @@
 .coll {
   border: 1px solid var(--border-color) !important;
+  border-top: none !important;
   border-top: none;
   margin-bottom: 100;
   color: #5f5f5f;
-  width: 1321px;
+  width: 1340px;
 }
 .coll .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   border-radius: 0 !important;
@@ -14,7 +15,7 @@
   color: #11be6a;
 }
 
-.coll .ant-collapse {
+/* .coll .ant-collapse {
   border: 1px solid var(--border-color) !important;
 
-}
+} */

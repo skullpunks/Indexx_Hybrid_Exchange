@@ -292,7 +292,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 
-                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} style={{paddingLeft : "15px", paddingRight : 0}}>
                                     <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                 </Option>
                             })

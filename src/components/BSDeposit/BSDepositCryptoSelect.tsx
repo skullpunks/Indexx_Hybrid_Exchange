@@ -329,7 +329,7 @@ export const BSDepositCryptoSelect = () => {
         </div>
       </div>
 
-      <div className="card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container">
+      <div className="card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select">
         <h1 className="font_20x padding-t-2x padding-b-1x">Select Coin</h1>
         <div className="">
           <label>Currency</label>
@@ -424,18 +424,25 @@ export const BSDepositCryptoSelect = () => {
           {network && (
             <div className="sensitive_data margin-t-2x">
               <div>Address</div>
+              <div>
+
               {selectedCoin !== 'FTT'
                 ? singleWallet?.coinWalletAddress
                 : singleWallet?.coinAddress}
-              <div className="margin-t-2x d-flex flex-align-center font_weight_800">
                 <img
                   src={copyIcon}
                   alt="copy icon"
                   width="21"
                   height="11"
                   className="padding-l-1x cursor-pointer"
+                  style={{marginBottom:"5px"}}
                   onClick={() => copy(singleWallet?.coinWalletAddress)}
                 />
+              </div>
+              <div className="margin-t-2x d-flex flex-align-center ">
+                <div>
+                Click to scan QR Code
+                </div>
                 {selectedCoin === 'FTT' ? (
                   <Popover
                     placement="bottom"

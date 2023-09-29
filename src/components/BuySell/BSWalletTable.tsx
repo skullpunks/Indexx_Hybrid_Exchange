@@ -27,6 +27,7 @@ interface DataType {
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
+    const [valueInput, setValueInput] = useState('');
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
 
     };
@@ -137,6 +138,8 @@ const BSWalletTable = () => {
 
     //    const [walletData, setWalletData] = useState() as any;
     const [walletData, setWalletData] = useState<DataType[]>([]);
+    const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
+    const [sortedData, setSortedData] = useState<DataType[]>([]);
 
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
@@ -174,16 +177,35 @@ const BSWalletTable = () => {
         //     setTotalBalanceInUSD(totalBalInUSD)
         // }
     }
+    useEffect(() => {
+        setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
+    }, [filteredWalletData, hideZeroBalance])
+
+    useEffect(() => {
+        if(valueInput === "") {
+            setFilteredWalletData(walletData);
+            return
+        }
+        const temp = walletData.filter(item =>
+            item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
+            item.coinName.toLowerCase().includes(valueInput.toLowerCase())
+          );
+
+        setFilteredWalletData(temp);
+
+    }, [valueInput, walletData])
 
 
-    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
+    const onChageSearch = (e:any) => {
+        let val = e.currentTarget.value;
+        setValueInput(val);    
+    }
 
-
-    const filteredWalletData = walletData ? walletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [];
+    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} value={valueInput} onChange={onChageSearch} />;
 
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
-        const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
+        const xx = sortedData && sortedData.slice((current - 1) * pageSize, current * pageSize);
 
         return xx
     };
@@ -217,7 +239,7 @@ const BSWalletTable = () => {
                         </div>
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
                         <MyPagination
-                            total={filteredWalletData && filteredWalletData.length}
+                            total={sortedData && sortedData.length}
                             current={current}
                             onChange={setCurrent}
                         />

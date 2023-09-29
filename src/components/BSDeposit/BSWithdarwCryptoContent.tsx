@@ -401,7 +401,7 @@ export const BSWithdarwCryptoContent = () => {
         </div>
       </div>
 
-      <div className="card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container">
+      <div className="card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select">
         <h1 className="font_20x padding-t-2x padding-b-1x">Select Coin</h1>
         <div className="">
           <label>Currency</label>

@@ -155,8 +155,8 @@
   font-size: 40px;
 }
 
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  height: 55px;
+.deposit-select .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  height: 54px !important;
   border-radius: 5px;
   border: 1px solid #d7d7d7;
 }

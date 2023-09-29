@@ -245,7 +245,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   // getPricesData();
 
   return (
-    <div className="bs_container card">
+    <div className="bs_container card pb-0">
       <div className="card__header flex-justify-between d-flex flex-align-center">
         <h1 className="centered" style={{ color: '#5f5f5f' }}>
           <span
@@ -268,7 +268,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
           <div
             className="bs_curreny_left padding-b-2x"
-            style={{ alignItems: 'baseline', padding: '50px 20px' }}
+            style={{ alignItems: 'baseline', padding: '40px 20px' }}
           >
             <span
               placeholder="0"
@@ -339,8 +339,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
                             paddingRight: "4px"
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
-        <div className="footer bs_footer_action">
-          <p className="text-center pb-2" style={{ color: "var(--body_color)" }}>
+        <div className="footer bs_footer_action p-2">
+          <p className="text-center pb-1 pt-1" style={{ color: "var(--body_color)" }}>
             Transaction/Admin Fee: {adminFee || '0.00'} %
           </p>
           {/* {Number(totalAmountToPayInUSD) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&

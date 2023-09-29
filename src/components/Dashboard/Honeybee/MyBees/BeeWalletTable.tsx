@@ -27,6 +27,7 @@ interface DataType {
 }
 const BeeWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
+    const [valueInput, setValueInput] = useState('');
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         
     };
@@ -137,6 +138,8 @@ const columns: ColumnsType<DataType> = [
 ];
 
     const [walletData, setWalletData] = useState<DataType[]>([]);
+    const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
+    const [sortedData, setSortedData] = useState<DataType[]>([]);
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     // let data: any[] = [{ "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x9a327efba5e175fb240f1b8b9326bdf10d9297b1", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Binance", "coinSymbol": "BNB", "coinDecimals": 18, "coinBalance": 0.10753, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-19T12:39:57.526Z", "coinLastUsedOn": "2022-10-19T12:39:57.526Z", "isCoinActive": true, "_id": "634ff01d03980b5c11c96f74" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x986081cb3253264f57535056b55673d4674038bf", "coinPrivateKey": "", "coinNetwork": "Ethereum", "coinName": "Ethereum", "coinSymbol": "ETH", "coinDecimals": 18, "coinBalance": 0.095925216001389, "coinBalanceInUSD": 123, "coinBalanceInBTC": 0.0065, "coinCreatedOn": "2022-10-19T17:12:33.087Z", "coinLastUsedOn": "2022-10-19T17:12:33.087Z", "isCoinActive": true, "_id": "63503001204238ba708ec2b2" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x43e4d660fa09b82d5c906d87f775eb6cd215ccff", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Indexx500", "coinSymbol": "IN500", "coinDecimals": 18, "coinBalance": 10, "coinBalanceInUSD": 37, "coinBalanceInBTC": 0.0019, "coinCreatedOn": "2022-10-20T01:27:32.295Z", "coinLastUsedOn": "2022-10-20T01:27:32.295Z", "isCoinActive": true, "_id": "6350a40436c8ac9aa13874ad" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "msT58masPu6racd9XFUHCSibfdwDPjZdgc", "coinPrivateKey": "", "coinNetwork": "Bitcoin", "coinName": "Bitcoin", "coinSymbol": "BTC", "coinDecimals": 8, "coinBalance": 0.0015, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-20T09:49:16.127Z", "coinLastUsedOn": "2022-10-20T09:49:16.127Z", "isCoinActive": true, "_id": "6351199c93823abe5ccbca1d" }];
@@ -175,14 +178,35 @@ const columns: ColumnsType<DataType> = [
     }
 
 
-    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
- 
-    
-    const filteredWalletData = walletData ? walletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [];
+    useEffect(() => {
+        setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
+    }, [filteredWalletData, hideZeroBalance])
+
+    useEffect(() => {
+        if(valueInput === "") {
+            setFilteredWalletData(walletData);
+            return
+        }
+        const temp = walletData.filter(item =>
+            item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
+            item.coinName.toLowerCase().includes(valueInput.toLowerCase())
+          );
+
+        setFilteredWalletData(temp);
+
+    }, [valueInput, walletData])
+
+
+    const onChageSearch = (e:any) => {
+        let val = e.currentTarget.value;
+        setValueInput(val);    
+    }
+
+    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} value={valueInput} onChange={onChageSearch} />;
 
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
-        const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
+        const xx = sortedData && sortedData.slice((current - 1) * pageSize, current * pageSize);
         
         return xx
     };
@@ -201,6 +225,7 @@ const columns: ColumnsType<DataType> = [
         );
     };
 
+   console.log(sortedData);
    
    
     return (
@@ -216,7 +241,7 @@ const columns: ColumnsType<DataType> = [
                         </div>
                         <Table className='custom_table' columns={columns}dataSource={getData(current, pageSize)} onChange={onChange} />
                         <MyPagination
-                    total={filteredWalletData && filteredWalletData.length}
+                    total={sortedData && sortedData.length}
                     current={current}
                     onChange={setCurrent}
                 />

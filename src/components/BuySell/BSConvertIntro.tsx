@@ -211,7 +211,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
@@ -224,7 +224,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChangeToToken} value={BSvalue?.toToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
