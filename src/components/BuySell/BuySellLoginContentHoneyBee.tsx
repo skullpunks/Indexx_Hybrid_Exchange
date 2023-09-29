@@ -38,6 +38,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
+      localStorage.setItem('userType', resObj?.userType);
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);

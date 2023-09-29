@@ -30,7 +30,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [userBalance, setUserBalance] = useState(0);
-    const [showUserBalance, setShowUserBalance] = useState(false);
+    // const [showUserBalance, setShowUserBalance] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState("");
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
@@ -130,10 +130,10 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             setSelectedCoin(value);
             if (res.status === 200) {
                 setUserBalance(res.data.balance);
-                setShowUserBalance(true);
+                // setShowUserBalance(true);
             } else {
                 setUserBalance(0);
-                setShowUserBalance(true);
+                // setShowUserBalance(true);
                 return 0;
             }
         } else {
@@ -142,11 +142,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             setSelectedCoin(value);
             if (res.status === 200) {
                 setUserBalance(res.data.balance);
-                setShowUserBalance(true);
+                // setShowUserBalance(true);
                 return Number(res.data.balance);
             } else {
                 setUserBalance(0);
-                setShowUserBalance(true);
+                // setShowUserBalance(true);
                 return 0;
             }
         }
@@ -211,7 +211,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
@@ -224,7 +224,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     onChange={handleChangeToToken} value={BSvalue?.toToken}>
                     {
                         initialTokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
@@ -232,14 +232,14 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 </Select>
             </div>
             <div className="bs_footer_action " >
-                <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
+                <button style={{ marginTop: 5 }} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
             </div>
 
-            {showUserBalance &&
+            {/* {showUserBalance && */}
                 <div>
                     <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            }
+            {/* } */}
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
         </div >

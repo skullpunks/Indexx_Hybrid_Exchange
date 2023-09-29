@@ -56,7 +56,7 @@
   width: calc(100% - 20px);
 }
 
-.large_card .reset_button {
+.not_so_large_card .reset_button {
   top: 10px;
   right: 0;
   margin-top: 23px;
@@ -97,7 +97,7 @@
   .transaction_crypto_history th {
     display: none;
   }
-  .large_card {
+  .not_so_large_card {
     max-width: 90%;
   }
 

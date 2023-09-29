@@ -627,7 +627,7 @@ const CaptainProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#FFB300',
+                      backgroundColor: '#ffa200',
                       boxShadow: 'none',
                     },
                   }}
@@ -653,7 +653,7 @@ const CaptainProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#FFB300',
+                      backgroundColor: '#ffa200',
                       boxShadow: 'none',
                     },
                   }}

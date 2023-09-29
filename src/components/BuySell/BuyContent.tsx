@@ -205,10 +205,10 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         style={{ alignItems: 'center' }}
       >
         <div
-          className="bs_token_left d-flex justify-between"
+          className="bs_token_left d-flex justify-between align-items-center"
           style={{ height: '55px', padding: '0 11px' }}
         >
-          <div className="bs_token_num d-flex text-start">
+          <div className="bs_token_num d-flex text-start align-items-center">
             <img
               src={bsDollar}
               alt="Index icon"
@@ -227,7 +227,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
             <Select
-              className="width-150 border-0"
+              className="width-100 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
               dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
@@ -241,6 +241,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
                       value={token.address}
                       className="common__token d-flex bs_token_container"
                       data-address={token.address}
+                      style={{paddingLeft : "15px", paddingRight : 0}}
                     >
                       <div className="d-flex bs_token_num select-drop">
                         <img
@@ -275,7 +276,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
         <button
           onClick={navigateUser}
           className={!isLimitPassed || buyVal === '' ? 'disable_icon ' : ''}
-          style={{ marginTop: 30 }}
+          style={{ marginTop: 18 }}
         >
           Preview Purchase{' '}
         </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import frame from '../../../assets/hive-dashboard/silverframe.svg';
+import frame from '../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import BeeHeader from './BeeHeader/BeeHeader';
@@ -144,7 +144,7 @@ const BeeProfile = () => {
                 // border:"none"
               }}
             >
-              <div className="profile-hexagon" style={{marginBottom:"20px"}}>
+              <div className="profile-hexagon" style={{marginBottom:"16.5px"}}>
                 <img
                   alt=""
                   src={(profilePic !== undefined) ? profilePic : dummy}
@@ -295,7 +295,7 @@ const BeeProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#FFB300',
+                      backgroundColor: '#ffa200',
                       boxShadow: 'none',
                     },
                   }}
@@ -319,7 +319,7 @@ const BeeProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#FFB300',
+                      backgroundColor: '#ffa200',
                       boxShadow: 'none',
                     },
                   }}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import frame from '../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
+import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
 
 import pin from '../../../assets/hive-dashboard/sidebar/pin- 1.svg';
 import man from '../../../assets/hive-dashboard/sidebar/man- 2.svg';
@@ -80,7 +81,7 @@ const CaptainDash = () => {
 
   
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "dark"
+    localStorage.getItem('selectedTheme') || "light"
   );
 
   useEffect(() => {
@@ -101,8 +102,9 @@ const CaptainDash = () => {
       <SubHeader />
       {userType === "CaptainBee" ?
         (<div style={{paddingTop:"220px"}}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-496px"}}>
-        My Dashboard
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-329px"}}>
+        <img src={waggle} alt="" width={"46px"}/>&nbsp;&nbsp;&nbsp;
+        Waggle Dance / My Dashboard
         </div>  
         <div className="hive-container">
           <div

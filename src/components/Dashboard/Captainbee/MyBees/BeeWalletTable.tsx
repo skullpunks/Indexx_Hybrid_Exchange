@@ -24,6 +24,7 @@ interface DataType {
     coinBalance: any;
     coinBalanceInUSD: any;
     coinBalanceInBTC: any;
+    coinPrice: any;
 }
 interface BeeWalletTableProps {
     BeeEmail: string;
@@ -33,6 +34,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
 
 
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
+    const [valueInput, setValueInput] = useState('');
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         
     };
@@ -50,8 +52,12 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
 
     const columns: ColumnsType<DataType> = [
         {
-            title: 'Asset',
             dataIndex: 'coinSymbol',
+            sorter: {
+                compare: (a, b) => a.coinSymbol.localeCompare(b.coinSymbol),
+                multiple: 1,
+            },
+            title: 'Asset',
             render: (_, record) => {
                 const imageSrc = require(`../../../../assets/token-icons/${record.coinSymbol}.png`).default;
                 return (
@@ -60,7 +66,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
                         {record.coinSymbol} {record.coinName}
                     </>
                 );
-            }
+            },
         },
         // {
         //     title: 'Allocations',
@@ -70,36 +76,58 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
         //     },
         // },
         {
-            title: 'Balance',
             dataIndex: 'coinBalance',
             sorter: {
-                compare: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
+                compare: (a, b) => a.coinBalance - b.coinBalance,
+                multiple: 2,
+            },
+            title: 'Balance',
+            // dataIndex: 'coinBalance',
+            // sorter: {
+            //     compare: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
+            //     multiple: 3,
+            // },
+        },
+        {
+            title: 'Coin Rate',
+            dataIndex: 'coinPrice',
+            sorter: {
+                compare: (a, b) => a.coinPrice - b.coinPrice,
                 multiple: 3,
             },
         },
         {
-            title: 'Available Balance',
-            dataIndex: 'coinBalance',
+            title: 'Total Value in USD',
+            dataIndex: 'coinBalanceInUSD',
             sorter: {
-                compare: (a, b) => parseFloat(a.coinBalanceInBTC) - parseFloat(b.coinBalanceInBTC),
-                multiple: 2,
+                compare: (a, b) => (a.coinBalance * a.coinPrice) - (b.coinBalance * b.coinPrice),
+                multiple: 4,
             },
-            responsive: ["sm"],
-            // render: (_, record) => {
-            //     let opts = { danger: false, success: false };
-            //     if (parseFloat(record.DailyChange) > 0) {
-            //         opts["success"] = true; opts["danger"] = false;
-            //     }
-            //     else {
-            //         opts["danger"] = true; opts["success"] = false;
-            //     };
-
-            //     let classNameLabel = (parseFloat(record.DailyChange) > 0) ? "btn-success" : "btn-warn"
-            //     return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
-            //         {record.DailyChange}
-            //     </Button>
-            // },
+            render: (_, record) => record.coinBalance * record.coinPrice
         },
+        // {
+        //     title: 'Available Balance',
+        //     dataIndex: 'coinBalance',
+        //     sorter: {
+        //         compare: (a, b) => parseFloat(a.coinBalance) - parseFloat(b.coinBalance),
+        //         multiple: 5,
+        //     },
+        //     responsive: ["sm"],
+        //     // render: (_, record) => {
+        //     //     let opts = { danger: false, success: false };
+        //     //     if (parseFloat(record.DailyChange) > 0) {
+        //     //         opts["success"] = true; opts["danger"] = false;
+        //     //     }
+        //     //     else {
+        //     //         opts["danger"] = true; opts["success"] = false;
+        //     //     };
+
+        //     //     let classNameLabel = (parseFloat(record.DailyChange) > 0) ? "btn-success" : "btn-warn"
+        //     //     return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
+        //     //         {record.DailyChange}
+        //     //     </Button>
+        //     // },
+        // },
         {
             title: 'Unavailable Balance',
             dataIndex: 'coinBalance',
@@ -108,14 +136,16 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
             },
             sorter: {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
-                multiple: 1,
+                multiple: 5,
             },
             responsive: ["sm"],
         },
 
     ];
 
-    const [walletData, setWalletData] = useState() as any;
+    const [walletData, setWalletData] = useState<DataType[]>([]);
+    const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
+    const [sortedData, setSortedData] = useState<DataType[]>([]);
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
@@ -148,7 +178,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
             let decoded: any = decodeJWT(access_token);
             let userWallets = await getUserWallets(decoded.email);
             
-            setWalletData(userWallets.data);
+            setWalletData(userWallets.data.map((item: any) => ({ ...item, key: item._id })));
         }
         // let usersWallet = userWallets.data;
         // let totalBalInUSD = 0;
@@ -165,15 +195,35 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
         // }
     }
 
+    useEffect(() => {
+        setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
+    }, [filteredWalletData, hideZeroBalance])
 
-    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} />;
+    useEffect(() => {
+        if(valueInput === "") {
+            setFilteredWalletData(walletData);
+            return
+        }
+        const temp = walletData.filter(item =>
+            item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
+            item.coinName.toLowerCase().includes(valueInput.toLowerCase())
+          );
+
+        setFilteredWalletData(temp);
+
+    }, [valueInput, walletData])
 
 
-    const filteredWalletData = walletData ? walletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [];
+    const onChageSearch = (e:any) => {
+        let val = e.currentTarget.value;
+        setValueInput(val);    
+    }
+
+    const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} value={valueInput} onChange={onChageSearch} />;
 
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
-        const xx = filteredWalletData && filteredWalletData.slice((current - 1) * pageSize, current * pageSize);
+        const xx = sortedData && sortedData.slice((current - 1) * pageSize, current * pageSize);
         
         return xx
     };
@@ -207,7 +257,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
                         </div>
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
                         <MyPagination
-                            total={filteredWalletData && filteredWalletData.length}
+                            total={sortedData && sortedData.length}
                             current={current}
                             onChange={setCurrent}
                         />

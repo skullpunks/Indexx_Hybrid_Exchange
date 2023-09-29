@@ -21,7 +21,7 @@ const BeeWallet = () => {
                 </div>
             </div> */}
 
-            <div className='scan-container d-flex flex-direction-column card large_card orange pb-0'>
+            <div className='scan-container d-flex flex-direction-column card not_so_large_card orange pb-0'>
 
 
                 <BeeWalletTop />

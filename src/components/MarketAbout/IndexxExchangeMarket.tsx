@@ -106,9 +106,7 @@ const IndexxExchangeMarket = () => {
                                 participate in all derivatives like Daily Fortune, Casino and
                                 Games. The price is low at the moment but has the highest
                                 potential to increase value because of its characteristics,
-                                demand and need. Today is the best time to hoard Indexx
-                                Exchange since it is only $0.10/INEX and it is predicted to
-                                increase its value within 3 - 6 months time.
+                                demand and need. Now is the best time to buy and hold your Indexx INEX tokens. The current price per INEX token is $2.00, while being predicted to increase in value within 3 - 6 months time.  
                             </p>
                             <br />
 

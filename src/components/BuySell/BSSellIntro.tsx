@@ -292,7 +292,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 
-                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
+                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} style={{paddingLeft : "15px", paddingRight : 0}}>
                                     <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                 </Option>
                             })
@@ -314,14 +314,14 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
             </div>
             <div className="bs_footer_action " >
                 {/* <button className="sell_btn" disabled={(!isLimitPassed)} onClick={formSubmit}>Preview Sell </button> */}
-                <button style={{ marginTop: 30 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
+                <button style={{ marginTop: 0 }} className={((parseFloat(val) < 0.00001 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? "disable_icon" :
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
-            {showUserBalance &&
+            {/* {showUserBalance && */}
                 <div>
-                    <h6 className='text-center'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
+                    <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
                 </div>
-            }
+            {/* } */}
 
 
 

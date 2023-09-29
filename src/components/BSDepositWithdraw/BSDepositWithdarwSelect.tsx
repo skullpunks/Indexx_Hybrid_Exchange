@@ -30,15 +30,15 @@ export const BSDepositWithdarwSelect = () => {
             {/* <RightOutlined /> */}
           </div>
         </div>
-        <label className='padding-t-3x'>Deposit with</label>
+        <label className='padding-t-3x'>Withdraw with</label>
         <Button disabled className='disabled_button font_23x'>
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
           <span className='radio_text'>Bank Transfer(SWIFT) <br />
-            <span className='helper_text'>0 Fee, 1-4 Business days</span>
+            <span className='helper_text'>Fee: 5 USD, 2-5 Business days</span>
           </span></Radio>
-        <Button type="primary" className='disable_icon'>
+        <Button type="primary">
           <Link to="/indexx-exchange/buy-sell/withdraw/info">Continue</Link>
         </Button>
 

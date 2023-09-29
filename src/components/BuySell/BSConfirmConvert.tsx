@@ -37,7 +37,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   // 
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean>(false);
-  const [rateData1, setRateData1] = useState();
+  const [rateData1, setRateData1] = useState(0);
+  const [rateData2, setRateData2] = useState(0);
   const [rateData3, setRateData3] = useState(0);
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const [, setTotalAmountToPayInUSD] = useState(0);
@@ -83,7 +84,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let res2 = await getCoinPriceByName(String(filteredToArray[0].title));
     priceData2 = res2.data;
     
-
+    setRateData2(priceData2.results.data);
     
     
     let finalRate = priceData1.results.data / priceData2.results.data;
@@ -244,7 +245,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   // getPricesData();
 
   return (
-    <div className="bs_container card">
+    <div className="bs_container card pb-0">
       <div className="card__header flex-justify-between d-flex flex-align-center">
         <h1 className="centered" style={{ color: '#5f5f5f' }}>
           <span
@@ -267,7 +268,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
           <div
             className="bs_curreny_left padding-b-2x"
-            style={{ alignItems: 'baseline', padding: '50px 20px' }}
+            style={{ alignItems: 'baseline', padding: '40px 20px' }}
           >
             <span
               placeholder="0"
@@ -284,6 +285,26 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
           {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
                     </div> */}
+        </div>
+        <div
+          className="bs_token d-flex cursor-pointer justify-between font_20x"
+          style={{ alignItems: 'center' }}
+        >
+          <span>{filteredToArray[0].title} Rate</span>
+          <span>
+            {Math.floor(rateData2 * 10000) / 10000} USD /{' '}
+            {filteredToArray[0].title}
+          </span>
+        </div>
+        <div
+          className="bs_token d-flex cursor-pointer justify-between font_20x"
+          style={{ alignItems: 'center' }}
+        >
+          <span>{filteredFromArray[0].title} Rate </span>
+          <span>
+            {Math.floor(rateData1 * 10000) / 10000} USD /{' '}
+            {filteredFromArray[0].title}
+          </span>
         </div>
         <div
           className="bs_token d-flex cursor-pointer justify-between font_20x"
@@ -318,8 +339,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
                             paddingRight: "4px"
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
-        <div className="footer bs_footer_action">
-          <p className="text-center pb-2" style={{ color: "var(--body_color)" }}>
+        <div className="footer bs_footer_action p-2">
+          <p className="text-center pb-1 pt-1" style={{ color: "var(--body_color)" }}>
             Transaction/Admin Fee: {adminFee || '0.00'} %
           </p>
           {/* {Number(totalAmountToPayInUSD) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&

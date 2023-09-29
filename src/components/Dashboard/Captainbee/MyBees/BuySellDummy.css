@@ -49,7 +49,7 @@
   color: #fff;
 }
 
-.large_card {
+.not_so_large_card {
   margin: 0 auto;
   max-width: calc(120% - 160px);
   /* margin-bottom: 300px; */

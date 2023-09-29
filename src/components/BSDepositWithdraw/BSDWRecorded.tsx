@@ -21,7 +21,7 @@ export const BSDWRecorded = () => {
             <div className='card bs_container sell_screens margin-lr-auto  margin-t-3x responsive_container'>
                 <h1 className='text-center padding-lr-2x padding-t-2x'>Your transaction has recorded </h1>
                 <div className='text-center w-100 padding-tb-2x'><img src={RecordedIcon} className="padding-tb-2x" alt="RecordedIcon" width="100" height="121" /></div>
-                <p className='border-t-1x padding-lr-2x padding-t-2x'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>
+                <p className='border-t-1x padding-lr-2x padding-t-2x'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-5 business days.</p>
                 <div className='padding-lr-2x padding-t-2x margin-b-2x margin-t-auto'>
                     <Button type="primary" className='margin-t-2x' >
                         <Link to="/indexx-exchange/buy-sell/withdraw/">Home</Link>

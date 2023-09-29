@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import framecapt from '../../../../assets/hive-dashboard/frame.svg';
-import frame from '../../../../assets/hive-dashboard/silverframe.svg';
+import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
 import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
@@ -45,7 +45,7 @@ const BeeDash = () => {
   }, [id])
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "dark"
+    localStorage.getItem('selectedTheme') || "light"
   );
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const BeeDash = () => {
                 }}
               >
                 <div className="side-hexagon"
-                  style={{ marginBottom: '12px' }}
+                  style={{ marginBottom: '8px' }}
 
                 >
                   <img
