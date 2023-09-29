@@ -97,29 +97,29 @@ const BSWalletTable = () => {
             },
             render: (_, record) => record.coinBalance * record.coinPrice
         },
-        {
-            title: 'Available Balance',
-            dataIndex: 'coinBalance',
-            sorter: {
-                compare: (a, b) => parseFloat(a.coinBalance) - parseFloat(b.coinBalance),
-                multiple: 5,
-            },
-            responsive: ["sm"],
-            // render: (_, record) => {
-            //     let opts = { danger: false, success: false };
-            //     if (parseFloat(record.DailyChange) > 0) {
-            //         opts["success"] = true; opts["danger"] = false;
-            //     }
-            //     else {
-            //         opts["danger"] = true; opts["success"] = false;
-            //     };
+        // {
+        //     title: 'Available Balance',
+        //     dataIndex: 'coinBalance',
+        //     sorter: {
+        //         compare: (a, b) => parseFloat(a.coinBalance) - parseFloat(b.coinBalance),
+        //         multiple: 5,
+        //     },
+        //     responsive: ["sm"],
+        //     // render: (_, record) => {
+        //     //     let opts = { danger: false, success: false };
+        //     //     if (parseFloat(record.DailyChange) > 0) {
+        //     //         opts["success"] = true; opts["danger"] = false;
+        //     //     }
+        //     //     else {
+        //     //         opts["danger"] = true; opts["success"] = false;
+        //     //     };
 
-            //     let classNameLabel = (parseFloat(record.DailyChange) > 0) ? "btn-success" : "btn-warn"
-            //     return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
-            //         {record.DailyChange}
-            //     </Button>
-            // },
-        },
+        //     //     let classNameLabel = (parseFloat(record.DailyChange) > 0) ? "btn-success" : "btn-warn"
+        //     //     return <Button type='primary' size="middle" {...opts} className={classNameLabel}>
+        //     //         {record.DailyChange}
+        //     //     </Button>
+        //     // },
+        // },
         {
             title: 'Unavailable Balance',
             dataIndex: 'coinBalance',
@@ -128,7 +128,7 @@ const BSWalletTable = () => {
             },
             sorter: {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
-                multiple: 6,
+                multiple: 5,
             },
             responsive: ["sm"],
         },
