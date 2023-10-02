@@ -11,20 +11,22 @@
 
 .side-container{
     background-color: #ffb300;
-    width: 900px;
+    width: 1200px;
     /* height: 650px; */
     padding: 20px;
+    margin-left: 30px;
 }
 
 .honeybee-container{
   background-color: var(--hive-honeybee);
-  width: 900px;
+  width: 1200px;
   /* height: 700px; */
   padding: 20px;
 }
 
 .lh_32x{
     line-height: 32px;
+    overflow-wrap: break-word;
 }
 .hexagon {
   position: relative;

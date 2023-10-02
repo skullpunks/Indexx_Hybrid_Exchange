@@ -4,6 +4,7 @@ import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
+import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
 
 import './SubHeader.css'
 import { Link, useLocation } from 'react-router-dom';
@@ -24,8 +25,8 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard">
             <div className="card">
-            <img src={hat} className="card-img-top" alt="..."/>
-            <div className="card-body">
+            <img src={waggle} className="card-img-top mt-sm-2 mb-sm-2" alt="..."/>
+            <div className="card-body" style={{marginTop:"1.5px"}}>
                 <h5 className="card-title">Waggle Dance</h5>
                 <Typography
                 component='p'
@@ -48,14 +49,14 @@ const SubHeader = () => {
             <div className="card">
             <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
             <div className="card-body">
-                <h5 className="card-title">Honey Bees</h5>
+                <h5 className="card-title">My Honey Bees</h5>
             <Typography
                 component='p'
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-mybees'
                     ? {
                       height: '0.07px',
-                      width: '58px',
+                      width: '72px',
                       backgroundColor: '#000',
                     }
                     : null

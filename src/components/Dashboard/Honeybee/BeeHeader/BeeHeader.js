@@ -3,6 +3,7 @@ import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg
 import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
+import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
 
 import './BeeHeader.css'
 import { Link, useLocation } from 'react-router-dom';
@@ -22,7 +23,7 @@ const BeeHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard">
             <div className="card">
-            <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
+            <img src={waggle} className="card-img-top mt-sm-2 mb-sm-2" alt="..." style={{marginTop:"6.5px"}}/>
             <div className="card-body">
                 <h5 className="card-title">Waggle Dance</h5>
                 <Typography
@@ -46,14 +47,14 @@ const BeeHeader = () => {
             <div className="card">
             <img src={hat} className="card-img-top" alt="..."/>
             <div className="card-body">
-                <h5 className="card-title">Captain Bee</h5>
+                <h5 className="card-title">My Captain Bee</h5>
             <Typography
                 component='p'
                 style={
                   location.pathname === '/indexx-exchange/bee-dashboard/bee-captain'
                     ? {
                       height: '0.07px',
-                      width: '58px',
+                      width: '75px',
                       backgroundColor: '#000',
                     }
                     : null

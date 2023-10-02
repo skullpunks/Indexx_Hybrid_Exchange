@@ -49,6 +49,17 @@
     font-size: 13px;
 }
 
+.button-box-2 {
+    color: var(--dark_text);
+    /* margin-left: 1.5rem; */
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    font-family: "Inter";
+    font-size: 13px;
+}
+
 .button-btn {
     background-color: #FFB300;
     padding-left: 4.2rem;

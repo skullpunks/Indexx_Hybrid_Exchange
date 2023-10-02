@@ -234,9 +234,10 @@ const Growth = () => {
                       background: 'var(--body_background)',
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
                       p: 1,
+                      aspectRatio:1
                     }}
                   >
                     <Typography
@@ -244,7 +245,7 @@ const Growth = () => {
                       fontSize={'12px'}
                       fontWeight={600}
                       textAlign={'left'}
-                      pr={5}
+                      pr={"50%"}
                     >
                       Total Honey Bees/Users
                     </Typography>
@@ -278,9 +279,10 @@ const Growth = () => {
                       background: 'var(--body_background)',
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
                       p: 1,
+                      aspectRatio:1
                     }}
                   >
                     <Typography
@@ -288,7 +290,7 @@ const Growth = () => {
                       fontSize={'12px'}
                       fontWeight={600}
                       textAlign={'left'}
-                      pr={12}
+                      pr={"70%"}
                     >
                       Total Orders
                     </Typography>
@@ -320,12 +322,13 @@ const Growth = () => {
                 <Box
                   sx={{
                     background: 'var(--body_background)',
-                    color:"var(--body_color)"
+                    color:"var(--body_color)",
+                    width:"100%",
                   }}
                 >
                   <LineChart
-                    width={400}
-                    height={300}
+                    width={572}
+                    height={429}
                     series={[
                       { data: pData, label: 'pv' },
                       { data: uData, label: 'uv' },
