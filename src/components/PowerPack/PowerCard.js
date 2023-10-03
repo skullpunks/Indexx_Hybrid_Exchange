@@ -196,7 +196,7 @@ const PowerCard = ({ card }) => {
                                 },
                             }}
                         >
-                            Buy Stock Token
+                            Buy
                         </Button>
                     </Link>
                 </Box>
