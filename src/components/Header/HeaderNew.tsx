@@ -367,6 +367,11 @@ const HeaderNew = () => {
                           NFT
                         </a>
                       </NavDropdown.Item>
+                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/power-pack`} className="link-div">
+                        <a href={`${baseCEXURL}/indexx-exchange/power-pack`} className="link-style">
+                          Power Pack
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseWSURL}/certificates`} className="link-div">
                         <a href={`${baseWSURL}/certificates`} className="link-style">
                           Stock Certificates
