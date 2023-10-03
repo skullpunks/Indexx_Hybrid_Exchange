@@ -1,12 +1,56 @@
-import React, { useState } from 'react'
 import { Box, Button, Grid, Grow, Typography } from '@mui/material';
+import { useState } from 'react';
 import ReactCardFlip from "react-card-flip";
-import { Link } from 'react-router-dom';
+import { createPowerPackOrder } from '../../services/api';
 
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
-
+    const [loadings, setLoadings] = useState(false);
     const parsedId = parseInt(card.id) * 100;
+    const [message, setMessage] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+    function stringPriceToNumber(price) {
+        return parseFloat(price.replace(/,/g, ''));
+      }
+      
+    // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+    const createNewBuyOrder = async (card) => {
+        console.log("purchasedCard", card);
+        setLoadings(true);
+        let purchasedProduct = card.name;
+        let paymentMethodUsed = "Paypal";
+        let powerPackAmountInNumber = stringPriceToNumber(card?.price);
+        let powerPackAmount = card?.price;
+        console.log(
+            paymentMethodUsed,
+            purchasedProduct,
+            powerPackAmountInNumber,
+            powerPackAmount
+        )
+        let res = await createPowerPackOrder(purchasedProduct,
+            paymentMethodUsed,
+            purchasedProduct,
+            powerPackAmountInNumber,
+            powerPackAmount);
+        if (res.status === 200) {
+            setLoadings(false);
+            //--Below code is to enable paypal Order---
+
+            for (let i = 0; i < res.data.links.length; i++) {
+                if (res.data.links[i].rel.includes("approve")) {
+                    window.location.href = res.data.links[i].href;
+                }
+            }
+            //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+        } else {
+            setLoadings(false);
+            // openNotificationWithIcon2('error', res.data);
+            setIsModalOpen(true);
+            setMessage(res.data);
+        }
+    };
 
     return (
         <Grow
@@ -174,31 +218,33 @@ const PowerCard = ({ card }) => {
                             }
                         </Box>
                     </ReactCardFlip>
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                        <Button
-                            sx={{
-                                backgroundColor: "transparent",
-                                color: "#5f5f5f",
-                                border: "1px solid #A1A1A1",
-                                borderRadius: "0",
-                                px: 4,
-                                mt: 2,
-                                width: "260px",
-                                height: "36px",
-                                fontSize: "13px",
-                                fontWeight: "100",
-                                textTransform: "none",
-                                zIndex: "5",
-                                "&:hover": {
-                                    background: "#11BE6A",
-                                    color: "#ffffff",
-                                    borderColor: "#11BE6A",
-                                },
-                            }}
-                        >
-                            Buy
-                        </Button>
-                    </Link>
+                    <Button
+                        onClick={() => {
+                            createNewBuyOrder(card);
+                        }}
+                        loading={loadings}
+                        sx={{
+                            backgroundColor: "transparent",
+                            color: "#5f5f5f",
+                            border: "1px solid #A1A1A1",
+                            borderRadius: "0",
+                            px: 4,
+                            mt: 2,
+                            width: "260px",
+                            height: "36px",
+                            fontSize: "13px",
+                            fontWeight: "100",
+                            textTransform: "none",
+                            zIndex: "5",
+                            "&:hover": {
+                                background: "#11BE6A",
+                                color: "#ffffff",
+                                borderColor: "#11BE6A",
+                            },
+                        }}
+                    >
+                        Buy
+                    </Button>
                 </Box>
             </Grid>
         </Grow>
