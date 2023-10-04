@@ -48,21 +48,21 @@ const PaymentSuccess = () => {
               <Link to='/indexx-exchange/buy-sell/'>
 
                 <Button
-                  variant="contained"
                   disableTouchRipple
                   sx={{
-                    backgroundColor: '#FFB300',
-                    borderRadius: '2px',
-                    color: '#282828',
+                    backgroundColor: "transparent",
+                    color: "#5f5f5f",
+                    border: "1px solid #A1A1A1",
+                    borderRadius: "0",
                     width: '100%',
                     px: 8,
                     textTransform: 'none',
                     fontSize: '15px',
                     fontWeight: 500,
                     boxShadow: 'none',
-                    //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFB300',
+                      borderColor: "#FFB300",
                       boxShadow: 'none',
                     },
                   }}
@@ -73,12 +73,12 @@ const PaymentSuccess = () => {
               <Link to='/indexx-exchange/buy-sell/wallet'>
 
                 <Button
-                  variant="contained"
                   disableTouchRipple
                   sx={{
-                    backgroundColor: '#FFB300',
-                    borderRadius: '2px',
-                    color: '#282828',
+                    backgroundColor: "transparent",
+                    color: "#5f5f5f",
+                    border: "1px solid #A1A1A1",
+                    borderRadius: "0",
                     width: '100%',
                     px: 11,
                     textTransform: 'none',
@@ -87,7 +87,8 @@ const PaymentSuccess = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFB300',
+                      borderColor: "#FFB300",
                       boxShadow: 'none',
                     },
                   }}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PowerCard from './PowerCard'
 import { Box, Grid, Typography } from '@mui/material'
 import { PackData } from './PackData'
+import powerp from "../../assets/powerpack/power page logo 1.svg";
 
 const PowerPack = () => {
     const [cards, setCards] = useState([]);
@@ -17,17 +18,20 @@ const PowerPack = () => {
                     justifyContent: "center",
                     alignContent: "center",
                     alignItems: "center",
-                    // maxWidth: `${isMobile ? "100%" : "75%" }`,
                     width: "100%",
                     objectFit: "scale-down",
-                    // maxHeight: "auto"
-                    // my: 12,
                     my: 2,
-                    flexDirection: "column",
+                    flexDirection: "row",
                     gap: 3,
                 }}
             >
-                <Box width={"62%"} sx={{ textAlign: "center" }}>
+                <Box
+                    component={"img"}
+                    src={powerp}
+                    alt='logo'                
+                />
+
+                <Box sx={{ textAlign: "center" }}>
                     <Typography variant={"p"} fontWeight={600} fontSize={"37px"}>
                         Power Pack Pricing
                     </Typography>

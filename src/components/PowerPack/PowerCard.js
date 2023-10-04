@@ -2,6 +2,7 @@ import { Box, Button, Grid, Grow, Typography } from '@mui/material';
 import { useState } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder } from '../../services/api';
+import inex from '../../assets/INEX 5.svg';
 
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
@@ -72,7 +73,7 @@ const PowerCard = ({ card }) => {
                             padding: '20px'
                         }}>
 
-                            <Typography variant="text" component="p" fontSize={"27px"} fontWeight={600} lineHeight={2.1} mb={3}
+                            <Typography variant="text" component="p" fontSize={"27px"} fontWeight={600} lineHeight={2.1} mb={2}
                                 style={{ color: `${card.level === "Captain Bee" ? "#FFB300" : "inherit"}` }}
                             >
                                 {card.name}
@@ -80,15 +81,29 @@ const PowerCard = ({ card }) => {
 
                             <img alt="" src={card.photo} width={"180px"} style={{ marginBottom: "15px" }} />
 
-                            <Typography variant="text" component="p" fontSize={"50px"} fontWeight={400} mb={7} mt={3}>
+                            <Typography variant="text" component="p" fontSize={"50px"} fontWeight={600} mb={5} mt={1}>
                                 ${card.price}
                             </Typography>
 
-                            <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
+                            <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} >
                                 Features
                             </Typography>
 
-                            {card.level === "Captain Bee" ?
+                            <Typography variant="text" component="p" fontSize={"13px"} fontWeight={300} style={{ color: "#FFB300" }} lineHeight={"22.8px"} my={1}>
+                            {card.level === "Captain Bee" ?   `${card.level} Level` : '\u00A0'}
+                                    </Typography>
+
+                            <Typography variant="text" component="p" fontSize={"15px"} fontWeight={800} mb={0.5} lineHeight={"22.8px"}>
+                                <img src={inex} alt="inex" style={{paddingRight:"4px"}} />
+                                  {card.coins}  INEX Tokens ($2 each)
+                            </Typography>
+                                    {card.features.slice(1, 3).map((item) =>
+                                        <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
+                                            {item}
+                                        </Typography>
+                                    )}
+
+                            {/* {card.level === "Captain Bee" ?
                                 <>
                                     <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
                                         {card.level} Level
@@ -101,7 +116,9 @@ const PowerCard = ({ card }) => {
                                 </>
                                 :
                                 <>
-
+                                    <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
+                                    {" "}
+                                    </Typography>
                                     {card.features.slice(0, 3).map((item) =>
                                         <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
                                             {item}
@@ -109,7 +126,7 @@ const PowerCard = ({ card }) => {
                                     )}
                                 </>
 
-                            }
+                            } */}
 
 
                             {card.flip &&
@@ -118,7 +135,7 @@ const PowerCard = ({ card }) => {
                                     disableTouchRipple
                                     sx={{
                                         fontSize: "13px",
-                                        color: "#11BE6A",
+                                        color: "#FFB300",
                                         textTransform: "none",
                                         backgroundColor: "transparent",
                                         boxShadow: 'none',
@@ -128,7 +145,7 @@ const PowerCard = ({ card }) => {
                                         '&:hover': {
                                             backgroundColor: 'transparent',
                                             boxShadow: 'none',
-                                            color: "#0ea55a",
+                                            color: "#ffa200",
                                         },
                                     }}
                                 >
@@ -160,13 +177,13 @@ const PowerCard = ({ card }) => {
                                 ${card.price}
                             </Typography>
 
-                            {card.level === "Captain Bee" ?
+                            {/* {card.level === "Captain Bee" ? */}
                                 <div style={{
-                                    minHeight: "286px", display: "flex",
-                                    justifyContent: "flex-end", flexDirection: "column"
+                                    minHeight: "306px", display: "flex",
+                                    justifyContent: "flex-start", flexDirection: "column"
                                 }}>
                                     <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
-                                        {card.level} Level
+                                        {card.level === "Captain Bee" ?   `${card.level} Level` : '\u00A0'}
                                     </Typography>
 
                                     {card.features.map((item) =>
@@ -175,20 +192,18 @@ const PowerCard = ({ card }) => {
                                         </Typography>
                                     )}
                                 </div>
-                                :
+                                {/* :
                                 <div style={{
-                                    minHeight: "286px", display: "flex",
-                                    justifyContent: "flex-end", flexDirection: "column"
+                                    minHeight: "306px", display: "flex",
+                                    justifyContent: "flex-start", flexDirection: "column"
                                 }}>
-
                                     {card.features.map((item) =>
                                         <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
                                             {item}
                                         </Typography>
                                     )}
                                 </div>
-
-                            }
+                            } */}
 
 
                             {card.flip &&
@@ -197,7 +212,7 @@ const PowerCard = ({ card }) => {
                                     disableTouchRipple
                                     sx={{
                                         fontSize: "13px",
-                                        color: "#11BE6A",
+                                        color: "#FFB300",
                                         textTransform: "none",
                                         backgroundColor: "transparent",
                                         boxShadow: 'none',
@@ -205,11 +220,11 @@ const PowerCard = ({ card }) => {
                                         width: "fit-content",
                                         height: "fit-content",
                                         position: "relative",
-                                        bottom: "-37px",
+                                        bottom: "-17px",
                                         '&:hover': {
                                             backgroundColor: 'transparent',
                                             boxShadow: 'none',
-                                            color: "#0ea55a",
+                                            color: "#ffa200",
                                         },
                                     }}
                                 >
@@ -237,13 +252,12 @@ const PowerCard = ({ card }) => {
                             textTransform: "none",
                             zIndex: "5",
                             "&:hover": {
-                                background: "#11BE6A",
-                                color: "#ffffff",
-                                borderColor: "#11BE6A",
+                                background: "#FFB300",
+                                borderColor: "#FFB300",
                             },
                         }}
                     >
-                        Buy
+                        Buy Power Pack
                     </Button>
                 </Box>
             </Grid>
