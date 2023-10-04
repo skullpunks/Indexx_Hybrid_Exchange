@@ -1,9 +1,27 @@
-import React from 'react'
-import man from "../../assets/man paint 1.svg"
-import { Box, Button, Typography } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Button, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import man from "../../assets/man paint 1.svg";
+import { getPaypalOrder } from '../../services/api';
 
 const PaymentSuccess = () => {
+    
+    const [orderID, setOrderId] = useState("");
+    const [orderId] = useSearchParams();
+
+  useEffect(() => {
+    setOrderId(String(orderId.get("orderId")));
+    if (orderId.get("orderId") !== undefined) {
+        getPaypalOrder(String(orderId.get('orderId'))).then((res) => {
+            
+            if (res.status === 200) {
+                let orderData = res.data.data;
+                console.log("orderData", orderData)
+            }
+        });
+    }
+}, [orderId])
+
     return (
         <Box mt={18}>
             <Box mx={"auto"} sx={{
@@ -20,7 +38,7 @@ const PaymentSuccess = () => {
                 on purchasing the 
                 </Typography>
                 <Typography variant="text" component="p" fontSize={"40px"} fontWeight={400}>
-                Power Pack
+                Power Pack. Your orderId is {orderID}
                 </Typography>
                 <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
                 The INEX tokens have been dropped automatically in your wallet. 
