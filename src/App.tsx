@@ -79,6 +79,7 @@ import BeeDash2 from "./components/Dashboard/Honeybee/MyBees/BeeDash2";
 import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStartedLayoutHoneyBee";
 import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 import PowerPack from "./components/PowerPack/PowerPack";
+import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -139,6 +140,7 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
+          <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 
 
           {/* {
