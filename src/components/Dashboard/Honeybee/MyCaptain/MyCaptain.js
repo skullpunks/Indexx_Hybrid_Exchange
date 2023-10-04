@@ -25,8 +25,10 @@ import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 import '../../Captainbee/CaptainDash.css';
 import MyCaptainTabs from './MyCaptainTabs';
 import BeeHeader from '../BeeHeader/BeeHeader';
-import { Rating } from '@mui/material';
+import { Button, Rating } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
+import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
+import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
 
 
 const MyCaptain = () => {
@@ -35,6 +37,8 @@ const MyCaptain = () => {
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [email, setEmail] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpench, setIsModalOpenCh] = useState(false);
 
   useEffect(() => {
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
@@ -52,15 +56,69 @@ const MyCaptain = () => {
     <>
       <BeeHeader />
       <div style={{paddingTop:"220px"}}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-390px"}}>
+      <div className='d-flex justify-content-center' style={{marginLeft:"260px"}}>
+
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{width:"1200px"}}>
+        <div style={{width:"74%"}}>
           Your Captain Bee’s  Dashboard
+        </div>
+          <div className='d-flex justify-content-between' style={{width:"25.5%"}}>
+
+          <Button
+              variant="outlined"
+              disableTouchRipple
+              onClick={() => setIsModalOpenCh(true)}
+              sx={{
+                borderColor: '#FFB300',
+                borderRadius: '2px',
+                color: '#282828',
+                height: '40px',
+                width:"149px",
+                px: 1,
+                textTransform: 'none',
+                fontSize: '10px',
+                boxShadow: 'none',
+                '&:hover': {
+                  borderColor: '#FFB300',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              Change Captain Bee
+            </Button>
+            <Button
+              variant="outlined"
+              disableTouchRipple
+              onClick={() => setIsModalOpen(true)}
+              sx={{
+                borderColor: '#FFB300',
+                borderRadius: '2px',
+                color: '#282828',
+                width:"149px",
+                height: '40px',
+                px: 1,
+                textTransform: 'none',
+                fontSize: '10px',
+                boxShadow: 'none',
+                '&:hover': {
+                  borderColor: '#FFB300',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              Remove Captain Bee
+            </Button>
+            </div>
+
         </div>  
+      </div>
+
       <div className="hive-container">
         <div
           className="d-flex justify-content-between"
-          style={{ width: '76%', maxWidth: '1140px' }}
+          // style={{ width: '76%', maxWidth: '1140px' }}
         >
-        <div className="d-flex flex-direction-column mt-1">
+        <div className="d-flex flex-direction-column mt-1" style={{width:"16%"}}>
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
                   style={{
@@ -146,6 +204,18 @@ const MyCaptain = () => {
         </div>
       </div>
       </div>
+      <div>
+          <RemoveCaptain
+            isVisible={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </div>
+        <div>
+          <ChangeCaptain
+            isVisible={isModalOpench}
+            onClose={() => setIsModalOpenCh(false)}
+          />
+        </div>
     </>
   );
 };

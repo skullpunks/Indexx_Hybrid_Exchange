@@ -65,8 +65,8 @@ const BeeDash = () => {
     <>
       <SubHeader />
       <div style={{paddingTop:"220px"}}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-389px"}}>
-        Honey Bee’s  Dashboard
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-422px"}}>
+        Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard
         </div>  
       <div className="hive-container">
         <div

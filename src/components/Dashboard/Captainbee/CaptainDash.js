@@ -102,16 +102,16 @@ const CaptainDash = () => {
       <SubHeader />
       {userType === "CaptainBee" ?
         (<div style={{paddingTop:"220px"}}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-329px"}}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-570px"}}>
         <img src={waggle} alt="" width={"46px"}/>&nbsp;&nbsp;&nbsp;
         Waggle Dance / My Dashboard
         </div>  
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
-            style={{ width: '74%', maxWidth: '1140px' }}
+            // style={{ width: '74%', maxWidth: '1140px' }}
           >
-            <div className="d-flex flex-direction-column mt-1">
+            <div className="d-flex flex-direction-column mt-1" style={{width:"17%"}}>
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
                   style={{
@@ -431,9 +431,10 @@ const CaptainDash = () => {
                         background: 'var(--body_background)',
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
                         p: 1,
+                        aspectRatio:1
                       }}
                     >
                       <Typography
@@ -441,7 +442,7 @@ const CaptainDash = () => {
                         fontSize={'12px'}
                         fontWeight={600}
                         textAlign={'left'}
-                        pr={5}
+                        pr={"50%"}
                       >
                         Total Honey Bees/Users
                       </Typography>
@@ -475,9 +476,10 @@ const CaptainDash = () => {
                         background: 'var(--body_background)',
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
                         p: 1,
+                        aspectRatio:1
                       }}
                     >
                       <Typography
@@ -485,7 +487,7 @@ const CaptainDash = () => {
                         fontSize={'12px'}
                         fontWeight={600}
                         textAlign={'left'}
-                        pr={12}
+                        pr={"70%"}
                       >
                         Total Orders
                       </Typography>
@@ -517,11 +519,12 @@ const CaptainDash = () => {
                   <Box
                     sx={{
                       background: 'var(--body_background)',
+                      width:"100%",
                     }}
                   >
                     <LineChart
-                      width={400}
-                      height={300}
+                      width={572}
+                      height={429}
                       series={[
                         { data: pData, label: 'pv' },
                         { data: uData, label: 'uv' },

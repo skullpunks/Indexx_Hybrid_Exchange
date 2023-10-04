@@ -165,7 +165,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           window.location.href = res.data.links[i].href;
         }
       }
-      getStripePaymentIntent(res.data.orderId, res.data.user.email);
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
       // openNotificationWithIcon2('error', res.data);

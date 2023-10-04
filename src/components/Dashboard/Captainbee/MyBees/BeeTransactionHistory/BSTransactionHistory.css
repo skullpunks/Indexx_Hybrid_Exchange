@@ -117,9 +117,9 @@
   }
 }
 
-.custom_table tr > td.ant-table-cell:nth-child(3) {
+/* .custom_table tr > td.ant-table-cell:nth-child(3) {
   text-align: right;
-}
+} */
 
 .custom_table 
 .ant-table-tbody 

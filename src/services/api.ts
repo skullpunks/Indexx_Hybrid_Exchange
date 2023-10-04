@@ -22,7 +22,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  //baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -699,6 +699,32 @@ export const createBuyOrder = async (
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createPowerPackOrder = async (
+  purchasedProduct: string,
+  paymentMethodUsed: string,
+  amount: number,
+  powerPackAmountInNumber: number,
+  powerPackAmount: number,
+  email?: string,
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/order/createPowerPackOrder', {
+      purchasedProduct: purchasedProduct,
+      powerPackAmount: powerPackAmount,
+      amount: amount,
+      powerPackAmountInNumber: powerPackAmountInNumber,
+      paymentMethodUsed: paymentMethodUsed,
+      email: email ? email : localStorage.getItem('user'),
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createPowerPackOrder)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

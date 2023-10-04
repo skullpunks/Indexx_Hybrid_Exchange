@@ -3,6 +3,16 @@
     color: white;
 }
 
+.capt-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-tabs-tab-btn:focus {
+    padding: 0;
+    color: #393939;
+}
+
 .capt-tabs .ant-tabs-ink-bar {
-    background: #000;
+    display: none;
+  }
+
+  .capt-tabs .ant-tabs-top > .ant-tabs-nav::before{
+    display: none;
   }
