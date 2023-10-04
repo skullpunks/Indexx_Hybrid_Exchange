@@ -36,8 +36,13 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 
                 if (res.status === 200) {
                     let orderData = res.data.data;
+                    if(orderData?.orderType == "Buy" || orderData?.orderType == "Sell" || orderData?.orderType == "Convert") {
                     setoutAmt(orderData.breakdown.outAmount)
                     setoutcurr(orderData.breakdown.outCurrencyName)
+                    } else {
+                        navigate(`/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`);
+                    }
+                    
                 }
             });
         }
