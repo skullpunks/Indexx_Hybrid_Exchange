@@ -3,6 +3,7 @@ import PowerCard from './PowerCard'
 import { Box, Grid, Typography } from '@mui/material'
 import { PackData } from './PackData'
 import powerp from "../../assets/powerpack/power page logo 1.svg";
+import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
 
 const PowerPack = () => {
     const [cards, setCards] = useState([]);
@@ -12,6 +13,7 @@ const PowerPack = () => {
 
     return (
         <Box mt={18} pb={5}>
+        <PowerPackHeader/>
             <Box
                 sx={{
                     display: "flex",
@@ -20,7 +22,8 @@ const PowerPack = () => {
                     alignItems: "center",
                     width: "100%",
                     objectFit: "scale-down",
-                    my: 2,
+                    mt:25,
+                    mb: 2,
                     flexDirection: "row",
                     gap: 3,
                 }}
