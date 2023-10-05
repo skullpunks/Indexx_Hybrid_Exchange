@@ -22,7 +22,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  //baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -711,6 +711,7 @@ export const createPowerPackOrder = async (
   amount: number,
   powerPackAmountInNumber: number,
   powerPackAmount: number,
+  discountCode: string,
   email?: string,
 ) => {
   try {
@@ -720,6 +721,7 @@ export const createPowerPackOrder = async (
       amount: amount,
       powerPackAmountInNumber: powerPackAmountInNumber,
       paymentMethodUsed: paymentMethodUsed,
+      discountCode: discountCode,
       email: email ? email : localStorage.getItem('user'),
     });
     return result.data;
@@ -728,6 +730,18 @@ export const createPowerPackOrder = async (
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
+  }
+};
+
+export const getDiscountCode = async (discountCode: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/order/validateDiscountCode/${discountCode}`);
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (getCoreWalletDetails)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
   }
 };
 

@@ -45,39 +45,35 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
         }
     }, []);
 
-    console.log(BSvalue, "convert");
-    console.log(filteredtokens, "tokens");
-
-    
     useEffect(() => {
-        if(tokenType === 2) {
-          const filtered = initialTokens.filter(item =>
-            item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
-            item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-          );
-          setFilteredtokens(filtered);
-          
-          handleChange(filtered[0].address);
-        //   handleChangeToToken(filtered[1].address);
+        let newTokens: any[] = [];
+
+        if (tokenType === 2) {
+            newTokens = initialTokens.filter(item =>
+                item.subTitle.toLowerCase().includes('stock') ||
+                item.subTitle.toLowerCase().includes('snp500')
+            );
+        } else if (tokenType === 1) {
+            newTokens = initialTokens.filter(item =>
+                !item.subTitle.toLowerCase().includes('stock') &&
+                !item.subTitle.toLowerCase().includes('snp500')
+            );
+        } else if (tokenType === 0) {
+            newTokens = initialTokens;
         }
-    
-        else if (tokenType === 1){
-          const filtered = initialTokens.filter(item =>
-            !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
-            !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-    
-          );
-          setFilteredtokens(filtered);
-          handleChange(filtered[0].address);
-        //   handleChangeToToken(filtered[1].address);
+
+        setFilteredtokens(newTokens);
+
+    }, [tokenType]);
+
+    useEffect(() => {
+        // This effect triggers when filteredtokens changes
+        if (filteredtokens && filteredtokens.length) {
+            handleChange(filteredtokens[0]?.address || "");
+            handleChangeToToken(filteredtokens[1]?.address || "");
         }
-    
-        else if (tokenType === 0){
-          setFilteredtokens(initialTokens);
-          handleChange(initialTokens[0].address);
-        //   handleChangeToToken(initialTokens[1].address);
-        }
-      }, [tokenType])
+    }, [filteredtokens]);
+
 
     useEffect(() => {
         return () => {
@@ -116,7 +112,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
         let testVal: string = "";
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
-            
+
             if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
                 e.preventDefault();
                 return;
@@ -149,8 +145,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
         }
         if (val) {
             // setScreenName("confirmConvert");
-            
-            
+
+
             if (honeyBeeId === "undefined" || honeyBeeId === "")
                 navigate("/indexx-exchange/buy-sell/confirm-convert");
             else
@@ -162,7 +158,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
     }
 
     const getCoinBalance = async (value: string) => {
-        
+
         if (honeyBeeId && honeyBeeEmail) {
             const res = await getWalletBalance(honeyBeeEmail, value);
             setSelectedCoin(value);
@@ -176,7 +172,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
             }
         } else {
             const res = await getWalletBalance(email, value);
-            
+
             setSelectedCoin(value);
             if (res.status === 200) {
                 setUserBalance(res.data.balance);
@@ -190,36 +186,46 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
         }
     }
 
-    const filteredFromArray = filteredtokens.filter(function (obj) {
-        return obj?.address === BSvalue?.fromToken;
-    });
-
-    console.log(filteredFromArray, "array");
-
-
     const handleChange = async (value: string) => {
         let getGraphCoin = graphTokens.find(x => x.address === value);
-        if (setBSvalue && BSvalue) {
-            setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
-        }
-        let getRequiredCoin = filteredtokens.find(x => x.address === value);
-        await getCoinBalance(String(getRequiredCoin?.title));
 
+        if (setBSvalue && BSvalue) {
+            setBSvalue(prevValue => ({ ...prevValue, fromToken: value, fromGraph: String(getGraphCoin?.graph) }));
+        }
+
+        let getRequiredCoin = filteredtokens.find(x => x.address === value);
+        if (getRequiredCoin) {
+            await getCoinBalance(String(getRequiredCoin?.title));
+        }
     };
+
 
     const handleChangeToToken = (value: string) => {
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, toToken: value });
         }
     };
+
     const swapCoin = () => {
-        let temp = BSvalue?.fromToken;
-        let getRequiredCoin = filteredtokens.find(x => x.address === temp);
-        
-        
-        if (BSvalue && temp) {
-            setBSvalue({ ...BSvalue, fromToken: BSvalue?.toToken, toToken: temp });
-            //getCoinBalance(BSvalue?.fromTitle)
+        let tempFromToken = BSvalue?.fromToken;
+        let tempToToken = BSvalue?.toToken;
+
+        // Find the graph related to the toToken since after swapping, toToken will be the new fromToken
+        let getGraphCoin = graphTokens.find(x => x.address === tempToToken);
+
+        if (BSvalue && tempFromToken && tempToToken) {
+            setBSvalue(prevValue => ({ 
+                ...prevValue, 
+                fromToken: tempToToken, 
+                toToken: tempFromToken,
+                fromGraph: String(getGraphCoin?.graph) 
+            }));
+            // Find the token object corresponding to the new 'fromToken' after swap
+            let swappedToken = filteredtokens.find(token => token.address === tempToToken);
+
+            if (swappedToken) {
+                getCoinBalance(swappedToken.title);  // Fetch balance for the new 'fromToken'
+            }
         }
 
     }
@@ -232,7 +238,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
                     <div className="bs_curreny_left padding-2x" style={{ transform: "scale(1)" }}>
 
                         <input placeholder="0" className="input_currency" type="text" value={val} onChange={updateVal} style={{ width: "1.2ch" }} />
-                        <span className="font_20x px-1">{filteredFromArray[0].title}</span>
+                        <span className="font_20x px-1">{filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''}</span>
                         {/* <span className="font_20x">{BSvalue?.fromTitle}</span> */}
                     </div>
                     <div className='swap_Arrow_icon cursor-pointer' onClick={swapCoin}>
@@ -249,10 +255,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
 
                 <Select className='width-100 border-0'
-                    onChange={handleChange} value={BSvalue?.fromToken}>
+                    onChange={handleChange} value={BSvalue?.fromToken} key={BSvalue.fromToken}
+                >
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
@@ -262,10 +269,10 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
 
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
                 <Select className='width-100 border-0'
-                    onChange={handleChangeToToken} value={BSvalue?.toToken}>
+                    onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}>
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
+                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
@@ -273,13 +280,20 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
                 </Select>
             </div>
             <div className="bs_footer_action " >
-                <button style={{ marginTop: 5 }} className={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) ? " disable_icon" : (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} disabled={((parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) && (parseFloat(val) <= (Math.floor(userBalance * 1000) / 1000))) || ((userBalance === 0 || (userBalance < parseFloat(val))))} onClick={checkPurchase} >Preview Convert </button>
+            <button 
+                style={{ marginTop: 5 }} 
+                className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val) ? "disable_icon" : ""} 
+                disabled={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val)}
+                onClick={checkPurchase} 
+            >
+                Preview Convert
+            </button>
             </div>
 
             {/* {showUserBalance && */}
-                <div>
-                    <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
-                </div>
+            <div>
+                <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
+            </div>
             {/* } */}
             {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
             <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}

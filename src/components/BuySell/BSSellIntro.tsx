@@ -351,7 +351,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
             </div>
             {/* {showUserBalance && */}
                 <div>
-                    <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {selectedCoin} </h6>
+                    <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {filteredFromArray[0].title} </h6>
                 </div>
             {/* } */}
 

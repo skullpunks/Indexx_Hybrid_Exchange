@@ -1,7 +1,7 @@
-import { Box, Button, Grid, Grow, Typography } from '@mui/material';
+import { Box, Button, Grid, Grow, Typography, Collapse, TextField } from '@mui/material';
 import { useState } from 'react';
 import ReactCardFlip from "react-card-flip";
-import { createPowerPackOrder } from '../../services/api';
+import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
 
 const PowerCard = ({ card }) => {
@@ -10,12 +10,17 @@ const PowerCard = ({ card }) => {
     const parsedId = parseInt(card.id) * 100;
     const [message, setMessage] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [discountCode, setDiscountCode] = useState('');
+    const [discountAmount, setDiscountAmount] = useState(0); // the discount amount
+    const [finalAmount, setFinalAmount] = useState(stringPriceToNumber(card?.price));
+    const [isApplyClicked, setIsApplyClicked] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
 
     function stringPriceToNumber(price) {
         return parseFloat(price.replace(/,/g, ''));
-      }
-      
+    }
+
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
     const createNewBuyOrder = async (card) => {
         console.log("purchasedCard", card);
@@ -24,17 +29,20 @@ const PowerCard = ({ card }) => {
         let paymentMethodUsed = "Paypal";
         let powerPackAmountInNumber = stringPriceToNumber(card?.price);
         let powerPackAmount = card?.price;
+        
         console.log(
             paymentMethodUsed,
             purchasedProduct,
             powerPackAmountInNumber,
-            powerPackAmount
+            powerPackAmount,
+            discountCode
         )
         let res = await createPowerPackOrder(purchasedProduct,
             paymentMethodUsed,
             purchasedProduct,
             powerPackAmountInNumber,
-            powerPackAmount);
+            powerPackAmount,
+            discountCode);
         if (res.status === 200) {
             setLoadings(false);
             //--Below code is to enable paypal Order---
@@ -50,6 +58,21 @@ const PowerCard = ({ card }) => {
             // openNotificationWithIcon2('error', res.data);
             setIsModalOpen(true);
             setMessage(res.data);
+        }
+    };
+
+    const applyDiscount = async () => {
+        let validateDiscountCode = await getDiscountCode(discountCode);
+        if (validateDiscountCode.status === 200) {
+            const discount = parseFloat(card?.price) * validateDiscountCode.data.discountPercentage;
+            setDiscountAmount(discount);
+            setFinalAmount(parseFloat(card?.price) - discount);
+            setErrorMessage(""); // Clear any previous error messages
+        } else {
+            setErrorMessage("Invalid code");  // 2. Set the error message when the code is invalid
+            const discount = parseFloat(card?.price) * 0;
+            setDiscountAmount(discount);
+            setFinalAmount(parseFloat(card?.price) - discount);
         }
     };
 
@@ -90,18 +113,18 @@ const PowerCard = ({ card }) => {
                             </Typography>
 
                             <Typography variant="text" component="p" fontSize={"13px"} fontWeight={300} style={{ color: "#FFB300" }} lineHeight={"22.8px"} my={1}>
-                            {card.level === "Captain Bee" ?   `${card.level} Level` : '\u00A0'}
-                                    </Typography>
+                                {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                            </Typography>
 
                             <Typography variant="text" component="p" fontSize={"15px"} fontWeight={800} mb={0.5} lineHeight={"22.8px"}>
-                                <img src={inex} alt="inex" style={{paddingRight:"4px"}} />
-                                  {card.coins}  INEX Tokens ($2 each)
+                                <img src={inex} alt="inex" style={{ paddingRight: "4px" }} />
+                                {card.coins}  INEX Tokens ($2 each)
                             </Typography>
-                                    {card.features.slice(1, 3).map((item) =>
-                                        <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
-                                            {item}
-                                        </Typography>
-                                    )}
+                            {card.features.slice(1, 3).map((item) =>
+                                <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
+                                    {item}
+                                </Typography>
+                            )}
 
                             {/* {card.level === "Captain Bee" ?
                                 <>
@@ -178,21 +201,21 @@ const PowerCard = ({ card }) => {
                             </Typography>
 
                             {/* {card.level === "Captain Bee" ? */}
-                                <div style={{
-                                    minHeight: "306px", display: "flex",
-                                    justifyContent: "flex-start", flexDirection: "column"
-                                }}>
-                                    <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
-                                        {card.level === "Captain Bee" ?   `${card.level} Level` : '\u00A0'}
-                                    </Typography>
+                            <div style={{
+                                minHeight: "306px", display: "flex",
+                                justifyContent: "flex-start", flexDirection: "column"
+                            }}>
+                                <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
+                                    {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                                </Typography>
 
-                                    {card.features.map((item) =>
-                                        <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
-                                            {item}
-                                        </Typography>
-                                    )}
-                                </div>
-                                {/* :
+                                {card.features.map((item) =>
+                                    <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
+                                        {item}
+                                    </Typography>
+                                )}
+                            </div>
+                            {/* :
                                 <div style={{
                                     minHeight: "306px", display: "flex",
                                     justifyContent: "flex-start", flexDirection: "column"
@@ -233,6 +256,83 @@ const PowerCard = ({ card }) => {
                             }
                         </Box>
                     </ReactCardFlip>
+
+                    <Button onClick={() => setIsApplyClicked(!isApplyClicked)} style={{ marginBottom: '10px' }} sx={{
+                        backgroundColor: "transparent",
+                        color: "#FFB300",  // Adjusted color
+                        px: 4,
+                        mt: 2,
+                        width: "260px",
+                        height: "36px",
+                        fontSize: "13px",
+                        fontWeight: "100",
+                        textTransform: "none",
+                        marginBottom: '10px',
+                        "&:hover": {
+                            background: "transparent",
+                            color: "#FFA200",
+                        },
+                    }}>
+                        Apply Discount
+                    </Button>
+
+                    <Collapse in={isApplyClicked}>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value)}
+                            placeholder="Enter discount code"
+                            style={{
+                                width: '260px',
+                                borderRadius: 0,
+                                textAlign: 'center',
+                                padding: '10px',
+                            }}
+                            sx={{
+                                width: '260px',
+                            }}
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            onClick={applyDiscount}
+                            disabled={!discountCode}
+                            sx={{
+                                backgroundColor: "transparent",
+                                color: "#5f5f5f",
+                                border: "1px solid #A1A1A1",
+                                borderRadius: "0",
+                                px: 4,
+                                mt: 2,
+                                width: "260px",
+                                height: "36px",
+                                fontSize: "13px",
+                                fontWeight: "100",
+                                textTransform: "none",
+                                zIndex: "5",
+                                "&:hover": {
+                                    background: "#FFB300",
+                                    borderColor: "#FFB300",
+                                },
+                            }}
+                        >
+                            Apply
+                        </Button>
+                        {/* Display discount and final amount */}
+                        <div>
+                            <Box style={{ marginTop: '10px', textAlign: 'center', marginLeft: "-43px" }}>
+                                <Typography variant="body2" fontSize={"15px"} fontWeight={800}>Discount Applied: ${discountAmount}</Typography>
+                                <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${finalAmount}</Typography>
+                            </Box>
+                            {errorMessage && (
+                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red', marginLeft: "-43px" }}>
+                                    {errorMessage}
+                                </Box>
+                            )}
+                        </div>
+                    </Collapse>
                     <Button
                         onClick={() => {
                             createNewBuyOrder(card);
