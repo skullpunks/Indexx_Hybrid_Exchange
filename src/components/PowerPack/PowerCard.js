@@ -24,6 +24,8 @@ const PowerCard = ({ card }) => {
     useEffect(() => {
         if (!discountCode) {
             setErrorMessage('');
+            setDiscountAmount(0);  // Clear the discount amount
+            setFinalAmount(parseFloat((card?.price || '0').replace(/,/g, '')));  // Reset the final amount to the original price
         }
     }, [discountCode]);
 
@@ -336,12 +338,12 @@ const PowerCard = ({ card }) => {
                         </Button>
                         {/* Display discount and final amount */}
                         <div>
-                            <Box style={{ marginTop: '10px', textAlign: 'center', marginLeft: "-43px" }}>
+                            <Box style={{ marginTop: '10px', textAlign: 'center' }}>
                                 <Typography variant="body2" fontSize={"15px"} fontWeight={800}>Discount Applied: ${Math.floor(discountAmount * 100) / 100}</Typography>
                                 <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${Math.floor(finalAmount * 100) / 100}</Typography>
                             </Box>
                             {errorMessage && (
-                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red', marginLeft: "-43px" }}>
+                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red'}}>
                                     {errorMessage}
                                 </Box>
                             )}
