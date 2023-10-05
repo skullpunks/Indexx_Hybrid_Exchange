@@ -287,7 +287,7 @@ const PowerCard = ({ card }) => {
                         Apply Discount
                     </Button>
 
-                    <Collapse in={isApplyClicked}>
+                    <Collapse in={isApplyClicked} sx={{width:"260px"}} className='power-input'>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -295,14 +295,15 @@ const PowerCard = ({ card }) => {
                             value={discountCode}
                             onChange={(e) => setDiscountCode(e.target.value)}
                             placeholder="Enter discount code"
-                            style={{
-                                width: '260px',
-                                borderRadius: 0,
-                                textAlign: 'center',
-                                padding: '10px',
-                            }}
                             sx={{
                                 width: '260px',
+                                textAlign: 'center',
+                                borderRadius:"0px",
+                            }}
+                            InputProps={{
+                                style: {
+                                   borderRadius: 0,
+                                },
                             }}
                         />
                         <Button
@@ -321,9 +322,11 @@ const PowerCard = ({ card }) => {
                                 height: "36px",
                                 fontSize: "13px",
                                 fontWeight: "100",
+                                boxShadow: 'none',
                                 textTransform: "none",
                                 zIndex: "5",
                                 "&:hover": {
+                                    boxShadow: 'none',
                                     background: "#FFB300",
                                     borderColor: "#FFB300",
                                 },
