@@ -51,6 +51,7 @@ import IndexxPEPGraph from '../Graphs/IndexxPEPGraph';
 import IndexxTLSAGraph from '../Graphs/IndexxTSLAGraph';
 import IndexxBCMGraph from '../Graphs/IndexxBCMGraph';
 import IndexxSP500Graph from '../Graphs/IndexxSP500Graph';
+import TabExample from './BSHeader/TabExample';
 
 // import { BSProvider } from '../../utils/SwapContext';
 
@@ -122,10 +123,25 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       setHasEmail(true);
     }
   },[hasEmail])
+
+  // const tabKeyMap = {
+  //   all: 0,
+  //   token: 1,
+  //   stock: 2,
+  //   powerpack: 3,
+  // };
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (event:any, newValue:number) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <div className="swap_container">
+      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange}/>
       <span style={{textAlign:'center'}}>
-      <p style={{marginTop:130,fontSize:30}}>Indexx Exchange</p>
+      <p style={{marginTop:200,fontSize:30}}>Indexx Exchange</p>
        <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
       
@@ -147,7 +163,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         <Routes>
           <Route
             path=""
-            element={<BuySellIntro setScreenName={setScreenName} />}
+            element={<BuySellIntro setScreenName={setScreenName} tokenType={selectedTab} />}
           />
           <Route
             path="confirm-purchase"

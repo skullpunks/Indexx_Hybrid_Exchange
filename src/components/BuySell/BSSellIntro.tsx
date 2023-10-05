@@ -24,8 +24,9 @@ export interface TokensObj {
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
+    tokenType: number;
 }
-const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
+const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
     
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
@@ -42,11 +43,42 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [filteredtokens, setFilteredtokens] = useState(initialTokens);
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
     //     }
     //   });
+
+      
+  useEffect(() => {
+    if(tokenType === 2) {
+      const filtered = initialTokens.filter(item =>
+        item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+      );
+      setFilteredtokens(filtered);
+      
+      handleChange(filtered[0].address);
+      // setBSvalue(filtered[0]);
+    }
+
+    else if (tokenType === 1){
+      const filtered = initialTokens.filter(item =>
+        !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
+        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+
+      );
+      setFilteredtokens(filtered);
+      handleChange(filtered[0].address);
+    }
+
+    else if (tokenType === 0){
+      setFilteredtokens(initialTokens);
+      handleChange(initialTokens[0].address);
+    }
+  }, [tokenType])
+  
 
     useEffect(() => {
         // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
@@ -129,7 +161,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     const handleChange = async (value: string) => {
 
-        let getRequiredCoin = initialTokens.find(x => x.address === value);
+        let getRequiredCoin = filteredtokens.find(x => x.address === value);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
 
@@ -174,7 +206,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
     }
 
-    const filteredFromArray = initialTokens.filter(function (obj: any) {
+    const filteredFromArray = filteredtokens.filter(function (obj: any) {
         return (obj?.address === BSvalue?.fromToken);
     });
 
@@ -199,7 +231,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
 
     const formSubmit = () => {
         
-        let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
+        let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
             return;
@@ -288,7 +320,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName }) => {
                     dropdownStyle={{ backgroundColor: "var(--body_background)", }}
                 >
                     {
-                        initialTokens
+                        filteredtokens
                             // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                             .map((token, index) => {
 

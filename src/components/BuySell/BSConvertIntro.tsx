@@ -16,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
+    tokenType: number;
 }
 
 // const filteredArray = (items: any, keyName: any, key: any) => {
@@ -23,7 +24,7 @@ interface Props {
 //         return obj[keyName] === key;
 //     });
 // }
-const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
+const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
     const ref = useRef<HTMLInputElement>(null);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
@@ -34,6 +35,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     const [selectedCoin, setSelectedCoin] = useState("");
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+    const [filteredtokens, setFilteredtokens] = useState(initialTokens);
+
     const { id } = useParams();
 
     useEffect(() => {
@@ -41,6 +44,41 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
             ref.current.value = '';
         }
     }, []);
+
+    console.log(BSvalue, "convert");
+    console.log(filteredtokens, "tokens");
+
+    
+    useEffect(() => {
+        if(tokenType === 2) {
+          const filtered = initialTokens.filter(item =>
+            item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+            item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+          );
+          setFilteredtokens(filtered);
+          
+          handleChange(filtered[0].address);
+        //   handleChangeToToken(filtered[1].address);
+        }
+    
+        else if (tokenType === 1){
+          const filtered = initialTokens.filter(item =>
+            !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
+            !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+    
+          );
+          setFilteredtokens(filtered);
+          handleChange(filtered[0].address);
+        //   handleChangeToToken(filtered[1].address);
+        }
+    
+        else if (tokenType === 0){
+          setFilteredtokens(initialTokens);
+          handleChange(initialTokens[0].address);
+        //   handleChangeToToken(initialTokens[1].address);
+        }
+      }, [tokenType])
+
     useEffect(() => {
         return () => {
             let access_token = String(localStorage.getItem("access_token"));
@@ -94,8 +132,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     }
 
     const checkPurchase = () => {
-        let getRequiredCoin = initialTokens.find(x => x.address === BSvalue?.fromToken);
-        let getRequiredToCoin = initialTokens.find(x => x.address === BSvalue?.toToken);
+        let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
+        let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
         if (getRequiredCoin?.title === "FTT" && getRequiredToCoin?.title !== "INXP") {
             alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
@@ -152,16 +190,19 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
         }
     }
 
-    const filteredFromArray = initialTokens.filter(function (obj) {
+    const filteredFromArray = filteredtokens.filter(function (obj) {
         return obj?.address === BSvalue?.fromToken;
     });
+
+    console.log(filteredFromArray, "array");
+
 
     const handleChange = async (value: string) => {
         let getGraphCoin = graphTokens.find(x => x.address === value);
         if (setBSvalue && BSvalue) {
             setBSvalue({ ...BSvalue, fromToken: value, fromGraph: String(getGraphCoin?.graph) });
         }
-        let getRequiredCoin = initialTokens.find(x => x.address === value);
+        let getRequiredCoin = filteredtokens.find(x => x.address === value);
         await getCoinBalance(String(getRequiredCoin?.title));
 
     };
@@ -173,7 +214,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
     };
     const swapCoin = () => {
         let temp = BSvalue?.fromToken;
-        let getRequiredCoin = initialTokens.find(x => x.address === temp);
+        let getRequiredCoin = filteredtokens.find(x => x.address === temp);
         
         
         if (BSvalue && temp) {
@@ -210,7 +251,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <Select className='width-100 border-0'
                     onChange={handleChange} value={BSvalue?.fromToken}>
                     {
-                        initialTokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
+                        filteredtokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
@@ -223,7 +264,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName }) => {
                 <Select className='width-100 border-0'
                     onChange={handleChangeToToken} value={BSvalue?.toToken}>
                     {
-                        initialTokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
+                        filteredtokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{paddingLeft : "15px", paddingRight : 0}}>
                                 <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>

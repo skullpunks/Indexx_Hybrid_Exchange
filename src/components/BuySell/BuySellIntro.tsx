@@ -13,6 +13,7 @@ import './BuySellIntro.css';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
+  tokenType: number;
 }
 
 const filteredArray = (items: any, keyName: any, key: any) => {
@@ -23,7 +24,7 @@ const filteredArray = (items: any, keyName: any, key: any) => {
 
 
 
-const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
+const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType }) => {
   const { id } = useParams();
   const [ip, setIP] = useState('');
   const [country, setCountry] = useState('');
@@ -71,19 +72,19 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
       label: 'Buy',
       key: '1',
       value: 'buy',
-      children: <BuyContent setScreenName={setScreenName} />,
+      children: <BuyContent setScreenName={setScreenName} tokenType={tokenType}/>,
     }, // remember to pass the key prop
     {
       label: 'Sell',
       key: '2',
       value: 'sell',
-      children: <BSSellIntro setScreenName={setScreenName} />,
+      children: <BSSellIntro setScreenName={setScreenName} tokenType={tokenType}/>,
     },
     {
       label: 'Convert',
       key: '3',
       value: 'convert',
-      children: <BSConvertIntro setScreenName={setScreenName} />,
+      children: <BSConvertIntro setScreenName={setScreenName} tokenType={tokenType}/>,
     },
   ];
   const callback = function (key: any) {
@@ -183,7 +184,7 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName }) => {
           <div className="bs_container_header">
             <h1>Buy Crypto</h1>
           </div>
-          <BuyContent setScreenName={setScreenName} />
+          <BuyContent setScreenName={setScreenName} tokenType={tokenType} />
         </>
       )}
     </div>
