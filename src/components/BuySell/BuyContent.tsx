@@ -15,13 +15,44 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
+  tokenType: number;
 }
 
-const BuyContent: React.FC<Props> = ({ setScreenName }) => {
+const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+  const [filteredtokens, setFilteredtokens] = useState(initialTokens);
+  
+  useEffect(() => {
+    if(tokenType === 2) {
+      const filtered = initialTokens.filter(item =>
+        item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+      );
+      setFilteredtokens(filtered);
+      
+      handleChange(filtered[0].address);
+    }
+
+    else if (tokenType === 1){
+      const filtered = initialTokens.filter(item =>
+        !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
+        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+
+      );
+      setFilteredtokens(filtered);
+      handleChange(filtered[0].address);
+    }
+
+    else if (tokenType === 0){
+      setFilteredtokens(initialTokens);
+      handleChange(initialTokens[0].address);
+    }
+  }, [tokenType])
+  
+
   const navigateUser = () => {
-    let getRequiredCoin = initialTokens.find(
+    let getRequiredCoin = filteredtokens.find(
       (x) => x.address === BSvalue?.fromToken
     );
     if (getRequiredCoin?.title === 'INXP' || getRequiredCoin?.title === 'FTT') {
@@ -91,7 +122,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
   }, [BSvalue.fromTitle, BSvalue.amount, id]);
 
   const handleChange = async (value: string) => {
-    let getRequiredCoin = initialTokens.find((x) => x.address === value);
+    let getRequiredCoin = filteredtokens.find((x) => x.address === value);
     let getGraphCoin = graphTokens.find((x) => x.address === value);
 
     if (setBSvalue && BSvalue) {
@@ -149,7 +180,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
 
       let value = BSvalue?.fromToken;
       // debugger;
-      let getRequiredCoin = initialTokens.find((x) => x.address === value);
+      let getRequiredCoin = filteredtokens.find((x) => x.address === value);
       await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
     }
   };
@@ -232,7 +263,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName }) => {
               value={BSvalue?.fromToken}
               dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
             >
-              {initialTokens
+              {filteredtokens
                 //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
                 .map((token, index) => {
                   return (

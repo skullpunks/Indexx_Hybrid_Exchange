@@ -1,0 +1,52 @@
+.power-page .card-img-top{
+    width: 40px;
+    /* height: 40.86px; */
+    transition: trasnform 330ms ease-in-out !important;
+}
+
+.power-page .card-img-top:hover{
+    transform: scale(1.3);
+    transition: trasnform 330ms ease-in-out !important;
+}
+
+.power-page .card{
+    min-width: auto !important;
+    min-height: auto;
+    align-items: center;
+    padding: 10px 10px 10px;
+    width: 100px;
+    height: 80px;
+    border: none;
+    border-radius: 0;
+    background-color: var(--main-body);
+}
+
+.power-page .card-body{
+    padding: 0;
+}
+
+
+.power-page  h5{
+    width: auto !important;
+    background-color: transparent;
+    border: none;
+    font-size: 10px !important;
+    margin-top: 0px;
+    color: #000 !important;
+    /* color: var(--body_color); */
+}
+
+.power-page .card-text{
+    justify-content: center;
+    text-align: center;
+    color: #000 !important;
+    /* color: var(--body_color); */
+}
+
+.up-logos .col{
+    width: 7%;
+}
+
+.power-page a{
+    text-decoration: none !important;
+}
