@@ -38,10 +38,12 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { notification } from 'antd';
+import { getCaptainBeeStatics } from '../../../services/api';
 
 const HoneyComb = () => {
 
   const [text, settext] = useState();
+  const [userType, setUserType] = useState("");
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
@@ -58,6 +60,22 @@ const HoneyComb = () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
+
+
+  const [staticsData, setStaticsData] = useState();
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    
+    setUserType(userType);
+    if (userType === "CaptainBee") {
+      getCaptainBeeStatics(username).then((data) => {
+        
+        setStaticsData(data.data);
+      });
+    }
+  }, [])
 
 
   const openNotificationWithIcon = (
@@ -97,7 +115,7 @@ const HoneyComb = () => {
           className="fw-bold justify-content-center d-flex"
           style={{ fontSize: '32px' }}
         >
-          Captain Bee Willie’s Public Profile
+          Captain Bee {staticsData?.affiliateUserProfile?.accname} Public Profile
         </div>
         <div className="hive-container">
           <div
@@ -129,7 +147,7 @@ const HoneyComb = () => {
                   <div className="hexagon">
                     <img
                       alt=""
-                      src={dummy}
+                      src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
                       width={'63px'}
                       height={'66px'}
                       ml={'-6px'}
@@ -139,7 +157,7 @@ const HoneyComb = () => {
                 </div>
               </div>
               <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
-                Captain Bee Willie A
+                Captain Bee {staticsData?.affiliateUserProfile?.accname}
               </div>
               <div className="justify-content-center d-flex">
                   <img src={copper} alt='pack' width={"80%"} />
@@ -147,7 +165,7 @@ const HoneyComb = () => {
               <div className="align-items-start lh_32x">
                 <div className="font_17x d-flex flex-direction-column align-items-start mt-4">
                   <div className="fw-bold">Bio :</div>
-                  My name is Willie and i am the best captain bee to ever exist
+                  My name is {staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
                   in indexx hive
                 </div>
 
@@ -157,7 +175,7 @@ const HoneyComb = () => {
                   ) : (
                     <img alt="man" src={man} className="me-2" />
                   )}
-                  @willie
+                  @{staticsData?.affiliateUserProfile?.Username}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
@@ -165,7 +183,7 @@ const HoneyComb = () => {
                   ) : (
                     <img alt="man" src={pin} className="me-2" />
                   )}
-                  United States of America
+                  {staticsData?.affiliateUserProfile?.country}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
@@ -173,7 +191,7 @@ const HoneyComb = () => {
                   ) : (
                     <img alt="man" src={house} className="me-2" />
                   )}
-                  New York
+                 {staticsData?.affiliateUserProfile?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
@@ -181,34 +199,33 @@ const HoneyComb = () => {
                   ) : (
                     <img alt="man" src={clock} className="me-2" />
                   )}
-                  October 10, 2023
+                  {staticsData?.formatedAccountCreationDate}
                 </div>
               </div>
 
               <div className="align-items-start lh_32x mt-5">
-                <a href="/">
-                  {/* <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer"> */}
+              <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={discord_dark} className="me-3" />
                   ) : (
                     <img alt="Discord" src={discord} className="me-3" />
                   )}
                 </a>
-                <a href="/">
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={insta_dark} className="me-3" />
                   ) : (
                     <img alt="Instagram" src={insta} className="me-3" />
                   )}
                 </a>
-                <a href="/">
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={linkedin_dark} className="me-3" />
                   ) : (
                     <img alt="LinkedIn" src={linkedin} className="me-3" />
                   )}
                 </a>
-                <a href="/">
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={twitter_dark} />
                   ) : (
@@ -218,7 +235,7 @@ const HoneyComb = () => {
               </div>
               <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
                 <div>
-                  Invite Honey Bee : 123456
+                  Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
                     onClick={() => copyClick(123456)}
@@ -226,7 +243,7 @@ const HoneyComb = () => {
                   />
                 </div>
                 <div>
-                  Invite Captain Bee : skfFSj7
+                  Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
                     onClick={() => copyClick(123456)}
@@ -289,7 +306,7 @@ const HoneyComb = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      32
+                        {staticsData?.honeyBeesCount}
                     </Typography>
                     <Typography
                       variant="text"
@@ -304,7 +321,7 @@ const HoneyComb = () => {
                         gap: 1,
                       }}
                     >
-                      <img alt="up" src={arrow} /> {'30%'}
+                       <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%" }
                     </Typography>
                   </Box>
                   <Box
@@ -427,7 +444,7 @@ const HoneyComb = () => {
                           <Box className="bee-hexagon">
                             <img
                               alt=""
-                              src={dummy}
+                              src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
                               width={'63px'}
                               height={'66px'}
                               ml={'-6px'}
@@ -452,7 +469,7 @@ const HoneyComb = () => {
                           }}
                         >
                           <div className="font_15x d-flex align-items-center">
-                            Captin Bee Willie A. 
+                            Captin Bee {staticsData?.affiliateUserProfile?.accname} 
                           </div>
                           <div className="font_10x d-flex align-items-center">
                             October 9, 2023
