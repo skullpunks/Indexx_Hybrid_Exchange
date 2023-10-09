@@ -661,6 +661,18 @@ export const marketsData = async () => {
   }
 };
 
+export const stockMarketsData = async (symbol: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/basic/stockmarketPrice/${symbol}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (marketPrice)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const updateFavCurrencies = async (email: string, currency: string) => {
   try {
     const result = await API.post('/api/v1/inex/basic/updateFavCurrencies', {
