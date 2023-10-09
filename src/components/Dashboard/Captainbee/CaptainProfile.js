@@ -30,6 +30,7 @@ const CaptainProfile = () => {
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
   const [referralCode, setReferralCode] = useState('');
+  const [referralCodeCapt, setReferralCodeCapt] = useState('');
   const [accname, setAccname] = useState('');
   const [discord, setDiscord] = useState("");
   const [insta, setInsta] = useState("");
@@ -38,6 +39,7 @@ const CaptainProfile = () => {
   const [staticsData, setStaticsData] = useState();
   const [userType, setUserType] = useState("");
   const [loadings, setLoadings] = useState(false);
+  const [bio, setBio] = useState("");
 
   const openNotificationWithIcon = (
     type,
@@ -375,7 +377,7 @@ const CaptainProfile = () => {
                     width={'35%'}
                     textAlign={'left'}
                   >
-                   Referral Code
+                   Honey Bee Referral Code
                   </Typography>
                   <TextField
                     variant="outlined"
@@ -387,6 +389,38 @@ const CaptainProfile = () => {
                     value={referralCode}
                     onChange={(e) => {
                       setReferralCode(e.target.value);
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    mb: 2,
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'18px'}
+                    fontWeight={400}
+                    width={'35%'}
+                    textAlign={'left'}
+                  >
+                   Captain Bee Referral Code
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    placeholder="referralcode"
+                    type="text"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ mb: 2, width: '64%' }}
+                    size="small" // Make the input box smaller
+                    value={referralCodeCapt}
+                    onChange={(e) => {
+                      setReferralCodeCapt(e.target.value);
                     }}
                   />
                 </Box>
@@ -441,6 +475,39 @@ const CaptainProfile = () => {
                     value={accname}
                     onChange={(e) => {
                       setAccname(e.target.value);
+                    }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    mb: 2,
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'18px'}
+                    fontWeight={400}
+                    width={'35%'}
+                    textAlign={'left'}
+                  >
+                    Public Bio
+                  </Typography>
+                  <TextField
+                    //   label="Account Name"
+                    variant="outlined"
+                    placeholder="Add Bio Here"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ mb: 2, width: '64%' }}
+                    size="small" // Make the input box smaller
+                    value={bio}
+                    onChange={(e) => {
+                      setBio(e.target.value);
                     }}
                   />
                 </Box>

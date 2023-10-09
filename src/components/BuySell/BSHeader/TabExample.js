@@ -138,14 +138,14 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
                 src={power_white}
                 alt="Home"
                 width={'63px'}
-                style={{ marginBottom: 0 }}
+                style={{ marginBottom: "1.2px" }}
               />
             :
             <img
               src={power}
               alt="Home"
               width={'63px'}
-              style={{ marginBottom: 0 }}
+              style={{ marginBottom: "1.2px" }}
             />
           }
           component={Link}

@@ -179,6 +179,10 @@ a.nav-link:hover {
   cursor: pointer;
 }
 
+.font_10x {
+  font-size: 10px;
+}
+
 .font_15x {
   font-size: 15px;
 }

@@ -92,7 +92,7 @@ const SubHeader = () => {
 
 
         <div className="col">
-        <a href="/indexx-exchange/coming-soon-honeycomb">
+        <a href="/indexx-exchange/dashboard/honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
                 width:"auto"
@@ -102,7 +102,7 @@ const SubHeader = () => {
                 <Typography
                 component='p'
                 sx={
-                  location.pathname === '/indexx-exchange/coming-soon-honeycomb'
+                  location.pathname === '/indexx-exchange/dashboard/honeycomb'
                     ? {
                       height: '0.07px',
                       width: '58px',

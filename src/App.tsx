@@ -80,6 +80,7 @@ import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStar
 import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 import PowerPack from "./components/PowerPack/PowerPack";
 import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
+import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -131,7 +132,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
-          <Route path="/indexx-exchange/coming-soon-honeycomb" element={<HoneyCombComingSoon />} />
+          <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
 
           {/* Routes for Honey Bee DashBoard   */}
           <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
