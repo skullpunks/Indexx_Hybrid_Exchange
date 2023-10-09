@@ -25,9 +25,10 @@ import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/disc
 
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
+import copper from "../../../assets/powerpack/copper hat.svg";
 
 import comingsoon from '../../../assets/hive-dashboard/comingsoon.svg';
-import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
+// import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 
 import { LineChart } from '@mui/x-charts/LineChart';
 
@@ -46,6 +47,10 @@ import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
 import { getCaptainBeeStatics } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
+
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import { notification } from 'antd';
 
 const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
@@ -97,6 +102,34 @@ const CaptainDash = () => {
     };
   }, []);
 
+  const openNotificationWithIcon = (
+    type,
+    message
+  ) => {
+    const Icon =
+      type === 'error' ? (
+        <CloseCircleFilled />
+      ) : (
+        <CheckCircleFilled className="hive_link" />
+      );
+    notification[type]({
+      message: message,
+      description: '',
+      icon: Icon,
+      style: {
+        border: '1px solid #FFB300',
+        boxShadow: 'none',
+        borderRadius: 5,
+        top: 100,
+      },
+    });
+  };
+
+  const copyClick = (code) => {
+    navigator.clipboard.writeText(code);
+    openNotificationWithIcon('success', 'Copied Successfully!');
+  };
+
   return (
     <>
       <SubHeader />
@@ -142,11 +175,15 @@ const CaptainDash = () => {
                   </div>
                 </div>
               </div>
-                <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">
+                <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
+              <div className="justify-content-center d-flex">
+              <img src={copper} alt='pack' width={"80%"} />
+                  </div>
               <div className="align-items-start lh_32x">
-                <div className="font_13x d-flex align-items-center ">
+
+                <div className="font_13x d-flex align-items-center mt-4">
                 {theme === "dark" ?
               <img alt="man" src={man_dark} className="me-2" />
               :
@@ -211,6 +248,26 @@ const CaptainDash = () => {
                 </a>
 
               </div>
+
+              <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                <div>
+                  Invite Honey Bee : 123456
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() => copyClick(123456)}
+                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
+                  />
+                </div>
+                <div>
+                  Invite Captain Bee : skfFSj7
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() => copyClick(123456)}
+                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
+                  />
+                </div>
+              </div>
+
               <div className="d-flex  flex-direction-column align-items-start mt-5">
                 <div className="font_13x ">
                   Your Rating
