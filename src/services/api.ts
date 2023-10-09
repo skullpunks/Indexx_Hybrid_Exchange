@@ -733,9 +733,9 @@ export const createPowerPackOrder = async (
   }
 };
 
-export const getDiscountCode = async (discountCode: string) => {
+export const getDiscountCode = async (discountCode: string, packName: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/order/validateDiscountCode/${discountCode}`);
+    const result = await API.get(`/api/v1/inex/order/validateDiscountCode/${discountCode}/${packName}`);
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (getCoreWalletDetails)');

@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Grow, Typography, Collapse, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
@@ -21,6 +21,14 @@ const PowerCard = ({ card }) => {
         return parseFloat(price.replace(/,/g, ''));
     }
 
+    useEffect(() => {
+        if (!discountCode) {
+            setErrorMessage('');
+            setDiscountAmount(0);  // Clear the discount amount
+            setFinalAmount(parseFloat((card?.price || '0').replace(/,/g, '')));  // Reset the final amount to the original price
+        }
+    }, [discountCode]);
+
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
     const createNewBuyOrder = async (card) => {
         console.log("purchasedCard", card);
@@ -29,7 +37,7 @@ const PowerCard = ({ card }) => {
         let paymentMethodUsed = "Paypal";
         let powerPackAmountInNumber = stringPriceToNumber(card?.price);
         let powerPackAmount = card?.price;
-        
+
         console.log(
             paymentMethodUsed,
             purchasedProduct,
@@ -58,23 +66,28 @@ const PowerCard = ({ card }) => {
             // openNotificationWithIcon2('error', res.data);
             setIsModalOpen(true);
             setMessage(res.data);
+            setErrorMessage(res.data);
         }
     };
 
     const applyDiscount = async () => {
-        let validateDiscountCode = await getDiscountCode(discountCode);
+        let validateDiscountCode = await getDiscountCode(discountCode, card.name);
         if (validateDiscountCode.status === 200) {
-            const discount = parseFloat(card?.price) * validateDiscountCode.data.discountPercentage;
+            const price = parseFloat((card?.price || '0').replace(/,/g, ''));
+            const discount = price * validateDiscountCode.data.discountPercentage;
             setDiscountAmount(discount);
-            setFinalAmount(parseFloat(card?.price) - discount);
+            setFinalAmount(price - discount);
+            console.log(price - discount);
             setErrorMessage(""); // Clear any previous error messages
         } else {
-            setErrorMessage("Invalid code");  // 2. Set the error message when the code is invalid
-            const discount = parseFloat(card?.price) * 0;
+            setErrorMessage(validateDiscountCode?.data);  // 2. Set the error message when the code is invalid
+            const price = parseFloat((card?.price || '0').replace(/,/g, ''));
+            const discount = price * 0;
             setDiscountAmount(discount);
-            setFinalAmount(parseFloat(card?.price) - discount);
+            setFinalAmount(price - discount);
         }
     };
+
 
     return (
         <Grow
@@ -325,12 +338,12 @@ const PowerCard = ({ card }) => {
                         </Button>
                         {/* Display discount and final amount */}
                         <div>
-                            <Box style={{ marginTop: '10px', textAlign: 'center', marginLeft: "-43px" }}>
-                                <Typography variant="body2" fontSize={"15px"} fontWeight={800}>Discount Applied: ${discountAmount}</Typography>
-                                <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${finalAmount}</Typography>
+                            <Box style={{ marginTop: '10px', textAlign: 'center' }}>
+                                <Typography variant="body2" fontSize={"15px"} fontWeight={800}>Discount Applied: ${Math.floor(discountAmount * 100) / 100}</Typography>
+                                <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${Math.floor(finalAmount * 100) / 100}</Typography>
                             </Box>
                             {errorMessage && (
-                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red', marginLeft: "-43px" }}>
+                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red'}}>
                                     {errorMessage}
                                 </Box>
                             )}
