@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import stock from '../../../assets/BSheader/graphd 1.svg';
 import power from '../../../assets/BSheader/power pack 1.svg';
 import token from '../../../assets/BSheader/tokens icon 1.svg';
 import all from '../../../assets/BSheader/x icon- 1.svg';
+import power_white from '../../../assets/BSheader/power pack 1-white.svg';
+import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
+import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
+import stock_white from '../../../assets/BSheader/tokens icon  white (2).svg';
 import './TabExample.css';
 import { Link } from 'react-router-dom';
 
@@ -15,6 +19,23 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
   //   setSelectedTab(newValue);
   // };
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   console.log(selectedTab);
 
   return (
@@ -24,7 +45,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         top: '90px',
         width: '100%',
         zIndex: 999,
-        background: '#fff',
+        background: 'var(--body_background)',
         height: '90px',
       }}
       className="ext-tabs"
@@ -34,17 +55,27 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         onChange={handleTabChange}
         centered
         aria-label="icon label tabs example"
+        style={{marginTop:"6px"}}
       >
         <Tab
           label="All"
-          icon={
-            <img
-              src={all}
-              alt="Home"
-              width={'40px'}
-              style={{ marginBottom: 0 }}
-            />
-          }
+          icon=
+            {theme === "dark" ? 
+              <img
+                src={all_white}
+                alt="Home"
+                width={'40px'}
+                style={{ marginBottom: 0 }}
+              />
+            :
+              <img
+                src={all}
+                alt="Home"
+                width={'40px'}
+                style={{ marginBottom: 0 }}
+              />
+            }
+          
           style={{
             width: '40px',
             textTransform: 'none',
@@ -56,6 +87,14 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         <Tab
           label="Tokens"
           icon={
+            theme === "dark" ? 
+            <img
+              src={token_white}
+              alt="Home"
+              width={'42px'}
+              style={{ marginBottom: 0 }}
+            />
+            :
             <img
               src={token}
               alt="Home"
@@ -74,7 +113,13 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
 
         <Tab
           label="Stock Tokens"
-          icon={<img src={stock} alt="Home" width={'45px'} 
+          icon={
+            theme === "dark" ? 
+            <img src={stock_white} alt="Home" width={'45px'} 
+          style={{ marginBottom: 6, marginTop:6}}
+          />
+          :
+          <img src={stock} alt="Home" width={'45px'} 
           style={{ marginBottom: 6, marginTop:6}}
           />}
           style={{
@@ -88,6 +133,14 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         <Tab
           label="Power Packs"
           icon={
+            theme === "dark" ? 
+              <img
+                src={power_white}
+                alt="Home"
+                width={'63px'}
+                style={{ marginBottom: 0 }}
+              />
+            :
             <img
               src={power}
               alt="Home"

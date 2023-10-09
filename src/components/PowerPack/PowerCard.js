@@ -82,7 +82,7 @@ const PowerCard = ({ card }) => {
             style={{ transformOrigin: "0 0 0" }}
             {...(true ? { timeout: 1000 + parsedId } : {})}
         >
-            <Grid item xs={1} sm={6} md={3} zIndex={1000}>
+            <Grid item xs={1} sm={6} md={3} >
                 <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }} mt={2} mb={15}>
                     <ReactCardFlip isFlipped={flip}
                         flipDirection="horizontal">
@@ -343,7 +343,7 @@ const PowerCard = ({ card }) => {
                         loading={loadings}
                         sx={{
                             backgroundColor: "transparent",
-                            color: "#5f5f5f",
+                            color: "var(--body_color)",
                             border: "1px solid #A1A1A1",
                             borderRadius: "0",
                             px: 4,

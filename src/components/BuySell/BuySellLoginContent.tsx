@@ -83,7 +83,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     
   };
   return (
-    <div className="">
+    // <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
       <h3 className="text-center margin-lr-auto">Indexx Exchange</h3>
         <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
@@ -198,7 +198,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           <br />
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

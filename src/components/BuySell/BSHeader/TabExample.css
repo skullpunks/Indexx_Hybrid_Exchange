@@ -1,8 +1,8 @@
 .ext-tabs .ant-tabs-ink-bar {
-  background-color:  #000 !important;
+  background-color:  var(--body_color) !important;
 }
 
 .ext-tabs .MuiTabs-indicator{
-  background-color:  #000 !important;
+  background-color:  var(--body_color) !important;
   height: 0.7px;
 }
