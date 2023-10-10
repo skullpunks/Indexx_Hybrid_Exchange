@@ -94,10 +94,10 @@ console.log(refcode === "null");
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
       <div className="row">
-        <div className="col-5">
+        <div className="col">
           <div
             className="text-center justify-center"
-            style={{ paddingLeft: 26 }}
+            // style={{ paddingLeft: 26 }}
           >
             <h3 className='mb-0'>Get Started for</h3>
             <h1 className="top_heading mb-2">Indexx Exchange</h1>
@@ -275,7 +275,7 @@ console.log(refcode === "null");
           </div>
         </div>
 
-        <div className="col">
+        <div className="col log-img">
           <div style={{  marginBottom:-100,paddingLeft: 100 }}>
                     <br/>  <br/>  <br/>
             <Image
