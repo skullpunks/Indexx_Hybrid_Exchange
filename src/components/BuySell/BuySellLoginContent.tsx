@@ -28,7 +28,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     
     
     let res = await loginAPI(values.email_or_username, values.password);
-    
+    console.log(res);
     if (res.status === 200) {
       
       setLoadings(false);
@@ -47,7 +47,6 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
-      
       setLoadings(false);
       openNotificationWithIcon('error', res.data);
     }

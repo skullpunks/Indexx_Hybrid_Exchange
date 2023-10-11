@@ -69,6 +69,18 @@ const HoneyComb = () => {
 
   const [staticsData, setStaticsData] = useState();
 
+
+  useEffect(() => {
+    async function fetchAllText() {
+      const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+      const getMessage = await getPublicMessages(email);
+      console.log("getMessage", getMessage?.data, getMessage?.data?.filter(x => x.createdUserEmail === String(email)));
+      setAllTexts(getMessage?.data?.filter(x => x.createdUserEmail === String(email)));
+    }
+    fetchAllText();
+
+  }, [])
+
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
@@ -78,11 +90,11 @@ const HoneyComb = () => {
       getCaptainBeeStatics(username).then((data) => {
         setStaticsData(data.data);
         console.log(data?.data?.powerPackData?.type);
-        if(data?.data?.powerPackData) {
-        const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-        setPowerPackPhoto(getPowerPack?.photo);
+        if (data?.data?.powerPackData) {
+          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+          setPowerPackPhoto(getPowerPack?.photo);
         } else {
-        setPowerPackPhoto(undefined);
+          setPowerPackPhoto(undefined);
         }
       });
     }
@@ -95,8 +107,8 @@ const HoneyComb = () => {
     const postMessage = await postPublicMessage(email, text);
     console.log("postmessage", postMessage);
     const getMessage = await getPublicMessages(email);
-    console.log("getMessage", getMessage);
-    //setAllTexts();
+    console.log("getMessage", getMessage?.data);
+    setAllTexts(getMessage?.data?.filter(x => x.createdUserEmail === String(email)));
     //if(postMessage)
   }
 
@@ -186,12 +198,12 @@ const HoneyComb = () => {
                   <img src={powerPackPhoto} alt='pack' width={"80%"} />
                 </div>) : (
                   <div>
-                  Please purchase the powerpack from the below URL: <br/>
-                  <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                    Power Pack Purchase
-                  </a>
-                </div>
-              )
+                    Please purchase the powerpack from the below URL: <br />
+                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                      Power Pack Purchase
+                    </a>
+                  </div>
+                )
               }
               <div className="align-items-start lh_32x">
                 <div className="font_17x d-flex flex-direction-column align-items-start mt-4">
@@ -500,7 +512,7 @@ const HoneyComb = () => {
                       </Box>
                     </Box>
 
-                    <Box
+                    {/* <Box
                       sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -521,13 +533,17 @@ const HoneyComb = () => {
                       <div className="font_10x d-flex align-items-center">
                         October 9, 2023
                       </div>
-                    </Box>
+                    </Box> */}
+                    <br />
+                    {allTexts &&
+                      <MessageList data={allTexts} />
+                    }
 
 
                   </Box>
-                  <Box sx={{ paddingLeft: "77px" }}>
+                  {/* <Box sx={{ paddingLeft: "77px" }}>
                     Good morning America!
-                  </Box>
+                  </Box> */}
                 </Box>
               </Box>
             </div>
@@ -539,3 +555,32 @@ const HoneyComb = () => {
 };
 
 export default HoneyComb;
+
+const MessageList = ({ data }) => {
+  return (
+    <div>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'baseline',
+          backgroundColor: 'transparent',
+          border: '1px solid #e0e0e0',
+          borderRadius: '4px',
+          padding: '80px',  
+          margin: '8px 0',
+        }}
+      >
+        {data?.map((message) => (
+          <><div key={message._id} className="font_15x d-flex align-items-center">
+            {message.publicMessage}
+          </div>
+          <div className="font_10x d-flex align-items-center" style={{ alignSelf: 'flex-end' }}>
+              {new Date(message.createdData).toLocaleString()}
+            </div></>
+        ))}
+      </Box>
+    </div>
+  );
+};
