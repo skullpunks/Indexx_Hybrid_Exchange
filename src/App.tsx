@@ -81,6 +81,8 @@ import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 import PowerPack from "./components/PowerPack/PowerPack";
 import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
 import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
+import TeamCaptainDash from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash";
+import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain";
 // import CareerSoon from './components/Careers/CareerSoon';
 
 
@@ -133,6 +135,9 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
           <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
+          <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
+
 
           {/* Routes for Honey Bee DashBoard   */}
           <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
