@@ -6,11 +6,15 @@ import pin from '../../../assets/hive-dashboard/sidebar/pin- 1.svg';
 import man from '../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
+import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
 import house_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
 import clock_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
+import email_dark from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
+import phone_dark from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
 import twitter from '../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
 import insta from '../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
@@ -138,11 +142,11 @@ const HoneyComb = () => {
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
-            style={{ width: '64%', maxWidth: '1000px' }}
+            style={{ width: '70%', maxWidth: '1200px' }}
           >
             <div
               className="d-flex flex-direction-column mt-1"
-              style={{ width: '20%' }}
+              style={{ width: '30%' }}
             >
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
@@ -198,9 +202,9 @@ const HoneyComb = () => {
 
                 <div className="font_13x d-flex align-items-center mt-5">
                   {theme === 'dark' ? (
-                    <img alt="man" src={man_dark} className="me-2" />
+                    <img alt="man" src={man_dark} className="me-1" />
                   ) : (
-                    <img alt="man" src={man} className="me-2" />
+                    <img alt="man" src={man} className="me-1" />
                   )}
                   @{staticsData?.affiliateUserProfile?.Username}
                 </div>
@@ -214,19 +218,35 @@ const HoneyComb = () => {
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
-                    <img alt="man" src={house_dark} className="me-2" />
+                    <img alt="man" src={house_dark} className="me-1" />
                   ) : (
-                    <img alt="man" src={house} className="me-2" />
+                    <img alt="man" src={house} className="me-1" />
                   )}
                   {staticsData?.affiliateUserProfile?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
-                    <img alt="man" src={clock_dark} className="me-2" />
+                    <img alt="man" src={clock_dark} className="me-1" />
                   ) : (
-                    <img alt="man" src={clock} className="me-2" />
+                    <img alt="man" src={clock} className="me-1" />
                   )}
                   {staticsData?.formatedAccountCreationDate}
+                </div>
+                <div className="font_13x d-flex align-items-center">
+                  {theme === 'dark' ? (
+                    <img alt="man" src={phone_dark} className="me-2" />
+                  ) : (
+                    <img alt="man" src={phone} className="me-2" />
+                  )}
+                  +123456789
+                </div>
+                <div className="font_13x d-flex align-items-center">
+                  {theme === 'dark' ? (
+                    <img alt="man" src={email_dark} className="me-2" />
+                  ) : (
+                    <img alt="man" src={email} className="me-2" />
+                  )}
+                  abcd@gmail.com
                 </div>
               </div>
 

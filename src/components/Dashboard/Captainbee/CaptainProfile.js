@@ -11,6 +11,9 @@ import {
   CheckCircleFilled,
   CloseCircleFilled,
 } from '@ant-design/icons';
+import { IOSSwitch } from '../../IOSSwitch/IOSSwitch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -28,7 +31,9 @@ const CaptainProfile = () => {
   const [lastname, setLastname] = useState('');
   const [Username, setUsername] = useState('');
   const [Email, setEmail] = useState('');
+  const [useEmail, setUseEmail] = useState(true);
   const [Phone, setPhone] = useState('');
+  const [usePhone, setUsePhone] = useState(true);
   const [referralCode, setReferralCode] = useState('');
   const [referralCodeCapt, setReferralCodeCapt] = useState('');
   const [accname, setAccname] = useState('');
@@ -255,11 +260,20 @@ const CaptainProfile = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'baseline',
                     width: '100%',
                     mb: 2,
+                  }}
+                >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
                   }}
                 >
                   <Typography
@@ -277,7 +291,7 @@ const CaptainProfile = () => {
                     type="email"
                     InputLabelProps={{ shrink: true, readOnly: true, }}
                     variant="outlined"
-                    sx={{ mb: 2, width: '64%' }}
+                    sx={{ width: '64%' }}
                     size="small" // Make the input box smaller
                     value={staticsData?.affiliateUserProfile.Email}
                     //  error={emailError !== ''}
@@ -288,6 +302,41 @@ const CaptainProfile = () => {
                     }}
                   />
                 </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    mb:2
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'15px'}
+                    fontWeight={400}
+                    width={'50%'}
+                    textAlign={'left'}
+                  >
+                    Display Email address publically
+                  </Typography>
+                    <FormGroup>
+                <FormControlLabel
+                  control={<IOSSwitch sx={{ m: 1 }} checked={useEmail}  />}
+                  value={useEmail}
+                  onChange={(e) => {
+                    
+                    if (!useEmail && e.target.checked === true) {
+                      setUseEmail(true)
+                    } else {
+                      setUseEmail(false)
+                    }
+                  }}
+                />
+              </FormGroup>
+              </Box>
+              </Box>
                 <Box
                   sx={{
                     display: 'flex',
@@ -327,11 +376,21 @@ const CaptainProfile = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'baseline',
                     width: '100%',
                     mb: 2,
+                  }}
+                >
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
                   }}
                 >
                   <Typography
@@ -349,7 +408,7 @@ const CaptainProfile = () => {
                     placeholder="Phone Number"
                     type="tel"
                     InputLabelProps={{ shrink: true }}
-                    sx={{ mb: 2, width: '64%' }}
+                    sx={{ width: '64%' }}
                     size="small" // Make the input box smaller
                     value={Phone}
                     onChange={(e) => {
@@ -360,6 +419,42 @@ const CaptainProfile = () => {
                     }}
                   />
                 </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    mb:2
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'15px'}
+                    fontWeight={400}
+                    width={'50%'}
+                    textAlign={'left'}
+                  >
+                    Display phone number publically
+                  </Typography>
+                    <FormGroup>
+                <FormControlLabel
+                  control={<IOSSwitch sx={{ m: 1 }} checked={usePhone}  />}
+                  value={usePhone}
+                  onChange={(e) => {
+                    
+                    if (!usePhone && e.target.checked === true) {
+                      setUsePhone(true)
+                    } else {
+                      setUsePhone(false)
+                    }
+                  }}
+                />
+              </FormGroup>
+              </Box>
+                </Box>
+
                 <Box
                   sx={{
                     display: 'flex',

@@ -720,6 +720,7 @@ a.bs_link:hover {
 
   .responsive_container .bs_container.bs_form {
     padding: 0 16px;
+    /* margin-inline: auto !important; */
   }
 
   .responsive_container .top_heading {
