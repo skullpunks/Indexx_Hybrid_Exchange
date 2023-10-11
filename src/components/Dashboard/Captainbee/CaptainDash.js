@@ -25,8 +25,7 @@ import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/disc
 
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
-import copper from "../../../assets/powerpack/copper hat.svg";
-
+import { PackData } from '../../PowerPack/PackData';
 import comingsoon from '../../../assets/hive-dashboard/comingsoon.svg';
 // import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 
@@ -45,7 +44,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { getCaptainBeeStatics } from '../../../services/api';
+import { getCaptainBeeStatics, baseCEXURL } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -56,6 +55,7 @@ const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
+  const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [userType, setUserType] = useState("");
   const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -74,17 +74,22 @@ const CaptainDash = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    
+
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        
         setStaticsData(data.data);
+        if(data?.data?.powerPackData) {
+          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+          setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+          setPowerPackPhoto(undefined);
+          }
       });
     }
   }, [])
 
-  
+
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
@@ -96,7 +101,7 @@ const CaptainDash = () => {
     };
 
     window.addEventListener('storage', handleStorageChange);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -134,330 +139,338 @@ const CaptainDash = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{paddingTop:"220px"}}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{marginLeft:"-570px"}}>
-        <img src={waggle} alt="" width={"46px"}/>&nbsp;&nbsp;&nbsp;
-        Waggle Dance / My Dashboard
-        </div>  
-        <div className="hive-container">
-          <div
-            className="d-flex justify-content-between"
+        (<div style={{ paddingTop: "220px" }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-570px" }}>
+            <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
+            Waggle Dance / My Dashboard
+          </div>
+          <div className="hive-container">
+            <div
+              className="d-flex justify-content-between"
             // style={{ width: '74%', maxWidth: '1140px' }}
-          >
-            <div className="d-flex flex-direction-column mt-1" style={{width:"17%"}}>
-              <div className="d-flex  flex-direction-column align-items-center">
-                <div
-                  style={{
-                    width: '193px',
-                    height: '193px',
-                    backgroundImage: `url(${frame})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    // border:"none"
-                  }}
-                >
-                  <div className="hexagon">
-                    <img
-                      alt=""
-                      src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                      width={'63px'}
-                      height={'66px'}
-                      ml={'-6px'}
-                      border={'none'}
-                    />
+            >
+              <div className="d-flex flex-direction-column mt-1" style={{ width: "17%" }}>
+                <div className="d-flex  flex-direction-column align-items-center">
+                  <div
+                    style={{
+                      width: '193px',
+                      height: '193px',
+                      backgroundImage: `url(${frame})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      // border:"none"
+                    }}
+                  >
+                    <div className="hexagon">
+                      <img
+                        alt=""
+                        src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                        width={'63px'}
+                        height={'66px'}
+                        ml={'-6px'}
+                        border={'none'}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
-              <div className="justify-content-center d-flex">
-              <img src={copper} alt='pack' width={"80%"} />
+                  {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
+                    (<div className="justify-content-center d-flex">
+                      <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                    </div>) : (
+                      <div>
+                        Please purchase the powerpack from the below URL: <br />
+                        <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                          Power Pack Purchase
+                        </a>
+                      </div>
+                    )}
+                <div className="align-items-start lh_32x">
+
+                  <div className="font_13x d-flex align-items-center mt-4">
+                    {theme === "dark" ?
+                      <img alt="man" src={man_dark} className="me-2" />
+                      :
+                      <img alt="man" src={man} className="me-2" />
+                    }
+                    @{staticsData?.affiliateUserProfile?.Username}
                   </div>
-              <div className="align-items-start lh_32x">
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={pin_dark} className="me-2" />
+                      :
+                      <img alt="man" src={pin} className="me-2" />
+                    }
+                    {staticsData?.affiliateUserProfile?.country}
+                  </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={house_dark} className="me-2" />
+                      :
+                      <img alt="man" src={house} className="me-2" />
+                    }
+                    {staticsData?.affiliateUserProfile?.city}
+                  </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={clock_dark} className="me-2" />
+                      :
+                      <img alt="man" src={clock} className="me-2" />
+                    }
+                    {staticsData?.formatedAccountCreationDate}
+                  </div>
+                </div>
 
-                <div className="font_13x d-flex align-items-center mt-4">
-                {theme === "dark" ?
-              <img alt="man" src={man_dark} className="me-2" />
-              :
-                  <img alt="man" src={man} className="me-2" />
-                }
-                  @{staticsData?.affiliateUserProfile?.Username}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                {theme === "dark" ?
-              <img alt="man" src={pin_dark} className="me-2" />
-              :
-                  <img alt="man" src={pin} className="me-2" />
-                }
-                  {staticsData?.affiliateUserProfile?.country}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                {theme === "dark" ?
-              <img alt="man" src={house_dark} className="me-2" />
-              :
-                  <img alt="man" src={house} className="me-2" />
-                }
-                  {staticsData?.affiliateUserProfile?.city}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                {theme === "dark" ?
-              <img alt="man" src={clock_dark} className="me-2" />
-              :
-                  <img alt="man" src={clock} className="me-2" />
-                }
-                  {staticsData?.formatedAccountCreationDate}
-                </div>
-            </div>
+                <div className="align-items-start lh_32x mt-4">
+                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
+                    {theme === "dark" ?
+                      <img alt="man" src={discord_dark} className="me-3" />
+                      :
+                      <img alt="Discord" src={discord} className="me-3" />
+                    }
+                  </a>
+                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
+                    {theme === "dark" ?
+                      <img alt="man" src={insta_dark} className="me-3" />
+                      :
+                      <img alt="Instagram" src={insta} className="me-3" />
+                    }
+                  </a>
+                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
+                    {theme === "dark" ?
+                      <img alt="man" src={linkedin_dark} className="me-3" />
+                      :
+                      <img alt="LinkedIn" src={linkedin} className="me-3" />
+                    }
+                  </a>
+                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
+                    {theme === "dark" ?
+                      <img alt="man" src={twitter_dark} />
+                      :
+                      <img alt="Twitter" src={twitter} />
+                    }
+                  </a>
 
-              <div className="align-items-start lh_32x mt-4">
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                {theme === "dark" ?
-              <img alt="man" src={discord_dark} className="me-3" />
-              :
-                  <img alt="Discord" src={discord} className="me-3" />
-                }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                {theme === "dark" ?
-              <img alt="man" src={insta_dark} className="me-3" />
-              :
-              <img alt="Instagram" src={insta} className="me-3" />
-                }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                {theme === "dark" ?
-              <img alt="man" src={linkedin_dark} className="me-3" />
-              :
-              <img alt="LinkedIn" src={linkedin} className="me-3" />
-                }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                {theme === "dark" ?
-              <img alt="man" src={twitter_dark}/>
-              :
-                  <img alt="Twitter" src={twitter} />
-                }
-                </a>
+                </div>
 
-              </div>
+                <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                  <div>
+                    Invite Honey Bee : 123456
+                    <ContentCopyIcon
+                      fontSize="13px"
+                      onClick={() => copyClick(123456)}
+                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                    />
+                  </div>
+                  <div>
+                    Invite Captain Bee : skfFSj7
+                    <ContentCopyIcon
+                      fontSize="13px"
+                      onClick={() => copyClick(123456)}
+                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                    />
+                  </div>
+                </div>
 
-              <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
-                <div>
-                  Invite Honey Bee : 123456
-                  <ContentCopyIcon
-                    fontSize="13px"
-                    onClick={() => copyClick(123456)}
-                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
-                  />
-                </div>
-                <div>
-                  Invite Captain Bee : skfFSj7
-                  <ContentCopyIcon
-                    fontSize="13px"
-                    onClick={() => copyClick(123456)}
-                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
-                  />
-                </div>
-              </div>
-
-              <div className="d-flex  flex-direction-column align-items-start mt-5">
-                <div className="font_13x ">
-                  Your Rating
-                </div>
-                <div className='mt-4'>
-                  <Rating name="read-only" value={4} readOnly size='large' />
-                </div>
-                <div className="font_40x mt-3">
-                  95%
+                <div className="d-flex  flex-direction-column align-items-start mt-5">
+                  <div className="font_13x ">
+                    Your Rating
+                  </div>
+                  <div className='mt-4'>
+                    <Rating name="read-only" value={4} readOnly size='large' />
+                  </div>
+                  <div className="font_40x mt-3">
+                    95%
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="side-container">
-              <Typography
-                variant="text"
-                component="p"
-                fontSize={'15px'}
-                fontWeight={700}
-                textAlign={'left'}
-                mb={2}
-                sx={{
-                color:"#393939",
-                }}
+              <div className="side-container">
+                <Typography
+                  variant="text"
+                  component="p"
+                  fontSize={'15px'}
+                  fontWeight={700}
+                  textAlign={'left'}
+                  mb={2}
+                  sx={{
+                    color: "#393939",
+                  }}
 
-              >
-                Sales Dashboard
-              </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: 2,
-                }}
-              >
+                >
+                  Sales Dashboard
+                </Typography>
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     gap: 2,
-                    width: '50%',
                   }}
                 >
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'row',
-                      gap: 1,
+                      flexDirection: 'column',
+                      gap: 2,
+                      width: '50%',
                     }}
                   >
                     <Box
                       sx={{
                         display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'baseline',
-                        width: '31%',
-                        background: 'var(--body_background)',
-                        pl: 1,
-                        pt: 0.4,
+                        flexDirection: 'row',
+                        gap: 1,
                       }}
                     >
-                      <Typography
-                        variant="text"
-                        fontSize={'12px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                      >
-                        Platforms
-                      </Typography>
-                      <Select
-                        value={platform}
-                        onChange={(e) => {
-                          setPlatform(e.target.value);
-                        }}
-                        variant="standard"
-                        InputLabelProps={{ shrink: true }}
+                      <Box
                         sx={{
-                          width: '100%',
-                          borderRadius: 0,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '31%',
                           background: 'var(--body_background)',
-                          color:"var(--body_color)",
-                          border: 'none',
-                          outline: 'none',
-                          padding: 0,
-                          fontSize: '12px',
+                          pl: 1,
+                          pt: 0.4,
                         }}
-                        size="small"
-                        disableUnderline
                       >
-                        {/* <MenuItem value="">Select Platform</MenuItem> */}
-                        <MenuItem key="Exchange" value="Exchange">
-                          Indexx Exchange
-                        </MenuItem>
-                      </Select>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'baseline',
-                        width: '29%',
-                        background: 'var(--body_background)',
-                        pl: 1,
-                        pt: 0.4,
-                      }}
-                    >
-                      <Typography
-                        variant="text"
-                        fontSize={'12px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                      >
-                        Type of Order
-                      </Typography>
-                      <Select
-                        value={Order}
-                        onChange={(e) => {
-                          setOrder(e.target.value);
-                        }}
-                        variant="standard"
-                        InputLabelProps={{ shrink: true }}
+                        <Typography
+                          variant="text"
+                          fontSize={'12px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          Platforms
+                        </Typography>
+                        <Select
+                          value={platform}
+                          onChange={(e) => {
+                            setPlatform(e.target.value);
+                          }}
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
+                          sx={{
+                            width: '100%',
+                            borderRadius: 0,
+                            background: 'var(--body_background)',
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '12px',
+                          }}
+                          size="small"
+                          disableUnderline
+                        >
+                          {/* <MenuItem value="">Select Platform</MenuItem> */}
+                          <MenuItem key="Exchange" value="Exchange">
+                            Indexx Exchange
+                          </MenuItem>
+                        </Select>
+                      </Box>
+                      <Box
                         sx={{
-                          width: '100%',
-                          borderRadius: 0,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '29%',
                           background: 'var(--body_background)',
-                          color:"var(--body_color)",
-                          border: 'none',
-                          outline: 'none',
-                          padding: 0,
-                          fontSize: '12px',
+                          pl: 1,
+                          pt: 0.4,
                         }}
-                        size="small"
-                        disableUnderline
                       >
-                        <MenuItem key="buysell" value="buysell">
-                          Buy & Sell
-                        </MenuItem>
-                        <MenuItem key="Convert" value="Convert">
-                          Convert
-                        </MenuItem>
-                      </Select>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'baseline',
-                        width: '40%',
-                        background: 'var(--body_background)',
-                        pl: 1,
-                        pt: 0.4,
-                      }}
-                    >
-                      <Typography
-                        variant="text"
-                        fontSize={'12px'}
-                        fontWeight={600}
-                        textAlign={'left'}
+                        <Typography
+                          variant="text"
+                          fontSize={'12px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          Type of Order
+                        </Typography>
+                        <Select
+                          value={Order}
+                          onChange={(e) => {
+                            setOrder(e.target.value);
+                          }}
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
+                          sx={{
+                            width: '100%',
+                            borderRadius: 0,
+                            background: 'var(--body_background)',
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '12px',
+                          }}
+                          size="small"
+                          disableUnderline
+                        >
+                          <MenuItem key="buysell" value="buysell">
+                            Buy & Sell
+                          </MenuItem>
+                          <MenuItem key="Convert" value="Convert">
+                            Convert
+                          </MenuItem>
+                        </Select>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '40%',
+                          background: 'var(--body_background)',
+                          pl: 1,
+                          pt: 0.4,
+                        }}
                       >
-                        Date Range
-                      </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'12px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          Date Range
+                        </Typography>
 
-                      <Select
-                        value={selectedDate}
-                        onChange={(e) => {
-                          setSelectedDate(e.target.value);
-                        }}
-                        variant="standard"
-                        InputLabelProps={{ shrink: true }}
-                        sx={{
-                          width: '100%',
-                          borderRadius: 0,
-                          background: 'var(--body_background)',
-                          color:"var(--body_color)",
-                          border: 'none',
-                          outline: 'none',
-                          padding: 0,
-                          fontSize: '12px',
-                        }}
-                        size="small"
-                        disableUnderline
-                      >
-                        <MenuItem key="aug-sept" value="aug-sept">
-                          August-September
-                        </MenuItem>
-                      </Select>
+                        <Select
+                          value={selectedDate}
+                          onChange={(e) => {
+                            setSelectedDate(e.target.value);
+                          }}
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
+                          sx={{
+                            width: '100%',
+                            borderRadius: 0,
+                            background: 'var(--body_background)',
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '12px',
+                          }}
+                          size="small"
+                          disableUnderline
+                        >
+                          <MenuItem key="aug-sept" value="aug-sept">
+                            August-September
+                          </MenuItem>
+                        </Select>
 
-                      {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         views={['year', 'month']}
                         label="Month/Year"
@@ -473,134 +486,134 @@ const CaptainDash = () => {
                         )}
                       />
                     </LocalizationProvider> */}
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: '50%',
-                        background: 'var(--body_background)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        p: 1,
-                        aspectRatio:1
-                      }}
-                    >
-                      <Typography
-                        variant="text"
-                        fontSize={'12px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                        pr={"50%"}
-                      >
-                        Total Honey Bees/Users
-                      </Typography>
-                      <Typography
-                        variant="text"
-                        fontSize={'77px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                      >
-                        {staticsData?.honeyBeesCount}
-                      </Typography>
-                      <Typography
-                        variant="text"
-                        fontSize={'22px'}
-                        fontWeight={400}
-                        textAlign={'left'}
-                        color={'#FFB300'}
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'baseline',
-                          verticalAlign: 'bottom',
-                          gap: 1,
-                        }}
-                      >
-                        <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%" }
-                      </Typography>
+                      </Box>
                     </Box>
                     <Box
                       sx={{
-                        width: '50%',
-                        background: 'var(--body_background)',
                         display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        p: 1,
-                        aspectRatio:1
+                        flexDirection: 'row',
+                        gap: 2,
                       }}
                     >
-                      <Typography
-                        variant="text"
-                        fontSize={'12px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                        pr={"70%"}
-                      >
-                        Total Orders
-                      </Typography>
-                      <Typography
-                        variant="text"
-                        fontSize={'77px'}
-                        fontWeight={600}
-                        textAlign={'left'}
-                      >
-                        {staticsData?.ordersCount}
-                      </Typography>
-                      <Typography
-                        variant="text"
-                        fontSize={'22px'}
-                        fontWeight={400}
-                        textAlign={'left'}
-                        color={'#FFB300'}
+                      <Box
                         sx={{
+                          width: '50%',
+                          background: 'var(--body_background)',
                           display: 'flex',
-                          alignItems: 'baseline',
-                          verticalAlign: 'bottom',
-                          gap: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 1,
+                          aspectRatio: 1
                         }}
                       >
-                        <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
-                      </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'12px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                          pr={"50%"}
+                        >
+                          Total Honey Bees/Users
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'77px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          {staticsData?.honeyBeesCount}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'left'}
+                          color={'#FFB300'}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
+                          }}
+                        >
+                          <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          width: '50%',
+                          background: 'var(--body_background)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 1,
+                          aspectRatio: 1
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={'12px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                          pr={"70%"}
+                        >
+                          Total Orders
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'77px'}
+                          fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          {staticsData?.ordersCount}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'left'}
+                          color={'#FFB300'}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
+                          }}
+                        >
+                          <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        background: 'var(--body_background)',
+                        width: "100%",
+                      }}
+                    >
+                      <LineChart
+                        width={572}
+                        height={429}
+                        series={[
+                          { data: pData, label: 'pv' },
+                          { data: uData, label: 'uv' },
+                        ]}
+                        xAxis={[{ scaleType: 'point', data: xLabels }]}
+                      />
                     </Box>
                   </Box>
-                  <Box
-                    sx={{
-                      background: 'var(--body_background)',
-                      width:"100%",
-                    }}
-                  >
-                    <LineChart
-                      width={572}
-                      height={429}
-                      series={[
-                        { data: pData, label: 'pv' },
-                        { data: uData, label: 'uv' },
-                      ]}
-                      xAxis={[{ scaleType: 'point', data: xLabels }]}
-                    />
-                  </Box>
-                </Box>
 
-                <Box
-                  component="img"
-                  alt="comingsoon"
-                  src={comingsoon}
-                  width={'50%'}
-                />
-              </Box>
+                  <Box
+                    component="img"
+                    alt="comingsoon"
+                    src={comingsoon}
+                    width={'50%'}
+                  />
+                </Box>
+              </div>
             </div>
           </div>
-        </div>
         </div>) :
         <><BeeDash2 />
         </>

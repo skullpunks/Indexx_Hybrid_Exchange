@@ -23,8 +23,7 @@ import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/Lin
 import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
-import copper from "../../../assets/powerpack/copper hat.svg";
-
+import { PackData } from '../../PowerPack/PackData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import {
@@ -38,12 +37,14 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { notification } from 'antd';
-import { getCaptainBeeStatics } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
 
 const HoneyComb = () => {
 
   const [text, settext] = useState();
   const [userType, setUserType] = useState("");
+  const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [allTexts, setAllTexts] = useState();
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
@@ -67,16 +68,33 @@ const HoneyComb = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    
+
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(username).then((data) => {
-        
         setStaticsData(data.data);
+        console.log(data?.data?.powerPackData?.type);
+        if(data?.data?.powerPackData) {
+        const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+        setPowerPackPhoto(getPowerPack?.photo);
+        } else {
+        setPowerPackPhoto(undefined);
+        }
       });
     }
   }, [])
 
+  const handleSubmitPostMessage = async () => {
+    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    console.log("text", text);
+    console.log("email", email);
+    const postMessage = await postPublicMessage(email, text);
+    console.log("postmessage", postMessage);
+    const getMessage = await getPublicMessages(email);
+    console.log("getMessage", getMessage);
+    //setAllTexts();
+    //if(postMessage)
+  }
 
   const openNotificationWithIcon = (
     type,
@@ -159,9 +177,18 @@ const HoneyComb = () => {
               <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
                 Captain Bee {staticsData?.affiliateUserProfile?.accname}
               </div>
-              <div className="justify-content-center d-flex">
-                  <img src={copper} alt='pack' width={"80%"} />
-              </div>
+              {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
+                (<div className="justify-content-center d-flex">
+                  <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                </div>) : (
+                  <div>
+                  Please purchase the powerpack from the below URL: <br/>
+                  <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                    Power Pack Purchase
+                  </a>
+                </div>
+              )
+              }
               <div className="align-items-start lh_32x">
                 <div className="font_17x d-flex flex-direction-column align-items-start mt-4">
                   <div className="fw-bold">Bio :</div>
@@ -191,7 +218,7 @@ const HoneyComb = () => {
                   ) : (
                     <img alt="man" src={house} className="me-2" />
                   )}
-                 {staticsData?.affiliateUserProfile?.city}
+                  {staticsData?.affiliateUserProfile?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
                   {theme === 'dark' ? (
@@ -204,7 +231,7 @@ const HoneyComb = () => {
               </div>
 
               <div className="align-items-start lh_32x mt-5">
-              <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={discord_dark} className="me-3" />
                   ) : (
@@ -239,7 +266,7 @@ const HoneyComb = () => {
                   <ContentCopyIcon
                     fontSize="13px"
                     onClick={() => copyClick(123456)}
-                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
+                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
                 <div>
@@ -247,7 +274,7 @@ const HoneyComb = () => {
                   <ContentCopyIcon
                     fontSize="13px"
                     onClick={() => copyClick(123456)}
-                    style={{ cursor: 'pointer', marginBottom:"4px", marginLeft:"5px" }}
+                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
               </div>
@@ -284,7 +311,7 @@ const HoneyComb = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       px: 2,
-                      py:1,
+                      py: 1,
                       aspectRatio: 2,
                       border: '1px solid var(--border-color)',
                       borderRadius: "2px",
@@ -306,7 +333,7 @@ const HoneyComb = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                        {staticsData?.honeyBeesCount}
+                      {staticsData?.honeyBeesCount}
                     </Typography>
                     <Typography
                       variant="text"
@@ -321,7 +348,7 @@ const HoneyComb = () => {
                         gap: 1,
                       }}
                     >
-                       <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%" }
+                      <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
                     </Typography>
                   </Box>
                   <Box
@@ -333,7 +360,7 @@ const HoneyComb = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       px: 2,
-                      py:1,
+                      py: 1,
                       aspectRatio: 2,
                       border: '1px solid var(--border-color)',
                       borderRadius: "2px",
@@ -375,113 +402,113 @@ const HoneyComb = () => {
                   </Box>
                 </Box>
                 <Box className="post-input" sx={{
-                    display:"flex",
-                    flexDirection:"column",
+                  display: "flex",
+                  flexDirection: "column",
                 }}>
-                <TextField
-                id="outlined-multiline-static"
-                // label="Multiline"
-                placeholder='Share something with the Public and your Honeybees!'
-                multiline
-                rows={5}
-                InputLabelProps={{ shrink: true }}
-                variant="outlined"
-                value={text}
+                  <TextField
+                    id="outlined-multiline-static"
+                    // label="Multiline"
+                    placeholder='Share something with the Public and your Honeybees!'
+                    multiline
+                    rows={5}
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                    value={text}
                     onChange={(e) => {
                       settext(e.target.value);
                     }}
-                sx={{width:"100%"}}
-                />
+                    sx={{ width: "100%" }}
+                  />
 
-                <Button
-                  variant="contained"
-                  // onClick={handleSubmit}
-                  disableTouchRipple
-                  sx={{
-                    backgroundColor: '#FFB300',
-                    borderRadius: '2px',
-                    color: '#282828',
-                    width: '35%',
-                    px: 4,
-                    py: 0.5,
-                    textTransform: 'none',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    boxShadow: 'none',
-                    mt:3,
-                    alignSelf:"flex-end",
-                    '&:hover': {
-                      backgroundColor: '#ffa200',
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmitPostMessage}
+                    disableTouchRipple
+                    sx={{
+                      backgroundColor: '#FFB300',
+                      borderRadius: '2px',
+                      color: '#282828',
+                      width: '35%',
+                      px: 4,
+                      py: 0.5,
+                      textTransform: 'none',
+                      fontSize: '13px',
+                      fontWeight: 500,
                       boxShadow: 'none',
-                    },
-                  }}
-                >
-                  Post
-                </Button>
+                      mt: 3,
+                      alignSelf: "flex-end",
+                      '&:hover': {
+                        backgroundColor: '#ffa200',
+                        boxShadow: 'none',
+                      },
+                    }}
+                  >
+                    Post
+                  </Button>
 
                 </Box>
 
                 <Box className="d-flex flex-direction-column">
-                <MoreHorizIcon style={{alignSelf:"flex-end", fontSize:"20px", marginBottom:"-20px"}}/>
-                      <Box className="d-flex align-items-center">
-                        <Box
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            backgroundImage: `url(${frame})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                            backgroundPosition: 'center',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            // border:"none"
-                          }}
-                        >
-                          <Box className="bee-hexagon">
-                            <img
-                              alt=""
-                              src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                              width={'63px'}
-                              height={'66px'}
-                              ml={'-6px'}
-                              border={'none'}
-                            />
-                          </Box>
-                        </Box>
-
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection:"column",
-                            justifyContent: "center",
-                            alignItems:"baseline",
-                            backgroundColor: 'transparent',
-                            border: "none",
-                            height: '50px',
-                            marginLeft: '-35px',
-                            pl: 4,
-                            width: '211px',
-                            transition: "0.3s ease-in-out",
-                          }}
-                        >
-                          <div className="font_15x d-flex align-items-center">
-                            Captin Bee {staticsData?.affiliateUserProfile?.accname} 
-                          </div>
-                          <div className="font_10x d-flex align-items-center">
-                            October 9, 2023
-                          </div>
-                        </Box>
-
-
+                  <MoreHorizIcon style={{ alignSelf: "flex-end", fontSize: "20px", marginBottom: "-20px" }} />
+                  <Box className="d-flex align-items-center">
+                    <Box
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        backgroundImage: `url(${frame})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'center',
+                        position: 'relative',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        // border:"none"
+                      }}
+                    >
+                      <Box className="bee-hexagon">
+                        <img
+                          alt=""
+                          src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                          width={'63px'}
+                          height={'66px'}
+                          ml={'-6px'}
+                          border={'none'}
+                        />
                       </Box>
-                      <Box sx={{paddingLeft:"77px"}}>
-                      Good morning America!
-                      </Box>
-                      </Box>
+                    </Box>
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "baseline",
+                        backgroundColor: 'transparent',
+                        border: "none",
+                        height: '50px',
+                        marginLeft: '-35px',
+                        pl: 4,
+                        width: '211px',
+                        transition: "0.3s ease-in-out",
+                      }}
+                    >
+                      <div className="font_15x d-flex align-items-center">
+                        Captin Bee {staticsData?.affiliateUserProfile?.accname}
+                      </div>
+                      <div className="font_10x d-flex align-items-center">
+                        October 9, 2023
+                      </div>
+                    </Box>
+
+
+                  </Box>
+                  <Box sx={{ paddingLeft: "77px" }}>
+                    Good morning America!
+                  </Box>
+                </Box>
               </Box>
             </div>
           </div>
