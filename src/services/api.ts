@@ -22,7 +22,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -121,6 +121,32 @@ export const requestPermissionsByEmail = async (
       honeyBeeEmail,
       requestType,
     });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const postPublicMessage = async (
+  email: string,
+  message: string,
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/postpublicMessage/`, {
+      email,
+      message,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getPublicMessages = async (
+  email: string,
+) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getpublicMessages/${email}`);
     return result.data;
   } catch (e: any) {
     return e.response.data;
