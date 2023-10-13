@@ -6,6 +6,9 @@ import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Grid, Button } from '@mui/material';
 import { getCaptainBeeStatics } from '../../../../services/api';
 import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
+import NodeGraph from '../../graph';
+import FlowDiagram2 from '../../graph';
+import FlowDiagram from '../../reactFlow';
 
 
 const MyBees = () => {
@@ -28,168 +31,174 @@ const MyBees = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{paddingTop:"220px"}}>
-        <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-          <div style={{width:"30%", textAlign:"center"}}>
-          These are the Honey Bees that are part of your honeycomb. Select one to guide them
+        (<div style={{ paddingTop: "220px" }}>
+          <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
+            <div style={{ width: "30%", textAlign: "center" }}>
+              These are the Honey Bees that are part of your honeycomb. Select one to guide them
+            </div>
           </div>
-        </div>  
-        <div className="hive-container d-flex">
-          <Box
-            sx={{
-              width: '73%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 2,
-            }}
-          >
-            <Grid
-              container
-              // columns={{ xs: 1, sm: 12, md: 12 }}
-              spacing={{ xs: 1, md: 2 }}
-              maxWidth={"1150px"}
-              rowSpacing={12}
+          <div className="hive-container d-flex">
+            <Box
+              sx={{
+                width: '73%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+              }}
             >
-              {staticsData?.honeyBeesRegisteredData?.length > 0 ?
-                (staticsData?.honeyBeesRegisteredData?.map((item) => (
-                  <Grid item xs={1} sm={6} md={3} >
-                    <div className="d-flex flex-direction-column">
-                      <div className="d-flex align-items-center">
-                        <div
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            backgroundImage: `url(${frame})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                            backgroundPosition: 'center',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            // border:"none"
-                          }}
-                        >
+              <Grid
+                container
+                // columns={{ xs: 1, sm: 12, md: 12 }}
+                spacing={{ xs: 1, md: 2 }}
+                maxWidth={"1150px"}
+                rowSpacing={12}
+              >
+                {staticsData?.honeyBeesRegisteredData?.length > 0 ?
+                  (staticsData?.honeyBeesRegisteredData?.map((item) => (
+                    <Grid item xs={1} sm={6} md={3} >
+                      <div className="d-flex flex-direction-column">
+                        <div className="d-flex align-items-center">
                           <div
-                            className="bee-hexagon"
-                            style={{ marginBottom: '7px' }}
+                            style={{
+                              width: '80px',
+                              height: '80px',
+                              backgroundImage: `url(${frame})`,
+                              backgroundRepeat: 'no-repeat',
+                              backgroundSize: 'contain',
+                              backgroundPosition: 'center',
+                              position: 'relative',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              alignSelf: 'center',
+                              // border:"none"
+                            }}
                           >
-                            <img
-                              alt=""
-                              src={item?.profilePic === undefined ? dummy : item?.profilePic}
-                              width={'63px'}
-                              height={'66px'}
-                              ml={'-6px'}
-                              border={'none'}
-                            />
+                            <div
+                              className="bee-hexagon"
+                              style={{ marginBottom: '7px' }}
+                            >
+                              <img
+                                alt=""
+                                src={item?.profilePic === undefined ? dummy : item?.profilePic}
+                                width={'63px'}
+                                height={'66px'}
+                                ml={'-6px'}
+                                border={'none'}
+                              />
+                            </div>
                           </div>
-                        </div>
 
-                        <Box
-                          className=" d-flex justify-content-center"
-                          sx={{
-                            display: "flex",
-                            flexDirection:"column",
-                            justifyContent: "center",
-                            alignItems:"baseline",
-                            backgroundColor: 'transparent',
-                            border: "1.5px solid #E1E1E1",
-                            height: '50px',
-                            marginLeft: '-35px',
-                            pl: 4,
-                            width: '211px',
-                            transition: "0.3s ease-in-out",
-                            '&:hover': {
-                              backgroundColor: '#FFB300',
-                              borderColor: '#FFB300',
-                            },
-                          }}
+                          <Box
+                            className=" d-flex justify-content-center"
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "baseline",
+                              backgroundColor: 'transparent',
+                              border: "1.5px solid #E1E1E1",
+                              height: '50px',
+                              marginLeft: '-35px',
+                              pl: 4,
+                              width: '211px',
+                              transition: "0.3s ease-in-out",
+                              '&:hover': {
+                                backgroundColor: '#FFB300',
+                                borderColor: '#FFB300',
+                              },
+                            }}
+                          >
+                            <div className="font_15x d-flex align-items-center">
+                              Honey Bee
+                            </div>
+                            <div className="font_15x d-flex align-items-center">
+                              {item.username}
+                            </div>
+                          </Box>
+                        </div>
+                        <div
+                          className="d-flex align-items-center justify-content-start mt-1"
+                          style={{ marginLeft: '14px' }}
                         >
-                          <div className="font_15x d-flex align-items-center">
-                            Honey Bee 
-                          </div>
-                          <div className="font_15x d-flex align-items-center">
-                            {item.username}
-                          </div>
-                        </Box>
-                      </div>
-                      <div
-                        className="d-flex align-items-center justify-content-start mt-1"
-                        style={{ marginLeft: '14px' }}
-                      >
-                        <Button
-                          variant="outlined"
-                          href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
-                          // onClick={handleSubmit}
-                          disableTouchRipple
-                          // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-                          sx={{
-                            borderColor: '#FFB300',
-                            borderRadius: '2px',
-                            color: 'var(--body_color)',
-                            width: '120px',
-                            height: '32px',
-                            textTransform: 'none',
-                            fontSize: '10px',
-                            boxShadow: 'none',
-                            transition: "0.3s ease-in-out",
-                            '&:hover': {
-                              backgroundColor: '#FFB300',
+                          <Button
+                            variant="outlined"
+                            href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
+                            // onClick={handleSubmit}
+                            disableTouchRipple
+                            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
+                            sx={{
                               borderColor: '#FFB300',
+                              borderRadius: '2px',
+                              color: 'var(--body_color)',
+                              width: '120px',
+                              height: '32px',
+                              textTransform: 'none',
+                              fontSize: '10px',
                               boxShadow: 'none',
+                              transition: "0.3s ease-in-out",
+                              '&:hover': {
+                                backgroundColor: '#FFB300',
+                                borderColor: '#FFB300',
+                                boxShadow: 'none',
+                                color: 'var(--body_color)',
+                                // color: '#282828',
+                              },
+                            }}
+                          >
+                            Exchange
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            // onClick={handleSubmit}
+                            href={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/HoneyBee`}
+                            disableTouchRipple
+                            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
+                            sx={{
+                              borderColor: '#FFB300',
+                              borderRadius: '2px',
                               color: 'var(--body_color)',
                               // color: '#282828',
-                            },
-                          }}
-                        >
-                          Exchange
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          // onClick={handleSubmit}
-                          href={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1`}
-                          disableTouchRipple
-                          // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-                          sx={{
-                            borderColor: '#FFB300',
-                            borderRadius: '2px',
-                            color: 'var(--body_color)',
-                            // color: '#282828',
-                            width: '120px',
-                            height: '32px',
-                            textTransform: 'none',
-                            fontSize: '10px',
-                            boxShadow: 'none',
-                            transition: "0.3s ease-in-out",
-                            ml: 0.3,
-                            '&:hover': {
-                              backgroundColor: '#FFB300',
-                              borderColor: '#FFB300',
-                              // color: '#282828',
-                              color: 'var(--body_color)',
+                              width: '120px',
+                              height: '32px',
+                              textTransform: 'none',
+                              fontSize: '10px',
                               boxShadow: 'none',
-                            },
-                          }}
-                        >
-                          DashBoard
-                        </Button>
+                              transition: "0.3s ease-in-out",
+                              ml: 0.3,
+                              '&:hover': {
+                                backgroundColor: '#FFB300',
+                                borderColor: '#FFB300',
+                                // color: '#282828',
+                                color: 'var(--body_color)',
+                                boxShadow: 'none',
+                              },
+                            }}
+                          >
+                            DashBoard
+                          </Button>
+                        </div>
+                      </div>
+                    </Grid>
+                  ))) :
+                  <>
+                    <div className="d-flex flex-direction-column justify-content-center" style={{ paddingTop: "140px" }}>
+                      <div className="d-flex align-items-center justify-content-center">
+                        <h2 style={{ color: "var( --body_color)" }}> No Honey Bees Available to list </h2>
                       </div>
                     </div>
-                  </Grid>
-                ))) :
-                <>
-                  <div className="d-flex flex-direction-column justify-content-center" style={{paddingTop:"140px"}}>
-                    <div className="d-flex align-items-center justify-content-center">
-                      <h2 style={{color:"var( --body_color)"}}> No Honey Bees Available to list </h2>
-                    </div>
-                  </div>
-                </>}
-            </Grid>
-          </Box>
-        </div>
+                  </>}
+              </Grid>
+
+            </Box>
+          </div>
+          {/* {---} */}
+          
+          <div>
+            {/* <FlowDiagram /> */}
+          </div>
         </div>) :
         <><HoneyBeeComingSoon />
         </>

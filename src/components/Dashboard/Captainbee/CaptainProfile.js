@@ -73,14 +73,12 @@ const CaptainProfile = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    
+
     setUserType(userType);
 
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        
+      getCaptainBeeStatics(username, "yes").then((data) => {
         setStaticsData(data.data);
-
         const profile = data.data.affiliateUserProfile || {};
         const socialMediaLink = profile.socialMediaLink || {};
         const fullUserData = data.data.userFullData || {};
@@ -96,20 +94,26 @@ const CaptainProfile = () => {
         setTwitter(socialMediaLink.twitter || '');
         setEmail(profile.Email || '');
         setUsername(profile.Username || '');
+        setUseEmail(profile.isEmailPublic || false);
+        setUsePhone(profile.isPhonePublic || false);
+        setBio(profile.PublicBio || '');
       });
     }
   }, [])
 
   const handleSubmit = async () => {
     setLoadings(true);
-    
+
     let updateData = {
-      twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, referralCode
+      twitter, discord, linkedin, insta, photo, accname, lastname, firstname, Phone, referralCode,
+      isPhonePublic: usePhone,
+      isEmailPublic: useEmail,
+      PublicBio: bio
     }
     updateCaptainBeeProfile(Email, Username, updateData).then((data) => {
-      
+
       if (data.status === 200) {
-        
+
         setLoadings(false);
         openNotificationWithIcon('success', 'Profile data updated Successfully');
       } else {
@@ -121,7 +125,7 @@ const CaptainProfile = () => {
   }
 
   const handlePhotoChange = (event) => {
-    
+
     const file = event.target.files[0];
     uploadToS3(file, 'photoId');
   };
@@ -139,7 +143,7 @@ const CaptainProfile = () => {
       await s3.putObject(params).promise();
       // Construct and set the file URL
       const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-      
+
       setPhoto(url);
     } catch (error) {
       alert('Error uploading file:', error);
@@ -150,7 +154,7 @@ const CaptainProfile = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div className="hive-container" style={{paddingTop:"280px"}}>
+        (<div className="hive-container" style={{ paddingTop: "280px" }}>
           <div
             className="d-flex flex-direction-column justify-content-center"
             style={{ width: '74%', maxWidth: '1140px' }}
@@ -267,76 +271,76 @@ const CaptainProfile = () => {
                     mb: 2,
                   }}
                 >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
-                    variant="text"
-                    fontSize={'18px'}
-                    fontWeight={400}
-                    width={'35%'}
-                    textAlign={'left'}
-                  >
-                    Email
-                  </Typography>
-                  <TextField
-                    //   label="Email"
-                    placeholder="you@yourdomain.com"
-                    type="email"
-                    InputLabelProps={{ shrink: true, readOnly: true, }}
-                    variant="outlined"
-                    sx={{ width: '64%' }}
-                    size="small" // Make the input box smaller
-                    value={staticsData?.affiliateUserProfile.Email}
-                    //  error={emailError !== ''}
-                    // helperText={emailError}
-                    // onBlur={validateEmail}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                      width: '100%',
                     }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'baseline',
-                    width: '100%',
-                    mb:2
-                  }}
-                >
-                  <Typography
-                    variant="text"
-                    fontSize={'15px'}
-                    fontWeight={400}
-                    width={'50%'}
-                    textAlign={'left'}
                   >
-                    Display Email address publically
-                  </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      fontWeight={400}
+                      width={'35%'}
+                      textAlign={'left'}
+                    >
+                      Email
+                    </Typography>
+                    <TextField
+                      //   label="Email"
+                      placeholder="you@yourdomain.com"
+                      type="email"
+                      InputLabelProps={{ shrink: true, readOnly: true, }}
+                      variant="outlined"
+                      sx={{ width: '64%' }}
+                      size="small" // Make the input box smaller
+                      value={staticsData?.affiliateUserProfile.Email}
+                      //  error={emailError !== ''}
+                      // helperText={emailError}
+                      // onBlur={validateEmail}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      alignItems: 'baseline',
+                      width: '100%',
+                      mb: 2
+                    }}
+                  >
+                    <Typography
+                      variant="text"
+                      fontSize={'15px'}
+                      fontWeight={400}
+                      width={'50%'}
+                      textAlign={'left'}
+                    >
+                      Display Email address publically
+                    </Typography>
                     <FormGroup>
-                <FormControlLabel
-                  control={<IOSSwitch sx={{ m: 1 }} checked={useEmail}  />}
-                  value={useEmail}
-                  onChange={(e) => {
-                    
-                    if (!useEmail && e.target.checked === true) {
-                      setUseEmail(true)
-                    } else {
-                      setUseEmail(false)
-                    }
-                  }}
-                />
-              </FormGroup>
-              </Box>
-              </Box>
+                      <FormControlLabel
+                        control={<IOSSwitch sx={{ m: 1 }} checked={useEmail} />}
+                        value={useEmail}
+                        onChange={(e) => {
+
+                          if (!useEmail && e.target.checked === true) {
+                            setUseEmail(true)
+                          } else {
+                            setUseEmail(false)
+                          }
+                        }}
+                      />
+                    </FormGroup>
+                  </Box>
+                </Box>
                 <Box
                   sx={{
                     display: 'flex',
@@ -362,10 +366,11 @@ const CaptainProfile = () => {
                     // color='var(--body_color)'
                     placeholder="Username"
                     InputLabelProps={{ shrink: true, readOnly: true, }}
-                    sx={{ mb: 2, width: '64%',
-                    color:"var(--body_color)",
-                    borderColor:"var(--body_color)"
-                     }}
+                    sx={{
+                      mb: 2, width: '64%',
+                      color: "var(--body_color)",
+                      borderColor: "var(--body_color)"
+                    }}
                     size="small" // Make the input box smaller
                     value={staticsData?.affiliateUserProfile.Username}
                     onChange={(e) => {
@@ -384,75 +389,75 @@ const CaptainProfile = () => {
                   }}
                 >
 
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
-                    variant="text"
-                    fontSize={'18px'}
-                    fontWeight={400}
-                    width={'35%'}
-                    textAlign={'left'}
-                  >
-                    Phone Number
-                  </Typography>
-                  <TextField
-                    //   label="Phone Number"
-                    variant="outlined"
-                    placeholder="Phone Number"
-                    type="tel"
-                    InputLabelProps={{ shrink: true }}
-                    sx={{ width: '64%' }}
-                    size="small" // Make the input box smaller
-                    value={Phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                      width: '100%',
                     }}
-                    inputProps={{
-                      maxLength: 10, // Limit input to 10 characters
-                    }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'baseline',
-                    width: '100%',
-                    mb:2
-                  }}
-                >
-                  <Typography
-                    variant="text"
-                    fontSize={'15px'}
-                    fontWeight={400}
-                    width={'50%'}
-                    textAlign={'left'}
                   >
-                    Display phone number publically
-                  </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      fontWeight={400}
+                      width={'35%'}
+                      textAlign={'left'}
+                    >
+                      Phone Number
+                    </Typography>
+                    <TextField
+                      //   label="Phone Number"
+                      variant="outlined"
+                      placeholder="Phone Number"
+                      type="tel"
+                      InputLabelProps={{ shrink: true }}
+                      sx={{ width: '64%' }}
+                      size="small" // Make the input box smaller
+                      value={Phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                      inputProps={{
+                        maxLength: 10, // Limit input to 10 characters
+                      }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      alignItems: 'baseline',
+                      width: '100%',
+                      mb: 2
+                    }}
+                  >
+                    <Typography
+                      variant="text"
+                      fontSize={'15px'}
+                      fontWeight={400}
+                      width={'50%'}
+                      textAlign={'left'}
+                    >
+                      Display phone number publically
+                    </Typography>
                     <FormGroup>
-                <FormControlLabel
-                  control={<IOSSwitch sx={{ m: 1 }} checked={usePhone}  />}
-                  value={usePhone}
-                  onChange={(e) => {
-                    
-                    if (!usePhone && e.target.checked === true) {
-                      setUsePhone(true)
-                    } else {
-                      setUsePhone(false)
-                    }
-                  }}
-                />
-              </FormGroup>
-              </Box>
+                      <FormControlLabel
+                        control={<IOSSwitch sx={{ m: 1 }} checked={usePhone} />}
+                        value={usePhone}
+                        onChange={(e) => {
+
+                          if (!usePhone && e.target.checked === true) {
+                            setUsePhone(true)
+                          } else {
+                            setUsePhone(false)
+                          }
+                        }}
+                      />
+                    </FormGroup>
+                  </Box>
                 </Box>
 
                 <Box
@@ -472,7 +477,7 @@ const CaptainProfile = () => {
                     width={'35%'}
                     textAlign={'left'}
                   >
-                   Honey Bee Referral Code
+                    Honey Bee Referral Code
                   </Typography>
                   <TextField
                     variant="outlined"
@@ -504,7 +509,7 @@ const CaptainProfile = () => {
                     width={'35%'}
                     textAlign={'left'}
                   >
-                   Captain Bee Referral Code
+                    Captain Bee Referral Code
                   </Typography>
                   <TextField
                     variant="outlined"
@@ -513,9 +518,9 @@ const CaptainProfile = () => {
                     InputLabelProps={{ shrink: true }}
                     sx={{ mb: 2, width: '64%' }}
                     size="small" // Make the input box smaller
-                    value={referralCodeCapt}
+                    value={referralCode}
                     onChange={(e) => {
-                      setReferralCodeCapt(e.target.value);
+                      setReferralCode(e.target.value);
                     }}
                   />
                 </Box>

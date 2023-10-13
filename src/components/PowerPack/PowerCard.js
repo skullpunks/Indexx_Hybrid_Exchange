@@ -31,42 +31,57 @@ const PowerCard = ({ card }) => {
 
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
     const createNewBuyOrder = async (card) => {
-        console.log("purchasedCard", card);
-        setLoadings(true);
-        let purchasedProduct = card.name;
-        let paymentMethodUsed = "Paypal";
-        let powerPackAmountInNumber = stringPriceToNumber(card?.price);
-        let powerPackAmount = card?.price;
+        let userEmail = (localStorage.getItem('user'));
+        console.log("userEmail", userEmail)
+        if (userEmail !== null && userEmail !== "") {
+            console.log('I AM HERE');
+            console.log("purchasedCard", card);
+            setLoadings(true);
+            let purchasedProduct = card.name;
+            let paymentMethodUsed = "Paypal";
+            let powerPackAmountInNumber = stringPriceToNumber(card?.price);
+            let powerPackAmount = card?.price;
 
-        console.log(
-            paymentMethodUsed,
-            purchasedProduct,
-            powerPackAmountInNumber,
-            powerPackAmount,
-            discountCode
-        )
-        let res = await createPowerPackOrder(purchasedProduct,
-            paymentMethodUsed,
-            purchasedProduct,
-            powerPackAmountInNumber,
-            powerPackAmount,
-            discountCode);
-        if (res.status === 200) {
-            setLoadings(false);
-            //--Below code is to enable paypal Order---
+            console.log(
+                paymentMethodUsed,
+                purchasedProduct,
+                powerPackAmountInNumber,
+                powerPackAmount,
+                discountCode
+            )
+            let res = await createPowerPackOrder(purchasedProduct,
+                paymentMethodUsed,
+                purchasedProduct,
+                powerPackAmountInNumber,
+                powerPackAmount,
+                discountCode);
+            if (res.status === 200) {
+                setLoadings(false);
+                //--Below code is to enable paypal Order---
 
-            for (let i = 0; i < res.data.links.length; i++) {
-                if (res.data.links[i].rel.includes("approve")) {
-                    window.location.href = res.data.links[i].href;
+                for (let i = 0; i < res.data.links.length; i++) {
+                    if (res.data.links[i].rel.includes("approve")) {
+                        window.location.href = res.data.links[i].href;
+                    }
                 }
+                //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+            } else {
+                setLoadings(false);
+                // openNotificationWithIcon2('error', res.data);
+                setIsModalOpen(true);
+                setMessage(res.data);
+                setErrorMessage(res.data);
             }
-            //getStripePaymentIntent(res.data.orderId, res.data.user.email);
         } else {
-            setLoadings(false);
-            // openNotificationWithIcon2('error', res.data);
-            setIsModalOpen(true);
-            setMessage(res.data);
-            setErrorMessage(res.data);
+            console.log("Email not found ask user to login");
+            // Save the current route
+            localStorage.setItem('redirectRoute', window.location.pathname);
+
+            // Redirect to the login page
+            window.location.href = '/indexx-exchange/buy-sell/hive-login';
+            //("save the current route history")
+            //(go to login route, /indexx-exchange/buy-sell/hive-login)
+            //("come back to this route after login")
         }
     };
 
@@ -289,7 +304,7 @@ const PowerCard = ({ card }) => {
                         Apply Discount
                     </Button>
 
-                    <Collapse in={isApplyClicked} sx={{width:"260px"}} className='power-input'>
+                    <Collapse in={isApplyClicked} sx={{ width: "260px" }} className='power-input'>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -300,11 +315,11 @@ const PowerCard = ({ card }) => {
                             sx={{
                                 width: '260px',
                                 textAlign: 'center',
-                                borderRadius:"0px",
+                                borderRadius: "0px",
                             }}
                             InputProps={{
                                 style: {
-                                   borderRadius: 0,
+                                    borderRadius: 0,
                                 },
                             }}
                         />
@@ -343,7 +358,7 @@ const PowerCard = ({ card }) => {
                                 <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${Math.floor(finalAmount * 100) / 100}</Typography>
                             </Box>
                             {errorMessage && (
-                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red'}}>
+                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red' }}>
                                     {errorMessage}
                                 </Box>
                             )}

@@ -133,7 +133,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
-          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab" element={<BeeDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType" element={<BeeDash />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />

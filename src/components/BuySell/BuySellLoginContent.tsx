@@ -47,8 +47,9 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
+      console.log(res.data);
       setLoadings(false);
-      openNotificationWithIcon('error', res.data);
+      openNotificationWithIcon('error', res?.data);
     }
   };
 

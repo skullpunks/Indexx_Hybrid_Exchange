@@ -211,8 +211,9 @@ const HoneyComb = () => {
               <div className="align-items-start lh_32x">
                 <div className="font_17x d-flex flex-direction-column align-items-start mt-4">
                   <div className="fw-bold">Bio :</div>
-                  My name is {staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
-                  in indexx hive
+                  {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
+                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
+                  in indexx hive`}
                 </div>
 
                 <div className="font_13x d-flex align-items-center mt-5">
@@ -247,22 +248,26 @@ const HoneyComb = () => {
                   )}
                   {staticsData?.formatedAccountCreationDate}
                 </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === 'dark' ? (
-                    <img alt="man" src={phone_dark} className="me-2" />
-                  ) : (
-                    <img alt="man" src={phone} className="me-2" />
-                  )}
-                  +123456789
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === 'dark' ? (
-                    <img alt="man" src={email_dark} className="me-2" />
-                  ) : (
-                    <img alt="man" src={email} className="me-2" />
-                  )}
-                  abcd@gmail.com
-                </div>
+                {staticsData?.affiliateUserProfile?.isPhonePublic &&
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={phone_dark} className="me-2" />
+                    ) : (
+                      <img alt="man" src={phone} className="me-2" />
+                    )}
+                    {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
+                  </div>
+                }
+                {staticsData?.affiliateUserProfile?.isEmailPublic &&
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={email_dark} className="me-2" />
+                    ) : (
+                      <img alt="man" src={email} className="me-2" />
+                    )}
+                    {staticsData?.affiliateUserProfile?.Email}
+                  </div>
+                }
               </div>
 
               <div className="align-items-start lh_32x mt-5">
@@ -300,7 +305,7 @@ const HoneyComb = () => {
                   Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
-                    onClick={() => copyClick(123456)}
+                    onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
@@ -308,7 +313,7 @@ const HoneyComb = () => {
                   Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
-                    onClick={() => copyClick(123456)}
+                    onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
@@ -417,7 +422,7 @@ const HoneyComb = () => {
                       fontWeight={600}
                       textAlign={'left'}
                     >
-                      6
+                      {staticsData?.captainsCount}
                     </Typography>
                     <Typography
                       variant="text"

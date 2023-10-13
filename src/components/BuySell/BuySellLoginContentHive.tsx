@@ -27,17 +27,17 @@ const BuySellLoginContentHive: React.FC = () => {
 
   const onFinish = async (values: any) => {
     setLoadings(true);
-    
-    
+
+
     let res = await loginHive(values.email_or_username, values.password);
-    
+
     if (res.status === 200) {
-      
+
       setLoadings(false);
       openNotificationWithIcon('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
-      
-      
+
+
       debugger;
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
@@ -47,12 +47,20 @@ const BuySellLoginContentHive: React.FC = () => {
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
-      
-      redirectUrl
-        ? navigate(redirectUrl)
-        : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+
+      // Check if there's a saved route in localStorage
+      const redirectRoute = localStorage.getItem('redirectRoute');
+
+      if (redirectRoute) {
+        // Redirect to the saved route after successful login
+        window.location.href = redirectRoute;
+      } else {
+        redirectUrl
+          ? navigate(redirectUrl)
+          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+      }
     } else {
-      
+
       setLoadings(false);
       openNotificationWithIcon('error', res.data);
     }
@@ -85,7 +93,7 @@ const BuySellLoginContentHive: React.FC = () => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    
+
   };
 
   const handleClick = () => {
@@ -93,8 +101,8 @@ const BuySellLoginContentHive: React.FC = () => {
   }
   return (
     <div className="scan-container flex-align-stretch">
-      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center log-img'>
-        <img alt='' src={hive} width={"70%"}/>
+      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
+        <img alt='' src={hive} width={"70%"} />
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
         <h1 className="text-center margin-lr-auto top_heading">CaptainBee Log In</h1>
@@ -113,7 +121,7 @@ const BuySellLoginContentHive: React.FC = () => {
             autoComplete="off"
           >
             <div className="form_element email position-relative">
-            <Form.Item
+              <Form.Item
                 label="Email / Username"
                 name="email_or_username"
                 rules={[
@@ -211,10 +219,10 @@ const BuySellLoginContentHive: React.FC = () => {
               onClick={handleClick}
             >
 
-            <p style={{ color: '#ffb300', fontSize: 15 }}>
-              {' '}
-              Sign up for Captain Bee
-            </p>
+              <p style={{ color: '#ffb300', fontSize: 15 }}>
+                {' '}
+                Sign up for Captain Bee
+              </p>
             </Link>
           </div>
           <br />

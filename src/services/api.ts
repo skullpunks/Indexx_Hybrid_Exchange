@@ -22,7 +22,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -63,6 +63,20 @@ export const signupAPI = async (
     return e.response.data;
   }
 };
+export function formatPhoneNumberToUSFormat(inputString: string) {
+  // Remove any non-numeric characters from the input
+  const numericInput = inputString.replace(/\D/g, '');
+
+  // Check if the numeric input has a valid length
+  if (numericInput.length !== 10) {
+    return 'Invalid phone number';
+  }
+
+  // Format the numeric input into the US phone number format
+  const formattedPhoneNumber = `(${numericInput.slice(0, 3)}) ${numericInput.slice(3, 6)}-${numericInput.slice(6)}`;
+
+  return formattedPhoneNumber;
+}
 
 export const loginAPI = async (email: string, password: string) => {
   try {
@@ -88,10 +102,13 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-export const getCaptainBeeStatics = async (username: string) => {
+export const getCaptainBeeStatics = async (
+  username: string,
+  isPublicProfile: string = 'no'
+) => {
   try {
     const result = await API.get(
-      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}`
+      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}`
     );
     return result.data;
   } catch (e: any) {
@@ -127,10 +144,7 @@ export const requestPermissionsByEmail = async (
   }
 };
 
-export const postPublicMessage = async (
-  email: string,
-  message: string,
-) => {
+export const postPublicMessage = async (email: string, message: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/postpublicMessage/`, {
       email,
@@ -142,11 +156,11 @@ export const postPublicMessage = async (
   }
 };
 
-export const getPublicMessages = async (
-  email: string,
-) => {
+export const getPublicMessages = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getpublicMessages/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getpublicMessages/${email}`
+    );
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -689,7 +703,9 @@ export const marketsData = async () => {
 
 export const stockMarketsData = async (symbol: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/basic/stockmarketPrice/${symbol}`);
+    const result = await API.get(
+      `/api/v1/inex/basic/stockmarketPrice/${symbol}`
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (marketPrice)');
@@ -750,7 +766,7 @@ export const createPowerPackOrder = async (
   powerPackAmountInNumber: number,
   powerPackAmount: number,
   discountCode: string,
-  email?: string,
+  email?: string
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createPowerPackOrder', {
@@ -771,9 +787,14 @@ export const createPowerPackOrder = async (
   }
 };
 
-export const getDiscountCode = async (discountCode: string, packName: string) => {
+export const getDiscountCode = async (
+  discountCode: string,
+  packName: string
+) => {
   try {
-    const result = await API.get(`/api/v1/inex/order/validateDiscountCode/${discountCode}/${packName}`);
+    const result = await API.get(
+      `/api/v1/inex/order/validateDiscountCode/${discountCode}/${packName}`
+    );
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (getCoreWalletDetails)');

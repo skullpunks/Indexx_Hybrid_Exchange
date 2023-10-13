@@ -202,17 +202,17 @@ const CaptainDash = () => {
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
                 {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
-                (<div className="justify-content-center d-flex">
-                  <img src={powerPackPhoto} alt='pack' width={"80%"} />
-                </div>) : (
-                  <div>
-                  Please purchase the powerpack from the below URL: <br/>
-                  <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                    Power Pack Purchase
-                  </a>
-                </div>
-              )
-              }
+                  (<div className="justify-content-center d-flex">
+                    <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                  </div>) : (
+                    <div>
+                      Please purchase the powerpack from the below URL: <br />
+                      <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                        Power Pack Purchase
+                      </a>
+                    </div>
+                  )
+                }
                 <div className="align-items-start lh_32x">
 
                   <div className="font_13x d-flex align-items-center mt-4">
@@ -247,22 +247,26 @@ const CaptainDash = () => {
                     }
                     {staticsData?.formatedAccountCreationDate}
                   </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={phone_dark} className="me-2" />
-                    ) : (
-                      <img alt="man" src={phone} className="me-2" />
-                    )}
-                    +123 456 789
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={email_dark} className="me-2" />
-                    ) : (
-                      <img alt="man" src={email} className="me-2" />
-                    )}
-                    abcd@gmail.com
-                  </div>
+                  {staticsData?.affiliateUserProfile?.isPhonePublic &&
+                    <div className="font_13x d-flex align-items-center">
+                      {theme === 'dark' ? (
+                        <img alt="man" src={phone_dark} className="me-2" />
+                      ) : (
+                        <img alt="man" src={phone} className="me-2" />
+                      )}
+                      {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
+                    </div>
+                  }
+                  {staticsData?.affiliateUserProfile?.isEmailPublic &&
+                    <div className="font_13x d-flex align-items-center">
+                      {theme === 'dark' ? (
+                        <img alt="man" src={email_dark} className="me-2" />
+                      ) : (
+                        <img alt="man" src={email} className="me-2" />
+                      )}
+                      {staticsData?.affiliateUserProfile?.Email}
+                    </div>
+                  }
                 </div>
 
                 <div className="align-items-start lh_32x mt-4">
@@ -299,18 +303,18 @@ const CaptainDash = () => {
 
                 <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
                   <div>
-                    Invite Honey Bee : 123456
+                    Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(123456)}
+                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                   <div>
-                    Invite Captain Bee : skfFSj7
+                    Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(123456)}
+                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -866,7 +870,7 @@ const CaptainDash = () => {
                           fontWeight={600}
                           textAlign={'left'}
                         >
-                          {staticsData?.honeyBeesCount}
+                          {staticsData?.captainsCount}
                         </Typography>
                         <Typography
                           variant="text"
@@ -881,7 +885,7 @@ const CaptainDash = () => {
                             gap: 1,
                           }}
                         >
-                          <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                          <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
                         </Typography>
                       </Box>
                       <Box

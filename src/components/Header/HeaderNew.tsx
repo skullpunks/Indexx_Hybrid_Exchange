@@ -853,7 +853,9 @@ const HeaderNew = () => {
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div style={{
+                        color:"#FFB300"
+                      }}>
 
                         {title}
                       </div>
