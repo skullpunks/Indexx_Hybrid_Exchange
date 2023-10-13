@@ -96,7 +96,7 @@ const PowerCard = ({ card }) => {
             {...(true ? { timeout: 1000 + parsedId } : {})}
         >
             <Grid item xs={1} sm={6} md={3} >
-                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }} mt={2} mb={15}>
+                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems:"center" }} mt={2} mb={15}>
                     <ReactCardFlip isFlipped={flip}
                         flipDirection="horizontal">
                         <Box style={{

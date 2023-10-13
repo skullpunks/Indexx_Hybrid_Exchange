@@ -4,12 +4,17 @@ import { Box, Grid, Typography } from '@mui/material'
 import { PackData } from './PackData'
 import powerp from "../../assets/powerpack/power page logo 1.svg";
 import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const PowerPack = () => {
     const [cards, setCards] = useState([]);
     useEffect(() => {
         setCards(PackData);
       }, []);
+
+      const themes = useTheme();
+      const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
     return (
         <Box mt={18} pb={5}>
@@ -24,7 +29,7 @@ const PowerPack = () => {
                     objectFit: "scale-down",
                     mt:25,
                     mb: 2,
-                    flexDirection: "row",
+                    flexDirection: `${isMobile ? "column" : "row"}`,
                     gap: 3,
                 }}
             >

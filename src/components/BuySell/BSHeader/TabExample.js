@@ -11,6 +11,9 @@ import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
 import stock_white from '../../../assets/BSheader/tokens icon  white (2).svg';
 import './TabExample.css';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
+
 
 const TabExample = ({ selectedTab, handleTabChange }) => {
   // const [selectedTab, setSelectedTab] = useState(0);
@@ -22,6 +25,9 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -42,7 +48,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
     <div
       style={{
         position: 'fixed',
-        top: '90px',
+        top: `${isMobile ? '60px' : '90px'}`,
         width: '100%',
         zIndex: 999,
         background: 'var(--body_background)',
@@ -76,13 +82,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
               />
             }
           
-          style={{
-            width: '40px',
-            textTransform: 'none',
-            color: 'inherit',
-            fontSize: '10px',
-            padding:0
-          }}
+            className='tab-format'
         />
         <Tab
           label="Tokens"
@@ -102,13 +102,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
               style={{ marginBottom: 0 }}
             />
           }
-          style={{
-            width: '100px',
-            textTransform: 'none',
-            color: 'inherit',
-            fontSize: '10px',
-            padding:0
-          }}
+          className='tab-format'
         />
 
         <Tab
@@ -122,13 +116,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           <img src={stock} alt="Home" width={'45px'} 
           style={{ marginBottom: 6, marginTop:6}}
           />}
-          style={{
-            width: '100px',
-            textTransform: 'none',
-            color: 'inherit',
-            fontSize: '10px',
-            padding:0
-          }}
+          className='tab-format'
         />
         <Tab
           label="Power Packs"
@@ -150,13 +138,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           }
           component={Link}
           to='/indexx-exchange/power-pack'
-          style={{
-            width: '100px',
-            textTransform: 'none',
-            color: 'inherit',
-            fontSize: '10px',
-            padding:0
-          }}
+          className='tab-format'
         />
       </Tabs>
       {/* <div style={{color:"#11BE6A", fontSize:"10px", fontStyle:"italic", display:'flex',

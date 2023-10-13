@@ -93,7 +93,7 @@ const BuySellLoginContentHive: React.FC = () => {
   }
   return (
     <div className="scan-container flex-align-stretch">
-      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
+      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center log-img'>
         <img alt='' src={hive} width={"70%"}/>
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">

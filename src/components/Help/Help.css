@@ -171,10 +171,10 @@ h1 {
         border-left: 0;
         width: 100%;
     }
-    .ant-collapse-content > .ant-collapse-content-box {
+    /* .ant-collapse-content > .ant-collapse-content-box { */
 
-        padding:0;
-    }
+        /* padding:0; */
+    /* } */
     .info{
         margin-top:0;
     }

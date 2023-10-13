@@ -71,14 +71,14 @@ const SubHeader = () => {
             <div className="card">
             <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
             <div className="card-body">
-                <h5 className="card-title">Team Captain Bees</h5>
+                <h5 className="card-title">Captain Bee's Colony</h5>
             <Typography
                 component='p'
                 sx={
                   location.pathname === '/indexx-exchange/dashboard/capt-mycaptains'
                     ? {
                       height: '0.07px',
-                      width: '88px',
+                      width: '95px',
                       backgroundColor: '#000',
                     }
                     : null

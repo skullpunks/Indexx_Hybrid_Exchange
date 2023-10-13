@@ -6,6 +6,8 @@ import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const PowerPackHeader = () => {
   const location = useLocation();
@@ -26,9 +28,15 @@ const PowerPackHeader = () => {
     };
   }, []);
 
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   return (
 
-    <div style={{position:"fixed", top:"90px", width:"100%", zIndex:999, background:"var(--main-body)", height:"80px"}}>
+    <div style={{position:"fixed", 
+        top: `${isMobile ? '60px' : '90px'}`,
+    width:"100%", zIndex:999, background:"var(--main-body)", 
+    height:"80px"}}>
 
     <div className="container power-page mt-2">
 

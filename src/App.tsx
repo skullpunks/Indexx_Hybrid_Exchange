@@ -84,7 +84,8 @@ import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
 import TeamCaptainDash from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash";
 import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain";
 // import CareerSoon from './components/Careers/CareerSoon';
-
+import { ThemeProvider } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 function App() {
   /*
@@ -112,7 +113,11 @@ function App() {
         }
     }, [email]);
 */
+  let theme = createTheme();
+  theme = responsiveFontSizes(theme);
+  
   return (
+    <ThemeProvider theme={theme}>
     <div>
       <BrowserRouter>
         {/* <Header /> */}
@@ -282,6 +287,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </ThemeProvider>
   );
 }
 

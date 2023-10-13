@@ -14,7 +14,7 @@
     min-height: auto;
     align-items: center;
     padding: 10px 10px 10px;
-    width: 110px;
+    width: 120px;
     height: 80px;
     border: none;
     border-radius: 0;
@@ -44,7 +44,7 @@
 }
 
 .sub-logos .col{
-    width: 8%;
+    width: 8.5%;
 }
 
 .sub-page a{

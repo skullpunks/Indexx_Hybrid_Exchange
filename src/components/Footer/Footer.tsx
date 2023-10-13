@@ -7,7 +7,7 @@ import YouTube from '../../assets/arts/youtTubeIcon.svg';
 import Reddit from '../../assets/arts/redditIcon.svg';
 import facebook from '../../assets/arts/fb_logo.png';
 import Telegram from '../../assets/arts/telegram.png';
-import needHelp from '../../assets/arts/needhelp.png';
+// import needHelp from '../../assets/arts/needhelp.png';
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from '../../assets/arts/personFlip.png';
 
@@ -15,6 +15,7 @@ import personFlipCoin from '../../assets/arts/personFlip.png';
 import indexText_dark from '../../assets/indexx.ai_black.svg';
 import indexText from '../../assets/indexx.ai white.png';
 import arrow from '../../assets/arrow-.svg';
+import plus from '../../assets/arts/plus.svg';
 import './Footer.css';
 import { baseCEXURL, baseDEXURL, baseURL, baseHiveURL, baseWSURL, baseWalletURL, baseShopURL, baseXnftURL, baseMktplaceURL } from '../../services/api';
 
@@ -503,17 +504,17 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
       </footer>
 
       <footer
-        className="site_footer position-relative container-fluid mobile-display"
-        // style={{marginTop:"100px"}}
+        className="site_footer position-relative container-fluid mobile-display border-top"
+        style={{paddingTop:"100px"}}
       >
         
            
 
         <div className="col-xs-6 col-md-4 flip_icon_container text-center">
           
-        <a href={`${baseURL}/indexx-exchange/help`} className="need_help_phone" style={{ backgroundImage: `url(${needHelp})` ,textDecoration:'none' }}>
+           {/* <a href={`${baseURL}/indexx-exchange/help`} className="need_help_phone" style={{ backgroundImage: `url(${needHelp})` ,textDecoration:'none' }}>
                    Need Help?
-               </a>
+               </a> */}
             {/* {footerArt === 'flipWoman' ? (
               <img
                 src={womanFlipCoin}
@@ -542,7 +543,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                        <Link to="/" className="primary_color">Get Connected</Link>
                    </h1> */}
                      
-            <div className="social-wrapper"   style={{ marginBottom: 30 }}>
+            <div className="social-wrapper"   style={{ marginBottom: 50 }}>
               <ul>
                 {icons.map((icon, index) => (
                   <li key={index}>
@@ -566,122 +567,335 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </div>
 
           <div
-            className="col-sm-12 col-md-12 footercentre2 text-center "
-            style={{ marginBottom: 80 }}
+            className="col-sm-12 col-md-12 footercentre2 text-left "
+            style={{ marginBottom: 40 }}
           >
-            <div className="row text-center">
-              <div className="col text-center">
-                <span style={{ textAlign: 'center' }}>
-                  <p>Products</p>
-                  <p className="text-extra-small text-center" style={{}}>
-                    <a
-                      href={baseCEXURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Exchange
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={baseDEXURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Swap
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href="https://tokens.indexx.ai/"
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      indexx Tokens
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={`${baseCEXURL}/indexx-exchange/import-indexx-tokens`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Import indexx Tokens
-                      </span>
-                    </a>
-                    <br />
-                    <br />
-                  </p>
-                </span>
+            <div className="row  w-100 mobile-row border-top">
+              <a className="btn footer-drop " data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+                Platforms
+                <img src={plus} alt="plus" width={"9px"} />
+              </a>
+              <div className="collapse multi-collapse" id="multiCollapseExample1">
+                <div className="">
+                  <span style={{ textAlign: 'start' }}>
+                    <p className="text-extra-small" style={{}}>
+                      <a
+                        href={baseCEXURL}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Exchange
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href="https://fortune.daily.indexx.ai/"
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Fortune Daily
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href={baseShopURL}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Shop
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href={baseDEXURL}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Swap
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href={baseWSURL}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Wall street
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href={baseMktplaceURL}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Market
+                        </span>
+                      </a>
+                      <br />
+                      <br />
+                    </p>
+                  </span>
+                </div>
               </div>
-              <div className="col">
-                <span style={{ textAlign: 'center' }}>
-                  <p>Earn</p>
-                  <p
-                    className="text-extra-small text-center"
-                    style={{
-                      color: '#9F9F9F',
-                      textDecoration: 'none',
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    <a
-                      href={`${baseCEXURL}/indexx-exchange/trade-to-earn`}
+            </div>
+
+            <div className="row  w-100 mobile-row">
+              <a className="btn footer-drop " data-bs-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">
+                Products
+                <img src={plus} alt="plus" width={"9px"} />
+              </a>
+              <div className="collapse multi-collapse" id="multiCollapseExample2">
+                <div className="">
+                  <span style={{ textAlign: 'start' }}>
+                    <p
+                      className="text-extra-small"
+                      style={{
+                        color: '#9F9F9F',
+                        textDecoration: 'none',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <a
+                      href={`${baseShopURL}/collections/gift-cards-1`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      {' '}
-                      Trade to Earn{' '}
+                      Gift Cards
                       </span>
                     </a>
                     <br />
-
                     <a
-                      href={`${baseURL}/indexx-exchange/coming-soon?page=Indexx%20Bank`}
+                      href={`${baseShopURL}/collections/greeting-cards`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      {' '}
-                      indexx Bank{' '}
+                      Greeting Cards
                       </span>
                     </a>
-
                     <br />
-                  </p>
-                </span>
+                    <a
+                       href={`${baseURL}/indexx-exchange/nfts`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      NFT
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={`${baseWSURL}/certificates`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      Stock Certificates
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={`${baseWSURL}/details`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      Stock Tokens
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={`${baseURL}/indexx-exchange/token-details`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      Tokens
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={baseXnftURL}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      XNFT
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={`${baseXnftURL}/#fiat-cur`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      XUSD
+                      </span>
+                    </a>
+                    <br />
+                    <a
+                      href={`${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      $1 Bitcoin
+                      </span>
+                    </a>
+                    <br />
+                    <br />
+                    </p>
+                  </span>
+                </div>
               </div>
-              <div className="col">
-                <span style={{ textAlign: 'center' }}>
-                  <p>Company</p>
-                  <p
-                    className="text-extra-small text-center"
-                    style={{
-                      color: '#9F9F9F',
-                      textDecoration: 'none',
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    <a
-                      href={`${baseURL}/indexx-exchange/how-it-works`}
+            </div>
+
+            <div className="row  w-100 mobile-row">
+              <a className="btn footer-drop " data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">
+                Program
+                <img src={plus} alt="plus" width={"9px"} />
+              </a>
+              <div className="collapse multi-collapse" id="multiCollapseExample3">
+                <div className="">
+                  <span style={{ textAlign: 'start' }}>
+                    <p
+                      className="text-extra-small"
+                      style={{
+                        color: '#9F9F9F',
+                        textDecoration: 'none',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <a
+                      href="https://register.affiliate.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      {' '}
-                      How it Works{' '}
+                      Affiliate Program
                       </span>
                     </a>
                     <br />
+
                     <a
-                      href={`${baseURL}/indexx-exchange/about`}
+                      href={baseHiveURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      About{' '}
+                      Hive
                       </span>
                     </a>
 
                     <br />
                     <a
+                      href={`${baseURL}/indexx-exchange/trade-to-earn`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                        Trade to Earn
+                      </span>
+                    </a>
+
+                    <br />
+                    <br />
+                    </p>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="row  w-100 mobile-row">
+              <a className="btn footer-drop " data-bs-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample4">
+                Wallet
+                <img src={plus} alt="plus" width={"9px"} />
+              </a>
+              <div className="collapse multi-collapse" id="multiCollapseExample4">
+                <div className="">
+                  <span style={{ textAlign: 'start' }}>
+                    <p
+                      className="text-extra-small"
+                      style={{
+                        color: '#9F9F9F',
+                        textDecoration: 'none',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <a
+                      href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en"
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      Wallet Extension
+                      </span>
+                    </a>
+                    <br />
+
+                    <a
+                       href={baseWalletURL}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className='link_sty'>
+                      Wallet Web
+                      </span>
+                    </a>
+                      <br />
+                      <br />
+                    </p>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="row  w-100 mobile-row">
+              <a className="btn footer-drop " data-bs-toggle="collapse" href="#multiCollapseExample5" role="button" aria-expanded="false" aria-controls="multiCollapseExample5">
+                Company
+                <img src={plus} alt="plus" width={"9px"} />
+              </a>
+              <div className="collapse multi-collapse" id="multiCollapseExample5">
+                <div className="">
+                  <span style={{ textAlign: 'start' }}>
+                    <p
+                      className="text-extra-small"
+                      style={{
+                        color: '#9F9F9F',
+                        textDecoration: 'none',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <a
+                        href={`${baseURL}/indexx-exchange/about`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          About{' '}
+                        </span>
+                      </a>
+
+                      <br />
+                      <a
+                        href={`${baseURL}/indexx-exchange/blog`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Blog{' '}
+                        </span>
+                      </a>
+
+                      <br />
+                      <a
+                        href={`${baseURL}/indexx-exchange/careers`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Careers{' '}
+                        </span>
+                      </a>
+                      <br />
+                      <a
+                        href={`${baseURL}/indexx-exchange/how-it-works`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          {' '}
+                          How it Works{' '}
+                        </span>
+                      </a>
+                      <br />
+                      {/* <a
                       href={`${baseURL}/indexx-exchange/nfts`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
@@ -689,21 +903,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       NFT{' '}
                       </span>
                     </a>
-
-
-                    
-                   
-
-                    <br />
-                    {/* <a
-                      href={baseURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      {' '}
-                      Hybrid Exchange{' '}
-                      </span>
-                    </a> */}
                     <br />
                     <a
                       href="https://register.affiliate.indexx.ai/"
@@ -713,29 +912,28 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       Affiliate Program{' '}
                       </span>
                     </a>
-                    <br />
+                    <br /> */}
+                      <a
+                        href={`${baseURL}/indexx-exchange/markets`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Markets Performance{' '}
+                        </span>
+                      </a>
+                      <br />
 
-                    <a
-                      href={`${baseURL}/indexx-exchange/blog`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Blog{' '}
-                      </span>
-                    </a>
+                      <a
+                        href={`${baseURL}/indexx-exchange/vlog`}
+                        style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                      >
+                        <span className='link_sty'>
+                          Vlog{' '}
+                        </span>
+                      </a>
 
-                    <br />
-                    <a
-                      href={`${baseURL}/indexx-exchange/vlog`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Vlog{' '}
-                      </span>
-                    </a>
-
-                    <br />
-                    <a
+                      <br />
+                      {/* <a
                       href={`${baseURL}/indexx-exchange/legal`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
@@ -743,38 +941,35 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       Legal{' '}
                       </span>
                     </a>
-                    <br />
-                    <a
-                      href={`${baseURL}/indexx-exchange/careers`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      Careers{' '}
-                      </span>
-                    </a>
-                    <br />
-                  </p>
-                </span>
-              </div>
-
-              <div style={{ marginRight: -80 }}>
-                <span>
-                  <h1
-                    className="align-middle"
-                    style={{ marginTop: 45,}}
-                  >
-                    <a href={baseURL}>
-                      <img src={indexText} alt="index logo"  width={"119px"}  className='logo_ind'/>
-                    </a>
-                  </h1>
-                </span>
+                    <br /> */}
+                      <br />
+                    </p>
+                  </span>
+                </div>
               </div>
             </div>
+
+
+
           </div>
         
         </div>
-        <div className="copyright_bar row">
-          <p className="copyright_text text-center">
+        <div className="row mx-auto w-100"
+            style={{ marginBottom: 40 }}
+        >
+                    <a href={baseURL} className='w-100 mx-auto d-flex justify-content-center'>
+                    {theme === "dark" ?
+                    <img src={indexText} alt="index logo" width={"70px"} className='logo_ind'/>
+
+                    :
+                      <img src={indexText_dark} alt="index logo" width={"70px"} className='logo_ind'/>
+                    }
+                      </a>
+                    {/* <img src={arrow} alt="index logo" width={"19px"} /> */}
+                  
+        </div>
+        <div className="copyright_bar row mx-auto w-100">
+          <p className="copyright_text text-center w-100">
             Copyright © 2023 All Rights Reserved.
           </p>
           <br />

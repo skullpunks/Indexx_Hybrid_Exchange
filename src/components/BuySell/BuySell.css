@@ -686,6 +686,7 @@ a.bs_link:hover {
   .bs_main > .responsive_container.card {
     min-width: 100%;
     max-width: 100%;
+    margin-inline: 0;
   }
 
   .bs_wallet .card,

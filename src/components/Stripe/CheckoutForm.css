@@ -142,7 +142,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  form {
+  .check-out form {
     width: 80vw;
     min-width: initial;
   }
