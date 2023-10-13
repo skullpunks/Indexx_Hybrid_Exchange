@@ -140,6 +140,9 @@ const HoneyComb = () => {
     openNotificationWithIcon('success', 'Copied Successfully!');
   };
 
+  const options = { year: 'numeric', month: 'long', day: 'numeric',   hour: '2-digit',
+  minute: '2-digit',
+  hour12: true };
 
   return (
     <>
@@ -406,7 +409,7 @@ const HoneyComb = () => {
                       // pr={"70%"}
                       alignSelf={'flex-start'}
                     >
-                      Total Team Captain Bees
+                      Total Captain Bee's Colonys
                     </Typography>
                     <Typography
                       variant="text"
@@ -480,7 +483,13 @@ const HoneyComb = () => {
 
                 </Box>
 
-                <Box className="d-flex flex-direction-column">
+                {allTexts && allTexts?.map((message) => (
+                <Box className="d-flex flex-direction-column" key={message._id} sx={{
+                  // border: '1px solid var(--border-color)',
+                  // borderRadius: "2px",
+                  pr:2,
+                  pb:2
+                }}>
                   <MoreHorizIcon style={{ alignSelf: "flex-end", fontSize: "20px", marginBottom: "-20px" }} />
                   <Box className="d-flex align-items-center">
                     <Box
@@ -512,7 +521,7 @@ const HoneyComb = () => {
                       </Box>
                     </Box>
 
-                    {/* <Box
+                    <Box
                       sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -531,20 +540,21 @@ const HoneyComb = () => {
                         Captin Bee {staticsData?.affiliateUserProfile?.accname}
                       </div>
                       <div className="font_10x d-flex align-items-center">
-                        October 9, 2023
+                      {new Date(message.createdData).toLocaleString('en-US', options)}
                       </div>
-                    </Box> */}
+                    </Box>
                     <br />
-                    {allTexts &&
+                    {/* {allTexts &&
                       <MessageList data={allTexts} />
-                    }
+                    } */}
 
 
                   </Box>
-                  {/* <Box sx={{ paddingLeft: "77px" }}>
-                    Good morning America!
-                  </Box> */}
+                  <Box sx={{ paddingLeft: "77px" }}>
+                  {message.publicMessage}
+                  </Box>
                 </Box>
+        ))}
               </Box>
             </div>
           </div>
@@ -556,31 +566,31 @@ const HoneyComb = () => {
 
 export default HoneyComb;
 
-const MessageList = ({ data }) => {
-  return (
-    <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'baseline',
-          backgroundColor: 'transparent',
-          border: '1px solid #e0e0e0',
-          borderRadius: '4px',
-          padding: '80px',  
-          margin: '8px 0',
-        }}
-      >
-        {data?.map((message) => (
-          <><div key={message._id} className="font_15x d-flex align-items-center">
-            {message.publicMessage}
-          </div>
-          <div className="font_10x d-flex align-items-center" style={{ alignSelf: 'flex-end' }}>
-              {new Date(message.createdData).toLocaleString()}
-            </div></>
-        ))}
-      </Box>
-    </div>
-  );
-};
+// const MessageList = ({ data }) => {
+//   return (
+//     <div>
+//       <Box
+//         sx={{
+//           display: 'flex',
+//           flexDirection: 'column',
+//           justifyContent: 'center',
+//           alignItems: 'baseline',
+//           backgroundColor: 'transparent',
+//           border: '1px solid #e0e0e0',
+//           borderRadius: '4px',
+//           padding: '80px',  
+//           margin: '8px 0',
+//         }}
+//       >
+//         {data?.map((message) => (
+//           <><div key={message._id} className="font_15x d-flex align-items-center">
+//             {message.publicMessage}
+//           </div>
+//           <div className="font_10x d-flex align-items-center" style={{ alignSelf: 'flex-end' }}>
+//               {new Date(message.createdData).toLocaleString()}
+//             </div></>
+//         ))}
+//       </Box>
+//     </div>
+//   );
+// };
