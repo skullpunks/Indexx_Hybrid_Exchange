@@ -1,6 +1,7 @@
 import React from 'react'
 import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
 import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
+import colony from "../../../../assets/hive-dashboard/subheader/colony icon 1.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
@@ -69,7 +70,7 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-mycaptains">
             <div className="card">
-            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
             <div className="card-body">
                 <h5 className="card-title">Captain Bee's Colony</h5>
             <Typography
