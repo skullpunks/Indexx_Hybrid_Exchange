@@ -71,7 +71,7 @@ const BeeDash = () => {
       <SubHeader />
       <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-422px" }}>
-          Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard
+        {userType === "CaptainBee" ?  "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" :"Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
         </div>
         <div className="hive-container">
           <div
@@ -147,10 +147,10 @@ const BeeDash = () => {
 
               <div className="align-items-start lh_32x">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                  Honey Bee {id}
+                {userType === "CaptainBee" ? "Captain Bee": "Honey Bee"} {id}
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
-                  Honey Bee of Captain {honeyBeeData?.referredUserData?.data2?.Username} Team
+                {userType === "CaptainBee" ? "Captain Bee of Captain": "Honey Bee of Captain"} {honeyBeeData?.referredUserData?.data2?.Username} Team
                 </div>
                 <div className="font_13x d-flex align-items-center ">
                   {theme === "dark" ?
