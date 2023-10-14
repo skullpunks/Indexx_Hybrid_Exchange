@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
-
+import './PowerCard.css'
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
     const [loadings, setLoadings] = useState(false);
@@ -15,7 +15,7 @@ const PowerCard = ({ card }) => {
     const [finalAmount, setFinalAmount] = useState(stringPriceToNumber(card?.price));
     const [isApplyClicked, setIsApplyClicked] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
+    const [isHighlighted, setIsHighlighted] = useState(false);
 
     function stringPriceToNumber(price) {
         return parseFloat(price.replace(/,/g, ''));
@@ -111,18 +111,25 @@ const PowerCard = ({ card }) => {
             {...(true ? { timeout: 1000 + parsedId } : {})}
         >
             <Grid item xs={1} sm={6} md={3} >
-                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems:"center" }} mt={2} mb={15}>
+                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems:"center" }} mt={2} mb={15}
+                  onMouseEnter={() => setIsHighlighted(true)}
+                  onMouseLeave={() => setIsHighlighted(false)}
+                
+                >
                     <ReactCardFlip isFlipped={flip}
                         flipDirection="horizontal">
-                        <Box style={{
+                            <Box  style={{
                             width: '260px',
                             height: '545px',
-                            // margin: '20px',
                             borderRadius: 0,
-                            border: "1px solid #A1A1A1",
+                           
                             textAlign: 'center',
-                            padding: '20px'
-                        }}>
+                            padding: '20px',
+                            position: 'relative', // Add this style
+                            border: card.level === "Captain Bee" ? "none" : "1px solid #A1A1A1",
+                        }}
+                        className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}
+  >
 
                             <Typography variant="text" component="p" fontSize={"27px"} fontWeight={600} lineHeight={2.1} mb={2}
                                 style={{ color: `${card.level === "Captain Bee" ? "#FFB300" : "inherit"}` }}
