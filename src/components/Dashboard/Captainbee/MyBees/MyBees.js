@@ -9,7 +9,7 @@ import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComing
 import NodeGraph from '../../graph';
 import FlowDiagram2 from '../../graph';
 import FlowDiagram from '../../reactFlow';
-
+import man from "../../../../assets/hive-dashboard/man4 2.svg";
 
 const MyBees = () => {
   const [staticsData, setStaticsData] = useState();
@@ -166,26 +166,7 @@ const MyBees = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column">
         <div className="d-flex align-items-center">
-          <div
-            style={{
-              width: '80px',
-              height: '80px',
-              backgroundImage: `url(${frame})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              position: 'relative',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-            }}
-          >
-            <div className="bee-hexagon" style={{ marginBottom: '7px' }}>
-              {/* You can add any text or icons here to indicate an empty box */}
-            </div>
-          </div>
+          <img src={man} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
 
           <Box
             className=" d-flex justify-content-center"
@@ -201,10 +182,6 @@ const MyBees = () => {
               pl: 4,
               width: '211px',
               transition: "0.3s ease-in-out",
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-              },
             }}
           >
             <div className="font_15x d-flex align-items-center">
@@ -235,11 +212,8 @@ const MyBees = () => {
               boxShadow: 'none',
               transition: "0.3s ease-in-out",
               '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                boxShadow: 'none',
-                color: 'var(--body_color)',
-                // color: '#282828',
+              borderColor: '#E1E1E1', // Grey border color
+              boxShadow: 'none',
               },
             }}
           >
@@ -263,11 +237,8 @@ const MyBees = () => {
               transition: "0.3s ease-in-out",
               ml: 0.3,
               '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                // color: '#282828',
-                color: 'var(--body_color)',
-                boxShadow: 'none',
+              borderColor: '#E1E1E1', // Grey border color
+              boxShadow: 'none',
               },
             }}
           >

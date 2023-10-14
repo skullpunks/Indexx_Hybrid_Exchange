@@ -544,6 +544,10 @@ button.navbar-toggler {
   display: none;
 }
 
+.link-div:active + .dropdown-menu{
+  display: none;
+}
+
 
 .my-menu .dropdown-menu {
   /* width:  calc(100vw - 17px); */
@@ -605,9 +609,10 @@ button.navbar-toggler {
 .profile-menu .dropdown-menu .profile-back {
   top: 510px;
 }
-/* .dropdown-toggle::after {
-  display: none;
-} */
+
+.profile-menu .dropdown-toggle::after {
+  color: #FFB300;
+}
 
 
 @media screen and (min-width: 2500px) {

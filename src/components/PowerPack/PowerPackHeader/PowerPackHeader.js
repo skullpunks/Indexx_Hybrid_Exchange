@@ -38,7 +38,7 @@ const PowerPackHeader = () => {
     width:"100%", zIndex:999, background:"var(--main-body)", 
     height:"80px"}}>
 
-    <div className="container power-page mt-2">
+    <div className="container power-page">
 
     <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
     

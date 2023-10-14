@@ -141,7 +141,7 @@ const LeaderCaptain = () => {
           <div style={{ paddingTop: "220px" }}>
             <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
               <div style={{ width: "30%", textAlign: "center" }}>
-                These are no Leader Captain Bee for you
+                There are no Leader Captain Bee for you
               </div>
             </div>
           </div>
