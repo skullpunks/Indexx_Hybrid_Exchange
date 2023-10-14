@@ -45,7 +45,7 @@ const SubHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col">
+        <div className="col"  style={{marginLeft:"-17px"}}>
         <Link to="/indexx-exchange/dashboard/capt-mybees">
             <div className="card">
             <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
@@ -111,7 +111,7 @@ const SubHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col">
+        <div className="col" style={{marginLeft:"-5px"}}>
         <a href="/indexx-exchange/dashboard/capt-profile">
             <div className="card">
             <img src={pen} className="card-img-top " alt="..." />
@@ -135,7 +135,7 @@ const SubHeader = () => {
         </div>
 
 
-        <div className="col">
+        <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
@@ -159,7 +159,7 @@ const SubHeader = () => {
             </div>
         </a>
         </div>
-        <div className="col">
+        <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/capt-resource-mkt">
             <div className="card">
             <img src={calendar} className="card-img-top" alt="..."/>
