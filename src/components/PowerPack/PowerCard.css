@@ -12,6 +12,7 @@
     bottom: -5px; /* Adjust bottom to account for the thicker border */
     border: 5px solid transparent; /* Set the border to a thicker yellow border */
     animation: border-animation 2s linear infinite;
+    pointer-events: none;
   }
   
   @keyframes border-animation {
