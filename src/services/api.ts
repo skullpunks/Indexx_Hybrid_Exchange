@@ -22,7 +22,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -104,11 +104,12 @@ export const loginAPI = async (email: string, password: string) => {
 
 export const getCaptainBeeStatics = async (
   username: string,
-  isPublicProfile: string = 'no'
+  isPublicProfile: string = 'no',
+  userType: string = "CaptainBee"
 ) => {
   try {
     const result = await API.get(
-      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}`
+      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}/${userType}`
     );
     return result.data;
   } catch (e: any) {

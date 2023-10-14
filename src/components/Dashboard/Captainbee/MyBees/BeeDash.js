@@ -44,7 +44,7 @@ const BeeDash = () => {
       setHoneyBeeEmail(data?.data?.userFullData?.email);
       setCaptainBeeData(data?.data?.referredUserData?.data2);
     });
-    getCaptainBeeStatics(id).then((data) => {
+    getCaptainBeeStatics(id, "no", userType).then((data) => {
       setStaticsData(data.data);
     });
   }, [id])
