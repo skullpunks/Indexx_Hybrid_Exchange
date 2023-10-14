@@ -218,11 +218,13 @@ const LineGraph = (props: any) => {
               />
             )}
             <YAxis
-              stroke="var(--body_color)"
+              stroke="#5f5f5f"
               padding={{ top: 20 }}
-              tick={{ fill: 'var(--body_color)' }}
+              tick={{ fill: '#5f5f5f' }}
               domain={['auto', 'auto']}
               hide={true}
+              minTickGap={90}
+
             />
             {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}

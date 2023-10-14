@@ -41,6 +41,16 @@ import IndexxExchangeMarket from '../MarketAbout/IndexxExchangeMarket';
 import LitecoinMarket from '../MarketAbout/LitecoinMarket';
 import EthereumMarket from '../MarketAbout/EthereumMarket';
 import FTTTokenMarket from '../MarketAbout/FTTTokenMarket';
+import AmazonStockTokenMarket from '../MarketAbout/AmazonStockTokenMarket';
+import AppleStockTokenMarket from '../MarketAbout/AppleStockTokenMarket';
+import MicrosoftStockTokenMarket from '../MarketAbout/MicrosoftStockTokenMarket';
+import GoogleStockTokenMarket from '../MarketAbout/GoogleStockTokenMarket';
+import BroadcomStockTokenMarket from '../MarketAbout/BroadcomStockTokenMarket';
+import TelsaStockTokenMarket from '../MarketAbout/TelsaStockTokenMarket';
+import MetaStockTokenMarket from '../MarketAbout/MetaStockTokenMarket';
+import PespiCoStockTokenMarket from '../MarketAbout/PespiCoStockTokenMarket';
+import NvidiaStockTokenMarket from '../MarketAbout/NividaStockTokenMarket';
+import SNP500StockTokenMarket from '../MarketAbout/SNP500StockTokenMarket';
 import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
 import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
 import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
@@ -92,16 +102,16 @@ let markets: any = {
   IndexxExchange: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
   FTTGraph: FTTTokenMarket,
-  IndexxAMZNGraph: FTTTokenMarket,
-  IndexxBCMGraph: FTTTokenMarket,
-  IndexxSP500Graph: FTTTokenMarket,
-  IndexxGOOGLGraph: FTTTokenMarket,
-  IndexxAPPLGraph: FTTTokenMarket,
-  IndexxMETAGraph: FTTTokenMarket,
-  IndexxMSFTGraph: FTTTokenMarket,
-  IndexxNVDAGraph: FTTTokenMarket,
-  IndexxPEPGraph: FTTTokenMarket,
-  IndexxTLSAGraph: FTTTokenMarket,
+  IndexxAMZNGraph: AmazonStockTokenMarket,
+  IndexxBCMGraph: BroadcomStockTokenMarket,
+  IndexxSP500Graph: SNP500StockTokenMarket,
+  IndexxGOOGLGraph: GoogleStockTokenMarket,
+  IndexxAPPLGraph: AppleStockTokenMarket,
+  IndexxMETAGraph: MetaStockTokenMarket,
+  IndexxMSFTGraph: MicrosoftStockTokenMarket,
+  IndexxNVDAGraph: NvidiaStockTokenMarket,
+  IndexxPEPGraph: PespiCoStockTokenMarket,
+  IndexxTLSAGraph: TelsaStockTokenMarket,
 };
 const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // const [status, setStatus] = useState("");

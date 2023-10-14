@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
+import './BuySellLoginContentHive.css';
 
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
@@ -103,10 +104,10 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
       <div className="row">
-        <div className="col-5">
+        <div className="col">
           <div
             className="text-center justify-center"
-            style={{ paddingLeft: 28 }}
+            // style={{ paddingLeft: 28 }}
           >
             <h3 className='mb-0'>Get Started as</h3>
             <h1 className="top_heading mb-2">HoneyBee</h1>
@@ -284,7 +285,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
           </div>
         </div>
 
-        <div className="col">
+        <div className="col log-img">
           <div style={{ marginBottom: -100, paddingLeft: 100 }}>
             <br />  <br />  <br />
             <Image

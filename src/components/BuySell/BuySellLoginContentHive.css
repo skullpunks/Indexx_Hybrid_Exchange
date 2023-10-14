@@ -39,3 +39,10 @@
   right: 21px;
   transform: translate(50%, 50%);
 }
+
+@media (max-width: 767px) {
+
+.log-img{
+  display: none !important;
+}
+}

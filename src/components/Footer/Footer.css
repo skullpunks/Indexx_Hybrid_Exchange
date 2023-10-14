@@ -192,6 +192,9 @@
     .site_footer_inner {
         flex-direction: column;
         padding-left: 0;
+        max-width: 100% ;
+        border: none;
+
     }
 
     .site_footer>div>div {
@@ -205,6 +208,38 @@
         height: 200px;
 
     }
+    
+    .mobile-row .btn{
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    .footer-drop{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        transition: none !important;
+    }
+    
+    .mobile-row{
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+    
+    .border-top{
+        border-top: 1px solid var(--border-color) !important;
+    }
+
+    .copyright_bar {
+        max-width: 100%;
+    }
+
+    .copyright_text {
+        padding-right: 0px;
+    }
+
+    .logo_ind {
+        width: 110px;
+    }
 
     .desktop-display {
         display: none;
@@ -214,7 +249,7 @@
         position: inherit;
         width: 230px;
    
-        top:-110px;
+        top:-60px;
         scale:1.2
     
     }

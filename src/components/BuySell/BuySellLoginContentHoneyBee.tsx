@@ -83,7 +83,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
     
   };
   return (
-    <div className="">
+    // <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
         <h1 className="text-center margin-lr-auto top_heading">HoneyBee Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
@@ -201,7 +201,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
           <br />
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

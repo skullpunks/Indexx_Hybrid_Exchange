@@ -29,6 +29,24 @@
     -->
     <title>indexx.ai</title>
     <script src= 'https://cdn.blockpass.org/widget/scripts/release/3.0.2/blockpass-kyc-connect.prod.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+          $('.link-div').click(function (e) {
+              e.preventDefault(); // Prevent the default behavior of the link
+              $(this).closest('.dropdown-menu').hide();
+              window.location.href = $(this).attr('href'); // Redirect to the link's href
+          });
+      });
+      $(document).ready(function () {
+          $('.action-link-div').click(function (e) {
+              e.preventDefault(); // Prevent the default behavior of the link
+              $(this).closest('.dropdown-menu').hide();
+              window.location.href = $(this).attr('href'); // Redirect to the link's href
+          });
+      });
+      
+  </script>
   </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

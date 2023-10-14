@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
-
+import './PowerCard.css'
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
     const [loadings, setLoadings] = useState(false);
@@ -15,7 +15,7 @@ const PowerCard = ({ card }) => {
     const [finalAmount, setFinalAmount] = useState(stringPriceToNumber(card?.price));
     const [isApplyClicked, setIsApplyClicked] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
+    const [isHighlighted, setIsHighlighted] = useState(false);
 
     function stringPriceToNumber(price) {
         return parseFloat(price.replace(/,/g, ''));
@@ -31,42 +31,57 @@ const PowerCard = ({ card }) => {
 
     // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
     const createNewBuyOrder = async (card) => {
-        console.log("purchasedCard", card);
-        setLoadings(true);
-        let purchasedProduct = card.name;
-        let paymentMethodUsed = "Paypal";
-        let powerPackAmountInNumber = stringPriceToNumber(card?.price);
-        let powerPackAmount = card?.price;
+        let userEmail = (localStorage.getItem('user'));
+        console.log("userEmail", userEmail)
+        if (userEmail !== null && userEmail !== "") {
+            console.log('I AM HERE');
+            console.log("purchasedCard", card);
+            setLoadings(true);
+            let purchasedProduct = card.name;
+            let paymentMethodUsed = "Paypal";
+            let powerPackAmountInNumber = stringPriceToNumber(card?.price);
+            let powerPackAmount = card?.price;
 
-        console.log(
-            paymentMethodUsed,
-            purchasedProduct,
-            powerPackAmountInNumber,
-            powerPackAmount,
-            discountCode
-        )
-        let res = await createPowerPackOrder(purchasedProduct,
-            paymentMethodUsed,
-            purchasedProduct,
-            powerPackAmountInNumber,
-            powerPackAmount,
-            discountCode);
-        if (res.status === 200) {
-            setLoadings(false);
-            //--Below code is to enable paypal Order---
+            console.log(
+                paymentMethodUsed,
+                purchasedProduct,
+                powerPackAmountInNumber,
+                powerPackAmount,
+                discountCode
+            )
+            let res = await createPowerPackOrder(purchasedProduct,
+                paymentMethodUsed,
+                purchasedProduct,
+                powerPackAmountInNumber,
+                powerPackAmount,
+                discountCode);
+            if (res.status === 200) {
+                setLoadings(false);
+                //--Below code is to enable paypal Order---
 
-            for (let i = 0; i < res.data.links.length; i++) {
-                if (res.data.links[i].rel.includes("approve")) {
-                    window.location.href = res.data.links[i].href;
+                for (let i = 0; i < res.data.links.length; i++) {
+                    if (res.data.links[i].rel.includes("approve")) {
+                        window.location.href = res.data.links[i].href;
+                    }
                 }
+                //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+            } else {
+                setLoadings(false);
+                // openNotificationWithIcon2('error', res.data);
+                setIsModalOpen(true);
+                setMessage(res.data);
+                setErrorMessage(res.data);
             }
-            //getStripePaymentIntent(res.data.orderId, res.data.user.email);
         } else {
-            setLoadings(false);
-            // openNotificationWithIcon2('error', res.data);
-            setIsModalOpen(true);
-            setMessage(res.data);
-            setErrorMessage(res.data);
+            console.log("Email not found ask user to login");
+            // Save the current route
+            localStorage.setItem('redirectRoute', window.location.pathname);
+
+            // Redirect to the login page
+            window.location.href = '/indexx-exchange/buy-sell/hive-login';
+            //("save the current route history")
+            //(go to login route, /indexx-exchange/buy-sell/hive-login)
+            //("come back to this route after login")
         }
     };
 
@@ -95,19 +110,26 @@ const PowerCard = ({ card }) => {
             style={{ transformOrigin: "0 0 0" }}
             {...(true ? { timeout: 1000 + parsedId } : {})}
         >
-            <Grid item xs={1} sm={6} md={3} zIndex={1000}>
-                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }} mt={2} mb={15}>
+            <Grid item xs={1} sm={6} md={3} >
+                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems:"center" }} mt={2} mb={15}
+                  onMouseEnter={() => setIsHighlighted(true)}
+                  onMouseLeave={() => setIsHighlighted(false)}
+                
+                >
                     <ReactCardFlip isFlipped={flip}
                         flipDirection="horizontal">
-                        <Box style={{
+                            <Box  style={{
                             width: '260px',
                             height: '545px',
-                            // margin: '20px',
                             borderRadius: 0,
-                            border: "1px solid #A1A1A1",
+                           
                             textAlign: 'center',
-                            padding: '20px'
-                        }}>
+                            padding: '20px',
+                            position: 'relative', // Add this style
+                            border: card.level === "Captain Bee" ? "none" : "1px solid #A1A1A1",
+                        }}
+                        className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}
+  >
 
                             <Typography variant="text" component="p" fontSize={"27px"} fontWeight={600} lineHeight={2.1} mb={2}
                                 style={{ color: `${card.level === "Captain Bee" ? "#FFB300" : "inherit"}` }}
@@ -197,8 +219,9 @@ const PowerCard = ({ card }) => {
                             borderRadius: 0,
                             border: "1px solid #A1A1A1",
                             textAlign: 'center',
-                            padding: '20px'
-                        }}>
+                            border: card.level === "Captain Bee" ? "none" : "1px solid #A1A1A1",
+                        }}
+                        className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}>
 
                             <img alt="" src={card.photo} width={"82px"} style={{ marginBottom: "15px" }} />
 
@@ -289,7 +312,7 @@ const PowerCard = ({ card }) => {
                         Apply Discount
                     </Button>
 
-                    <Collapse in={isApplyClicked} sx={{width:"260px"}} className='power-input'>
+                    <Collapse in={isApplyClicked} sx={{ width: "260px" }} className='power-input'>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -300,11 +323,11 @@ const PowerCard = ({ card }) => {
                             sx={{
                                 width: '260px',
                                 textAlign: 'center',
-                                borderRadius:"0px",
+                                borderRadius: "0px",
                             }}
                             InputProps={{
                                 style: {
-                                   borderRadius: 0,
+                                    borderRadius: 0,
                                 },
                             }}
                         />
@@ -343,7 +366,7 @@ const PowerCard = ({ card }) => {
                                 <Typography variant="body2" fontSize={"15px"} fontWeight={800} style={{ fontWeight: 'bold' }}>Final Amount: ${Math.floor(finalAmount * 100) / 100}</Typography>
                             </Box>
                             {errorMessage && (
-                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red'}}>
+                                <Box style={{ marginTop: '10px', textAlign: 'center', color: 'red' }}>
                                     {errorMessage}
                                 </Box>
                             )}
@@ -356,7 +379,7 @@ const PowerCard = ({ card }) => {
                         loading={loadings}
                         sx={{
                             backgroundColor: "transparent",
-                            color: "#5f5f5f",
+                            color: "var(--body_color)",
                             border: "1px solid #A1A1A1",
                             borderRadius: "0",
                             px: 4,

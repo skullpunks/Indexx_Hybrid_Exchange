@@ -89,7 +89,7 @@ const BeeHeader = () => {
         </div>
 
 
-        <div className="col">
+        {/* <div className="col">
         <a href="/indexx-exchange/bee-dashboard/honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
@@ -112,7 +112,7 @@ const BeeHeader = () => {
             </div>
             </div>
         </a>
-        </div>
+        </div> */}
 
     </div>
     </div>

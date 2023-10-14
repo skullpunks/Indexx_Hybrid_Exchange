@@ -10,7 +10,7 @@ import { getHoneyBeeDataByUsername, requestPermissionsByEmail } from '../../../.
 
 const Permissions = () => {
 
-  const { id } = useParams();
+  const { id, userType } = useParams();
   const [userData, setUserData] = useState();
   const [permissionData, setPermissionData] = useState();
   const [captainBeeEmail, setCaptainBeeEmail] = useState();
@@ -44,14 +44,25 @@ const Permissions = () => {
 
 
     getHoneyBeeDataByUsername(id).then((data) => {
+      console.log(data?.data);
       setUserData(data.data);
       let currentUserEmail = data.data.userFullData.email;
-      let captainbeePermissions = data.data.referredUserData?.data.relationships;
       setHoneyBeeEmail(currentUserEmail);
-      setCaptainBeeEmail(data?.data?.referredUserData?.data?.email)
-      let c = captainbeePermissions.find(x => x.honeybeeEmail === currentUserEmail);
+      if (userType === "CaptainBee") {
+        let captainbeePermissions = data.data.referredUserData?.data?.captainBeeRelationShips;
+        console.log(captainbeePermissions);
+        setCaptainBeeEmail(data?.data?.referredUserData?.data?.email)
+        let c = captainbeePermissions.find(x => x.captainBeeEmail === currentUserEmail);
 
-      setPermissionData(c)
+        setPermissionData(c)
+      } else if (userType === "HoneyBee") {
+        let honeybeePermissions = data.data.referredUserData?.data?.relationships;
+        console.log(honeybeePermissions);
+        setCaptainBeeEmail(data?.data?.referredUserData?.data?.email)
+        let c = honeybeePermissions.find(x => x.honeybeeEmail === currentUserEmail);
+
+        setPermissionData(c)
+      }
     });
   }, [id])
 
@@ -74,7 +85,7 @@ const Permissions = () => {
   return (
     <div className="pt-5">
       <div className="font_15x fw-bold" style={{ color: "#393939" }}>
-        Permissions given by honeybee {id} to captainbee {userData?.referredUserData?.data2?.Username}
+        Permissions given by {userType === "CaptainBee" ?  "captainbee" : "honeybee"} {id} to captainbee {userData?.referredUserData?.data2?.Username}
       </div>
       <div
         className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"

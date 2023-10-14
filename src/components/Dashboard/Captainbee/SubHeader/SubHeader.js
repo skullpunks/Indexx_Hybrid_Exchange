@@ -1,6 +1,7 @@
 import React from 'react'
 import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
 import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
+import colony from "../../../../assets/hive-dashboard/subheader/colony icon 1.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
@@ -18,9 +19,9 @@ const SubHeader = () => {
 
     <div style={{position:"fixed", top:"90px", width:"100%", zIndex:999, background:"#FFB300", height:"90px"}}>
 
-    <div className="container cover-page">
+    <div className="container sub-page">
 
-    <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
+    <div className="row row-cols-1 row-cols-md-4 g-4 sub-logos"  style={{justifyContent:"center"}}>
     
         <div className="col">
         <Link to="/indexx-exchange/dashboard">
@@ -66,7 +67,50 @@ const SubHeader = () => {
             </div>
         </Link>
         </div>
-        
+        <div className="col">
+        <Link to="/indexx-exchange/dashboard/capt-mycaptains">
+            <div className="card">
+            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <div className="card-body">
+                <h5 className="card-title">Captain Bee's Colony</h5>
+            <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-mycaptains'
+                    ? {
+                      height: '0.07px',
+                      width: '95px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
+        <div className="col">
+        <Link to="/indexx-exchange/dashboard/capt-leader">
+            <div className="card">
+            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <div className="card-body">
+                <h5 className="card-title">Leader Captain Bee</h5>
+            <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-leader'
+                    ? {
+                      height: '0.07px',
+                      width: '88px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
         <div className="col">
         <a href="/indexx-exchange/dashboard/capt-profile">
             <div className="card">
@@ -92,7 +136,7 @@ const SubHeader = () => {
 
 
         <div className="col">
-        <a href="/indexx-exchange/coming-soon-honeycomb">
+        <a href="/indexx-exchange/dashboard/honeycomb">
             <div className="card">
             <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
                 width:"auto"
@@ -102,7 +146,7 @@ const SubHeader = () => {
                 <Typography
                 component='p'
                 sx={
-                  location.pathname === '/indexx-exchange/coming-soon-honeycomb'
+                  location.pathname === '/indexx-exchange/dashboard/honeycomb'
                     ? {
                       height: '0.07px',
                       width: '58px',

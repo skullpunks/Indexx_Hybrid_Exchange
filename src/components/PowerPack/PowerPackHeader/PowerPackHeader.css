@@ -32,7 +32,7 @@
     border: none;
     font-size: 10px !important;
     margin-top: 0px;
-    color: #000 !important;
+    color: var(--body_color) !important;
     /* color: var(--body_color); */
 }
 
@@ -43,10 +43,23 @@
     /* color: var(--body_color); */
 }
 
+
+.power-page .col{
+    display: flex;
+    justify-content: center;
+    margin-inline: 0;
+}
+
 .up-logos .col{
     width: 7%;
 }
 
 .power-page a{
     text-decoration: none !important;
+}
+
+@media (max-width: 767px) {
+.up-logos .col{
+    width: 25%;
+}
 }

@@ -1,0 +1,29 @@
+.highlighted-captain-bee-card {
+    position: relative;
+    border: none; /* Remove the black border completely */
+  }
+  
+  .highlighted-captain-bee-card::after {
+    content: '';
+    position: absolute;
+    top: -5px; /* Adjust top to account for the thicker border */
+    left: -5px; /* Adjust left to account for the thicker border */
+    right: -5px; /* Adjust right to account for the thicker border */
+    bottom: -5px; /* Adjust bottom to account for the thicker border */
+    border: 5px solid transparent; /* Set the border to a thicker yellow border */
+    animation: border-animation 2s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes border-animation {
+    0% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: yellow;
+    }
+    100% {
+      border-color: transparent;
+    }
+  }
+  

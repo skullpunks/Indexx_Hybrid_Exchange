@@ -245,7 +245,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
 
   return (
     <>
-    <div className="bs_container card">
+    <div className="bs_container card check-out">
       <div className="card__header flex-justify-between d-flex flex-align-center">
         <h1 className="centered" style={{ color: '#5f5f5f' }}>
           <span

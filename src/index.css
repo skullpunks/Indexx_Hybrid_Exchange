@@ -227,3 +227,9 @@ iframe {
 .font_25x {
   font-size: 25px;
 }
+
+@media (max-width: 767px) {
+  .card {
+    min-width: -webkit-fill-available;
+  }
+}

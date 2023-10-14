@@ -80,8 +80,12 @@ import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStar
 import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
 import PowerPack from "./components/PowerPack/PowerPack";
 import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
+import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
+import TeamCaptainDash from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash";
+import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain";
 // import CareerSoon from './components/Careers/CareerSoon';
-
+import { ThemeProvider } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 function App() {
   /*
@@ -109,7 +113,11 @@ function App() {
         }
     }, [email]);
 */
+  let theme = createTheme();
+  theme = responsiveFontSizes(theme);
+  
   return (
+    <ThemeProvider theme={theme}>
     <div>
       <BrowserRouter>
         {/* <Header /> */}
@@ -125,13 +133,16 @@ function App() {
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
-          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab" element={<BeeDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType" element={<BeeDash />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
-          <Route path="/indexx-exchange/coming-soon-honeycomb" element={<HoneyCombComingSoon />} />
+          <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
+          <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
+          <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
+
 
           {/* Routes for Honey Bee DashBoard   */}
           <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
@@ -276,6 +287,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </ThemeProvider>
   );
 }
 
