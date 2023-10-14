@@ -219,8 +219,9 @@ const PowerCard = ({ card }) => {
                             borderRadius: 0,
                             border: "1px solid #A1A1A1",
                             textAlign: 'center',
-                            padding: '20px'
-                        }}>
+                            border: card.level === "Captain Bee" ? "none" : "1px solid #A1A1A1",
+                        }}
+                        className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}>
 
                             <img alt="" src={card.photo} width={"82px"} style={{ marginBottom: "15px" }} />
 
