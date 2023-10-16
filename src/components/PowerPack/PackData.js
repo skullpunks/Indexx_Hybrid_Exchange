@@ -132,7 +132,7 @@ export const PackData = [
     },
     {
         id: "8",
-        name: "Black Pack",
+        name: "Royal Pack",
         photo: black,
         price: "15,000",
         coins:"7500",
