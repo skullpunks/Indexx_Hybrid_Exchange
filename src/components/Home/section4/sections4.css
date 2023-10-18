@@ -65,14 +65,14 @@
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  color: #11be6a;
+  color: var(--primary-color);
   cursor: pointer;
   padding-top: 30px;
   padding-bottom: 50px;
 }
 
 .item-link:hover {
-  color: #0ea55a;
+  color: var(--secondary-color);
 }
 
 .section4-container-heading {

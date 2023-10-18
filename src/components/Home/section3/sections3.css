@@ -82,7 +82,7 @@
   text-align: center;
   padding: 15px;
   cursor: pointer;
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 .actionButtonContainer {
@@ -99,7 +99,7 @@
   text-align: center;
   padding: 15px;
   cursor: pointer;
-  border: 1px solid #11be6a;
+  border: 1px solid var(--primary-color);
   border-radius: 10px;
   color: #5a5858;
   width: fit-content;

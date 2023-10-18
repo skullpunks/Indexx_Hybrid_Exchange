@@ -21,6 +21,7 @@ import {
   getTaskCenterDetails,
   getHoneyBeeDataByUsername,
 } from '../../services/api';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -135,7 +136,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       
       if (!permissionData?.permissions?.sell) {
         setLoadings(false);
-        openNotificationWithIcon2('error', "As Captain bee, Please apply for sell approval from honey bee");
+        OpenNotification('error', "As Captain bee, Please apply for sell approval from honey bee");
         return;
       }
       res = await createSellOrder(basecoin, quotecoin, amount, totalAmountToPay, 0, honeyBeeEmail, true);
@@ -160,54 +161,9 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       }
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error', "Failed to Process Sell Order. Please check balance on the wallet");
+      OpenNotification('error', "Failed to Process Sell Order. Please check balance on the wallet");
     }
     //getStripePaymentIntent(res.data.orderId, res.data.user.email);
-  };
-
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    notification[type]({
-      message: 'Successfully Processed Sell Order',
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (type: NotificationType, message?: string) => {
-    notification[type]({
-      message:
-        message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon3 = (type: NotificationType) => {
-    notification[type]({
-      message: 'Failed to Process Sell Order. INEX token not allowed to sell',
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
   };
 
   const processSellOrder = async (order: any) => {
@@ -215,7 +171,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     
     if (basecoin === 'INEX') {
       setLoadings(false);
-      openNotificationWithIcon3('error');
+      OpenNotification('error', 'Failed to Process Sell Order. INEX token not allowed to sell');
     } else {
       const res = await confirmSellOrder(
         order.user.email,
@@ -225,7 +181,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       );
       if (res.status === 200) {
         setLoadings(false);
-        openNotificationWithIcon('success');
+        OpenNotification('success', 'Successfully Processed Sell Order');
         // setScreenName("BSSellInprogress");
         if (honeyBeeId === "undefined" || honeyBeeId === "")
           navigate("/indexx-exchange/buy-sell/sell-in-progress");
@@ -233,7 +189,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
           navigate(`/indexx-exchange/buy-sell/sell-in-progress/${honeyBeeId}`);
       } else {
         setLoadings(false);
-        openNotificationWithIcon2('error');
+        OpenNotification('error', 'Failed to Process Sell Order. INEX token not allowed to sell');
       }
     }
   };

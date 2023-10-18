@@ -151,8 +151,12 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     <div className="swap_container">
       <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange}/>
       <span style={{textAlign:'center'}}>
-      <p style={{marginTop:200,fontSize:30}}>Indexx Exchange</p>
-       <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+        {localStorage.getItem("userlogged") === 'normal' ? 
+          <p style={{marginTop:200,fontSize:30}}>Indexx Exchange</p>
+          :
+          <p style={{marginTop:200,fontSize:30}}>Hive Exchange</p>
+        }
+    <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
       
 

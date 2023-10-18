@@ -86,6 +86,7 @@ import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/Leade
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { useState, useEffect } from "react";
 
 function App() {
   /*
@@ -115,10 +116,33 @@ function App() {
 */
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
+
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+
+  useEffect(() => {
+    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
+
+  }, [])
+  
+  useEffect(() => {
+    const handleStorageChange = (event:any) => {
+      // console.log(event);
+      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
+      setUserLogged(event.currentTarget.localStorage.userlogged);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const themeClass = `theme-${userLogged}`;
   
   return (
     <ThemeProvider theme={theme}>
-    <div>
+    <div className={themeClass}>
       <BrowserRouter>
         {/* <Header /> */}
         <ScrollToTop />

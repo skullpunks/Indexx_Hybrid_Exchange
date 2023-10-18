@@ -43,6 +43,7 @@ import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
 import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
 import SubHeader from '../SubHeader/SubHeader';
 import { PackData } from '../../../PowerPack/PackData';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 
 const LeaderCaptain = () => {
@@ -104,32 +105,9 @@ const LeaderCaptain = () => {
     };
   }, []);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
 
@@ -171,7 +149,7 @@ const LeaderCaptain = () => {
                       fontSize: '10px',
                       boxShadow: 'none',
                       '&:hover': {
-                        borderColor: '#FFB300',
+                        borderColor: '#FFD000',
                         boxShadow: 'none',
                       },
                     }}
@@ -193,7 +171,7 @@ const LeaderCaptain = () => {
                       fontSize: '10px',
                       boxShadow: 'none',
                       '&:hover': {
-                        borderColor: '#FFB300',
+                        borderColor: '#FFD000',
                         boxShadow: 'none',
                       },
                     }}

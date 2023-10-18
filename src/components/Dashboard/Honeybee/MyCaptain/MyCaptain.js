@@ -79,7 +79,7 @@ const MyCaptain = () => {
                 fontSize: '10px',
                 boxShadow: 'none',
                 '&:hover': {
-                  borderColor: '#FFB300',
+                  borderColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -101,7 +101,7 @@ const MyCaptain = () => {
                 fontSize: '10px',
                 boxShadow: 'none',
                 '&:hover': {
-                  borderColor: '#FFB300',
+                  borderColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}

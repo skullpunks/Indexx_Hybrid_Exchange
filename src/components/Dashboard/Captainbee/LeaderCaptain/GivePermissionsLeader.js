@@ -1,15 +1,12 @@
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from '@ant-design/icons';
+
 import { Button, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 
-import { notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { getHoneyBeePermissions, updatePermissionsByHoneyBee } from '../../../../services/api';
 import { IOSSwitch } from '../../../IOSSwitch/IOSSwitch';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 
 const GivePermissionsLeader = () => {
@@ -20,38 +17,16 @@ const GivePermissionsLeader = () => {
   const [email, setEmail] = useState();
   const [loadings, setLoadings] = useState(false);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
   const savePermissions = async () => {
     try {
       setLoadings(true);
       const res = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
       if (res.status === 200) {
         setLoadings(false);
-        openNotificationWithIcon('success', "Permissions updated successfully");
+        OpenNotification('success', "Permissions updated successfully");
       } else {
         setLoadings(false);
-        openNotificationWithIcon('error', "Failed to update permissions");
+        OpenNotification('error', "Failed to update permissions");
       }
     } catch (err) {
       console.log(err);
@@ -193,7 +168,7 @@ const GivePermissionsLeader = () => {
                 boxShadow: 'none',
                 //   mt:3,
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}

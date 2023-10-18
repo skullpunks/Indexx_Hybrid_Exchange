@@ -8,14 +8,13 @@ import {
   Checkbox,
   Form,
   Input,
-  notification,
   Space,
   Image,
 } from 'antd';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI, baseDEXURL } from '../../services/api';
 import hands from '../../assets/arts/honeybee_signup.svg';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellGetStartedHoneyBee: React.FC = () => {
   //creating IP state
@@ -33,6 +32,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
     try {
       setLoadings(true);
       localStorage.setItem('tempAuthEmail', values.email);
+      localStorage.setItem('userlogged', "honeyb");
       let referralCode = refcode === "null" || refcode === "" || refcode === "undefined" || refcode === undefined ? "" : refcode
       console.log(values.email, values.password, values.username, referralCode)
 
@@ -40,16 +40,17 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
       if (res.status === 200) {
         setLoadings(false);
-        openNotificationWithIcon('success', 'Successfully registered');
+        OpenNotification('success', 'Successfully registered');
+        window.dispatchEvent( new Event('storage') ) 
         navigate('email-auth');
       } else {
         setLoadings(false);
-        openNotificationWithIcon('error', res.data);
+        OpenNotification('error', res.data);
       }
     }
     catch (err) {
       setLoadings(false);
-      openNotificationWithIcon('error', "Something went wrong. Please try again later.");
+      OpenNotification('error', "Something went wrong. Please try again later.");
     }
   };
 
@@ -76,35 +77,10 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    let Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
       <div className="row">
-        <div className="col">
+        <div className="col d-flex flex-direction-column text-center justify-center flex-align-center">
           <div
             className="text-center justify-center"
             // style={{ paddingLeft: 28 }}
@@ -116,7 +92,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
             </Link> */}
           </div>
 
-          <div className="bs_container bs_form card">
+          <div className="bs_container bs_form card text-center justify-center">
             <div className="d-flex justify-center"></div>
             <Form
               form={form}

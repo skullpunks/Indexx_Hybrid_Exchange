@@ -10,7 +10,7 @@ import {
   CheckCircleFilled,
   CloseCircleFilled,
 } from '@ant-design/icons';
-
+import OpenNotification from '../../OpenNotification/OpenNotification';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 AWS.config.update({
@@ -34,29 +34,6 @@ const BeeProfile = () => {
     
     const file = event.target.files[0];
     uploadToS3(file, 'photoId');
-  };
-
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
   };
 
   const uploadToS3 = async (file, fileType) => {
@@ -89,10 +66,10 @@ const BeeProfile = () => {
       if (data.status === 200) {
         
         setLoadings(false);
-        openNotificationWithIcon('success', 'Profile data updated Successfully');
+        OpenNotification('success', 'Profile data updated Successfully');
       } else {
         setLoadings(false);
-        openNotificationWithIcon('error', 'Failed to updated. Please try again.');
+        OpenNotification('error', 'Failed to updated. Please try again.');
       }
     }
     )
@@ -295,7 +272,7 @@ const BeeProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFD000',
                       boxShadow: 'none',
                     },
                   }}
@@ -319,7 +296,7 @@ const BeeProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFD000',
                       boxShadow: 'none',
                     },
                   }}

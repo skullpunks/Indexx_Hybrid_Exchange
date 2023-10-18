@@ -35,7 +35,7 @@
 */
 
 a.nav-link:hover {
-  color: #1890ff !important;
+  color: var(--dropdown-hover) !important;
 }
 
 .dark-menu .dropdown-menu {
@@ -106,7 +106,7 @@ a.nav-link:hover {
 .header-connect-wallet:hover {
   /* box-shadow: #ffffff85 0 5px 7px 0;
     transform: scale(1.05); */
-  background-color: #0ea55a;
+  background-color: var(--secondary-color);
 }
 
 .header-connect-wallet {
@@ -118,7 +118,7 @@ a.nav-link:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: #11be6a;
+  background: var(--primary-color);
   padding: 15px;
   border-radius: 7px;
 }
@@ -284,7 +284,7 @@ a.nav-link:hover {
 }
 
 .ant-btn.buy_sell_button {
-  background-color: #11be6a;
+  background-color: var(--primary-color);
   font-size: 15px;
   height: 40px;
 }
@@ -294,7 +294,11 @@ a.nav-link:hover {
 }
 
 a.link.text-white:hover {
-  color: #1890ff !important;
+  color: var(--dropdown-hover) !important;
+}
+
+.buy-cryp a.nav-link:hover{
+  color: var(--link-hover) !important;
 }
 
 .main_navigation .nav-link {
@@ -390,7 +394,7 @@ a.link.text-white:hover {
 }
 
 .color-warn {
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 .ant-btn.buy_crypto_btn,
@@ -478,6 +482,34 @@ button.navbar-toggler {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  .main-div{
+    width: 100% !important;
+  }
+
+  .black-div{
+    display: none;
+  }
+
+  .my-menu .dropdown-menu {
+    width: auto;
+    margin-left: 0 !important;
+    padding-top: 0;
+    border-radius: 0;
+    border: none;
+  }
+  
+  .main-menu{
+    padding: 0 !important;
+    padding-left: 0 !important;
+    flex-direction: column !important;
+    overflow-y: scroll;
+  }
+
+  .back {
+    display: none;
+  }
+
 }
 
 
@@ -527,6 +559,14 @@ button.navbar-toggler {
   background: transparent;
 } 
 
+.main-div{
+  width: 200vw;
+}
+
+.black-div{
+  height: 26px;
+  background: black;
+}
 
 .back {
   position: absolute;

@@ -21,6 +21,7 @@ import {
   enableTradeToEarn,
 } from '../../services/api';
 import Footer from '../Footer/Footer';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const { Text } = Typography;
 
@@ -137,51 +138,16 @@ const TaskCenter = () => {
     if (res.status === 200) {
       setLoadings(false);
       getTaskCenterDetailsData();
-      openNotificationWithIcon('success', 'Trade to Earn is enabled');
+      OpenNotification('success', 'Trade to Earn is enabled');
     } else {
       setLoadings(false);
-      openNotificationWithIcon2(
+      OpenNotification(
         'error',
         'Something went wrong. Please contact admin'
       );
     }
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   useEffect(() => {
     //checkUserCompletedOrder();

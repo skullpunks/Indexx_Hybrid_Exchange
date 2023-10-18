@@ -32,8 +32,6 @@ import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 import copper from "../../../../assets/powerpack/copper hat.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import greyman from "../../../../assets/hive-dashboard/man4 2.svg";
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
 import { Rating } from '@mui/material';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
@@ -53,6 +51,7 @@ import { baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserD
 import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 const TeamCaptainDash = () => {
   const [userType, setUserType] = useState("");
@@ -117,32 +116,9 @@ const TeamCaptainDash = () => {
     };
   }, []);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
   // Define a function to render a single Honey Bee box.

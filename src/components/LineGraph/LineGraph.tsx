@@ -175,8 +175,8 @@ const LineGraph = (props: any) => {
           >
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#11be6a" stopOpacity={0.5} />
-                <stop offset="90%" stopColor="#11be6a" stopOpacity={0} />
+                <stop offset="5%" stopColor="var(--primary-color)" stopOpacity={0.5} />
+                <stop offset="90%" stopColor="var(--primary-color)" stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -186,7 +186,7 @@ const LineGraph = (props: any) => {
               dataKey="price"
               strokeWidth={1.5}
               isAnimationActive={false}
-              stroke="lightgreen"
+              stroke="var(--highlight-color)"
               // fill="rgba(246, 96, 54 , 0.09)"
               fill="url(#colorUv)"
             />

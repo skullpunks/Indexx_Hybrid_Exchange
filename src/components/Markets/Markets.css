@@ -96,8 +96,8 @@
 }
 
 .market-container .ant-tabs-ink-bar {
-  border-color: #11be6a;
-  background-color: #11be6a;
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
 .market-container .ant-tabs-tab + .ant-tabs-tab {
@@ -105,13 +105,13 @@
 }
 
 .ant-btn.btn-success {
-  background-color: #00a151;
+  background-color: var(--primary-color);
   border-color: transparent;
   border-radius: 4px;
 }
 
 .ant-btn.btn-success:hover {
-  background-color: #018342;
+  background-color: var(--secondary-color);
   border-color: transparent;
   border-radius: 4px;
 }

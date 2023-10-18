@@ -1,13 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Upload, notification, Table } from 'antd';
+import { Button, Form, Input, Modal, Upload, Table } from 'antd';
 import AWS from 'aws-sdk';
 import { useEffect, useState } from 'react';
 import Footer from '../Footer/Footer';
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { createBug, decodeJWT, getUserCreatedBugs } from '../../services/api';
 import { ColumnsType, TableProps } from 'antd/lib/table';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const { TextArea } = Input;
 
@@ -76,28 +76,7 @@ const BugReport = () => {
       />
     ),
   };
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
+
 
   useEffect(() => {
     const access_token = String(localStorage.getItem('access_token'));
@@ -150,13 +129,13 @@ const BugReport = () => {
             setBugsData(res.data.data);
             setTableLoadings(false);
             form.resetFields();
-            openNotificationWithIcon('success', 'Bug Report Submitted');
+            OpenNotification('success', 'Bug Report Submitted');
           } else {
             setTableLoadings(false);
           }
         });
       } else {
-        openNotificationWithIcon('error', 'Bug Report Failed');
+        OpenNotification('error', 'Bug Report Failed');
       }
     }
   };

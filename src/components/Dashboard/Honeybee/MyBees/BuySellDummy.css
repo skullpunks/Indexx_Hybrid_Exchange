@@ -7,7 +7,7 @@
 }
 
 .custom-select .ant-select-dropdown-menu-item:hover {
-  background-color: #1890ff; /* Set your desired hover background color */
+  background-color: var(--dropdown-hover); /* Set your desired hover background color */
   color: white; /* Set your desired hover text color */
 }
 
@@ -29,7 +29,7 @@
 }
 
 .bs_wallet_top {
-  background: #11be6a;
+  background: var(--primary-color);
 
   max-width: calc(100% - 160px);
   margin: 0 auto 20px;

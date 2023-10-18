@@ -17,6 +17,13 @@
   padding: 0 !important;
 }
 
+.tab-format:hover, 
+.tab-format:focus, 
+.tab-format:active 
+{
+  background: transparent;
+}
+
 @media (max-width: 767px) {
 
   .tab-format{

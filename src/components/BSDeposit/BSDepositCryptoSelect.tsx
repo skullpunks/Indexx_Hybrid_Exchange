@@ -4,12 +4,12 @@ import {
   ArrowRightOutlined,
   CopyOutlined,
   QrcodeOutlined,
-  CloseCircleFilled,
 } from '@ant-design/icons';
-import { Button, Input, Popover, Select, Table, notification } from 'antd';
+import { Button, Input, Popover, Select, Table } from 'antd';
 // import bsDollar from "../../assets/arts/bsDollar.svg";
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
 // import IN500 from "../../assets/token-icons/33.png";
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 import copyIcon from '../../assets/arts/copyIcon.svg';
 import { Link, useNavigate } from 'react-router-dom';
@@ -247,45 +247,13 @@ export const BSDepositCryptoSelect = () => {
     
     if (res.status === 200) {
       setLoadings(false);
-      openNotificationWithIcon('success');
+      OpenNotification('success', 'Your Deposit is successfully');
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error', res.data.message);
+      OpenNotification('error', res.data.message);
     }
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    notification[type]({
-      message: 'Your Deposit is successfully',
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const content = (value: string, network: string, address: string) => (
     <div className="popover_container " style={{}}>

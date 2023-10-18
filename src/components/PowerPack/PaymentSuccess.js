@@ -71,9 +71,9 @@ const PaymentSuccess = () => {
           <Button
             disableTouchRipple
             sx={{
-              backgroundColor: "transparent",
+              backgroundColor: '#FFB300',
               color: "#5f5f5f",
-              border: "1px solid #A1A1A1",
+              border: "1px solid #FFB300",
               borderRadius: "0",
               width: '185px',
               // px: 8,
@@ -82,8 +82,8 @@ const PaymentSuccess = () => {
               fontWeight: 500,
               boxShadow: 'none',
               '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: "#FFB300",
+                backgroundColor: '#FFD000',
+                borderColor: "#FFD000",
                 boxShadow: 'none',
               },
             }}
@@ -96,9 +96,9 @@ const PaymentSuccess = () => {
                 <Button
                   disableTouchRipple
                   sx={{
-                    backgroundColor: "transparent",
+                    backgroundColor: '#FFB300',
                     color: "#5f5f5f",
-                    border: "1px solid #A1A1A1",
+                    border: "1px solid #FFB300",
                     borderRadius: "0",
                     width: '185px',
                     // px: 8,
@@ -107,8 +107,8 @@ const PaymentSuccess = () => {
                     fontWeight: 500,
                     boxShadow: 'none',
                     '&:hover': {
-                      backgroundColor: '#FFB300',
-                      borderColor: "#FFB300",
+                      backgroundColor: '#FFD000',
+                      borderColor: "#FFD000",
                       boxShadow: 'none',
                     },
                   }}
@@ -121,9 +121,9 @@ const PaymentSuccess = () => {
                 <Button
                   disableTouchRipple
                   sx={{
-                    backgroundColor: "transparent",
+                    backgroundColor: '#FFB300',
                     color: "#5f5f5f",
-                    border: "1px solid #A1A1A1",
+                    border: "1px solid #FFB300",
                     borderRadius: "0",
                     width: '100%',
                     px: 8,
@@ -133,8 +133,8 @@ const PaymentSuccess = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#FFB300',
-                      borderColor: "#FFB300",
+                      backgroundColor: '#FFD000',
+                      borderColor: "#FFD000",
                       boxShadow: 'none',
                     },
                   }}

@@ -1,9 +1,9 @@
 import { InfoCircleFilled } from '@ant-design/icons';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { Button, Input, Form, notification } from 'antd';
+import { Button, Input, Form } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeJWT, changePassword } from '../../services/api';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const SecurityChange = () => {
   // const onFinish = (values: any) => {
@@ -23,50 +23,15 @@ const SecurityChange = () => {
     ).then((res) => {
       if (res.status === 200) {
         setLoadings(false);
-        openNotificationWithIcon('success', res.data);
+        OpenNotification('success', res.data);
         navigate('/indexx-exchange/account');
       } else {
         setLoadings(false);
-        openNotificationWithIcon2('error', res.data);
+        OpenNotification('error', res.data);
       }
     });
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     

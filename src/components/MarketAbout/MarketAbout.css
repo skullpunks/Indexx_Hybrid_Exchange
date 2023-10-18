@@ -12,7 +12,7 @@
   border-top: none;
 }
 .coll .ant-collapse > .ant-collapse-item > .ant-collapse-header:hover {
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 /* .coll .ant-collapse {

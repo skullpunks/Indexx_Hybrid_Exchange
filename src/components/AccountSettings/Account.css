@@ -25,11 +25,11 @@
 }
 
 .border-1x-orange {
-  border: 1px solid #11be6a;
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
 }
 .ant-switch-checked {
-  background: #11be6a;
+  background: var(--primary-color);
 }
 
 .basic_funtion > div {
@@ -75,9 +75,9 @@
 }
 
 .security_container .btn-primary {
-  background: #11be6a;
+  background: var(--primary-color);
   height: 38px;
-  border-color: #11be6a;
+  border-color: var(--primary-color);
 }
 
 .security_container .height_28x {
@@ -116,7 +116,7 @@
 }
 
 .ant-tabs-ink-bar {
-  background: #11be6a;
+  background: var(--primary-color);
 }
 .font_17x {
   font-size: 17px;

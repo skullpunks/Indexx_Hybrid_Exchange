@@ -188,9 +188,14 @@ const HeaderNew = () => {
 
 
               <NavDropdown title="Platforms" id="basic-nav-dropdown" className="my-menu" renderMenuOnMount={true}>
-                <div style={{ width: "200vw" }}>
+                <div className="main-div"
+                //  style={{ width: "200vw" }}
+                 >
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                  <div className="black-div"
+                  // style={{ height: "26px", background: "black" }}
+                  >  
+                  </div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -796,7 +801,7 @@ const HeaderNew = () => {
               <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
             </Nav>
 
-            <Nav className="align-items-center">
+            <Nav className="align-items-center buy-cryp">
 
               {localStorage.getItem("user") ? (
                 <>
@@ -804,7 +809,7 @@ const HeaderNew = () => {
                     as={Link}
                     to="/indexx-exchange/buy-sell/"
                     href="/"
-                    className="btn btn-danger text-white"
+                    className="btn btn-danger"
                     style={{ height: "41px", zIndex: "10000" }}
                   >
                     Buy Crypto

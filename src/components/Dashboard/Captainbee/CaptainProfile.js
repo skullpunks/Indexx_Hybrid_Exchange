@@ -4,16 +4,12 @@ import frame from '../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { getCaptainBeeStatics, updateCaptainBeeProfile } from '../../../services/api';
-import { notification } from 'antd';
 import AWS from 'aws-sdk';
 import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from '@ant-design/icons';
 import { IOSSwitch } from '../../IOSSwitch/IOSSwitch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import OpenNotification from '../../OpenNotification/OpenNotification';
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -45,30 +41,6 @@ const CaptainProfile = () => {
   const [userType, setUserType] = useState("");
   const [loadings, setLoadings] = useState(false);
   const [bio, setBio] = useState("");
-
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -115,10 +87,10 @@ const CaptainProfile = () => {
       if (data.status === 200) {
 
         setLoadings(false);
-        openNotificationWithIcon('success', 'Profile data updated Successfully');
+        OpenNotification('success', 'Profile data updated Successfully');
       } else {
         setLoadings(false);
-        openNotificationWithIcon('error', 'Failed to updated. Please try again.');
+        OpenNotification('error', 'Failed to updated. Please try again.');
       }
     }
     )
@@ -794,7 +766,7 @@ const CaptainProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFD000',
                       boxShadow: 'none',
                     },
                   }}
@@ -820,7 +792,7 @@ const CaptainProfile = () => {
                     boxShadow: 'none',
                     //   mt:3,
                     '&:hover': {
-                      backgroundColor: '#ffa200',
+                      backgroundColor: '#FFD000',
                       boxShadow: 'none',
                     },
                   }}

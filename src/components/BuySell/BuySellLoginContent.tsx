@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from '../../assets/arts/qrCode.svg';
-import { Button, Form, Input, notification, Divider } from 'antd';
+import { Button, Form, Input, Divider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   loginAPI,
@@ -11,10 +11,9 @@ import {
   baseURL,
 } from '../../services/api';
 import {
-  CheckCircleFilled,
   InfoCircleFilled,
-  CloseCircleFilled,
 } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -32,13 +31,14 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     if (res.status === 200) {
       
       setLoadings(false);
-      openNotificationWithIcon('success', 'Login Successful');
+      OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
       
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
+      localStorage.setItem('userlogged', "normal");
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -49,35 +49,13 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     } else {
       console.log(res.data);
       setLoadings(false);
-      openNotificationWithIcon('error', res?.data);
+      OpenNotification('error', res?.data);
     }
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
+  localStorage.setItem('userlogged', "normal");
 
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     
@@ -156,7 +134,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
             Don’t have an account?{' '}
             <Link
               to="/indexx-exchange/buy-sell/get-started"
-              style={{ color: '#11be6a' }}
+              style={{ color: 'var(--primary-color)' }}
             >
               Get Started
             </Link>
@@ -190,7 +168,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
             </Link>{' '}
             <br />
             <br />
-            <p style={{ color: '#11be6a', fontSize: 15 }}>
+            <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
               {' '}
               Sign up to be an indexxer
             </p>

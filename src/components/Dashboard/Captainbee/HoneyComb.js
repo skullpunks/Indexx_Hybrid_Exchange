@@ -39,9 +39,8 @@ import {
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
 import { baseCEXURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
+import OpenNotification from '../../OpenNotification/OpenNotification';
 
 const HoneyComb = () => {
 
@@ -112,32 +111,9 @@ const HoneyComb = () => {
     //if(postMessage)
   }
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
   const options = { year: 'numeric', month: 'long', day: 'numeric',   hour: '2-digit',
@@ -478,7 +454,7 @@ const HoneyComb = () => {
                       mt: 3,
                       alignSelf: "flex-end",
                       '&:hover': {
-                        backgroundColor: '#ffa200',
+                        backgroundColor: '#FFD000',
                         boxShadow: 'none',
                       },
                     }}

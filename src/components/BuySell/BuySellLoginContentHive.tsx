@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import {
-  CheckCircleFilled,
-  CloseCircleFilled,
   InfoCircleFilled,
 } from '@ant-design/icons';
-import { Button, Form, Input, notification } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import hive from "../../assets/hive_exchange log in.svg";
 // import qrCode from '../../assets/arts/qrCode.svg';
@@ -17,6 +15,7 @@ import {
   loginHive
 } from '../../services/api';
 import "./BuySellLoginContentHive.css";
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 // interface Props {
 //   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -34,7 +33,7 @@ const BuySellLoginContentHive: React.FC = () => {
     if (res.status === 200) {
 
       setLoadings(false);
-      openNotificationWithIcon('success', 'Login Successful');
+      OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
 
 
@@ -44,6 +43,7 @@ const BuySellLoginContentHive: React.FC = () => {
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
       localStorage.setItem('username', resObj?.username);
+      localStorage.setItem('userlogged', "captain");
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -62,35 +62,12 @@ const BuySellLoginContentHive: React.FC = () => {
     } else {
 
       setLoadings(false);
-      openNotificationWithIcon('error', res.data);
+      OpenNotification('error', res.data);
     }
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
 
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
 
@@ -99,6 +76,8 @@ const BuySellLoginContentHive: React.FC = () => {
   const handleClick = () => {
     window.location.href = "https://hive.indexx.ai/sign-up"
   }
+  localStorage.setItem('userlogged', "captain");
+
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>

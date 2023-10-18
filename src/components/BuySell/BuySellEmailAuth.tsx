@@ -6,6 +6,7 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import { validateEmail } from '../../services/api';
 import { useEffect, useState } from 'react';
 import React, { ClipboardEvent } from 'react';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellEmailAuth = () => {
   const navigate = useNavigate();
@@ -69,59 +70,23 @@ const BuySellEmailAuth = () => {
     
     const res = await validateEmail(email, otpCode.join('').toString());
     if (res.status === 200) {
-      openNotificationWithIcon('success', res.data);
+      OpenNotification('success', res.data);
       navigate('/indexx-exchange/kyc');
       setLoadings(false);
     } else {
       
-      openNotificationWithIcon2('error', res.data);
+      OpenNotification('error', res.data);
       setLoadings(false);
     }
-  };
-
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
   };
 
   // const resendEmail = async () => {
   //     let res = await resendEmailCode(email);
   //     
   //     if (res.status === 200) {
-  //         openNotificationWithIcon('success', res.data);
+  //         OpenNotification('success', res.data);
   //     } else {
-  //         openNotificationWithIcon2('error', res.data);
+  //         OpenNotification('error', res.data);
   //     }
   // }
 

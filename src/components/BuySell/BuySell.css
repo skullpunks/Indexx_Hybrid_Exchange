@@ -56,13 +56,20 @@
 
 button {
   width: 100%;
-  background: #11be6a;
+  background: var(--primary-color);
   border-radius: 10px;
   color: #fff;
   font-size: 20px;
   border: none;
   height: 55px;
   cursor: pointer;
+}
+
+button:hover,
+button:focus,
+button:active{
+  background: var(--secondary-color);
+
 }
 
 .bs_container_header {
@@ -85,7 +92,7 @@ button {
 .bs_footer_action button {
   color: #ffffff;
   /* background: rgba(95, 95, 95, 0.2); */
-  background-color: #11be6a;
+  background-color: var(--primary-color);
   border-radius: 0px;
   height: 55px;
 }
@@ -93,14 +100,14 @@ button {
 .bs_footer_action button:hover,
 .bs_footer_action button:focus,
 .bs_footer_action button:active {
-  background-color: #0ea55a;
+  background-color: var(--secondary-color);
   outline: none;
 }
 
 .bs_footer_action button.disable_icon:hover,
 .bs_footer_action button.disable_icon:focus,
 .bs_footer_action button.disable_icon:active {
-  background-color: #11be6a;
+  background-color: var(--primary-color);
 }
 
 .bs_token_num {
@@ -231,14 +238,14 @@ input::-webkit-input-placeholder {
 }
 
 button.ant-btn-link.btn_link span {
-  color: #11be6a;
+  color: var(--primary-color);
   font-size: 20px;
   height: 39px;
   padding-top: 16px;
 }
 
 button.ant-btn-link.btn_link span:hover {
-  color: #0ea55a;
+  color: var(--secondary-color);
 }
 
 .left_arrow {
@@ -283,11 +290,11 @@ button.ant-btn-link.btn_link span:hover {
 }
 
 .text_link {
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 .text_link:hover {
-  color: #0ea55a;
+  color: var(--secondary-color);
 }
 
 input[type='checkbox'] {
@@ -411,7 +418,7 @@ input[type='checkbox'] {
 }
 
 .ant-dropdown-menu-item:hover {
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 .ant-dropdown-menu-item.ant-dropdown-menu-item-disabled:hover {
@@ -481,7 +488,7 @@ input[type='checkbox'] {
 }
 
 .text-underline:hover {
-  color: #11be6a;
+  color: var(--primary-color);
   text-decoration: underline;
 }
 
@@ -513,16 +520,16 @@ button.ant-btn-primary [disabled] {
 .bs_main .ant-btn-primary:active,
 .bs_main .ant-btn-primary:focus {
   height: 55px;
-  border-color: #11be6a !important; 
-  background-color: #11be6a !important;
+  border-color: var(--primary-color) !important; 
+  background-color: var(--primary-color) !important;
   color: #fff;
   font-size: 20px;
   border-radius: 0px;
 }
 .bs_main .ant-btn-primary:hover{
   height: 55px;
-  border-color: #0ea55a !important; 
-  background-color: #0ea55a !important;
+  border-color: var(--secondary-color) !important; 
+  background-color: var(--secondary-color) !important;
   color: #fff;
   font-size: 20px;
   border-radius: 0px;
@@ -549,7 +556,7 @@ button.ant-btn-primary [disabled] {
   > .ant-tabs-nav-wrap
   > .ant-tabs-nav-list
   > .ant-tabs-tab:hover {
-  color: #11be6a;
+  color: var(--primary-color);
 }
 
 .bs_tab_item.ant-tabs {
@@ -572,7 +579,7 @@ button.ant-btn-primary [disabled] {
   > .ant-tabs-nav-wrap
   > .ant-tabs-nav-list
   > .ant-tabs-ink-bar {
-  background-color: #11be6a;
+  background-color: var(--primary-color);
 }
 
 .bs_main > .card {
@@ -581,18 +588,18 @@ button.ant-btn-primary [disabled] {
 }
 
 .ant-btn-dangerous.ant-btn-primary {
-  background-color: #11be6a !important ;
-  border-color: #11be6a !important ;
+  background-color: var(--primary-color) !important ;
+  border-color: var(--primary-color) !important ;
 }
 
 .ant-btn-dangerous.ant-btn-primary:hover {
-  background-color: #0ea55a !important ;
-  border-color: #0ea55a !important ;
+  background-color: var(--secondary-color) !important ;
+  border-color: var(--secondary-color) !important ;
 }
 
 .bs_link,
 a.bs_link:hover {
-  color: #11be6a !important;
+  color: var(--primary-color) !important;
 }
 
 .padding-lr-0 {
@@ -612,7 +619,7 @@ a.bs_link:hover {
 }
 
 .bs_main .ant-btn-primary:hover {
-  background-color: #0ea55a;
+  background-color: var(--secondary-color);
 }
 
 .bs_main .card__header {
@@ -625,7 +632,7 @@ a.bs_link:hover {
 .bs_main .footer.ant-btn-primary:hover,
 .bs_main .footer .ant-btn-primary:focus {
   border-color: #d7d7d7;
-  background-color: #0ea55a;
+  background-color: var(--secondary-color);
 }
 
 .bs_curreny_left input:hover,
@@ -772,8 +779,8 @@ a.bs_link:hover {
 }
 
 .bs_main .hive-btn {
-  background-color: #FFD000 !important;
-  border-color: #FFD000!important;
+  background-color: #FFB300 !important;
+  border-color: #FFB300!important;
   font-size: 20px;
   height: 55px;
   color: #fff;
@@ -784,14 +791,14 @@ a.bs_link:hover {
 .bs_main .hive-btn:focus,
 .bs_main .hive-btn:active
 {
-  background-color: #FFB300 !important;
-  border-color: #FFB300!important;
+  background-color: #FFD000 !important;
+  border-color: #FFD000!important;
 }
 
 .hive_link {
-  color: #FFD000;
+  color: #FFB300;
 }
 
 .hive_link:hover {
-  color: #FFB300;
+  color: #FFD000;
 }

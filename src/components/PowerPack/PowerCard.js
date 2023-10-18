@@ -67,7 +67,6 @@ const PowerCard = ({ card }) => {
                 //getStripePaymentIntent(res.data.orderId, res.data.user.email);
             } else {
                 setLoadings(false);
-                // openNotificationWithIcon2('error', res.data);
                 setIsModalOpen(true);
                 setMessage(res.data);
                 setErrorMessage(res.data);
@@ -203,7 +202,7 @@ const PowerCard = ({ card }) => {
                                         '&:hover': {
                                             backgroundColor: 'transparent',
                                             boxShadow: 'none',
-                                            color: "#ffa200",
+                                            color: "#FFD000",
                                         },
                                     }}
                                 >
@@ -284,7 +283,7 @@ const PowerCard = ({ card }) => {
                                         '&:hover': {
                                             backgroundColor: 'transparent',
                                             boxShadow: 'none',
-                                            color: "#ffa200",
+                                            color: "#FFD000",
                                         },
                                     }}
                                 >
@@ -307,7 +306,7 @@ const PowerCard = ({ card }) => {
                         marginBottom: '10px',
                         "&:hover": {
                             background: "transparent",
-                            color: "#FFA200",
+                            color: "#FFD000",
                         },
                     }}>
                         Apply Discount
@@ -379,9 +378,9 @@ const PowerCard = ({ card }) => {
                         }}
                         loading={loadings}
                         sx={{
-                            backgroundColor: "transparent",
+                            background: "#FFB300",
                             color: "var(--body_color)",
-                            border: "1px solid #A1A1A1",
+                            border: "1px solid #FFB300",
                             borderRadius: "0",
                             px: 4,
                             mt: 2,
@@ -392,8 +391,8 @@ const PowerCard = ({ card }) => {
                             textTransform: "none",
                             zIndex: "5",
                             "&:hover": {
-                                background: "#FFB300",
-                                borderColor: "#FFB300",
+                                background: "#FFD000",
+                                borderColor: "#FFD000",
                             },
                         }}
                     >

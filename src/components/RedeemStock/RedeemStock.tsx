@@ -1,7 +1,5 @@
-import { CloseCircleFilled } from '@ant-design/icons';
 import {
     Button,
-    notification
 } from 'antd';
 import { useEffect, useState } from 'react';
 import {
@@ -9,6 +7,7 @@ import {
     redeemStockCoupon,
     redeemValue
 } from '../../services/api';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 export const RedeemStock = () => {
     const [loadings, setLoadings] = useState<boolean>(false);
@@ -41,35 +40,17 @@ export const RedeemStock = () => {
         
         if (res?.result?.status === 200) {
             setLoadings(false);
-            openNotificationWithIcon2(
+            OpenNotification(
                 'error',
                 res?.message
             );
         } else {
             setLoadings(false);
-            openNotificationWithIcon2(
+            OpenNotification(
                 'error',
                 res?.error
             );
         }
-    };
-    type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-    const openNotificationWithIcon2 = (
-        type: NotificationType,
-        message: string
-    ) => {
-        notification[type]({
-            message: message,
-            description: '',
-            icon: <CloseCircleFilled />,
-            style: {
-                border: '1px solid #11be6a',
-                boxShadow: 'none',
-                borderRadius: 5,
-                top: 100,
-            },
-        });
     };
 
     const redeemVoucher = async () => {
@@ -87,7 +68,7 @@ export const RedeemStock = () => {
                 setIsLoading(false);
             } else {
                 
-                openNotificationWithIcon2(
+                OpenNotification(
                     'error',
                     results?.error
                 );

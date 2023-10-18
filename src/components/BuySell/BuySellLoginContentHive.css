@@ -1,6 +1,6 @@
 .hive-btn {
-  background-color: #FFD000;
-  border-color: #FFD000!important;
+  background-color: #FFB300;
+  border-color: #FFB300!important;
   font-size: 20px;
   height: 55px;
   color: #fff;
@@ -11,8 +11,8 @@
 .hive-btn:focus,
 .hive-btn:active
 {
-  background-color: #FFB300 !important;
-  border-color: #FFB300!important;
+  background-color: #FFD000 !important;
+  border-color: #FFD000!important;
 }
 
 .hive-btn-2 {

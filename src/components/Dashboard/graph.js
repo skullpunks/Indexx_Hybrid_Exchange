@@ -100,7 +100,7 @@ const FlowDiagram2 = () => {
           const targetId = relationship.captainBeeEmail;
           newData.nodes.push({
             id: targetId,
-            color: 'lightgreen',
+            color: 'var(--highlight-color)',
             x: level * nodeSpacing + nodeSpacing,
             y: level * levelSpacing + yOffset,
           });

@@ -1,8 +1,8 @@
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { Button, Input, Form, notification } from 'antd';
+import { Button, Input, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../../services/api';
+import OpenNotification from '../OpenNotification/OpenNotification';
 // import Email from "../../assets/arts/Email.svg";
 
 const BuySellResetPassword = () => {
@@ -16,43 +16,14 @@ const BuySellResetPassword = () => {
     await resetPassword(String(email), values.password).then((res) => {
       
       if (res.status === 200) {
-        openNotificationWithIcon('success');
+        OpenNotification('success', 'Successfully reset password');
         navigate('/indexx-exchange/buy-sell/login');
       } else {
-        openNotificationWithIcon2('error');
+        OpenNotification('error', 'Failed to reset the password');
       }
     });
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    notification[type]({
-      message: 'Successfully reset password',
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (type: NotificationType) => {
-    notification[type]({
-      message: 'Failed to reset the password',
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     

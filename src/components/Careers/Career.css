@@ -6,7 +6,7 @@
 .apply_button:hover,
 .apply_button:active,
 .apply_button:focus {
-  background-color: #11be6a;
+  background-color: var(--primary-color);
   color: #fff;
   font-size: 20px;
   height: 46px;
