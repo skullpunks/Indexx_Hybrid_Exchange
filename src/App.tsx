@@ -87,6 +87,7 @@ import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/Leade
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { useState, useEffect } from "react";
+import Staking from "./components/Staking/Staking";
 import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
 
 function App() {
@@ -178,6 +179,7 @@ function App() {
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 
+          <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
 
           {/* {
                         // userData?.role === "Standard"

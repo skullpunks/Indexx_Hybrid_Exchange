@@ -26,6 +26,7 @@
   --highlight-color: lightgreen;
   --link-hover: #1890ff;
   --dropdown-hover: #1890ff;
+  --staking-color: #e7e7e7;
 }
 
 [data-bs-theme="dark"] {
@@ -57,6 +58,7 @@
   --highlight-color: lightgreen;
   --link-hover: #1890ff;
   --dropdown-hover: #1890ff;
+  --staking-color: #171C26;
 }
 
 

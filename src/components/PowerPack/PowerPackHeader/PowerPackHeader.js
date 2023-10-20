@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import power from '../../../assets/BSheader/power pack 1.svg';
 import all from '../../../assets/BSheader/x icon- 1.svg';
+import stack from '../../../assets/BSheader/staking icon 2.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
 import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
+import stack_white from '../../../assets/BSheader/staking icon 1.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
@@ -94,7 +96,34 @@ const PowerPackHeader = () => {
             </div>
         </Link>
         </div>
-
+        <div className="col">
+        <Link to="/indexx-exchange/buy-sell/staking">
+            <div className="card">
+            {theme === "dark" ? 
+            <img src={stack_white} className="card-img-top" alt="..."
+              style={{height:"34px"}}
+            />
+            :
+            <img src={stack} className="card-img-top" alt="..."/>
+            }
+            <div className="card-body">
+                <h5 className="card-title">Staking</h5>
+                <Typography
+                component='p'
+                style={
+                  location.pathname === '/indexx-exchange/buy-sell/staking'
+                    ? {
+                      height: '0.07px',
+                      width: '66px',
+                      backgroundColor: 'var(--body_color)',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
 
     </div>
     </div>
