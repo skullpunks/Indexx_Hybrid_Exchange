@@ -54,7 +54,7 @@ export const BSDepositCryptoSelect = () => {
   const [selectedCoin, setSelectedCoin] = useState('INEX');
 
   const [copiedValue, copy] = useCopyToClipboard();
-  
+
 
   const columns: ColumnsType<DataType> = [
     {
@@ -167,23 +167,23 @@ export const BSDepositCryptoSelect = () => {
       let finalArr = res.data.filter(
         (x: any) => x.transactionType === 'DEPOSIT_CYRPTO'
       );
-      
+
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-      
+
       setUsersWallets(res.data);
     });
   }, []);
 
   const handleChange = async (value: string) => {
     setNetwork(value);
-    
+
     if (selectedCoin === 'FTT') {
       if (value === 'ETH') {
         //alert(value);
         const coreFTTWallet = await getFTTCoreWalletDetails();
-        
+
         setSingleWallet(coreFTTWallet);
       } else {
         alert('Please select ETH network for FTT Deposit');
@@ -202,7 +202,7 @@ export const BSDepositCryptoSelect = () => {
         (x: any) => x.coinSymbol === value
       );
       if (value === 'ETH') {
-        
+
         alert(`Please select BNB network for ${selectedCoin} Deposit`);
       } else {
         setSingleWallet(userWallet[0]);
@@ -215,7 +215,7 @@ export const BSDepositCryptoSelect = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-    
+
     setSelectedCoin(String(getRequiredCoin?.title));
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
@@ -236,15 +236,15 @@ export const BSDepositCryptoSelect = () => {
     setLoadings(true);
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
-    
-    
+
+
     const res = await checkAndUpdateDeposit(
       decodedToken.email,
       depositHash,
       String(selectedCoin),
       String(network)
     );
-    
+
     if (res.status === 200) {
       setLoadings(false);
       OpenNotification('success', 'Your Deposit is successfully');
@@ -315,7 +315,9 @@ export const BSDepositCryptoSelect = () => {
                   x.title === 'INEX' ||
                   x.title === 'INXC' ||
                   x.title === 'IUSD+' ||
-                  x.title === 'FTT'
+                  x.title === 'FTT' ||
+                  x.title === 'DOGE' ||
+                  x.title === 'XRP'
               )
               .map((token) => {
                 return (
@@ -386,30 +388,47 @@ export const BSDepositCryptoSelect = () => {
                   </span>{' '}
                 </div>
               </Select.Option>
+              <Select.Option value="XRP">
+                <div className="font_20x">
+                  XRP{' '}
+                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
+                    Ripple
+                  </span>{' '}
+                </div>
+              </Select.Option>
+              <Select.Option value="DOGE">
+                <div className="font_20x">
+                  DOGE{' '}
+                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
+                    Dogecoin
+                  </span>{' '}
+                </div>
+              </Select.Option>
               {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
             </Select>
+
           </div>
           {network && (
             <div className="sensitive_data margin-t-2x">
               <div>Address</div>
               <div>
 
-              {selectedCoin !== 'FTT'
-                ? singleWallet?.coinWalletAddress
-                : singleWallet?.coinAddress}
+                {selectedCoin !== 'FTT'
+                  ? singleWallet?.coinWalletAddress
+                  : singleWallet?.coinAddress}
                 <img
                   src={copyIcon}
                   alt="copy icon"
                   width="21"
                   height="11"
                   className="padding-l-1x cursor-pointer"
-                  style={{marginBottom:"5px"}}
+                  style={{ marginBottom: "5px" }}
                   onClick={() => copy(singleWallet?.coinWalletAddress)}
                 />
               </div>
               <div className="margin-t-2x d-flex flex-align-center ">
                 <div>
-                Click to scan QR Code
+                  Click to scan QR Code
                 </div>
                 {selectedCoin === 'FTT' ? (
                   <Popover

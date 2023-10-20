@@ -63,6 +63,38 @@
     "graph": "LitecoinGraph"
   },
   {
+    "title": "DOGE",
+    "subTitle": "Dogecoin",
+    "image": "DOGE",
+    "address": "DBtxwCEEBzmfnmRv9Lss1sfjGxEoXdThx1",
+    "commonToken": true,
+    "graph": "DogecoinGraph"
+  },
+  {
+    "title": "XRP",
+    "subTitle": "Ripple",
+    "image": "XRP",
+    "address": "rHz4FhakC6QsYa7hPbAMbFNcFY57fAYwaj",
+    "commonToken": true,
+    "graph": "RippleGraph"
+  },
+  {
+    "title": "USDC",
+    "subTitle": "USDC",
+    "image": "USDC",
+    "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    "commonToken": true,
+    "graph": "USDCGraph"
+  },
+  {
+    "title": "USDT",
+    "subTitle": "Tether",
+    "image": "USDT",
+    "address": "0x55d398326f99059ff775485246999027b3197955",
+    "commonToken": true,
+    "graph": "USDTGraph"
+  },
+  {
     "title": "ETH",
     "subTitle": "Ethereum",
     "image": "ETH",

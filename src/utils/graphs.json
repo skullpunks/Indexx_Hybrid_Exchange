@@ -78,5 +78,21 @@
   {
     "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110cAC11",
     "graph": "IndexxTLSAGraph"
+  },
+  {
+    "address": "DBtxwCEEBzmfnmRv9Lss1sfjGxEoXdThx1",
+    "graph": "DogecoinGraph"
+  },
+  {
+    "address": "rHz4FhakC6QsYa7hPbAMbFNcFY57fAYwaj",
+    "graph": "RippleGraph"
+  },
+  {
+    "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    "graph": "USDCGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197955",
+    "graph": "USDTGraph"
   }
 ]

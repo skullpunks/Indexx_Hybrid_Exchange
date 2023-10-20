@@ -20,6 +20,10 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import BinanceGraph from '../Graphs/BinanceGraph';
 import BitcoinGraph from '../Graphs/BitcoinGraph';
 import EthereumGraph from '../Graphs/EthereumGraph';
+import DogecoinGraph from '../Graphs/DogecoinGraph';
+import RippleGraph from '../Graphs/RippleGraph';
+import USDCGraph from '../Graphs/USDCGraph';
+import USDTGraph from '../Graphs/USDTGraph';
 import FTTGraph from '../Graphs/FTTGraph';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
@@ -51,6 +55,10 @@ import MetaStockTokenMarket from '../MarketAbout/MetaStockTokenMarket';
 import PespiCoStockTokenMarket from '../MarketAbout/PespiCoStockTokenMarket';
 import NvidiaStockTokenMarket from '../MarketAbout/NividaStockTokenMarket';
 import SNP500StockTokenMarket from '../MarketAbout/SNP500StockTokenMarket';
+import DogecoinMarket from '../MarketAbout/DogecoinMarket';
+import RippleMarket from '../MarketAbout/RippleMarket';
+import USDCMarket from '../MarketAbout/USDCMarket';
+import USDTMarket from '../MarketAbout/USDTMarket';
 import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
 import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
 import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
@@ -75,6 +83,10 @@ let graphs: any = {
   IndexxCrypto: IndexxCryptoGraph,
   IndexxUSDPGraph: IndexxUSDPGraph,
   BinanceGraph: BinanceGraph,
+  DogecoinGraph: DogecoinGraph,
+  RippleGraph: RippleGraph,
+  USDCGraph: USDCGraph,
+  USDTGraph: USDTGraph,
   LitecoinGraph: LitecoinGraph,
   IndexxExchange: IndexxExchangeGraph,
   IndexxPhoenixGraph: IndexxPhoenixGraph,
@@ -98,6 +110,10 @@ let markets: any = {
   IndexxCrypto: IndexxCryptoMarket,
   IndexxUSDPGraph: IndexxUSDPMarket,
   BinanceGraph: BinanceMarket,
+  RippleGraph: RippleMarket,
+  DogecoinGraph: DogecoinMarket,
+  USDCGraph: USDCMarket,
+  USDTGraph: USDTMarket,
   LitecoinGraph: LitecoinMarket,
   IndexxExchange: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
@@ -132,7 +148,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     if (userId !== undefined && userId !== null) {
       setHasEmail(true);
     }
-  },[hasEmail])
+  }, [hasEmail])
 
   // const tabKeyMap = {
   //   all: 0,
@@ -143,25 +159,25 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleTabChange = (event:any, newValue:number) => {
+  const handleTabChange = (event: any, newValue: number) => {
     setSelectedTab(newValue);
   };
 
   return (
     <div className="swap_container">
-      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange}/>
-      <span style={{textAlign:'center'}}>
-        {localStorage.getItem("userlogged") === 'normal' ? 
-          <p style={{marginTop:200,fontSize:30}}>Indexx Exchange</p>
+      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} />
+      <span style={{ textAlign: 'center' }}>
+        {localStorage.getItem("userlogged") === 'normal' ?
+          <p style={{ marginTop: 200, fontSize: 30 }}>Indexx Exchange</p>
           :
-          <p style={{marginTop:200,fontSize:30}}>Hive Exchange</p>
+          <p style={{ marginTop: 200, fontSize: 30 }}>Hive Exchange</p>
         }
-    <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+        <p style={{ fontSize: 15 }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
-      
 
-      <div className="scan-container flex-align-stretch bs_main" style={{marginTop:-80}}>
-       
+
+      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -80 }}>
+
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
@@ -199,7 +215,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="convert-in-progress"
             element={<BSConvertInProgress setScreenName={setScreenName} />}
           />
-           <Route
+          <Route
             path="confirm-convert/:id"
             element={<BSConfirmConvert setScreenName={setScreenName} />}
           />
@@ -230,7 +246,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="sell-in-progress"
             element={<BSSellInprogress setScreenName={setScreenName} />}
           />
-           <Route
+          <Route
             path="sell-confirm-convert/:id"
             element={<BSSellConfirmConvert setScreenName={setScreenName} />}
           />
