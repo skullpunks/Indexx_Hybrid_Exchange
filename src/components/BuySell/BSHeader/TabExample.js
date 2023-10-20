@@ -5,10 +5,13 @@ import stock from '../../../assets/BSheader/graphd 1.svg';
 import power from '../../../assets/BSheader/power pack 1.svg';
 import token from '../../../assets/BSheader/tokens icon 1.svg';
 import all from '../../../assets/BSheader/x icon- 1.svg';
+import stack from '../../../assets/BSheader/staking icon 2.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
 import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
 import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
 import stock_white from '../../../assets/BSheader/tokens icon  white (2).svg';
+import stack_white from '../../../assets/BSheader/staking icon 1.svg';
+
 import './TabExample.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
@@ -138,6 +141,28 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           }
           component={Link}
           to='/indexx-exchange/power-pack'
+          className='tab-format'
+        />
+        <Tab
+          label="Staking"
+          icon={
+            theme === "dark" ? 
+              <img
+                src={stack_white}
+                alt="Home"
+                width={'30px'}
+                style={{ marginBottom: "1.2px" }}
+              />
+            :
+            <img
+              src={stack}
+              alt="Home"
+              width={'30px'}
+              style={{ marginBottom: "1.2px" }}
+            />
+          }
+          component={Link}
+          to='/indexx-exchange/buy-sell/staking'
           className='tab-format'
         />
       </Tabs>
