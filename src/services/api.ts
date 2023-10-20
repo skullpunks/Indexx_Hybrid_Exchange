@@ -1,5 +1,6 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
+import * as crypto from 'crypto';
 let baseAPIURL = '';
 export let baseCEXURL = '';
 export let baseDEXURL = '';
@@ -10,7 +11,17 @@ export let baseWalletURL = '';
 export let baseShopURL = '';
 export let baseXnftURL = '';
 export let baseMktplaceURL = '';
-
+//export const secretKey = process.env.YOUR_SECRET_KEY || "123456Indexx2023";
+export const secretKey =
+  process.env.YOUR_SECRET_KEY === undefined
+    ? '123456Indexx2023'
+    : process.env.YOUR_SECRET_KEY;
+const secret = 'appSecretKey';
+const rounds = 9921;
+const keySize = 32;
+const algorithm = 'aes-256-cbc';
+const salt = crypto.createHash('sha1').update(secret).digest('hex');
+export let baseAcademyUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseAPIURL = 'https://test.api.indexx.ai';
   baseCEXURL = 'https://test.cex.indexx.ai';
@@ -19,10 +30,12 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
+  //baseWalletURL = 'http://localhost:3001';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAcademyUrl = 'http://localhost:3000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -34,6 +47,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
+  baseAcademyUrl = 'https://academy.indexx.ai';
 }
 
 const API = axios.create({
@@ -73,7 +87,10 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
   }
 
   // Format the numeric input into the US phone number format
-  const formattedPhoneNumber = `(${numericInput.slice(0, 3)}) ${numericInput.slice(3, 6)}-${numericInput.slice(6)}`;
+  const formattedPhoneNumber = `(${numericInput.slice(
+    0,
+    3
+  )}) ${numericInput.slice(3, 6)}-${numericInput.slice(6)}`;
 
   return formattedPhoneNumber;
 }
@@ -1123,6 +1140,20 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
   }
 };
 
+export const stakingList = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getStakedCoins/${email}`,     
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
 export const redeemValue = async (voucher: string, email: string) => {
   try {
     const result = await API.post(
@@ -1319,3 +1350,79 @@ export const getIndexxMediumBlogs = async () => {
     return e.response.data;
   }
 };
+
+// Encrypt a string
+export function encrypt(text: string) {
+  let iv = crypto.randomBytes(16);
+  console.log('secretKey', secretKey);
+  console.log('text', text);
+  let secretKey1 = crypto.randomBytes(32).toString('hex');
+
+  const cipher = crypto.createCipheriv('aes-256-cbc', secretKey1, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+// Decrypt an encrypted string
+export function decrypt(encryptedText: string) {
+  let iv = crypto.randomBytes(16);
+  const decipher = crypto.createDecipheriv('aes-256-cbc', secretKey, iv);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
+
+export function encryptData(data: any) {
+  const iv = crypto.randomBytes(16);
+  const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+  const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+  let encrypted = cipher.update(data, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return iv.toString('base64') + ':' + encrypted;
+}
+
+export function decryptData(encryptedText: any) {
+  try {
+    const textParts = encryptedText.split(':');
+    const iv = Buffer.from(textParts.shift(), 'base64');
+    const encryptedData = Buffer.from(textParts.join(':'), 'base64');
+    const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+    const decipher = crypto.createDecipheriv(algorithm, key, iv); // Use the parsed IV
+
+    let decrypted = decipher.update(encryptedData);
+    decrypted = Buffer.concat([decipher.final()]);
+
+    return decrypted.toString('utf8');
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+//const Cryptr = require('cryptr');
+
+
+
+
+// Encrypt a string
+// export function encrypt(text) {
+//   const iv = crypto.randomBytes(16);
+//   const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+//   const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+//   let encrypted = cipher.update(text, 'utf8', 'hex');
+//   encrypted += cipher.final('hex');
+//   return iv.toString('base64') + ':' + encrypted;
+// }
+
+// Decrypt an encrypted string
+// export function decrypt(encryptedText) {
+//   const textParts = encryptedText.split(':');
+//   const iv = Buffer.from(textParts.shift(), 'base64');
+//   const encryptedData = Buffer.from(textParts.join(':'), 'hex');
+//   const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+//   const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
+//   let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+//   decrypted += decipher.final('utf8');
+//   return decrypted;
+// }

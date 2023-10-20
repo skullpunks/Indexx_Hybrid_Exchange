@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from '../../assets/arts/qrCode.svg';
@@ -14,6 +14,8 @@ import {
   InfoCircleFilled,
 } from '@ant-design/icons';
 import OpenNotification from '../OpenNotification/OpenNotification';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -35,6 +37,9 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
       let resObj = await decodeJWT(res.data.access_token);
       
       localStorage.setItem('user', resObj?.email);
+      const userKey = cryptr.encrypt(values.password);
+      localStorage.setItem('userkey', userKey);
+      localStorage.setItem('userpass', values.password);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
@@ -53,6 +58,52 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     }
   };
 
+  useEffect(() => {
+
+    async function loginUser() {
+      // Get the URL search parameters
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      // Get the values of useremail and userkey
+      const userEmail = urlSearchParams.get('useremail');
+      const userKey = urlSearchParams.get('userkey');
+      const userType = urlSearchParams.get('usertype');
+     
+      if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
+        let userPassword = (String(userKey));
+        // You can now use userEmail and userKey as needed in your component
+        let res = await loginAPI(userEmail, userPassword);
+
+        if (res.status === 200) {
+
+          setLoadings(false);
+          OpenNotification('success', 'Login Successful');
+          let resObj = await decodeJWT(res.data.access_token);
+          localStorage.setItem('userpass', userPassword);
+          localStorage.setItem('user', resObj?.email);
+          const userKey = cryptr.encrypt(userPassword);
+          localStorage.setItem('userkey', userKey);
+          localStorage.setItem('access_token', res.data.access_token);
+          localStorage.setItem('refresh_token', res.data.refresh_token);
+          localStorage.setItem('userType', resObj?.userType);
+          let redirectUrl = window.localStorage.getItem('redirect');
+          window.localStorage.removeItem('redirect');
+          let userDetails = await getUserDetails(resObj?.email);
+
+          redirectUrl
+            ? navigate(redirectUrl)
+            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+        } else {
+
+          setLoadings(false);
+          OpenNotification('error', res.data);
+        }
+      }
+    }
+    loginUser();
+
+  }, []);
+
+  type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
   localStorage.setItem('userlogged', "normal");
 
