@@ -47,7 +47,8 @@ import {
   baseShopURL,
   baseWSURL,
   baseWalletURL,
-  baseXnftURL
+  baseXnftURL,
+  decodeJWT
 } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
 
@@ -97,6 +98,7 @@ const HeaderNew = () => {
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
   const [userProfile, setUserProfile] = useState();
+  const [url, setUrl] = useState("");
 
   let pageName = searchParams.get("page");
   // alert(pageName)
@@ -146,7 +148,30 @@ const HeaderNew = () => {
         setUserProfile(data?.data?._doc?.profilePic);
       })
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    let access_token = String(localStorage.getItem("access_token"));
+    console.log("access", access_token);
+    if (access_token) { 
+      try {
+        let decoded = decodeJWT(access_token);
+        const userEmail = decoded.email;
+        const userKey = String(localStorage.getItem("userkey"));
+        const userType = localStorage.getItem("userType");
+        const userpassword = localStorage.getItem("userpass");
+        console.log("userEmail", userEmail);
+        console.log("userKey", userKey);
+        console.log("userpassword", userpassword);
+        const walletUrl = `${baseWalletURL}/login/sign-in/?useremail=${userEmail}&userkey=${userpassword}&usertype=${userType}`;
+        setUrl(walletUrl);
+      } catch (error) {
+        console.error("Error decoding access_token:", error);
+        // Handle the error, e.g., show an error message to the user or perform appropriate actions.
+      }
+    }
+  }, []);
+
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) ||
@@ -357,6 +382,11 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Products
                       </div>
+                      <NavDropdown.Item href={`${url}`} className="link-div">
+                        <a href={`${url}`} className="link-style" target="_blank" rel="noopener noreferrer">
+                          Web Wallet
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="link-style">
                           Gift Cards
@@ -859,7 +889,7 @@ const HeaderNew = () => {
                         </div>
                       </div>
                       <div style={{
-                        color:"#FFB300"
+                        color: "#FFB300"
                       }}>
 
                         {title}
@@ -910,6 +940,12 @@ const HeaderNew = () => {
                           <NavDropdown.Item href="/indexx-exchange/trade-to-earn" className="link-div">
                             <Link to="/indexx-exchange/trade-to-earn" className="link-style">
                               Trade to Earn
+
+                            </Link>
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="/indexx-exchange/buy-sell/staking-history" className="link-div">
+                            <Link to="/indexx-exchange/buy-sell/staking-history" className="link-style">
+                              Staking History
 
                             </Link>
                           </NavDropdown.Item>

@@ -87,6 +87,7 @@ import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/Leade
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { useState, useEffect } from "react";
+import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
 
 function App() {
   /*
@@ -235,6 +236,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/transaction-history/*"
             element={<BSTransactionHistoryLayout />}
+          /> 
+          <Route
+            path="/indexx-exchange/buy-sell/staking-history/*"
+            element={<BSStakingHistoryLayout />}
           /> 
           <Route
             path="/indexx-exchange/buy-sell/order-history/*"
