@@ -989,6 +989,14 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1;
     } else if (coinType === 'BUSD') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'XRP') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DOGE') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'USDC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'USDT') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BTC') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'ETH') {
@@ -1142,9 +1150,7 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
 
 export const stakingList = async (email: string) => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/getStakedCoins/${email}`,     
-    );
+    const result = await API.get(`/api/v1/inex/user/getStakedCoins/${email}`);
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (transactionList)');
@@ -1401,9 +1407,6 @@ export function decryptData(encryptedText: any) {
 }
 
 //const Cryptr = require('cryptr');
-
-
-
 
 // Encrypt a string
 // export function encrypt(text) {
