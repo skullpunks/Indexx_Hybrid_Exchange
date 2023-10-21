@@ -164,6 +164,25 @@ a.nav-link:hover {
   transition: transform 330ms ease-in-out;
 }
 
+.hive_icon {
+  background-image: url("../../assets/indexx\ ai\ yellow\ 1.svg");
+  font-size: 0;
+  background-repeat: no-repeat;
+  width: 119px;
+  height: 36px;
+  background-size: contain;
+  transition: transform 330ms ease-in-out;
+}
+
+.hive_icon:hover {
+  background-image: url("../../assets/indexx\ ai\ yellow\ 1.svg");
+  background-repeat: no-repeat;
+  width: 119px;
+  height: 36px;
+  background-size: contain;
+  transform: scale(1.1);
+  transition: transform 330ms ease-in-out;
+}
 .logo__text {
   font-size: 29px;
   line-height: 1;
@@ -647,7 +666,7 @@ button.navbar-toggler {
 }
 
 .profile-menu .dropdown-menu .profile-back {
-  top: 510px;
+  top: 560px;
 }
 
 .profile-menu .dropdown-toggle::after {
@@ -895,4 +914,8 @@ button.navbar-toggler {
   justify-content: center;
   align-items: center;
   padding-bottom: 0;
+}
+
+a:hover{
+  color: var(--dropdown-hover);
 }

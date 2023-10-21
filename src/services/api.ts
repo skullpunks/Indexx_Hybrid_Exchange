@@ -34,8 +34,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  baseAcademyUrl = 'http://localhost:3000';
-  baseAPIURL = 'http://localhost:5000';
+  // baseAcademyUrl = 'http://localhost:3000';
+  // baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';

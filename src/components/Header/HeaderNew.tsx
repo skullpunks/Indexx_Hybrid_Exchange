@@ -172,6 +172,22 @@ const HeaderNew = () => {
     }
   }, []);
 
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+  useEffect(() => {
+    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
+    const handleStorageChange = (event:any) => {
+      // console.log(event);
+      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
+      setUserLogged(event.currentTarget.localStorage.userlogged);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) ||
@@ -183,7 +199,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href={baseURL} className="logo__icon">
+            <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
           </div>
@@ -200,7 +216,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container style={{ maxWidth: "1360px" }}>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href={baseURL} className="logo__icon">
+            <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
             {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
