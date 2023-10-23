@@ -603,6 +603,11 @@ const HeaderNew = () => {
                           Trade to Earn
                         </a>
                       </NavDropdown.Item>
+                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/staking`} className="link-div">
+                        <a href={`${baseURL}/indexx-exchange/buy-sell/staking`} className="link-style">
+                          Staking
+                        </a>
+                      </NavDropdown.Item>
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "80px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "23px" }}>

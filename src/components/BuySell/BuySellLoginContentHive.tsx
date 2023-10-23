@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/hive_exchange log in.svg";
+import hive from "../../assets/welcome to indexx exchange.svg";
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,

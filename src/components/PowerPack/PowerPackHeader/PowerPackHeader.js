@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import power from '../../../assets/BSheader/power pack 1.svg';
 import all from '../../../assets/BSheader/x icon- 1.svg';
-import stack from '../../../assets/BSheader/staking icon 2.svg';
+import stack from '../../../assets/BSheader/staking icon black.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
 import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
-import stack_white from '../../../assets/BSheader/staking icon 1.svg';
+import stack_white from '../../../assets/BSheader/satking icon white.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
@@ -104,7 +104,9 @@ const PowerPackHeader = () => {
               style={{height:"34px"}}
             />
             :
-            <img src={stack} className="card-img-top" alt="..."/>
+            <img src={stack} className="card-img-top" alt="..."
+              style={{height:"34px"}}
+            />
             }
             <div className="card-body">
                 <h5 className="card-title">Staking</h5>
