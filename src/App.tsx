@@ -89,6 +89,8 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { useState, useEffect } from "react";
 import Staking from "./components/Staking/Staking";
 import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
+import Bridge from "./components/Bridge/Bridge";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 function App() {
   /*
@@ -149,6 +151,17 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew />
+        {/* {window.location.pathname.includes("for-honeybee") === true ? 
+        <div className="notif"> 
+        <WarningAmberIcon sx={{fontSize:"18px"}}/>
+
+        {" "}You are currently controlling {window.location.pathname.split('/').pop()}’s Exchange. Any transaction done here will affect their assets!!
+        {" "}
+        <WarningAmberIcon sx={{fontSize:"18px"}}/>
+        
+        </div>
+        : null
+         }  */}
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />
@@ -180,6 +193,7 @@ function App() {
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 
           <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
+          <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
           {/* {
                         // userData?.role === "Standard"

@@ -47,6 +47,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
 
   console.log(selectedTab);
 
+  // const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
   return (
     <div
       style={{

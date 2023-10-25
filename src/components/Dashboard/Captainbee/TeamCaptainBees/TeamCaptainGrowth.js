@@ -7,6 +7,7 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon_grey.svg';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
+import CommissionTable from '../CommissionTable';
 
 const TeamCaptainGrowth = () => {
     const [platform, setPlatform] = useState('Exchange');
@@ -68,6 +69,15 @@ const TeamCaptainGrowth = () => {
 
   return (
     <div style={{paddingTop:"10px"}}>
+      <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    mt: 2
+                  }}
+                >
+
               <Box
                 sx={{
                   display: 'flex',
@@ -364,7 +374,7 @@ const TeamCaptainGrowth = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box
+                  {/* <Box
                     sx={{
                       background: 'var(--body_background)',
                       width:"100%",
@@ -379,7 +389,7 @@ const TeamCaptainGrowth = () => {
                       ]}
                       xAxis={[{ scaleType: 'point', data: xLabels }]}
                     />
-                  </Box>
+                  </Box> */}
                 </Box>
 
                 <Box
@@ -670,7 +680,7 @@ const TeamCaptainGrowth = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box
+                  {/* <Box
                     sx={{
                       background: 'var(--body_background)',
                       width:"100%",
@@ -685,9 +695,14 @@ const TeamCaptainGrowth = () => {
                       ]}
                       xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
                     />
-                  </Box>
+                  </Box> */}
                 </Box>
               </Box>
+
+              <Box>
+                    <CommissionTable/>
+                  </Box>
+      </Box>
     </div>
   )
 }

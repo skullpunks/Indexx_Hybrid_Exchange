@@ -52,6 +52,7 @@ import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import CommissionTable from './CommissionTable';
 
 const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
@@ -310,6 +311,15 @@ const CaptainDash = () => {
                 </div>
               </div>
               <div className="side-container">
+              <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    mt: 2
+                  }}
+                >
+
                 <Box
                   sx={{
                     display: 'flex',
@@ -606,7 +616,7 @@ const CaptainDash = () => {
                         </Typography>
                       </Box>
                     </Box>
-                    <Box
+                    {/* <Box
                       sx={{
                         background: 'var(--body_background)',
                         width: "100%",
@@ -621,7 +631,7 @@ const CaptainDash = () => {
                         ]}
                         xAxis={[{ scaleType: 'point', data: xLabels }]}
                       />
-                    </Box>
+                    </Box> */}
                   </Box>
 
                   <Box
@@ -912,7 +922,7 @@ const CaptainDash = () => {
                         </Typography>
                       </Box>
                     </Box>
-                    <Box
+                    {/* <Box
                       sx={{
                         background: 'var(--body_background)',
                         width: "100%",
@@ -927,7 +937,12 @@ const CaptainDash = () => {
                         ]}
                         xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
                       />
-                    </Box>
+                    </Box> */}
+                  </Box>
+                </Box>
+
+                  <Box>
+                    <CommissionTable/>
                   </Box>
                 </Box>
               </div>
