@@ -4,7 +4,7 @@ import useFetch from "../Hooks/use-fetch";
 import styles from "./Graph.module.css";
 import { getCryptoPrice } from "../../services/api";
 
-const url = "https://api.coingecko.com/api/v3/coins/toncoin/market_chart?vs_currency=usd&days=";
+const url = "https://api.coingecko.com/api/v3/coins/the-open-network/market_chart?vs_currency=usd&days=";
 const currencyName = "Toncoin";
 const currencySymbol = "TON";
 const ToncoinGraph = () => {
