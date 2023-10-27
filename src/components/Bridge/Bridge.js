@@ -18,6 +18,23 @@ const Bridge = () => {
 
   }, [])
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   const handleAcad = () => {
     let access_token = String(localStorage.getItem("access_token"));
     let decoded = decodeJWT(access_token);
@@ -60,28 +77,28 @@ const Bridge = () => {
         alignItems: "flex-end"
       }}>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
-            <img src={wallet} alt='' style={{width:"70px"}} onClick={handlewallet}/>
-            <div className='fw-bold font_20x' style={{marginTop:"40px"}}>
-            Wallet 
-            </div>
+          <img src={wallet} alt='' style={{ width: "70px" }} onClick={handlewallet} />
+          <div className='fw-bold font_20x' style={{ marginTop: "40px" }}>
+            Wallet
+          </div>
         </Box>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
-            <img src={userLogged === "normal" ? exchange : hive_exch} alt='' style={{width:"200px"}}/>
-            <div className='fw-bold font_20x' style={{marginTop:"20px"}}>
-            {userLogged === "normal" ? "Indexx Exchange" : "Hive Exchange"} 
-            </div>
+          <img src={userLogged === "normal" ? exchange : hive_exch} alt='' style={{ width: "200px" }} />
+          <div className='fw-bold font_20x' style={{ marginTop: "20px" }}>
+            {userLogged === "normal" ? "Indexx Exchange" : "Hive Exchange"}
+          </div>
         </Box>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
-            {theme === "dark" ?
-            <img src={academy_dark} alt=''  style={{width:"70px"}} onClick={handleAcad}/>
-              :
-            <img src={academy} alt=''  style={{width:"70px"}} onClick={handleAcad}/>
-            }
-            {theme === "dark" ?
-            <img src={academylogo_dark} alt=''  style={{marginTop:"50px", height:"29px"}}/>
-              :
-              <img src={academylogo} alt=''  style={{marginTop:"50px", height:"29px"}}/>
-            }
+          {theme === "dark" ?
+            <img src={academy_dark} alt='' style={{ width: "70px" }} onClick={handleAcad} />
+            :
+            <img src={academy} alt='' style={{ width: "70px" }} onClick={handleAcad} />
+          }
+          {theme === "dark" ?
+            <img src={academylogo_dark} alt='' style={{ marginTop: "50px", height: "29px" }} />
+            :
+            <img src={academylogo} alt='' style={{ marginTop: "50px", height: "29px" }} />
+          }
         </Box>
       </Box>
     </div>
