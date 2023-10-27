@@ -12,6 +12,7 @@ import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 
+import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -147,6 +148,17 @@ const MyCaptain = () => {
                       border={'none'}
                     />
                   </div>
+                  <img
+                  alt=""
+                  src={bronze}
+                  style={{
+                    position: 'absolute',
+                    bottom: '-25px',
+                    right: '17px',
+                    width: '79px', 
+                    height: '81px',
+                  }}
+                />
                 </div>
               </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">

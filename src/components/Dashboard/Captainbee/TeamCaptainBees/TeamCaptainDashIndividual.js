@@ -29,7 +29,7 @@ import discord_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/d
 
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
-import copper from "../../../../assets/powerpack/copper hat.svg";
+import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import greyman from "../../../../assets/hive-dashboard/man4 2.svg";
 import { Rating } from '@mui/material';
@@ -99,7 +99,7 @@ const TeamCaptainDashIndividual = () => {
     }
   }, [])
 
-
+  console.log(staticsData, "data");
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
@@ -391,7 +391,7 @@ const TeamCaptainDashIndividual = () => {
         </>
       } */}
       <div style={{ paddingTop: "220px" }}>
-        <div className='font_20x fw-bold justify-content-start d-flex' style={{ marginLeft: "315px" }}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-484px" }}>
  
           Team Captain Bee {staticsData?.affiliateUserProfile?.accname} Dashboard
         </div>
@@ -427,6 +427,18 @@ const TeamCaptainDashIndividual = () => {
                     border={'none'}
                   />
                 </div>
+
+                <img
+                  alt=""
+                  src={bronze}
+                  style={{
+                    position: 'absolute',
+                    bottom: '-25px',
+                    right: '17px',
+                    width: '79px', 
+                    height: '81px',
+                  }}
+                />
               </div>
               <div className="align-items-start lh_32x">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">

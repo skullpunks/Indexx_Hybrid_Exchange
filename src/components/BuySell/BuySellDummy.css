@@ -143,6 +143,10 @@
   border-color: var(--primary-color);
 }
 
+.staking-toggle .MuiToggleButtonGroup-grouped:not(:first-of-type){
+    border-left: 1px solid var(--border-color) !important;
+}
+
 @media (max-width: 767px) {
   .bs_wallet_top {
     max-width: 90%;

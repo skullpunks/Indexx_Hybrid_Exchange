@@ -38,7 +38,10 @@ const PowerPackHeader = () => {
     <div style={{position:"fixed", 
         top: `${isMobile ? '60px' : '90px'}`,
     width:"100%", zIndex:999, background:"var(--main-body)", 
-    height:"80px"}}>
+    height:"95px",
+    paddingTop:"15px"
+    
+    }}>
 
     <div className="container power-page">
 
@@ -53,7 +56,7 @@ const PowerPackHeader = () => {
             <img src={all} className="card-img-top" alt="..."/>
             }
             <div className="card-body">
-                <h5 className="card-title">All</h5>
+                <h5 className="card-title mt-1">Buy Crypto</h5>
                 <Typography
                 component='p'
                 style={
@@ -79,14 +82,14 @@ const PowerPackHeader = () => {
             <img src={power} className="card-img-top" alt="..." style={{width:"63px"}}/>
             }
             <div className="card-body">
-                <h5 className="card-title">Power Packs</h5>
+                <h5 className="card-title mt-1">Power Packs</h5>
             <Typography
                 component='p'
                 style={
                   location.pathname === '/indexx-exchange/power-pack'
                     ? {
                       height: '0.07px',
-                      width: '75px',
+                      width: '59px',
                       backgroundColor: 'var(--body_color)',
                     }
                     : null
@@ -109,14 +112,14 @@ const PowerPackHeader = () => {
             />
             }
             <div className="card-body">
-                <h5 className="card-title">Staking</h5>
+                <h5 className="card-title mt-1">Staking</h5>
                 <Typography
                 component='p'
                 style={
                   location.pathname === '/indexx-exchange/buy-sell/staking'
                     ? {
                       height: '0.07px',
-                      width: '66px',
+                      width: '36px',
                       backgroundColor: 'var(--body_color)',
                     }
                     : null

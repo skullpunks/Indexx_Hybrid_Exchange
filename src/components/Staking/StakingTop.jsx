@@ -16,6 +16,8 @@ import {
   Typography,
   Button,
   TextField,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
 import iUSD from '../../assets/token-icons/iUSD+ new2 3.svg';
 import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
@@ -51,6 +53,8 @@ const StakingTop = () => {
   const [finalAmount, setFinalAmount] = useState(0);
   const [error, setError] = useState('');
   const [loadings, setLoadings] = useState(false);
+  const [lockup, setLockup] = useState('6m')
+
 
   useEffect(() => {
     getAllUserWallet();
@@ -248,8 +252,8 @@ const StakingTop = () => {
   return (
     <>
       <div className="orange width-100 padding-t-2x align-items-center d-flex justify-content-center mb-4">
-        <h1 className="padding-l-3x padding-b-1x staking-sty">
-          Indexx Staking
+        <h1 className="padding-b-1x staking-sty font_48x">
+          Staking
         </h1>
       </div>
       <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
@@ -388,7 +392,7 @@ const StakingTop = () => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            alignItems: 'baseline',
+            alignItems: 'flex-start',
             width: '100%',
             background: 'var(--main-body)',
             gap: 5,
@@ -398,7 +402,7 @@ const StakingTop = () => {
           }}
         >
           <Box className="d-flex flex-direction-column" width={'48%'}>
-            <Box className="d-flex" sx={{ gap: 1, mb: 4 }}>
+            <Box className="d-flex" sx={{ gap: 1, mb: 8.7 }}>
               <Button
                 variant="contained"
                 disableTouchRipple
@@ -407,7 +411,7 @@ const StakingTop = () => {
                   backgroundColor: 'var(--primary-color)',
                   borderRadius: '2px',
                   color: '#282828',
-                  height: '40px',
+                  height: '44px',
                   px: 1,
                   textTransform: 'none',
                   fontSize: '16px',
@@ -428,7 +432,7 @@ const StakingTop = () => {
                   borderColor: 'var(--primary-color)',
                   borderRadius: '2px',
                   color: 'var(--primary-color)',
-                  height: '40px',
+                  height: '44px',
                   px: 1,
                   textTransform: 'none',
                   fontSize: '16px',
@@ -505,13 +509,67 @@ const StakingTop = () => {
             </Box>
 
             <Box
-              className="d-flex flex-direction-column"
-              sx={{ mt: 3, pt: 1, borderRadius: '2px' }}
+              className="d-flex flex-direction-column staking-toggle"
+              sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
             >
-              <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
+              <Typography variant="text" fontSize={'18px'} textAlign={'left'} pb={0.4}>
                 Lock-up Period
               </Typography>
-              <FormControl>
+              <ToggleButtonGroup
+                color="primary"
+                value={lockup}
+                exclusive
+                onChange={handleChange}
+                aria-label="Platform"
+                sx={{
+                  width:"100%",
+                  gap:1,
+                  justifyContent:"space-between",
+                }}
+              >
+              <ToggleButton value="6m"
+                disableTouchRipple
+                sx={{
+                    color: 'var(--primary-color)',
+                    borderRadius:"2px",
+                    height: '44px',
+                    width:"49%",
+                    border:"1px solid var(--border-color)",
+                    '&:hover': {
+                        background:"var(--staking-color)",
+                      },
+                    '&.Mui-selected': {
+                      color: '#282828',
+                      background:"#FFB300",
+                      '&:hover': {
+                        background:"#FFB300",
+                      },
+                    }, 
+                    }}
+                >6 Months</ToggleButton>
+
+                <ToggleButton value="1yr" 
+                disableTouchRipple
+                  sx={{
+                    color: 'var(--primary-color)',
+                    borderRadius:"2px",
+                    height: '44px',
+                    width:"49%",
+                    border:"1px solid var(--border-color)",
+                    '&:hover': {
+                        background:"var(--staking-color)",
+                      },
+                    '&.Mui-selected': {
+                      color: '#282828',
+                      background:"#FFB300",
+                      '&:hover': {
+                        background:"#FFB300",
+                      },
+                    },
+                    }}> 1 Year</ToggleButton>
+                
+              </ToggleButtonGroup>
+              {/* <FormControl>
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
@@ -549,7 +607,7 @@ const StakingTop = () => {
 
                   />
                 </RadioGroup>
-              </FormControl>
+              </FormControl> */}
               <Box className="d-flex" sx={{ gap: 3, mt: 1 }}></Box>
             </Box>
 
@@ -606,8 +664,14 @@ const StakingTop = () => {
           </Box>
 
           <Box className="d-flex flex-direction-column" width={'45%'}>
-            <Box className="d-flex" sx={{ gap: 3, mb: 4 }}>
-              <Box
+            <Box className="d-flex" sx={{ gap: 3, mb: 2.5, background:"var(--primary-color)", fontSize:"50px", width:"91%",
+              alignItems:"center",
+              pl:4,
+              py:1
+             }}>
+            APR:15.0%
+
+              {/* <Box
                 sx={{
                   backgroundColor: 'var(--staking-color)',
                   borderRadius: '2px',
@@ -617,8 +681,8 @@ const StakingTop = () => {
                   px: 2,
                 }}
               >
-                APR: 15%
-              </Box>
+                APR:14.03%
+              </Box> */}
               <Box
                 sx={{
                   backgroundColor: 'var(--staking-color)',
@@ -627,6 +691,7 @@ const StakingTop = () => {
                   height: '40px',
                   py: 0.7,
                   px: 2,
+                  ml:4
                 }}
               >
                 <img
@@ -683,7 +748,7 @@ const StakingTop = () => {
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
                   Rewards
                 </Typography>
-                <Box className="d-flex align-items-center" sx={{ mt: 0.7 }}>
+                <Box className="d-flex align-items-center" sx={{ mt: 0.1 }}>
                   <img
                     src={
                       require(`../../assets/token-icons/INEX.png`).default
@@ -701,7 +766,7 @@ const StakingTop = () => {
                       color: '#282828',
                       px: 1,
                       ml: 1,
-                      height: '35px',
+                      height: '44px',
                       borderRadius: '2px',
                     }}
                   >
@@ -718,7 +783,7 @@ const StakingTop = () => {
                   variant="text"
                   fontSize={'18px'}
                   textAlign={'left'}
-                  sx={{ pt: 0.75 }}
+                  sx={{ pt: 0.85 }}
                 >
                   {sixMonthReward}
                 </Typography>
@@ -732,7 +797,7 @@ const StakingTop = () => {
                   variant="text"
                   fontSize={'18px'}
                   textAlign={'left'}
-                  sx={{ pt: 0.75 }}
+                  sx={{ pt: 0.85 }}
                 >
                   {oneYearReward}
                 </Typography>

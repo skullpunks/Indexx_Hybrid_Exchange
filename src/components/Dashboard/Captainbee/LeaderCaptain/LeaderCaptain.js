@@ -22,6 +22,7 @@ import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
+import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { notification } from 'antd';
@@ -219,6 +220,18 @@ const LeaderCaptain = () => {
                             border={'none'}
                           />
                         </div>
+
+                        <img
+                          alt=""
+                          src={bronze}
+                          style={{
+                            position: 'absolute',
+                            bottom: '-25px',
+                            right: '17px',
+                            width: '79px', 
+                            height: '81px',
+                          }}
+                        />
                       </div>
                     </div>
                     <div

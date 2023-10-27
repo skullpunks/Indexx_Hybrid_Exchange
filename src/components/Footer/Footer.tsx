@@ -15,7 +15,7 @@ import personFlipCoin from '../../assets/arts/personFlip.png';
 import indexText_dark from '../../assets/indexx.ai_black.svg';
 import indexText from '../../assets/indexx.ai white.png';
 import indexTextyellow from '../../assets/indexx ai yellow 1.svg';
-import indexTextyellowdark from '../../assets/indexx ai yellow 1.svg';
+import indexTextyellowdark from '../../assets/yellow_dark.svg';
 import arrow from '../../assets/arrow-.svg';
 import plus from '../../assets/arts/plus.svg';
 import './Footer.css';

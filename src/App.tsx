@@ -91,6 +91,8 @@ import Staking from "./components/Staking/Staking";
 import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
 import Bridge from "./components/Bridge/Bridge";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import TeamCaptainDashIndividual from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDashIndividual";
+import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
 
 function App() {
   /*
@@ -150,18 +152,7 @@ function App() {
       <BrowserRouter>
         {/* <Header /> */}
         <ScrollToTop />
-        <HeaderNew />
-        {/* {window.location.pathname.includes("for-honeybee") === true ? 
-        <div className="notif"> 
-        <WarningAmberIcon sx={{fontSize:"18px"}}/>
-
-        {" "}You are currently controlling {window.location.pathname.split('/').pop()}’s Exchange. Any transaction done here will affect their assets!!
-        {" "}
-        <WarningAmberIcon sx={{fontSize:"18px"}}/>
-        
-        </div>
-        : null
-         }  */}
+        <HeaderNew /> 
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />
@@ -178,6 +169,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-sales" element={<CaptainResourceSales />} />
           <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
           <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
