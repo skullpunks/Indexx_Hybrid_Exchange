@@ -28,6 +28,7 @@ import '../CaptainDash.css';
 import BeeTabs from './BeeTabs';
 import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../services/api';
 import { useParams } from 'react-router-dom';
+import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndividual';
 const BeeDash = () => {
   const { id, userType } = useParams();
 
@@ -69,130 +70,134 @@ const BeeDash = () => {
   return (
     <>
       <SubHeader />
-      <div style={{ paddingTop: "220px" }}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-422px" }}>
-        {userType === "CaptainBee" ?  "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" :"Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
-        </div>
-        <div className="hive-container">
-          <div
-            className="d-flex justify-content-between"
-          // style={{ width: '86%', maxWidth: '1140px' }}
-          >
-            <div className="d-flex flex-direction-column align-items-center mt-1">
-              <div className="d-flex  flex-direction-row align-items-center">
-                <div
-                  style={{
-                    width: '193px',
-                    height: '193px',
-                    backgroundImage: `url(${framecapt})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    // border:"none"
-                    marginTop: "-15px"
-                  }}
-                >
-
-
-                  <div className="hexagon">
-                    <img
-                      alt=""
-                      src={captainBeeData?.photoIdFileurl !== undefined ? captainBeeData?.photoIdFileurl : dummy}
-                      width={'63px'}
-                      height={'66px'}
-                      ml={'-6px'}
-                      border={'none'}
-                    />
-                  </div>
-                </div>
-                <div
-                  style={{
-                    width: '104px',
-                    height: '107px',
-                    backgroundImage: `url(${userType === "CaptainBee" ? framecapt : frame})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'end',
-                    // border:"none",
-                    marginBottom: "-4.5px"
-                  }}
-                >
-                  <div className="side-hexagon"
-                    style={{ marginBottom: '8px' }}
-
+      {userType === "HoneyBee" ?
+        (<div style={{ paddingTop: "220px" }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-422px" }}>
+            {userType === "CaptainBee" ? "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" : "Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
+          </div>
+          <div className="hive-container">
+            <div
+              className="d-flex justify-content-between"
+            // style={{ width: '86%', maxWidth: '1140px' }}
+            >
+              <div className="d-flex flex-direction-column align-items-center mt-1">
+                <div className="d-flex  flex-direction-row align-items-center">
+                  <div
+                    style={{
+                      width: '193px',
+                      height: '193px',
+                      backgroundImage: `url(${framecapt})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      // border:"none"
+                      marginTop: "-15px"
+                    }}
                   >
-                    <img
-                      alt=""
-                      src={honeyBeeData?.userFullData?.profilePic !== undefined ? honeyBeeData?.userFullData?.profilePic : (staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                      width={'63px'}
-                      height={'66px'}
-                      ml={'-6px'}
-                      border={'none'}
-                    />
+
+
+                    <div className="hexagon">
+                      <img
+                        alt=""
+                        src={captainBeeData?.photoIdFileurl !== undefined ? captainBeeData?.photoIdFileurl : dummy}
+                        width={'63px'}
+                        height={'66px'}
+                        ml={'-6px'}
+                        border={'none'}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: '104px',
+                      height: '107px',
+                      backgroundImage: `url(${userType === "CaptainBee" ? framecapt : frame})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'end',
+                      // border:"none",
+                      marginBottom: "-4.5px"
+                    }}
+                  >
+                    <div className="side-hexagon"
+                      style={{ marginBottom: '8px' }}
+
+                    >
+                      <img
+                        alt=""
+                        src={honeyBeeData?.userFullData?.profilePic !== undefined ? honeyBeeData?.userFullData?.profilePic : (staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                        width={'63px'}
+                        height={'66px'}
+                        ml={'-6px'}
+                        border={'none'}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="align-items-start lh_32x">
-                <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                {userType === "CaptainBee" ? "Captain Bee": "Honey Bee"} {id}
+                <div className="align-items-start lh_32x">
+                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
+                    {userType === "CaptainBee" ? "Captain Bee" : "Honey Bee"} {id}
+                  </div>
+                  <div className="font_10x mb-3 lh_32x align-items-start">
+                    {userType === "CaptainBee" ? "Captain Bee of Captain" : "Honey Bee of Captain"} {honeyBeeData?.referredUserData?.data2?.Username} Team
+                  </div>
+                  <div className="font_13x d-flex align-items-center ">
+                    {theme === "dark" ?
+                      <img alt="man" src={man_dark} className="me-2" />
+                      :
+                      <img alt="man" src={man} className="me-2" />
+                    }
+                    @{id}
+                  </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={pin_dark} className="me-2" />
+                      :
+                      <img alt="man" src={pin} className="me-2" />
+                    }
+                    {honeyBeeData?.userFullData?.country === undefined ? "NA" : honeyBeeData?.userFullData?.country}
+                  </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={house_dark} className="me-2" />
+                      :
+                      <img alt="man" src={house} className="me-2" />
+                    }
+                    {honeyBeeData?.userFullData?.city === undefined ? "NA" : honeyBeeData?.userFullData?.city}
+                  </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === "dark" ?
+                      <img alt="man" src={clock_dark} className="me-2" />
+                      :
+                      <img alt="man" src={clock} className="me-2" />
+                    }
+                    {honeyBeeData?.formatedAccountCreationDate}
+                  </div>
                 </div>
-                <div className="font_10x mb-3 lh_32x align-items-start">
-                {userType === "CaptainBee" ? "Captain Bee of Captain": "Honey Bee of Captain"} {honeyBeeData?.referredUserData?.data2?.Username} Team
-                </div>
-                <div className="font_13x d-flex align-items-center ">
-                  {theme === "dark" ?
-                    <img alt="man" src={man_dark} className="me-2" />
-                    :
-                    <img alt="man" src={man} className="me-2" />
-                  }
-                  @{id}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={pin_dark} className="me-2" />
-                    :
-                    <img alt="man" src={pin} className="me-2" />
-                  }
-                  {honeyBeeData?.userFullData?.country === undefined ? "NA" : honeyBeeData?.userFullData?.country}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={house_dark} className="me-2" />
-                    :
-                    <img alt="man" src={house} className="me-2" />
-                  }
-                  {honeyBeeData?.userFullData?.city === undefined ? "NA" : honeyBeeData?.userFullData?.city}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={clock_dark} className="me-2" />
-                    :
-                    <img alt="man" src={clock} className="me-2" />
-                  }
-                  {honeyBeeData?.formatedAccountCreationDate}
-                </div>
-              </div>
 
-            </div>
-            <div className="honeybee-container">
-              <BeeTabs honeyBeeEmail={honeyBeeEmail} />
+              </div>
+              <div className="honeybee-container">
+                <BeeTabs honeyBeeEmail={honeyBeeEmail} />
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div>)
+        :
+        <TeamCaptainDashIndividual />
+      }
     </>
   );
 };

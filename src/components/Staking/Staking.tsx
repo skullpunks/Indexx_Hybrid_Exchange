@@ -14,9 +14,9 @@ const Staking = () => {
   return (
     <div>
 
-        <PowerPackHeader />
-    <div className="bs_wallet" style={{paddingTop:"200px"}}>
-      {/* <div className='d-flex bs_wallet_top'>
+      <PowerPackHeader />
+      <div className="bs_wallet" style={{ paddingTop: "200px" }}>
+        {/* <div className='d-flex bs_wallet_top'>
                 <div>
                     <Link to="" className='font_15x text-white' ><CheckCircleOutlined className='padding-r-2x margin-r-0_5x' />Create account</Link>
                 </div>
@@ -25,15 +25,15 @@ const Staking = () => {
                 </div>
             </div> */}
 
-      <div className="scan-container d-flex flex-direction-column card large_card orange pb-0">
-        <StakingTop />
+        <div className="scan-container d-flex flex-direction-column card large_card orange pb-0">
+          <StakingTop />
 
-        <div className="width-100 bs_wallet_table">
-          <StakingTable />
+          <div className="width-100 bs_wallet_table">
+            <StakingTable />
+          </div>
         </div>
+        <Footer footerArt="flipWoman" />
       </div>
-      <Footer footerArt="flipWoman" />
-    </div>
     </div>
 
   );

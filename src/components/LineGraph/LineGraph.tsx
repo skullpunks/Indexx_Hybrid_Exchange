@@ -167,7 +167,8 @@ const LineGraph = (props: any) => {
           <br></br>
 
           <AreaChart
-            margin={{ left: -60, right: -19, top: 10 }}
+            // margin={{ left: -60, right: -19, top: 10 }}
+            margin={{ left: -5, right: -19, top: 10 }}
             className={styles.graphBackground}
             width={width}
             height={height}
@@ -201,6 +202,7 @@ const LineGraph = (props: any) => {
                 tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
+                tickMargin={10} 
                 minTickGap={92}
               />
             ) : (
@@ -214,7 +216,8 @@ const LineGraph = (props: any) => {
                 tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
-                minTickGap={90}
+                tickMargin={10}
+                minTickGap={92}
               />
             )}
             <YAxis
@@ -222,9 +225,9 @@ const LineGraph = (props: any) => {
               padding={{ top: 20 }}
               tick={{ fill: '#5f5f5f' }}
               domain={['auto', 'auto']}
-              hide={true}
+              // remove this line or set it to false
+              // hide={true} 
               minTickGap={90}
-
             />
             {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}

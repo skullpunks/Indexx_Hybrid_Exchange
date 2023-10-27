@@ -55,11 +55,23 @@ import MetaStockTokenMarket from '../MarketAbout/MetaStockTokenMarket';
 import PespiCoStockTokenMarket from '../MarketAbout/PespiCoStockTokenMarket';
 import NvidiaStockTokenMarket from '../MarketAbout/NividaStockTokenMarket';
 import SNP500StockTokenMarket from '../MarketAbout/SNP500StockTokenMarket';
+import SolanaMarket from "../MarketAbout/SolanaMarket";
+import TronMarket from "../MarketAbout/TronMarket";
+import ChainLinkMarket from '../MarketAbout/ChainLinkMarket';
+import DaiMarket from '../MarketAbout/DaiMarket';
+import ToncoinMarket from '../MarketAbout/ToncoinMarket';
+import ShibMarket from '../MarketAbout/ShibMarket';
 import DogecoinMarket from '../MarketAbout/DogecoinMarket';
 import RippleMarket from '../MarketAbout/RippleMarket';
 import USDCMarket from '../MarketAbout/USDCMarket';
 import USDTMarket from '../MarketAbout/USDTMarket';
 import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
+import SolanaGraph from '../Graphs/SolanaGraph';
+import TronGraph from '../Graphs/TronGraph';
+import ChainLinkGraph from '../Graphs/ChainLinkGraph';
+import DaiGraph from '../Graphs/DaiGraph';
+import ToncoinGraph from '../Graphs/ToncoinGraph';
+import ShibGraph from '../Graphs/ShibGraph';
 import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
 import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
 import IndexxMETAGraph from '../Graphs/IndexxMETAGraph';
@@ -87,6 +99,12 @@ let graphs: any = {
   RippleGraph: RippleGraph,
   USDCGraph: USDCGraph,
   USDTGraph: USDTGraph,
+  TronGraph: TronGraph,
+  SolanaGraph: SolanaGraph,
+  ChainLinkGraph: ChainLinkGraph,
+  DaiGraph: DaiGraph,
+  ToncoinGraph: ToncoinGraph,
+  ShibGraph: ShibGraph,
   LitecoinGraph: LitecoinGraph,
   IndexxExchange: IndexxExchangeGraph,
   IndexxPhoenixGraph: IndexxPhoenixGraph,
@@ -114,6 +132,12 @@ let markets: any = {
   DogecoinGraph: DogecoinMarket,
   USDCGraph: USDCMarket,
   USDTGraph: USDTMarket,
+  TronGraph: TronMarket,
+  SolanaGraph: SolanaMarket,
+  ChainLinkGraph: ChainLinkMarket,
+  DaiGraph: DaiMarket,
+  ToncoinGraph: ToncoinMarket,
+  ShibGraph: ShibMarket,
   LitecoinGraph: LitecoinMarket,
   IndexxExchange: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,

@@ -44,10 +44,10 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseURL = 'https://test.indexx.ai';
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
-  baseWalletURL = 'https://wallet.indexx.ai';
+  baseWalletURL = 'https://test.wallet.indexx.ai';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
-  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
+  baseMktplaceURL = 'https://test.xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
 }
 
@@ -998,6 +998,10 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'USDT') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'SOL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TRX') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BTC') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'ETH') {
@@ -1184,6 +1188,30 @@ export const redeemStockCoupon = async (voucher: string, email: string) => {
     const result = await API.post(`/api/v1/xnft/giftcards/redeemStockCoupon`, {
       voucher: voucher,
       email: email,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const stakeCoin = async (
+  email: string,
+  amount: number,
+  coin: string,
+  type: string,
+  percentage: number
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/stakecoin`, {
+      email: email,
+      amount: amount,
+      coin: coin,
+      type: type,
+      percentage: percentage,
     });
     return result.data;
   } catch (err: any) {

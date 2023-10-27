@@ -52,8 +52,10 @@ import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { useParams } from 'react-router-dom';
 
 const TeamCaptainDashIndividual = () => {
+  const { id } = useParams();
   const [userType, setUserType] = useState("");
   const [staticsData, setStaticsData] = useState();
   const [powerPackPhoto, setPowerPackPhoto] = useState();
@@ -65,12 +67,11 @@ const TeamCaptainDashIndividual = () => {
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
     const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
+      getCaptainBeeStatics(id).then((data) => {
         console.log(data?.data);
         setStaticsData(data.data);
         if (data?.data?.powerPackData) {

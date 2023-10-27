@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
 import { decodeJWT, getUserWallets } from '../../services/api';
 import { Button } from 'antd';
+import BSStakingHistoryTable from '../BSStakingHistory/BSStakingHistoryTable';
 
 interface DataType {
   key: React.Key;
@@ -225,13 +226,13 @@ const getCurrentDate = (): string => {
           key="1"
           className="padding-2x font_30x"
         >
-          <div className="border-b-1x margin-b-2x">
+          {/* <div className="border-b-1x margin-b-2x"> */}
             {/* <div className='checkbox-container' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div> */}
-            <Table
+            {/* <Table
               className="custom_table"
               columns={columns}
               dataSource={getData(current, pageSize)}
@@ -242,7 +243,8 @@ const getCurrentDate = (): string => {
               current={current}
               onChange={setCurrent}
             />
-          </div>
+          </div> */}
+          <BSStakingHistoryTable />
         </Tabs.TabPane>
       </Tabs>
     </div>

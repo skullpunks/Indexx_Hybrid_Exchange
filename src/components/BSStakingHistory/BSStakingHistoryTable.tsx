@@ -15,6 +15,7 @@ interface DataType {
     rewardAmount: number;
     finalAmount: number;
     coin: string;
+    rewardCoin: string;
     email: string;
     percentage: number;
     startDate: string;
@@ -79,7 +80,7 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'rewardAmount',
             render: (text, record) => (
                 <span>
-                    {text} {record.coin}
+                    {text} {record.rewardCoin}
                 </span>
             ),
             responsive: ['sm'],
@@ -92,7 +93,7 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'finalAmount',
             render: (text, record) => (
                 <span>
-                    {text} {record?.coin}
+                    {text} {record?.rewardCoin}
                 </span>
             ),
             responsive: ['sm'],

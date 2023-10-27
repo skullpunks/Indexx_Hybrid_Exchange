@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // import comingSoon from "../../assets/coming_soon.png";
 import {
   decodeJWT,
   getUserWallets,
   getCoinPriceByName,
+  getHoneyBeeDataByUsername,
+  getWalletBalance,
+  stakeCoin,
 } from '../../services/api';
 import {
   Box,
@@ -16,26 +19,48 @@ import {
 } from '@mui/material';
 import iUSD from '../../assets/token-icons/iUSD+ new2 3.svg';
 import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
+import bnb from '../../assets/token-icons/BNB.png';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import tokensList from '../../utils/Tokens.json';
+import OpenNotification from '../../components/OpenNotification/OpenNotification';
 
 const StakingTop = () => {
   const navigate = useNavigate();
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   let access_token = String(localStorage.getItem('access_token'));
   let decoded = decodeJWT(access_token);
-
+  const { id } = useParams();
   const [stakingtype, setStakingtype] = useState('token');
-  const [token, setToken] = useState('iUSD');
+  const [token, setToken] = useState(tokensList?.[0]?.title || 'INEX');
+  const [selectedToken, setSelectedToken] = useState();
   const [calcAmt, setcalcAmt] = useState('');
   const [amt, setAmt] = useState('');
+  const [type, setType] = useState('');
+  const [isVisible, setIsVisible] = useState(true);
+  const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
+  const [honeyBeeId, setHoneyBeeId] = useState('');
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
+  const [userBalance, setUserBalance] = useState(0);
+  const [sixMonthReward, setSixMonthReward] = useState(0);
+  const [oneYearReward, setOneYearReward] = useState(0);
+  const [rewards, setRewards] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
+  const [error, setError] = useState('');
+  const [loadings, setLoadings] = useState(false);
 
   useEffect(() => {
     getAllUserWallet();
-  });
+    if (id) {
+      setHoneyBeeId(String(id));
+      getHoneyBeeDataByUsername(String(id)).then((data) => {
+        setHoneyBeeEmail(data.data.userFullData?.email);
+      });
+    }
+  }, []);
 
   const getAllUserWallet = async () => {
     let userWallets = await getUserWallets(decoded.email);
@@ -53,10 +78,171 @@ const StakingTop = () => {
     setTotalBalanceInUSD(totalBalInUSD);
   };
 
-  const [isVisible, setIsVisible] = useState(true);
-
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
+  };
+
+  const getCoinBalance = async (value) => {
+    if (honeyBeeId && honeyBeeEmail) {
+      const res = await getWalletBalance(honeyBeeEmail, value);
+      if (res.status === 200) {
+        setUserBalance(res.data.balance);
+        let inputAmt = amt;
+        if (inputAmt < 50) {
+          setError('Minimum staking amount must be at least 50.');
+        } else if (inputAmt > res.data.balance) {
+          setError(
+            `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
+          );
+        } else {
+          setError('');
+
+          if (type === 'Long') {
+            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+          } else if (type === 'Short') {
+            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+          }
+        }
+      } else {
+        setUserBalance(0);
+        let inputAmt = amt;
+        if (inputAmt < 50) {
+          setError('Minimum staking amount must be at least 50.');
+        } else if (inputAmt > 0) {
+          setError(
+            `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
+          );
+        } else {
+          setError('');
+
+          if (type === 'Long') {
+            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+          } else if (type === 'Short') {
+            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+          }
+        }
+      }
+    } else {
+      const res = await getWalletBalance(decoded.email, value);
+      if (res.status === 200) {
+        setUserBalance(res.data.balance);
+        let inputAmt = amt;
+        if (inputAmt < 50) {
+          setError('Minimum staking amount must be at least 50.');
+        } else if (inputAmt > res.data.balance) {
+          setError(
+            `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
+          );
+        } else {
+          setError('');
+
+          if (type === 'Long') {
+            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+          } else if (type === 'Short') {
+            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+          }
+        }
+      } else {
+        setUserBalance(0);
+        let inputAmt = amt;
+        if (inputAmt < 50) {
+          setError('Minimum staking amount must be at least 50.');
+        } else if (inputAmt > 0) {
+          setError(
+            `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
+          );
+        } else {
+          setError('');
+
+          if (type === 'Long') {
+            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+          } else if (type === 'Short') {
+            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+          }
+        }
+      }
+    }
+  };
+
+  const submitStake = async () => {
+    try {
+      setLoadings(true);
+      let percentage = type === "Short" ? selectedToken.stakingPercentage6months : selectedToken.stakingPercentage1year
+      console.log(
+        'decoded.email, amt, token, type',
+        decoded.email,
+        amt,
+        token,
+        type,
+        percentage
+      );
+      let res = await stakeCoin(decoded.email, amt, token, type, percentage);
+      if(res.status === 200) {
+        setLoadings(false);
+        OpenNotification('success', `Your ${token} token staking successfully`);
+      }
+    } catch (err) {
+      setLoadings(false);
+      OpenNotification('error', 'Failed to updated. Please try again.');
+      console.log('error', err);
+    }
+  };
+
+  useEffect(() => {
+    let filteredTokens = [];
+    if (stakingtype === 'token') {
+      filteredTokens = tokensList?.filter((token) => !token.isStock);
+    } else if (stakingtype === 'stock-token') {
+      filteredTokens = tokensList?.filter((token) => token.isStock);
+    }
+
+    setInitialTokens(filteredTokens);
+
+    // Set the default token (the first token from the filtered list)
+    if (filteredTokens.length > 0) {
+      setToken(filteredTokens[0].title);
+      setSelectedToken(filteredTokens[0]);
+      getCoinBalance(filteredTokens[0].title);
+      let inputAmt = amt;
+      if (inputAmt < 50) {
+        setError('Minimum staking amount must be at least 50.');
+      } else if (inputAmt > userBalance) {
+        setError(
+          `Insufficient balance available to stake. Please buy ${filteredTokens[0].title} or deposit ${filteredTokens[0].title}.`
+        );
+      } else {
+        setError('');
+
+        if (type === 'Long') {
+          setRewards(inputAmt * filteredTokens[0].stakingPercentage1year);
+          setFinalAmount(inputAmt * (1 + filteredTokens[0].stakingPercentage1year));
+        } else if (type === 'Short') {
+          setRewards(inputAmt * filteredTokens[0].stakingPercentage6months);
+          setFinalAmount(inputAmt * (1 + filteredTokens[0].stakingPercentage6months));
+        }
+      }
+    } else {
+      setToken(''); // No tokens available for the selected type, so set an empty value.
+    }
+  }, [stakingtype]); // The useEffect depends on stakingtype. Whenever it changes, this effect will run.
+
+  const handleChange = (event) => {
+    setType(event.target.value);
+    if (event.target.value === 'Long') {
+      setRewards(amt *selectedToken.stakingPercentage1year);
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year));
+    } else if (event.target.value === 'Short') {
+      setRewards(amt * selectedToken.stakingPercentage6months);
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months));
+    }
   };
 
   return (
@@ -142,6 +328,28 @@ const StakingTop = () => {
             value={token}
             onChange={(e) => {
               setToken(e.target.value);
+              let selectedCoin = initialTokens.find(x=> x.title === e.target.value);
+              setSelectedToken(selectedCoin); 
+              getCoinBalance(e.target.value);
+              let inputAmt = amt;
+              console.log('amount', inputAmt);
+              if (inputAmt < 50) {
+                setError('Minimum staking amount must be at least 50.');
+              } else if (inputAmt > userBalance) {
+                setError(
+                  `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
+                );
+              } else {
+                setError('');
+
+                if (type === 'Long') {
+                  setRewards(inputAmt * selectedCoin.stakingPercentage1year);
+                  setFinalAmount(inputAmt * (1 + selectedCoin.stakingPercentage1year));
+                } else if (type === 'Short') {
+                  setRewards(inputAmt * selectedCoin.stakingPercentage6months);
+                  setFinalAmount(inputAmt * (1 + selectedCoin.stakingPercentage6months));
+                }
+              }
             }}
             variant="standard"
             //   InputLabelProps={{ shrink: true }}
@@ -158,18 +366,21 @@ const StakingTop = () => {
             size="small"
             disableUnderline
           >
-            <MenuItem key="iUSD" value="iUSD">
-              <>
+            {initialTokens.map((token) => (
+              <MenuItem key={token.title} value={token.title}>
                 <img
-                  src={iUSD}
-                  alt="iUSD"
+                  src={
+                    require(`../../assets/token-icons/${token.image}.png`)
+                      .default
+                  }
+                  alt={token.title}
                   width={30}
                   height={30}
                   style={{ marginRight: '8px' }}
                 />
-                iUSD+
-              </>
-            </MenuItem>
+                {token.title}
+              </MenuItem>
+            ))}
           </Select>
         </Box>
         <Box
@@ -191,6 +402,7 @@ const StakingTop = () => {
               <Button
                 variant="contained"
                 disableTouchRipple
+                onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}
                 sx={{
                   backgroundColor: 'var(--primary-color)',
                   borderRadius: '2px',
@@ -211,6 +423,7 @@ const StakingTop = () => {
               <Button
                 variant="outlined"
                 disableTouchRipple
+                onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}
                 sx={{
                   borderColor: 'var(--primary-color)',
                   borderRadius: '2px',
@@ -242,7 +455,7 @@ const StakingTop = () => {
               }}
             >
               <Typography variant="text" fontSize={'25px'} textAlign={'left'}>
-                Balance: 0
+                Balance: {userBalance}
               </Typography>
               <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
                 <TextField
@@ -253,18 +466,40 @@ const StakingTop = () => {
                   size="small" // Make the input box smaller
                   value={amt}
                   onChange={(e) => {
-                    setAmt(e.target.value);
+                    const inputAmt = e.target.value;
+                    setAmt(inputAmt);
+                    if (inputAmt < 50) {
+                      setError('Minimum staking amount must be at least 50.');
+                    } else if (inputAmt > userBalance) {
+                      setError(
+                        `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
+                      );
+                    } else {
+                      setError('');
+
+                      if (type === 'Long') {
+                        setRewards(inputAmt * selectedToken?.stakingPercentage1year ?? 0);
+                        setFinalAmount(inputAmt * (1 + selectedToken?.stakingPercentage1year ?? 0));
+                      } else if (type === 'Short') {
+                        setRewards(inputAmt * selectedToken?.stakingPercentage1year ?? 0);
+                        setFinalAmount(inputAmt * (1 + selectedToken?.stakingPercentage1year ?? 0));
+                      }
+                    }
                   }}
+                  error={!!error}
+                  helperText={error}
                 />
                 <Box>
                   <img
-                    src={iUSD}
-                    alt="iUSD"
+                    src={
+                      require(`../../assets/token-icons/${token}.png`).default
+                    }
+                    alt={token}
                     width={30}
                     height={30}
                     style={{ marginRight: '8px' }}
                   />
-                  iUSD+
+                  {token}
                 </Box>
               </Box>
             </Box>
@@ -281,9 +516,11 @@ const StakingTop = () => {
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
+                  onChange={handleChange}
+                  value={type}
                 >
                   <FormControlLabel
-                    value="1yr"
+                    value="Long"
                     control={
                       <Radio
                         sx={{
@@ -294,10 +531,10 @@ const StakingTop = () => {
                         }}
                       />
                     }
-                    label="1 Year"
+                    label={`1 Year (${selectedToken?.stakingPercentage1year ?? 0}%)`}
                   />
                   <FormControlLabel
-                    value="6m"
+                    value="Short"
                     control={
                       <Radio
                         sx={{
@@ -308,7 +545,8 @@ const StakingTop = () => {
                         }}
                       />
                     }
-                    label="6 Months"
+                    label={`6 Months (${selectedToken?.stakingPercentage6months ?? 0}%)`}
+
                   />
                 </RadioGroup>
               </FormControl>
@@ -316,6 +554,22 @@ const StakingTop = () => {
             </Box>
 
             <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
+              <Box className="d-flex justify-content-between">
+                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
+                  Rewards you will receive
+                </Typography>
+                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
+                  {rewards}
+                </Typography>
+              </Box>
+              <Box className="d-flex justify-content-between">
+                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
+                  Final Amount you will receive
+                </Typography>
+                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
+                  {finalAmount}
+                </Typography>
+              </Box>
               <Box className="d-flex justify-content-between">
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
                   Transaction Cost
@@ -327,6 +581,9 @@ const StakingTop = () => {
               <Button
                 variant="contained"
                 disableTouchRipple
+                disabled={!!error || !amt || !type}
+                onClick={submitStake}
+                loading={loadings}
                 sx={{
                   backgroundColor: 'var(--primary-color)',
                   borderRadius: '2px',
@@ -343,7 +600,7 @@ const StakingTop = () => {
                   },
                 }}
               >
-                Deposit
+                Stake
               </Button>
             </Box>
           </Box>
@@ -360,7 +617,7 @@ const StakingTop = () => {
                   px: 2,
                 }}
               >
-                APR:14.03%
+                APR: 15%
               </Box>
               <Box
                 sx={{
@@ -373,13 +630,13 @@ const StakingTop = () => {
                 }}
               >
                 <img
-                  src={eth}
-                  alt="ETH"
+                  src={bnb}
+                  alt="BSC"
                   width={30}
                   height={30}
                   style={{ marginRight: '8px' }}
                 />
-                ETH Mainnet
+                BSC Mainnet
               </Box>
             </Box>
 
@@ -402,17 +659,21 @@ const StakingTop = () => {
                   value={calcAmt}
                   onChange={(e) => {
                     setcalcAmt(e.target.value);
+                    setSixMonthReward(Number(e.target.value) * selectedToken?.stakingPercentage6months ?? 0);
+                    setOneYearReward(Number(e.target.value) * selectedToken?.stakingPercentage1year ?? 0);
                   }}
                 />
                 <Box>
                   <img
-                    src={iUSD}
-                    alt="iUSD"
+                    src={
+                      require(`../../assets/token-icons/${token}.png`).default
+                    }
+                    alt={token}
                     width={30}
                     height={30}
                     style={{ marginRight: '8px' }}
                   />
-                  iUSD+
+                  {token}
                 </Box>
               </Box>
             </Box>
@@ -420,22 +681,24 @@ const StakingTop = () => {
             <Box className="d-flex" sx={{ gap: 7, mt: 3, pt: 1 }}>
               <Box className="d-flex flex-direction-column">
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Rewards (by $0)
+                  Rewards
                 </Typography>
                 <Box className="d-flex align-items-center" sx={{ mt: 0.7 }}>
                   <img
-                    src={iUSD}
-                    alt="iUSD"
+                    src={
+                      require(`../../assets/token-icons/INEX.png`).default
+                    }
+                    alt={"INEX"}
                     width={30}
                     height={30}
                     style={{ marginRight: '8px' }}
                   />
-                  iUSD+
+                  {"INEX"}
                   <Box
                     className="d-flex align-items-center"
                     sx={{
                       backgroundColor: 'var(--primary-color)',
-                      color:'#282828',
+                      color: '#282828',
                       px: 1,
                       ml: 1,
                       height: '35px',
@@ -449,7 +712,7 @@ const StakingTop = () => {
 
               <Box className="d-flex flex-direction-column">
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Per week
+                  6 months ({selectedToken?.stakingPercentage6months}%)
                 </Typography>
                 <Typography
                   variant="text"
@@ -457,13 +720,13 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.75 }}
                 >
-                  0.05%
+                  {sixMonthReward}
                 </Typography>
               </Box>
 
               <Box className="d-flex flex-direction-column">
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Per month
+                  1 year ({selectedToken?.stakingPercentage1year}%)
                 </Typography>
                 <Typography
                   variant="text"
@@ -471,7 +734,7 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.75 }}
                 >
-                  0.5%
+                  {oneYearReward}
                 </Typography>
               </Box>
             </Box>

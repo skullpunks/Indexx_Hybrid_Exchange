@@ -14,8 +14,8 @@ import OpenNotification from '../../OpenNotification/OpenNotification';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 AWS.config.update({
-  accessKeyId: 'AKIA5FBFFKSZD76C64G6',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIA5FBFFKSZP5B37GOS',
+  secretAccessKey: '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',
   region: REGION,
 });
 var s3 = new AWS.S3();

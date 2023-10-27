@@ -310,6 +310,7 @@ export const BSDepositCryptoSelect = () => {
               .filter(
                 (x: any) =>
                   x.title === 'BNB' ||
+                  x.title === 'BTC' ||
                   x.title === 'ETH' ||
                   x.title === 'IN500' ||
                   x.title === 'INEX' ||

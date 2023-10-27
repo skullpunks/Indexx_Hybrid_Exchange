@@ -94,5 +94,29 @@
   {
     "address": "0x55d398326f99059ff775485246999027b3197955",
     "graph": "USDTGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197944",
+    "graph": "TronGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197933",
+    "graph": "SolanaGraph"
+  },
+  {
+    "address": "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    "graph": "ChainLinkGraph"
+  },
+  {
+    "address": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
+    "graph": "DaiGraph"
+  },
+  {
+    "address": "0x2859e4544C4bB03966803b044A93563Bd2D0DD4D",
+    "graph": "ShibGraph"
+  },
+  {
+    "address": "0x76A797A59Ba2C17726896976B7B3747BfD1d220f",
+    "graph": "ToncoinGraph"
   }
 ]

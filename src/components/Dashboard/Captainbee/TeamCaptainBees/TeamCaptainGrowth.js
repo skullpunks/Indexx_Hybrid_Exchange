@@ -8,8 +8,10 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
 import CommissionTable from '../CommissionTable';
+import { useParams } from 'react-router-dom';
 
 const TeamCaptainGrowth = () => {
+  const { id } = useParams();
     const [platform, setPlatform] = useState('Exchange');
     const [Order, setOrder] = useState('buysell');
     const [selectedDate, setSelectedDate] = useState('aug-sept');
@@ -47,26 +49,30 @@ const TeamCaptainGrowth = () => {
       'Page G',
     ];
 
+
+    const [powerPackPhoto, setPowerPackPhoto] = useState();
+    const [honeyBeeData, setHoneyBeeData] = useState();
+    const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
+    const [captainBeeData, setRefferedUserData] = useState();
+    const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
+    const [captainbeeOrders, setCaptainbeeOrders] = useState();
+    const [captainbeesUsers, setCaptainbeeUsers] = useState();
+
     useEffect(() => {
       const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
       const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-      
+  
+      setUserType(userType);
       if (userType === "CaptainBee") {
-        getCaptainBeeStatics(username).then((data) => {
-          
+        getCaptainBeeStatics(id).then((data) => {
           setStaticsData(data.data);
         });
+        console.log("I am if")
       } else {
-        
-        getHoneyUserDetails(user).then((data) => {
-          
-          setUserData(data.data?._doc);
-          setEmail(data.data?._doc?.email);
-        })
+        console.log("I am else")
+  
       }
     }, [])
-
   return (
     <div style={{paddingTop:"10px"}}>
       <Box
