@@ -29,10 +29,11 @@ import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/disc
 
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
+import bronze from "../../../assets/Rank Badges/1 bronze.svg";
 import { PackData } from '../../PowerPack/PackData';
 // import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 
-import { LineChart } from '@mui/x-charts/LineChart';
+// import { LineChart } from '@mui/x-charts/LineChart';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -63,29 +64,29 @@ const CaptainDash = () => {
   const [OrderCapt, setOrderCapt] = useState('buysell');
   const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
   const [userType, setUserType] = useState("");
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  // const xLabels = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
-  const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  const xLabelsCapt = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
+  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
+  // const xLabelsCapt = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
   const [staticsData, setStaticsData] = useState();
 
@@ -174,6 +175,18 @@ const CaptainDash = () => {
                         border={'none'}
                       />
                     </div>
+
+                    <img
+                      alt=""
+                      src={bronze}
+                      style={{
+                        position: 'absolute',
+                        bottom: '-25px',
+                        right: '17px',
+                        width: '79px', 
+                        height: '81px',
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">

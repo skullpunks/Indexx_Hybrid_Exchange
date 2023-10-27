@@ -19,12 +19,6 @@ import { useMediaQuery} from '@mui/material'
 
 
 const TabExample = ({ selectedTab, handleTabChange }) => {
-  // const [selectedTab, setSelectedTab] = useState(0);
-
-  // const handleTabChange = (event, newValue) => {
-  //   setSelectedTab(newValue);
-  // };
-
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
@@ -36,6 +30,9 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
     const handleStorageChange = (event) => {
       console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
+      if(window.location.pathname.includes("for-honeybee")){
+        setTheme("light")
+      }
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -45,20 +42,20 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
     };
   }, []);
 
+  useEffect(() => {
+      if(window.location.pathname.includes("for-honeybee")){
+        setTheme("light")
+      }
+    },[]);
+
   console.log(selectedTab);
 
-  // const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
   return (
     <div
       style={{
-        position: 'fixed',
-        top: `${isMobile ? '60px' : '90px'}`,
-        width: '100%',
-        zIndex: 999,
-        background: 'var(--body_background)',
-        height: '90px',
+        top: `${isMobile ? '60px' : '90px'}`,        
       }}
-      className="ext-tabs"
+      className={window.location.pathname.includes("for-honeybee") === true ? "other-tabs" :"ext-tabs"}
     >
       <Tabs
         value={selectedTab}
@@ -68,21 +65,21 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         style={{marginTop:"6px"}}
       >
         <Tab
-          label="All"
+          label="Buy Crypto"
           icon=
             {theme === "dark" ? 
               <img
                 src={all_white}
                 alt="Home"
                 width={'40px'}
-                style={{ marginBottom: 0 }}
+                style={{ marginBottom: 10 }}
               />
             :
               <img
                 src={all}
                 alt="Home"
                 width={'40px'}
-                style={{ marginBottom: 0 }}
+                style={{ marginBottom: 10 }}
               />
             }
           
@@ -96,14 +93,14 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
               src={token_white}
               alt="Home"
               width={'42px'}
-              style={{ marginBottom: 0 }}
+              style={{ marginBottom: 10 }}
             />
             :
             <img
               src={token}
               alt="Home"
               width={'42px'}
-              style={{ marginBottom: 0 }}
+              style={{ marginBottom: 10 }}
             />
           }
           className='tab-format'
@@ -113,12 +110,12 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           label="Stock Tokens"
           icon={
             theme === "dark" ? 
-            <img src={stock_white} alt="Home" width={'45px'} 
-          style={{ marginBottom: 6, marginTop:6}}
+            <img src={stock_white} alt="Home" width={'50px'} 
+          style={{ marginBottom: 13, marginTop:6}}
           />
           :
-          <img src={stock} alt="Home" width={'45px'} 
-          style={{ marginBottom: 6, marginTop:6}}
+          <img src={stock} alt="Home" width={'50px'} 
+          style={{ marginBottom: 13, marginTop:6}}
           />}
           className='tab-format'
         />
@@ -130,14 +127,14 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
                 src={power_white}
                 alt="Home"
                 width={'63px'}
-                style={{ marginBottom: "1.2px" }}
+                style={{ marginBottom: "11px" }}
               />
             :
             <img
               src={power}
               alt="Home"
               width={'63px'}
-              style={{ marginBottom: "1.2px" }}
+              style={{ marginBottom: "11px" }}
             />
           }
           component={Link}
@@ -151,15 +148,15 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
               <img
                 src={stack_white}
                 alt="Home"
-                width={'40px'}
-                style={{ marginBottom: "4px" }}
+                width={'45px'}
+                style={{ marginBottom: "10px" }}
               />
             :
             <img
               src={stack}
               alt="Home"
-              width={'40px'}
-              style={{ marginBottom: "4px" }}
+              width={'45px'}
+              style={{ marginBottom: "10px" }}
             />
           }
           component={Link}

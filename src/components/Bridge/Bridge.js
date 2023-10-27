@@ -1,13 +1,12 @@
 import { Box } from '@mui/material'
 import React, {useState, useEffect} from 'react'
 import wallet from "../../assets/Bridge/Wallet.png"
-import walletlogo from "../../assets/Bridge/Wallet logo Light 2.png"
 import hive_exch from "../../assets/Bridge/hive-exchange.png"
-import hive_exchlogo from "../../assets/Bridge/hive-exch logo.png"
-import academy from "../../assets/Bridge/academy.png"
-import academylogo from "../../assets/Bridge/acad-logo.png"
+import academy from "../../assets/Bridge/xacademy for LM.svg"
+import academy_dark from "../../assets/Bridge/xacademy for DM.svg"
+import academylogo from "../../assets/Bridge/logo (1) (1).png"
+import academylogo_dark from "../../assets/Bridge/logo (1) (2).png"
 import exchange from "../../assets/Bridge/exchange.png"
-import exchangelogo from "../../assets/Bridge/exch-logo.png"
 import { baseAcademyUrl, baseWalletURL} from '../../services/api';
 
 const Bridge = () => {
@@ -17,6 +16,23 @@ const Bridge = () => {
       const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
   
     }, [])
+
+    const [theme, setTheme] = useState(
+      localStorage.getItem('selectedTheme') || "light"
+    );
+  
+    useEffect(() => {
+      const handleStorageChange = (event) => {
+        console.log(event);
+        setTheme(event.currentTarget.localStorage.selectedTheme);
+      };
+  
+      window.addEventListener('storage', handleStorageChange);
+      
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+      };
+    }, []);
 
     const handleAcad = () => {
       window.location.href = `${baseAcademyUrl}`;
@@ -38,15 +54,27 @@ const Bridge = () => {
         }}>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
             <img src={wallet} alt='' style={{width:"70px"}} onClick={handlewallet}/>
-            <img src={walletlogo} alt=''  style={{marginTop:"40px"}}/>
+            <div className='fw-bold font_20x' style={{marginTop:"40px"}}>
+            Wallet 
+            </div>
         </Box>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
             <img src={userLogged === "normal" ? exchange : hive_exch} alt='' style={{width:"200px"}}/>
-            <img src={userLogged === "normal" ? exchangelogo : hive_exchlogo} alt='' style={{marginTop:"20px"}}/>
+            <div className='fw-bold font_20x' style={{marginTop:"20px"}}>
+            {userLogged === "normal" ? "Indexx Exchange" : "Hive Exchange"} 
+            </div>
         </Box>
         <Box className="d-flex flex-direction-column justify-content-center align-items-center">
+            {theme === "dark" ?
+            <img src={academy_dark} alt=''  style={{width:"70px"}} onClick={handleAcad}/>
+              :
             <img src={academy} alt=''  style={{width:"70px"}} onClick={handleAcad}/>
-            <img src={academylogo} alt=''  style={{marginTop:"50px"}}/>
+            }
+            {theme === "dark" ?
+            <img src={academylogo_dark} alt=''  style={{marginTop:"50px", height:"29px"}}/>
+              :
+              <img src={academylogo} alt=''  style={{marginTop:"50px", height:"29px"}}/>
+            }
         </Box>
         </Box>
     </div>

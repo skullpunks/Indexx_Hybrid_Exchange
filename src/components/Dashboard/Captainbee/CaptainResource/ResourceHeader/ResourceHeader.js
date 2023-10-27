@@ -2,9 +2,15 @@ import React, {useEffect, useState} from 'react'
 // import acc from "../../../../../assets/hive-dashboard/resource-header/acc 1.svg";
 // import affiliate from "../../../../../assets/hive-dashboard/resource-header/affiliate icon 2.svg";
 import hammer from "../../../../../assets/hive-dashboard/resource-header/hfhfhf 1.svg";
-import sales from "../../../../../assets/hive-dashboard/resource-header/megaphone 1.svg";
+import mkt from "../../../../../assets/hive-dashboard/resource-header/megaphone 1.svg";
 import hammer_dark from "../../../../../assets/hive-dashboard/resource-header/Legal.svg";
-import sales_dark from "../../../../../assets/hive-dashboard/resource-header/Marketing.svg";
+import mkt_dark from "../../../../../assets/hive-dashboard/resource-header/Marketing.svg";
+import sales from "../../../../../assets/hive-dashboard/resource-header/sales icon 1.svg";
+import sales_dark from "../../../../../assets/hive-dashboard/resource-header/sales icon for DM.svg";
+import technical from "../../../../../assets/hive-dashboard/resource-header/gear01 1.svg";
+import technical_dark from "../../../../../assets/hive-dashboard/resource-header/gear01_dark.svg";
+
+
 // import setting from "../../../../../assets/hive-dashboard/resource-header/technicalb 1.svg";
 
 import './ResourceHeader.css'
@@ -43,9 +49,9 @@ const ResourceHeader = () => {
         <Link to="/indexx-exchange/dashboard/capt-resource-mkt">
             <div className="card">
             {theme === "dark" ?
-              <img alt="man" src={sales_dark} className="card-img-top" />
+              <img alt="man" src={mkt_dark} className="card-img-top" />
               :
-            <img src={sales} className="card-img-top" alt="..."/>
+            <img src={mkt} className="card-img-top" alt="..."/>
             }
             <div className="card-body">
                 <h5 className="card-title">Marketing</h5>
@@ -65,28 +71,7 @@ const ResourceHeader = () => {
             </div>
         </Link>
         </div>
-        {/* <div className="col">
-        <Link to="/indexx-exchange/dashboard/capt-resource-tech">
-            <div className="card">
-            <img src={setting} className="card-img-top" alt="..." />
-            <div className="card-body">
-                <h5 className="card-title">Technical</h5>
-            <Typography
-                component='p'
-                sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-resource-tech'
-                    ? {
-                      height: '0.07px',
-                      width: '58px',
-                      backgroundColor: '#FFB300',
-                    }
-                    : null
-                }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
+        {/* 
         
         <div className="col">
         <a href="/indexx-exchange/dashboard/capt-resource-acc">
@@ -111,30 +96,7 @@ const ResourceHeader = () => {
         </a>
         </div>
 
-        <div className="col">
-        <a href="/indexx-exchange/dashboard/capt-resource-mgmt">
-            <div className="card">
-            <img src={affiliate} className="card-img-top " alt="..." style={{
-                width:"auto"
-            }}/>
-            <div className="card-body">
-                <h5 className="card-title">Management</h5>
-                <Typography
-                component='p'
-                sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-resource-mgmt'
-                    ? {
-                      height: '0.07px',
-                      width: '58px',
-                      backgroundColor: '#FFB300',
-                    }
-                    : null
-                }
-              ></Typography>
-            </div>
-            </div>
-        </a>
-        </div> */}
+        */}
 
         <div className="col">
         <a href="/indexx-exchange/dashboard/capt-resource-leg">
@@ -161,6 +123,60 @@ const ResourceHeader = () => {
             </div>
             </div>
         </a>
+        </div>
+
+        {/* <div className="col">
+        <a href="/indexx-exchange/dashboard/capt-resource-sales">
+            <div className="card">
+            {theme === "dark" ?
+              <img alt="man" src={sales_dark} className="card-img-top" />
+              :
+            <img src={sales} className="card-img-top" alt="..."/>
+            }
+            <div className="card-body">
+                <h5 className="card-title">Sales</h5>
+                <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-resource-sales'
+                    ? {
+                      height: '0.07px',
+                      width: '58px',
+                      backgroundColor: '#FFB300',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </a>
+        </div>  */}
+
+        <div className="col">
+        <Link to="/indexx-exchange/dashboard/capt-resource-tech">
+            <div className="card">
+            {theme === "dark" ?
+              <img alt="man" src={technical_dark} className="card-img-top" />
+              :
+            <img src={technical} className="card-img-top" alt="..."/>
+            }
+            <div className="card-body">
+                <h5 className="card-title">Technical</h5>
+            <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-resource-tech'
+                    ? {
+                      height: '0.07px',
+                      width: '58px',
+                      backgroundColor: '#FFB300',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
         </div>
 
     </div>

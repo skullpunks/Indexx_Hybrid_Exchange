@@ -25,6 +25,7 @@ import twitter_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/twit
 import insta_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
 import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
 import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
+import bronze from "../../../assets/Rank Badges/1 bronze.svg";
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
 import { PackData } from '../../PowerPack/PackData';
@@ -167,6 +168,18 @@ const HoneyComb = () => {
                       border={'none'}
                     />
                   </div>
+
+                  <img
+                      alt=""
+                      src={bronze}
+                      style={{
+                        position: 'absolute',
+                        bottom: '-25px',
+                        right: '17px',
+                        width: '79px', 
+                        height: '81px',
+                      }}
+                    />
                 </div>
               </div>
               <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">

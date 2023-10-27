@@ -168,9 +168,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
-          <p style={{ marginTop: 200, fontSize: 30 }}>Indexx Exchange</p>
+          <p style={{ marginTop: 220, fontSize: 30 }}>Indexx Exchange</p>
           :
-          <p style={{ marginTop: 200, fontSize: 30 }}>Hive Exchange</p>
+          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "220px"}`, fontSize: 30 }}>Hive Exchange</p>
         }
         <p style={{ fontSize: 15 }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>

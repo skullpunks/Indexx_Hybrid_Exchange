@@ -931,6 +931,11 @@ const HeaderNew = () => {
                               Account & Settings
                             </Link>
                           </NavDropdown.Item>
+                          <NavDropdown.Item href="/indexx-exchange/bridge" className="link-div">
+                            <Link to="/indexx-exchange/bridge" className="link-style">
+                              Bridge
+                            </Link>
+                          </NavDropdown.Item>
                           <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
                             <Link to="/indexx-exchange/dashboard" className="link-style">
                               Waggle Dance / Dashboard

@@ -1,7 +1,7 @@
 .navbar-dark {
   --bs-navbar-color: #fff;
   --bs-navbar-hover-color: #c8c5c5;
-  --bs-navbar-active-color: #c8c5c5;
+  /* --bs-navbar-active-color: #c8c5c5; */
   --bs-nav-link-font-size: 15px;
   --bs-navbar-nav-link-padding-x: 1rem;
   --bs-navbar-padding-y: 0.8rem;
@@ -666,7 +666,7 @@ button.navbar-toggler {
 }
 
 .profile-menu .dropdown-menu .profile-back {
-  top: 560px;
+  top: 588px;
 }
 
 .profile-menu .dropdown-toggle::after {

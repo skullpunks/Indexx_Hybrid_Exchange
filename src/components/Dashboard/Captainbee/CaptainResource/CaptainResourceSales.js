@@ -17,7 +17,7 @@ const resourceData = [
   },
 ];
 
-const CaptainResourceTechnical = () => {
+const CaptainResourceSales = () => {
   const [resource ] = useState(resourceData);
 
   return (
@@ -64,4 +64,4 @@ const CaptainResourceTechnical = () => {
   )
 }
 
-export default CaptainResourceTechnical;
+export default CaptainResourceSales
