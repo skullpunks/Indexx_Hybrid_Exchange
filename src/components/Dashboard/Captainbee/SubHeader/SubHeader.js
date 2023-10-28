@@ -54,7 +54,8 @@ const SubHeader = () => {
             <Typography
                 component='p'
                 sx={
-                  location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees')
+                  location.pathname === '/indexx-exchange/dashboard/capt-mybees' ||
+                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('HoneyBee'))
                     ? {
                       height: '0.07px',
                       width: '72px',
@@ -76,7 +77,8 @@ const SubHeader = () => {
             <Typography
                 component='p'
                 sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-mycaptains'
+                  location.pathname === '/indexx-exchange/dashboard/capt-mycaptains' ||
+                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('CaptainBee'))
                     ? {
                       height: '0.07px',
                       width: '95px',
