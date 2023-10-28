@@ -1004,7 +1004,15 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BTC') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'LEO') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TUSD') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'ETH') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TON') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DAI') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BNB') {
       oneUSDValue = 1 / coinValue;
@@ -1167,7 +1175,9 @@ export const stakingList = async (email: string) => {
 
 export const commissionList = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getCommissionHistory/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getCommissionHistory/${email}`
+    );
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (transactionList)');

@@ -118,5 +118,13 @@
   {
     "address": "0x76A797A59Ba2C17726896976B7B3747BfD1d220f",
     "graph": "ToncoinGraph"
+  },
+  {
+    "address": "0x40af3827F39D0EAcBF4A168f8D4ee67c121D11c9",
+    "graph": "TrueUSDGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3",
+    "graph": "LEOGraph"
   }
 ]

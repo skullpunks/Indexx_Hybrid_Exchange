@@ -1,16 +1,16 @@
 
 import { Collapse, Divider, Image } from 'antd';
-import ca from '../../assets/token-icons/TUSD.png';
+import ca from '../../assets/token-icons/USDT.png';
 
 import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
-const TUSDMarket = () => {
+const USDTMarket = () => {
     const { Panel } = Collapse;
     const [data, setData] = useState() as any;
     useEffect(() => {
         marketsData().then((res) => {
-            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "TUSD");
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "USDT");
             setData(requiredData);
         });
     }, []);
@@ -67,7 +67,7 @@ const TUSDMarket = () => {
 
 
                                     <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.CirculatingSupply} TUSD</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.CirculatingSupply} USDT</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -101,7 +101,7 @@ const TUSDMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>TUSD </p>
+                            <p style={{ fontSize: 20 }}>USDT </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                             Launched in 2014, Tether is a blockchain-enabled platform designed to facilitate the use of fiat currencies in a digital manner. Tether works to disrupt the conventional financial system via a more modern approach to money. Tether has made headway by giving customers the ability to transact with traditional currencies across the blockchain, without the inherent volatility and complexity typically associated with a digital currency. As the first blockchain-enabled platform to facilitate the digital use of traditional currencies (a familiar, stable accounting unit), Tether has democratised cross-border transactions across the blockchain.
                             </p>
@@ -113,4 +113,4 @@ const TUSDMarket = () => {
     )
 };
 
-export default TUSDMarket;
+export default USDTMarket;

@@ -103,10 +103,14 @@ const StakingTop = () => {
 
           if (type === 'Long') {
             setRewards(inputAmt * selectedToken.stakingPercentage1year);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage1year)
+            );
           } else if (type === 'Short') {
             setRewards(inputAmt * selectedToken.stakingPercentage6months);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage6months)
+            );
           }
         }
       } else {
@@ -123,10 +127,14 @@ const StakingTop = () => {
 
           if (type === 'Long') {
             setRewards(inputAmt * selectedToken.stakingPercentage1year);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage1year)
+            );
           } else if (type === 'Short') {
             setRewards(inputAmt * selectedToken.stakingPercentage6months);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage6months)
+            );
           }
         }
       }
@@ -146,10 +154,14 @@ const StakingTop = () => {
 
           if (type === 'Long') {
             setRewards(inputAmt * selectedToken.stakingPercentage1year);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage1year)
+            );
           } else if (type === 'Short') {
             setRewards(inputAmt * selectedToken.stakingPercentage6months);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage6months)
+            );
           }
         }
       } else {
@@ -166,10 +178,14 @@ const StakingTop = () => {
 
           if (type === 'Long') {
             setRewards(inputAmt * selectedToken.stakingPercentage1year);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage1year));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage1year)
+            );
           } else if (type === 'Short') {
             setRewards(inputAmt * selectedToken.stakingPercentage6months);
-            setFinalAmount(inputAmt * (1 + selectedToken.stakingPercentage6months));
+            setFinalAmount(
+              inputAmt * (1 + selectedToken.stakingPercentage6months)
+            );
           }
         }
       }
@@ -179,24 +195,18 @@ const StakingTop = () => {
   const submitStake = async () => {
     try {
       setLoadings(true);
-      let percentage = type === "Short" ? selectedToken.stakingPercentage6months : selectedToken.stakingPercentage1year
-      console.log(
-        'decoded.email, amt, token, type',
-        decoded.email,
-        amt,
-        token,
-        type,
-        percentage
-      );
+      let percentage =
+        type === 'Short'
+          ? selectedToken.stakingPercentage6months
+          : selectedToken.stakingPercentage1year;
       let res = await stakeCoin(decoded.email, amt, token, type, percentage);
-      if(res.status === 200) {
+      if (res.status === 200) {
         setLoadings(false);
         OpenNotification('success', `Your ${token} token staked successfully`);
       }
     } catch (err) {
       setLoadings(false);
       OpenNotification('error', 'Failed to updated. Please try again.');
-      console.log('error', err);
     }
   };
 
@@ -227,10 +237,14 @@ const StakingTop = () => {
 
         if (type === 'Long') {
           setRewards(inputAmt * filteredTokens[0].stakingPercentage1year);
-          setFinalAmount(inputAmt * (1 + filteredTokens[0].stakingPercentage1year));
+          setFinalAmount(
+            inputAmt * (1 + filteredTokens[0].stakingPercentage1year)
+          );
         } else if (type === 'Short') {
           setRewards(inputAmt * filteredTokens[0].stakingPercentage6months);
-          setFinalAmount(inputAmt * (1 + filteredTokens[0].stakingPercentage6months));
+          setFinalAmount(
+            inputAmt * (1 + filteredTokens[0].stakingPercentage6months)
+          );
         }
       }
     } else {
@@ -241,7 +255,7 @@ const StakingTop = () => {
   const handleChange = (event) => {
     setType(event.target.value);
     if (event.target.value === 'Long') {
-      setRewards(amt *selectedToken.stakingPercentage1year);
+      setRewards(amt * selectedToken.stakingPercentage1year);
       setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year));
     } else if (event.target.value === 'Short') {
       setRewards(amt * selectedToken.stakingPercentage6months);
@@ -253,11 +267,14 @@ const StakingTop = () => {
     <>
       <div className="orange width-100 padding-t-2x align-items-center d-flex justify-content-center mb-4">
         <h1 className="padding-b-1x font_48x">
-        <img src={pig} alt="pig" style={{marginRight:"30px"}}/>
+          <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
           Staking
         </h1>
       </div>
-      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative" style={{maxWidth:"1600px"}}>
+      <div
+        className="padding-t-1x width-100 bs_wallet_top_banner position-relative"
+        style={{ maxWidth: '1600px' }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -307,35 +324,30 @@ const StakingTop = () => {
             </MenuItem>
           </Select>
 
-          <Typography
-            fontSize={'25px'}
-            textAlign={'left'}
-            ml={7}
-          >
+          <Typography fontSize={'25px'} textAlign={'left'} ml={7}>
             Blockchain
           </Typography>
           <Box
-                sx={{
-                  backgroundColor: 'var(--staking-color)',
-                  borderRadius: '2px',
-                  fontSize: '16px',
-                  height: '40px',
-                  py: 0.7,
-                  px: 2,
-                  ml:6,
-                  alignSelf:"center"
-                }}
-              >
-              
-                <img
-                  src={bnb}
-                  alt="BSC"
-                  width={30}
-                  height={30}
-                  style={{ marginRight: '8px' }}
-                />
-                BSC Mainnet
-              </Box>
+            sx={{
+              backgroundColor: 'var(--staking-color)',
+              borderRadius: '2px',
+              fontSize: '16px',
+              height: '40px',
+              py: 0.7,
+              px: 2,
+              ml: 6,
+              alignSelf: 'center',
+            }}
+          >
+            <img
+              src={bnb}
+              alt="BSC"
+              width={30}
+              height={30}
+              style={{ marginRight: '8px' }}
+            />
+            BSC Mainnet
+          </Box>
         </Box>
         <Box
           sx={{
@@ -363,11 +375,12 @@ const StakingTop = () => {
             value={token}
             onChange={(e) => {
               setToken(e.target.value);
-              let selectedCoin = initialTokens.find(x=> x.title === e.target.value);
-              setSelectedToken(selectedCoin); 
+              let selectedCoin = initialTokens.find(
+                (x) => x.title === e.target.value
+              );
+              setSelectedToken(selectedCoin);
               getCoinBalance(e.target.value);
               let inputAmt = amt;
-              console.log('amount', inputAmt);
               if (inputAmt < 50) {
                 setError('Minimum staking amount must be at least 50.');
               } else if (inputAmt > userBalance) {
@@ -379,10 +392,14 @@ const StakingTop = () => {
 
                 if (type === 'Long') {
                   setRewards(inputAmt * selectedCoin.stakingPercentage1year);
-                  setFinalAmount(inputAmt * (1 + selectedCoin.stakingPercentage1year));
+                  setFinalAmount(
+                    inputAmt * (1 + selectedCoin.stakingPercentage1year)
+                  );
                 } else if (type === 'Short') {
                   setRewards(inputAmt * selectedCoin.stakingPercentage6months);
-                  setFinalAmount(inputAmt * (1 + selectedCoin.stakingPercentage6months));
+                  setFinalAmount(
+                    inputAmt * (1 + selectedCoin.stakingPercentage6months)
+                  );
                 }
               }
             }}
@@ -437,7 +454,9 @@ const StakingTop = () => {
               <Button
                 variant="contained"
                 disableTouchRipple
-                onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}
+                onClick={() =>
+                  navigate('/indexx-exchange/buy-sell/deposit-crypto')
+                }
                 sx={{
                   backgroundColor: 'var(--primary-color)',
                   borderRadius: '2px',
@@ -458,7 +477,9 @@ const StakingTop = () => {
               <Button
                 variant="outlined"
                 disableTouchRipple
-                onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}
+                onClick={() =>
+                  navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+                }
                 sx={{
                   borderColor: 'var(--primary-color)',
                   borderRadius: '2px',
@@ -477,13 +498,13 @@ const StakingTop = () => {
                     borderColor: 'var(--secondary-color)',
                     color: 'var(--secondary-color)',
                     boxShadow: 'none',
-                    background:"transparent"
+                    background: 'transparent',
                   },
                   '&:focus': {
                     borderColor: 'var(--secondary-color)',
                     color: 'var(--secondary-color)',
                     boxShadow: 'none',
-                    background:"transparent"
+                    background: 'transparent',
                   },
                 }}
               >
@@ -525,11 +546,21 @@ const StakingTop = () => {
                       setError('');
 
                       if (type === 'Long') {
-                        setRewards(inputAmt * selectedToken?.stakingPercentage1year ?? 0);
-                        setFinalAmount(inputAmt * (1 + selectedToken?.stakingPercentage1year ?? 0));
+                        setRewards(
+                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                        );
+                        setFinalAmount(
+                          inputAmt *
+                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                        );
                       } else if (type === 'Short') {
-                        setRewards(inputAmt * selectedToken?.stakingPercentage1year ?? 0);
-                        setFinalAmount(inputAmt * (1 + selectedToken?.stakingPercentage1year ?? 0));
+                        setRewards(
+                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                        );
+                        setFinalAmount(
+                          inputAmt *
+                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                        );
                       }
                     }
                   }}
@@ -555,8 +586,17 @@ const StakingTop = () => {
               className="d-flex flex-direction-column staking-toggle"
               sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
             >
-              <Typography variant="text" fontSize={'18px'} textAlign={'left'} pb={0.4}>
-                <img src={lock} alt="lock" style={{height:"25px", marginRight:"10px"}} />
+              <Typography
+                variant="text"
+                fontSize={'18px'}
+                textAlign={'left'}
+                pb={0.4}
+              >
+                <img
+                  src={lock}
+                  alt="lock"
+                  style={{ height: '25px', marginRight: '10px' }}
+                />
                 Lock-up Period
               </Typography>
               <ToggleButtonGroup
@@ -566,83 +606,82 @@ const StakingTop = () => {
                 onChange={handleChange}
                 aria-label="Platform"
                 sx={{
-                  width:"100%",
-                  gap:1,
-                  justifyContent:"space-between",
+                  width: '100%',
+                  gap: 1,
+                  justifyContent: 'space-between',
                 }}
               >
-              <ToggleButton value="Short"
-                disableTouchRipple
-                sx={{
-                    color: 'var(--primary-color)',
-                    borderRadius:"2px",
-                    height: '44px',
-                    width:"49%",
-                    border:"1px solid var(--border-color)",
-                    '&:hover': {
-                        background:"var(--staking-color)",
-                      },
-                      '&:active': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background:"transparent"
-                  },
-                  '&:focus': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background:"transparent"
-                  },
-                    '&.Mui-selected': {
-                      color: '#282828',
-                      background:"var(--primary-color)",
-                      '&:hover': {
-                        background:"var(--primary-color)",
-                      },
-                      
-                    }, 
-                    }}
-                >
-                
-                6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
-
-                </ToggleButton>
-
-                <ToggleButton value="Long" 
-                disableTouchRipple
+                <ToggleButton
+                  value="Short"
+                  disableTouchRipple
                   sx={{
                     color: 'var(--primary-color)',
-                    borderRadius:"2px",
+                    borderRadius: '2px',
                     height: '44px',
-                    width:"49%",
-                    border:"1px solid var(--border-color)",
+                    width: '49%',
+                    border: '1px solid var(--border-color)',
                     '&:hover': {
-                        background:"var(--staking-color)",
-                      },
-                      '&:active': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background:"transparent"
-                  },
-                  '&:focus': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background:"transparent"
-                  },
+                      background: 'var(--staking-color)',
+                    },
+                    '&:active': {
+                      borderColor: 'var(--secondary-color)',
+                      color: 'var(--secondary-color)',
+                      boxShadow: 'none',
+                      background: 'transparent',
+                    },
+                    '&:focus': {
+                      borderColor: 'var(--secondary-color)',
+                      color: 'var(--secondary-color)',
+                      boxShadow: 'none',
+                      background: 'transparent',
+                    },
                     '&.Mui-selected': {
                       color: '#282828',
-                      background:"var(--primary-color)",
+                      background: 'var(--primary-color)',
                       '&:hover': {
-                        background:"var(--primary-color)",
+                        background: 'var(--primary-color)',
                       },
                     },
-                    }}> 
-                    1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
-                    </ToggleButton>
-                
+                  }}
+                >
+                  6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
+                </ToggleButton>
+
+                <ToggleButton
+                  value="Long"
+                  disableTouchRipple
+                  sx={{
+                    color: 'var(--primary-color)',
+                    borderRadius: '2px',
+                    height: '44px',
+                    width: '49%',
+                    border: '1px solid var(--border-color)',
+                    '&:hover': {
+                      background: 'var(--staking-color)',
+                    },
+                    '&:active': {
+                      borderColor: 'var(--secondary-color)',
+                      color: 'var(--secondary-color)',
+                      boxShadow: 'none',
+                      background: 'transparent',
+                    },
+                    '&:focus': {
+                      borderColor: 'var(--secondary-color)',
+                      color: 'var(--secondary-color)',
+                      boxShadow: 'none',
+                      background: 'transparent',
+                    },
+                    '&.Mui-selected': {
+                      color: '#282828',
+                      background: 'var(--primary-color)',
+                      '&:hover': {
+                        background: 'var(--primary-color)',
+                      },
+                    },
+                  }}
+                >
+                  1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
+                </ToggleButton>
               </ToggleButtonGroup>
               {/* <FormControl>
                 <RadioGroup
@@ -739,14 +778,25 @@ const StakingTop = () => {
           </Box>
 
           <Box className="d-flex flex-direction-column" width={'45%'}>
-            <Box className="d-flex" sx={{ gap: 3, mb: 2.5, background:"var(--primary-color)", fontSize:"50px", width:"91%",
-              alignItems:"center",
-              justifyContent:"center",
-              color:"#343434",
-              py:1
-             }}>
-            APR:15.0%
-
+            <Box
+              className="d-flex"
+              sx={{
+                gap: 3,
+                mb: 2.5,
+                background: 'var(--primary-color)',
+                fontSize: '50px',
+                width: '91%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#343434',
+                py: 1,
+              }}
+            >
+              APR:
+              {type === 'Short'
+                ? selectedToken?.stakingPercentage6months
+                : selectedToken?.stakingPercentage1year}
+              %
               {/* <Box
                 sx={{
                   backgroundColor: 'var(--staking-color)',
@@ -759,7 +809,6 @@ const StakingTop = () => {
               >
                 APR:14.03%
               </Box> */}
-              
             </Box>
 
             <Box className="d-flex flex-direction-column" sx={{ mt: 1, pt: 1 }}>
@@ -781,8 +830,14 @@ const StakingTop = () => {
                   value={calcAmt}
                   onChange={(e) => {
                     setcalcAmt(e.target.value);
-                    setSixMonthReward(Number(e.target.value) * selectedToken?.stakingPercentage6months ?? 0);
-                    setOneYearReward(Number(e.target.value) * selectedToken?.stakingPercentage1year ?? 0);
+                    setSixMonthReward(
+                      Number(e.target.value) *
+                        selectedToken?.stakingPercentage6months ?? 0
+                    );
+                    setOneYearReward(
+                      Number(e.target.value) *
+                        selectedToken?.stakingPercentage1year ?? 0
+                    );
                   }}
                 />
                 <Box>
@@ -807,15 +862,13 @@ const StakingTop = () => {
                 </Typography>
                 <Box className="d-flex align-items-center" sx={{ mt: 0.1 }}>
                   <img
-                    src={
-                      require(`../../assets/token-icons/INEX.png`).default
-                    }
-                    alt={"INEX"}
+                    src={require(`../../assets/token-icons/INEX.png`).default}
+                    alt={'INEX'}
                     width={30}
                     height={30}
                     style={{ marginRight: '8px' }}
                   />
-                  {"INEX"}
+                  {'INEX'}
                   <Box
                     className="d-flex align-items-center"
                     sx={{
