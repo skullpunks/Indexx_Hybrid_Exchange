@@ -191,7 +191,7 @@ const StakingTop = () => {
       let res = await stakeCoin(decoded.email, amt, token, type, percentage);
       if(res.status === 200) {
         setLoadings(false);
-        OpenNotification('success', `Your ${token} token staking successfully`);
+        OpenNotification('success', `Your ${token} token staked successfully`);
       }
     } catch (err) {
       setLoadings(false);
