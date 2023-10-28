@@ -147,6 +147,12 @@
     border-left: 1px solid var(--border-color) !important;
 }
 
+.staking-toggle .MuiToggleButtonGroup-grouped:not(:first-of-type):focus,
+.staking-toggle .MuiToggleButtonGroup-grouped:not(:first-of-type):active
+{
+  border-left: 1px solid var(--primary-color) !important;
+}
+
 @media (max-width: 767px) {
   .bs_wallet_top {
     max-width: 90%;

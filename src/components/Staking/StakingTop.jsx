@@ -19,14 +19,16 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material';
-import iUSD from '../../assets/token-icons/iUSD+ new2 3.svg';
-import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
+// import iUSD from '../../assets/token-icons/iUSD+ new2 3.svg';
+// import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
 import bnb from '../../assets/token-icons/BNB.png';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import pig from '../../assets/arts/pig staking 1.svg';
+import lock from '../../assets/arts/lock4 2.png';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
 import tokensList from '../../utils/Tokens.json';
 import OpenNotification from '../../components/OpenNotification/OpenNotification';
 
@@ -53,8 +55,6 @@ const StakingTop = () => {
   const [finalAmount, setFinalAmount] = useState(0);
   const [error, setError] = useState('');
   const [loadings, setLoadings] = useState(false);
-  const [lockup, setLockup] = useState('6m')
-
 
   useEffect(() => {
     getAllUserWallet();
@@ -252,11 +252,12 @@ const StakingTop = () => {
   return (
     <>
       <div className="orange width-100 padding-t-2x align-items-center d-flex justify-content-center mb-4">
-        <h1 className="padding-b-1x staking-sty font_48x">
+        <h1 className="padding-b-1x font_48x">
+        <img src={pig} alt="pig" style={{marginRight:"30px"}}/>
           Staking
         </h1>
       </div>
-      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
+      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative" style={{maxWidth:"1600px"}}>
         <Box
           sx={{
             display: 'flex',
@@ -305,6 +306,36 @@ const StakingTop = () => {
               Stock Token
             </MenuItem>
           </Select>
+
+          <Typography
+            fontSize={'25px'}
+            textAlign={'left'}
+            ml={7}
+          >
+            Blockchain
+          </Typography>
+          <Box
+                sx={{
+                  backgroundColor: 'var(--staking-color)',
+                  borderRadius: '2px',
+                  fontSize: '16px',
+                  height: '40px',
+                  py: 0.7,
+                  px: 2,
+                  ml:6,
+                  alignSelf:"center"
+                }}
+              >
+              
+                <img
+                  src={bnb}
+                  alt="BSC"
+                  width={30}
+                  height={30}
+                  style={{ marginRight: '8px' }}
+                />
+                BSC Mainnet
+              </Box>
         </Box>
         <Box
           sx={{
@@ -442,6 +473,18 @@ const StakingTop = () => {
                     color: 'var(--secondary-color)',
                     boxShadow: 'none',
                   },
+                  '&:active': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
+                  '&:focus': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
                 }}
               >
                 Withdraw
@@ -513,11 +556,12 @@ const StakingTop = () => {
               sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
             >
               <Typography variant="text" fontSize={'18px'} textAlign={'left'} pb={0.4}>
+                <img src={lock} alt="lock" style={{height:"25px", marginRight:"10px"}} />
                 Lock-up Period
               </Typography>
               <ToggleButtonGroup
                 color="primary"
-                value={lockup}
+                value={type}
                 exclusive
                 onChange={handleChange}
                 aria-label="Platform"
@@ -527,7 +571,7 @@ const StakingTop = () => {
                   justifyContent:"space-between",
                 }}
               >
-              <ToggleButton value="6m"
+              <ToggleButton value="Short"
                 disableTouchRipple
                 sx={{
                     color: 'var(--primary-color)',
@@ -538,17 +582,34 @@ const StakingTop = () => {
                     '&:hover': {
                         background:"var(--staking-color)",
                       },
+                      '&:active': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
+                  '&:focus': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
                     '&.Mui-selected': {
                       color: '#282828',
-                      background:"#FFB300",
+                      background:"var(--primary-color)",
                       '&:hover': {
-                        background:"#FFB300",
+                        background:"var(--primary-color)",
                       },
+                      
                     }, 
                     }}
-                >6 Months</ToggleButton>
+                >
+                
+                6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
 
-                <ToggleButton value="1yr" 
+                </ToggleButton>
+
+                <ToggleButton value="Long" 
                 disableTouchRipple
                   sx={{
                     color: 'var(--primary-color)',
@@ -559,14 +620,28 @@ const StakingTop = () => {
                     '&:hover': {
                         background:"var(--staking-color)",
                       },
+                      '&:active': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
+                  '&:focus': {
+                    borderColor: 'var(--secondary-color)',
+                    color: 'var(--secondary-color)',
+                    boxShadow: 'none',
+                    background:"transparent"
+                  },
                     '&.Mui-selected': {
                       color: '#282828',
-                      background:"#FFB300",
+                      background:"var(--primary-color)",
                       '&:hover': {
-                        background:"#FFB300",
+                        background:"var(--primary-color)",
                       },
                     },
-                    }}> 1 Year</ToggleButton>
+                    }}> 
+                    1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
+                    </ToggleButton>
                 
               </ToggleButtonGroup>
               {/* <FormControl>
@@ -666,7 +741,8 @@ const StakingTop = () => {
           <Box className="d-flex flex-direction-column" width={'45%'}>
             <Box className="d-flex" sx={{ gap: 3, mb: 2.5, background:"var(--primary-color)", fontSize:"50px", width:"91%",
               alignItems:"center",
-              pl:4,
+              justifyContent:"center",
+              color:"#343434",
               py:1
              }}>
             APR:15.0%
@@ -683,26 +759,7 @@ const StakingTop = () => {
               >
                 APR:14.03%
               </Box> */}
-              <Box
-                sx={{
-                  backgroundColor: 'var(--staking-color)',
-                  borderRadius: '2px',
-                  fontSize: '16px',
-                  height: '40px',
-                  py: 0.7,
-                  px: 2,
-                  ml:4
-                }}
-              >
-                <img
-                  src={bnb}
-                  alt="BSC"
-                  width={30}
-                  height={30}
-                  style={{ marginRight: '8px' }}
-                />
-                BSC Mainnet
-              </Box>
+              
             </Box>
 
             <Box className="d-flex flex-direction-column" sx={{ mt: 1, pt: 1 }}>
