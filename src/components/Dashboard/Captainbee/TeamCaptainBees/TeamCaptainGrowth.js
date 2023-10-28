@@ -361,7 +361,7 @@ const TeamCaptainGrowth = () => {
                         fontWeight={600}
                         textAlign={'left'}
                       >
-                        $150
+                        ${staticsData?.affiliateUserTotalEarnings?.amountInUSD? staticsData?.affiliateUserTotalEarnings?.amountInUSD : 0}
                       </Typography>
                       <Typography
                         variant="text"
@@ -667,7 +667,7 @@ const TeamCaptainGrowth = () => {
                         fontWeight={600}
                         textAlign={'left'}
                       >
-                        $150
+                        ${staticsData?.affiliateUserTotalEarnings?.amountInUSD? staticsData?.affiliateUserTotalEarnings?.amountInUSD : 0}
                       </Typography>
                       <Typography
                         variant="text"

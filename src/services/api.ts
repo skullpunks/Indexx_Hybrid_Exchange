@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -1156,6 +1156,18 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
 export const stakingList = async (email: string) => {
   try {
     const result = await API.get(`/api/v1/inex/user/getStakedCoins/${email}`);
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const commissionList = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getCommissionHistory/${email}`);
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (transactionList)');
