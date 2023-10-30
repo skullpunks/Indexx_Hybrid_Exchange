@@ -67,7 +67,7 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'stakedAmount',
             render: (text, record) => (
                 <span>
-                    {text} {record.coin}
+                    {parseFloat(text).toFixed(2)} {record.coin}
                 </span>
             ),
             responsive: ['sm'],
@@ -80,7 +80,7 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'rewardAmount',
             render: (text, record) => (
                 <span>
-                    {text} {record.rewardCoin}
+                    {parseFloat(text).toFixed(2)} {record.rewardCoin}
                 </span>
             ),
             responsive: ['sm'],
@@ -93,7 +93,7 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'finalAmount',
             render: (text, record) => (
                 <span>
-                    {text} {record?.rewardCoin}
+                    {parseFloat(text).toFixed(2)} {record?.rewardCoin}
                 </span>
             ),
             responsive: ['sm'],

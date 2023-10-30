@@ -110,14 +110,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -142,14 +144,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -177,14 +181,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -209,14 +215,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -276,14 +284,18 @@ const StakingTop = () => {
         setError('');
 
         if (type === 'Long') {
-          setRewards(inputAmt * filteredTokens[0].stakingPercentage1year);
+          setRewards(
+            inputAmt * (filteredTokens[0].stakingPercentage1year / 100)
+          );
           setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage1year)
+            inputAmt * (1 + filteredTokens[0].stakingPercentage1year / 100)
           );
         } else if (type === 'Short') {
-          setRewards(inputAmt * filteredTokens[0].stakingPercentage6months);
+          setRewards(
+            inputAmt * (filteredTokens[0].stakingPercentage6months / 100)
+          );
           setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage6months)
+            inputAmt * (1 + filteredTokens[0].stakingPercentage6months / 100)
           );
         }
       }
@@ -295,11 +307,11 @@ const StakingTop = () => {
   const handleChange = (event) => {
     setType(event.target.value);
     if (event.target.value === 'Long') {
-      setRewards(amt * selectedToken.stakingPercentage1year);
-      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year));
+      setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year / 100));
     } else if (event.target.value === 'Short') {
-      setRewards(amt * selectedToken.stakingPercentage6months);
-      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months));
+      setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
     }
   };
 
@@ -605,19 +617,23 @@ const StakingTop = () => {
 
                       if (type === 'Long') {
                         setRewards(
-                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                          inputAmt *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
                         );
                         setFinalAmount(
                           inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                            (1 + selectedToken?.stakingPercentage1year / 100 ??
+                              0)
                         );
                       } else if (type === 'Short') {
                         setRewards(
-                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                          inputAmt *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
                         );
                         setFinalAmount(
                           inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                            (1 + selectedToken?.stakingPercentage1year / 100 ??
+                              0)
                         );
                       }
                     }
@@ -797,7 +813,7 @@ const StakingTop = () => {
                   Final Amount you will receive
                 </Typography>
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {finalAmount}
+                  {finalAmount.toFixed(2)}
                 </Typography>
               </Box>
               <Box className="d-flex justify-content-between">
@@ -890,11 +906,11 @@ const StakingTop = () => {
                     setcalcAmt(e.target.value);
                     setSixMonthReward(
                       Number(e.target.value) *
-                        selectedToken?.stakingPercentage6months ?? 0
+                        (selectedToken?.stakingPercentage6months / 100) ?? 0
                     );
                     setOneYearReward(
                       Number(e.target.value) *
-                        selectedToken?.stakingPercentage1year ?? 0
+                        (selectedToken?.stakingPercentage1year / 100) ?? 0
                     );
                   }}
                 />
@@ -953,7 +969,7 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.85 }}
                 >
-                  {sixMonthReward}
+                  {sixMonthReward.toFixed(2)}
                 </Typography>
               </Box>
 
@@ -967,7 +983,7 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.85 }}
                 >
-                  {oneYearReward}
+                  {oneYearReward.toFixed(2)}
                 </Typography>
               </Box>
             </Box>

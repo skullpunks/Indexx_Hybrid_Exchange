@@ -389,7 +389,7 @@ const LeaderCaptain = () => {
                   </div>
                 </div>
                 <div className="side-container" style={{ marginLeft: 0, width: "1150px" }}>
-                  <LeaderCaptainTabs />
+                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
                 </div>
               </div>
             </div>
