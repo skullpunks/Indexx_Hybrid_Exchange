@@ -252,7 +252,7 @@ const StakingTop = () => {
   return (
     <>
       <div className="orange width-100 padding-t-2x align-items-center d-flex justify-content-center mb-4">
-        <h1 className="padding-b-1x font_48x">
+        <h1 className="padding-b-1x font_40x">
         <img src={pig} alt="pig" style={{marginRight:"30px"}}/>
           Staking
         </h1>

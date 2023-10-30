@@ -90,9 +90,8 @@ import { useState, useEffect } from "react";
 import Staking from "./components/Staking/Staking";
 import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
 import Bridge from "./components/Bridge/Bridge";
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import TeamCaptainDashIndividual from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDashIndividual";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
+// import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
   /*
@@ -204,6 +203,10 @@ function App() {
             path="/indexx-exchange/buy-sell/login/*"
             element={<BuySellLogin />}
           />
+          {/* <Route
+            path="/indexx-exchange/buy-sell/all-login/*"
+            element={<BuySellAllLogin />}
+          /> */}
           <Route
             path="/indexx-exchange/buy-sell/login-honeybee/*"
             element={<BuySellLoginHoneyBee />}

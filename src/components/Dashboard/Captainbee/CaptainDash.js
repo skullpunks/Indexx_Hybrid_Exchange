@@ -29,8 +29,9 @@ import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/disc
 
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
-import bronze from "../../../assets/Rank Badges/1 bronze.svg";
+// import bronze from "../../../assets/Rank Badges/1 bronze.svg";
 import { PackData } from '../../PowerPack/PackData';
+import { RankData } from '../RankData';
 // import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 
 // import { LineChart } from '@mui/x-charts/LineChart';
@@ -60,6 +61,7 @@ const CaptainDash = () => {
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [platformCapt, setPlatformCapt] = useState('Exchange');
   const [OrderCapt, setOrderCapt] = useState('buysell');
   const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
@@ -103,6 +105,13 @@ const CaptainDash = () => {
           setPowerPackPhoto(getPowerPack?.photo);
         } else {
           setPowerPackPhoto(undefined);
+        }
+        if (data?.data?.affiliateUserProfile?.rank) {
+          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+          setRankPhoto(getRank?.photo);
+        } else {
+          const getRank = RankData.find(x => x.name === "Bronze")
+          setRankPhoto(getRank?.photo);
         }
       });
     }
@@ -178,7 +187,7 @@ const CaptainDash = () => {
 
                     <img
                       alt=""
-                      src={bronze}
+                      src={rankPhoto}
                       style={{
                         position: 'absolute',
                         bottom: '-25px',

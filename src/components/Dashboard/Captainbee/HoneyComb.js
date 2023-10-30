@@ -42,12 +42,14 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { baseCEXURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import { RankData } from '../RankData';
 
 const HoneyComb = () => {
 
   const [text, settext] = useState();
   const [userType, setUserType] = useState("");
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [allTexts, setAllTexts] = useState();
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
@@ -95,6 +97,13 @@ const HoneyComb = () => {
           setPowerPackPhoto(getPowerPack?.photo);
         } else {
           setPowerPackPhoto(undefined);
+        }
+        if (data?.data?.affiliateUserProfile?.rank) {
+          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+          setRankPhoto(getRank?.photo);
+        } else {
+          const getRank = RankData.find(x => x.name === "Bronze")
+          setRankPhoto(getRank?.photo);
         }
       });
     }
@@ -171,7 +180,7 @@ const HoneyComb = () => {
 
                   <img
                       alt=""
-                      src={bronze}
+                      src={rankPhoto}
                       style={{
                         position: 'absolute',
                         bottom: '-25px',

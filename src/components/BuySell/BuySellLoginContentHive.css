@@ -29,6 +29,10 @@
   border-color: #0EA55A!important;
 }
 
+.text-underline-forgot{
+  text-decoration: underline;
+}
+
 .text-underline-forgot:hover {
   color: #ffb300;
   text-decoration: underline;

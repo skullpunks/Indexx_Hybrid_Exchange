@@ -30,6 +30,7 @@ import { Button, Rating } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
 import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
 import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
+import { RankData } from '../../RankData';
 
 
 const MyCaptain = () => {
@@ -40,6 +41,7 @@ const MyCaptain = () => {
   const [email, setEmail] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpench, setIsModalOpenCh] = useState(false);
+  const [rankPhoto, setRankPhoto] = useState();
 
   useEffect(() => {
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
@@ -49,6 +51,13 @@ const MyCaptain = () => {
       setCaptainbeeCreateDate(data.data.accountCreationDate);
       setCaptainbeeOrders(data.data.totalOrder);
       setCaptainbeeUsers(data.data.honeyBeesCount);
+      if (data?.data?.refferedUserAffilateData?.rank) {
+        const getRank = RankData.find(x => x.name === data?.data?.refferedUserAffilateData?.rank)
+        setRankPhoto(getRank?.photo);
+      } else {
+        const getRank = RankData.find(x => x.name === "Bronze")
+        setRankPhoto(getRank?.photo);
+      }
     })
 
   }, []);
@@ -150,7 +159,7 @@ const MyCaptain = () => {
                   </div>
                   <img
                   alt=""
-                  src={bronze}
+                  src={rankPhoto}
                   style={{
                     position: 'absolute',
                     bottom: '-25px',

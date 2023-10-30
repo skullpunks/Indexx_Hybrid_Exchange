@@ -8,6 +8,8 @@ import './BuySell.css';
 import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
+import logo from "../../assets/arts/exchange logo_green 5.svg";
+import hivelogo from "../../assets/Bridge/hive-exchange.png";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -192,9 +194,13 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
-          <p style={{ marginTop: 220, fontSize: 30 }}>Indexx Exchange</p>
+          <p style={{ marginTop: 220, fontSize: 40 }}>
+            <img src={logo} alt="logo" style={{marginRight:"20px"}}/>
+            Indexx Exchange</p>
           :
-          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "220px"}`, fontSize: 30 }}>Hive Exchange</p>
+          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "220px"}`, fontSize: 40 }}>
+            <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
+            Hive Exchange</p>
         }
         <p style={{ fontSize: 15 }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>

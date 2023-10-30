@@ -22,10 +22,8 @@ import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
-import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
+// import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -45,6 +43,7 @@ import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
 import SubHeader from '../SubHeader/SubHeader';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { RankData } from '../../RankData';
 
 
 const LeaderCaptain = () => {
@@ -52,6 +51,7 @@ const LeaderCaptain = () => {
   const [captainBeeFullData, setRefferedFullData] = useState();
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [email, setEmail] = useState();
@@ -84,6 +84,13 @@ const LeaderCaptain = () => {
         setPowerPackPhoto(getPowerPack?.photo);
       } else {
         setPowerPackPhoto(undefined);
+      }
+      if (data?.data?.affiliateUserProfile?.rank) {
+        const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+        setRankPhoto(getRank?.photo);
+      } else {
+        const getRank = RankData.find(x => x.name === "Bronze")
+        setRankPhoto(getRank?.photo);
       }
     })
 
@@ -223,7 +230,7 @@ const LeaderCaptain = () => {
 
                         <img
                           alt=""
-                          src={bronze}
+                          src={rankPhoto}
                           style={{
                             position: 'absolute',
                             bottom: '-25px',

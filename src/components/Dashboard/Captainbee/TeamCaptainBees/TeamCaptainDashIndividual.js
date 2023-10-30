@@ -53,12 +53,14 @@ import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useParams } from 'react-router-dom';
+import { RankData } from '../../RankData';
 
 const TeamCaptainDashIndividual = () => {
   const { id } = useParams();
   const [userType, setUserType] = useState("");
   const [staticsData, setStaticsData] = useState();
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [captainBeeData, setRefferedUserData] = useState();
@@ -79,6 +81,13 @@ const TeamCaptainDashIndividual = () => {
           setPowerPackPhoto(getPowerPack?.photo);
         } else {
           setPowerPackPhoto(undefined);
+        }
+        if (data?.data?.affiliateUserProfile?.rank) {
+          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+          setRankPhoto(getRank?.photo);
+        } else {
+          const getRank = RankData.find(x => x.name === "Bronze")
+          setRankPhoto(getRank?.photo);
         }
       });
       console.log("I am if")
@@ -430,7 +439,7 @@ const TeamCaptainDashIndividual = () => {
 
                 <img
                   alt=""
-                  src={bronze}
+                  src={rankPhoto}
                   style={{
                     position: 'absolute',
                     bottom: '-25px',
