@@ -66,7 +66,7 @@ import ShibMarket from '../MarketAbout/ShibMarket';
 import DogecoinMarket from '../MarketAbout/DogecoinMarket';
 import RippleMarket from '../MarketAbout/RippleMarket';
 import USDCMarket from '../MarketAbout/USDCMarket';
-import USDTMarket from '../MarketAbout/USDTMarket';
+import TUSDMarket from '../MarketAbout/USDTMarket';
 import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
 import SolanaGraph from '../Graphs/SolanaGraph';
 import TronGraph from '../Graphs/TronGraph';
@@ -74,6 +74,8 @@ import ChainLinkGraph from '../Graphs/ChainLinkGraph';
 import DaiGraph from '../Graphs/DaiGraph';
 import ToncoinGraph from '../Graphs/ToncoinGraph';
 import ShibGraph from '../Graphs/ShibGraph';
+import LEOGraph from '../Graphs/LEOGraph';
+import TrueUSDGraph from '../Graphs/TrueUSDGraph';
 import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
 import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
 import IndexxMETAGraph from '../Graphs/IndexxMETAGraph';
@@ -101,6 +103,8 @@ let graphs: any = {
   RippleGraph: RippleGraph,
   USDCGraph: USDCGraph,
   USDTGraph: USDTGraph,
+  TrueUSDGraph: TrueUSDGraph,
+  LEOGraph: LEOGraph,
   TronGraph: TronGraph,
   SolanaGraph: SolanaGraph,
   ChainLinkGraph: ChainLinkGraph,
@@ -133,8 +137,10 @@ let markets: any = {
   RippleGraph: RippleMarket,
   DogecoinGraph: DogecoinMarket,
   USDCGraph: USDCMarket,
-  USDTGraph: USDTMarket,
+  USDTGraph: TUSDMarket,
   TronGraph: TronMarket,
+  TrueUSDGraph: TronMarket,
+  LEOGraph: TronMarket,
   SolanaGraph: SolanaMarket,
   ChainLinkGraph: ChainLinkMarket,
   DaiGraph: DaiMarket,
