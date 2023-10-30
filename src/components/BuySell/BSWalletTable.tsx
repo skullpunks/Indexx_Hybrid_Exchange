@@ -123,7 +123,7 @@ const BSWalletTable = () => {
         //     // },
         // },
         {
-            title: 'Unavailable Balance',
+            title: 'Staked Balance',
             dataIndex: 'coinStakedBalance',
             render: (_, record) => {
                 return record.coinStakedBalance || 0;

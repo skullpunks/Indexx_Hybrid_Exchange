@@ -27,6 +27,9 @@ import RippleGraph from '../Graphs/RippleGraph';
 import USDCGraph from '../Graphs/USDCGraph';
 import USDTGraph from '../Graphs/USDTGraph';
 import FTTGraph from '../Graphs/FTTGraph';
+import BCHGraph from '../Graphs/BCHGraph';
+import DOTGraph from '../Graphs/DOTGraph';
+import MATICGraph from '../Graphs/MATICGraph';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
 import IndexxExchangeGraph from '../Graphs/IndexxExchange';
@@ -61,8 +64,13 @@ import SolanaMarket from "../MarketAbout/SolanaMarket";
 import TronMarket from "../MarketAbout/TronMarket";
 import ChainLinkMarket from '../MarketAbout/ChainLinkMarket';
 import DaiMarket from '../MarketAbout/DaiMarket';
+import PolygonMarket from '../MarketAbout/PolygonMarket';
+import PolkadotMarket from '../MarketAbout/PolkadotMarket';
+import BitcoinCashMarket from '../MarketAbout/BitcoinCashMarket';
 import ToncoinMarket from '../MarketAbout/ToncoinMarket';
 import ShibMarket from '../MarketAbout/ShibMarket';
+import TrueUSDMarket from '../MarketAbout/TrueUSDMarket';
+import LEOMarket from '../MarketAbout/LEOMarket';
 import DogecoinMarket from '../MarketAbout/DogecoinMarket';
 import RippleMarket from '../MarketAbout/RippleMarket';
 import USDCMarket from '../MarketAbout/USDCMarket';
@@ -106,6 +114,9 @@ let graphs: any = {
   TrueUSDGraph: TrueUSDGraph,
   LEOGraph: LEOGraph,
   TronGraph: TronGraph,
+  BCHGraph: BCHGraph,
+  MATICGraph: MATICGraph,
+  DOTGraph: DOTGraph,
   SolanaGraph: SolanaGraph,
   ChainLinkGraph: ChainLinkGraph,
   DaiGraph: DaiGraph,
@@ -139,8 +150,11 @@ let markets: any = {
   USDCGraph: USDCMarket,
   USDTGraph: TUSDMarket,
   TronGraph: TronMarket,
-  TrueUSDGraph: TronMarket,
-  LEOGraph: TronMarket,
+  BCHGraph: BitcoinCashMarket,
+  MATICGraph: PolygonMarket,
+  DOTGraph: PolkadotMarket,
+  TrueUSDGraph: TrueUSDMarket,
+  LEOGraph: LEOMarket,
   SolanaGraph: SolanaMarket,
   ChainLinkGraph: ChainLinkMarket,
   DaiGraph: DaiMarket,

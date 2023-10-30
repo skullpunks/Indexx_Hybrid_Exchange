@@ -129,7 +129,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
         //     // },
         // },
         {
-            title: 'Unavailable Balance',
+            title: 'Staked Balance',
             dataIndex: 'coinBalance',
             render: (_, record) => {
                 return 0;

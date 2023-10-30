@@ -126,5 +126,17 @@
   {
     "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3",
     "graph": "LEOGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912c22",
+    "graph": "MATICGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912a22",
+    "graph": "BCHGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912b22",
+    "graph": "DOTGraph"
   }
 ]

@@ -92,9 +92,17 @@ const StakingTop = () => {
       if (res.status === 200) {
         setUserBalance(res.data.balance);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > res.data.balance) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -116,9 +124,17 @@ const StakingTop = () => {
       } else {
         setUserBalance(0);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > 0) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -143,9 +159,17 @@ const StakingTop = () => {
       if (res.status === 200) {
         setUserBalance(res.data.balance);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > res.data.balance) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -167,9 +191,17 @@ const StakingTop = () => {
       } else {
         setUserBalance(0);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > 0) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -226,8 +258,16 @@ const StakingTop = () => {
       setSelectedToken(filteredTokens[0]);
       getCoinBalance(filteredTokens[0].title);
       let inputAmt = amt;
-      if (inputAmt < 50) {
-        setError('Minimum staking amount must be at least 50.');
+      let minimumRequired = 50;
+      // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+      if (
+        ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(filteredTokens[0].title)
+      ) {
+        minimumRequired = 0.01;
+      }
+
+      if (inputAmt < minimumRequired) {
+        setError(`Minimum staking amount must be at least ${minimumRequired}.`);
       } else if (inputAmt > userBalance) {
         setError(
           `Insufficient balance available to stake. Please buy ${filteredTokens[0].title} or deposit ${filteredTokens[0].title}.`
@@ -381,8 +421,18 @@ const StakingTop = () => {
               setSelectedToken(selectedCoin);
               getCoinBalance(e.target.value);
               let inputAmt = amt;
-              if (inputAmt < 50) {
-                setError('Minimum staking amount must be at least 50.');
+              let minimumRequired = 50;
+              // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+              if (
+                ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
+              ) {
+                minimumRequired = 0.01;
+              }
+
+              if (inputAmt < minimumRequired) {
+                setError(
+                  `Minimum staking amount must be at least ${minimumRequired}.`
+                );
               } else if (inputAmt > userBalance) {
                 setError(
                   `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
@@ -536,8 +586,16 @@ const StakingTop = () => {
                   onChange={(e) => {
                     const inputAmt = e.target.value;
                     setAmt(inputAmt);
-                    if (inputAmt < 50) {
-                      setError('Minimum staking amount must be at least 50.');
+                    let minimumRequired = 50;
+                    // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                    if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)) {
+                      minimumRequired = 0.01;
+                    }
+
+                    if (inputAmt < minimumRequired) {
+                      setError(
+                        `Minimum staking amount must be at least ${minimumRequired}.`
+                      );
                     } else if (inputAmt > userBalance) {
                       setError(
                         `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`

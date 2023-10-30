@@ -219,6 +219,39 @@
     "stakingPercentage1year": 5
   },
   {
+    "title": "MATIC",
+    "subTitle": "Polygon",
+    "image": "MATIC",
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912c22",
+    "commonToken": true,
+    "isStock": false,
+    "graph": "MATICGraph",
+    "stakingPercentage6months": 2,
+    "stakingPercentage1year": 5
+  },
+  {
+    "title": "BCH",
+    "subTitle": "Bitcoin Cash",
+    "image": "BCH",
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912a22",
+    "commonToken": true,
+    "isStock": false,
+    "graph": "BCHGraph",
+    "stakingPercentage6months": 2,
+    "stakingPercentage1year": 5
+  },
+  {
+    "title": "DOT",
+    "subTitle": "Polkadot",
+    "image": "DOT",
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912b22",
+    "commonToken": true,
+    "isStock": false,
+    "graph": "DOTGraph",
+    "stakingPercentage6months": 2,
+    "stakingPercentage1year": 5
+  },
+  {
     "title": "ETH",
     "subTitle": "Ethereum",
     "image": "ETH",

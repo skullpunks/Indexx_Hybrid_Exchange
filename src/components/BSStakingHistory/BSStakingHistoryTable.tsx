@@ -147,9 +147,13 @@ const BSStakingHistoryTable: React.FC = () => {
 
         stakingList(decodedToken?.email).then((res) => {
             const results = res.data;
-            setTxList(results);
-            setTxListFilter(results);
+            const reversedResults = [...results].reverse(); // Create a copy and reverse the order
+            
+            setTxList(reversedResults);
+            setTxListFilter(reversedResults);
         });
+
+        
     }, []);
 
     const handleChangeTime = (value: string) => {
