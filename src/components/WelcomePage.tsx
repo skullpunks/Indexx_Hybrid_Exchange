@@ -1,7 +1,7 @@
 // import { Button } from 'antd'
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import Footer from './Footer/Footer'
+// import Footer from './Footer/Footer'
 
 const WelcomePage = () => {
     return (
@@ -24,7 +24,8 @@ const WelcomePage = () => {
                     </div>
                 </div>
             </div>
-            <Footer helpIcon={false} /> </>
+            {/* <Footer helpIcon={false} />  */}
+            </>
     )
 }
 

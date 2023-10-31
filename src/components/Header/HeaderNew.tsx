@@ -603,8 +603,8 @@ const HeaderNew = () => {
                           Trade to Earn
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/staking`} className="link-div">
-                        <a href={`${baseURL}/indexx-exchange/buy-sell/staking`} className="link-style">
+                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/buy-sell/staking`} className="link-div">
+                        <a href={`${baseCEXURL}/indexx-exchange/buy-sell/staking`} className="link-style">
                           Staking
                         </a>
                       </NavDropdown.Item>

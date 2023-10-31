@@ -4,6 +4,7 @@ import Email from '../../assets/arts/Email.svg';
 import qrCode from '../../assets/arts/qrCode.svg';
 import { Button, Form, Input, Divider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from "../../assets/arts/exchange logo_green 5.svg";
 import {
   loginAPI,
   decodeJWT,
@@ -114,7 +115,9 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   return (
     // <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
-      <h3 className="text-center margin-lr-auto">Indexx Exchange</h3>
+      <h3 className="text-center margin-lr-auto d-flex align-items-center">
+      <img src={logo} alt="logo" style={{marginRight:"10px"}}/>
+        Indexx Exchange</h3>
         <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL

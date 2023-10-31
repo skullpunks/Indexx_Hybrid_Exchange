@@ -8,7 +8,7 @@ import Team from './Team';
 import { Collapse } from 'antd';
 
 
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import Intro from "./Intro";
 
 const { Panel } = Collapse;
@@ -46,7 +46,7 @@ const Help = () => {
             </div>
 
 
-            <Footer helpIcon={false} />
+            {/* <Footer helpIcon={false} /> */}
         </>
 
     )

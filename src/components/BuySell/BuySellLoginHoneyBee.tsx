@@ -5,7 +5,7 @@ import BuySellLoginFail from './BuySellLoginFail';
 import BuySellLoggedContent from './BuySellLoggedContent';
 import BuySellLoggedTwoFactor from './BuySellLoggedTwoFactor';
 import BuySellLoggedVerfication from './BuySellLoggedVerfication';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import { Route, Routes } from 'react-router-dom';
 import BuySellForgotPassword from './BuySellForgotPassword';
 import BuySellVerifyEmail from './BuySellVerifyEmail';
@@ -31,7 +31,7 @@ const BuySellLoginHoneyBee = () => {
                 </Routes>
 
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </>
     )
 }

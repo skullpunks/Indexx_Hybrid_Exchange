@@ -1,7 +1,7 @@
 import { Badge, Descriptions } from 'antd';
 import { useEffect, useState } from 'react';
 import { decodeJWT, getUserDetails } from '../../services/api';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import "./BS-Sell.css";
 import "./BuySellDummy.css";
 
@@ -74,7 +74,7 @@ const BSDashhboard = () => {
                         </Descriptions.Item>
                     </Descriptions>
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </div>
     )
 }

@@ -9,24 +9,33 @@ import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.sv
 
 import './SubHeader.css'
 import { Link, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
-
+import { Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 const SubHeader = () => {
   const location = useLocation();
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
 
-    <div style={{position:"fixed", top:"90px", width:"100%", zIndex:999, background:"#FFB300", height:"90px"}}>
+    <div style={{position:"fixed", 
+    // top:"90px", 
+    top:`${isMobile ? "60px" : "90px"}`, 
+    width:"100%", zIndex:999, background:"#FFB300", 
+    // height:"90px"}}>
+    height:`${isMobile ? "162px" : "90px"}`, }}>
+
 
     <div className="container sub-page">
 
-    <div className="row row-cols-1 row-cols-md-4 g-4 sub-logos"  style={{justifyContent:"center"}}>
+    <div className="row row-cols-1 row-cols-md-4 g-4 sub-logos"  style={{justifyContent:"center",
+    paddingTop: `${isMobile ? "25px" : "0"}`,}}>
     
         <div className="col">
         <Link to="/indexx-exchange/dashboard">
             <div className="card">
-            <img src={waggle} className="card-img-top mt-sm-2 mb-sm-2" alt="..."/>
+            <img src={waggle} className="card-img-top mt-2 mb-sm-2" alt="..."/>
             <div className="card-body" style={{marginTop:"1.5px"}}>
                 <h5 className="card-title">Waggle Dance</h5>
                 <Typography
@@ -140,7 +149,7 @@ const SubHeader = () => {
         <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/honeycomb">
             <div className="card">
-            <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
+            <img src={honey} className="card-img-top mt-sm-1 mb-sm-1" alt="..." style={{
                 width:"auto"
             }}/>
             <div className="card-body">

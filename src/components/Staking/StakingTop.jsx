@@ -271,27 +271,23 @@ const StakingTop = () => {
           Staking
         </h1>
       </div>
-      <div
-        className="padding-t-1x width-100 bs_wallet_top_banner position-relative"
-        style={{ maxWidth: '1600px' }}
-      >
+      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'start',
+            justifyContent: 'space-between',
             alignItems: 'baseline',
             width: '100%',
             background: 'var(--main-body)',
-            gap: 4,
+            gap: 5,
             //   pl: 1,
             pt: 0.4,
           }}
         >
+          <Box className="d-flex " width={'48%'} sx={{gap:4}}>
           <Typography
-            //   variant="text"
             fontSize={'25px'}
-            //   fontWeight={600}
             textAlign={'left'}
           >
             Staking type
@@ -304,7 +300,7 @@ const StakingTop = () => {
             variant="standard"
             //   InputLabelProps={{ shrink: true }}
             sx={{
-              width: '35%',
+              width: '72.5%',
               borderRadius: 0,
               background: 'var(--main-body)',
               color: 'var(--body_color)',
@@ -323,8 +319,9 @@ const StakingTop = () => {
               Stock Token
             </MenuItem>
           </Select>
-
-          <Typography fontSize={'25px'} textAlign={'left'} ml={7}>
+          </Box>
+          <Box className="d-flex " width={'45%'}>
+          <Typography fontSize={'25px'} textAlign={'left'}>
             Blockchain
           </Typography>
           <Box
@@ -347,6 +344,7 @@ const StakingTop = () => {
               style={{ marginRight: '8px' }}
             />
             BSC Mainnet
+          </Box>
           </Box>
         </Box>
         <Box

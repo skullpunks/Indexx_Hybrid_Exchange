@@ -10,7 +10,7 @@
 }
 
 .ext-tabs{
-  background: var(--body_background);
+  background: var(--main-body);
   color: var(--body_color);
   width: 100%;
   z-index: 999;

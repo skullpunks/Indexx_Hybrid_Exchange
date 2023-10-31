@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import power from '../../../assets/BSheader/power pack 1.svg';
-import all from '../../../assets/BSheader/x icon- 1.svg';
+import all from '../../../assets/BSheader/EX-010.png';
+import hive_all from '../../../assets/BSheader/hive exchange black 1.svg';
 import stack from '../../../assets/BSheader/staking icon black.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
-import all_white from '../../../assets/BSheader/x icon- 1-white.svg';
+import all_white from '../../../assets/BSheader/EX-011.png';
+import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
@@ -51,9 +53,9 @@ const PowerPackHeader = () => {
         <Link to="/indexx-exchange/buy-sell?type=buy">
             <div className="card">
             {theme === "dark" ? 
-            <img src={all_white} className="card-img-top" alt="..."/>
+            <img src={localStorage.getItem("userlogged") === 'normal' ? all_white : hive_all_white} className="card-img-top" alt="..."/>
             :
-            <img src={all} className="card-img-top" alt="..."/>
+            <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..."/>
             }
             <div className="card-body">
                 <h5 className="card-title mt-1">Buy Crypto</h5>

@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 import logo from "../../assets/arts/exchange logo_green 5.svg";
-import hivelogo from "../../assets/Bridge/hive-exchange.png";
+import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';

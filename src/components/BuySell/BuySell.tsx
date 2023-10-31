@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import "../IndexxSwap/IndexxSwap.css";
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import { BSProvider } from '../../utils/SwapContext';
 import BuySellMain from './BuySellMain';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -26,7 +26,7 @@ const BuySell = () => {
       <BSProvider >
         {status === "" && <BuySellMain setStatus={setStatus} />}
       </BSProvider>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

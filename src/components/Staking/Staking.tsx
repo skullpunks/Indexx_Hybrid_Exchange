@@ -1,7 +1,7 @@
 import React from 'react';
 import '../BuySell/BS-Sell.css';
 import '../BuySell/BuySellDummy.css';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import StakingTable from './StakingTable';
 import StakingTop from './StakingTop';
 import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
@@ -32,7 +32,7 @@ const Staking = () => {
             <StakingTable />
           </div>
         </div>
-        <Footer footerArt="flipWoman" />
+        {/* <Footer footerArt="flipWoman" /> */}
       </div>
     </div>
 

@@ -8,7 +8,7 @@ import brian from "../../assets/arts/brian.svg";
 import tony from "../../assets/arts/tony.svg";
 import Nick from "../../assets/arts/Nick.svg";
 import "./About.css";
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 
 const About = () => {
     return (
@@ -102,7 +102,7 @@ const About = () => {
                 </div>
                 <div className='font_15x padding-t-3x margin-t-3x padding-b-3x' style={{ paddingBottom: 200 }}>Make a career out of crypto. Join the indexx.ai team and help us take the future of money to new heights.</div>
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </>
     );
 }

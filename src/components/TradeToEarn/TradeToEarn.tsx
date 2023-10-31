@@ -11,7 +11,7 @@ import red2 from '../../assets/red2.png';
 import red from '../../assets/red.png';
 import redv from '../../assets/vector.png';
 import tradetoearnlogo from '../../assets/arts/tradetoearnlogo.png';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import {
   decodeJWT,
   getUserRewardDetails,
@@ -492,7 +492,7 @@ const TradeToEarn = () => {
         <Image preview={false} src={no3} style={{ paddingLeft: 10, display: 'flex', justifyContent: 'center', width: 480, alignItems: 'center' }}></Image> */}
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

@@ -5,7 +5,7 @@ import dt from "../../assets/how-it-works/discounttable.png";
 import in5 from "../../assets/how-it-works/index500.png";
 import incr from "../../assets/how-it-works/incr.png";
 import inu from "../../assets/how-it-works/inu.png";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 
 const HowTokens = () => {
   return (
@@ -268,7 +268,7 @@ const HowTokens = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };
