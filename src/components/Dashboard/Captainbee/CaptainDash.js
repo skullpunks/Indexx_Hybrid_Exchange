@@ -192,7 +192,7 @@ const CaptainDash = () => {
                         position: 'absolute',
                         bottom: '-25px',
                         right: '17px',
-                        width: '79px', 
+                        width: '79px',
                         height: '81px',
                       }}
                     />
@@ -619,7 +619,7 @@ const CaptainDash = () => {
                             fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${staticsData?.affiliateUserTotalEarnings?.amountInUSD? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(1) : 0}
+                             ${'0.00'}
                           </Typography>
                           <Typography
                             variant="text"
@@ -634,7 +634,7 @@ const CaptainDash = () => {
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                            <img alt="up" src={arrow} />  {"0%"}
                           </Typography>
                         </Box>
                       </Box>
@@ -925,7 +925,10 @@ const CaptainDash = () => {
                             fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${staticsData?.affiliateUserTotalEarnings?.amountInUSD? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(1) : 0}
+                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
+                              : '0.00')
+                            }
                           </Typography>
                           <Typography
                             variant="text"

@@ -123,7 +123,7 @@ const columns: ColumnsType<DataType> = [
     //     // },
     // },
     {
-        title: 'Unavailable Balance',
+        title: 'Staked Balance',
         dataIndex: 'coinBalance',
         render: (_, record) => {
             return 0;

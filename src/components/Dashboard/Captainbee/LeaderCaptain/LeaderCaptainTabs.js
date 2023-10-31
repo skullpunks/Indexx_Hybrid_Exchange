@@ -9,7 +9,7 @@ import LeaderCaptGrowth from './LeaderCaptGrowth';
 import GivePermissionsLeader from './GivePermissionsLeader';
 
 
-const LeaderCaptainTabs = () => {
+const LeaderCaptainTabs = ({leaderEmail}) => {
     return (
         <div 
         // style={{ paddingTop: 90 }} 
@@ -17,7 +17,7 @@ const LeaderCaptainTabs = () => {
         >
             <Tabs defaultActiveKey="1" className='tab-list'>
                 <Tabs.TabPane tab="Growth" key="1">
-                   <LeaderCaptGrowth/>
+                   <LeaderCaptGrowth leaderEmail={leaderEmail}/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Permissions" key="2">
                   <GivePermissionsLeader/>

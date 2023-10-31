@@ -1018,6 +1018,12 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'LTC') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'MATIC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DOT') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BCH') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INEX') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'IAMZN') {

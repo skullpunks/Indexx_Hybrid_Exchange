@@ -92,9 +92,17 @@ const StakingTop = () => {
       if (res.status === 200) {
         setUserBalance(res.data.balance);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > res.data.balance) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -102,23 +110,33 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
       } else {
         setUserBalance(0);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > 0) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -126,14 +144,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -143,9 +163,17 @@ const StakingTop = () => {
       if (res.status === 200) {
         setUserBalance(res.data.balance);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > res.data.balance) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -153,23 +181,33 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
       } else {
         setUserBalance(0);
         let inputAmt = amt;
-        if (inputAmt < 50) {
-          setError('Minimum staking amount must be at least 50.');
-        } else if (inputAmt > 0) {
+        let minimumRequired = 50;
+        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+        if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(value)) {
+          minimumRequired = 0.01;
+        }
+
+        if (inputAmt < minimumRequired) {
+          setError(
+            `Minimum staking amount must be at least ${minimumRequired}.`
+          );
+        } else if (inputAmt > userBalance) {
           setError(
             `Insufficient balance available to stake. Please buy ${value} or deposit ${value}.`
           );
@@ -177,14 +215,16 @@ const StakingTop = () => {
           setError('');
 
           if (type === 'Long') {
-            setRewards(inputAmt * selectedToken.stakingPercentage1year);
+            setRewards(inputAmt * (selectedToken.stakingPercentage1year / 100));
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage1year)
+              inputAmt * (1 + selectedToken.stakingPercentage1year / 100)
             );
           } else if (type === 'Short') {
-            setRewards(inputAmt * selectedToken.stakingPercentage6months);
+            setRewards(
+              inputAmt * (selectedToken.stakingPercentage6months / 100)
+            );
             setFinalAmount(
-              inputAmt * (1 + selectedToken.stakingPercentage6months)
+              inputAmt * (1 + selectedToken.stakingPercentage6months / 100)
             );
           }
         }
@@ -226,8 +266,16 @@ const StakingTop = () => {
       setSelectedToken(filteredTokens[0]);
       getCoinBalance(filteredTokens[0].title);
       let inputAmt = amt;
-      if (inputAmt < 50) {
-        setError('Minimum staking amount must be at least 50.');
+      let minimumRequired = 50;
+      // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+      if (
+        ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(filteredTokens[0].title)
+      ) {
+        minimumRequired = 0.01;
+      }
+
+      if (inputAmt < minimumRequired) {
+        setError(`Minimum staking amount must be at least ${minimumRequired}.`);
       } else if (inputAmt > userBalance) {
         setError(
           `Insufficient balance available to stake. Please buy ${filteredTokens[0].title} or deposit ${filteredTokens[0].title}.`
@@ -236,14 +284,18 @@ const StakingTop = () => {
         setError('');
 
         if (type === 'Long') {
-          setRewards(inputAmt * filteredTokens[0].stakingPercentage1year);
+          setRewards(
+            inputAmt * (filteredTokens[0].stakingPercentage1year / 100)
+          );
           setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage1year)
+            inputAmt * (1 + filteredTokens[0].stakingPercentage1year / 100)
           );
         } else if (type === 'Short') {
-          setRewards(inputAmt * filteredTokens[0].stakingPercentage6months);
+          setRewards(
+            inputAmt * (filteredTokens[0].stakingPercentage6months / 100)
+          );
           setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage6months)
+            inputAmt * (1 + filteredTokens[0].stakingPercentage6months / 100)
           );
         }
       }
@@ -255,11 +307,11 @@ const StakingTop = () => {
   const handleChange = (event) => {
     setType(event.target.value);
     if (event.target.value === 'Long') {
-      setRewards(amt * selectedToken.stakingPercentage1year);
-      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year));
+      setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year / 100));
     } else if (event.target.value === 'Short') {
-      setRewards(amt * selectedToken.stakingPercentage6months);
-      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months));
+      setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
     }
   };
 
@@ -379,8 +431,18 @@ const StakingTop = () => {
               setSelectedToken(selectedCoin);
               getCoinBalance(e.target.value);
               let inputAmt = amt;
-              if (inputAmt < 50) {
-                setError('Minimum staking amount must be at least 50.');
+              let minimumRequired = 50;
+              // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+              if (
+                ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
+              ) {
+                minimumRequired = 0.01;
+              }
+
+              if (inputAmt < minimumRequired) {
+                setError(
+                  `Minimum staking amount must be at least ${minimumRequired}.`
+                );
               } else if (inputAmt > userBalance) {
                 setError(
                   `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
@@ -534,8 +596,16 @@ const StakingTop = () => {
                   onChange={(e) => {
                     const inputAmt = e.target.value;
                     setAmt(inputAmt);
-                    if (inputAmt < 50) {
-                      setError('Minimum staking amount must be at least 50.');
+                    let minimumRequired = 50;
+                    // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                    if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)) {
+                      minimumRequired = 0.01;
+                    }
+
+                    if (inputAmt < minimumRequired) {
+                      setError(
+                        `Minimum staking amount must be at least ${minimumRequired}.`
+                      );
                     } else if (inputAmt > userBalance) {
                       setError(
                         `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
@@ -545,19 +615,23 @@ const StakingTop = () => {
 
                       if (type === 'Long') {
                         setRewards(
-                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                          inputAmt *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
                         );
                         setFinalAmount(
                           inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                            (1 + selectedToken?.stakingPercentage1year / 100 ??
+                              0)
                         );
                       } else if (type === 'Short') {
                         setRewards(
-                          inputAmt * selectedToken?.stakingPercentage1year ?? 0
+                          inputAmt *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
                         );
                         setFinalAmount(
                           inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year ?? 0)
+                            (1 + selectedToken?.stakingPercentage1year / 100 ??
+                              0)
                         );
                       }
                     }
@@ -737,7 +811,7 @@ const StakingTop = () => {
                   Final Amount you will receive
                 </Typography>
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {finalAmount}
+                  {finalAmount.toFixed(2)}
                 </Typography>
               </Box>
               <Box className="d-flex justify-content-between">
@@ -830,11 +904,11 @@ const StakingTop = () => {
                     setcalcAmt(e.target.value);
                     setSixMonthReward(
                       Number(e.target.value) *
-                        selectedToken?.stakingPercentage6months ?? 0
+                        (selectedToken?.stakingPercentage6months / 100) ?? 0
                     );
                     setOneYearReward(
                       Number(e.target.value) *
-                        selectedToken?.stakingPercentage1year ?? 0
+                        (selectedToken?.stakingPercentage1year / 100) ?? 0
                     );
                   }}
                 />
@@ -893,7 +967,7 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.85 }}
                 >
-                  {sixMonthReward}
+                  {sixMonthReward.toFixed(2)}
                 </Typography>
               </Box>
 
@@ -907,7 +981,7 @@ const StakingTop = () => {
                   textAlign={'left'}
                   sx={{ pt: 0.85 }}
                 >
-                  {oneYearReward}
+                  {oneYearReward.toFixed(2)}
                 </Typography>
               </Box>
             </Box>
