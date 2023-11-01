@@ -91,15 +91,15 @@ const BSStakingHistoryTable: React.FC = () => {
             title: 'Final Amount',
             dataIndex: 'finalAmount',
             key: 'finalAmount',
-            render: (text, record) => (
+            render: (_, record) => (
                 <span>
-                    {parseFloat(text).toFixed(2)} {record?.rewardCoin}
+                    {String(record.stakedAmount.toFixed(2))} {record.coin} {"+"} {String(record.rewardAmount.toFixed(2))} {record.rewardCoin}
                 </span>
             ),
             responsive: ['sm'],
-            sorter: (a, b) => a.finalAmount - b.finalAmount,
+            //sorter: (a, b) => a.stakedAmount.localeCompare(b.stakedAmount), // sorting based on stakedAmount as a simple reference
             sortDirections: ['descend', 'ascend'],
-        },
+        },    
         {
             title: 'Type',
             dataIndex: 'type',

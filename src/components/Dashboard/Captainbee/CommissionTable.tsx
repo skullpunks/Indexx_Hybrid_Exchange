@@ -4,15 +4,16 @@ import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
 import { commissionList, decodeJWT, getUserWallets } from '../../../services/api'
-import { Button } from 'antd';
 
 interface DataType {
-  beeType: string;
+  beeType?: string; // Made it optional since the response doesn't have this
   captainBeeEmail: string;
   created: Date;
-  rank: string;  // We still don't have rank data
+  rank: string;
   finalCommissionAmountInUSD: number;
+  commissionPercentage: number;
   orderAmount: number;
+  name?: string;  // Added this based on the response
 }
 
 type CommissionTableProps = {
@@ -21,8 +22,6 @@ type CommissionTableProps = {
 
 
 const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
-  const [hideZeroBalance, setHideZeroBalance] = useState(false);
-  const [valueInput, setValueInput] = useState('');
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
     filters,
@@ -30,41 +29,28 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     extra
   ) => { };
 
-  const handleButtonInvest = (id: any) => { };
-
-  const handleButtonWithdraw = (id: any) => { };
-
-  //   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-
-  // const getCurrentDate = (): string => {
-  //   return new Date().toLocaleString('en-US', options);
-  // };
-
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  };
-
-  const getCurrentDate = (): string => {
-    return new Date().toLocaleDateString('en-US', dateOptions);
-  };
 
   const columns: ColumnsType<DataType> = [
     {
       dataIndex: 'beeType',
       title: 'Type',
-      sorter: (a, b) => a.beeType.localeCompare(b.beeType),
+      sorter: (a, b) => (a.beeType || "Captain").localeCompare(b.beeType || "Captain"),
       render: (_, record) => {
         return record.beeType ? record.beeType : "Captain";
       },
     },
     {
       title: 'Name',
-      dataIndex: 'captainBeeEmail',
-      sorter: (a, b) => a.captainBeeEmail.localeCompare(b.captainBeeEmail),
+      dataIndex: 'name',
+      sorter: (a, b) => {
+        if (a.name && b.name) {
+          return a.name.localeCompare(b.name);
+        } else {
+          return a.captainBeeEmail.localeCompare(b.captainBeeEmail);
+        }
+      },
       render: (_, record) => {
-        return record.captainBeeEmail.split('@')[0];  // Extract name from email
+        return record.name || record.captainBeeEmail.split('@')[0];
       },
     },
     {
@@ -80,8 +66,8 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       dataIndex: 'rank',
       responsive: ['sm'],
       sorter: (a, b) => a.rank.localeCompare(b.rank),
-      render: () => {
-        return "Bronze";  // Need to adjust based on actual rank data
+      render: (_, record) => {
+        return record.rank;  // Adjusted based on actual rank data
       },
     },
     {
@@ -89,6 +75,12 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       dataIndex: 'finalCommissionAmountInUSD',
       sorter: (a, b) => a.finalCommissionAmountInUSD - b.finalCommissionAmountInUSD,
       render: (_, record) => "$" + parseFloat(String(record.finalCommissionAmountInUSD)).toFixed(2),
+    },
+    {
+      title: 'Commission Percentage',
+      dataIndex: 'commissionPercentage',
+      sorter: (a, b) => a.commissionPercentage - b.commissionPercentage,
+      render: (_, record) => parseFloat(String(record.commissionPercentage)).toFixed(2),
     },
     {
       title: 'Order Total',
@@ -99,7 +91,6 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       },
     },
   ];
-
 
   interface CommissionDataType {
     _id: string;
