@@ -10,6 +10,8 @@ import { IOSSwitch } from '../../IOSSwitch/IOSSwitch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -41,6 +43,9 @@ const CaptainProfile = () => {
   const [userType, setUserType] = useState("");
   const [loadings, setLoadings] = useState(false);
   const [bio, setBio] = useState("");
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -129,7 +134,7 @@ const CaptainProfile = () => {
         (<div className="hive-container" style={{ paddingTop: "280px" }}>
           <div
             className="d-flex flex-direction-column justify-content-center"
-            style={{ width: '74%', maxWidth: '1140px' }}
+            style={{ width: `${isMobile ? '90%' : '74%'}`, maxWidth: '1140px' }}
           >
             <div
               style={{
@@ -181,12 +186,13 @@ const CaptainProfile = () => {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-start',
-                  width: '58%',
+                  // width: '58%',
+                  width: `${isMobile ? '90%' : '58%'}`,
                   maxWidth: '1520px',
                   mt: 7,
                 }}
               >
-                <Typography variant="text" fontSize={'30px'} fontWeight={600}>
+                <Typography variant="text" fontSize={isMobile ? '20px' : '30px'} fontWeight={600}>
                   Captain Bee Information
                 </Typography>
                 <Box
@@ -201,7 +207,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -254,7 +260,7 @@ const CaptainProfile = () => {
                   >
                     <Typography
                       variant="text"
-                      fontSize={'18px'}
+                      fontSize={isMobile ? '14px' : '18px'}
                       fontWeight={400}
                       width={'35%'}
                       textAlign={'left'}
@@ -283,17 +289,18 @@ const CaptainProfile = () => {
                       display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'flex-end',
-                      alignItems: 'baseline',
+                      // alignItems: 'baseline',
                       width: '100%',
                       mb: 2
                     }}
                   >
                     <Typography
                       variant="text"
-                      fontSize={'15px'}
+                      fontSize={isMobile ? '12px' : '15px'}
                       fontWeight={400}
-                      width={'50%'}
+                      width={isMobile ? '47%' :'55.8%'}
                       textAlign={'left'}
+                      mt={'7px'}
                     >
                       Display Email address publically
                     </Typography>
@@ -309,6 +316,7 @@ const CaptainProfile = () => {
                             setUseEmail(false)
                           }
                         }}
+                        style={{marginLeft:0, marginRight:"-8px"}}
                       />
                     </FormGroup>
                   </Box>
@@ -325,7 +333,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -372,7 +380,7 @@ const CaptainProfile = () => {
                   >
                     <Typography
                       variant="text"
-                      fontSize={'18px'}
+                      fontSize={isMobile ? '14px' : '18px'}
                       fontWeight={400}
                       width={'35%'}
                       textAlign={'left'}
@@ -401,17 +409,18 @@ const CaptainProfile = () => {
                       display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'flex-end',
-                      alignItems: 'baseline',
+                      // alignItems: 'baseline',
                       width: '100%',
                       mb: 2
                     }}
                   >
                     <Typography
                       variant="text"
-                      fontSize={'15px'}
+                      fontSize={isMobile ? '12px' : '15px'}
                       fontWeight={400}
-                      width={'50%'}
+                      width={isMobile ? '47%' :'55.8%'}
                       textAlign={'left'}
+                      mt={'7px'}
                     >
                       Display phone number publically
                     </Typography>
@@ -427,6 +436,7 @@ const CaptainProfile = () => {
                             setUsePhone(false)
                           }
                         }}
+                        style={{marginLeft:0, marginRight:"-8px"}}
                       />
                     </FormGroup>
                   </Box>
@@ -444,10 +454,11 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
+                    alignSelf={isMobile ? 'normal' : 'baseline'}
                   >
                     Honey Bee Referral Code
                   </Typography>
@@ -476,10 +487,11 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
+                    alignSelf={isMobile ? 'normal' : 'baseline'}
                   >
                     Captain Bee Referral Code
                   </Typography>
@@ -505,13 +517,14 @@ const CaptainProfile = () => {
                   justifyContent: 'center',
                   alignItems: 'flex-start',
                   width: '58%',
+                  width: `${isMobile ? '90%' : '58%'}`,
                   mt: 7,
                   maxWidth: '1520px',
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'30px'}
+                  fontSize={isMobile ? '20px' : '30px'}
                   fontWeight={600}
                   mb={2}
                 >
@@ -530,7 +543,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -563,7 +576,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -592,13 +605,14 @@ const CaptainProfile = () => {
                   justifyContent: 'center',
                   alignItems: 'flex-start',
                   width: '58%',
+                  width: `${isMobile ? '90%' : '58%'}`,
                   mt: 7,
                   maxWidth: '1520px',
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'30px'}
+                  fontSize={isMobile ? '20px' : '30px'}
                   fontWeight={600}
                   mb={2}
                 >
@@ -617,7 +631,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -650,7 +664,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -683,7 +697,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -716,7 +730,7 @@ const CaptainProfile = () => {
                 >
                   <Typography
                     variant="text"
-                    fontSize={'18px'}
+                    fontSize={isMobile ? '14px' : '18px'}
                     fontWeight={400}
                     width={'35%'}
                     textAlign={'left'}
@@ -744,7 +758,8 @@ const CaptainProfile = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'baseline',
-                  width: '58%',
+                  // width: '58%',
+                  width: `${isMobile ? '90%' : '58%'}`,
                   my: 2,
                 }}
               >
@@ -758,7 +773,7 @@ const CaptainProfile = () => {
                     borderRadius: '2px',
                     color: '#282828',
                     width: '49%',
-                    px: 10,
+                    px: isMobile ? 0 : 10,
                     //   py: 1,
                     textTransform: 'none',
                     fontSize: '15px',
@@ -784,8 +799,8 @@ const CaptainProfile = () => {
                     borderRadius: '2px',
                     color: '#282828',
                     width: '49%',
-                    px: 10,
-                    py: 1,
+                    px: isMobile ? 0 : 10,
+                    // py: 1,
                     textTransform: 'none',
                     fontSize: '15px',
                     fontWeight: 500,

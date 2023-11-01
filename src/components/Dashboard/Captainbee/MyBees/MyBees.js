@@ -261,7 +261,7 @@ const MyBees = () => {
         (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
             <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
-              These are the Honey Bees that are part of your honeycomb. Select one to guide them
+              These are the Honey Bees that are part of your Colony. Select one to guide them
             </div>
           </div>
           <div className="hive-container d-flex">

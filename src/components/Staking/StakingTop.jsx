@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import comingSoon from "../../assets/coming_soon.png";
+// import { Button } from 'antd';
 import {
   decodeJWT,
   getUserWallets,
@@ -43,7 +44,7 @@ const StakingTop = () => {
   const [selectedToken, setSelectedToken] = useState();
   const [calcAmt, setcalcAmt] = useState('');
   const [amt, setAmt] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Long');
   const [isVisible, setIsVisible] = useState(true);
   const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
   const [honeyBeeId, setHoneyBeeId] = useState('');
@@ -822,6 +823,17 @@ const StakingTop = () => {
                   N/A
                 </Typography>
               </Box>
+              {/* <Button
+            type="primary"
+            className="atn-btn atn-btn-round"
+            block
+                onClick={submitStake}
+                disabled={!!error || !amt || !type}
+            loading={loadings}
+          >
+            {' '}
+            Confirm Purchase
+          </Button> */}
               <Button
                 variant="contained"
                 disableTouchRipple

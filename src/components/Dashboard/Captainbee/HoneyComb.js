@@ -43,6 +43,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { baseCEXURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import { RankData } from '../RankData';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const HoneyComb = () => {
 
@@ -54,6 +56,9 @@ const HoneyComb = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -133,21 +138,21 @@ const HoneyComb = () => {
   return (
     <>
       <SubHeader />
-      <div style={{ paddingTop: '220px' }}>
+      <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
         <div
           className="fw-bold justify-content-center d-flex"
-          style={{ fontSize: '32px' }}
+          style={{ fontSize: `${isMobile ? "18px" : '32px'}` }}
         >
           Captain Bee {staticsData?.affiliateUserProfile?.accname} Public Profile
         </div>
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
-            style={{ width: '70%', maxWidth: '1200px' }}
+            style={{ width:`${isMobile ? "90%" : "70%"}`, maxWidth: '1200px', flexDirection:`${isMobile ? "column" : "row"}` }}
           >
             <div
               className="d-flex flex-direction-column mt-1"
-              style={{ width: '30%' }}
+              style={{ width: `${isMobile ? "100%" : "30%"}`  }}
             >
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
@@ -191,14 +196,14 @@ const HoneyComb = () => {
                     />
                 </div>
               </div>
-              <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
+              <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{justifyContent:`${isMobile ? "center" : "start"}`}}>
                 Captain Bee {staticsData?.affiliateUserProfile?.accname}
               </div>
               {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                 (<div className="justify-content-center d-flex">
-                  <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                  <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                 </div>) : (
-                  <div>
+                  <div className="justify-content-center d-flex flex-direction-column" style={{marginLeft:`${isMobile ? "40px" : 0}`}}>
                     Please purchase the powerpack from the below URL: <br />
                     <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                       Power Pack Purchase
@@ -206,8 +211,8 @@ const HoneyComb = () => {
                   </div>
                 )
               }
-              <div className="align-items-start lh_32x">
-                <div className="font_17x d-flex flex-direction-column align-items-start mt-4">
+              <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
+                <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
@@ -268,7 +273,7 @@ const HoneyComb = () => {
                 }
               </div>
 
-              <div className="align-items-start lh_32x mt-5">
+              <div className="align-items-start lh_32x mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={discord_dark} className="me-3" />
@@ -298,7 +303,7 @@ const HoneyComb = () => {
                   )}
                 </a>
               </div>
-              <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+              <div className="d-flex flex-direction-column align-items-start lh_32x mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
                 <div>
                   Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -316,7 +321,7 @@ const HoneyComb = () => {
                   />
                 </div>
               </div>
-              <div className="d-flex  flex-direction-column align-items-start mt-5">
+              <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
                 <div className="font_13x ">Your Rating</div>
                 <div className="mt-4">
                   <Rating name="read-only" value={4} readOnly size="large" />
@@ -466,7 +471,7 @@ const HoneyComb = () => {
                       backgroundColor: '#FFB300',
                       borderRadius: '2px',
                       color: '#282828',
-                      width: '35%',
+                      width: `${isMobile ? '100%' : '35%'}`,
                       px: 4,
                       py: 0.5,
                       textTransform: 'none',
@@ -474,7 +479,7 @@ const HoneyComb = () => {
                       fontWeight: 500,
                       boxShadow: 'none',
                       mt: 3,
-                      alignSelf: "flex-end",
+                      alignSelf: `${isMobile ? 'center' : 'flex-end'}`,
                       '&:hover': {
                         backgroundColor: '#FFD000',
                         boxShadow: 'none',

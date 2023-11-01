@@ -36,7 +36,7 @@ const SubHeader = () => {
         <Link to="/indexx-exchange/dashboard">
             <div className="card">
             <img src={waggle} className="card-img-top mt-2 mb-sm-2" alt="..."/>
-            <div className="card-body" style={{marginTop:"1.5px"}}>
+            <div className="card-body" style={{marginTop:`${isMobile ? "-1px" : "1.5px"}`}}>
                 <h5 className="card-title">Waggle Dance</h5>
                 <Typography
                 component='p'
@@ -80,7 +80,7 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-mycaptains">
             <div className="card">
-            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
                 <h5 className="card-title">Captain Bee's Colony</h5>
             <Typography
@@ -103,7 +103,7 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-leader">
             <div className="card">
-            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
                 <h5 className="card-title">Leader Captain Bee</h5>
             <Typography
