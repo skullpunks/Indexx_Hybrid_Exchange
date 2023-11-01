@@ -1,5 +1,5 @@
 .site_footer {
-    background-color: var(--body_background);
+    background-color: var(--main-body);
     color: var(--body_color);
 }
 
@@ -34,7 +34,7 @@
 }
 
 .copyright_bar {
-    background-color: var(--body_background);
+    background-color: var(--main-body);
     display: flex;
     flex-direction: row;
     align-items: center;

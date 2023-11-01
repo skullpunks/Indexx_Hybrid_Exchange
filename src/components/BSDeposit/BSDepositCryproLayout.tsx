@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import BSDepositCryptoSelect from './BSDepositCryptoSelect';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import BSDepositCryptoWallet from './BSDepositCryptoWallet';
@@ -19,7 +19,7 @@ export const BSDepositCryproLayout = () => {
                     </Routes>
                 </BSProvider >
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </>
     )
 

@@ -20,7 +20,7 @@ import {
   getUserCreatedBugs,
   enableTradeToEarn,
 } from '../../services/api';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import OpenNotification from '../OpenNotification/OpenNotification';
 
 const { Text } = Typography;
@@ -648,7 +648,7 @@ const TaskCenter = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

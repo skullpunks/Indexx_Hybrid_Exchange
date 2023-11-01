@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import comingSoon from "../../assets/coming_soon.png";
+// import { Button } from 'antd';
 import {
   decodeJWT,
   getUserWallets,
@@ -43,7 +44,7 @@ const StakingTop = () => {
   const [selectedToken, setSelectedToken] = useState();
   const [calcAmt, setcalcAmt] = useState('');
   const [amt, setAmt] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Long');
   const [isVisible, setIsVisible] = useState(true);
   const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
   const [honeyBeeId, setHoneyBeeId] = useState('');
@@ -323,27 +324,23 @@ const StakingTop = () => {
           Staking
         </h1>
       </div>
-      <div
-        className="padding-t-1x width-100 bs_wallet_top_banner position-relative"
-        style={{ maxWidth: '1600px' }}
-      >
+      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'start',
+            justifyContent: 'space-between',
             alignItems: 'baseline',
             width: '100%',
             background: 'var(--main-body)',
-            gap: 4,
+            gap: 5,
             //   pl: 1,
             pt: 0.4,
           }}
         >
+          <Box className="d-flex " width={'48%'} sx={{gap:4}}>
           <Typography
-            //   variant="text"
             fontSize={'25px'}
-            //   fontWeight={600}
             textAlign={'left'}
           >
             Staking type
@@ -356,7 +353,7 @@ const StakingTop = () => {
             variant="standard"
             //   InputLabelProps={{ shrink: true }}
             sx={{
-              width: '35%',
+              width: '72.5%',
               borderRadius: 0,
               background: 'var(--main-body)',
               color: 'var(--body_color)',
@@ -375,8 +372,9 @@ const StakingTop = () => {
               Stock Token
             </MenuItem>
           </Select>
-
-          <Typography fontSize={'25px'} textAlign={'left'} ml={7}>
+          </Box>
+          <Box className="d-flex " width={'45%'}>
+          <Typography fontSize={'25px'} textAlign={'left'}>
             Blockchain
           </Typography>
           <Box
@@ -399,6 +397,7 @@ const StakingTop = () => {
               style={{ marginRight: '8px' }}
             />
             BSC Mainnet
+          </Box>
           </Box>
         </Box>
         <Box
@@ -824,6 +823,17 @@ const StakingTop = () => {
                   N/A
                 </Typography>
               </Box>
+              {/* <Button
+            type="primary"
+            className="atn-btn atn-btn-round"
+            block
+                onClick={submitStake}
+                disabled={!!error || !amt || !type}
+            loading={loadings}
+          >
+            {' '}
+            Confirm Purchase
+          </Button> */}
               <Button
                 variant="contained"
                 disableTouchRipple

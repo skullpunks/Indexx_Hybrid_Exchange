@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { Button, Image } from 'antd';
 import IN500 from '../../assets/token-icons/IN500.png';
@@ -276,7 +276,7 @@ const ImportTokens = () => {
                 <br />
             </div>
 
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

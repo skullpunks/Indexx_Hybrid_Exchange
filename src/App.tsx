@@ -91,6 +91,7 @@ import Staking from "./components/Staking/Staking";
 import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
 import Bridge from "./components/Bridge/Bridge";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
+import Footer from "./components/Footer/Footer";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -326,6 +327,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
     </ThemeProvider>
   );

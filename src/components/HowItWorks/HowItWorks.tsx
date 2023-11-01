@@ -5,7 +5,7 @@ import tradetoearn from "../../assets/how-it-works/tradetoearn.png";
 import tokens from "../../assets/how-it-works/tokens.png";
 import indexxfortune from "../../assets/how-it-works/indexxfortune.png";
 import finalsquare from "../../assets/how-it-works/finalsquare.png";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 const { Text } = Typography;
 
@@ -137,7 +137,7 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

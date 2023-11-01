@@ -282,7 +282,7 @@ const LeaderCaptain = () => {
                     (<div className="justify-content-center d-flex">
                       <img src={powerPackPhoto} alt='pack' width={"80%"} />
                     </div>) : (
-                      <div>
+                      <div className="justify-content-start d-flex">
                         Leader has not purchased any powerpack.
                       </div>
                     )

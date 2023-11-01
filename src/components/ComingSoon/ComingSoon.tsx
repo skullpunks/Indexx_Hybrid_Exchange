@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import { useSearchParams } from "react-router-dom";
 import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 import careersIcon from "../../assets/arts/careersIcon.png";
@@ -27,7 +27,7 @@ const ComingSoon = () => {
                 }
             </div>
 
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

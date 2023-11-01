@@ -10,10 +10,15 @@ import NodeGraph from '../../graph';
 import FlowDiagram2 from '../../graph';
 import FlowDiagram from '../../reactFlow';
 import man from "../../../../assets/hive-dashboard/man4 2.svg";
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const MyBees = () => {
   const [staticsData, setStaticsData] = useState();
   const [userType, setUserType] = useState("");
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -30,7 +35,7 @@ const MyBees = () => {
   // Define a function to render a single Honey Bee box.
   const renderHoneyBeeBox = (item) => (
     <Grid item xs={1} sm={6} md={3} >
-      <div className="d-flex flex-direction-column">
+      <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
           <div
             style={{
@@ -164,7 +169,7 @@ const MyBees = () => {
   // Define a function to render an empty Honey Bee box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
     <Grid item xs={1} sm={6} md={3}>
-      <div className="d-flex flex-direction-column">
+      <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
           <img src={man} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
 
@@ -253,10 +258,10 @@ const MyBees = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: "220px" }}>
+        (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: "30%", textAlign: "center" }}>
-              These are the Honey Bees that are part of your honeycomb. Select one to guide them
+            <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
+              These are the Honey Bees that are part of your Colony. Select one to guide them
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -264,6 +269,7 @@ const MyBees = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
+                flexDirection: `${isMobile? "column" : "row"}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,
@@ -271,8 +277,8 @@ const MyBees = () => {
             >
               <Grid
                 container
-                // columns={{ xs: 1, sm: 12, md: 12 }}
-                spacing={{ xs: 1, md: 2 }}
+                columns={{ xs: 1, sm: 12, md: 12 }}
+                spacing={{ xs: 12, md: 2 }}
                 maxWidth={"1150px"}
                 rowSpacing={12}
               >

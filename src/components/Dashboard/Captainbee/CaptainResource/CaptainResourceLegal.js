@@ -3,6 +3,8 @@ import ResourceHeader from './ResourceHeader/ResourceHeader'
 import SubHeader from '../SubHeader/SubHeader'
 import { Box, Grid } from '@mui/material';
 import './CaptainResource.css'
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const resourceData = [
   {
@@ -49,6 +51,8 @@ const resourceData = [
 
 const CaptainResourceLegal = () => {
   const [resource ] = useState(resourceData);
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
     <>
@@ -57,7 +61,7 @@ const CaptainResourceLegal = () => {
       <div className="hive-container" style={{paddingTop:"320px"}}>
       <Box
           sx={{
-            width: '53%',
+            width: `${isMobile ? "95%" : '53%'}`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -66,7 +70,7 @@ const CaptainResourceLegal = () => {
         >
           <Grid
             container
-            // columns={{ xs: 1, sm: 12, md: 12 }}
+            columns={{ xs: 2, sm: 12, md: 12 }}
             spacing={{ xs: 1, md: 1 }}
             maxWidth={"500px"}
             rowSpacing={8}

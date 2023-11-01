@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Upload, Table } from 'antd';
 import AWS from 'aws-sdk';
 import { useEffect, useState } from 'react';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { createBug, decodeJWT, getUserCreatedBugs } from '../../services/api';
@@ -403,7 +403,7 @@ const BugReport = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

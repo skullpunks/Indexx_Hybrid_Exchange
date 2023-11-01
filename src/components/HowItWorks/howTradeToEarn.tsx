@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import t2e from "../../assets/how-it-works/tradetoearncoin.png";
 import phase1 from "../../assets/how-it-works/phase1.png";
 import phase2 from "../../assets/how-it-works/phase2.png";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 
 const HowTradeToEarn = () => {
   const navigate = useNavigate();
@@ -152,7 +152,7 @@ const HowTradeToEarn = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

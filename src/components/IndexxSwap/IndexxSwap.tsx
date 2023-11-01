@@ -6,7 +6,7 @@ import ConfirmSwap from '../ConfirmSwap/ConfirmSwap';
 import WaitForConfirmation from '../WaitForConfirmation/WaitForConfirmation';
 import TransactionSubmit from '../TransactionSubmit/TransactionSubmit';
 import ConfirmSwapTwo from '../ConfirmSwapTwo/ConfirmSwapTwo';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import { SwapFromContext, SwapToContext } from '../../utils/SwapContext';
 import bgContainer from "../../assets/arts/bgContainer.png";
 
@@ -28,7 +28,7 @@ const IndexxSwap = () => {
                     {status === "TransactionSubmit" && <TransactionSubmit setStatus={setStatus} />}
                 </SwapToContext.Provider>
             </SwapFromContext.Provider>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

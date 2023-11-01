@@ -619,7 +619,7 @@ const CaptainDash = () => {
                             fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${'0.00'}
+                             ${'0.00'}
                           </Typography>
                           <Typography
                             variant="text"

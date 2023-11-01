@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './IndexBlog.css';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import ShortenText from '../../utils/ShortenText';
 import ToText from '../../utils/ToText';
 import { getAllPost } from '../../services/blogAPI';
@@ -89,7 +89,7 @@ export const IndexBlog = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

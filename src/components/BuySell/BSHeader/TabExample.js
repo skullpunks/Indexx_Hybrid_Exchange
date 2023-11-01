@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import stock from '../../../assets/BSheader/graphd 1.svg';
+import stock from '../../../assets/BSheader/Stock token bnw.svg';
 import power from '../../../assets/BSheader/power pack 1.svg';
 import token from '../../../assets/BSheader/tokens icon 1.svg';
 import all from '../../../assets/BSheader/EX-010.png';
+import hive_all from '../../../assets/BSheader/hive exchange black 1.svg';
 import stack from '../../../assets/BSheader/staking icon black.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
 import all_white from '../../../assets/BSheader/EX-011.png';
+import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
-import stock_white from '../../../assets/BSheader/tokens icon  white (2).svg';
+import stock_white from '../../../assets/BSheader/Stock token bnw 3.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
 
 import './TabExample.css';
@@ -63,8 +65,10 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         centered
         aria-label="icon label tabs example"
         style={{marginTop:"6px"}}
+        className='tabs-tab'
       >
-        <Tab
+      {localStorage.getItem("userlogged") === 'normal' ?
+      <Tab
           label="Buy Crypto"
           icon=
             {theme === "dark" ? 
@@ -84,7 +88,33 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
             }
           
             className='tab-format'
+            disableTouchRipple
         />
+          :
+          <Tab
+          label="Buy Crypto"
+          icon=
+            {theme === "dark" ? 
+              <img
+                src={hive_all_white}
+                alt="Home"
+                width={'40px'}
+                style={{ marginBottom: 10 }}
+              />
+            :
+              <img
+                src={hive_all}
+                alt="Home"
+                width={'40px'}
+                style={{ marginBottom: 10 }}
+              />
+            }
+          
+            className='tab-format'
+            disableTouchRipple
+        />
+        }
+        
         <Tab
           label="Tokens"
           icon={
@@ -104,6 +134,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
             />
           }
           className='tab-format'
+          disableTouchRipple
         />
 
         <Tab
@@ -118,6 +149,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           style={{ marginBottom: 13, marginTop:6}}
           />}
           className='tab-format'
+          disableTouchRipple
         />
         <Tab
           label="Power Packs"
@@ -140,6 +172,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           component={Link}
           to='/indexx-exchange/power-pack'
           className='tab-format'
+          disableTouchRipple
         />
         <Tab
           label="Staking"
@@ -162,6 +195,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           component={Link}
           to='/indexx-exchange/buy-sell/staking'
           className='tab-format'
+          disableTouchRipple
         />
       </Tabs>
       {/* <div style={{color:"#11BE6A", fontSize:"10px", fontStyle:"italic", display:'flex',

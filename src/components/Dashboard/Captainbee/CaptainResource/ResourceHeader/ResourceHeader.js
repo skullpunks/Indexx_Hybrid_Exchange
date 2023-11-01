@@ -15,7 +15,8 @@ import technical_dark from "../../../../../assets/hive-dashboard/resource-header
 
 import './ResourceHeader.css'
 import { Link, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 
 const ResourceHeader = () => {
@@ -23,6 +24,9 @@ const ResourceHeader = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -39,9 +43,17 @@ const ResourceHeader = () => {
 
   return (
 
-    <div style={{position:"fixed", top:"180px", width:"100%", zIndex:999, background:"var(--main-body)", height:"90px"}} className='resc'>
+    <div style={{position:"fixed", 
+    top:"180px",
+    top:`${isMobile ? "214px" : "180px"}`, 
 
-    <div className="container cover-page">
+     width:"100%", zIndex:999, background:"var(--main-body)", 
+    //  height:"90px"
+    height:`${isMobile ? "112px" : "90px"}`
+     
+     }} className='resc'>
+
+    <div className="container resource-page">
 
     <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
     

@@ -4,7 +4,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Input, Tabs } from 'antd';
 // import type { ColumnsType, TableProps } from 'antd/es/table';
 import MarketsTable from './MarketsTable';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import MarketsBTCTable from './MarketsBTCable';
 import MarketsIUSDPable from './MarketsIUSDPTable';
 import debounce from 'lodash.debounce';
@@ -59,7 +59,7 @@ const Markets = () => {
         </div>
 
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
