@@ -40,7 +40,7 @@ import {
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { baseCEXURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
+import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, postPublicMessage, getPublicMessages } from '../../../services/api';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import { RankData } from '../RankData';
 import { useTheme } from '@emotion/react';
@@ -308,7 +308,9 @@ const HoneyComb = () => {
                   Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
-                    onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                    onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
@@ -316,7 +318,9 @@ const HoneyComb = () => {
                   Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
-                    onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                    onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>

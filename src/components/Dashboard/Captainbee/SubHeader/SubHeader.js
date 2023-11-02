@@ -6,6 +6,7 @@ import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
 import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
+import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
 import './SubHeader.css'
 import { Link, useLocation } from 'react-router-dom';
@@ -197,7 +198,32 @@ const SubHeader = () => {
             </div>
         </a>
         </div>
+        <div className="col" style={{marginLeft:"-20px"}}>
+        <a href="/indexx-exchange/buy-sell">
+            <div className="card">
+            <img src={exch} className="card-img-top" alt="..." style={{marginBottom: `${isMobile ? 0 : "3px" }`}}/>
+            <div className="card-body">
+                <h5 className="card-title">Hive Exchange</h5>
+                <Typography
+                component='p'
+                sx={
+                  location.pathname === '/'
+                    ? {
+                      height: '0.07px',
+                      width: '58px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </a>
+        </div>
 
+        <div className="col" style={{width:"100px"}}>
+        
+        </div>
     </div>
     </div>
 

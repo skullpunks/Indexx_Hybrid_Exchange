@@ -49,7 +49,7 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -306,7 +306,9 @@ const CaptainDash = () => {
                     Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -314,7 +316,9 @@ const CaptainDash = () => {
                     Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -569,7 +573,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'77px'}
+                            fontSize={'50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -615,7 +619,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'77px'}
+                            fontSize={'50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -875,7 +879,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'77px'}
+                            fontSize={'50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -921,7 +925,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'77px'}
+                            fontSize={'50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >

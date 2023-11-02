@@ -801,6 +801,7 @@ a.bs_link:hover {
 
 .hive_link:hover {
   color: #FFD000;
+  cursor: pointer;
 }
 
 .notif{

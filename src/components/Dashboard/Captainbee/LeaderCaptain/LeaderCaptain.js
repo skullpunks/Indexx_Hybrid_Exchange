@@ -20,6 +20,7 @@ import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.s
 import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
+import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
 // import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
@@ -37,7 +38,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import '../../Captainbee/CaptainDash.css';
 import LeaderCaptainTabs from './LeaderCaptainTabs';
 import { Button, Rating } from '@mui/material';
-import { getCaptainBeeStatics, getReferredUserDetails } from '../../../../services/api';
+import { getCaptainBeeStatics, getReferredUserDetails, baseCEXURL, baseHiveURL } from '../../../../services/api';
 import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
 import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
 import SubHeader from '../SubHeader/SubHeader';
@@ -138,6 +139,7 @@ const LeaderCaptain = () => {
 
               <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: "1150px" }}>
                 <div style={{ width: "74%" }}>
+                  <img src={hat} alt="hat" style={{marginRight:"10px"}} />
                   Leader Captain Bee’s  Dashboard
                 </div>
                 <div className='d-flex justify-content-between' style={{ width: "29.5%" }}>
@@ -361,7 +363,9 @@ const LeaderCaptain = () => {
                         Invite Honey Bee : {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick(captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
@@ -369,7 +373,9 @@ const LeaderCaptain = () => {
                         Invite Captain Bee : {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick(captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>

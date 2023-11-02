@@ -47,7 +47,7 @@ import { Rating } from '@mui/material';
 import '../../Captainbee/CaptainDash.css';
 import { Box, Grid, Button } from '@mui/material';
 import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
-import { baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
@@ -360,7 +360,22 @@ const TeamCaptainDash = () => {
           {/* {---} */}
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
             <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
+            {availableBeesCount === 0 ? <>
+              Please invite the Captain Bees using this {" "}
+              <a href={`${
+              baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode
+              }`}
+               className='hive_link'>
+              referral link
+              </a>
+              {" "} to guide them. 
+            </>
+            :
+            <>
               These are the Captain Bees that are part of your Hex Colony. Select one to guide them
+            </>}
             </div>
           </div>
           <div className="hive-container d-flex">

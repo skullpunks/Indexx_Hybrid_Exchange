@@ -7,7 +7,7 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
-import CommissionTable from '../CommissionTable';
+// import CommissionTable from '../CommissionTable';
 
 const LeaderCaptGrowth = ({ leaderEmail }) => {
   const [platform, setPlatform] = useState('Exchange');
@@ -292,7 +292,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   alignItems: 'center',
                   px: 2,
                   py: 1,
-                  // aspectRatio:1
+                  aspectRatio:3
                 }}
               >
                 <Typography
@@ -599,7 +599,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   alignItems: 'center',
                   px: 2,
                   py: 1,
-                  // aspectRatio:1
+                  aspectRatio:3
                 }}
               >
                 <Typography
@@ -701,9 +701,9 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
           </Box>
         </Box>
 
-        <Box>
+        {/* <Box>
           <CommissionTable leaderEmail={myleaderEmail} />
-        </Box>
+        </Box> */}
       </Box>
 
     </div>

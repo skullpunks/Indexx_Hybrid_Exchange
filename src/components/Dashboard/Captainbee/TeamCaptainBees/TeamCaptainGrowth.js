@@ -311,7 +311,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={'50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -357,7 +357,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={'50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -617,7 +617,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={'50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -663,7 +663,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={'50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >

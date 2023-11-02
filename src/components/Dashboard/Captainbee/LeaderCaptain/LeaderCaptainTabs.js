@@ -4,7 +4,7 @@ import React from 'react'
 import { Tabs } from 'antd';
 import './LeaderCaptainTabs.css'
 
-import CaptTransactionHistoryLayout from './CaptTransactionHistory/CaptTransactionHistoryLayout';
+// import CaptTransactionHistoryLayout from './CaptTransactionHistory/CaptTransactionHistoryLayout';
 import LeaderCaptGrowth from './LeaderCaptGrowth';
 import GivePermissionsLeader from './GivePermissionsLeader';
 
@@ -22,9 +22,9 @@ const LeaderCaptainTabs = ({leaderEmail}) => {
                 <Tabs.TabPane tab="Permissions" key="2">
                   <GivePermissionsLeader/>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Transactions" key="3">
+                {/* <Tabs.TabPane tab="Transactions" key="3">
                 <CaptTransactionHistoryLayout/>
-                </Tabs.TabPane>
+                </Tabs.TabPane> */}
             </Tabs>
         </div>
     );

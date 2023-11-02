@@ -99,7 +99,10 @@ const HeaderNew = () => {
   const [isCaptain, setisCaptain] = useState(false);
   const [userProfile, setUserProfile] = useState();
   const [url, setUrl] = useState("");
+  const [haspowerpack, setHaspowerpack] = useState(false);
 
+  console.log(haspowerpack, "has pack");
+  
   let pageName = searchParams.get("page");
   // alert(pageName)
   useEffect(() => {
@@ -136,6 +139,9 @@ const HeaderNew = () => {
 
         setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
         setStaticsData(data.data);
+        if(data?.data?.powerPackData !== undefined || data?.data?.powerPackData !== null || data?.data?.powerPackData !== "" ){
+          setHaspowerpack(true);
+        }
       });
     } else {
       setisCaptain(false);
@@ -873,6 +879,8 @@ const HeaderNew = () => {
 
                   <NavDropdown title={
                     <div className="d-flex align-items-center justify-content-center">
+                      {localStorage.getItem("userlogged") !== 'normal' &&
+
                       <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
 
                         <div
@@ -909,6 +917,7 @@ const HeaderNew = () => {
                           </div>
                         </div>
                       </div>
+                      }
                       <div style={{
                         color: "#FFB300"
                       }}>
@@ -936,11 +945,14 @@ const HeaderNew = () => {
                               Bridge
                             </Link>
                           </NavDropdown.Item>
+                          {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) &&
+
                           <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
                             <Link to="/indexx-exchange/dashboard" className="link-style">
                               Waggle Dance / Dashboard
                             </Link>
                           </NavDropdown.Item>
+}
                           <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
                             <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="link-style">
                               Deposit
@@ -1046,7 +1058,11 @@ const HeaderNew = () => {
 
                         </div>
                       </div>
-                      <div className="back profile-back"> </div>
+                      {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
+                          <div className="back profile-back"> </div>
+                        :
+                          <div className="back profile-back" style={{top:"548px"}}> </div>
+                      }
                     </div>
                   </NavDropdown>
 

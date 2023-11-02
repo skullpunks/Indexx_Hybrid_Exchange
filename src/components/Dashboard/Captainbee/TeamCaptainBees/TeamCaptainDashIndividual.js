@@ -47,7 +47,7 @@ import { Rating } from '@mui/material';
 import '../../Captainbee/CaptainDash.css';
 import { Box, Grid, Button } from '@mui/material';
 import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
-import { baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
@@ -561,7 +561,9 @@ const TeamCaptainDashIndividual = () => {
                     Invite Honey Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -569,7 +571,9 @@ const TeamCaptainDashIndividual = () => {
                     Invite Captain Bee : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>

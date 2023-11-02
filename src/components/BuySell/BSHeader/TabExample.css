@@ -5,8 +5,8 @@
 .ext-tabs .MuiTabs-indicator{
   background-color:  var(--body_color) ;
   height: 0.7px;
-  transform: translateX(50%); 
-  width:50px !important
+  transform: translateX(20%); 
+  width:70px !important
 }
 
 .ext-tabs{

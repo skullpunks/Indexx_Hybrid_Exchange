@@ -13,17 +13,22 @@ import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
 import stock_white from '../../../assets/BSheader/Stock token bnw 3.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
+import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
+import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
 
 import './TabExample.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery} from '@mui/material'
+import { getCaptainBeeStatics } from '../../../services/api';
 
 
 const TabExample = ({ selectedTab, handleTabChange }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
+  const [userType, setUserType] = useState("");
+  const [isCaptain, setisCaptain] = useState(false);
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
@@ -52,6 +57,25 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
 
   console.log(selectedTab);
 
+  const [staticsData, setStaticsData] = useState();
+  const [haspowerpack, setHaspowerpack] = useState(false);
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+
+    setUserType(userType);
+    if (userType === "CaptainBee") {
+      setisCaptain(true);
+      getCaptainBeeStatics(username).then((data) => {
+        setStaticsData(data.data);
+        if(data?.data?.powerPackData !== undefined || data?.data?.powerPackData !== null || data?.data?.powerPackData !== "" ){
+          setHaspowerpack(true);
+        }
+      });
+    }
+  }, [])
+
   return (
     <div
       style={{
@@ -66,10 +90,11 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         aria-label="icon label tabs example"
         style={{marginTop:"6px"}}
         className='tabs-tab'
+        // variant='scrollable'
       >
       {localStorage.getItem("userlogged") === 'normal' ?
       <Tab
-          label="Buy Crypto"
+          label="Exchange"
           icon=
             {theme === "dark" ? 
               <img
@@ -92,7 +117,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         />
           :
           <Tab
-          label="Buy Crypto"
+          label="Hive Exchange"
           icon=
             {theme === "dark" ? 
               <img
@@ -197,6 +222,31 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           className='tab-format'
           disableTouchRipple
         />
+      {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
+        <Tab
+          label="Waggle Dance"
+          icon={
+            theme === "dark" ? 
+              <img
+                src={waggle_white}
+                alt="Home"
+                width={'55px'}
+                style={{ marginBottom: "15px" }}
+              />
+            :
+            <img
+              src={waggle}
+              alt="Home"
+              width={'55px'}
+              style={{ marginBottom: "15px" }}
+            />
+          }
+          component={Link}
+          to='/indexx-exchange/dashboard'
+          className='tab-format'
+          disableTouchRipple
+        />
+      :null}
       </Tabs>
       {/* <div style={{color:"#11BE6A", fontSize:"10px", fontStyle:"italic", display:'flex',
       justifyContent:"center", paddingTop:"10px", paddingBottom:"30px"}}>

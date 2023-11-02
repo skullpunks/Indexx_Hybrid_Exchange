@@ -10,6 +10,8 @@ import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 import logo from "../../assets/arts/exchange logo_green 5.svg";
 import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
+import token from "../../assets/BSheader/token-12 2.svg";
+import stock_token from "../../assets/BSheader/Stock Token 2.svg";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -216,13 +218,35 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         {localStorage.getItem("userlogged") === 'normal' ?
           <p style={{ marginTop: 220, fontSize: 40 }}>
             <img src={logo} alt="logo" style={{marginRight:"20px"}}/>
-            Indexx Exchange</p>
+            Indexx Exchange
+            {selectedTab === 1 ? <>
+              {" "}  - 
+              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Tokens  
+            </>
+            : selectedTab === 2 ? <>
+             {" "}  - 
+              <img src={stock_token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Stock Tokens  
+            </> :null}
+          </p>
           :
           <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "220px"}`, fontSize: 40 }}>
             <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
-            Hive Exchange</p>
+            Hive Exchange
+            {selectedTab === 1 ? <>
+              {" "}  - 
+              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Tokens  
+            </>
+            : selectedTab === 2 ? <>
+             {" "}  - 
+              <img src={stock_token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Stock Tokens  
+            </> :null}
+            </p>
         }
-        <p style={{ fontSize: 15 }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+        <p style={{ fontSize: 15, marginTop:"10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
 
 

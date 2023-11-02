@@ -85,23 +85,6 @@
     color: var(--body_color);
 }
 
-.logo__icon {
-    background-image: url("../../assets/arts/indexText.svg");
-    font-size: 0;
-    background-repeat: no-repeat;
-    width: 119px;
-    height: 26px;
-    background-size: contain;
-}
-
-.logo__icon:hover {
-    background-image: url("../../assets/arts/indexTextHover.svg");
-    background-repeat: no-repeat;
-    width: 119px;
-    height: 26px;
-    background-size: contain;
-}
-
 .social-connect-icons{
     transition: transform 330ms ease-in-out;
     width: 29px;

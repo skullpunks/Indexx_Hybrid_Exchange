@@ -4,7 +4,7 @@ import SubHeader from '../SubHeader/SubHeader';
 import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Grid, Button } from '@mui/material';
-import { getCaptainBeeStatics } from '../../../../services/api';
+import { getCaptainBeeStatics, baseCEXURL } from '../../../../services/api';
 import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
 import NodeGraph from '../../graph';
 import FlowDiagram2 from '../../graph';
@@ -261,7 +261,22 @@ const MyBees = () => {
         (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
             <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
+            {availableBeesCount === 0 ? <>
+              Please invite the Honey Bees using this {" "}
+              <a href={`${
+              baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    staticsData?.userFullData?.referralCode
+              }`}
+               className='hive_link'>
+              referral link
+              </a>
+               {" "} to guide them. 
+            </>
+            :
+            <>
               These are the Honey Bees that are part of your Colony. Select one to guide them
+            </>}
             </div>
           </div>
           <div className="hive-container d-flex">
