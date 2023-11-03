@@ -56,7 +56,7 @@ const TeamCaptainGrowth = () => {
   const [captainBeeData, setRefferedUserData] = useState();
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
-  const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [captainbeesEmail, setCaptainbeeEmail] = useState();
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -66,13 +66,16 @@ const TeamCaptainGrowth = () => {
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(id).then((data) => {
         setStaticsData(data.data);
+        console.log("Data", data?.data);
+        console.log("Data", data?.data.userFullData?.email);
+        setCaptainbeeEmail(data?.data?.userFullData?.email);
       });
       console.log("I am if")
     } else {
       console.log("I am else")
 
     }
-  }, [])
+  }, [captainbeesEmail])
   return (
     <div style={{ paddingTop: "10px" }}>
       <Box
@@ -752,7 +755,7 @@ const TeamCaptainGrowth = () => {
         </Box>
 
         <Box>
-          <CommissionTable />
+          <CommissionTable leaderEmail={captainbeesEmail}/>
         </Box>
       </Box>
     </div>

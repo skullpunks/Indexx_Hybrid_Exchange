@@ -3,7 +3,8 @@ import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
-import { commissionList, decodeJWT, getUserWallets } from '../../../services/api'
+import { commissionList, decodeJWT, getCaptainBeeStatics, getUserWallets } from '../../../services/api'
+import { useParams } from 'react-router-dom';
 
 interface DataType {
   beeType?: string; // Made it optional since the response doesn't have this
@@ -11,6 +12,7 @@ interface DataType {
   created: Date;
   rank: string;
   finalCommissionAmountInUSD: number;
+  finalCommissionAmountInINEX: number;
   commissionPercentage: number;
   orderAmount: number;
   name?: string;  // Added this based on the response
@@ -29,6 +31,9 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     extra
   ) => { };
 
+  const { id } = useParams();
+
+  const [captainbeesEmail, setCaptainbeeEmail] = useState();
 
   const columns: ColumnsType<DataType> = [
     {
@@ -74,13 +79,21 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission',
       dataIndex: 'finalCommissionAmountInUSD',
       sorter: (a, b) => a.finalCommissionAmountInUSD - b.finalCommissionAmountInUSD,
-      render: (_, record) => "$" + parseFloat(String(record.finalCommissionAmountInUSD)).toFixed(2),
+      //render: (_, record) => formatCurrency(record.finalCommissionAmountInUSD),
+      render: (_, record) => {
+        // Assuming you want to format it as "USD: $amount, INEX: $amount"
+        return `USD: $${record.finalCommissionAmountInUSD.toFixed(2)} + INEX: ${record.finalCommissionAmountInINEX.toFixed(2)}`;
+      },
     },
     {
       title: 'Commission Percentage',
       dataIndex: 'commissionPercentage',
       sorter: (a, b) => a.commissionPercentage - b.commissionPercentage,
-      render: (_, record) => parseFloat(String(record.commissionPercentage)).toFixed(2),
+      render: (_, record) => {
+        return typeof record.commissionPercentage === 'number'
+          ? record.commissionPercentage.toFixed(2) + '%'
+          : '0.00%';
+      }
     },
     {
       title: 'Order Total',
@@ -107,93 +120,95 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   }
 
 
+  // Provide a fallback for the currency formatting
+  const formatCurrency = (amount: number) => {
+    return amount ? "$" + amount.toFixed(2) : "$0.00";
+  };
+
   const topcolumns: ColumnsType<CommissionDataType> = [
     {
       dataIndex: 'totalCommissionEarned',
-      title: 'Commission Earned (All Time)',
+      title: 'Commission Earned',
       align: "center",
-      render: (_, record) => "$" + (record.totalCommissionEarned.amountInUSD).toFixed(2),
+      render: (_, record) => {
+        return `${formatCurrency(record?.totalCommissionEarned?.amountInUSD)} / INEX: ${record?.totalCommissionEarned?.amountInINEX.toFixed(2)}`;
+      },
     },
     {
       dataIndex: 'totalCommissionToBePaid',
       title: 'Commission Due',
       align: "center",
-      render: (_, record) => "$" + (record.totalCommissionToBePaid.amountInUSD).toFixed(2),
+      render: (_, record) => {
+        return `${formatCurrency(record?.totalCommissionToBePaid?.amountInUSD)} / INEX: ${record?.totalCommissionToBePaid?.amountInINEX.toFixed(2)}`;
+      },
     },
     {
       dataIndex: 'commissionPaid',
-      title: 'Commission Paid (All Time)',
+      title: 'Commission Paid',
       align: "center",
-      render: (_, record) => "$" + (record.totalCommissionEarned.amountInUSD - record.totalCommissionToBePaid.amountInUSD).toFixed(2),
+      render: (_, record) => {
+        const earnedUSD = record?.totalCommissionEarned?.amountInUSD ?? 0;
+        const earnedINEX = record?.totalCommissionEarned?.amountInINEX ?? 0;
+        const dueUSD = record?.totalCommissionToBePaid?.amountInUSD ?? 0;
+        const dueINEX = record?.totalCommissionToBePaid?.amountInINEX ?? 0;
+        return `${formatCurrency(earnedUSD - dueUSD)} / INEX: ${(earnedINEX - dueINEX).toFixed(2)}`;
+      },
     },
     {
       dataIndex: 'commissionPercentage',
       title: 'Commission Percentage',
       align: "center",
-      render: (_, record) => record.commissionPercentage + "%",
+      render: (_, record) => {
+        return typeof record?.commissionPercentage === 'number'
+          ? record?.commissionPercentage.toFixed(2) + '%'
+          : '0.00%';
+      },
     },
   ];
 
 
-  //    const [walletData, setWalletData] = useState() as any;
-  const [walletData, setWalletData] = useState<DataType[]>([]);
   const [sortedData, setSortedData] = useState<DataType[]>([]);
   const [commissionPaidData, setCommissionPaidData] = useState<CommissionDataType[]>([]);
   const pageSize = 10;
   const [current, setCurrent] = useState(1);
-  // let data: any[] = [{ "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x9a327efba5e175fb240f1b8b9326bdf10d9297b1", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Binance", "coinSymbol": "BNB", "coinDecimals": 18, "coinBalance": 0.10753, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-19T12:39:57.526Z", "coinLastUsedOn": "2022-10-19T12:39:57.526Z", "isCoinActive": true, "_id": "634ff01d03980b5c11c96f74" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x986081cb3253264f57535056b55673d4674038bf", "coinPrivateKey": "", "coinNetwork": "Ethereum", "coinName": "Ethereum", "coinSymbol": "ETH", "coinDecimals": 18, "coinBalance": 0.095925216001389, "coinBalanceInUSD": 123, "coinBalanceInBTC": 0.0065, "coinCreatedOn": "2022-10-19T17:12:33.087Z", "coinLastUsedOn": "2022-10-19T17:12:33.087Z", "isCoinActive": true, "_id": "63503001204238ba708ec2b2" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "0x43e4d660fa09b82d5c906d87f775eb6cd215ccff", "coinPrivateKey": "", "coinNetwork": "Binance Smart Chain", "coinName": "Indexx500", "coinSymbol": "IN500", "coinDecimals": 18, "coinBalance": 10, "coinBalanceInUSD": 37, "coinBalanceInBTC": 0.0019, "coinCreatedOn": "2022-10-20T01:27:32.295Z", "coinLastUsedOn": "2022-10-20T01:27:32.295Z", "isCoinActive": true, "_id": "6350a40436c8ac9aa13874ad" }, { "userId": "63495a547aa72680b1562302", "coinType": "Crypto", "coinWalletAddress": "msT58masPu6racd9XFUHCSibfdwDPjZdgc", "coinPrivateKey": "", "coinNetwork": "Bitcoin", "coinName": "Bitcoin", "coinSymbol": "BTC", "coinDecimals": 8, "coinBalance": 0.0015, "coinBalanceInUSD": 29, "coinBalanceInBTC": 0.0015, "coinCreatedOn": "2022-10-20T09:49:16.127Z", "coinLastUsedOn": "2022-10-20T09:49:16.127Z", "isCoinActive": true, "_id": "6351199c93823abe5ccbca1d" }];
 
   useEffect(() => {
-    getAllUserWallet();
     getCommissionHistory();
   }, []);
 
-  const getAllUserWallet = async () => {
-    let access_token = String(localStorage.getItem('access_token'));
-    let decoded: any = decodeJWT(access_token);
-    let userWallets = await getUserWallets(decoded.email);
-    setWalletData(
-      userWallets.data.map((item: any) => ({ ...item, key: item._id }))
-    );
-  };
+  useEffect(() => {
+    getCaptainBeeStatics(String(id)).then((data) => {
+      console.log("Data2", data?.data?.userFullData?.email);
+      setCaptainbeeEmail(data?.data?.userFullData?.email);
+    });
+  }, [captainbeesEmail])
 
   const getCommissionHistory = async () => {
-    if (leaderEmail === undefined || leaderEmail === null) {
-      console.log("leader email is null")
+    if (id) {
+      let idResults = await getCaptainBeeStatics(String(id));
+      let userEmail = (idResults?.data?.userFullData?.email);
+      let commissionHistory = await commissionList(userEmail);
+      const results = commissionHistory?.data?.getAllCommissionRecordsData;
+      const reversedResults = [...results].reverse(); // Create a copy and reverse the order
+      // Set default values if the fetch returns undefined
+      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setSortedData(reversedResults || []);
+    } else if (leaderEmail === undefined || leaderEmail === null) {
       let access_token = String(localStorage.getItem('access_token'));
       let decoded: any = decodeJWT(access_token);
       let commissionHistory = await commissionList(decoded.email);
       const results = commissionHistory?.data?.getAllCommissionRecordsData;
       const reversedResults = [...results].reverse(); // Create a copy and reverse the order
-      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData)
-      setSortedData(reversedResults);
+      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setSortedData(reversedResults || []);
     } else {
-      console.log("leader email is exists")
       let commissionHistory = await commissionList(leaderEmail);
       const results = commissionHistory?.data?.getAllCommissionRecordsData;
       const reversedResults = [...results].reverse(); // Create a copy and reverse the order
-      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData)
-      setSortedData(reversedResults);
+      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setSortedData(reversedResults || []);
     }
   }
-
-  // useEffect(() => {
-  //   setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
-  // }, [filteredWalletData, hideZeroBalance])
-
-  // useEffect(() => {
-  //   if (valueInput === '') {
-  //     setFilteredWalletData(walletData);
-  //     return;
-  //   }
-  //   const temp = walletData.filter(
-  //     (item) =>
-  //       item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
-  //       item.coinName.toLowerCase().includes(valueInput.toLowerCase())
-  //   );
-
-  //   setFilteredWalletData(temp);
-  // }, [valueInput, walletData]);
 
   const getData = (current: number, pageSize: number) => {
     // Normally you should get the data from the server
