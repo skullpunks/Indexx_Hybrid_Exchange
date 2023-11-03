@@ -121,8 +121,12 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
 
 
   // Provide a fallback for the currency formatting
-  const formatCurrency = (amount: number) => {
-    return amount ? "$" + amount.toFixed(2) : "$0.00";
+  const formatCurrency = (amount: number | undefined) => {
+    // Handle undefined amounts by returning a default string
+    if (typeof amount === 'undefined') {
+      return "$0.00";
+    }
+    return `$${amount.toFixed(2)}`;
   };
 
   const topcolumns: ColumnsType<CommissionDataType> = [
@@ -131,7 +135,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Earned',
       align: "center",
       render: (_, record) => {
-        return `${formatCurrency(record?.totalCommissionEarned?.amountInUSD)} / INEX: ${record?.totalCommissionEarned?.amountInINEX.toFixed(2)}`;
+        return `${formatCurrency(record.totalCommissionEarned?.amountInUSD)} / INEX: ${formatCurrency(record.totalCommissionEarned?.amountInINEX)}`;
       },
     },
     {
@@ -139,7 +143,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Due',
       align: "center",
       render: (_, record) => {
-        return `${formatCurrency(record?.totalCommissionToBePaid?.amountInUSD)} / INEX: ${record?.totalCommissionToBePaid?.amountInINEX.toFixed(2)}`;
+        return `${formatCurrency(record.totalCommissionToBePaid?.amountInUSD)} / INEX: ${formatCurrency(record.totalCommissionToBePaid?.amountInINEX)}`;
       },
     },
     {
@@ -147,11 +151,12 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Paid',
       align: "center",
       render: (_, record) => {
-        const earnedUSD = record?.totalCommissionEarned?.amountInUSD ?? 0;
-        const earnedINEX = record?.totalCommissionEarned?.amountInINEX ?? 0;
-        const dueUSD = record?.totalCommissionToBePaid?.amountInUSD ?? 0;
-        const dueINEX = record?.totalCommissionToBePaid?.amountInINEX ?? 0;
-        return `${formatCurrency(earnedUSD - dueUSD)} / INEX: ${(earnedINEX - dueINEX).toFixed(2)}`;
+        const earnedUSD = record.totalCommissionEarned?.amountInUSD ?? 0;
+        const earnedINEX = record.totalCommissionEarned?.amountInINEX ?? 0;
+        const dueUSD = record.totalCommissionToBePaid?.amountInUSD ?? 0;
+        const dueINEX = record.totalCommissionToBePaid?.amountInINEX ?? 0;
+        // We're assuming that undefined - undefined should be zero
+        return `${formatCurrency(earnedUSD - dueUSD)} / INEX: ${formatCurrency(earnedINEX - dueINEX)}`;
       },
     },
     {
