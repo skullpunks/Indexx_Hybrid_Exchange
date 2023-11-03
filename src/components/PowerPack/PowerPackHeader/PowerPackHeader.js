@@ -56,7 +56,7 @@ const PowerPackHeader = () => {
       setisCaptain(true);
       getCaptainBeeStatics(username).then((data) => {
         setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined || data?.data?.powerPackData !== null || data?.data?.powerPackData !== "" ){
+        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
           setHaspowerpack(true);
         }
       });

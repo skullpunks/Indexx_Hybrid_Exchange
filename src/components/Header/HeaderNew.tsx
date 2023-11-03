@@ -139,7 +139,7 @@ const HeaderNew = () => {
 
         setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
         setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined || data?.data?.powerPackData !== null || data?.data?.powerPackData !== "" ){
+        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== ""){
           setHaspowerpack(true);
         }
       });
