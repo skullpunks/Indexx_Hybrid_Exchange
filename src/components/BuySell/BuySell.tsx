@@ -10,7 +10,7 @@ const BuySell = () => {
 
   const [status, setStatus] = useState("");
   
-  const [haspowerpack, setHaspowerpack] = useState(false);
+  const [haspowerpack, setHaspowerpack] = useState(true);
   const [isCaptain, setisCaptain] = useState(false);
 
   useEffect(() => {
@@ -23,6 +23,9 @@ const BuySell = () => {
       getCaptainBeeStatics(username).then((data) => {
         if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
           setHaspowerpack(true);
+        }
+        else{
+          setHaspowerpack(false);
         }
       });
       }

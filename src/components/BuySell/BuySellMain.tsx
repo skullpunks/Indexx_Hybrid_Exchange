@@ -233,7 +233,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             </> :null}
           </p>
           :
-          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "230px"}`, fontSize: 40 }}>
+          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? "300px" : "220px"}`, fontSize: 40 }}>
             <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
             Hive Exchange
             {selectedTab === 1 ? <>
@@ -255,7 +255,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       </span>
 
 
-      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -80 }}>
+      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -120 }}>
 
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}

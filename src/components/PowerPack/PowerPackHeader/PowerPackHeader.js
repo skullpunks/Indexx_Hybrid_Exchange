@@ -171,7 +171,7 @@ const PowerPackHeader = () => {
             <div className="card-body">
                 <h5 className="card-title mt-1">
                 
-                {localStorage.getItem("userlogged") === 'normal' ? "Staking" : "Nectar"}
+                {localStorage.getItem("userlogged") === 'normal' ? "Staking" : "Nectar/Staking"}
                 </h5>
                 <Typography
                 component='p'
@@ -179,7 +179,7 @@ const PowerPackHeader = () => {
                   location.pathname === '/indexx-exchange/buy-sell/staking'
                     ? {
                       height: '0.07px',
-                      width: '36px',
+                      width: '66px',
                       backgroundColor: 'var(--body_color)',
                     }
                     : null

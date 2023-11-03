@@ -381,7 +381,7 @@ const TeamCaptainGrowth = () => {
                   fontWeight={600}
                   textAlign={'left'}
                 >
-                  {'0.00'} 
+                  {'0.00'} {" "}
                   <span className='font_17x'>
                     INEX
                   </span>
@@ -713,7 +713,7 @@ const TeamCaptainGrowth = () => {
                             {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
                               : '0.00')
-                            } 
+                            } {" "}
                             <span className='font_17x'>
                             INEX
                             </span>

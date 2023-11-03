@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import stock from '../../../assets/BSheader/Stock token bnw.svg';
+import stock from '../../../assets/BSheader/Stock token icon_black.svg';
 import power from '../../../assets/BSheader/power pack 1.svg';
 import token from '../../../assets/BSheader/tokens icon 1.svg';
 import all from '../../../assets/BSheader/EX-010.png';
@@ -59,10 +59,9 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
       }
     },[]);
 
-  console.log(selectedTab);
 
   const [staticsData, setStaticsData] = useState();
-  const [haspowerpack, setHaspowerpack] = useState(false);
+  const [haspowerpack, setHaspowerpack] = useState(true);
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -78,7 +77,9 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           localStorage.setItem('haspp', true);
         }
         else{
+          setHaspowerpack(false);
           localStorage.setItem('haspp', false);
+          setTheme("light")
         }
       });
     }
@@ -89,7 +90,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
       style={{
         top: `${isMobile ? '60px' : '90px'}`,        
       }}
-      className={window.location.pathname.includes("for-honeybee") === true ? "other-tabs" :"ext-tabs"}
+      className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === false ? "ext-tabs" :"other-tabs"}
     >
       <Tabs
         value={selectedTab}
@@ -257,7 +258,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         />
         :
         <Tab
-          label="Nectar"
+          label="Nectar/Staking"
           icon={
             theme === "dark" ? 
               <img
