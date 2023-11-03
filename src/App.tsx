@@ -151,10 +151,20 @@ function App() {
   const PrivateRoutes = () => {
     // let auth = {'token':true}
   const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
-  console.log(isAuthenticated, "auth");
-  return (
-      isAuthenticated ? <Outlet/> : <Navigate to='/indexx-exchange/buy-sell/hive-login'/>
-    )
+  const isAllowed =  localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false"
+
+    if(isAuthenticated && !isAllowed) {
+      return <Outlet/>
+    }
+    else if(!isAuthenticated){
+      return <Navigate to='/indexx-exchange/buy-sell/hive-login'/>
+    }
+    
+    if(isAllowed) {
+      return <Navigate to='/indexx-exchange/power-pack'/>
+    }
+    return <Outlet/>
+
   }
   
   // const isAuthenticated = localStorage.getItem("access_token") !== undefined || localStorage.getItem("access_token") !== null
@@ -194,6 +204,7 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
         </Route>
+
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 

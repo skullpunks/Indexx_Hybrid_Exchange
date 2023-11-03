@@ -73,8 +73,12 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
       setisCaptain(true);
       getCaptainBeeStatics(username).then((data) => {
         setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined || data?.data?.powerPackData !== null || data?.data?.powerPackData !== "" ){
+        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
           setHaspowerpack(true);
+          localStorage.setItem('haspp', true);
+        }
+        else{
+          localStorage.setItem('haspp', false);
         }
       });
     }
@@ -199,7 +203,7 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
             />
           }
           component={Link}
-          to='/indexx-exchange/coming-soon?page=ETF'
+          to='/indexx-exchange/coming-soon-etf'
           className='tab-format'
           disableTouchRipple
         />

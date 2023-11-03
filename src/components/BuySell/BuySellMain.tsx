@@ -233,7 +233,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             </> :null}
           </p>
           :
-          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "220px"}`, fontSize: 40 }}>
+          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "230px"}`, fontSize: 40 }}>
             <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
             Hive Exchange
             {selectedTab === 1 ? <>
