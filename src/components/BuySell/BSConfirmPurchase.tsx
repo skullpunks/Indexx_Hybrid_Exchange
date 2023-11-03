@@ -106,25 +106,6 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     setIsTransferModalVisible(false);
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const getTaskCenterDetailsData = async () => {
     const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
@@ -146,7 +127,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       
       
       if(!permissionData?.permissions?.buy) {
-        // openNotificationWithIcon2('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
         setIsModalOpen(true);
         setMessage("As Captain bee, Please apply for buy approval from honey bee");
         setLoadings(false);
@@ -168,7 +149,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
-      // openNotificationWithIcon2('error', res.data);
+      // OpenNotification('error', res.data);
       setIsModalOpen(true);
       setMessage(res.data);      
     }

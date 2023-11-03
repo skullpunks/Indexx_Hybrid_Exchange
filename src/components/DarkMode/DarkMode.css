@@ -25,7 +25,7 @@
     /* left: 2px; */
     /* background: linear-gradient(180deg, #ffcc89, #d8860b); */
     /* background: linear-gradient(180deg,#e8dfdf, #adadad); */
-    background-image: url("./light\ 2.svg");
+    background-image: url("./dark\ 2.svg");
     background-repeat: no-repeat;
     background-size: contain;
     border-radius: 180px;
@@ -38,14 +38,14 @@
     visibility: hidden;
 }
 .dark_mode_input:checked + .dark_mode_label {
-    background-image: url("./dark\ 2.svg");
+    background-image: url("./light\ 2.svg");
     background: #242424;
 }
 .dark_mode_input:checked + .dark_mode_label:after {
     /* left: 42px; */
     /* transform: translateX(-100%); */
     /* background: linear-gradient(180deg, #777, #3a3a3a); */
-    background-image: url("./dark\ 2.svg");
+    background-image: url("./light\ 2.svg");
     background-size: contain;
 }
 .dark_mode_label:active:after {

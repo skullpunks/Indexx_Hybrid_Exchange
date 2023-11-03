@@ -167,7 +167,8 @@ const LineGraph = (props: any) => {
           <br></br>
 
           <AreaChart
-            margin={{ left: -60, right: -19, top: 10 }}
+            // margin={{ left: -60, right: -19, top: 10 }}
+            margin={{ left: -5, right: -19, top: 10 }}
             className={styles.graphBackground}
             width={width}
             height={height}
@@ -175,8 +176,8 @@ const LineGraph = (props: any) => {
           >
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#11be6a" stopOpacity={0.5} />
-                <stop offset="90%" stopColor="#11be6a" stopOpacity={0} />
+                <stop offset="5%" stopColor="var(--primary-color)" stopOpacity={0.5} />
+                <stop offset="90%" stopColor="var(--primary-color)" stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -186,7 +187,7 @@ const LineGraph = (props: any) => {
               dataKey="price"
               strokeWidth={1.5}
               isAnimationActive={false}
-              stroke="lightgreen"
+              stroke="var(--highlight-color)"
               // fill="rgba(246, 96, 54 , 0.09)"
               fill="url(#colorUv)"
             />
@@ -201,6 +202,7 @@ const LineGraph = (props: any) => {
                 tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
+                tickMargin={10} 
                 minTickGap={92}
               />
             ) : (
@@ -214,7 +216,8 @@ const LineGraph = (props: any) => {
                 tick={{ fill: 'var(--body_color)' }}
                 tickFormatter={value > 2 ? dateFormatter : dateFormatter2}
                 style={{ fontSize: 13 }}
-                minTickGap={90}
+                tickMargin={10}
+                minTickGap={92}
               />
             )}
             <YAxis
@@ -222,9 +225,9 @@ const LineGraph = (props: any) => {
               padding={{ top: 20 }}
               tick={{ fill: '#5f5f5f' }}
               domain={['auto', 'auto']}
-              hide={true}
+              // remove this line or set it to false
+              // hide={true} 
               minTickGap={90}
-
             />
             {/* <Tooltip position={{ y: -10 }}
               labelFormatter={dateFormatter3}

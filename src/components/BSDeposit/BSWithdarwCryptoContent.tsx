@@ -7,9 +7,8 @@ import {
   RadioChangeEvent,
   Radio,
   Space,
-  notification,
 } from 'antd';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
 import { Typography } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
 // import QRCodeIcon from "../../assets/arts/QRCodeIcon.svg";
@@ -323,7 +322,7 @@ export const BSWithdarwCryptoContent = () => {
       let message =
         'Withdraw Successfull. Transaction Id: ' + res.data.data.hash;
 
-      openNotificationWithIcon('success', message);
+      OpenNotification('success', message);
       let finalArr = txs.data.filter(
         (x: any) => x.transactionType === 'WITHDRAW_CYRPTO'
       );
@@ -332,7 +331,7 @@ export const BSWithdarwCryptoContent = () => {
       setLoadings(false);
     } else {
       setLoadings(false);
-      openNotificationWithIcon2(
+      OpenNotification(
         'error',
         'Failed to withdraw. Please try again or contact support'
       );
@@ -348,41 +347,7 @@ export const BSWithdarwCryptoContent = () => {
   //     }
   // }
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (
-    type: NotificationType,
-    message: string
-  ) => {
-    notification[type]({
-      message: message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
   return (
     <div className="scan-container bs_main wd_container">
       <div className="d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container">

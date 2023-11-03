@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from '../../assets/arts/qrCode.svg';
-import { Button, Form, Input, notification, Divider } from 'antd';
+import { Button, Form, Input, Divider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from "../../assets/arts/exchange logo_green 5.svg";
 import {
   loginAPI,
   decodeJWT,
@@ -11,10 +12,11 @@ import {
   baseURL,
 } from '../../services/api';
 import {
-  CheckCircleFilled,
   InfoCircleFilled,
-  CloseCircleFilled,
 } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -32,13 +34,17 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     if (res.status === 200) {
       
       setLoadings(false);
-      openNotificationWithIcon('success', 'Login Successful');
+      OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
       
       localStorage.setItem('user', resObj?.email);
+      const userKey = cryptr.encrypt(values.password);
+      localStorage.setItem('userkey', userKey);
+      localStorage.setItem('userpass', values.password);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
+      localStorage.setItem('userlogged', "normal");
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -49,35 +55,59 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
     } else {
       console.log(res.data);
       setLoadings(false);
-      openNotificationWithIcon('error', res?.data);
+      OpenNotification('error', res?.data);
     }
   };
 
+  useEffect(() => {
+
+    async function loginUser() {
+      // Get the URL search parameters
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      // Get the values of useremail and userkey
+      const userEmail = urlSearchParams.get('useremail');
+      const userKey = urlSearchParams.get('userkey');
+      const userType = urlSearchParams.get('usertype');
+     
+      if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
+        let userPassword = (String(userKey));
+        // You can now use userEmail and userKey as needed in your component
+        let res = await loginAPI(userEmail, userPassword);
+
+        if (res.status === 200) {
+
+          setLoadings(false);
+          OpenNotification('success', 'Login Successful');
+          let resObj = await decodeJWT(res.data.access_token);
+          localStorage.setItem('userpass', userPassword);
+          localStorage.setItem('user', resObj?.email);
+          const userKey = cryptr.encrypt(userPassword);
+          localStorage.setItem('userkey', userKey);
+          localStorage.setItem('access_token', res.data.access_token);
+          localStorage.setItem('refresh_token', res.data.refresh_token);
+          localStorage.setItem('userType', resObj?.userType);
+          let redirectUrl = window.localStorage.getItem('redirect');
+          window.localStorage.removeItem('redirect');
+          let userDetails = await getUserDetails(resObj?.email);
+
+          redirectUrl
+            ? navigate(redirectUrl)
+            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+        } else {
+
+          setLoadings(false);
+          OpenNotification('error', res.data);
+        }
+      }
+    }
+    loginUser();
+
+  }, []);
+
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
+  localStorage.setItem('userlogged', "normal");
 
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     
@@ -85,7 +115,9 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   return (
     // <div className="">
       <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
-      <h3 className="text-center margin-lr-auto">Indexx Exchange</h3>
+      <h3 className="text-center margin-lr-auto d-flex align-items-center">
+      <img src={logo} alt="logo" style={{marginRight:"10px"}}/>
+        Indexx Exchange</h3>
         <h1 className="text-center margin-lr-auto top_heading">Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -156,7 +188,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
             Don’t have an account?{' '}
             <Link
               to="/indexx-exchange/buy-sell/get-started"
-              style={{ color: '#11be6a' }}
+              style={{ color: 'var(--primary-color)' }}
             >
               Get Started
             </Link>
@@ -190,7 +222,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
             </Link>{' '}
             <br />
             <br />
-            <p style={{ color: '#11be6a', fontSize: 15 }}>
+            <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
               {' '}
               Sign up to be an indexxer
             </p>

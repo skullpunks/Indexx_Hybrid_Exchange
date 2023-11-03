@@ -24,6 +24,7 @@ interface DataType {
     coinBalanceInUSD: any;
     coinBalanceInBTC: any;
     coinPrice: any;
+    coinStakedBalance: any;
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
@@ -122,17 +123,17 @@ const BSWalletTable = () => {
         //     // },
         // },
         {
-            title: 'Unavailable Balance',
-            dataIndex: 'coinBalance',
+            title: 'Staked Balance',
+            dataIndex: 'coinStakedBalance',
             render: (_, record) => {
-                return 0;
+                return record.coinStakedBalance || 0;
             },
             sorter: {
-                compare: (a, b) => a.coinBalance - b.coinBalance,
+                compare: (a, b) => (a.coinStakedBalance || 0) - (b.coinStakedBalance || 0),
                 multiple: 5,
             },
             responsive: ["sm"],
-        },
+        }
 
     ];
 

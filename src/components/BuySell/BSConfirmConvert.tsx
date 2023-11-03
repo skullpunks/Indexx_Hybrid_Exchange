@@ -1,4 +1,4 @@
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import IN500 from "../../assets/token-icons/33.png";
@@ -7,6 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 // import { CheckCircleFilled } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
+
 import {
   getAppSettings,
   getCoinPriceByName,
@@ -170,7 +172,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       
       if (!permissionData?.permissions?.convert) {
         setLoadings(false);
-        openNotificationWithIcon2('error', "As Captain bee, Please apply for convert approval from honey bee");
+        OpenNotification('error', "As Captain bee, Please apply for convert approval from honey bee");
         return;
       }
       res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount), totalAmountToPay, 0, honeyBeeEmail, true);
@@ -190,46 +192,17 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       }
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error');
+      OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
     }
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-  const openNotificationWithIcon = (type: NotificationType) => {
-    notification[type]({
-      message: 'Successfully Processed Convert Order',
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (type: NotificationType, message: string = "Failed to Process Convert Order. Please check balance on the wallet") => {
-    notification[type]({
-      message:
-        message,
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
   const processConvertOrder = async (order: any) => {
     const res = await confirmConvertOrder(order.user.email, order.orderId);
     
     if (res.status === 200) {
       setLoadings(false);
-      openNotificationWithIcon('success');
+      OpenNotification('success', 'Successfully Processed Convert Order');
        // setScreenName("BSSellInprogress");
        if (honeyBeeId === "undefined" || honeyBeeId === "")
        navigate("/indexx-exchange/buy-sell/convert-in-progress");
@@ -237,7 +210,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
        navigate(`/indexx-exchange/buy-sell/convert-in-progress/${honeyBeeId}`);
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error');
+      OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
     }
   };
 

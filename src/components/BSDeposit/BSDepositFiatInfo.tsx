@@ -88,7 +88,7 @@ export const BSDepositFiatInfo = () => {
             message={message}
             showIcon
             icon={
-              <InfoCircleFilled style={{ color: '#11be6a', fontSize: 20 }} />
+              <InfoCircleFilled style={{ color: 'var(--primary-color)', fontSize: 20 }} />
             }
             type="success"
             style={{

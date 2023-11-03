@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom'
 // import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
@@ -86,6 +87,14 @@ import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/Leade
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { useState, useEffect } from "react";
+import Staking from "./components/Staking/Staking";
+import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
+import Bridge from "./components/Bridge/Bridge";
+import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
+import Footer from "./components/Footer/Footer";
+import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
+// import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
   /*
@@ -115,14 +124,57 @@ function App() {
 */
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
+
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+
+  useEffect(() => {
+    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
+
+  }, [])
   
+  useEffect(() => {
+    const handleStorageChange = (event:any) => {
+      // console.log(event);
+      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
+      setUserLogged(event.currentTarget.localStorage.userlogged);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const themeClass = `theme-${userLogged}`;
+  
+  const PrivateRoutes = () => {
+    // let auth = {'token':true}
+  const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
+  const isAllowed =  localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false"
+
+    if(isAuthenticated && !isAllowed) {
+      return <Outlet/>
+    }
+    else if(!isAuthenticated){
+      return <Navigate to='/indexx-exchange/buy-sell/hive-login'/>
+    }
+    
+    if(isAllowed) {
+      return <Navigate to='/indexx-exchange/power-pack'/>
+    }
+    return <Outlet/>
+
+  }
+  
+  // const isAuthenticated = localStorage.getItem("access_token") !== undefined || localStorage.getItem("access_token") !== null
   return (
     <ThemeProvider theme={theme}>
-    <div>
+    <div className={themeClass}>
       <BrowserRouter>
         {/* <Header /> */}
         <ScrollToTop />
-        <HeaderNew />
+        <HeaderNew /> 
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />
@@ -130,6 +182,7 @@ function App() {
             <Route path="/*" element={<BuySell />} />
           }
 
+        <Route element={<PrivateRoutes/>}>
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
@@ -139,6 +192,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
           <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
+          <Route path="/indexx-exchange/dashboard/capt-resource-sales" element={<CaptainResourceSales />} />
           <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
           <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
@@ -149,10 +203,13 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/bee-profile" element={<BeeProfile />} />
           <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
+        </Route>
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 
+          <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
+          <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
           {/* {
                         // userData?.role === "Standard"
@@ -162,6 +219,7 @@ function App() {
 
           <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
           <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
+          <Route path="/indexx-exchange/coming-soon-etf" element={<ComingSoonETF />} />
           <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
           <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
           <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
@@ -171,6 +229,10 @@ function App() {
             path="/indexx-exchange/buy-sell/login/*"
             element={<BuySellLogin />}
           />
+          {/* <Route
+            path="/indexx-exchange/buy-sell/all-login/*"
+            element={<BuySellAllLogin />}
+          /> */}
           <Route
             path="/indexx-exchange/buy-sell/login-honeybee/*"
             element={<BuySellLoginHoneyBee />}
@@ -211,6 +273,10 @@ function App() {
           <Route
             path="/indexx-exchange/buy-sell/transaction-history/*"
             element={<BSTransactionHistoryLayout />}
+          /> 
+          <Route
+            path="/indexx-exchange/buy-sell/staking-history/*"
+            element={<BSStakingHistoryLayout />}
           /> 
           <Route
             path="/indexx-exchange/buy-sell/order-history/*"
@@ -286,6 +352,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
     </ThemeProvider>
   );

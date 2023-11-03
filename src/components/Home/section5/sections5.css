@@ -28,7 +28,7 @@
 
 .getStarted:hover {
   /* box-shadow: #ffffff85 0 5px 7px 0; */
-  background-color: #0ea55a;
+  background-color: var(--secondary-color);
   /* transform: scale(1.05); */
 }
 
@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: #11be6a;
+  background: var(--primary-color);
   padding: 15px;
   border-radius: 7px;
 }

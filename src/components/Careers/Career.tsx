@@ -1,7 +1,7 @@
 // import { Button } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import './Career.css'
 
 const Career = () => {
@@ -83,9 +83,9 @@ const Career = () => {
 
             </div>
 
-            <div className='padding-t-3x margin-t-3x margin-t_300x'>
-                <Footer />
-            </div>
+            {/* <div className='padding-t-3x margin-t-3x margin-t_300x'> */}
+                {/* <Footer /> */}
+            {/* </div> */}
         </>
     )
 }

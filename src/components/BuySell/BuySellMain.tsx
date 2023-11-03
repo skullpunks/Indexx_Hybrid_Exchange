@@ -8,6 +8,11 @@ import './BuySell.css';
 import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
+import logo from "../../assets/arts/exchange logo_green 5.svg";
+import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
+import token from "../../assets/BSheader/token-12 2.svg";
+import stock_token from "../../assets/BSheader/Stock Token 2.svg";
+import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -20,7 +25,14 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import BinanceGraph from '../Graphs/BinanceGraph';
 import BitcoinGraph from '../Graphs/BitcoinGraph';
 import EthereumGraph from '../Graphs/EthereumGraph';
+import DogecoinGraph from '../Graphs/DogecoinGraph';
+import RippleGraph from '../Graphs/RippleGraph';
+import USDCGraph from '../Graphs/USDCGraph';
+import USDTGraph from '../Graphs/USDTGraph';
 import FTTGraph from '../Graphs/FTTGraph';
+import BCHGraph from '../Graphs/BCHGraph';
+import DOTGraph from '../Graphs/DOTGraph';
+import MATICGraph from '../Graphs/MATICGraph';
 import Indexx500Graph from '../Graphs/Indexx500Graph';
 import IndexxCryptoGraph from '../Graphs/IndexxCrypto';
 import IndexxExchangeGraph from '../Graphs/IndexxExchange';
@@ -51,7 +63,30 @@ import MetaStockTokenMarket from '../MarketAbout/MetaStockTokenMarket';
 import PespiCoStockTokenMarket from '../MarketAbout/PespiCoStockTokenMarket';
 import NvidiaStockTokenMarket from '../MarketAbout/NividaStockTokenMarket';
 import SNP500StockTokenMarket from '../MarketAbout/SNP500StockTokenMarket';
+import SolanaMarket from "../MarketAbout/SolanaMarket";
+import TronMarket from "../MarketAbout/TronMarket";
+import ChainLinkMarket from '../MarketAbout/ChainLinkMarket';
+import DaiMarket from '../MarketAbout/DaiMarket';
+import PolygonMarket from '../MarketAbout/PolygonMarket';
+import PolkadotMarket from '../MarketAbout/PolkadotMarket';
+import BitcoinCashMarket from '../MarketAbout/BitcoinCashMarket';
+import ToncoinMarket from '../MarketAbout/ToncoinMarket';
+import ShibMarket from '../MarketAbout/ShibMarket';
+import TrueUSDMarket from '../MarketAbout/TrueUSDMarket';
+import LEOMarket from '../MarketAbout/LEOMarket';
+import DogecoinMarket from '../MarketAbout/DogecoinMarket';
+import RippleMarket from '../MarketAbout/RippleMarket';
+import USDCMarket from '../MarketAbout/USDCMarket';
+import TUSDMarket from '../MarketAbout/USDTMarket';
 import IndexxAMZNGraph from '../Graphs/IndexxAMZNGraph';
+import SolanaGraph from '../Graphs/SolanaGraph';
+import TronGraph from '../Graphs/TronGraph';
+import ChainLinkGraph from '../Graphs/ChainLinkGraph';
+import DaiGraph from '../Graphs/DaiGraph';
+import ToncoinGraph from '../Graphs/ToncoinGraph';
+import ShibGraph from '../Graphs/ShibGraph';
+import LEOGraph from '../Graphs/LEOGraph';
+import TrueUSDGraph from '../Graphs/TrueUSDGraph';
 import IndexxGOOGLGraph from '../Graphs/IndexxGOOGLGraph';
 import IndexxAPPLGraph from '../Graphs/IndexxAPPLGraph';
 import IndexxMETAGraph from '../Graphs/IndexxMETAGraph';
@@ -62,6 +97,7 @@ import IndexxTLSAGraph from '../Graphs/IndexxTSLAGraph';
 import IndexxBCMGraph from '../Graphs/IndexxBCMGraph';
 import IndexxSP500Graph from '../Graphs/IndexxSP500Graph';
 import TabExample from './BSHeader/TabExample';
+import { baseWSURL } from '../../services/api';
 
 // import { BSProvider } from '../../utils/SwapContext';
 
@@ -75,6 +111,21 @@ let graphs: any = {
   IndexxCrypto: IndexxCryptoGraph,
   IndexxUSDPGraph: IndexxUSDPGraph,
   BinanceGraph: BinanceGraph,
+  DogecoinGraph: DogecoinGraph,
+  RippleGraph: RippleGraph,
+  USDCGraph: USDCGraph,
+  USDTGraph: USDTGraph,
+  TrueUSDGraph: TrueUSDGraph,
+  LEOGraph: LEOGraph,
+  TronGraph: TronGraph,
+  BCHGraph: BCHGraph,
+  MATICGraph: MATICGraph,
+  DOTGraph: DOTGraph,
+  SolanaGraph: SolanaGraph,
+  ChainLinkGraph: ChainLinkGraph,
+  DaiGraph: DaiGraph,
+  ToncoinGraph: ToncoinGraph,
+  ShibGraph: ShibGraph,
   LitecoinGraph: LitecoinGraph,
   IndexxExchange: IndexxExchangeGraph,
   IndexxPhoenixGraph: IndexxPhoenixGraph,
@@ -98,6 +149,21 @@ let markets: any = {
   IndexxCrypto: IndexxCryptoMarket,
   IndexxUSDPGraph: IndexxUSDPMarket,
   BinanceGraph: BinanceMarket,
+  RippleGraph: RippleMarket,
+  DogecoinGraph: DogecoinMarket,
+  USDCGraph: USDCMarket,
+  USDTGraph: TUSDMarket,
+  TronGraph: TronMarket,
+  BCHGraph: BitcoinCashMarket,
+  MATICGraph: PolygonMarket,
+  DOTGraph: PolkadotMarket,
+  TrueUSDGraph: TrueUSDMarket,
+  LEOGraph: LEOMarket,
+  SolanaGraph: SolanaMarket,
+  ChainLinkGraph: ChainLinkMarket,
+  DaiGraph: DaiMarket,
+  ToncoinGraph: ToncoinMarket,
+  ShibGraph: ShibMarket,
   LitecoinGraph: LitecoinMarket,
   IndexxExchange: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
@@ -132,7 +198,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     if (userId !== undefined && userId !== null) {
       setHasEmail(true);
     }
-  },[hasEmail])
+  }, [hasEmail])
 
   // const tabKeyMap = {
   //   all: 0,
@@ -143,21 +209,54 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleTabChange = (event:any, newValue:number) => {
+  const handleTabChange = (event: any, newValue: number) => {
     setSelectedTab(newValue);
   };
 
   return (
     <div className="swap_container">
-      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange}/>
-      <span style={{textAlign:'center'}}>
-      <p style={{marginTop:200,fontSize:30}}>Indexx Exchange</p>
-       <p style={{fontSize:15}}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} />
+      <span style={{ textAlign: 'center' }}>
+        {localStorage.getItem("userlogged") === 'normal' ?
+          <p style={{ marginTop: 220, fontSize: 40 }}>
+            <img src={logo} alt="logo" style={{marginRight:"20px"}}/>
+            Indexx Exchange
+            {selectedTab === 1 ? <>
+              {" "}  - 
+              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Tokens  
+            </>
+            : selectedTab === 2 ? <>
+             {" "}  - 
+              <img src={stock_token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Stock Tokens  
+            </> :null}
+          </p>
+          :
+          <p style={{ marginTop: `${window.location.pathname.includes("for-honeybee") === true ? "260px" : "230px"}`, fontSize: 40 }}>
+            <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
+            Hive Exchange
+            {selectedTab === 1 ? <>
+              {" "}  - 
+              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+              Tokens  
+            </>
+            : selectedTab === 2 ? <>
+             {" "}  - 
+             <a href={baseWSURL}>
+             <img src={wallstreet} alt="logo" style={{marginLeft:"10px", width:"114px"}} className='walls'/>  
+             </a>
+              <img src={stock_token} alt="logo" style={{marginLeft:"-1px", marginRight:"10px", width:"64px"}}/>  
+              Stock Tokens  
+            </> :null}
+            </p>
+        }
+        <p style={{ fontSize: 15, marginTop:"10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
-      
 
-      <div className="scan-container flex-align-stretch bs_main" style={{marginTop:-80}}>
-       
+
+      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -80 }}>
+
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
@@ -195,7 +294,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="convert-in-progress"
             element={<BSConvertInProgress setScreenName={setScreenName} />}
           />
-           <Route
+          <Route
             path="confirm-convert/:id"
             element={<BSConfirmConvert setScreenName={setScreenName} />}
           />
@@ -226,7 +325,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             path="sell-in-progress"
             element={<BSSellInprogress setScreenName={setScreenName} />}
           />
-           <Route
+          <Route
             path="sell-confirm-convert/:id"
             element={<BSSellConfirmConvert setScreenName={setScreenName} />}
           />

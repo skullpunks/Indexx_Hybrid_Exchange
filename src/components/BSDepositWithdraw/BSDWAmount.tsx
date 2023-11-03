@@ -1,10 +1,10 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 // import RecordedIcon from "../../assets/arts/RecordedIcon.svg";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createFiatWithdraw, decodeJWT, getUserWallets } from '../../services/api';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 function debounce(func: Function, wait: number) {
     let timeout: NodeJS.Timeout | null;
@@ -46,42 +46,6 @@ export const BSDWAmount = () => {
 
     }, []);
 
-    type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-    const openNotificationWithIcon = (
-        type: NotificationType,
-        message: string
-    ) => {
-        notification[type]({
-            message: message,
-            description: '',
-            icon: <CheckCircleFilled className="text_link" />,
-            style: {
-                border: '1px solid #11be6a',
-                boxShadow: 'none',
-                borderRadius: 5,
-                top: 100,
-            },
-        });
-    };
-
-    const openNotificationWithIcon2 = (
-        type: NotificationType,
-        message: string
-    ) => {
-        notification[type]({
-            message: message,
-            description: '',
-            icon: <CloseCircleFilled />,
-            style: {
-                border: '1px solid #11be6a',
-                boxShadow: 'none',
-                borderRadius: 5,
-                top: 100,
-            },
-        });
-    };
-
     const handleSubmit = async () => {
         const res = await createFiatWithdraw(email, "USD", beneficiaryName,
             accountNumber,
@@ -90,11 +54,11 @@ export const BSDWAmount = () => {
             addressLine1,
             addressLine2, finalAmount);
         if (res.status === 200) {
-            openNotificationWithIcon('success', res.data.message);
+            OpenNotification('success', res.data.message);
             setLoadings(false);
         } else {
             setLoadings(false);
-            openNotificationWithIcon2(
+            OpenNotification(
                 'error',
                 'Failed to withdraw. Please try again or contact support'
             );

@@ -1,8 +1,7 @@
-import { Card, Image, Button, Input, notification } from 'antd';
+import { Card, Image, Button, Input } from 'antd';
 import { Divider } from 'antd';
 import { Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import exgcoin from '../../assets/arts/exgcoin.png';
 import logo from '../../assets/arts/logo.png';
@@ -12,7 +11,7 @@ import red2 from '../../assets/red2.png';
 import red from '../../assets/red.png';
 import redv from '../../assets/vector.png';
 import tradetoearnlogo from '../../assets/arts/tradetoearnlogo.png';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import {
   decodeJWT,
   getUserRewardDetails,
@@ -21,6 +20,7 @@ import {
 } from '../../services/api';
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
 
@@ -106,46 +106,15 @@ const TradeToEarn = () => {
     
     if (res.data.txData.status === 200) {
       setLoadings(false);
-      openNotificationWithIcon('success', res.data.txData.data.transactionHash);
+      OpenNotification('success', 'Rewards successsfully withdraw, Tx: ' + res.data.txData.data.transactionHash);
       setShowTxTest(true);
       setTxHash(res.data.txData.data.transactionHash);
       
       
     } else {
       setLoadings(false);
-      openNotificationWithIcon2('error');
+      OpenNotification('error', 'Failed to Rewards. Please check balance and try agrain after sometime');
     }
-  };
-
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (type: NotificationType, txHash: string) => {
-    notification[type]({
-      message: 'Rewards successsfully withdraw, Tx: ' + txHash,
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (type: NotificationType) => {
-    notification[type]({
-      message:
-        'Failed to Rewards. Please check balance and try agrain after sometime',
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
   };
 
   return (
@@ -523,7 +492,7 @@ const TradeToEarn = () => {
         <Image preview={false} src={no3} style={{ paddingLeft: 10, display: 'flex', justifyContent: 'center', width: 480, alignItems: 'center' }}></Image> */}
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

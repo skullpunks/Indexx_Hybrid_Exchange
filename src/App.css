@@ -21,8 +21,6 @@
 }
 
 
-
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -104,3 +102,30 @@
   opacity: 1;
 }
 
+/* Default theme */
+.theme-normal {
+  --primary-color: #11be6a;
+  --secondary-color: #0ea55a;
+  --highlight-color: lightgreen;
+  --link-hover: #1890ff;
+  --dropdown-hover: #1890ff;
+}
+
+/* CaptainBee theme */
+.theme-captain {
+  --primary-color: #ffb300;
+  --secondary-color: #FFD000;
+  --highlight-color: #ffb300;
+  --link-hover: grey;
+  --dropdown-hover: #ffb300;
+
+}
+
+/* HoneyBee theme */
+.theme-honeyb {
+  --primary-color: #ffb300;
+  --secondary-color: #FFD000;
+  --highlight-color: #ffb300;
+  --link-hover: grey;
+  --dropdown-hover: #ffb300;
+}

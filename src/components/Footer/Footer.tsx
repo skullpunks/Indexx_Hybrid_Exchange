@@ -14,6 +14,8 @@ import personFlipCoin from '../../assets/arts/personFlip.png';
 // import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
 import indexText_dark from '../../assets/indexx.ai_black.svg';
 import indexText from '../../assets/indexx.ai white.png';
+import indexTextyellow from '../../assets/indexx ai yellow 1.svg';
+import indexTextyellowdark from '../../assets/yellow_dark.svg';
 import arrow from '../../assets/arrow-.svg';
 import plus from '../../assets/arts/plus.svg';
 import './Footer.css';
@@ -61,11 +63,17 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
-
+  
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+  
   useEffect(() => {
+    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
     const handleStorageChange = (event:any) => {
       console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
+      if(setUserLogged !== event.currentTarget.localStorage.userlogged) {
+        setUserLogged(event.currentTarget.localStorage.userlogged);
+      }
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -102,10 +110,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                   >
                     <a href={baseURL}>
                     {theme === "dark" ?
-                    <img src={indexText} alt="index logo" width={"60px"} className='logo_ind'/>
+                    <img src={userLogged === "normal" ? indexText : indexTextyellow} alt="index logo" width={"60px"} className='logo_ind'/>
 
                     :
-                      <img src={indexText_dark} alt="index logo" width={"60px"} className='logo_ind'/>
+                      <img src={userLogged === "normal" ? indexText_dark : indexTextyellowdark} alt="index logo" width={"60px"} className='logo_ind'/>
                     }
                       </a>
                     {/* <img src={arrow} alt="index logo" width={"19px"} /> */}
@@ -959,10 +967,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         >
                     <a href={baseURL} className='w-100 mx-auto d-flex justify-content-center'>
                     {theme === "dark" ?
-                    <img src={indexText} alt="index logo" width={"70px"} className='logo_ind'/>
+                    <img src={userLogged === "normal" ? indexText : indexTextyellow} alt="index logo" width={"70px"} className='logo_ind'/>
 
                     :
-                      <img src={indexText_dark} alt="index logo" width={"70px"} className='logo_ind'/>
+                      <img src={userLogged === "normal" ? indexText_dark : indexTextyellowdark} alt="index logo" width={"70px"} className='logo_ind'/>
                     }
                       </a>
                     {/* <img src={arrow} alt="index logo" width={"19px"} /> */}

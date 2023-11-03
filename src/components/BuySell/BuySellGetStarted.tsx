@@ -7,14 +7,13 @@ import {
   Checkbox,
   Form,
   Input,
-  notification,
   Space,
   Image,
 } from 'antd';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 
 import { signupAPI, baseDEXURL } from '../../services/api';
 import hands from '../../assets/arts/normal_login.svg';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellGetStarted: React.FC = () => {
   //creating IP state
@@ -31,15 +30,17 @@ console.log(refcode === "null");
   const onFinish = async (values: any) => {
     setLoadings(true);
     localStorage.setItem('tempAuthEmail', values.email);
+    localStorage.setItem('userlogged', "normal");
     const res = await signupAPI(values.email, values.password, values.username, values.referral);
     
     if (res.status === 200) {
       setLoadings(false);
-      openNotificationWithIcon('success', 'Successfully registered');
+      OpenNotification('success', 'Successfully registered');
+      window.dispatchEvent( new Event('storage') ) 
       navigate('email-auth');
     } else {
       setLoadings(false);
-      openNotificationWithIcon('error', res.data);
+      OpenNotification('error', res.data);
     }
   };
 
@@ -66,30 +67,6 @@ console.log(refcode === "null");
     
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    let Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">

@@ -20,11 +20,11 @@ import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.s
 import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
+import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
+// import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -38,11 +38,13 @@ import { notification } from 'antd';
 import '../../Captainbee/CaptainDash.css';
 import LeaderCaptainTabs from './LeaderCaptainTabs';
 import { Button, Rating } from '@mui/material';
-import { getCaptainBeeStatics, getReferredUserDetails } from '../../../../services/api';
+import { getCaptainBeeStatics, getReferredUserDetails, baseCEXURL, baseHiveURL } from '../../../../services/api';
 import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
 import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
 import SubHeader from '../SubHeader/SubHeader';
 import { PackData } from '../../../PowerPack/PackData';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { RankData } from '../../RankData';
 
 
 const LeaderCaptain = () => {
@@ -50,6 +52,7 @@ const LeaderCaptain = () => {
   const [captainBeeFullData, setRefferedFullData] = useState();
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [email, setEmail] = useState();
@@ -83,6 +86,13 @@ const LeaderCaptain = () => {
       } else {
         setPowerPackPhoto(undefined);
       }
+      if (data?.data?.affiliateUserProfile?.rank) {
+        const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+        setRankPhoto(getRank?.photo);
+      } else {
+        const getRank = RankData.find(x => x.name === "Bronze")
+        setRankPhoto(getRank?.photo);
+      }
     })
 
   }, []);
@@ -104,32 +114,9 @@ const LeaderCaptain = () => {
     };
   }, []);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
 
@@ -152,6 +139,7 @@ const LeaderCaptain = () => {
 
               <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: "1150px" }}>
                 <div style={{ width: "74%" }}>
+                  <img src={hat} alt="hat" style={{marginRight:"10px"}} />
                   Leader Captain Bee’s  Dashboard
                 </div>
                 <div className='d-flex justify-content-between' style={{ width: "29.5%" }}>
@@ -171,7 +159,7 @@ const LeaderCaptain = () => {
                       fontSize: '10px',
                       boxShadow: 'none',
                       '&:hover': {
-                        borderColor: '#FFB300',
+                        borderColor: '#FFD000',
                         boxShadow: 'none',
                       },
                     }}
@@ -193,7 +181,7 @@ const LeaderCaptain = () => {
                       fontSize: '10px',
                       boxShadow: 'none',
                       '&:hover': {
-                        borderColor: '#FFB300',
+                        borderColor: '#FFD000',
                         boxShadow: 'none',
                       },
                     }}
@@ -241,6 +229,18 @@ const LeaderCaptain = () => {
                             border={'none'}
                           />
                         </div>
+
+                        <img
+                          alt=""
+                          src={rankPhoto}
+                          style={{
+                            position: 'absolute',
+                            bottom: '-25px',
+                            right: '17px',
+                            width: '79px', 
+                            height: '81px',
+                          }}
+                        />
                       </div>
                     </div>
                     <div
@@ -284,7 +284,7 @@ const LeaderCaptain = () => {
                     (<div className="justify-content-center d-flex">
                       <img src={powerPackPhoto} alt='pack' width={"80%"} />
                     </div>) : (
-                      <div>
+                      <div className="justify-content-start d-flex">
                         Leader has not purchased any powerpack.
                       </div>
                     )
@@ -358,20 +358,33 @@ const LeaderCaptain = () => {
                       <img alt="Twitter" src={twitter} />
                     </a>
 
-                    <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div>
-                        Invite Honey Bee : {captainBeeFullData?.referralCode}
+                        <span className='fw-bold'>
+                        Invite Honey Bee : 
+                        </span>
+                        <br />
+                        {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick(captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
+                      <br />
                       <div>
-                        Invite Captain Bee : {captainBeeFullData?.referralCode}
+                      <span className='fw-bold'>
+                        Invite Captain Bee : 
+                        </span>
+                        <br />
+                        {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick(captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
@@ -391,7 +404,7 @@ const LeaderCaptain = () => {
                   </div>
                 </div>
                 <div className="side-container" style={{ marginLeft: 0, width: "1150px" }}>
-                  <LeaderCaptainTabs />
+                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
                 </div>
               </div>
             </div>

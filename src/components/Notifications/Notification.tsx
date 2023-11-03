@@ -2,7 +2,7 @@ import React from 'react';
 import './Notification.css'
 import NotificationLeftNav from './NotificationLeftNav';
 import { Collapse } from 'antd';
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 import AllNotification from './AllNotification';
 import Activity from './Activity';
@@ -53,7 +53,7 @@ const Notification = () => {
 
 
 
-                <Footer helpIcon={false} />
+                {/* <Footer helpIcon={false} /> */}
             </>
 
 

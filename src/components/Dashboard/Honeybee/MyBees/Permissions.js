@@ -84,7 +84,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -119,7 +119,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -154,7 +154,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}

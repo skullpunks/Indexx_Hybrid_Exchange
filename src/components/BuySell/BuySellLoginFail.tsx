@@ -26,8 +26,8 @@ const BuySellLoginFail: React.FC<Props> = ({ setScreenName }) => {
         onClick={() => navigate('/indexx-exchange/buy-sell/login')}
         style={{
           height: 55,
-          borderColor: '#11be6a',
-          backgroundColor: '#11be6a',
+          borderColor: 'var(--primary-color)',
+          backgroundColor: 'var(--primary-color)',
           color: '#fff',
           fontSize: 20,
           borderRadius: 5,

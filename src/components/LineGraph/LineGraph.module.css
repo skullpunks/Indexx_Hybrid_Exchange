@@ -91,7 +91,7 @@
 } */
 
 .chart_inner_middle {
-  color: #11be6a;
+  color: var(--primary-color);
   font-size: 20px;
 }
 
@@ -121,7 +121,7 @@
 .bs_main .chart_inner_right .ant-segmented-item-selected {
   /* background: #006DFF;
   color:#fff; */
-  background: #11be6a;
+  background: var(--primary-color);
   /* color: #000; */
   color: var(--dark-text);
   background-color: transparent;

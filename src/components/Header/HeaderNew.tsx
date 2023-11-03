@@ -47,7 +47,8 @@ import {
   baseShopURL,
   baseWSURL,
   baseWalletURL,
-  baseXnftURL
+  baseXnftURL,
+  decodeJWT
 } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
 
@@ -97,7 +98,11 @@ const HeaderNew = () => {
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
   const [userProfile, setUserProfile] = useState();
+  const [url, setUrl] = useState("");
+  const [haspowerpack, setHaspowerpack] = useState(false);
 
+  console.log(haspowerpack, "has pack");
+  
   let pageName = searchParams.get("page");
   // alert(pageName)
   useEffect(() => {
@@ -134,6 +139,9 @@ const HeaderNew = () => {
 
         setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
         setStaticsData(data.data);
+        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== ""){
+          setHaspowerpack(true);
+        }
       });
     } else {
       setisCaptain(false);
@@ -146,7 +154,46 @@ const HeaderNew = () => {
         setUserProfile(data?.data?._doc?.profilePic);
       })
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    let access_token = String(localStorage.getItem("access_token"));
+    console.log("access", access_token);
+    if (access_token) { 
+      try {
+        let decoded = decodeJWT(access_token);
+        const userEmail = decoded.email;
+        const userKey = String(localStorage.getItem("userkey"));
+        const userType = localStorage.getItem("userType");
+        const userpassword = localStorage.getItem("userpass");
+        console.log("userEmail", userEmail);
+        console.log("userKey", userKey);
+        console.log("userpassword", userpassword);
+        const walletUrl = `${baseWalletURL}/login/sign-in/?useremail=${userEmail}&userkey=${userpassword}&usertype=${userType}`;
+        setUrl(walletUrl);
+      } catch (error) {
+        console.error("Error decoding access_token:", error);
+        // Handle the error, e.g., show an error message to the user or perform appropriate actions.
+      }
+    }
+  }, []);
+
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+  useEffect(() => {
+    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
+    const handleStorageChange = (event:any) => {
+      // console.log(event);
+      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
+      setUserLogged(event.currentTarget.localStorage.userlogged);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) ||
@@ -158,7 +205,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href={baseURL} className="logo__icon">
+            <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
           </div>
@@ -175,7 +222,7 @@ const HeaderNew = () => {
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container style={{ maxWidth: "1360px" }}>
           <div className="d-flex logo__holder">
-            <Navbar.Brand href={baseURL} className="logo__icon">
+            <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
             {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
@@ -188,9 +235,14 @@ const HeaderNew = () => {
 
 
               <NavDropdown title="Platforms" id="basic-nav-dropdown" className="my-menu" renderMenuOnMount={true}>
-                <div style={{ width: "200vw" }}>
+                <div className="main-div"
+                //  style={{ width: "200vw" }}
+                 >
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                  <div className="black-div"
+                  // style={{ height: "26px", background: "black" }}
+                  >  
+                  </div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -352,6 +404,11 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Products
                       </div>
+                      <NavDropdown.Item href={`${url}`} className="link-div">
+                        <a href={`${url}`} className="link-style" target="_blank" rel="noopener noreferrer">
+                          Web Wallet
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="link-style">
                           Gift Cards
@@ -550,6 +607,11 @@ const HeaderNew = () => {
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/trade-to-earn`} className="link-div">
                         <a href={`${baseURL}/indexx-exchange/trade-to-earn`} className="link-style">
                           Trade to Earn
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/buy-sell/staking`} className="link-div">
+                        <a href={`${baseCEXURL}/indexx-exchange/buy-sell/staking`} className="link-style">
+                          Staking
                         </a>
                       </NavDropdown.Item>
                     </div>
@@ -796,7 +858,7 @@ const HeaderNew = () => {
               <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
             </Nav>
 
-            <Nav className="align-items-center">
+            <Nav className="align-items-center buy-cryp">
 
               {localStorage.getItem("user") ? (
                 <>
@@ -804,7 +866,7 @@ const HeaderNew = () => {
                     as={Link}
                     to="/indexx-exchange/buy-sell/"
                     href="/"
-                    className="btn btn-danger text-white"
+                    className="btn btn-danger"
                     style={{ height: "41px", zIndex: "10000" }}
                   >
                     Buy Crypto
@@ -817,6 +879,8 @@ const HeaderNew = () => {
 
                   <NavDropdown title={
                     <div className="d-flex align-items-center justify-content-center">
+                      {localStorage.getItem("userlogged") !== 'normal' &&
+
                       <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
 
                         <div
@@ -853,8 +917,9 @@ const HeaderNew = () => {
                           </div>
                         </div>
                       </div>
+                      }
                       <div style={{
-                        color:"#FFB300"
+                        color: "#FFB300"
                       }}>
 
                         {title}
@@ -875,11 +940,19 @@ const HeaderNew = () => {
                               Account & Settings
                             </Link>
                           </NavDropdown.Item>
+                          <NavDropdown.Item href="/indexx-exchange/bridge" className="link-div">
+                            <Link to="/indexx-exchange/bridge" className="link-style">
+                              Bridge
+                            </Link>
+                          </NavDropdown.Item>
+                          {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) &&
+
                           <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
                             <Link to="/indexx-exchange/dashboard" className="link-style">
                               Waggle Dance / Dashboard
                             </Link>
                           </NavDropdown.Item>
+}
                           <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
                             <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="link-style">
                               Deposit
@@ -905,6 +978,12 @@ const HeaderNew = () => {
                           <NavDropdown.Item href="/indexx-exchange/trade-to-earn" className="link-div">
                             <Link to="/indexx-exchange/trade-to-earn" className="link-style">
                               Trade to Earn
+
+                            </Link>
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="/indexx-exchange/buy-sell/staking-history" className="link-div">
+                            <Link to="/indexx-exchange/buy-sell/staking-history" className="link-style">
+                              Staking History
 
                             </Link>
                           </NavDropdown.Item>
@@ -979,7 +1058,11 @@ const HeaderNew = () => {
 
                         </div>
                       </div>
-                      <div className="back profile-back"> </div>
+                      {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
+                          <div className="back profile-back"> </div>
+                        :
+                          <div className="back profile-back" style={{top:"548px"}}> </div>
+                      }
                     </div>
                   </NavDropdown>
 

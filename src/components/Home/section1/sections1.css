@@ -72,14 +72,14 @@
 }
 
 .login-button {
-  border-bottom: 50px solid #11be6a;
+  border-bottom: 50px solid var(--primary-color);
   border-left: 25px solid transparent;
   margin-right: -20px;
   margin-bottom: -42px;
 }
 
 .login-button:hover {
-  border-bottom-color: #0ea55a;
+  border-bottom-color: var(--secondary-color);
   border-left-color: transparent;
 }
 

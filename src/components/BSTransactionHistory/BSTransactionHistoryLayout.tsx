@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import './BSTransactionHistory.css';
 import BSTransactionHistoryContent from './BSTransactionHistoryContent';
@@ -13,7 +13,7 @@ export const BSTransactionHistoryLayout = () => {
                     <Route index element={<BSTransactionHistoryContent />} />
                 </Routes>
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </>
     )
 

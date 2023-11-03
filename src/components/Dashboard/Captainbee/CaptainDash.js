@@ -29,10 +29,12 @@ import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/disc
 
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
+// import bronze from "../../../assets/Rank Badges/1 bronze.svg";
 import { PackData } from '../../PowerPack/PackData';
+import { RankData } from '../RankData';
 // import HoneyBeeComingSoon from "../../../components/ComingSoon/HoneyBeeComingSoon";
 
-import { LineChart } from '@mui/x-charts/LineChart';
+// import { LineChart } from '@mui/x-charts/LineChart';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -47,45 +49,46 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
+import OpenNotification from '../../OpenNotification/OpenNotification';
+import CommissionTable from './CommissionTable';
 
 const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
+  const [rankPhoto, setRankPhoto] = useState();
   const [platformCapt, setPlatformCapt] = useState('Exchange');
   const [OrderCapt, setOrderCapt] = useState('buysell');
   const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
   const [userType, setUserType] = useState("");
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  // const xLabels = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
-  const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  const xLabelsCapt = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
+  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
+  // const xLabelsCapt = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
   const [staticsData, setStaticsData] = useState();
 
@@ -102,6 +105,13 @@ const CaptainDash = () => {
           setPowerPackPhoto(getPowerPack?.photo);
         } else {
           setPowerPackPhoto(undefined);
+        }
+        if (data?.data?.affiliateUserProfile?.rank) {
+          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+          setRankPhoto(getRank?.photo);
+        } else {
+          const getRank = RankData.find(x => x.name === "Bronze")
+          setRankPhoto(getRank?.photo);
         }
       });
     }
@@ -125,32 +135,10 @@ const CaptainDash = () => {
     };
   }, []);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
   return (
@@ -196,6 +184,18 @@ const CaptainDash = () => {
                         border={'none'}
                       />
                     </div>
+
+                    <img
+                      alt=""
+                      src={rankPhoto}
+                      style={{
+                        position: 'absolute',
+                        bottom: '-25px',
+                        right: '17px',
+                        width: '79px',
+                        height: '81px',
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
@@ -301,20 +301,33 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                <div className="d-flex flex-direction-column align-items-start  mt-5">
                   <div>
-                    Invite Honey Bee : {staticsData?.userFullData?.referralCode}
+                  <span className='fw-bold'>
+                    Invite Honey Bee : 
+                  </span>
+                    <br/>
+                    {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseCEXURL +
+                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
+                  <br />
                   <div>
-                    Invite Captain Bee : {staticsData?.userFullData?.referralCode}
+                  <span className='fw-bold'>
+                    Invite Captain Bee : 
+                  </span>
+                    <br/>
+                    {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick( baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -336,182 +349,191 @@ const CaptainDash = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     gap: 2,
                     mt: 2
                   }}
                 >
+
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'column',
+                      flexDirection: 'row',
                       gap: 2,
-                      width: '50%',
+                      mt: 2
                     }}
                   >
-                    <Typography
-                      variant="text"
-                      component="p"
-                      fontSize={'15px'}
-                      fontWeight={700}
-                      textAlign={'left'}
-                      mx={"auto"}
-                      mb={2}
-                      sx={{
-                        color: "#393939",
-                      }}
-
-                    >
-                      My Honey Bee Statistics
-                    </Typography>
                     <Box
                       sx={{
                         display: 'flex',
-                        flexDirection: 'row',
-                        gap: 1,
+                        flexDirection: 'column',
+                        gap: 2,
+                        width: '50%',
                       }}
                     >
-                      <Box
+                      <Typography
+                        variant="text"
+                        component="p"
+                        fontSize={'15px'}
+                        fontWeight={700}
+                        textAlign={'left'}
+                        mx={"auto"}
+                        mb={2}
                         sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '31%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
+                          color: "#393939",
                         }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Platforms
-                        </Typography>
-                        <Select
-                          value={platform}
-                          onChange={(e) => {
-                            setPlatform(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
-                          sx={{
-                            width: '100%',
-                            borderRadius: 0,
-                            background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
-                          }}
-                          size="small"
-                          disableUnderline
-                        >
-                          {/* <MenuItem value="">Select Platform</MenuItem> */}
-                          <MenuItem key="Exchange" value="Exchange">
-                            Indexx Exchange
-                          </MenuItem>
-                        </Select>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '29%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Type of Order
-                        </Typography>
-                        <Select
-                          value={Order}
-                          onChange={(e) => {
-                            setOrder(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
-                          sx={{
-                            width: '100%',
-                            borderRadius: 0,
-                            background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
-                          }}
-                          size="small"
-                          disableUnderline
-                        >
-                          <MenuItem key="buysell" value="buysell">
-                            Buy & Sell
-                          </MenuItem>
-                          <MenuItem key="Convert" value="Convert">
-                            Convert
-                          </MenuItem>
-                        </Select>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '40%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Date Range
-                        </Typography>
 
-                        <Select
-                          value={selectedDate}
-                          onChange={(e) => {
-                            setSelectedDate(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
+                      >
+                        My Honey Bee Statistics
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
                           sx={{
-                            width: '100%',
-                            borderRadius: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '31%',
                             background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
+                            pl: 1,
+                            pt: 0.4,
                           }}
-                          size="small"
-                          disableUnderline
                         >
-                          <MenuItem key="aug-sept" value="aug-sept">
-                            August-September
-                          </MenuItem>
-                        </Select>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Platforms
+                          </Typography>
+                          <Select
+                            value={platform}
+                            onChange={(e) => {
+                              setPlatform(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            {/* <MenuItem value="">Select Platform</MenuItem> */}
+                            <MenuItem key="Exchange" value="Exchange">
+                              Indexx Exchange
+                            </MenuItem>
+                          </Select>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '29%',
+                            background: 'var(--body_background)',
+                            pl: 1,
+                            pt: 0.4,
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Type of Order
+                          </Typography>
+                          <Select
+                            value={Order}
+                            onChange={(e) => {
+                              setOrder(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            <MenuItem key="buysell" value="buysell">
+                              Buy & Sell
+                            </MenuItem>
+                            <MenuItem key="Convert" value="Convert">
+                              Convert
+                            </MenuItem>
+                          </Select>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '40%',
+                            background: 'var(--body_background)',
+                            pl: 1,
+                            pt: 0.4,
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Date Range
+                          </Typography>
 
-                        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                          <Select
+                            value={selectedDate}
+                            onChange={(e) => {
+                              setSelectedDate(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            <MenuItem key="aug-sept" value="aug-sept">
+                              August-September
+                            </MenuItem>
+                          </Select>
+
+                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         views={['year', 'month']}
                         label="Month/Year"
@@ -527,109 +549,129 @@ const CaptainDash = () => {
                         )}
                       />
                     </LocalizationProvider> */}
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 2,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: '50%',
-                          background: 'var(--body_background)',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          px: 2,
-                          py: 1,
-                          aspectRatio: 1
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                          alignSelf={'flex-start'}
-                        >
-                          Total Honey Bees
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'77px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          {staticsData?.honeyBeesCount}
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'22px'}
-                          fontWeight={400}
-                          textAlign={'left'}
-                          color={'#FFB300'}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'baseline',
-                            verticalAlign: 'bottom',
-                            gap: 1,
-                          }}
-                        >
-                          <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
-                        </Typography>
+                        </Box>
                       </Box>
                       <Box
                         sx={{
-                          width: '50%',
-                          background: 'var(--body_background)',
                           display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          px: 2,
-                          py: 1,
-                          aspectRatio: 1
+                          flexDirection: 'row',
+                          gap: 2,
                         }}
                       >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                          alignSelf={'flex-start'}
-                        >
-                          Total Commision Earned in USD
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'77px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          $150
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'22px'}
-                          fontWeight={400}
-                          textAlign={'left'}
-                          color={'#FFB300'}
+                        <Box
                           sx={{
+                            width: '50%',
+                            background: 'var(--body_background)',
                             display: 'flex',
-                            alignItems: 'baseline',
-                            verticalAlign: 'bottom',
-                            gap: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            px: 2,
+                            py: 1,
+                            aspectRatio: 1
                           }}
                         >
-                          <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
-                        </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Honey Bees
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {staticsData?.honeyBeesCount}
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'22px'}
+                            fontWeight={400}
+                            textAlign={'left'}
+                            color={'#FFB300'}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'baseline',
+                              verticalAlign: 'bottom',
+                              gap: 1,
+                            }}
+                          >
+                            <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            width: '50%',
+                            background: 'var(--body_background)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            px: 2,
+                            py: 1,
+                            aspectRatio: 1
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in USD
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                             ${'0.00'}
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in INEX
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {'0.00'}
+                            <span className='font_17x'>
+                            INEX
+                            </span>
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'22px'}
+                            fontWeight={400}
+                            textAlign={'left'}
+                            color={'#FFB300'}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'baseline',
+                              verticalAlign: 'bottom',
+                              gap: 1,
+                            }}
+                          >
+                            <img alt="up" src={arrow} />  {"0%"}
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                    <Box
+                      {/* <Box
                       sx={{
                         background: 'var(--body_background)',
                         width: "100%",
@@ -644,180 +686,180 @@ const CaptainDash = () => {
                         ]}
                         xAxis={[{ scaleType: 'point', data: xLabels }]}
                       />
+                    </Box> */}
                     </Box>
-                  </Box>
 
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 2,
-                      width: '50%',
-                    }}
-                  >
-                    <Typography
-                      variant="text"
-                      component="p"
-                      fontSize={'15px'}
-                      fontWeight={700}
-                      textAlign={'left'}
-                      mx={"auto"}
-                      mb={2}
-                      sx={{
-                        color: "#393939",
-                      }}
-
-                    >
-                      My Captain Bee Statistics
-                    </Typography>
                     <Box
                       sx={{
                         display: 'flex',
-                        flexDirection: 'row',
-                        gap: 1,
+                        flexDirection: 'column',
+                        gap: 2,
+                        width: '50%',
                       }}
                     >
-                      <Box
+                      <Typography
+                        variant="text"
+                        component="p"
+                        fontSize={'15px'}
+                        fontWeight={700}
+                        textAlign={'left'}
+                        mx={"auto"}
+                        mb={2}
                         sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '31%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
+                          color: "#393939",
                         }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Platforms
-                        </Typography>
-                        <Select
-                          value={platformCapt}
-                          onChange={(e) => {
-                            setPlatformCapt(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
-                          sx={{
-                            width: '100%',
-                            borderRadius: 0,
-                            background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
-                          }}
-                          size="small"
-                          disableUnderline
-                        >
-                          {/* <MenuItem value="">Select Platform</MenuItem> */}
-                          <MenuItem key="Exchange" value="Exchange">
-                            Indexx Exchange
-                          </MenuItem>
-                        </Select>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '29%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Type of Order
-                        </Typography>
-                        <Select
-                          value={OrderCapt}
-                          onChange={(e) => {
-                            setOrderCapt(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
-                          sx={{
-                            width: '100%',
-                            borderRadius: 0,
-                            background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
-                          }}
-                          size="small"
-                          disableUnderline
-                        >
-                          <MenuItem key="buysell" value="buysell">
-                            Buy & Sell
-                          </MenuItem>
-                          <MenuItem key="Convert" value="Convert">
-                            Convert
-                          </MenuItem>
-                        </Select>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'baseline',
-                          width: '40%',
-                          background: 'var(--body_background)',
-                          pl: 1,
-                          pt: 0.4,
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          Date Range
-                        </Typography>
 
-                        <Select
-                          value={selectedDateCapt}
-                          onChange={(e) => {
-                            setSelectedDateCapt(e.target.value);
-                          }}
-                          variant="standard"
-                          InputLabelProps={{ shrink: true }}
+                      >
+                        My Captain Bee Statistics
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
                           sx={{
-                            width: '100%',
-                            borderRadius: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '31%',
                             background: 'var(--body_background)',
-                            color: "var(--body_color)",
-                            border: 'none',
-                            outline: 'none',
-                            padding: 0,
-                            fontSize: '12px',
+                            pl: 1,
+                            pt: 0.4,
                           }}
-                          size="small"
-                          disableUnderline
                         >
-                          <MenuItem key="aug-sept" value="aug-sept">
-                            August-September
-                          </MenuItem>
-                        </Select>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Platforms
+                          </Typography>
+                          <Select
+                            value={platformCapt}
+                            onChange={(e) => {
+                              setPlatformCapt(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            {/* <MenuItem value="">Select Platform</MenuItem> */}
+                            <MenuItem key="Exchange" value="Exchange">
+                              Indexx Exchange
+                            </MenuItem>
+                          </Select>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '29%',
+                            background: 'var(--body_background)',
+                            pl: 1,
+                            pt: 0.4,
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Type of Order
+                          </Typography>
+                          <Select
+                            value={OrderCapt}
+                            onChange={(e) => {
+                              setOrderCapt(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            <MenuItem key="buysell" value="buysell">
+                              Buy & Sell
+                            </MenuItem>
+                            <MenuItem key="Convert" value="Convert">
+                              Convert
+                            </MenuItem>
+                          </Select>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'baseline',
+                            width: '40%',
+                            background: 'var(--body_background)',
+                            pl: 1,
+                            pt: 0.4,
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            Date Range
+                          </Typography>
 
-                        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                          <Select
+                            value={selectedDateCapt}
+                            onChange={(e) => {
+                              setSelectedDateCapt(e.target.value);
+                            }}
+                            variant="standard"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{
+                              width: '100%',
+                              borderRadius: 0,
+                              background: 'var(--body_background)',
+                              color: "var(--body_color)",
+                              border: 'none',
+                              outline: 'none',
+                              padding: 0,
+                              fontSize: '12px',
+                            }}
+                            size="small"
+                            disableUnderline
+                          >
+                            <MenuItem key="aug-sept" value="aug-sept">
+                              August-September
+                            </MenuItem>
+                          </Select>
+
+                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         views={['year', 'month']}
                         label="Month/Year"
@@ -833,109 +875,135 @@ const CaptainDash = () => {
                         )}
                       />
                     </LocalizationProvider> */}
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 2,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: '50%',
-                          background: 'var(--body_background)',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          px: 2,
-                          py: 1,
-                          aspectRatio: 1
-                        }}
-                      >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                          alignSelf={'flex-start'}
-                        >
-                          Total Team Captain Bees
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'77px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          {staticsData?.captainsCount}
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'22px'}
-                          fontWeight={400}
-                          textAlign={'left'}
-                          color={'#FFB300'}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'baseline',
-                            verticalAlign: 'bottom',
-                            gap: 1,
-                          }}
-                        >
-                          <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
-                        </Typography>
+                        </Box>
                       </Box>
                       <Box
                         sx={{
-                          width: '50%',
-                          background: 'var(--body_background)',
                           display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          px: 2,
-                          py: 1,
-                          aspectRatio: 1
+                          flexDirection: 'row',
+                          gap: 2,
                         }}
                       >
-                        <Typography
-                          variant="text"
-                          fontSize={'12px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                          alignSelf={'flex-start'}
-                        >
-                          Total Commision Earned in USD
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'77px'}
-                          fontWeight={600}
-                          textAlign={'left'}
-                        >
-                          $150
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          fontSize={'22px'}
-                          fontWeight={400}
-                          textAlign={'left'}
-                          color={'#FFB300'}
+                        <Box
                           sx={{
+                            width: '50%',
+                            background: 'var(--body_background)',
                             display: 'flex',
-                            alignItems: 'baseline',
-                            verticalAlign: 'bottom',
-                            gap: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            px: 2,
+                            py: 1,
+                            aspectRatio: 1
                           }}
                         >
-                          <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
-                        </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Team Captain Bees
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {staticsData?.captainsCount}
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'22px'}
+                            fontWeight={400}
+                            textAlign={'left'}
+                            color={'#FFB300'}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'baseline',
+                              verticalAlign: 'bottom',
+                              gap: 1,
+                            }}
+                          >
+                            <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            width: '50%',
+                            background: 'var(--body_background)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            px: 2,
+                            py: 1,
+                            aspectRatio: 1
+                          }}
+                        >
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in USD
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
+                              : '0.00')
+                            }
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in INEX
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                              : '0.00')
+                            } 
+                            <span className='font_17x'>
+                            INEX
+                            </span>
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'22px'}
+                            fontWeight={400}
+                            textAlign={'left'}
+                            color={'#FFB300'}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'baseline',
+                              verticalAlign: 'bottom',
+                              gap: 1,
+                            }}
+                          >
+                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                    <Box
+                      {/* <Box
                       sx={{
                         background: 'var(--body_background)',
                         width: "100%",
@@ -950,7 +1018,12 @@ const CaptainDash = () => {
                         ]}
                         xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
                       />
+                    </Box> */}
                     </Box>
+                  </Box>
+
+                  <Box>
+                    <CommissionTable />
                   </Box>
                 </Box>
               </div>

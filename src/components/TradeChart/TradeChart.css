@@ -118,9 +118,9 @@
 }
 
 .orange .ant-tabs-ink-bar {
-  background: #11be6a;
+  background: var(--primary-color);
 }
 
 .orange .ant-tabs-tab:hover {
-  color: #11be6a;
+  color: var(--primary-color);
 }

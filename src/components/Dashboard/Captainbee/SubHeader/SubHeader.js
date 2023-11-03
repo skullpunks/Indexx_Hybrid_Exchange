@@ -6,28 +6,38 @@ import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
 import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
+import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
 import './SubHeader.css'
 import { Link, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
-
+import { Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 const SubHeader = () => {
   const location = useLocation();
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
 
-    <div style={{position:"fixed", top:"90px", width:"100%", zIndex:999, background:"#FFB300", height:"90px"}}>
+    <div style={{position:"fixed", 
+    // top:"90px", 
+    top:`${isMobile ? "60px" : "90px"}`, 
+    width:"100%", zIndex:999, background:"#FFB300", 
+    // height:"90px"}}>
+    height:`${isMobile ? "162px" : "90px"}`, }}>
+
 
     <div className="container sub-page">
 
-    <div className="row row-cols-1 row-cols-md-4 g-4 sub-logos"  style={{justifyContent:"center"}}>
+    <div className="row row-cols-1 row-cols-md-4 g-4 sub-logos"  style={{justifyContent:"center",
+    paddingTop: `${isMobile ? "25px" : "0"}`,}}>
     
         <div className="col">
         <Link to="/indexx-exchange/dashboard">
             <div className="card">
-            <img src={waggle} className="card-img-top mt-sm-2 mb-sm-2" alt="..."/>
-            <div className="card-body" style={{marginTop:"1.5px"}}>
+            <img src={waggle} className="card-img-top mt-2 mb-sm-2" alt="..."/>
+            <div className="card-body" style={{marginTop:`${isMobile ? "-1px" : "1.5px"}`}}>
                 <h5 className="card-title">Waggle Dance</h5>
                 <Typography
                 component='p'
@@ -54,7 +64,8 @@ const SubHeader = () => {
             <Typography
                 component='p'
                 sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-mybees'
+                  location.pathname === '/indexx-exchange/dashboard/capt-mybees' ||
+                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('HoneyBee'))
                     ? {
                       height: '0.07px',
                       width: '72px',
@@ -70,13 +81,14 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-mycaptains">
             <div className="card">
-            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
                 <h5 className="card-title">Captain Bee's Colony</h5>
             <Typography
                 component='p'
                 sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-mycaptains'
+                  location.pathname === '/indexx-exchange/dashboard/capt-mycaptains' ||
+                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('CaptainBee'))
                     ? {
                       height: '0.07px',
                       width: '95px',
@@ -92,7 +104,7 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-leader">
             <div className="card">
-            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px"}}/>
+            <img src={hat} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
                 <h5 className="card-title">Leader Captain Bee</h5>
             <Typography
@@ -138,7 +150,7 @@ const SubHeader = () => {
         <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/honeycomb">
             <div className="card">
-            <img src={honey} className="card-img-top mt-1 mb-1" alt="..." style={{
+            <img src={honey} className="card-img-top mt-sm-1 mb-sm-1" alt="..." style={{
                 width:"auto"
             }}/>
             <div className="card-body">
@@ -172,6 +184,7 @@ const SubHeader = () => {
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-tech' ||
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-acc' ||
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-leg' ||
+                  location.pathname === '/indexx-exchange/dashboard/capt-resource-sales' ||
                   location.pathname === '/indexx-exchange/dashboard/capt-resource-mgmt' 
                     ? {
                       height: '0.07px',
@@ -185,7 +198,32 @@ const SubHeader = () => {
             </div>
         </a>
         </div>
+        <div className="col" style={{marginLeft:"-20px"}}>
+        <a href="/indexx-exchange/buy-sell">
+            <div className="card">
+            <img src={exch} className="card-img-top" alt="..." style={{marginBottom: `${isMobile ? 0 : "3px" }`}}/>
+            <div className="card-body">
+                <h5 className="card-title">Hive Exchange</h5>
+                <Typography
+                component='p'
+                sx={
+                  location.pathname === '/'
+                    ? {
+                      height: '0.07px',
+                      width: '58px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </a>
+        </div>
 
+        <div className="col" style={{width:"100px"}}>
+        
+        </div>
     </div>
     </div>
 

@@ -1,12 +1,8 @@
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from '@ant-design/icons';
 import { Button, Typography } from '@mui/material';
-import { notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getHoneyBeeDataByUsername, requestPermissionsByEmail } from '../../../../services/api';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 const Permissions = () => {
 
@@ -16,29 +12,6 @@ const Permissions = () => {
   const [captainBeeEmail, setCaptainBeeEmail] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState();
   const [loadings, setLoadings] = useState(false);
-
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   useEffect(() => {
 
@@ -72,10 +45,10 @@ const Permissions = () => {
       let res = await requestPermissionsByEmail(captainBeeEmail, honeyBeeEmail, type);
       if (res.status === 200) {
         setLoadings(false);
-        openNotificationWithIcon('success', res.message);
+        OpenNotification('success', res.message);
       } else {
         setLoadings(false);
-        openNotificationWithIcon('error', res.message);
+        OpenNotification('error', res.message);
       }
     } catch (err) {
       console.log(err);
@@ -116,7 +89,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -144,7 +117,7 @@ const Permissions = () => {
                   fontSize: '15px',
                   boxShadow: 'none',
                   '&:hover': {
-                    backgroundColor: '#FFB300',
+                    backgroundColor: '#FFD000',
                     boxShadow: 'none',
                   },
                 }}
@@ -180,7 +153,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -207,7 +180,7 @@ const Permissions = () => {
                   fontSize: '15px',
                   boxShadow: 'none',
                   '&:hover': {
-                    backgroundColor: '#FFB300',
+                    backgroundColor: '#FFD000',
                     boxShadow: 'none',
                   },
                 }}
@@ -243,7 +216,7 @@ const Permissions = () => {
                 fontSize: '15px',
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: '#FFB300',
+                  backgroundColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -271,7 +244,7 @@ const Permissions = () => {
                   fontSize: '15px',
                   boxShadow: 'none',
                   '&:hover': {
-                    backgroundColor: '#FFB300',
+                    backgroundColor: '#FFD000',
                     boxShadow: 'none',
                   },
                 }}

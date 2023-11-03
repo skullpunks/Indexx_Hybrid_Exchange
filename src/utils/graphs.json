@@ -78,5 +78,65 @@
   {
     "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110cAC11",
     "graph": "IndexxTLSAGraph"
+  },
+  {
+    "address": "DBtxwCEEBzmfnmRv9Lss1sfjGxEoXdThx1",
+    "graph": "DogecoinGraph"
+  },
+  {
+    "address": "rHz4FhakC6QsYa7hPbAMbFNcFY57fAYwaj",
+    "graph": "RippleGraph"
+  },
+  {
+    "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    "graph": "USDCGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197955",
+    "graph": "USDTGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197944",
+    "graph": "TronGraph"
+  },
+  {
+    "address": "0x55d398326f99059ff775485246999027b3197933",
+    "graph": "SolanaGraph"
+  },
+  {
+    "address": "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    "graph": "ChainLinkGraph"
+  },
+  {
+    "address": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
+    "graph": "DaiGraph"
+  },
+  {
+    "address": "0x2859e4544C4bB03966803b044A93563Bd2D0DD4D",
+    "graph": "ShibGraph"
+  },
+  {
+    "address": "0x76A797A59Ba2C17726896976B7B3747BfD1d220f",
+    "graph": "ToncoinGraph"
+  },
+  {
+    "address": "0x40af3827F39D0EAcBF4A168f8D4ee67c121D11c9",
+    "graph": "TrueUSDGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3",
+    "graph": "LEOGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912c22",
+    "graph": "MATICGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912a22",
+    "graph": "BCHGraph"
+  },
+  {
+    "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912b22",
+    "graph": "DOTGraph"
   }
 ]

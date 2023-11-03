@@ -32,8 +32,6 @@ import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 import copper from "../../../../assets/powerpack/copper hat.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import greyman from "../../../../assets/hive-dashboard/man4 2.svg";
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { notification } from 'antd';
 import { Rating } from '@mui/material';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
@@ -49,10 +47,13 @@ import { Rating } from '@mui/material';
 import '../../Captainbee/CaptainDash.css';
 import { Box, Grid, Button } from '@mui/material';
 import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
-import { baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const TeamCaptainDash = () => {
   const [userType, setUserType] = useState("");
@@ -64,6 +65,9 @@ const TeamCaptainDash = () => {
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
@@ -117,38 +121,15 @@ const TeamCaptainDash = () => {
     };
   }, []);
 
-  const openNotificationWithIcon = (
-    type,
-    message
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="hive_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #FFB300',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
-    openNotificationWithIcon('success', 'Copied Successfully!');
+    OpenNotification('success', 'Copied Successfully!');
   };
 
   // Define a function to render a single Honey Bee box.
   const renderHoneyBeeBox = (item) => (
     <Grid item xs={1} sm={6} md={3} >
-      <div className="d-flex flex-direction-column">
+      <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
           <div
             style={{
@@ -282,7 +263,7 @@ const TeamCaptainDash = () => {
   // Define a function to render an empty Honey Bee box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
     <Grid item xs={1} sm={6} md={3}>
-      <div className="d-flex flex-direction-column">
+      <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
         <img src={greyman} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
 
@@ -375,11 +356,26 @@ const TeamCaptainDash = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: "220px" }}>
+        (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
           {/* {---} */}
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: "30%", textAlign: "center" }}>
+            <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
+            {availableBeesCount === 0 ? <>
+              Please invite the Captain Bees using this {" "}
+              <a href={`${
+              baseHiveURL +
+                    "/sign-up?referral=" +
+                    staticsData?.userFullData?.referralCode
+              }`}
+               className='hive_link'>
+              referral link
+              </a>
+              {" "} to guide them. 
+            </>
+            :
+            <>
               These are the Captain Bees that are part of your Hex Colony. Select one to guide them
+            </>}
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -387,6 +383,7 @@ const TeamCaptainDash = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
+                flexDirection: `${isMobile? "column" : "row"}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,
@@ -394,8 +391,8 @@ const TeamCaptainDash = () => {
             >
               <Grid
                 container
-                // columns={{ xs: 1, sm: 12, md: 12 }}
-                spacing={{ xs: 1, md: 2 }}
+                columns={{ xs: 1, sm: 12, md: 12 }}
+                spacing={{ xs: 12, md: 2 }}
                 maxWidth={"1150px"}
                 rowSpacing={12}
               >

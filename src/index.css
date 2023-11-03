@@ -20,7 +20,13 @@
 
   --disabled-btn-text:rgba(0, 0, 0, 0.25);
   --timeline:#e0e0e0;
-
+  
+  --primary-color: #11be6a;
+  --secondary-color: #0ea55a;
+  --highlight-color: lightgreen;
+  --link-hover: #1890ff;
+  --dropdown-hover: #1890ff;
+  --staking-color: #e7e7e7;
 }
 
 [data-bs-theme="dark"] {
@@ -46,6 +52,13 @@
 
   --disabled-btn-text:rgba(135, 132, 132, 0.785);
   --timeline:#3231319f;
+
+  --primary-color: #11be6a;
+  --secondary-color: #0ea55a;
+  --highlight-color: lightgreen;
+  --link-hover: #1890ff;
+  --dropdown-hover: #1890ff;
+  --staking-color: #171C26;
 }
 
 

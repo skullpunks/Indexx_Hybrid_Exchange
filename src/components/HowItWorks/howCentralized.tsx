@@ -5,7 +5,7 @@ import buysell from "../../assets/how-it-works/buysellss.png";
 import sell from "../../assets/how-it-works/sell.png";
 import convert from "../../assets/how-it-works/convert.png";
 import firstcoin from "../../assets/how-it-works/indexxlogo.png";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import { baseDEXURL } from "../../services/api";
 
 const { Text } = Typography;
@@ -236,7 +236,7 @@ const HowCentralized = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };

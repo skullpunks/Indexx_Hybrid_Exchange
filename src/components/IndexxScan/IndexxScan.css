@@ -1,16 +1,16 @@
 .btn-danger {
-  --bs-btn-bg: #11be6a;
-  --bs-btn-hover-bg: #0ea55a;
-  --bs-btn-active-bg: #11be6a;
+  --bs-btn-bg: var(--primary-color);
+  --bs-btn-hover-bg: var(--secondary-color);
+  --bs-btn-active-bg: var(--primary-color);
 }
 
 .btn-danger{
-    border-color:#11be6a
+    border-color:var(--primary-color)
     ;
 }
 
 .btn-danger:hover{
-    border-color:#0ea55a !important
+    border-color:var(--secondary-color) !important
     ;
 }
 .scan-container {

@@ -12,6 +12,7 @@ import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 
+import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -29,6 +30,7 @@ import { Button, Rating } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
 import RemoveCaptain from '../../../BuySell/Notification/RemoveCaptain';
 import ChangeCaptain from '../../../BuySell/Notification/ChangeCaptain';
+import { RankData } from '../../RankData';
 
 
 const MyCaptain = () => {
@@ -39,6 +41,7 @@ const MyCaptain = () => {
   const [email, setEmail] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpench, setIsModalOpenCh] = useState(false);
+  const [rankPhoto, setRankPhoto] = useState();
 
   useEffect(() => {
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
@@ -48,6 +51,13 @@ const MyCaptain = () => {
       setCaptainbeeCreateDate(data.data.accountCreationDate);
       setCaptainbeeOrders(data.data.totalOrder);
       setCaptainbeeUsers(data.data.honeyBeesCount);
+      if (data?.data?.refferedUserAffilateData?.rank) {
+        const getRank = RankData.find(x => x.name === data?.data?.refferedUserAffilateData?.rank)
+        setRankPhoto(getRank?.photo);
+      } else {
+        const getRank = RankData.find(x => x.name === "Bronze")
+        setRankPhoto(getRank?.photo);
+      }
     })
 
   }, []);
@@ -79,7 +89,7 @@ const MyCaptain = () => {
                 fontSize: '10px',
                 boxShadow: 'none',
                 '&:hover': {
-                  borderColor: '#FFB300',
+                  borderColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -101,7 +111,7 @@ const MyCaptain = () => {
                 fontSize: '10px',
                 boxShadow: 'none',
                 '&:hover': {
-                  borderColor: '#FFB300',
+                  borderColor: '#FFD000',
                   boxShadow: 'none',
                 },
               }}
@@ -147,6 +157,17 @@ const MyCaptain = () => {
                       border={'none'}
                     />
                   </div>
+                  <img
+                  alt=""
+                  src={rankPhoto}
+                  style={{
+                    position: 'absolute',
+                    bottom: '-25px',
+                    right: '17px',
+                    width: '79px', 
+                    height: '81px',
+                  }}
+                />
                 </div>
               </div>
                 <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">

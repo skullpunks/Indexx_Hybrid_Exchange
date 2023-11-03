@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import './TradeChart.css';
 import TradeScreenChart from "../../assets/arts/TradeScreenChart.svg";
 import { Radio, Tabs, Input, Button, Table } from 'antd';
@@ -173,7 +173,7 @@ const TradeChart = () => {
                 </div>
 
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

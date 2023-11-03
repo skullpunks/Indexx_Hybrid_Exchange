@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import BuySellEmailAuth from './/BuySellEmailAuth';
 //import BuySellSecureSteps from './/BuySellSecureSteps';
 import BuySellMobiAuth from './/BuySellMobiAuth';
@@ -33,7 +33,7 @@ const BuySellGetStartedLayoutHoneyBee = () => {
                     <Route path="sms-verify" element={<BuySellmobiVerfication />} />
                 </Routes>
             </div>
-            <Footer footerArt="flipWoman" />
+            {/* <Footer footerArt="flipWoman" /> */}
         </>
     )
 }

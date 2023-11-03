@@ -1,5 +1,6 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
+import * as crypto from 'crypto';
 let baseAPIURL = '';
 export let baseCEXURL = '';
 export let baseDEXURL = '';
@@ -10,7 +11,17 @@ export let baseWalletURL = '';
 export let baseShopURL = '';
 export let baseXnftURL = '';
 export let baseMktplaceURL = '';
-
+//export const secretKey = process.env.YOUR_SECRET_KEY || "123456Indexx2023";
+export const secretKey =
+  process.env.YOUR_SECRET_KEY === undefined
+    ? '123456Indexx2023'
+    : process.env.YOUR_SECRET_KEY;
+const secret = 'appSecretKey';
+const rounds = 9921;
+const keySize = 32;
+const algorithm = 'aes-256-cbc';
+const salt = crypto.createHash('sha1').update(secret).digest('hex');
+export let baseAcademyUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseAPIURL = 'https://api.indexx.ai';
   baseCEXURL = 'https://cex.indexx.ai';
@@ -19,10 +30,11 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
+  //baseWalletURL = 'http://localhost:3001';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  baseAPIURL = 'http://localhost:5000';
+  baseAcademyUrl = 'https://academy.indexx.ai';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -34,6 +46,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
+  baseAcademyUrl = 'https://academy.indexx.ai';
 }
 
 const API = axios.create({
@@ -73,7 +86,10 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
   }
 
   // Format the numeric input into the US phone number format
-  const formattedPhoneNumber = `(${numericInput.slice(0, 3)}) ${numericInput.slice(3, 6)}-${numericInput.slice(6)}`;
+  const formattedPhoneNumber = `(${numericInput.slice(
+    0,
+    3
+  )}) ${numericInput.slice(3, 6)}-${numericInput.slice(6)}`;
 
   return formattedPhoneNumber;
 }
@@ -973,31 +989,65 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1;
     } else if (coinType === 'BUSD') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'XRP') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DOGE') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'USDC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'USDT') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'SOL') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TRX') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BTC') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'LEO') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TUSD') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'ETH') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TON') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DAI') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'BNB') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'LTC') {
       oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'MATIC') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'DOT') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BCH') {
+      oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INEX') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IAMZN') {
+    } else if (coinType === 'AMZN') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IAAPL') {
+    } else if (coinType === 'AAPL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IGOOGL') {
+    }  else if (coinType === 'APPL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IMSFT') {
+    } else if (coinType === 'GOOGL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IMETA') {
+    } else if (coinType === 'MSFT') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IPEP') {
+    } else if (coinType === 'META') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'ITELA') {
+    } else if (coinType === 'PEP') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'INVDA') {
+    } else if (coinType === 'TELA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TSLA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BCH') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'SNP500') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'NVDA') {
       oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0.1;
@@ -1124,6 +1174,32 @@ export const transactionList = async (email: string, type: string = 'FIAT') => {
   }
 };
 
+export const stakingList = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getStakedCoins/${email}`);
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const commissionList = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getCommissionHistory/${email}`
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
 export const redeemValue = async (voucher: string, email: string) => {
   try {
     const result = await API.post(
@@ -1147,6 +1223,30 @@ export const redeemStockCoupon = async (voucher: string, email: string) => {
     const result = await API.post(`/api/v1/xnft/giftcards/redeemStockCoupon`, {
       voucher: voucher,
       email: email,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const stakeCoin = async (
+  email: string,
+  amount: number,
+  coin: string,
+  type: string,
+  percentage: number
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/stakecoin`, {
+      email: email,
+      amount: amount,
+      coin: coin,
+      type: type,
+      percentage: percentage,
     });
     return result.data;
   } catch (err: any) {
@@ -1320,3 +1420,76 @@ export const getIndexxMediumBlogs = async () => {
     return e.response.data;
   }
 };
+
+// Encrypt a string
+export function encrypt(text: string) {
+  let iv = crypto.randomBytes(16);
+  console.log('secretKey', secretKey);
+  console.log('text', text);
+  let secretKey1 = crypto.randomBytes(32).toString('hex');
+
+  const cipher = crypto.createCipheriv('aes-256-cbc', secretKey1, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+// Decrypt an encrypted string
+export function decrypt(encryptedText: string) {
+  let iv = crypto.randomBytes(16);
+  const decipher = crypto.createDecipheriv('aes-256-cbc', secretKey, iv);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
+
+export function encryptData(data: any) {
+  const iv = crypto.randomBytes(16);
+  const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+  const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+  let encrypted = cipher.update(data, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return iv.toString('base64') + ':' + encrypted;
+}
+
+export function decryptData(encryptedText: any) {
+  try {
+    const textParts = encryptedText.split(':');
+    const iv = Buffer.from(textParts.shift(), 'base64');
+    const encryptedData = Buffer.from(textParts.join(':'), 'base64');
+    const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+    const decipher = crypto.createDecipheriv(algorithm, key, iv); // Use the parsed IV
+
+    let decrypted = decipher.update(encryptedData);
+    decrypted = Buffer.concat([decipher.final()]);
+
+    return decrypted.toString('utf8');
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+//const Cryptr = require('cryptr');
+
+// Encrypt a string
+// export function encrypt(text) {
+//   const iv = crypto.randomBytes(16);
+//   const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+//   const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+//   let encrypted = cipher.update(text, 'utf8', 'hex');
+//   encrypted += cipher.final('hex');
+//   return iv.toString('base64') + ':' + encrypted;
+// }
+
+// Decrypt an encrypted string
+// export function decrypt(encryptedText) {
+//   const textParts = encryptedText.split(':');
+//   const iv = Buffer.from(textParts.shift(), 'base64');
+//   const encryptedData = Buffer.from(textParts.join(':'), 'hex');
+//   const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
+//   const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
+//   let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+//   decrypted += decipher.final('utf8');
+//   return decrypted;
+// }

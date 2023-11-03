@@ -1,5 +1,5 @@
 import orange from "../../assets/powerpack/Orange ribbon.svg";
-import black from "../../assets/powerpack/black hat.svg";
+import royal from "../../assets/powerpack/unnamed (6).png";
 import blue from "../../assets/powerpack/blue hat.svg";
 import copper from "../../assets/powerpack/copper hat.svg";
 import gold from "../../assets/powerpack/gold hat.svg";
@@ -132,8 +132,8 @@ export const PackData = [
     },
     {
         id: "8",
-        name: "Black Pack",
-        photo: black,
+        name: "Royal Pack",
+        photo: royal,
         price: "15,000",
         coins:"7500",
         features: ['7500 INEX Tokens ($2 each)',

@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import {
-  CheckCircleFilled,
-  CloseCircleFilled,
   InfoCircleFilled,
 } from '@ant-design/icons';
-import { Button, Form, Input, notification } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/hive_exchange log in.svg";
+import hive from "../../assets/hive_exchange.svg";
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
   decodeJWT,
+  encrypt,
+  encryptData,
   getUserDetails,
   loginHive
 } from '../../services/api';
 import "./BuySellLoginContentHive.css";
+import OpenNotification from '../OpenNotification/OpenNotification';
+import hat from "../../assets/arts/hat2 5.svg";
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 // interface Props {
 //   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -34,16 +38,20 @@ const BuySellLoginContentHive: React.FC = () => {
     if (res.status === 200) {
 
       setLoadings(false);
-      openNotificationWithIcon('success', 'Login Successful');
+      OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
 
 
       debugger;
       localStorage.setItem('user', resObj?.email);
+      const userKey = cryptr.encrypt(values.password);
+      localStorage.setItem('userkey', userKey);
+      localStorage.setItem('userpass', values.password);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
       localStorage.setItem('username', resObj?.username);
+      localStorage.setItem('userlogged', "captain");
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -62,35 +70,58 @@ const BuySellLoginContentHive: React.FC = () => {
     } else {
 
       setLoadings(false);
-      openNotificationWithIcon('error', res.data);
+      OpenNotification('error', res.data);
     }
   };
+
+  useEffect(() => {
+
+    async function loginUser() {
+      // Get the URL search parameters
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      // Get the values of useremail and userkey
+      const userEmail = urlSearchParams.get('useremail');
+      const userKey = urlSearchParams.get('userkey');
+      const userType = urlSearchParams.get('usertype');
+     
+      if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
+        let userPassword = (String(userKey));
+        // You can now use userEmail and userKey as needed in your component
+        let res = await loginHive(userEmail, userPassword);
+
+        if (res.status === 200) {
+
+          setLoadings(false);
+          OpenNotification('success', 'Login Successful');
+          let resObj = await decodeJWT(res.data.access_token);
+          localStorage.setItem('userpass', userPassword);
+          localStorage.setItem('user', resObj?.email);
+          const userKey = cryptr.encrypt(userPassword);
+          localStorage.setItem('userkey', userKey);
+          localStorage.setItem('access_token', res.data.access_token);
+          localStorage.setItem('refresh_token', res.data.refresh_token);
+          localStorage.setItem('userType', resObj?.userType);
+          let redirectUrl = window.localStorage.getItem('redirect');
+          window.localStorage.removeItem('redirect');
+          let userDetails = await getUserDetails(resObj?.email);
+
+          redirectUrl
+            ? navigate(redirectUrl)
+            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+        } else {
+
+          setLoadings(false);
+          OpenNotification('error', res.data);
+        }
+      }
+    }
+    loginUser();
+
+  }, []);
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
 
-  const openNotificationWithIcon = (
-    type: NotificationType,
-    message: string
-  ) => {
-    const Icon =
-      type === 'error' ? (
-        <CloseCircleFilled />
-      ) : (
-        <CheckCircleFilled className="text_link" />
-      );
-    notification[type]({
-      message: message,
-      description: '',
-      icon: Icon,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
 
@@ -99,13 +130,17 @@ const BuySellLoginContentHive: React.FC = () => {
   const handleClick = () => {
     window.location.href = "https://hive.indexx.ai/sign-up"
   }
+  localStorage.setItem('userlogged', "captain");
+
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
-        <img alt='' src={hive} width={"70%"} />
+        <img alt='' src={hive} width={"85%"} />
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
-        <h1 className="text-center margin-lr-auto top_heading">CaptainBee Log In</h1>
+        <h1 className="text-center margin-lr-auto top_heading">
+        <img src={hat} alt="hat" style={{marginRight:"10px"}} />
+          CaptainBee Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
         </div>
@@ -222,6 +257,19 @@ const BuySellLoginContentHive: React.FC = () => {
               <p style={{ color: '#ffb300', fontSize: 15 }}>
                 {' '}
                 Sign up for Captain Bee
+              </p>
+            </Link>
+            <br />
+            <Link
+              // to="https://hive.indexx.ai/sign-up"
+              to="/indexx-exchange/buy-sell/login-honeybee"
+              style={{ color: '#ffb300' }}
+              // onClick={handleClick}
+            >
+
+              <p style={{ color: '#ffb300', fontSize: 15 }}>
+                {' '}
+                Not a Captain Bee? Login as Honey Bee instead
               </p>
             </Link>
           </div>

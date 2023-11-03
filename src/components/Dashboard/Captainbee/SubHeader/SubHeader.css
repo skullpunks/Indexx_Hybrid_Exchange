@@ -11,14 +11,14 @@
 
 .sub-page .card{
     min-width: auto !important;
-    min-height: auto;
-    align-items: center;
-    padding: 10px 10px 10px;
-    width: 120px;
-    height: 80px;
-    border: none;
-    border-radius: 0;
-    background-color: #FFB300;
+    min-height: auto !important;
+    align-items: center !important;
+    padding: 10px 10px 10px !important;
+    width: 120px !important;
+    height: 80px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background-color: #FFB300 !important;
 }
 
 .sub-page .card-body{
@@ -50,3 +50,33 @@
 .sub-page a{
     text-decoration: none !important;
 }
+
+@media screen and (min-width: 350px) and (max-width: 1000px) {
+
+    
+    .sub-page .card-img-top{
+        width: 30px !important;
+        height: 24px !important;
+        transition: trasnform 330ms ease-in-out !important;
+    }
+
+    .sub-page .card{
+        /* padding: 0 !important; */
+        /* padding-top: 5px !important; */
+        /* width: 80px !important; */
+        /* height: 66px !important; */
+        width: 90px !important;
+        padding-inline: 5px !important;
+        line-height: 0.5;
+    }
+    
+    .sub-page .col{
+            width: 26.1% !important;
+            margin-top: 0;
+        }
+    
+        .sub-page  h5{
+            margin-top: 6px;
+        }
+
+      } 

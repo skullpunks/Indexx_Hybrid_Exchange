@@ -51,8 +51,8 @@ const BuySellLoggedVerfication: React.FC<Props> = ({ setScreenName }) => {
           className="atn-btn atn-btn-round"
           style={{
             height: 55,
-            borderColor: '#11be6a',
-            backgroundColor: '#11be6a',
+            borderColor: 'var(--primary-color)',
+            backgroundColor: 'var(--primary-color)',
             color: '#fff',
             fontSize: 20,
             borderRadius: 5,

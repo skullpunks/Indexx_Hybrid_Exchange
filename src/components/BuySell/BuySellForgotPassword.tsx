@@ -2,6 +2,7 @@ import { Button, Input, Form, notification } from 'antd';
 import Email from '../../assets/arts/Email.svg';
 import { forgotPassword } from '../../services/api';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellForgotPassword = () => {
   const onFinish = (values: any) => {
@@ -10,43 +11,14 @@ const BuySellForgotPassword = () => {
     forgotPassword(values.email).then((res) => {
       
       if (res.status === 200) {
-        openNotificationWithIcon('success');
+        OpenNotification('success', 'Email sent for resetting the password');
       } else {
-        openNotificationWithIcon2('error');
+        OpenNotification('error', 'Failed to send reset password. User email not registered');
       }
       //
     });
   };
 
-  type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    notification[type]({
-      message: 'Email sent for resetting the password',
-      description: '',
-      icon: <CheckCircleFilled className="text_link" />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
-
-  const openNotificationWithIcon2 = (type: NotificationType) => {
-    notification[type]({
-      message: 'Failed to send reset password. User email not registered',
-      description: '',
-      icon: <CloseCircleFilled />,
-      style: {
-        border: '1px solid #11be6a',
-        boxShadow: 'none',
-        borderRadius: 5,
-        top: 100,
-      },
-    });
-  };
 
   const onFinishFailed = (errorInfo: any) => {
     
