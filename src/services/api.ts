@@ -1026,21 +1026,29 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INEX') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IAMZN') {
+    } else if (coinType === 'AMZN') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IAAPL') {
+    } else if (coinType === 'AAPL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IGOOGL') {
+    }  else if (coinType === 'APPL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IMSFT') {
+    } else if (coinType === 'GOOGL') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IMETA') {
+    } else if (coinType === 'MSFT') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'IPEP') {
+    } else if (coinType === 'META') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'ITELA') {
+    } else if (coinType === 'PEP') {
       oneUSDValue = 1 / coinValue;
-    } else if (coinType === 'INVDA') {
+    } else if (coinType === 'TELA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TSLA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'BCH') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'SNP500') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'NVDA') {
       oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0.1;
