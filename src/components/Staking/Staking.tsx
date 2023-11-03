@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../BuySell/BS-Sell.css';
 import '../BuySell/BuySellDummy.css';
 // import Footer from '../Footer/Footer';
@@ -11,6 +11,15 @@ import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
 // import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
 const Staking = () => {
+
+  const [refresh, setRefresh] = useState<boolean>(true);
+
+  const handleRefereshChange = (event: any) => {
+    setRefresh(!refresh);
+  };
+
+  // console.log(refresh, "referesh");
+  
   return (
     <div>
 
@@ -26,10 +35,10 @@ const Staking = () => {
             </div> */}
 
         <div className="scan-container d-flex flex-direction-column card large_card orange pb-0">
-          <StakingTop />
+          <StakingTop refresh={refresh} handleRefresh={handleRefereshChange}/>
 
           <div className="width-100 bs_wallet_table">
-            <StakingTable />
+            <StakingTable refresh={refresh}/>
           </div>
         </div>
         {/* <Footer footerArt="flipWoman" /> */}

@@ -301,9 +301,13 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                <div className="d-flex flex-direction-column align-items-start  mt-5">
                   <div>
-                    Invite Honey Bee : {staticsData?.userFullData?.referralCode}
+                  <span className='fw-bold'>
+                    Invite Honey Bee : 
+                  </span>
+                    <br/>
+                    {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(baseCEXURL +
@@ -312,8 +316,13 @@ const CaptainDash = () => {
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
+                  <br />
                   <div>
-                    Invite Captain Bee : {staticsData?.userFullData?.referralCode}
+                  <span className='fw-bold'>
+                    Invite Captain Bee : 
+                  </span>
+                    <br/>
+                    {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick( baseHiveURL +
@@ -627,6 +636,26 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in INEX
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {'0.00'}
+                            <span className='font_17x'>
+                            INEX
+                            </span>
+                          </Typography>
+                          <Typography
+                            variant="text"
                             fontSize={'22px'}
                             fontWeight={400}
                             textAlign={'left'}
@@ -933,6 +962,29 @@ const CaptainDash = () => {
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
                               : '0.00')
                             }
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in INEX
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                              : '0.00')
+                            } 
+                            <span className='font_17x'>
+                            INEX
+                            </span>
                           </Typography>
                           <Typography
                             variant="text"

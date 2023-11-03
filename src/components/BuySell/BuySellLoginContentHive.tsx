@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/welcome to indexx exchange.svg";
+import hive from "../../assets/hive_exchange.svg";
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
@@ -18,6 +18,7 @@ import {
 } from '../../services/api';
 import "./BuySellLoginContentHive.css";
 import OpenNotification from '../OpenNotification/OpenNotification';
+import hat from "../../assets/arts/hat2 5.svg";
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -134,10 +135,12 @@ const BuySellLoginContentHive: React.FC = () => {
   return (
     <div className="scan-container flex-align-stretch">
       <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center'>
-        <img alt='' src={hive} width={"70%"} />
+        <img alt='' src={hive} width={"85%"} />
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
-        <h1 className="text-center margin-lr-auto top_heading">CaptainBee Log In</h1>
+        <h1 className="text-center margin-lr-auto top_heading">
+        <img src={hat} alt="hat" style={{marginRight:"10px"}} />
+          CaptainBee Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
         </div>
@@ -254,6 +257,19 @@ const BuySellLoginContentHive: React.FC = () => {
               <p style={{ color: '#ffb300', fontSize: 15 }}>
                 {' '}
                 Sign up for Captain Bee
+              </p>
+            </Link>
+            <br />
+            <Link
+              // to="https://hive.indexx.ai/sign-up"
+              to="/indexx-exchange/buy-sell/login-honeybee"
+              style={{ color: '#ffb300' }}
+              // onClick={handleClick}
+            >
+
+              <p style={{ color: '#ffb300', fontSize: 15 }}>
+                {' '}
+                Not a Captain Bee? Login as Honey Bee instead
               </p>
             </Link>
           </div>

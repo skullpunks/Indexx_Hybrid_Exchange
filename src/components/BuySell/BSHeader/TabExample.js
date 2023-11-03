@@ -15,6 +15,10 @@ import stock_white from '../../../assets/BSheader/Stock token bnw 3.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
 import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
 import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
+import nectar from '../../../assets/BSheader/nectar black.svg';
+import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
+import etf from '../../../assets/BSheader/etf logo 3.svg';
+import etf_white from '../../../assets/BSheader/etf white.svg';
 
 import './TabExample.css';
 import { Link } from 'react-router-dom';
@@ -177,6 +181,29 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           disableTouchRipple
         />
         <Tab
+          label="ETF"
+          icon={
+            theme === "dark" ? 
+              <img
+                src={etf_white}
+                alt="Home"
+                width={'63px'}
+                style={{ marginBottom: "5px" }}
+              />
+            :
+            <img
+              src={etf}
+              alt="Home"
+              width={'63px'}
+              style={{ marginBottom: "5px" }}
+            />
+          }
+          component={Link}
+          to='/indexx-exchange/coming-soon?page=ETF'
+          className='tab-format'
+          disableTouchRipple
+        />
+        <Tab
           label="Power Packs"
           icon={
             theme === "dark" ? 
@@ -199,6 +226,8 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           className='tab-format'
           disableTouchRipple
         />
+      {localStorage.getItem("userlogged") === 'normal' ?
+
         <Tab
           label="Staking"
           icon={
@@ -222,6 +251,31 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           className='tab-format'
           disableTouchRipple
         />
+        :
+        <Tab
+          label="Nectar"
+          icon={
+            theme === "dark" ? 
+              <img
+                src={nectar_white}
+                alt="Home"
+                width={'40px'}
+                style={{ marginBottom: "6px" }}
+              />
+            :
+            <img
+              src={nectar}
+              alt="Home"
+              width={'40px'}
+              style={{ marginBottom: "6px" }}
+            />
+          }
+          component={Link}
+          to='/indexx-exchange/buy-sell/staking'
+          className='tab-format'
+          disableTouchRipple
+        />
+      }
       {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
         <Tab
           label="Waggle Dance"

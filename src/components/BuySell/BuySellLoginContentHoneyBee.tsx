@@ -19,6 +19,7 @@ import {
 } from '@ant-design/icons';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import { decryptUserkey } from '../../services/helpers';
+import bee from "../../assets/arts/bee color 1.svg";
 
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
@@ -117,7 +118,9 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
   return (
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
-      <h1 className="text-center margin-lr-auto top_heading">HoneyBee Log In</h1>
+      <h1 className="text-center margin-lr-auto top_heading">
+      <img src={bee} alt="bee" />
+        HoneyBee Log In</h1>
       <div className="text-center margin-lr-auto padding-tb-2x">
         Please make sure you are visiting the correct URL
       </div>

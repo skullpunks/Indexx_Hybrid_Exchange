@@ -3,12 +3,16 @@ import power from '../../../assets/BSheader/power pack 1.svg';
 import all from '../../../assets/BSheader/EX-010.png';
 import hive_all from '../../../assets/BSheader/hive exchange black 1.svg';
 import stack from '../../../assets/BSheader/staking icon black.svg';
+import nectar from '../../../assets/BSheader/nectar black.svg';
 import power_white from '../../../assets/BSheader/power pack 1-white.svg';
 import all_white from '../../../assets/BSheader/EX-011.png';
 import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
+import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
 import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
+import etf from '../../../assets/BSheader/etf logo 3.svg';
+import etf_white from '../../../assets/BSheader/etf white.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
@@ -101,12 +105,38 @@ const PowerPackHeader = () => {
         </Link>
         </div>
         <div className="col">
+        <Link to="/indexx-exchange/coming-soon-etf">
+            <div className="card">
+            {theme === "dark" ? 
+            <img src={etf_white} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+            :
+            <img src={etf} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+            }
+            <div className="card-body">
+                <h5 className="card-title mt-1">ETF</h5>
+            <Typography
+                component='p'
+                style={
+                  location.pathname === '/indexx-exchange/coming-soon-etf'
+                    ? {
+                      height: '0.07px',
+                      width: '59px',
+                      backgroundColor: 'var(--body_color)',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
+        <div className="col">
         <Link to="/indexx-exchange/power-pack">
             <div className="card">
             {theme === "dark" ? 
-            <img src={power_white} className="card-img-top" alt="..." style={{width:"63px"}}/>
+            <img src={power_white} className="card-img-top" alt="..." style={{width:"60px"}}/>
             :
-            <img src={power} className="card-img-top" alt="..." style={{width:"63px"}}/>
+            <img src={power} className="card-img-top" alt="..." style={{width:"60px"}}/>
             }
             <div className="card-body">
                 <h5 className="card-title mt-1">Power Packs</h5>
@@ -130,16 +160,19 @@ const PowerPackHeader = () => {
         <Link to="/indexx-exchange/buy-sell/staking">
             <div className="card">
             {theme === "dark" ? 
-            <img src={stack_white} className="card-img-top" alt="..."
+            <img src={localStorage.getItem("userlogged") === 'normal' ? stack_white : nectar_white} className="card-img-top" alt="..."
               style={{height:"34px"}}
             />
             :
-            <img src={stack} className="card-img-top" alt="..."
+            <img src={localStorage.getItem("userlogged") === 'normal' ? stack : nectar} className="card-img-top" alt="..."
               style={{height:"34px"}}
             />
             }
             <div className="card-body">
-                <h5 className="card-title mt-1">Staking</h5>
+                <h5 className="card-title mt-1">
+                
+                {localStorage.getItem("userlogged") === 'normal' ? "Staking" : "Nectar"}
+                </h5>
                 <Typography
                 component='p'
                 style={

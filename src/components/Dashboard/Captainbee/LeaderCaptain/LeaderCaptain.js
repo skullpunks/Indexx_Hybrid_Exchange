@@ -358,9 +358,13 @@ const LeaderCaptain = () => {
                       <img alt="Twitter" src={twitter} />
                     </a>
 
-                    <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div>
-                        Invite Honey Bee : {captainBeeFullData?.referralCode}
+                        <span className='fw-bold'>
+                        Invite Honey Bee : 
+                        </span>
+                        <br />
+                        {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
                           onClick={() => copyClick(baseCEXURL +
@@ -369,8 +373,13 @@ const LeaderCaptain = () => {
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
+                      <br />
                       <div>
-                        Invite Captain Bee : {captainBeeFullData?.referralCode}
+                      <span className='fw-bold'>
+                        Invite Captain Bee : 
+                        </span>
+                        <br />
+                        {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
                           onClick={() => copyClick( baseHiveURL +

@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom'
 // import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
@@ -92,6 +93,7 @@ import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHisto
 import Bridge from "./components/Bridge/Bridge";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
 import Footer from "./components/Footer/Footer";
+import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -146,6 +148,16 @@ function App() {
 
   const themeClass = `theme-${userLogged}`;
   
+  const PrivateRoutes = () => {
+    // let auth = {'token':true}
+  const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
+  console.log(isAuthenticated, "auth");
+  return (
+      isAuthenticated ? <Outlet/> : <Navigate to='/indexx-exchange/buy-sell/hive-login'/>
+    )
+  }
+  
+  // const isAuthenticated = localStorage.getItem("access_token") !== undefined || localStorage.getItem("access_token") !== null
   return (
     <ThemeProvider theme={theme}>
     <div className={themeClass}>
@@ -160,6 +172,7 @@ function App() {
             <Route path="/*" element={<BuySell />} />
           }
 
+        <Route element={<PrivateRoutes/>}>
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
@@ -180,7 +193,7 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/bee-profile" element={<BeeProfile />} />
           <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
-
+        </Route>
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
 
@@ -195,6 +208,7 @@ function App() {
 
           <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
           <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
+          <Route path="/indexx-exchange/coming-soon-etf" element={<ComingSoonETF />} />
           <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
           <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
           <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />

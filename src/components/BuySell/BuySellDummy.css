@@ -143,6 +143,39 @@
   border-color: var(--primary-color);
 }
 
+.stake-btn{
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  border-radius: 2px;
+  color: #282828;
+  height: 40px;
+  text-transform: none;
+  font-size: 16px;
+  font-weight: 100 !important;
+}
+
+.stake-btn:hover, 
+.stake-btn:active{
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #282828;
+}
+
+.stake-outlined-btn{
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+  border-radius: 2px;
+  height: 44px;
+  text-transform: none;
+  font-size: 16px;
+  font-weight: 100 !important;
+}
+
+.stake-outlined-btn:hover{
+  border-color: var(--secondary-color) !important;
+  color: var(--secondary-color) !important;
+}
+
 .staking-toggle .MuiToggleButtonGroup-grouped:not(:first-of-type){
     border-left: 1px solid var(--border-color) !important;
 }

@@ -365,6 +365,26 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
+                  fontSize={'12px'}
+                  fontWeight={600}
+                  textAlign={'left'}
+                  alignSelf={'flex-start'}
+                >
+                  Total Commision Earned in INEX
+                </Typography>
+                <Typography
+                  variant="text"
+                  fontSize={'50px'}
+                  fontWeight={600}
+                  textAlign={'left'}
+                >
+                  {'0.00'} 
+                  <span className='font_17x'>
+                    INEX
+                  </span>
+                </Typography>
+                <Typography
+                  variant="text"
                   fontSize={'22px'}
                   fontWeight={400}
                   textAlign={'left'}
@@ -672,6 +692,29 @@ const TeamCaptainGrowth = () => {
                     : '0.00')
                   }
                 </Typography>
+                <Typography
+                            variant="text"
+                            fontSize={'12px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                            alignSelf={'flex-start'}
+                          >
+                            Total Commision Earned in INEX
+                          </Typography>
+                          <Typography
+                            variant="text"
+                            fontSize={'50px'}
+                            fontWeight={600}
+                            textAlign={'left'}
+                          >
+                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                              : '0.00')
+                            } 
+                            <span className='font_17x'>
+                            INEX
+                            </span>
+                          </Typography>
                 <Typography
                   variant="text"
                   fontSize={'22px'}

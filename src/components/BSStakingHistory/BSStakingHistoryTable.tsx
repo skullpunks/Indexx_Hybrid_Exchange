@@ -9,6 +9,10 @@ import useCopyToClipboard from '../../utils/useCopyToClipboard';
 
 const { Option } = Select;
 
+interface HistoryProps {
+    refresh?: boolean,
+  }
+
 interface DataType {
     stakingId: string;
     stakedAmount: number;
@@ -28,7 +32,7 @@ interface DataType {
 }
 
 
-const BSStakingHistoryTable: React.FC = () => {
+const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
     const [selection, setSelection] = useState({
         type: '',
         asset: '',
@@ -93,7 +97,15 @@ const BSStakingHistoryTable: React.FC = () => {
             key: 'finalAmount',
             render: (_, record) => (
                 <span>
-                    {String(record.stakedAmount.toFixed(2))} {record.coin} {"+"} {String(record.rewardAmount.toFixed(2))} {record.rewardCoin}
+                    {record.coin === record.rewardCoin ? 
+                        <>
+                            {String((record.stakedAmount + record.rewardAmount).toFixed(2))} {record.coin}
+                        </> 
+                    :
+                        <>
+                            {String(record.stakedAmount.toFixed(2))} {record.coin} {"+"} {String(record.rewardAmount.toFixed(2))} {record.rewardCoin}
+                        </>
+                    }     
                 </span>
             ),
             responsive: ['sm'],
@@ -154,7 +166,7 @@ const BSStakingHistoryTable: React.FC = () => {
         });
 
         
-    }, []);
+    }, [refresh]);
 
     const handleChangeTime = (value: string) => {
 

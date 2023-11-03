@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import comingSoon from "../../assets/coming_soon.png";
-// import { Button } from 'antd';
+import { Button } from 'antd';
 import {
   decodeJWT,
   getUserWallets,
@@ -15,7 +15,7 @@ import {
   MenuItem,
   Select,
   Typography,
-  Button,
+  // Button,
   TextField,
   ToggleButtonGroup,
   ToggleButton,
@@ -24,6 +24,7 @@ import {
 // import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
 import bnb from '../../assets/token-icons/BNB.png';
 import pig from '../../assets/arts/pig staking 1.svg';
+import nectar from '../../assets/arts/nectar 6.svg';
 import lock from '../../assets/arts/lock4 2.png';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
@@ -33,7 +34,7 @@ import lock from '../../assets/arts/lock4 2.png';
 import tokensList from '../../utils/Tokens.json';
 import OpenNotification from '../../components/OpenNotification/OpenNotification';
 
-const StakingTop = () => {
+const StakingTop = ({refresh, handleRefresh}) => {
   const navigate = useNavigate();
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   let access_token = String(localStorage.getItem('access_token'));
@@ -244,6 +245,8 @@ const StakingTop = () => {
       if (res.status === 200) {
         setLoadings(false);
         OpenNotification('success', `Your ${token} token staked successfully`);
+        handleRefresh();
+        setAmt('');
       }
     } catch (err) {
       setLoadings(false);
@@ -303,7 +306,7 @@ const StakingTop = () => {
     } else {
       setToken(''); // No tokens available for the selected type, so set an empty value.
     }
-  }, [stakingtype]); // The useEffect depends on stakingtype. Whenever it changes, this effect will run.
+  }, [stakingtype, refresh]); // The useEffect depends on stakingtype. Whenever it changes, this effect will run.
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -318,11 +321,23 @@ const StakingTop = () => {
 
   return (
     <>
-      <div className="orange width-100 padding-t-2x align-items-center d-flex justify-content-center mb-4">
+      <div className="orange width-100 padding-t-2x align-items-center d-flex flex-direction-column justify-content-center mb-4">
         <h1 className="padding-b-1x font_40x">
+        {localStorage.getItem("userlogged") === 'normal' ?
+          <>
           <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
           Staking
+          </>
+          :
+          <>
+          <img src={nectar} alt="nectar" style={{ marginRight: '30px' }} />
+          Nectar / Staking
+          </>
+        }
         </h1>
+        <Typography variant="body1" fontSize={"18px"} sx={{ my: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
+        To unlock the full potential of earning with Indexx Staking, you should consider staking either tokens or stock tokens for a minimum period of 6 or 12 months. This strategic move paves the way for substantial financial growth and success in your investment journey.
+      </Typography>
       </div>
       <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
         <Box
@@ -518,56 +533,45 @@ const StakingTop = () => {
                 onClick={() =>
                   navigate('/indexx-exchange/buy-sell/deposit-crypto')
                 }
-                sx={{
-                  backgroundColor: 'var(--primary-color)',
-                  borderRadius: '2px',
-                  color: '#282828',
-                  height: '44px',
-                  px: 1,
-                  textTransform: 'none',
-                  fontSize: '16px',
-                  boxShadow: 'none',
-                  '&:hover': {
-                    backgroundColor: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                  },
-                }}
+                className='ant-btn ant-btn-primary stake-btn'
+                style={{height:"44px"}}
               >
                 Deposit
               </Button>
               <Button
                 variant="outlined"
                 disableTouchRipple
+                className='ant-btn stake-outlined-btn'
                 onClick={() =>
                   navigate('/indexx-exchange/buy-sell/withdraw-crypto')
                 }
-                sx={{
-                  borderColor: 'var(--primary-color)',
-                  borderRadius: '2px',
-                  color: 'var(--primary-color)',
-                  height: '44px',
-                  px: 1,
-                  textTransform: 'none',
-                  fontSize: '16px',
-                  boxShadow: 'none',
-                  '&:hover': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                  },
-                  '&:active': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background: 'transparent',
-                  },
-                  '&:focus': {
-                    borderColor: 'var(--secondary-color)',
-                    color: 'var(--secondary-color)',
-                    boxShadow: 'none',
-                    background: 'transparent',
-                  },
-                }}
+                // sx={{
+                //   borderColor: 'var(--primary-color)',
+                //   borderRadius: '2px',
+                //   color: 'var(--primary-color)',
+                //   height: '44px',
+                //   px: 1,
+                //   textTransform: 'none',
+                //   fontSize: '16px',
+                //   boxShadow: 'none',
+                //   '&:hover': {
+                //     borderColor: 'var(--secondary-color)',
+                //     color: 'var(--secondary-color)',
+                //     boxShadow: 'none',
+                //   },
+                //   '&:active': {
+                //     borderColor: 'var(--secondary-color)',
+                //     color: 'var(--secondary-color)',
+                //     boxShadow: 'none',
+                //     background: 'transparent',
+                //   },
+                //   '&:focus': {
+                //     borderColor: 'var(--secondary-color)',
+                //     color: 'var(--secondary-color)',
+                //     boxShadow: 'none',
+                //     background: 'transparent',
+                //   },
+                // }}
               >
                 Withdraw
               </Button>
@@ -801,10 +805,10 @@ const StakingTop = () => {
             <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
               <Box className="d-flex justify-content-between">
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Rewards you will receive
+                  Rewards you will receive in INEX
                 </Typography>
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {rewards}
+                  {rewards} INEX
                 </Typography>
               </Box>
               <Box className="d-flex justify-content-between">
@@ -812,7 +816,7 @@ const StakingTop = () => {
                   Final Amount you will receive
                 </Typography>
                 <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {finalAmount.toFixed(2)}
+                  {amt} {token} + {rewards} INEX
                 </Typography>
               </Box>
               <Box className="d-flex justify-content-between">
@@ -823,18 +827,19 @@ const StakingTop = () => {
                   N/A
                 </Typography>
               </Box>
-              {/* <Button
+              <Button
             type="primary"
-            className="atn-btn atn-btn-round"
+            className="atn-btn atn-btn-round stake-btn"
             block
                 onClick={submitStake}
                 disabled={!!error || !amt || !type}
             loading={loadings}
+            style={{marginTop:12}}
           >
             {' '}
-            Confirm Purchase
-          </Button> */}
-              <Button
+            Stake
+          </Button>
+              {/* <Button
                 variant="contained"
                 disableTouchRipple
                 disabled={!!error || !amt || !type}
@@ -857,7 +862,7 @@ const StakingTop = () => {
                 }}
               >
                 Stake
-              </Button>
+              </Button> */}
             </Box>
           </Box>
 

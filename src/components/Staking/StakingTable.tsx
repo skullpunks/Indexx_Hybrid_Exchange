@@ -25,7 +25,12 @@ interface DataType {
   coinBalanceInBTC: any;
   coinPrice: any;
 }
-const StakingTable = () => {
+
+interface HistoryProps {
+  refresh: boolean,
+}
+
+const StakingTable:React.FC<HistoryProps> = ({refresh}) => {
   const [hideZeroBalance, setHideZeroBalance] = useState(false);
   const [valueInput, setValueInput] = useState('');
   const onChange: TableProps<DataType>['onChange'] = (
@@ -244,7 +249,7 @@ const getCurrentDate = (): string => {
               onChange={setCurrent}
             />
           </div> */}
-          <BSStakingHistoryTable />
+          <BSStakingHistoryTable refresh={refresh}/>
         </Tabs.TabPane>
       </Tabs>
     </div>

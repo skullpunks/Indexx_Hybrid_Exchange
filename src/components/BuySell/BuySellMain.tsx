@@ -12,6 +12,7 @@ import logo from "../../assets/arts/exchange logo_green 5.svg";
 import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
 import token from "../../assets/BSheader/token-12 2.svg";
 import stock_token from "../../assets/BSheader/Stock Token 2.svg";
+import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -96,6 +97,7 @@ import IndexxTLSAGraph from '../Graphs/IndexxTSLAGraph';
 import IndexxBCMGraph from '../Graphs/IndexxBCMGraph';
 import IndexxSP500Graph from '../Graphs/IndexxSP500Graph';
 import TabExample from './BSHeader/TabExample';
+import { baseWSURL } from '../../services/api';
 
 // import { BSProvider } from '../../utils/SwapContext';
 
@@ -241,7 +243,10 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             </>
             : selectedTab === 2 ? <>
              {" "}  - 
-              <img src={stock_token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
+             <a href={baseWSURL}>
+             <img src={wallstreet} alt="logo" style={{marginLeft:"10px", width:"114px"}} className='walls'/>  
+             </a>
+              <img src={stock_token} alt="logo" style={{marginLeft:"-1px", marginRight:"10px", width:"64px"}}/>  
               Stock Tokens  
             </> :null}
             </p>
