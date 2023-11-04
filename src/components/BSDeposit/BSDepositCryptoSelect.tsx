@@ -41,6 +41,20 @@ interface DataType {
   txid: string;
 }
 
+const currencyToNetwork: Record<string, string> = {
+  INEX: 'BSC',
+  IN500: 'BSC',
+  INXC: 'BSC',
+  'IUSD+': 'BSC',
+  ETH: 'ETH',
+  DOGE: 'DOGE',
+  XRP: 'XRP',
+  BNB:'BSC',
+  BTC: 'BTC',
+  FTT: 'BNB',
+  // Add more mappings for other currencies
+};
+
 export const BSDepositCryptoSelect = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -52,6 +66,7 @@ export const BSDepositCryptoSelect = () => {
   const [singleWallet, setSingleWallet] = useState() as any;
   const [depositHash, setDepositHash] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('INEX');
+ 
 
   const [copiedValue, copy] = useCopyToClipboard();
 
@@ -159,6 +174,12 @@ export const BSDepositCryptoSelect = () => {
     },
   ];
 
+
+  
+  useEffect(() => {
+    setNetwork(currencyToNetwork[selectedCoin]); // Update the network based on selectedCoin
+  }, [selectedCoin]);
+  
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
@@ -213,13 +234,25 @@ export const BSDepositCryptoSelect = () => {
     }
   };
 
+
+ 
+
   const handleChangeCurrency = (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
 
+
+
     setSelectedCoin(String(getRequiredCoin?.title));
+
+
+    setNetwork(currencyToNetwork[selectedCoin]);
+   
+
+    console.log("network",network);
+    console.log("coin",selectedCoin);
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
     if (setBSvalue && BSvalue) {
@@ -366,7 +399,7 @@ export const BSDepositCryptoSelect = () => {
           <div className="padding-t-1x">
             <label>Network</label>
 
-            <Select className="width-100" onChange={handleChange}>
+            <Select className="width-100" onChange={handleChange} defaultValue={network} value={network}>
               <Select.Option value="BNB">
                 <div className="font_20x">
                   BSC{' '}
