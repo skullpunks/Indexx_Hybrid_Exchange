@@ -41,6 +41,20 @@ interface DataType {
   txid: string;
 }
 
+const currencyToNetwork: Record<string, string> = {
+  INEX: 'BSC',
+  IN500: 'BSC',
+  INXC: 'BSC',
+  'IUSD+': 'BSC',
+  ETH: 'ETH',
+  DOGE: 'DOGE',
+  XRP: 'XRP',
+  BNB:'BSC',
+  BTC: 'BTC',
+  FTT: 'BNB',
+  // Add more mappings for other currencies
+};
+
 export const BSDepositCryptoSelect = () => {
   const [loadings, setLoadings] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -52,6 +66,7 @@ export const BSDepositCryptoSelect = () => {
   const [singleWallet, setSingleWallet] = useState() as any;
   const [depositHash, setDepositHash] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('INEX');
+ 
 
   const [copiedValue, copy] = useCopyToClipboard();
 
@@ -159,6 +174,12 @@ export const BSDepositCryptoSelect = () => {
     },
   ];
 
+
+  
+  useEffect(() => {
+    setNetwork(currencyToNetwork[selectedCoin]); // Update the network based on selectedCoin
+  }, [selectedCoin]);
+  
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
@@ -173,6 +194,10 @@ export const BSDepositCryptoSelect = () => {
     getUserWallets(decodedToken?.email).then((res) => {
 
       setUsersWallets(res.data);
+      const userWallet = res.data.filter(
+        (x: any) => x.coinSymbol === selectedCoin
+      );
+      setSingleWallet(userWallet[0]);
     });
   }, []);
 
@@ -199,10 +224,9 @@ export const BSDepositCryptoSelect = () => {
       setSingleWallet(userWallet[0]);
     } else {
       const userWallet = usersWallets.filter(
-        (x: any) => x.coinSymbol === value
+        (x: any) => x.coinSymbol === selectedCoin
       );
       if (value === 'ETH') {
-
         alert(`Please select BNB network for ${selectedCoin} Deposit`);
       } else {
         setSingleWallet(userWallet[0]);
@@ -210,13 +234,25 @@ export const BSDepositCryptoSelect = () => {
     }
   };
 
+
+ 
+
   const handleChangeCurrency = (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
 
+
+
     setSelectedCoin(String(getRequiredCoin?.title));
+
+
+    setNetwork(currencyToNetwork[selectedCoin]);
+   
+
+    console.log("network",network);
+    console.log("coin",selectedCoin);
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
     if (setBSvalue && BSvalue) {
@@ -307,19 +343,19 @@ export const BSDepositCryptoSelect = () => {
             value={BSvalue?.fromToken}
           >
             {initialTokens
-              .filter(
-                (x: any) =>
-                  x.title === 'BNB' ||
-                  x.title === 'BTC' ||
-                  x.title === 'ETH' ||
-                  x.title === 'IN500' ||
-                  x.title === 'INEX' ||
-                  x.title === 'INXC' ||
-                  x.title === 'IUSD+' ||
-                  x.title === 'FTT' ||
-                  x.title === 'DOGE' ||
-                  x.title === 'XRP'
-              )
+              //.filter(
+                //(x: any) =>
+                  // x.title === 'BNB' ||
+                  // x.title === 'BTC' ||
+                  // x.title === 'ETH' ||
+                  // x.title === 'IN500' ||
+                  // x.title === 'INEX' ||
+                  // x.title === 'INXC' ||
+                  // x.title === 'IUSD+' ||
+                  // x.title === 'FTT' ||
+                  // x.title === 'DOGE' ||
+                  // x.title === 'XRP'
+              //)
               .map((token) => {
                 return (
                   <Select.Option
@@ -363,8 +399,8 @@ export const BSDepositCryptoSelect = () => {
           <div className="padding-t-1x">
             <label>Network</label>
 
-            <Select className="width-100" onChange={handleChange}>
-              <Select.Option value="BSC">
+            <Select className="width-100" onChange={handleChange} defaultValue={network} value={network}>
+              <Select.Option value="BNB">
                 <div className="font_20x">
                   BSC{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
@@ -373,14 +409,14 @@ export const BSDepositCryptoSelect = () => {
                 </div>
               </Select.Option>
               {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
-              <Select.Option value="BNB">
+              {/* <Select.Option value="BNB">
                 <div className="font_20x">
                   BNB{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
                     Binance Beacon Chain (BEP2)
                   </span>{' '}
                 </div>
-              </Select.Option>
+              </Select.Option> */}
               <Select.Option value="ETH">
                 <div className="font_20x">
                   ETH{' '}
@@ -402,6 +438,14 @@ export const BSDepositCryptoSelect = () => {
                   DOGE{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
                     Dogecoin
+                  </span>{' '}
+                </div>
+              </Select.Option>
+              <Select.Option value="BTC">
+                <div className="font_20x">
+                  BTC{' '}
+                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
+                    Bitcoin
                   </span>{' '}
                 </div>
               </Select.Option>

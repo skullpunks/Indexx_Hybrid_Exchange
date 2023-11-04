@@ -94,6 +94,7 @@ import Bridge from "./components/Bridge/Bridge";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
 import Footer from "./components/Footer/Footer";
 import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
+// import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -175,6 +176,7 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew /> 
+        {/* <PowerPackHeader/> */}
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />

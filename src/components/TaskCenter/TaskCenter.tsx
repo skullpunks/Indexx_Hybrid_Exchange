@@ -158,7 +158,7 @@ const TaskCenter = () => {
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
-        <div className="row" style={{ paddingLeft: 70, paddingTop: 60 }}>
+        <div className="row" style={{  paddingTop: 75 }}>
           <div className="text-center">
             <p style={{ fontWeight: 50, fontSize: 70 }}>Task Center</p>
             <p style={{ fontWeight: 60, fontSize: 32 }}>
