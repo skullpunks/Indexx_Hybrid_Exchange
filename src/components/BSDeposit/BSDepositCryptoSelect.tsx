@@ -343,19 +343,19 @@ export const BSDepositCryptoSelect = () => {
             value={BSvalue?.fromToken}
           >
             {initialTokens
-              .filter(
-                (x: any) =>
-                  x.title === 'BNB' ||
-                  x.title === 'BTC' ||
-                  x.title === 'ETH' ||
-                  x.title === 'IN500' ||
-                  x.title === 'INEX' ||
-                  x.title === 'INXC' ||
-                  x.title === 'IUSD+' ||
-                  x.title === 'FTT' ||
-                  x.title === 'DOGE' ||
-                  x.title === 'XRP'
-              )
+              //.filter(
+                //(x: any) =>
+                  // x.title === 'BNB' ||
+                  // x.title === 'BTC' ||
+                  // x.title === 'ETH' ||
+                  // x.title === 'IN500' ||
+                  // x.title === 'INEX' ||
+                  // x.title === 'INXC' ||
+                  // x.title === 'IUSD+' ||
+                  // x.title === 'FTT' ||
+                  // x.title === 'DOGE' ||
+                  // x.title === 'XRP'
+              //)
               .map((token) => {
                 return (
                   <Select.Option
