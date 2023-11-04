@@ -199,10 +199,9 @@ export const BSDepositCryptoSelect = () => {
       setSingleWallet(userWallet[0]);
     } else {
       const userWallet = usersWallets.filter(
-        (x: any) => x.coinSymbol === value
+        (x: any) => x.coinSymbol === selectedCoin
       );
       if (value === 'ETH') {
-
         alert(`Please select BNB network for ${selectedCoin} Deposit`);
       } else {
         setSingleWallet(userWallet[0]);
@@ -364,7 +363,7 @@ export const BSDepositCryptoSelect = () => {
             <label>Network</label>
 
             <Select className="width-100" onChange={handleChange}>
-              <Select.Option value="BSC">
+              <Select.Option value="BNB">
                 <div className="font_20x">
                   BSC{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
@@ -373,14 +372,14 @@ export const BSDepositCryptoSelect = () => {
                 </div>
               </Select.Option>
               {/* <Option value="BTC"><div className='font_20x'>BTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Bitcoin</span> </div></Option> */}
-              <Select.Option value="BNB">
+              {/* <Select.Option value="BNB">
                 <div className="font_20x">
                   BNB{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
                     Binance Beacon Chain (BEP2)
                   </span>{' '}
                 </div>
-              </Select.Option>
+              </Select.Option> */}
               <Select.Option value="ETH">
                 <div className="font_20x">
                   ETH{' '}
@@ -402,6 +401,14 @@ export const BSDepositCryptoSelect = () => {
                   DOGE{' '}
                   <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
                     Dogecoin
+                  </span>{' '}
+                </div>
+              </Select.Option>
+              <Select.Option value="BTC">
+                <div className="font_20x">
+                  BTC{' '}
+                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
+                    Bitcoin
                   </span>{' '}
                 </div>
               </Select.Option>
