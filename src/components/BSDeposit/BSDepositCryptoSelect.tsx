@@ -173,6 +173,10 @@ export const BSDepositCryptoSelect = () => {
     getUserWallets(decodedToken?.email).then((res) => {
 
       setUsersWallets(res.data);
+      const userWallet = res.data.filter(
+        (x: any) => x.coinSymbol === selectedCoin
+      );
+      setSingleWallet(userWallet[0]);
     });
   }, []);
 
