@@ -244,7 +244,7 @@ console.log(refcode === "null");
                 the US residents. Instead, please register on our partner
                 platform dedicated to the US residents{' '}
                 <a className="text-link" href={baseDEXURL} rel="noreferrer">
-                  (test.dex.indexx.ai)
+                  (dex.indexx.ai)
                 </a>
                 .
               </p>

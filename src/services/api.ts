@@ -23,10 +23,10 @@ const algorithm = 'aes-256-cbc';
 const salt = crypto.createHash('sha1').update(secret).digest('hex');
 export let baseAcademyUrl = '';
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseAPIURL = 'https://test.api.indexx.ai';
-  baseCEXURL = 'https://test.cex.indexx.ai';
-  baseDEXURL = 'https://test.dex.indexx.ai';
-  baseURL = 'https://test.indexx.ai';
+  baseAPIURL = 'https://api.indexx.ai';
+  baseCEXURL = 'https://cex.indexx.ai';
+  baseDEXURL = 'https://dex.indexx.ai';
+  baseURL = 'https://indexx.ai';
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
@@ -34,20 +34,18 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
-  // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
 } else {
-  baseCEXURL = 'https://test.cex.indexx.ai';
-  baseDEXURL = 'https://test.dex.indexx.ai';
-  baseAPIURL = 'https://test.api.indexx.ai';
-  baseURL = 'https://test.indexx.ai';
+  baseCEXURL = 'https://cex.indexx.ai';
+  baseDEXURL = 'https://dex.indexx.ai';
+  baseAPIURL = 'https://api.indexx.ai';
+  baseURL = 'https://indexx.ai';
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
-  baseWalletURL = 'https://test.wallet.indexx.ai';
+  baseWalletURL = 'https://wallet.indexx.ai';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
-  baseMktplaceURL = 'https://test.xnftmarketplace.indexx.ai';
+  baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
 }
 
@@ -122,11 +120,12 @@ export const loginAPI = async (email: string, password: string) => {
 
 export const getCaptainBeeStatics = async (
   username: string,
-  isPublicProfile: string = 'no'
+  isPublicProfile: string = 'no',
+  userType: string = "CaptainBee"
 ) => {
   try {
     const result = await API.get(
-      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}`
+      `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}/${userType}`
     );
     return result.data;
   } catch (e: any) {
