@@ -22,8 +22,11 @@ interface DataType {
     txid: string;
 }
 
+type TeamCapTxTableProps = {
+    email: string;
+};
 
-const TCaptTransactionCryptoHistoryTable: React.FC = () => {
+const TCaptTransactionCryptoHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) => {
     const [selection, setSelection] = useState({
         type: '',
         asset: '',
@@ -137,21 +140,36 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken: any = decodeJWT(String(token)) as any;
-
-        transactionList(decodedToken?.email, '').then((res) => {
-            const results = res.data;
-            let finalArr = [];
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].transactionType?.includes('FIAT')) {
-                } else {
-                    finalArr.push(results[i]);
+        if (email) {
+            transactionList(email, '').then((res) => {
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                    } else {
+                        finalArr.push(results[i]);
+                    }
                 }
-            }
-            setTxList(finalArr);
-            setTxListFilter(finalArr);
-        });
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        } else {
+            const token = localStorage.getItem('access_token');
+            const decodedToken: any = decodeJWT(String(token)) as any;
+
+            transactionList(decodedToken?.email, '').then((res) => {
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+                    } else {
+                        finalArr.push(results[i]);
+                    }
+                }
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        }
     }, []);
 
     const handleChangeTime = (value: string) => {
@@ -247,11 +265,11 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
                 time: selection.time,
                 transactionHash: selection.transactionHash,
             });
-            
-            
+
+
             const txListFilterData = txList.filter((data: any) => {
-                
-                
+
+
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return data.transactionType?.toLowerCase() === value?.toLowerCase()
@@ -275,8 +293,8 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                
-                
+
+
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
@@ -299,7 +317,7 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
+
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
@@ -318,7 +336,7 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
+
                 return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
@@ -420,7 +438,7 @@ const TCaptTransactionCryptoHistoryTable: React.FC = () => {
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Transaction Hash</label> <br />
-                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius:"4px", border:"2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
+                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius: "4px", border: "2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />

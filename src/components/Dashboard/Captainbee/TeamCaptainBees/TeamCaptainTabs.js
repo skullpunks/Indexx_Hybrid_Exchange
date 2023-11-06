@@ -10,7 +10,7 @@ import TeamCaptainPermissions from './TeamCaptainPermissions';
 import TCaptTransactionHistoryLayout from './TeamCaptainTransactionHistory/TCaptTransactionHistoryLayout';
 
 
-const TeamCaptainTabs = () => {
+const TeamCaptainTabs = ({email}) => {
     return (
         <div 
         // style={{ paddingTop: 90 }} 
@@ -21,13 +21,13 @@ const TeamCaptainTabs = () => {
                    <TeamCaptainGrowth/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Wallet" key="2">
-                  <TeamCaptWallet />
+                  <TeamCaptWallet email={email}/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Permissions" key="3">
-                  <TeamCaptainPermissions/>
+                  <TeamCaptainPermissions email={email}/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Transactions" key="4">
-                <TCaptTransactionHistoryLayout/>
+                <TCaptTransactionHistoryLayout email={email}/>
                 </Tabs.TabPane>
             </Tabs>
         </div>

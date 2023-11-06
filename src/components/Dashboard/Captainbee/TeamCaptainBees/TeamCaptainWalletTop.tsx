@@ -7,7 +7,11 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 // import comingSoon from "../../../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../../../services/api';
 
-const TeamCaptainWalletTop = () => {
+type TeamCaptWalletTableProps = {
+    email: string;
+};
+
+const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({ email }) => {
     const navigate = useNavigate();
     const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
     let access_token = String(localStorage.getItem("access_token"));
@@ -37,27 +41,43 @@ const TeamCaptainWalletTop = () => {
 
 
     const getAllUserWallet = async () => {
-        let userWallets = await getUserWallets(decoded.email);
-        let usersWallet = userWallets.data;
-        let totalBalInUSD = 0;
-        for (let i = 0; i < usersWallet.length; i++) {
-            if (usersWallet[i].coinType === "Crypto") {
-                let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                let price = Number(res.data.results.data);
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
-            } else {
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+        if (email) {
+            let userWallets = await getUserWallets(email);
+            let usersWallet = userWallets.data;
+            let totalBalInUSD = 0;
+            for (let i = 0; i < usersWallet.length; i++) {
+                if (usersWallet[i].coinType === "Crypto") {
+                    let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
+                    let price = Number(res.data.results.data);
+                    totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+                } else {
+                    totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+                }
             }
+            setTotalBalanceInUSD(totalBalInUSD)
+        } else {
+            let userWallets = await getUserWallets(decoded.email);
+            let usersWallet = userWallets.data;
+            let totalBalInUSD = 0;
+            for (let i = 0; i < usersWallet.length; i++) {
+                if (usersWallet[i].coinType === "Crypto") {
+                    let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
+                    let price = Number(res.data.results.data);
+                    totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+                } else {
+                    totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+                }
+            }
+            setTotalBalanceInUSD(totalBalInUSD)
         }
-        setTotalBalanceInUSD(totalBalInUSD)
     }
 
     const [isVisible, setIsVisible] = useState(true);
 
     const toggleVisibility = () => {
-      setIsVisible(!isVisible);
+        setIsVisible(!isVisible);
     };
-  
+
     return (
         <>
             <div className='border-b-1x orange width-100 pt-3 font_15x'>
@@ -67,13 +87,13 @@ const TeamCaptainWalletTop = () => {
                 <h2 className='font_15x'>Estimated Balance</h2>
                 <div className='d-flex flex-align-center color_general'>
                     <h2 className='margin-b-0 font_15x'>$</h2>
-                    {isVisible ? 
-                    <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
-                    :
-                    <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                    {isVisible ?
+                        <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
+                        :
+                        <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
                     }
                     <div onClick={toggleVisibility}>
-                        {isVisible ? <VisibilityIcon/> : <VisibilityOffIcon />} 
+                        {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </div>
                 </div>
                 {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>
