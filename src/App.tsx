@@ -94,7 +94,7 @@ import Bridge from "./components/Bridge/Bridge";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
 import Footer from "./components/Footer/Footer";
 import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
-// import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
+import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -150,7 +150,6 @@ function App() {
   const themeClass = `theme-${userLogged}`;
   
   const PrivateRoutes = () => {
-    // let auth = {'token':true}
   const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
   const isAllowed =  localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false"
 
@@ -167,8 +166,8 @@ function App() {
     return <Outlet/>
 
   }
+  console.log(window.location.pathname, "path");
   
-  // const isAuthenticated = localStorage.getItem("access_token") !== undefined || localStorage.getItem("access_token") !== null
   return (
     <ThemeProvider theme={theme}>
     <div className={themeClass}>
@@ -176,7 +175,10 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew /> 
-        {/* <PowerPackHeader/> */}
+        { !window.location.pathname.includes("login") && !window.location.pathname.includes("dashboard") &&
+          !window.location.pathname.includes("get-started") && 
+          <PowerPackHeader/>
+        }
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />

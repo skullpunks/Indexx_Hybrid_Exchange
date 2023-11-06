@@ -59,6 +59,9 @@ const PowerPackHeader = () => {
         if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
           setHaspowerpack(true);
         }
+        else{
+          setHaspowerpack(false);
+        }
       });
     }
   }, [])

@@ -3,7 +3,7 @@ import PowerCard from './PowerCard';
 import { Box, Grid, Typography } from '@mui/material';
 import { PackData } from './PackData';
 import powerp from "../../assets/powerpack/power page logo 1.svg";
-import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
+// import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 
@@ -18,7 +18,7 @@ const PowerPack = () => {
 
   return (
     <Box mt={18} pb={5}>
-      <PowerPackHeader />
+      {/* <PowerPackHeader /> */}
       <Box
         sx={{
           display: "flex",

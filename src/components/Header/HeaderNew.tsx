@@ -862,7 +862,7 @@ const HeaderNew = () => {
 
               {localStorage.getItem("user") ? (
                 <>
-                  <Nav.Link
+                  {/* <Nav.Link
                     as={Link}
                     to="/indexx-exchange/buy-sell/"
                     href="/"
@@ -870,7 +870,7 @@ const HeaderNew = () => {
                     style={{ height: "41px", zIndex: "10000" }}
                   >
                     Buy Crypto
-                  </Nav.Link>
+                  </Nav.Link> */}
                   {/* <img src={Bellicon} alt="Notifications"
                     className="ms-3 my-2 text-white cursor-pointer"
                     style={{ maxHeight: 26, alignSelf: "center" }}
