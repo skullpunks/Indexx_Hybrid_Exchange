@@ -9,7 +9,10 @@ import TeamCaptWalletTable from './TeamCaptWalletTable';
 
 // import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
-const TeamCaptWallet = () => {
+type TeamWalletProps = {
+    email: string;
+};
+const TeamCaptWallet: React.FC<TeamWalletProps> = ({email}) => {
     return (
         <div className=''>
             {/* <div className='d-flex bs_wallet_top'>
@@ -24,10 +27,10 @@ const TeamCaptWallet = () => {
             <div className='scan-container d-flex flex-direction-column card not_so_large_card orange pb-0'>
 
 
-                <TeamCaptainWalletTop />
+                <TeamCaptainWalletTop email={email}/>
 
                 <div className='width-100 bs_wallet_table'>
-                    <TeamCaptWalletTable />
+                    <TeamCaptWalletTable email={email}/>
                 </div>
             </div>
             {/* <Footer footerArt="flipWoman" /> */}

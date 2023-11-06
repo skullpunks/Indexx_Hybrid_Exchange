@@ -74,7 +74,7 @@ const TeamCaptainDashIndividual = () => {
     setUserType(userType);
     if (userType === "CaptainBee") {
       getCaptainBeeStatics(id).then((data) => {
-        console.log(data?.data);
+        console.log("teamcaptaindash",data?.data);
         setStaticsData(data.data);
         if (data?.data?.powerPackData) {
           const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
@@ -603,7 +603,7 @@ const TeamCaptainDashIndividual = () => {
               </div>
             </div>
             <div className="side-container" style={{marginLeft:"10px"}}>
-              <TeamCaptainTabs />
+              <TeamCaptainTabs email={staticsData?.userFullData?.email}/>
             </div>
           </div>
         </div>

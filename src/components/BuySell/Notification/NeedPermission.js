@@ -7,25 +7,35 @@ const NeedPermission = ({ isVisible, onClose, message, id }) => {
     console.log(id, "id");
     if (!isVisible) return null;
     const handleClick = () => {
-        navigate(`/indexx-exchange/dashboard/capt-mybees/${id}/3`, { replace: true }); 
+        navigate(`/indexx-exchange/dashboard/capt-mybees/${id}/3/CaptainBee`, { replace: true });
         onClose();
     }
+
+    const handleKYCClick = () => {
+        navigate(`/indexx-exchange/account`, { replace: true });
+        onClose();
+    }
+
     return (
         <>
             <div class='main-box'>
-            <div className='close-button' onClick={onClose}>
-                &times; {/* This is the close button (X) */}
-            </div>
+                <div className='close-button' onClick={onClose}>
+                    &times; {/* This is the close button (X) */}
+                </div>
 
                 <div class='second-box'>
-                    <img src={logo} class="center" style={{ margin: "auto", paddingTop: "1.25rem" }}  width={78} alt="img" /> 
+                    <img src={logo} class="center" style={{ margin: "auto", paddingTop: "1.25rem" }} width={78} alt="img" />
                     <div class='text-box-2'>
                         {message}
                     </div>
                     <div class='button-box'>
-                        <button class='button-btn' onClick={handleClick}>
-                            Apply for permission
-                        </button>
+                        {id ?
+                            (<button class='button-btn' onClick={handleClick}>
+                                Apply for permission
+                            </button>) :
+                            (<button class='button-btn' onClick={handleKYCClick}>
+                                Verify Identity
+                            </button>)}
                     </div>
                 </div>
             </div>

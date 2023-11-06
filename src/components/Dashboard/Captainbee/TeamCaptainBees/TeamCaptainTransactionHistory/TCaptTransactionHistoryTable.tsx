@@ -23,7 +23,11 @@ interface DataType {
 }
 
 
-const TCaptTransactionHistoryTable: React.FC = () => {
+type TeamCapTxTableProps = {
+    email: string;
+};
+
+const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) => {
     const [selection, setSelection] = useState({
         type: '',
         asset: '',
@@ -37,7 +41,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
     const [copiedValue, copy] = useCopyToClipboard();
-    
+
     const columns: ColumnsType<DataType> = [
 
         {
@@ -133,23 +137,41 @@ const TCaptTransactionHistoryTable: React.FC = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken: any = decodeJWT(String(token)) as any;
-        transactionList(decodedToken?.email).then((res) => {
-            
-            const results = res.data;
-            let finalArr = [];
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].transactionType?.includes('FIAT')) {
-                    
-                    finalArr.push(results[i]);
-                } else {
-                    
+        if (email) {
+            transactionList(email).then((res) => {
+
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+
+                        finalArr.push(results[i]);
+                    } else {
+
+                    }
                 }
-            }
-            setTxList(finalArr);
-            setTxListFilter(finalArr);
-        });
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        } else {
+            const token = localStorage.getItem('access_token');
+            const decodedToken: any = decodeJWT(String(token)) as any;
+            transactionList(decodedToken?.email).then((res) => {
+
+                const results = res.data;
+                let finalArr = [];
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].transactionType?.includes('FIAT')) {
+
+                        finalArr.push(results[i]);
+                    } else {
+
+                    }
+                }
+                setTxList(finalArr);
+                setTxListFilter(finalArr);
+            });
+        }
     }, []);
 
     const handleChangeTime = (value: string) => {
@@ -191,7 +213,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
     };
     const handleChangeStatus = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-        
+
         if (value !== 'all') {
             setSelection({
                 type: selection.type,
@@ -267,7 +289,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                
+
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
                 // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
@@ -290,7 +312,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
+
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
@@ -309,7 +331,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
+
                 return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
@@ -341,7 +363,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
     const getData = (current: number, pageSize: number) => {
         // Normally you should get the data from the server
         const xx = txListFilter && txListFilter.slice((current - 1) * pageSize, current * pageSize);
-        
+
         return xx
     };
     const MyPagination = ({ total, onChange, current }: any) => {
@@ -401,7 +423,7 @@ const TCaptTransactionHistoryTable: React.FC = () => {
                         onSelect={handleSearchHashId}
                         options={options}
                         allowClear={true}
-                        style={{fontSize:"15px", width:"100%"}}
+                        style={{ fontSize: "15px", width: "100%" }}
                     />
                 </div>
             </div>
