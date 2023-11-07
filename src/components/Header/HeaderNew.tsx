@@ -878,7 +878,7 @@ const HeaderNew = () => {
                   /> */}
 
                   <NavDropdown title={
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center" >
                       {localStorage.getItem("userlogged") !== 'normal' &&
 
                       <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
@@ -926,7 +926,7 @@ const HeaderNew = () => {
                       </div>
                     </div>
 
-                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
+                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{minWidth:"353px"}}>
                     <div style={{ width: "200vw", marginBottom: "-10px" }}>
 
                       <div style={{ height: "16px", background: "black" }}></div>

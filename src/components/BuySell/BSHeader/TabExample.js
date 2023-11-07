@@ -19,6 +19,8 @@ import nectar from '../../../assets/BSheader/nectar black.svg';
 import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 import etf from '../../../assets/BSheader/etf logo 3.svg';
 import etf_white from '../../../assets/BSheader/etf white.svg';
+import wallet from '../../../assets/BSheader/funding wallet icon 1.svg';
+import wallet_white from '../../../assets/BSheader/funding wallet icon white 1.svg';
 
 import './TabExample.css';
 import { Link } from 'react-router-dom';
@@ -306,6 +308,29 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           disableTouchRipple
         />
       :null}
+      <Tab
+          label="Funding Wallet"
+          icon={
+            theme === "dark" ? 
+              <img
+                src={wallet_white}
+                alt="Home"
+                width={'45px'}
+                style={{ marginBottom: "15px" }}
+              />
+            :
+            <img
+              src={wallet}
+              alt="Home"
+              width={'45px'}
+              style={{ marginBottom: "15px" }}
+            />
+          }
+          component={Link}
+          to='/indexx-exchange/buy-sell/wallet'
+          className='tab-format'
+          disableTouchRipple
+        />
       </Tabs>
       {/* <div style={{color:"#11BE6A", fontSize:"10px", fontStyle:"italic", display:'flex',
       justifyContent:"center", paddingTop:"10px", paddingBottom:"30px"}}>

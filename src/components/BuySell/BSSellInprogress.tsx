@@ -1,5 +1,6 @@
 import React from 'react';
-import InProgressClock from "../../assets/arts/InProgressClock.svg";
+import InProgressClock from "../../assets/arts/new_arts/clock green.svg";
+import HiveInProgressClock from "../../assets/arts/new_arts/clock yellow hive.svg";
 import initialTokens from "../../utils/Tokens.json";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -34,7 +35,7 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
                 </h1>
             </div>
             <div className='card_body text-center'>
-                <img src={InProgressClock} alt="InProgressClock" className='padding-t-2x' />
+                <img  src={localStorage.getItem("userlogged") === 'normal' ? InProgressClock : HiveInProgressClock}  alt="InProgressClock" className='padding-t-2x' width={"90px"} />
 
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ padding: "30px 20px", alignItems: "baseline" }}>

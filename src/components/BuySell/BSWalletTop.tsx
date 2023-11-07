@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import wallet from '../../assets/BSheader/funding grey 1.svg';
 // import comingSoon from "../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/api';
 
@@ -57,11 +58,27 @@ const BSWalletTop = () => {
       setIsVisible(!isVisible);
     };
   
+//     <Box sx={{ textAlign: "center" }}>
+//     <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
+//       Power Pack
+//     </Typography>
+//   </Box>
+
+// </Box>
+// <Typography variant="body1" fontSize={"20px"} sx={{ mt: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
+//   To unlock the full potential of earning as a "Captain Bee," you must invest in a minimum of the Captain Bee Power Pack or a higher tier. This investment is your ticket to financial growth and success.
+// </Typography>
 
     return (
         <>
-            <div className='border-b-1x orange width-100 padding-t-2x'>
-                <h1 className='padding-l-3x padding-b-1x'>Funding Wallet</h1>
+            <div className='border-b-1x orange width-100 padding-t-2x padding-b-2x d-flex flex-direction-column align-items-center'>
+                <h1 className='padding-b-1x padding-t-1x fw-bold font_40x'>
+                    <img src={wallet} alt="logo" style={{marginRight:"20px"}}/>
+                    Funding Wallet
+                </h1>
+                <div className='font_20x padding-b-3x'>
+                Your trusted financial companion for managing, saving, and investing your money.
+                </div>
             </div>
             <div className='padding-t-1x width-100 bs_wallet_top_banner position-relative' >
                 <h2>Estimated Balance</h2>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import InProgressClock from "../../assets/arts/InProgressClock.svg";
+import InProgressClock from "../../assets/arts/new_arts/clock green.svg";
+import HiveInProgressClock from "../../assets/arts/new_arts/clock yellow hive.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { getPaypalOrder } from '../../services/api';
@@ -62,7 +63,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </h1>
             </div>
             <div className='card_body text-center'>
-                <img src={InProgressClock} alt="InProgressClock" className='padding-t-2x' />
+                <img  src={localStorage.getItem("userlogged") === 'normal' ? InProgressClock : HiveInProgressClock}  alt="InProgressClock" className='padding-t-2x' width={"90px"} />
 
                 {/* <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px 0 20px" }}>
