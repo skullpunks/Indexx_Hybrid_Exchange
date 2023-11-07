@@ -49,7 +49,7 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createBuyOrder } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -210,7 +210,7 @@ const CaptainDash = () => {
     let amount = 300;
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
-    res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
+    res = await createINEXBuyOrder(basecoin, quotecoin, amount, outAmount);
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
