@@ -152,3 +152,13 @@
     }
 
   }
+
+  .atn-btn-hover {
+    background-color: #FFC233; /* Normal state color */
+    border-color: #FFC233;
+  }
+  
+  .atn-btn-hover:hover {
+    background-color: #FFD55F; /* Lighter color for hover state */
+    border-color: #FFD55F;
+  }

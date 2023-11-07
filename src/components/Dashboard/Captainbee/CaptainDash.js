@@ -49,12 +49,15 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import CommissionTable from './CommissionTable';
+import { Button } from 'antd';
+let appSettingArr = [];
+let priceData = {};
 
 const CaptainDash = () => {
   const [platform, setPlatform] = useState('Exchange');
@@ -89,8 +92,65 @@ const CaptainDash = () => {
   //   'Page F',
   //   'Page G',
   // ];
-
+  const [message, setMessage] = useState();
   const [staticsData, setStaticsData] = useState();
+  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState({
+    total: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+  });
+  const [rateData, setRateData] = useState();
+  const [adminFee, setAdminFees] = useState('');
+  const [loadings, setLoadings] = useState(false);
+
+  useEffect(() => {
+    const nextPurchaseDate = staticsData?.nextPurchaseDate;
+    if (!nextPurchaseDate) return;
+
+    const updateTimer = () => {
+      const remaining = calculateTimeRemaining(nextPurchaseDate);
+      setTimeRemaining(remaining);
+    };
+
+    updateTimer();
+    const intervalId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [staticsData?.nextPurchaseDate]);
+
+  function calculateTimeRemaining(endTime) {
+    const total = Date.parse(endTime) - Date.now();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    return {
+      total, days, hours, minutes, seconds
+    };
+  }
+
+  const getPricesData = async () => {
+    const res = await getCoinPriceByName(String("INEX"));
+    priceData = res.data.results.data;
+    setRateData(priceData);
+
+    let oneUsdValue = await oneUSDHelper(
+      priceData,
+      "INEX"
+    );
+    const finalPay =
+      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    setTotalAmountToPay(finalPay);
+  };
+
+  const getAllSetting = async () => {
+    const res = await getAppSettings();
+    appSettingArr = res.data;
+    let adminFees = appSettingArr.find(
+      (item) => item.key === 'IndexxTokensAdminFees'
+    );
+    setAdminFees(adminFees.value);
+    return;
+  };
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -115,6 +175,8 @@ const CaptainDash = () => {
         }
       });
     }
+    getAllSetting();
+    getPricesData();
   }, [])
 
 
@@ -139,6 +201,29 @@ const CaptainDash = () => {
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
     OpenNotification('success', 'Copied Successfully!');
+  };
+
+  const createNewBuyOrder = async () => {
+    setLoadings(true);
+    let basecoin = "INEX";
+    let quotecoin = "USD";
+    let amount = 300;
+    let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+    let res;
+    res = await createINEXBuyOrder(basecoin, quotecoin, amount, outAmount);
+    if (res.status === 200) {
+      setLoadings(false);
+      //--Below code is to enable paypal Order---
+      for (let i = 0; i < res.data.links.length; i++) {
+        if (res.data.links[i].rel.includes("approve")) {
+          window.location.href = res.data.links[i].href;
+        }
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+    }
   };
 
   return (
@@ -303,31 +388,31 @@ const CaptainDash = () => {
 
                 <div className="d-flex flex-direction-column align-items-start  mt-5">
                   <div>
-                  <span className='fw-bold'>
-                    Invite Honey Bee : 
-                  </span>
-                    <br/>
+                    <span className='fw-bold'>
+                      Invite Honey Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                   <br />
                   <div>
-                  <span className='fw-bold'>
-                    Invite Captain Bee : 
-                  </span>
-                    <br/>
+                    <span className='fw-bold'>
+                      Invite Captain Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseHiveURL +
+                        "/sign-up?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -343,6 +428,34 @@ const CaptainDash = () => {
                   <div className="font_40x mt-3">
                     95%
                   </div>
+                </div>
+
+                <div className="d-flex flex-direction-column align-items-start mt-5">
+                  <div className="font_13x ">
+                    Next Monthly INEX Order Deadline
+                  </div>
+                  <div className="font_20x mt-3">
+                    {staticsData?.nextPurchaseDate}
+                  </div>
+                  <div className="font_20x mt-3">
+                    Time Remaining:
+                    <br />
+                    {timeRemaining.days > 0 && `${timeRemaining.days} days `}
+                    {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s
+                  </div>
+                  {timeRemaining.days < 15 && (
+                    <div>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover"
+                        block
+                        onClick={() => createNewBuyOrder()}
+                        loading={loadings}
+                      >
+                        Buy 300 INEX now
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="side-container">
@@ -632,7 +745,7 @@ const CaptainDash = () => {
                             fontWeight={600}
                             textAlign={'left'}
                           >
-                             ${'0.00'}
+                            ${'0.00'}
                           </Typography>
                           <Typography
                             variant="text"
@@ -651,7 +764,7 @@ const CaptainDash = () => {
                           >
                             {'0.00'}{" "}
                             <span className='font_17x'>
-                            INEX
+                              INEX
                             </span>
                           </Typography>
                           <Typography
@@ -983,7 +1096,7 @@ const CaptainDash = () => {
                               : '0.00')
                             } {" "}
                             <span className='font_17x'>
-                            INEX
+                              INEX
                             </span>
                           </Typography>
                           <Typography
