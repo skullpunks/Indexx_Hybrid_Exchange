@@ -13,6 +13,8 @@ import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
 import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
 import etf from '../../../assets/BSheader/etf logo 3.svg';
 import etf_white from '../../../assets/BSheader/etf white.svg';
+import wallet from '../../../assets/BSheader/funding wallet icon 1.svg';
+import wallet_white from '../../../assets/BSheader/funding wallet icon white 1.svg';
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
@@ -224,6 +226,36 @@ const PowerPackHeader = () => {
         </Link>
         </div>
       :null}
+      <div className="col">
+        <Link to="/indexx-exchange/buy-sell/wallet">
+            <div className="card">
+            {theme === "dark" ? 
+            <img src={wallet_white} className="card-img-top" alt="..."
+              style={{height:"34px"}}
+            />
+            :
+            <img src={wallet} className="card-img-top" alt="..."
+              style={{height:"34px"}}
+            />
+            }
+            <div className="card-body">
+                <h5 className="card-title mt-1">Funding Wallet</h5>
+                <Typography
+                component='p'
+                style={
+                  location.pathname === '/indexx-exchange/buy-sell/wallet'
+                    ? {
+                      height: '0.07px',
+                      width: '66px',
+                      backgroundColor: 'var(--body_color)',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
     </div>
     </div>
 

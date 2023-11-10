@@ -1,6 +1,7 @@
 import { Button } from 'antd'
 import React from 'react'
-import Verification from "../../assets/arts/Verification.svg";
+import Verification from "../../assets/arts/new_arts/normal exchange.svg";
+import HiveVerification from "../../assets/arts/new_arts/verification page hive.svg";
 
 export const PaymentMethod = () => {
   return (
@@ -16,7 +17,7 @@ export const PaymentMethod = () => {
         <br/>
         <br/>
         <br/>
-<img src={Verification} alt="Verification"  style={{width: "100px",
+<img src={localStorage.getItem("userlogged") === 'normal' ? Verification : HiveVerification} alt="Verification"  style={{width: "100px",
     margin: "0 auto"
 }}/>
 <br/>
