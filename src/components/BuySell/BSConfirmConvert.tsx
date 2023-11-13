@@ -81,19 +81,17 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       res = await getCoinPriceByName('FTT');
       priceData1 = res.data;
     }
-    
+
     setRateData1(priceData1.results.data);
     let res2 = await getCoinPriceByName(String(filteredToArray[0].title));
     priceData2 = res2.data;
-    
+
     setRateData2(priceData2.results.data);
-    
-    
+
+
     let finalRate = priceData1.results.data / priceData2.results.data;
-    
+
     setRateData3(finalRate);
-    
-    
     //setTotalAmountToPay(finalRate * Number(BSvalue?.amount))
     setTotalAmountToPayInUSD(
       finalRate * Number(BSvalue?.amount) * priceData2.results.data
@@ -111,7 +109,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title.includes('I')) {
+    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -122,7 +120,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       );
       setAdminFees(adminFees.value);
     }
-    
+
     return;
   };
   const [adminFee, setAdminFees] = useState('');
@@ -131,13 +129,13 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
-        
+
         setHoneyBeeEmail(data.data.userFullData?.email);
         let captainbeePermissions = data.data.referredUserData?.data.relationships;
-        
-        
+
+
         let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-        
+
         setPermissionData(c)
       });
 
@@ -168,8 +166,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let quotecoin: string = filteredToArray[0].title;
     let res;
     if (id) {
-      
-      
+
+
       if (!permissionData?.permissions?.convert) {
         setLoadings(false);
         OpenNotification('error', "As Captain bee, Please apply for convert approval from honey bee");
@@ -184,7 +182,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         totalAmountToPay
       );
     }
-    
+
     if (res.status === 200) {
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
@@ -199,15 +197,15 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
   const processConvertOrder = async (order: any) => {
     const res = await confirmConvertOrder(order.user.email, order.orderId);
-    
+
     if (res.status === 200) {
       setLoadings(false);
       OpenNotification('success', 'Successfully Processed Convert Order');
-       // setScreenName("BSSellInprogress");
-       if (honeyBeeId === "undefined" || honeyBeeId === "")
-       navigate("/indexx-exchange/buy-sell/convert-in-progress");
-     else
-       navigate(`/indexx-exchange/buy-sell/convert-in-progress/${honeyBeeId}`);
+      // setScreenName("BSSellInprogress");
+      if (honeyBeeId === "undefined" || honeyBeeId === "")
+        navigate("/indexx-exchange/buy-sell/convert-in-progress");
+      else
+        navigate(`/indexx-exchange/buy-sell/convert-in-progress/${honeyBeeId}`);
     } else {
       setLoadings(false);
       OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
@@ -285,7 +283,9 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         >
           <span>Rate</span>
           <span>
-            {Math.floor(rateData3 * 10000) / 10000} {filteredToArray[0].title} /{' '}
+            {rateData3 < 0.0001
+              ? rateData3.toFixed(8)
+              : Math.floor(rateData3 * 10000) / 10000} {filteredToArray[0].title} /{' '}
             {filteredFromArray[0].title}
           </span>
         </div>
