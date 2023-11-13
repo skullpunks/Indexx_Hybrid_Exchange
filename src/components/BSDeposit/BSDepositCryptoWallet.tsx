@@ -63,7 +63,7 @@ export const BSDepositCryptoWallet = () => {
         <h1 className='font_48x font_40x padding-b-1x'>Recent Deposit</h1>
         <div className='recent_deposit_container border-1x padding-2x '>
 
-          <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38" height="38" /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
+          <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38"   /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
           <div className='d-flex flex-justify-between padding-t-1x responsive_recent_deposits '>
 
             <div className='d-flex '><div className='wallet_funding'>

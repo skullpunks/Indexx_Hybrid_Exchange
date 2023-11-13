@@ -44,7 +44,7 @@ const BuySellSelect: React.FC<(Props)> = ({ setScreenName }) => {
                 {
                     initialTokens.map((token, index) => {
                         return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} >
-                         <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                         <div className='d-flex'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                         </Option>
                     })
                 }

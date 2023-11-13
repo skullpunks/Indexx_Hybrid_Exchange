@@ -17,6 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
     tokenType: number;
+    subtokenType: number;
 }
 
 // const filteredArray = (items: any, keyName: any, key: any) => {
@@ -24,7 +25,7 @@ interface Props {
 //         return obj[keyName] === key;
 //     });
 // }
-const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
+const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType }) => {
     const ref = useRef<HTMLInputElement>(null);
     const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
     const [val, setVal] = useState("");
@@ -49,14 +50,23 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
         let newTokens: any[] = [];
 
         if (tokenType === 2) {
-            newTokens = initialTokens.filter(item =>
-                item.subTitle.toLowerCase().includes('stock') ||
-                item.subTitle.toLowerCase().includes('snp500')
-            );
+            if(subtokenType === 0){
+                newTokens = initialTokens.filter(item =>
+                    (item.subTitle.toLowerCase().includes('stock') ||
+                    item.subTitle.toLowerCase().includes('snp500')) &&
+                    !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+                );
+                }
+                else if(subtokenType === 1){
+                    newTokens = initialTokens.filter(item =>
+                        item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+                    );
+                }
         } else if (tokenType === 1) {
             newTokens = initialTokens.filter(item =>
                 !item.subTitle.toLowerCase().includes('stock') &&
-                !item.subTitle.toLowerCase().includes('snp500')
+                !item.subTitle.toLowerCase().includes('snp500') &&
+                !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
             );
         } else if (tokenType === 0) {
             newTokens = initialTokens;
@@ -64,7 +74,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
 
         setFilteredtokens(newTokens);
 
-    }, [tokenType]);
+    }, [tokenType, subtokenType]);
 
     useEffect(() => {
         // This effect triggers when filteredtokens changes
@@ -260,7 +270,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
                     }
@@ -273,7 +283,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
                     }

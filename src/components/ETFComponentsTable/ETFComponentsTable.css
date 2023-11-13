@@ -1,0 +1,62 @@
+
+.etf_table .MuiTableContainer-root {
+    background-color: var(--body_background) !important;
+  }
+
+  .etf_table .MuiTable-root{
+    border: 1px solid var(--table-border);
+    border-bottom: none;
+  }
+
+  .etf_table .MuiTableBody-root .MuiTableRow-root:nth-child(odd){
+    background-color: var(--table-light) !important;
+  }
+  
+  .etf_table .MuiTable-root .MuiTableRow-head .MuiTableCell-root{
+    font-weight: bold !important;
+  }
+
+  .etf_table .MuiTable-root .MuiTableRow-head,
+  .etf_table .MuiTableBody-root .MuiTableRow-root:nth-child(even){
+    background-color: var(--body_background) !important;
+  }
+
+  .etf_table .MuiTableCell-root {
+    color: var(--body_color) !important;
+    border-bottom: none !important;
+    min-width: 250px;
+  }
+
+  .etf_table .MuiSvgIcon-root{
+    vertical-align: baseline !important;
+  }
+
+  .etf_table {
+    overflow-x: auto;
+  }
+  
+  .etf_table::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  /* .etf_table::-webkit-scrollbar-button {
+    display: block;
+    width: 12px;
+    height: 12px;
+  } */
+  
+  .etf_table::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--scroller), 0.5);
+    border-color: var(--table-border) !important;
+  }
+  
+  .etf_table::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(var(--scroller), 0.7);
+  }
+  
+  .etf_table::-webkit-scrollbar-track {
+    /* background-color: var(--table-light); */
+    background-color: var(--body_background);
+
+  }
+  

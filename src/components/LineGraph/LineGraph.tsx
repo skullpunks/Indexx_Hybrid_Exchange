@@ -221,9 +221,9 @@ const LineGraph = (props: any) => {
               />
             )}
             <YAxis
-              stroke="#5f5f5f"
+              stroke="var(--body_color)"
               padding={{ top: 20 }}
-              tick={{ fill: '#5f5f5f' }}
+              tick={{ fill: 'var(--body_color)' }}
               domain={['auto', 'auto']}
               // remove this line or set it to false
               // hide={true} 

@@ -141,22 +141,22 @@
   },
   {
     "address": "0x504F90b4df7ff29DA696311e64402C765CB0etf1",
-    "graph": "IndexxSP500Graph"
+    "graph": "IndexxEQSTKETFGraph"
   },
   {
     "address": "0x504F90b4df7ff29DA696311e64402C765CB0etf2",
-    "graph": "IndexxSP500Graph"
+    "graph": "IndexxCRYC10ETFGraph"
   },
   {
     "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110etf3",
-    "graph": "IndexxTLSAGraph"
+    "graph": "IndexxALCRYPETFGraph"
   },
   {
     "address": "0x504F90b4df7ff29DA696311e64402C765CB0etf4",
-    "graph": "IndexxSP500Graph"
+    "graph": "IndexxINDXXFETFGraph"
   },
   {
     "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110etf5",
-    "graph": "IndexxTLSAGraph"
+    "graph": "IndexxTOBETFGraph"
   }
 ]

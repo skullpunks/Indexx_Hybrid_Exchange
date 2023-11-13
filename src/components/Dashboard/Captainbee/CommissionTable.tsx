@@ -69,7 +69,6 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     {
       title: 'Rank',
       dataIndex: 'rank',
-      responsive: ['sm'],
       sorter: (a, b) => a.rank.localeCompare(b.rank),
       render: (_, record) => {
         return record.rank;  // Adjusted based on actual rank data
@@ -230,7 +229,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
         total={total}
         current={current}
         pageSize={pageSize}
-        responsive={true}
+        // responsive={true}
         style={{
           padding: '5px',
           textAlign: 'center',
@@ -242,20 +241,24 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   return (
     <div>
       <div
-        className="font_20x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
+        className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
         Affiliate Report / Commission Report
       </div>
       <div className="border-b-1x margin-b-2x pt-3">
         <Table<CommissionDataType>
           className="custom_table2"
+          style={{maxWidth:"94vw"}}
           columns={topcolumns}
           dataSource={commissionPaidData}
+          scroll={{x:true}}
         />
         <Table
           className="custom_table"
+          style={{maxWidth:"94vw"}}
           columns={columns}
           dataSource={getData(current, pageSize)}
           onChange={onChange}
+          scroll={{x:true}}
         />
         <MyPagination
           total={sortedData && sortedData.length}

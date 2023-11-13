@@ -53,7 +53,7 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
                     {record.modified}
                 </React.Fragment>
             ),
-            responsive: ["xs"]
+            // responsive: ["xs"]
         },
         {
             title: "Amount",
@@ -64,40 +64,40 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
                     {record.currencyRef}
                 </React.Fragment>
             ),
-            responsive: ["xs"]
+            // responsive: ["xs"]
         },
         {
             title: 'Time',
             dataIndex: 'modified',
             key: 'modified',
             render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Asset',
             dataIndex: 'currencyRef',
             key: 'currencyRef',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Type',
             dataIndex: 'transactionType',
             key: 'transactionType',
-            responsive: ["sm"]
+            // responsive: ["sm"]
         },
         {
             title: 'Deposit Wallet',
             dataIndex: 'walletType',
             key: 'walletType',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Amount',
             key: 'amount',
             dataIndex: 'amount',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Transaction Hash',
@@ -115,7 +115,7 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
                     </span>
                 </span>
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Destination',
@@ -131,7 +131,7 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
                     </span>
                 </span>
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
     ];
 
@@ -427,7 +427,10 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
                     />
                 </div>
             </div>
-            <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} 
+                scroll={{x:true}}
+                style={{maxWidth:"94vw"}}                 
+            />
             <MyPagination
                 total={txListFilter && txListFilter.length}
                 current={current}

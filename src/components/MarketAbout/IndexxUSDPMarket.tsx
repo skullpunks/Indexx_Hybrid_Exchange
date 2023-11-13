@@ -100,7 +100,7 @@ const IndexxUSDPMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>Litecoin </p>
+                            <p style={{ fontSize: 20 }}>iUSD+ </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
 
                                 IUSD+ is Indexx.ai’s stable coin and Perfect for beginners.

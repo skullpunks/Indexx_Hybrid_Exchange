@@ -51,6 +51,8 @@ import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
 import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
@@ -92,6 +94,10 @@ const CaptainDash = () => {
   //   'Page F',
   //   'Page G',
   // ];
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   const [message, setMessage] = useState();
   const [staticsData, setStaticsData] = useState();
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
@@ -230,8 +236,8 @@ const CaptainDash = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: "220px" }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-570px" }}>
+        (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
             <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
             Waggle Dance / My Dashboard
           </div>
@@ -239,8 +245,9 @@ const CaptainDash = () => {
             <div
               className="d-flex justify-content-between"
             // style={{ width: '74%', maxWidth: '1140px' }}
+            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
             >
-              <div className="d-flex flex-direction-column mt-1" style={{ width: "17%" }}>
+              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "17%"}` }}>
                 <div className="d-flex  flex-direction-column align-items-center">
                   <div
                     style={{
@@ -283,14 +290,14 @@ const CaptainDash = () => {
                     />
                   </div>
                 </div>
-                <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
+                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{justifyContent:`${isMobile ? "center" : "start"}`}}>
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
                 {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                   (<div className="justify-content-center d-flex">
-                    <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                    <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                   </div>) : (
-                    <div>
+                  <div className="justify-content-center d-flex flex-direction-column" style={{marginLeft:`${isMobile ? "40px" : 0}`}}>
                       Please purchase the powerpack from the below URL: <br />
                       <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                         Power Pack Purchase
@@ -298,7 +305,14 @@ const CaptainDash = () => {
                     </div>
                   )
                 }
-                <div className="align-items-start lh_32x">
+                <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+
+                {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+                  <div className="fw-bold">Bio :</div>
+                  {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
+                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
+                  in indexx hive`}
+                </div> */}
 
                   <div className="font_13x d-flex align-items-center mt-4">
                     {theme === "dark" ?
@@ -354,7 +368,7 @@ const CaptainDash = () => {
                   }
                 </div>
 
-                <div className="align-items-start lh_32x mt-4">
+                <div className="align-items-start lh_32x mt-4" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                   <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                     {theme === "dark" ?
                       <img alt="man" src={discord_dark} className="me-3" />
@@ -386,7 +400,7 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start  mt-5">
+                <div className="d-flex flex-direction-column align-items-start  mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                   <div>
                     <span className='fw-bold'>
                       Invite Honey Bee :
@@ -418,7 +432,7 @@ const CaptainDash = () => {
                   </div>
                 </div>
 
-                <div className="d-flex  flex-direction-column align-items-start mt-5">
+                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                   <div className="font_13x ">
                     Your Rating
                   </div>
@@ -430,7 +444,7 @@ const CaptainDash = () => {
                   </div>
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start mt-5">
+                <div className="d-flex flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                   <div className="font_13x ">
                     Next Monthly INEX Order Deadline
                   </div>
@@ -458,7 +472,7 @@ const CaptainDash = () => {
                   )}
                 </div>
               </div>
-              <div className="side-container">
+              <div className="side-container" style={{marginTop:`${isMobile ? "65px": "0px"}`}}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -471,8 +485,8 @@ const CaptainDash = () => {
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'row',
-                      gap: 2,
+                      flexDirection: `${isMobile ? "column" : "row"}`,
+                      gap: isMobile ? 4 : 2,
                       mt: 2
                     }}
                   >
@@ -481,7 +495,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: '50%',
+                        width:`${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography
@@ -679,14 +693,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -695,7 +709,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -725,14 +739,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -741,7 +755,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -749,7 +763,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -758,7 +772,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -807,7 +821,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: '50%',
+                        width:`${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography
@@ -1005,14 +1019,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -1021,7 +1035,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1051,14 +1065,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -1067,7 +1081,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1078,7 +1092,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -1087,7 +1101,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >

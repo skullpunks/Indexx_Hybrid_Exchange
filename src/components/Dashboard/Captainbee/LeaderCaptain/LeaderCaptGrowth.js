@@ -8,6 +8,8 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
 // import CommissionTable from '../CommissionTable';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const LeaderCaptGrowth = ({ leaderEmail }) => {
   const [platform, setPlatform] = useState('Exchange');
@@ -19,29 +21,29 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
   const [OrderCapt, setOrderCapt] = useState('buysell');
   const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
 
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  // const xLabels = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
-  const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  const xLabelsCapt = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
+  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
+  // const xLabelsCapt = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
   const [captainBeeData, setRefferedUserData] = useState();
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
@@ -49,6 +51,9 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [email, setEmail] = useState();
   const [myleaderEmail, setMyLeaderEmail] = useState();
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -81,8 +86,8 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 2,
+            flexDirection: `${isMobile ? "column" : "row"}`,
+            gap: isMobile ? 4 : 2,
             mt: 2
           }}
         >
@@ -91,7 +96,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width:`${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -290,14 +295,14 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio:3
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -306,7 +311,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -398,7 +403,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width:`${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -597,14 +602,14 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio:3
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -613,7 +618,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'77px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >

@@ -9,6 +9,8 @@ import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
 import CommissionTable from '../CommissionTable';
 import { useParams } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const TeamCaptainGrowth = () => {
   const { id } = useParams();
@@ -25,29 +27,29 @@ const TeamCaptainGrowth = () => {
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [email, setEmail] = useState('');
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  // const xLabels = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
-  const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  const xLabelsCapt = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
+  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
+  // const xLabelsCapt = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
 
   const [powerPackPhoto, setPowerPackPhoto] = useState();
@@ -76,6 +78,10 @@ const TeamCaptainGrowth = () => {
 
     }
   }, [captainbeesEmail])
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   return (
     <div style={{ paddingTop: "10px" }}>
       <Box
@@ -90,8 +96,8 @@ const TeamCaptainGrowth = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 2,
+            flexDirection: `${isMobile ? "column" : "row"}`,
+            gap: isMobile ? 4 : 2,
             mt: 2
           }}
         >
@@ -100,7 +106,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width:`${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -298,14 +304,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -314,7 +320,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -344,14 +350,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -360,7 +366,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -368,7 +374,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -377,7 +383,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -426,7 +432,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width:`${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -624,14 +630,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -640,7 +646,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -670,14 +676,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -686,7 +692,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
+                  fontSize={isMobile ? '25px' : '50px'}
                   fontWeight={600}
                   textAlign={'left'}
                 >
@@ -697,7 +703,7 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -706,7 +712,7 @@ const TeamCaptainGrowth = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
+                            fontSize={isMobile ? '25px' : '50px'}
                             fontWeight={600}
                             textAlign={'left'}
                           >

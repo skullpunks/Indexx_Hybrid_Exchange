@@ -45,7 +45,8 @@ import SubHeader from '../SubHeader/SubHeader';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { RankData } from '../../RankData';
-
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const LeaderCaptain = () => {
   const [captainBeeData, setRefferedUserData] = useState();
@@ -119,25 +120,27 @@ const LeaderCaptain = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
     <>
       <SubHeader />
       {!captainBeeData ?
         (<>
-          <div style={{ paddingTop: "220px" }}>
+          <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
             <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-              <div style={{ width: "30%", textAlign: "center" }}>
+              <div style={{ width: `${isMobile ? "80%" : "30%"}`, textAlign: "center" }}>
                 There are no Leader Captain Bee for you
               </div>
             </div>
           </div>
         </>) :
         (<>
-          <div style={{ paddingTop: "220px" }}>
-            <div className='d-flex justify-content-center' style={{ marginLeft: "295px" }}>
+          <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+            <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "295px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
-              <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: "1150px" }}>
+              <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: `${isMobile ? "auto" : "1150px"}` }}>
                 <div style={{ width: "74%" }}>
                   <img src={hat} alt="hat" style={{marginRight:"10px"}} />
                   Leader Captain Bee’s  Dashboard
@@ -196,9 +199,10 @@ const LeaderCaptain = () => {
             <div className="hive-container">
               <div
                 className="d-flex justify-content-between"
+                style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
               // style={{ width: '76%', maxWidth: '1140px' }}
               >
-                <div className="d-flex flex-direction-column mt-1" style={{ width: "16%" }}>
+                <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" :"16%"}` }}>
                   <div className="d-flex  flex-direction-row align-items-center">
 
                     <div className="d-flex  flex-direction-column align-items-center">
@@ -403,7 +407,7 @@ const LeaderCaptain = () => {
                     </div>
                   </div>
                 </div>
-                <div className="side-container" style={{ marginLeft: 0, width: "1150px" }}>
+                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}` }}>
                   <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
                 </div>
               </div>

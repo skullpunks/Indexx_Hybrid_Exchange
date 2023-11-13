@@ -372,7 +372,7 @@ export const BSDepositCryptoSelect = () => {
                         }
                         alt="IN500"
                         width="38"
-                        height="38"
+                         
                       />
                       <div className=" padding-l-1x d-flex flex-align-center">
                         {token.title}{' '}
@@ -390,7 +390,7 @@ export const BSDepositCryptoSelect = () => {
           </Select>
           {/* <div className='select_container d-flex flex-justify-between flex-align-center' style={{ paddingLeft: 10 }}>
 
-            <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
+            <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div>
             <CaretDownOutlined />
 
           </div> */}
@@ -581,7 +581,7 @@ export const BSDepositCryptoSelect = () => {
             dataSource={txList}
             className="transaction_crypto_history"
           />
-          {/* <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38" height="38" /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
+          {/* <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38"   /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
           <div className='d-flex flex-justify-between padding-t-1x responsive_recent_deposits '>
 
             <div className='d-flex '><div className='wallet_funding'>

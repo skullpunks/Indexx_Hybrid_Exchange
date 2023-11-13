@@ -61,7 +61,7 @@
 }
 
 .common__token {
-    padding: 0 4px;
+    padding: 10px 8px !important;
     border: none;
     border-right: 1px solid rgba(0, 109, 255, 0.2);
     height: auto;
