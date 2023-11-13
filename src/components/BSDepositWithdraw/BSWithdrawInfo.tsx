@@ -16,6 +16,7 @@ export const BSWithdrawInfo = () => {
   const [accountNumber, setAccountNumber] = useState(initialState.accountNumber || '');
   const [bankName, setBankName] = useState(initialState.bankName || ''); useState('');
   const [swiftCode, setSwiftCode] = useState(initialState.swiftCode || '');
+  const [routingNumber,setRoutingNumber] = useState(initialState.routingNumber|| '')
   const [addressLine1, setAddressLine1] = useState(initialState.addressLine1 || '');
   const [addressLine2, setAddressLine2] = useState(initialState.addressLine2 || '');
   const [city, setCity] = useState(initialState.city || '');
@@ -48,6 +49,10 @@ export const BSWithdrawInfo = () => {
   //   }
   // }, [country]);
 
+  const handleOrderHistoryClick = () => {
+    navigate('/indexx-exchange/buy-sell/order-history');
+  };
+
   useEffect(() => {
     // Function to fetch states for a country
     const fetchStates = (countryCode: string) => {
@@ -76,7 +81,9 @@ export const BSWithdrawInfo = () => {
       <div className='d-flex w_fiat flex-justify-between flex-align-center deposit_ontainer'>
         <div className='d-flex flex-align-center top_heading'>
           Withdraw Fiat</div>
-        <div className='flex-justify-between flex-grow-1 d-flex'> <div className='order_history'> <Button danger className='margin-l-2x'>Order History<ArrowRightOutlined /></Button></div>
+        <div className='flex-justify-between flex-grow-1 d-flex'> <div className='order_history'>  <Button danger className='margin-l-2x' onClick={handleOrderHistoryClick}>
+          Order History <ArrowRightOutlined />
+        </Button></div>
           <Button danger className='danger_disabled'>
             Withdraw Crypto<ArrowRightOutlined /></Button></div>
       </div>
@@ -115,7 +122,11 @@ export const BSWithdrawInfo = () => {
               <Input placeholder="Enter Bank name" value={bankName}
                 onChange={(e) => setBankName(e.target.value)} />
             </Form.Item>
-            <Form.Item label="SWIFT/BIC Code">
+            <Form.Item label="Routing Number (for ACH Transfer):">
+              <Input placeholder="Enter account number" value={routingNumber}
+                onChange={(e) => setRoutingNumber(e.target.value)} />
+            </Form.Item>
+            <Form.Item label="SWIFT/BIC Code (for International Transfers):">
               <Input placeholder="Enter value" value={swiftCode}
                 onChange={(e) => setSwiftCode(e.target.value)} />
             </Form.Item>
@@ -123,27 +134,6 @@ export const BSWithdrawInfo = () => {
               <Input placeholder="Benificiary Address Line 1" value={addressLine1}
                 onChange={(e) => setAddressLine1(e.target.value)} />
               <span className='placeholder_info'>Please input the address in English</span>
-            </Form.Item>
-            <Form.Item label="Benificiary Address Line 2">
-              <Input placeholder="Benificiary Address Line 2" value={addressLine2}
-                onChange={(e) => setAddressLine2(e.target.value)} />
-              <span className='placeholder_info'>Please input the address in English</span>
-            </Form.Item>
-            <Form.Item label="City">
-              <Input placeholder="City" value={city}
-                onChange={(e) => setCity(e.target.value)} />
-            </Form.Item>
-            <Form.Item label="State">
-              <Select
-                placeholder="Select State"
-                value={state}
-                onChange={(value) => setState(value)}
-                disabled={!country}
-              >
-                {states.map((st: any) => (
-                  <Option key={st?.isoCode} value={st?.isoCode}>{st.name}</Option>
-                ))}
-              </Select>
             </Form.Item>
             <Form.Item label="Country">
               <Select
@@ -156,6 +146,25 @@ export const BSWithdrawInfo = () => {
                 ))}
               </Select>
             </Form.Item>
+            <Form.Item label="State">
+              <Select
+                
+                placeholder="Select State"
+                value={state}
+                onChange={(value) => setState(value)}
+                disabled={!country}
+              >
+                {states.map((st: any) => (
+                  <Option key={st?.isoCode} value={st?.isoCode}>{st.name}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item label="City">
+              <Input placeholder="City" value={city}
+                onChange={(e) => setCity(e.target.value)} />
+            </Form.Item>
+           
+            
             <Form.Item label="Zip Code">
               <Input placeholder="Zip Code" value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)} />

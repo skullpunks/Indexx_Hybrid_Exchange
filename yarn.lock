@@ -5042,6 +5042,11 @@
     "path-type" "^4.0.0"
     "yaml" "^1.10.0"
 
+"country-state-city@^3.2.1":
+  "integrity" "sha512-kxbanqMc6izjhc/EHkGPCTabSPZ2G6eG4/97akAYHJUN4stzzFEvQPZoF8oXDQ+10gM/O/yUmISCR1ZVxyb6EA=="
+  "resolved" "https://registry.npmjs.org/country-state-city/-/country-state-city-3.2.1.tgz"
+  "version" "3.2.1"
+
 "crc-32@^1.2.0":
   "integrity" "sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ=="
   "resolved" "https://registry.npmjs.org/crc-32/-/crc-32-1.2.2.tgz"
