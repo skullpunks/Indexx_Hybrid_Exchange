@@ -25,8 +25,9 @@ export interface TokensObj {
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
     tokenType: number;
+    subtokenType: number;
 }
-const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
+const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType }) => {
     
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
@@ -53,21 +54,29 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
       
   useEffect(() => {
     if(tokenType === 2) {
-      const filtered = initialTokens.filter(item =>
-        item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
-        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-      );
-      setFilteredtokens(filtered);
-      
-      handleChange(filtered[0].address);
-      // setBSvalue(filtered[0]);
+      if(subtokenType === 0){
+        const filtered = initialTokens.filter(item =>
+          (item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+          item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())) &&
+          !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+        );
+        setFilteredtokens(filtered);
+        handleChange(filtered[0].address);
+        }
+        else if(subtokenType === 1){
+          const filtered = initialTokens.filter(item =>
+            item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+          );
+          setFilteredtokens(filtered);
+          handleChange(filtered[0].address);  
+        }
     }
 
     else if (tokenType === 1){
       const filtered = initialTokens.filter(item =>
         !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
-        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-
+        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase()) &&
+        !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
       );
       setFilteredtokens(filtered);
       handleChange(filtered[0].address);
@@ -77,7 +86,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
       setFilteredtokens(initialTokens);
       handleChange(initialTokens[0].address);
     }
-  }, [tokenType])
+  }, [tokenType, subtokenType])
   
 
     useEffect(() => {
@@ -325,7 +334,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
                             .map((token, index) => {
 
                                 return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} style={{paddingLeft : "15px", paddingRight : 0}}>
-                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" height="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                                 </Option>
                             })
                     }
@@ -337,8 +346,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType }) => {
             <div className="bs_token d-flex cursor-pointer py-4" style={{ alignItems: "center" }}>
                 <div className="bs_token_left d-flex justify-between">
 
-                    <div className="bs_token_num d-flex flex-align-center px-3" >
-                        <img src={bsDollar} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
+                    <div className="bs_token_num d-flex flex-align-center pe-3" style={{paddingLeft:"12px"}}>
+                        <img src={bsDollar} alt="Index icon" width="38"   style={{ marginRight: 11, }} />
                         USD  <span className="token_grey">US Dollar</span>
                     </div>
                 </div>

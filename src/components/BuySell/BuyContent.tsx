@@ -16,29 +16,39 @@ import { useNavigate, useParams } from 'react-router-dom';
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
   tokenType: number;
+  subtokenType: number;
 }
 
-const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
+const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [filteredtokens, setFilteredtokens] = useState(initialTokens);
   
   useEffect(() => {
     if(tokenType === 2) {
+      if(subtokenType === 0){
       const filtered = initialTokens.filter(item =>
-        item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
-        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
+        (item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())) &&
+        !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
       );
       setFilteredtokens(filtered);
-      
       handleChange(filtered[0].address);
+      }
+      else if(subtokenType === 1){
+        const filtered = initialTokens.filter(item =>
+          item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+        );
+        setFilteredtokens(filtered);
+        handleChange(filtered[0].address);  
+      }
     }
 
     else if (tokenType === 1){
       const filtered = initialTokens.filter(item =>
         !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
-        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-
+        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase()) &&
+        !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
       );
       setFilteredtokens(filtered);
       handleChange(filtered[0].address);
@@ -48,7 +58,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
       setFilteredtokens(initialTokens);
       handleChange(initialTokens[0].address);
     }
-  }, [tokenType])
+  }, [tokenType, subtokenType])
   
 
   const navigateUser = () => {
@@ -244,7 +254,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
               src={bsDollar}
               alt="Index icon"
               width="38"
-              height="38"
+               
               style={{ marginRight: 11 }}
             />
             USD <span className="token_grey">US Dollar</span>
@@ -282,7 +292,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
                           }
                           alt="IN500"
                           width="38"
-                          height="38"
+                          //  
                         />
                         <div className=" padding-l-1x d-flex flex-align-center">
                           {token.title}{' '}

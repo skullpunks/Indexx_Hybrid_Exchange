@@ -61,7 +61,7 @@ export const BSDepositFiatInfo = () => {
         </p>
         <div className="d-flex flex-align-center  padding-tb-4x border-t-1x flex-justify-between">
           <div className="d-flex flex-align-center">
-            <img src={bsDollar} alt="bsDollar" width="38" height="38" />
+            <img src={bsDollar} alt="bsDollar" width="38"   />
             <p className="font_28x padding-l-1x text-heavy">USD</p>
           </div>
           <p className="font_weight_800 font_28x text-heavy">

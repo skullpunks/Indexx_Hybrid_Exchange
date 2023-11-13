@@ -933,7 +933,9 @@ const HeaderNew = () => {
                       <div className="d-flex flex-row my-menu main-menu">
                         <div style={{ justifyContent: "center", fontSize: "13px" }}>
                           <div className="action-link-div" style={{ paddingBottom: "18px" }}>
-                            Explore Profile
+                            Explore {" "}
+                            {localStorage.getItem("userlogged") === 'normal' ? "" : "Hive"}{" "}
+                            Profile
                           </div>
                           <NavDropdown.Item href="/indexx-exchange/account" className="link-div">
                             <Link to="/indexx-exchange/account" className="link-style">

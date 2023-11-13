@@ -54,6 +54,8 @@ import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useParams } from 'react-router-dom';
 import { RankData } from '../../RankData';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const TeamCaptainDashIndividual = () => {
   const { id } = useParams();
@@ -130,6 +132,9 @@ const TeamCaptainDashIndividual = () => {
     navigator.clipboard.writeText(code);
     OpenNotification('success', 'Copied Successfully!');
   };
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   // Define a function to render a single Honey Bee box.
   const renderHoneyBeeBox = (item) => (
@@ -399,14 +404,15 @@ const TeamCaptainDashIndividual = () => {
         <><HoneyBeeComingSoon />
         </>
       } */}
-      <div style={{ paddingTop: "220px" }}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-484px" }}>
+      <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-484px"}`, textAlign: `${isMobile ? "center" : ""}`}}>
  
           Team Captain Bee {staticsData?.affiliateUserProfile?.accname} Dashboard
         </div>
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
+            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
           >
             <div className="d-flex flex-direction-column align-items-center mt-1 ps-4">
               <div
@@ -602,7 +608,7 @@ const TeamCaptainDashIndividual = () => {
 
               </div>
             </div>
-            <div className="side-container" style={{marginLeft:"10px"}}>
+            <div className="side-container" style={{marginLeft:`${isMobile ? "0" : "10px"}`, marginTop:`${isMobile ? "40px" : "0px"}`}}>
               <TeamCaptainTabs email={staticsData?.userFullData?.email}/>
             </div>
           </div>

@@ -163,7 +163,8 @@
 
 .stake-outlined-btn{
   border-color: var(--primary-color) !important;
-  color: var(--primary-color) !important;
+  color: var(--primary-color);
+  background-color: var(--body_background);
   border-radius: 2px;
   height: 44px;
   text-transform: none;
@@ -174,6 +175,7 @@
 .stake-outlined-btn:hover{
   border-color: var(--secondary-color) !important;
   color: var(--secondary-color) !important;
+  background-color: var(--body_background);
 }
 
 .staking-toggle .MuiToggleButtonGroup-grouped:not(:first-of-type){

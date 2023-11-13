@@ -21,15 +21,20 @@ import etf from '../../../assets/BSheader/etf logo 3.svg';
 import etf_white from '../../../assets/BSheader/etf white.svg';
 import wallet from '../../../assets/BSheader/funding wallet icon 1.svg';
 import wallet_white from '../../../assets/BSheader/funding wallet icon white 1.svg';
+import wallstreet from '../../../assets/BSheader/wall street icon 3 2.svg';
+import wallstreet_white from '../../../assets/BSheader/wall 4 1.svg';
+// import certif from '../../../assets/BSheader/stock cert white.svg';
+// import certif_white from '../../../assets/BSheader/cert icon.svg';
 
 import './TabExample.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery} from '@mui/material'
 import { getCaptainBeeStatics } from '../../../services/api';
+import SubTabs from './SubTabs';
 
 
-const TabExample = ({ selectedTab, handleTabChange }) => {
+const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTabChange }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
@@ -64,6 +69,10 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
 
   const [staticsData, setStaticsData] = useState();
   const [haspowerpack, setHaspowerpack] = useState(true);
+  // const handleClick = () => {
+  //   // console.log("clicked sdnj");
+  //   window.location.href='https://shop.indexx.ai/collections/indexx-stock-token-tickets';
+  // }
 
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
@@ -87,12 +96,13 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
     }
   }, [])
 
+  console.log(selectedTab, selectedSubTab, "main, sub");
   return (
     <div
       style={{
         top: `${isMobile ? '60px' : '90px'}`,        
       }}
-      className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === false ? "ext-tabs" :"other-tabs"}
+      className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === true ? "other-tabs" :"ext-tabs"}
     >
       <Tabs
         value={selectedTab}
@@ -174,20 +184,20 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
         />
 
         <Tab
-          label="Stock Tokens"
+          label="Wallstreet"
           icon={
             theme === "dark" ? 
-            <img src={stock_white} alt="Home" width={'50px'} 
-          style={{ marginBottom: 13, marginTop:6}}
+            <img src={wallstreet_white} alt="Home" width={'70px'} 
+          style={{ marginBottom: 16, marginTop:10}}
           />
           :
-          <img src={stock} alt="Home" width={'50px'} 
-          style={{ marginBottom: 13, marginTop:6}}
+          <img src={wallstreet} alt="Home" width={'70px'} 
+          style={{ marginBottom: 16, marginTop:10}}
           />}
           className='tab-format'
           disableTouchRipple
         />
-        <Tab
+        {/* <Tab
           label="ETF"
           icon={
             theme === "dark" ? 
@@ -209,7 +219,10 @@ const TabExample = ({ selectedTab, handleTabChange }) => {
           to='/indexx-exchange/coming-soon-etf'
           className='tab-format'
           disableTouchRipple
-        />
+        /> */}
+        {selectedTab === 2 && 
+          <SubTabs value={selectedSubTab} change={handleETFTabChange} theme={theme}/>
+        }
         <Tab
           label="Power Packs"
           icon={

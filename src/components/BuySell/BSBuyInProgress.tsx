@@ -5,6 +5,7 @@ import HiveInProgressClock from "../../assets/arts/new_arts/clock yellow hive.sv
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { getPaypalOrder } from '../../services/api';
+import CanStake from './Notification/CanStake';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -23,6 +24,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [outAmt, setoutAmt] = useState(0);
     const [, setToken] = useState("");
     const [tokenValue] = useSearchParams();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
@@ -40,6 +42,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                     if(orderData?.orderType == "Buy" || orderData?.orderType == "Sell" || orderData?.orderType == "Convert") {
                     setoutAmt(orderData.breakdown.outAmount)
                     setoutcurr(orderData.breakdown.outCurrencyName)
+                    setIsModalOpen(true);
                     } else {
                         navigate(`/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`);
                     }
@@ -87,6 +90,12 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/wallet")}> Go to Wallet</Button>
                 <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=buy" >New Buy</Link>
             </div>
+            <div>
+          <CanStake
+            isVisible={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </div>
         </div>
     )
 }

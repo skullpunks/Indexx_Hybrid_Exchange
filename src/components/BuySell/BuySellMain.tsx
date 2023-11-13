@@ -10,6 +10,8 @@ import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 import logo from "../../assets/arts/exchange logo_green 5.svg";
 import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
+import etf from "../../assets/BSheader/bescket-06 2.svg";
+import etf_light from "../../assets/BSheader/bescket-08 1.svg";
 import token from "../../assets/BSheader/token-12 2.svg";
 import stock_token from "../../assets/BSheader/Stock Token 2.svg";
 import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
@@ -63,6 +65,11 @@ import MetaStockTokenMarket from '../MarketAbout/MetaStockTokenMarket';
 import PespiCoStockTokenMarket from '../MarketAbout/PespiCoStockTokenMarket';
 import NvidiaStockTokenMarket from '../MarketAbout/NividaStockTokenMarket';
 import SNP500StockTokenMarket from '../MarketAbout/SNP500StockTokenMarket';
+import EqStocksETF from '../MarketAbout/EqStocksETF';
+import CryptoCapETF from '../MarketAbout/CryptoCapETF';
+import AlphaCryptoETF from '../MarketAbout/AlphaCryptoETF';
+import IndexxFocusETF from '../MarketAbout/IndexxFocusETF';
+import TokenBlendETF from '../MarketAbout/TokenBlendETF';
 import SolanaMarket from "../MarketAbout/SolanaMarket";
 import TronMarket from "../MarketAbout/TronMarket";
 import ChainLinkMarket from '../MarketAbout/ChainLinkMarket';
@@ -96,6 +103,11 @@ import IndexxPEPGraph from '../Graphs/IndexxPEPGraph';
 import IndexxTLSAGraph from '../Graphs/IndexxTSLAGraph';
 import IndexxBCMGraph from '../Graphs/IndexxBCMGraph';
 import IndexxSP500Graph from '../Graphs/IndexxSP500Graph';
+import IndexxEQSTKETFGraph from '../Graphs/IndexxEQSTKETFGraph';
+import IndexxALCRYPETFGraph from '../Graphs/IndexxALCRYPETFGraph';
+import IndexxTOBETFGraph from '../Graphs/IndexxTOBETFGraph';
+import IndexxINDXXFETFGraph from '../Graphs/IndexxINDXXFETFGraph';
+import IndexxCRYC10ETFGraph from '../Graphs/IndexxCRYC10ETFGraph';
 import TabExample from './BSHeader/TabExample';
 import { baseWSURL } from '../../services/api';
 
@@ -140,6 +152,11 @@ let graphs: any = {
   IndexxNVDAGraph: IndexxNVDAGraph,
   IndexxPEPGraph: IndexxPEPGraph,
   IndexxTLSAGraph: IndexxTLSAGraph,
+  IndexxEQSTKETFGraph: IndexxEQSTKETFGraph,
+  IndexxALCRYPETFGraph: IndexxALCRYPETFGraph,
+  IndexxCRYC10ETFGraph: IndexxCRYC10ETFGraph,
+  IndexxINDXXFETFGraph: IndexxINDXXFETFGraph,
+  IndexxTOBETFGraph: IndexxTOBETFGraph,
 };
 
 let markets: any = {
@@ -178,6 +195,11 @@ let markets: any = {
   IndexxNVDAGraph: NvidiaStockTokenMarket,
   IndexxPEPGraph: PespiCoStockTokenMarket,
   IndexxTLSAGraph: TelsaStockTokenMarket,
+  IndexxEQSTKETFGraph: EqStocksETF,
+  IndexxALCRYPETFGraph: AlphaCryptoETF,
+  IndexxCRYC10ETFGraph: CryptoCapETF,
+  IndexxINDXXFETFGraph: IndexxFocusETF,
+  IndexxTOBETFGraph: TokenBlendETF,
 };
 const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // const [status, setStatus] = useState("");
@@ -200,6 +222,25 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     }
   }, [hasEmail])
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+  useEffect(() => {
+    const handleStorageChange = (event:any) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+      if(window.location.pathname.includes("for-honeybee")){
+        setTheme("light")
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   // const tabKeyMap = {
   //   all: 0,
   //   token: 1,
@@ -208,54 +249,98 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   // };
 
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const handleTabChange = (event: any, newValue: number) => {
+  const [selectedSubTab, setSelectedSubTab] = useState(0);
+  
+  const handleETFTabChange = (event: any, newValue: number) => {
+    setSelectedSubTab(newValue);
+  };
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
 
+
+
   return (
     <div className="swap_container">
-      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} />
+      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange}  />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
           <p style={{ marginTop: 220, fontSize: 40 }}>
             <img src={logo} alt="logo" style={{marginRight:"20px"}}/>
             Indexx Exchange
-            {selectedTab === 1 ? <>
-              {" "}  - 
-              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
-              Tokens  
-            </>
-            : selectedTab === 2 ? <>
-             {" "}  - 
-              <img src={stock_token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
-              Stock Tokens  
-            </> :null}
+            {selectedTab === 1 && (
+              <>
+                {" "} - 
+                <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
+              </>
+            )}
+
+            {selectedTab === 2 && (
+              <>
+                {selectedSubTab === 0 && (
+                  <>
+                    {" "} - 
+                    <a href={baseWSURL}>
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                    </a>
+                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} /> Stock Tokens
+                  </>
+                )}
+
+                {selectedSubTab === 1 && (
+                  <>
+                    {" "} - 
+                    <a href={baseWSURL}>
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                    </a>
+                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} />
+                  </>
+                )}
+              </>
+            )}
+
           </p>
           :
-          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? "300px" : "220px"}`, fontSize: 40 }}>
+          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? "300px" : "280px"}`, fontSize: 40 }}>
             <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
             Hive Exchange
-            {selectedTab === 1 ? <>
-              {" "}  - 
-              <img src={token} alt="logo" style={{marginInline:"10px", width:"64px"}}/>  
-              Tokens  
-            </>
-            : selectedTab === 2 ? <>
-             {" "}  - 
-             <a href={baseWSURL}>
-             <img src={wallstreet} alt="logo" style={{marginLeft:"10px", width:"114px"}} className='walls'/>  
-             </a>
-              <img src={stock_token} alt="logo" style={{marginLeft:"-1px", marginRight:"10px", width:"64px"}}/>  
-              Stock Tokens  
-            </> :null}
+            {selectedTab === 1 && (
+              <>
+                {" "} - 
+                <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
+              </>
+            )}
+
+            {selectedTab === 2 && (
+              <>
+                {selectedSubTab === 0 && (
+                  <>
+                    {" "} - 
+                    <a href={baseWSURL}>
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                    </a>
+                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} /> Stock Tokens
+                  </>
+                )}
+
+                {selectedSubTab === 1 && (
+                  <>
+                    {" "} - 
+                    <a href={baseWSURL}>
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                    </a>
+                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} />
+                  </>
+                )}
+              </>
+            )}
             </p>
         }
         <p style={{ fontSize: 15, marginTop:"10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
 
 
-      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -120 }}>
+      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -140 }}>
 
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
@@ -272,7 +357,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         <Routes>
           <Route
             path=""
-            element={<BuySellIntro setScreenName={setScreenName} tokenType={selectedTab} />}
+            element={<BuySellIntro setScreenName={setScreenName} tokenType={selectedTab} subtokenType={selectedSubTab} />}
           />
           <Route
             path="confirm-purchase"

@@ -47,7 +47,7 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
       </div>
       <div className='card__body' >
         <div className="bs_token_num d-flex flex-align-center" >
-          <img src={require(`../../assets/arts/usd icon 1.svg`).default} alt="Index icon" width="38" height="38" style={{ marginRight: 11, }} />
+          <img src={require(`../../assets/arts/usd icon 1.svg`).default} alt="Index icon" width="38"   style={{ marginRight: 11, }} />
           USD  <span className="token_grey">US Dollar</span>
         </div>
         <div className="color_general" style={{ transform: "scale(1)", padding: "10px" }}>

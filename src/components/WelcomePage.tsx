@@ -20,7 +20,7 @@ const WelcomePage = () => {
                             indexx Orange</h3>
                         <h3>Centralized</h3>
                         <Button className='btn btn-small btn-danger'> Learn more</Button>
-                        {/* <img src={require(`../assets/arts/allCoins.png`).default} alt="IN500" width="38" height="38" /> */}
+                        {/* <img src={require(`../assets/arts/allCoins.png`).default} alt="IN500" width="38"   /> */}
                     </div>
                 </div>
             </div>
