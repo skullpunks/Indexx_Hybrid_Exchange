@@ -27,21 +27,19 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [tokenValue] = useSearchParams();
     const [subscriptionId] = useSearchParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    //https://cex.indexx.ai/indexx-exchange/buy-sell/buy-in-progress/?subscription_id=I-HDFPG5MCFD08&ba_token=BA-1CT07734VR294215A&token=6HD305731N213284V
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
         setIncurr(orderCurr)
         setInAmt(Number(orderAmount.get("orderAmount")));
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
-        //---Below commented code is for Paypal payments---
         setToken(String(tokenValue.get("token")));
         setSubscriptionId(String(subscriptionId.get("subscription_id")));
         if (subscriptionId.get("subscription_id") !== undefined && tokenValue.get("token") !== undefined) {
             getPaypalSubscription(String(subscriptionId.get('subscription_id'))).then((res) => {
                 if (res.status === 200) {
-                    let orderData = res.data.data;
-                    navigate(`/indexx-exchange/subscribe-success?subscriptionId=${orderData?.orderId}`);
+                    let subId = String(subscriptionId.get("subscription_id"));
+                    navigate(`/indexx-exchange/subscribe-success?subscription_id=${String(subId)}`);
                 }
             });
         } else if (tokenValue.get("token") !== undefined) {
