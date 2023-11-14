@@ -57,6 +57,21 @@ const API = axios.create({
 
 export default baseAPIURL;
 
+export function formatReadableDate(isoDate: string) {
+  const date = new Date(isoDate);
+  return date.toLocaleString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
+const formattedDate = formatReadableDate('2023-12-11T10:00:00Z');
+console.log(formattedDate); // Output: "December 11, 2023, 10:00 AM"
+
 export const signupAPI = async (
   email: string,
   password: string,
@@ -1059,7 +1074,7 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'AAPL') {
       oneUSDValue = 1 / coinValue;
-    }  else if (coinType === 'APPL') {
+    } else if (coinType === 'APPL') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'GOOGL') {
       oneUSDValue = 1 / coinValue;
@@ -1078,6 +1093,16 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
     } else if (coinType === 'SNP500') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'NVDA') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'EQSTK') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'CRYC10') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'ALCRYP') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'INDXXF') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'TOB') {
       oneUSDValue = 1 / coinValue;
     } else {
       oneUSDValue = 0.1;
@@ -1296,6 +1321,10 @@ export const createFiatWithdraw = async (
   swiftCode: string,
   addressLine1: string,
   addressLine2: string,
+  city: string,
+  state: string,
+  country: string,
+  zipCode: string,
   amount: string
 ) => {
   try {
@@ -1310,6 +1339,10 @@ export const createFiatWithdraw = async (
         swiftCode: swiftCode,
         addressLine1: addressLine1,
         addressLine2: addressLine2,
+        city: city,
+        state: state,
+        country: country,
+        zipCode: zipCode,
         coin: coin,
       }
     );

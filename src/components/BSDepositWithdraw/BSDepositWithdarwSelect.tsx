@@ -35,7 +35,7 @@ export const BSDepositWithdarwSelect = () => {
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
-          <span className='radio_text'>Bank Transfer(SWIFT) <br />
+          <span className='radio_text'>Bank Transfer <br />
             <span className='helper_text'>Fee: 5 USD, 2-5 Business days</span>
           </span></Radio>
         <Button type="primary">

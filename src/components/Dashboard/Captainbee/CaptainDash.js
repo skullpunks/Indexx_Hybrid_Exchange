@@ -49,7 +49,7 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery} from '@mui/material'
@@ -107,6 +107,7 @@ const CaptainDash = () => {
   const [rateData, setRateData] = useState();
   const [adminFee, setAdminFees] = useState('');
   const [loadings, setLoadings] = useState(false);
+  const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -158,6 +159,15 @@ const CaptainDash = () => {
     return;
   };
 
+
+  const handleCreateSubscription = () => {
+   
+  };
+
+  const handleCancelSubscription = () => {
+ 
+  };
+
   useEffect(() => {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
@@ -178,6 +188,10 @@ const CaptainDash = () => {
         } else {
           const getRank = RankData.find(x => x.name === "Bronze")
           setRankPhoto(getRank?.photo);
+        }
+        if(data?.data?.paypalSubscriptionDetails) {
+          setSubscription(data?.data?.paypalSubscriptionDetails);
+          console.log("subscription", data?.data?.paypalSubscriptionDetails)
         }
       });
     }
@@ -471,6 +485,47 @@ const CaptainDash = () => {
                     </div>
                   )}
                 </div>
+
+                {(subscription === null || subscription === undefined)?
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      You do not have an active Monthly $300 INEX subscription
+                    </div>
+                    <div>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCreateSubscription}
+                      >
+                       Please subscribe now
+                      </Button>
+                    </div>
+                  </div>)
+                  :
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      Your Monthly $300 INEX Purchase Subscription Details
+                    </div>
+                    <div className="font_13x mt-3">
+                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                    </div>
+                    <div className="font_13x">
+                      Status: {subscription?.paypalSubscriptionDetails?.status}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                    </div>
+                    <div>
+                      <Button
+                        type="danger"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCancelSubscription}
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div>
+                  </div>)
+                }
               </div>
               <div className="side-container" style={{marginTop:`${isMobile ? "65px": "0px"}`}}>
                 <Box
