@@ -95,6 +95,7 @@ import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResou
 import Footer from "./components/Footer/Footer";
 import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
 import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
+import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -175,9 +176,10 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew /> 
-        { !window.location.pathname.includes("login") && !window.location.pathname.includes("dashboard") &&
-          !window.location.pathname.includes("get-started") && 
+        { (!window.location.pathname.includes("login") && !window.location.pathname.includes("dashboard") &&
+          !window.location.pathname.includes("get-started") && !((localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) && window.location.pathname === "/")) ? 
           <PowerPackHeader/>
+          :null
         }
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
@@ -211,6 +213,7 @@ function App() {
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
+          <Route path="/indexx-exchange/subscribe-success" element={<SubscribeSuccess />} />
 
           <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
           <Route path="/indexx-exchange/bridge" element={<Bridge />} />

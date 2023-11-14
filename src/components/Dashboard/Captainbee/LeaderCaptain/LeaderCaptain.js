@@ -140,12 +140,15 @@ const LeaderCaptain = () => {
           <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
             <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "295px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
-              <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: `${isMobile ? "auto" : "1150px"}` }}>
-                <div style={{ width: "74%" }}>
+              <div className='font_20x fw-bold justify-content-center align-items-center d-flex' 
+              style={{ width: `${isMobile ? "100%" : "1150px"}`,
+              flexDirection:`${isMobile ? "column" : "row"}`
+               }}>
+                <div style={{ width: `${isMobile ? "100%" : "74%"}` }}>
                   <img src={hat} alt="hat" style={{marginRight:"10px"}} />
                   Leader Captain Bee’s  Dashboard
                 </div>
-                <div className='d-flex justify-content-between' style={{ width: "29.5%" }}>
+                <div className='d-flex justify-content-between' style={{ width: `${isMobile ? "83%" : "29.5%"}`, marginTop: `${isMobile ? "20px" : "0"}` }}>
 
                   <Button
                     variant="outlined"
@@ -196,14 +199,14 @@ const LeaderCaptain = () => {
               </div>
             </div>
 
-            <div className="hive-container">
+            <div className="hive-container justify-content-center">
               <div
                 className="d-flex justify-content-between"
                 style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
               // style={{ width: '76%', maxWidth: '1140px' }}
               >
-                <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" :"16%"}` }}>
-                  <div className="d-flex  flex-direction-row align-items-center">
+                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" :"16%"}` }}>
+                  <div className="d-flex  flex-direction-row align-items-center"  style={{marginLeft:`${isMobile ? "35px": "0px"}`}}>
 
                     <div className="d-flex  flex-direction-column align-items-center">
                       <div
@@ -278,22 +281,22 @@ const LeaderCaptain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
+                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x"  style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                     Leader Captain {captainBeeData?.Username}
                   </div>
-                  <div className="font_10x mb-3 lh_32x align-items-start">
+                  <div className="font_10x mb-3 lh_32x align-items-start"  style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                     Leader Captain Bee of Captain Willie’s Team
                   </div>
                   {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                     (<div className="justify-content-center d-flex">
-                      <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                      <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                     </div>) : (
                       <div className="justify-content-start d-flex">
                         Leader has not purchased any powerpack.
                       </div>
                     )
                   }
-                  <div className="align-items-start lh_32x">
+                  <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                     <div className="font_13x d-flex align-items-center mt-4">
                       {theme === "dark" ?
                         <img alt="man" src={man_dark} className="me-1" />
@@ -348,7 +351,7 @@ const LeaderCaptain = () => {
                   }
                   </div>
 
-                  <div className="align-items-start lh_32x mt-4">
+                  <div className="align-items-start lh_32x mt-4" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                     <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                       <img alt="Discord" src={discord} className="me-3" />
                     </a>
@@ -395,7 +398,7 @@ const LeaderCaptain = () => {
                     </div>
 
                   </div>
-                  <div className="d-flex  flex-direction-column align-items-start mt-5">
+                  <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
                     <div className="font_13x ">
                       Your Rating
                     </div>
@@ -407,7 +410,7 @@ const LeaderCaptain = () => {
                     </div>
                   </div>
                 </div>
-                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}` }}>
+                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}`, marginTop:`${isMobile ? "65px": "0px"}`}}>
                   <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
                 </div>
               </div>

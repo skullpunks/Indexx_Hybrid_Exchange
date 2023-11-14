@@ -919,7 +919,7 @@ const HeaderNew = () => {
                       </div>
                       }
                       <div style={{
-                        color: "#FFB300"
+                        color: "var(--primary-color)"
                       }}>
 
                         {title}

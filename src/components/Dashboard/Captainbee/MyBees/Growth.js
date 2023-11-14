@@ -8,6 +8,8 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { getHoneyBeeDataByUsername } from '../../../../services/api';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const Growth = () => {
     const [platform, setPlatform] = useState('Exchange');
@@ -38,12 +40,16 @@ const Growth = () => {
         
       });
     }, [id])
+    
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   return (
     <div style={{paddingTop:"10px"}}>
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection:`${isMobile ? "column" : "row"}`,
                 gap: 2,
                 mt:2
               }}
@@ -53,7 +59,7 @@ const Growth = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 2,
-                  width: '50%',
+                  width:`${isMobile ? "100%" : "50%"}`,
                 }}
               >
                 <Box

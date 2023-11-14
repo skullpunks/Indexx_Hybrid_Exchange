@@ -29,6 +29,9 @@ import BeeTabs from './BeeTabs';
 import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../services/api';
 import { useParams } from 'react-router-dom';
 import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndividual';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
+
 const BeeDash = () => {
   const { id, userType } = useParams();
 
@@ -36,6 +39,9 @@ const BeeDash = () => {
   const [captainBeeData, setCaptainBeeData] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
   const [staticsData, setStaticsData] = useState();
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
 
@@ -71,14 +77,15 @@ const BeeDash = () => {
     <>
       <SubHeader />
       {userType === "HoneyBee" ?
-        (<div style={{ paddingTop: "220px" }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-422px" }}>
+        (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-422px"}` }}>
             {userType === "CaptainBee" ? "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" : "Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
           </div>
           <div className="hive-container">
             <div
               className="d-flex justify-content-between"
             // style={{ width: '86%', maxWidth: '1140px' }}
+            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
             >
               <div className="d-flex flex-direction-column align-items-center mt-1">
                 <div className="d-flex  flex-direction-row align-items-center">

@@ -11,10 +11,15 @@ import stack_white from '../../../assets/BSheader/satking icon white.svg';
 import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
 import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
-import etf from '../../../assets/BSheader/etf logo 3.svg';
-import etf_white from '../../../assets/BSheader/etf white.svg';
+// import etf from '../../../assets/BSheader/etf logo 3.svg';
+// import etf_white from '../../../assets/BSheader/etf white.svg';
 import wallet from '../../../assets/BSheader/funding wallet icon 1.svg';
 import wallet_white from '../../../assets/BSheader/funding wallet icon white 1.svg';
+// import wallstreet from '../../../assets/BSheader/wall street icon 3 2.svg';
+// import wallstreet_white from '../../../assets/BSheader/wall 4 1.svg';
+// import stock from '../../../assets/BSheader/Stock token icon_black.svg';
+// import stock_white from '../../../assets/BSheader/Stock token bnw 3.svg';
+
 import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
@@ -27,6 +32,12 @@ const PowerPackHeader = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
+
+  // const [isActive, setIsActive] = useState(false);
+
+  // const handleActive = () =>{
+  //   setIsActive(!isActive);
+  // }
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -109,32 +120,86 @@ const PowerPackHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col">
-        <Link to="/indexx-exchange/coming-soon-etf">
+        
+        {/* <div className="col" onClick={handleActive}>
             <div className="card">
             {theme === "dark" ? 
-            <img src={etf_white} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+            <img src={wallstreet_white} className="card-img-top mt-2 mb-1" alt="..." style={{width:"75px", borderRadius:0}}/>
             :
-            <img src={etf} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+            <img src={wallstreet} className="card-img-top mt-2 mb-1" alt="..." style={{width:"75px", borderRadius:0}}/>
             }
             <div className="card-body">
-                <h5 className="card-title mt-1">ETF</h5>
-            <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/coming-soon-etf'
-                    ? {
-                      height: '0.07px',
-                      width: '59px',
-                      backgroundColor: 'var(--body_color)',
-                    }
-                    : null
+                <h5 className="card-title mt-1">Wallstreet</h5>
+                { isActive &&              
+                  <Typography
+                      component='p'
+                      style={{
+                            height: '0.07px',
+                            width: '59px',
+                            backgroundColor: 'var(--body_color)',
+                          }}
+                    ></Typography>
                 }
-              ></Typography>
             </div>
             </div>
-        </Link>
         </div>
+        {isActive && 
+          <>
+            <div className="col" style={{opacity:0.6}}>
+            <Link to="/indexx-exchange/buy-sell">
+                <div className="card">
+                {theme === "dark" ? 
+                <img src={stock_white} className="card-img-top mt-1 mb-1" alt="..." style={{width:"51.5px", borderRadius:0}}/>
+                :
+                <img src={stock} className="card-img-top mt-1 mb-1" alt="..." style={{width:"51.5px", borderRadius:0}}/>
+                }
+                <div className="card-body">
+                    <h5 className="card-title mt-1">Stock Tokens</h5>
+                <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/buy-sell'
+                        ? {
+                          height: '0.07px',
+                          width: '59px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
+                    }
+                  ></Typography>
+                </div>
+                </div>
+            </Link>
+            </div>
+
+            <div className="col" style={{opacity:0.6}}>
+            <Link to="/indexx-exchange/buy-sell">
+                <div className="card">
+                {theme === "dark" ? 
+                <img src={etf_white} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+                :
+                <img src={etf} className="card-img-top" alt="..." style={{width:"51.5px"}}/>
+                }
+                <div className="card-body">
+                    <h5 className="card-title mt-1">ETF</h5>
+                <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/buy-sell'
+                        ? {
+                          height: '0.07px',
+                          width: '59px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
+                    }
+                  ></Typography>
+                </div>
+                </div>
+            </Link>
+            </div>
+          </>
+        } */}
         <div className="col">
         <Link to="/indexx-exchange/power-pack">
             <div className="card">

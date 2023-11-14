@@ -168,6 +168,12 @@
       max-width: 100%;
     }
 
+    .honeybee-container{
+      width: 100%;
+      /* max-width: 100%; */
+      padding: 10px;
+    }
+
   }
 
   .atn-btn-hover {
