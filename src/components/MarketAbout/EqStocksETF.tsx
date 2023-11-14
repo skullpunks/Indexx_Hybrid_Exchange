@@ -11,8 +11,13 @@ const EqStocksETF = () => {
     const [data, setData] = useState() as any;
     const [aboutData, setAboutData] = useState() as any;
     useEffect(() => {
-        stockMarketsData("AAPL").then((res) => {
-            let requiredData = res.data;
+        // stockMarketsData("EQSTK").then((res) => {
+        //     let requiredData = res.data;
+        //     setData(requiredData);
+        // });
+        marketsData().then((res) => {
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "EQSTK");
+            console.log("requiredData",requiredData)
             setData(requiredData);
         });
       const allDetails = ETFData.filter((item) => item.symbol === "EQSTK")[0];
@@ -35,20 +40,6 @@ const EqStocksETF = () => {
                         color: 'var(--body_color)',
                     }}
                 >
-                    {/* "Name": "Apple Inc",
-        "Symbol": "AAPL",
-        "Price": "176.63499",
-        "Volume": "10635921",
-        "Change": "-0.48172",
-        "Change24H": "-0.48172",
-        "Change7D": "-0.48172",
-        "IUSDPrice": 178.4191818181818,
-        "BTCPrice": "176.63499",
-        "MarketCap": "$316.67B",
-        "CirculatingSupply": "18.63M",
-        "LowPrice": "175.80499",
-        "HighPrice": "177.36000",
-        "Favourite": false */}
                     <Panel
                         showArrow={false}
                         style={{ backgroundColor: 'var(--body_background)', fontSize: 30, color: '' }}
@@ -124,7 +115,7 @@ const EqStocksETF = () => {
                                 {aboutData?.desc}
                             </p>
                             <p style={{ fontSize: 25, fontWeight:"bold", marginBottom:25 }}>Components of {aboutData?.name} </p>
-                            <ETFComponentsTable symbol={"EQSTK"} />
+                            <ETFComponentsTable symbol={"EQSTK"} data={data}/>
                         </div>
                     </Panel>
                 </Collapse>

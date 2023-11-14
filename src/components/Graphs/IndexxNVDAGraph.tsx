@@ -208,9 +208,12 @@ const IndexxNVDAGraph = () => {
                         />
                         <YAxis
                             stroke="#5f5f5f"
+                            padding={{ top: 20 }}
                             tick={{ fill: '#5f5f5f' }}
                             domain={['auto', 'auto']}
-                            hide={true}
+                            // remove this line or set it to false
+                            // hide={true} 
+                            minTickGap={90}
                         />
                         <Tooltip
                             // className={styles.customTooltip}

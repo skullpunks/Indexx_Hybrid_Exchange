@@ -49,10 +49,10 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
@@ -108,6 +108,7 @@ const CaptainDash = () => {
   const [adminFee, setAdminFees] = useState('');
   const [loadings, setLoadings] = useState(false);
   const [subscription, setSubscription] = useState(null);
+  const [checkSubscription, setCheckSubscription] = useState(null);
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -160,12 +161,36 @@ const CaptainDash = () => {
   };
 
 
-  const handleCreateSubscription = () => {
-   
+  const handleCreateSubscription = async () => {
+    try {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
+      if (res.status === 200) {
+        console.log("res", res);
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes("approve")) {
+            window.location.href = res.data.links[i].href;
+          }
+        }
+      } else {
+        console.log("something went wrong");
+      }
+    } catch (err) {
+      console.log("err", err)
+    }
   };
 
-  const handleCancelSubscription = () => {
- 
+  const handleCancelSubscription = async () => {
+    try {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await cancelMonthlyINEXsubscription(decoded.email, subscription?.paypalSubscriptionDetails?.id, "Cancelling the subscription");
+      console.log("Res", res);
+
+    } catch (err) {
+      console.log("err", err)
+    }
   };
 
   useEffect(() => {
@@ -174,30 +199,37 @@ const CaptainDash = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
-        } else {
-          setPowerPackPhoto(undefined);
-        }
-        if (data?.data?.affiliateUserProfile?.rank) {
-          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-          setRankPhoto(getRank?.photo);
-        } else {
-          const getRank = RankData.find(x => x.name === "Bronze")
-          setRankPhoto(getRank?.photo);
-        }
-        if(data?.data?.paypalSubscriptionDetails) {
-          setSubscription(data?.data?.paypalSubscriptionDetails);
-          console.log("subscription", data?.data?.paypalSubscriptionDetails)
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+          if (data?.data?.paypalSubscriptionDetails) {
+            setSubscription(data?.data?.paypalSubscriptionDetails);
+            console.log("subscription", data?.data?.paypalSubscriptionDetails)
+            const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+            console.log("hasValidSubscription", hasValidSubscription)
+            setCheckSubscription(hasValidSubscription);
+            //paypalSubscriptionDetails":{"paypalSubscriptionDBData":null}
+          }
+        });
+      }
     }
     getAllSetting();
     getPricesData();
   }, [])
+
 
 
   const [theme, setTheme] = useState(
@@ -258,8 +290,8 @@ const CaptainDash = () => {
           <div className="hive-container">
             <div
               className="d-flex justify-content-between"
-            // style={{ width: '74%', maxWidth: '1140px' }}
-            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
+              // style={{ width: '74%', maxWidth: '1140px' }}
+              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
             >
               <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "17%"}` }}>
                 <div className="d-flex  flex-direction-column align-items-center">
@@ -304,14 +336,14 @@ const CaptainDash = () => {
                     />
                   </div>
                 </div>
-                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{justifyContent:`${isMobile ? "center" : "start"}`}}>
+                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
                 {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                   (<div className="justify-content-center d-flex">
                     <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                   </div>) : (
-                  <div className="justify-content-center d-flex flex-direction-column" style={{marginLeft:`${isMobile ? "40px" : 0}`}}>
+                    <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
                       Please purchase the powerpack from the below URL: <br />
                       <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                         Power Pack Purchase
@@ -319,9 +351,9 @@ const CaptainDash = () => {
                     </div>
                   )
                 }
-                <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
 
-                {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+                  {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
@@ -382,7 +414,7 @@ const CaptainDash = () => {
                   }
                 </div>
 
-                <div className="align-items-start lh_32x mt-4" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                     {theme === "dark" ?
                       <img alt="man" src={discord_dark} className="me-3" />
@@ -414,7 +446,7 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start  mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                <div className="d-flex flex-direction-column align-items-start  mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div>
                     <span className='fw-bold'>
                       Invite Honey Bee :
@@ -446,7 +478,7 @@ const CaptainDash = () => {
                   </div>
                 </div>
 
-                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
                     Your Rating
                   </div>
@@ -458,7 +490,7 @@ const CaptainDash = () => {
                   </div>
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
                     Next Monthly INEX Order Deadline
                   </div>
@@ -466,10 +498,10 @@ const CaptainDash = () => {
                     {staticsData?.nextPurchaseDate}
                   </div>
                   <div className="font_20x mt-3">
-                    Time Remaining:
+                    {timeRemaining.days > 0 ? "Time Remaining:" : ""}
                     <br />
                     {timeRemaining.days > 0 && `${timeRemaining.days} days `}
-                    {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s
+                    {timeRemaining.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
                   </div>
                   {timeRemaining.days < 15 && (
                     <div>
@@ -486,7 +518,7 @@ const CaptainDash = () => {
                   )}
                 </div>
 
-                {(subscription === null || subscription === undefined)?
+                {(!subscription?.paypalSubscriptionDBData) ?
                   (<div className="d-flex flex-direction-column align-items-start mt-5">
                     <div className="font_20x">
                       You do not have an active Monthly $300 INEX subscription
@@ -497,7 +529,7 @@ const CaptainDash = () => {
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
                         onClick={handleCreateSubscription}
                       >
-                       Please subscribe now
+                        Please subscribe now
                       </Button>
                     </div>
                   </div>)
@@ -527,7 +559,7 @@ const CaptainDash = () => {
                   </div>)
                 }
               </div>
-              <div className="side-container" style={{marginTop:`${isMobile ? "65px": "0px"}`}}>
+              <div className="side-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -550,7 +582,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width:`${isMobile ? "100%" : "50%"}`,
+                        width: `${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography
@@ -876,7 +908,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width:`${isMobile ? "100%" : "50%"}`,
+                        width: `${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography

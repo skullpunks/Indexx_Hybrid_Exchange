@@ -3,7 +3,7 @@ import { Button, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainPermissions = ({ email }) => {
 
@@ -33,16 +33,18 @@ const TeamCaptainPermissions = ({ email }) => {
     // }
     // else 
     if (userTypel === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        console.log("in else if in persmssopn",data?.data)
-        let captainbeePermissions = data?.data?.captainBeeRegisteredRequiredData;
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          console.log("in else if in persmssopn", data?.data)
+          let captainbeePermissions = data?.data?.captainBeeRegisteredRequiredData;
 
-        let c = captainbeePermissions.find(x => x.username === id);
-        console.log("captainbeePermissions", captainbeePermissions, c)
+          let c = captainbeePermissions.find(x => x.username === id);
+          console.log("captainbeePermissions", captainbeePermissions, c)
 
-        setPermissionData(c)
-      });
+          setPermissionData(c)
+        });
+      }
     } else {
 
       getHoneyUserDetails(user).then((data) => {
@@ -71,7 +73,7 @@ const TeamCaptainPermissions = ({ email }) => {
   return (
     <div >
       <div className='pt-2' style={{ background: "#FFB300" }}></div>
-      <div className="pt-4 pb-5" style={{ background: "white", paddingInline:`${isMobile ? '20px' : '45px'}` }}>
+      <div className="pt-4 pb-5" style={{ background: "white", paddingInline: `${isMobile ? '20px' : '45px'}` }}>
 
         <div className="font_15x fw-bold">
           Permissions given by TEAM CaptainBee {permissionData?.username} to  LEADER captainbee {staticsData?.affiliateUserProfile?.Username}
@@ -99,7 +101,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width:  `${isMobile ? '100%' : '217px'}`,   
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -134,7 +136,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width:  `${isMobile ? '100%' : '217px'}`,   
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -169,7 +171,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width:  `${isMobile ? '100%' : '217px'}`,   
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',

@@ -181,10 +181,12 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   }, []);
 
   useEffect(() => {
-    getCaptainBeeStatics(String(id)).then((data) => {
-      console.log("Data2", data?.data?.userFullData?.email);
-      setCaptainbeeEmail(data?.data?.userFullData?.email);
-    });
+    if (id) {
+      getCaptainBeeStatics(String(id)).then((data) => {
+        console.log("Data2", data?.data?.userFullData?.email);
+        setCaptainbeeEmail(data?.data?.userFullData?.email);
+      });
+    }
   }, [captainbeesEmail])
 
   const getCommissionHistory = async () => {
@@ -247,18 +249,18 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       <div className="border-b-1x margin-b-2x pt-3">
         <Table<CommissionDataType>
           className="custom_table2"
-          style={{maxWidth:"94vw"}}
+          style={{ maxWidth: "94vw" }}
           columns={topcolumns}
           dataSource={commissionPaidData}
-          scroll={{x:true}}
+          scroll={{ x: true }}
         />
         <Table
           className="custom_table"
-          style={{maxWidth:"94vw"}}
+          style={{ maxWidth: "94vw" }}
           columns={columns}
           dataSource={getData(current, pageSize)}
           onChange={onChange}
-          scroll={{x:true}}
+          scroll={{ x: true }}
         />
         <MyPagination
           total={sortedData && sortedData.length}

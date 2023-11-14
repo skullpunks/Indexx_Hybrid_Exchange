@@ -30,7 +30,7 @@ import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../ser
 import { useParams } from 'react-router-dom';
 import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndividual';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const BeeDash = () => {
   const { id, userType } = useParams();
@@ -51,9 +51,11 @@ const BeeDash = () => {
       setHoneyBeeEmail(data?.data?.userFullData?.email);
       setCaptainBeeData(data?.data?.referredUserData?.data2);
     });
-    getCaptainBeeStatics(id).then((data) => {
-      setStaticsData(data.data);
-    });
+    if (id) {
+      getCaptainBeeStatics(id).then((data) => {
+        setStaticsData(data.data);
+      });
+    }
   }, [id])
 
   const [theme, setTheme] = useState(
@@ -84,8 +86,8 @@ const BeeDash = () => {
           <div className="hive-container">
             <div
               className="d-flex justify-content-between"
-            // style={{ width: '86%', maxWidth: '1140px' }}
-            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
+              // style={{ width: '86%', maxWidth: '1140px' }}
+              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
             >
               <div className="d-flex flex-direction-column align-items-center mt-1">
                 <div className="d-flex  flex-direction-row align-items-center">

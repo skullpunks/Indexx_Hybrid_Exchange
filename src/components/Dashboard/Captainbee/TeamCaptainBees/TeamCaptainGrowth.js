@@ -10,7 +10,7 @@ import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/
 import CommissionTable from '../CommissionTable';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainGrowth = () => {
   const { id } = useParams();
@@ -66,13 +66,14 @@ const TeamCaptainGrowth = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(id).then((data) => {
-        setStaticsData(data.data);
-        console.log("Data", data?.data);
-        console.log("Data", data?.data.userFullData?.email);
-        setCaptainbeeEmail(data?.data?.userFullData?.email);
-      });
-      console.log("I am if")
+      if (id) {
+        getCaptainBeeStatics(id).then((data) => {
+          setStaticsData(data.data);
+          console.log("Data", data?.data);
+          console.log("Data", data?.data.userFullData?.email);
+          setCaptainbeeEmail(data?.data?.userFullData?.email);
+        });
+      }
     } else {
       console.log("I am else")
 
@@ -106,7 +107,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width:`${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -432,7 +433,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width:`${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -702,28 +703,28 @@ const TeamCaptainGrowth = () => {
                   }
                 </Typography>
                 <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
-                          >
-                            Total Commision Earned in INEX
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
-                              : '0.00')
-                            } {" "}
-                            <span className='font_17x'>
-                            INEX
-                            </span>
-                          </Typography>
+                  variant="text"
+                  fontSize={isMobile ? '10px' : '12px'}
+                  fontWeight={600}
+                  textAlign={'left'}
+                  alignSelf={'flex-start'}
+                >
+                  Total Commision Earned in INEX
+                </Typography>
+                <Typography
+                  variant="text"
+                  fontSize={isMobile ? '25px' : '50px'}
+                  fontWeight={600}
+                  textAlign={'left'}
+                >
+                  {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                    : '0.00')
+                  } {" "}
+                  <span className='font_17x'>
+                    INEX
+                  </span>
+                </Typography>
                 <Typography
                   variant="text"
                   fontSize={'22px'}
@@ -761,7 +762,7 @@ const TeamCaptainGrowth = () => {
         </Box>
 
         <Box>
-          <CommissionTable leaderEmail={captainbeesEmail}/>
+          <CommissionTable leaderEmail={captainbeesEmail} />
         </Box>
       </Box>
     </div>

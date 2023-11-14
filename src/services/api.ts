@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -68,9 +68,6 @@ export function formatReadableDate(isoDate: string) {
     hour12: true,
   });
 }
-
-const formattedDate = formatReadableDate('2023-12-11T10:00:00Z');
-console.log(formattedDate); // Output: "December 11, 2023, 10:00 AM"
 
 export const signupAPI = async (
   email: string,
@@ -701,6 +698,58 @@ export const getCoinPriceByName = async (
     const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
       type: type,
     });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getCoinPriceByName)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createMonthlyINEXsubscription = async (
+  email: string,
+  currencyIn: string,
+  currencyOut: string,
+  amount: string,
+  outAmount: string,
+  orderType: string
+) => {
+  try {
+    const result = await API.post(
+      `/api/v1/inex/order/createMonthlyINEXsubscription`,
+      {
+        email: email,
+        currencyIn: currencyIn,
+        currencyOut: currencyOut,
+        amount: amount,
+        outAmount: outAmount,
+        orderType: orderType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getCoinPriceByName)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const cancelMonthlyINEXsubscription = async (
+  email: string,
+  subscriptionId: string,
+  reason: string
+) => {
+  try {
+    const result = await API.post(
+      `/api/v1/inex/order/cancelMonthlyINEXsubscription`,
+      {
+        email: email,
+        subscriptionId: subscriptionId,
+        reason: reason,
+      }
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (getCoinPriceByName)');
@@ -1451,6 +1500,18 @@ export const getOrderDetails = async (email: string, orderId: string) => {
 export const getPaypalOrder = async (token: string) => {
   try {
     const result = await API.get(`/api/v1/inex/user/getPaypalOrder/${token}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getPaypalOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getPaypalSubscription = async (subscriptionId: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getPaypalSubscription/${subscriptionId}`);
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (getPaypalOrder)');

@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -54,27 +54,29 @@ const CaptainProfile = () => {
     setUserType(userType);
 
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username, "yes").then((data) => {
-        setStaticsData(data.data);
-        const profile = data.data.affiliateUserProfile || {};
-        const socialMediaLink = profile.socialMediaLink || {};
-        const fullUserData = data.data.userFullData || {};
-        setFirstname(profile.firstname || '');
-        setLastname(profile.lastname || '');
-        setPhoto(profile.photoIdFileurl || '');
-        setPhone(profile.Phone || '');
-        setReferralCode(fullUserData.referralCode || '');
-        setAccname(profile.accname || '');
-        setDiscord(socialMediaLink.discord || '');
-        setInsta(socialMediaLink.instagram || '');
-        setLinkedin(socialMediaLink.linkedin || '');
-        setTwitter(socialMediaLink.twitter || '');
-        setEmail(profile.Email || '');
-        setUsername(profile.Username || '');
-        setUseEmail(profile.isEmailPublic || false);
-        setUsePhone(profile.isPhonePublic || false);
-        setBio(profile.PublicBio || '');
-      });
+      if (username) {
+        getCaptainBeeStatics(username, "yes").then((data) => {
+          setStaticsData(data.data);
+          const profile = data.data.affiliateUserProfile || {};
+          const socialMediaLink = profile.socialMediaLink || {};
+          const fullUserData = data.data.userFullData || {};
+          setFirstname(profile.firstname || '');
+          setLastname(profile.lastname || '');
+          setPhoto(profile.photoIdFileurl || '');
+          setPhone(profile.Phone || '');
+          setReferralCode(fullUserData.referralCode || '');
+          setAccname(profile.accname || '');
+          setDiscord(socialMediaLink.discord || '');
+          setInsta(socialMediaLink.instagram || '');
+          setLinkedin(socialMediaLink.linkedin || '');
+          setTwitter(socialMediaLink.twitter || '');
+          setEmail(profile.Email || '');
+          setUsername(profile.Username || '');
+          setUseEmail(profile.isEmailPublic || false);
+          setUsePhone(profile.isPhonePublic || false);
+          setBio(profile.PublicBio || '');
+        });
+      }
     }
   }, [])
 
@@ -298,7 +300,7 @@ const CaptainProfile = () => {
                       variant="text"
                       fontSize={isMobile ? '12px' : '15px'}
                       fontWeight={400}
-                      width={isMobile ? '47%' :'55.8%'}
+                      width={isMobile ? '47%' : '55.8%'}
                       textAlign={'left'}
                       mt={'7px'}
                     >
@@ -316,7 +318,7 @@ const CaptainProfile = () => {
                             setUseEmail(false)
                           }
                         }}
-                        style={{marginLeft:0, marginRight:"-8px"}}
+                        style={{ marginLeft: 0, marginRight: "-8px" }}
                       />
                     </FormGroup>
                   </Box>
@@ -418,7 +420,7 @@ const CaptainProfile = () => {
                       variant="text"
                       fontSize={isMobile ? '12px' : '15px'}
                       fontWeight={400}
-                      width={isMobile ? '47%' :'55.8%'}
+                      width={isMobile ? '47%' : '55.8%'}
                       textAlign={'left'}
                       mt={'7px'}
                     >
@@ -436,7 +438,7 @@ const CaptainProfile = () => {
                             setUsePhone(false)
                           }
                         }}
-                        style={{marginLeft:0, marginRight:"-8px"}}
+                        style={{ marginLeft: 0, marginRight: "-8px" }}
                       />
                     </FormGroup>
                   </Box>

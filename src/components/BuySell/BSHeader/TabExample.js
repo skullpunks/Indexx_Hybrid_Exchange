@@ -29,7 +29,7 @@ import wallstreet_white from '../../../assets/BSheader/wall 4 1.svg';
 import './TabExample.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 import { getCaptainBeeStatics } from '../../../services/api';
 import SubTabs from './SubTabs';
 
@@ -48,23 +48,23 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
     const handleStorageChange = (event) => {
       console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
-      if(window.location.pathname.includes("for-honeybee")){
+      if (window.location.pathname.includes("for-honeybee")) {
         setTheme("light")
       }
     };
 
     window.addEventListener('storage', handleStorageChange);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
 
   useEffect(() => {
-      if(window.location.pathname.includes("for-honeybee")){
-        setTheme("light")
-      }
-    },[]);
+    if (window.location.pathname.includes("for-honeybee")) {
+      setTheme("light")
+    }
+  }, []);
 
 
   const [staticsData, setStaticsData] = useState();
@@ -81,18 +81,20 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
     setUserType(userType);
     if (userType === "CaptainBee") {
       setisCaptain(true);
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
-          setHaspowerpack(true);
-          localStorage.setItem('haspp', true);
-        }
-        else{
-          setHaspowerpack(false);
-          localStorage.setItem('haspp', false);
-          setTheme("light")
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "") {
+            setHaspowerpack(true);
+            localStorage.setItem('haspp', true);
+          }
+          else {
+            setHaspowerpack(false);
+            localStorage.setItem('haspp', false);
+            setTheme("light")
+          }
+        });
+      }
     }
   }, [])
 
@@ -100,31 +102,31 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
   return (
     <div
       style={{
-        top: `${isMobile ? '60px' : '90px'}`,        
+        top: `${isMobile ? '60px' : '90px'}`,
       }}
-      className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === true ? "other-tabs" :"ext-tabs"}
+      className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === true ? "other-tabs" : "ext-tabs"}
     >
       <Tabs
         value={selectedTab}
         onChange={handleTabChange}
         centered
         aria-label="icon label tabs example"
-        style={{marginTop:"6px"}}
+        style={{ marginTop: "6px" }}
         className='tabs-tab'
-        // variant='scrollable'
+      // variant='scrollable'
       >
-      {localStorage.getItem("userlogged") === 'normal' ?
-      <Tab
-          label="Exchange"
-          icon=
-            {theme === "dark" ? 
+        {localStorage.getItem("userlogged") === 'normal' ?
+          <Tab
+            label="Exchange"
+            icon=
+            {theme === "dark" ?
               <img
                 src={all_white}
                 alt="Home"
                 width={'40px'}
                 style={{ marginBottom: 10 }}
               />
-            :
+              :
               <img
                 src={all}
                 alt="Home"
@@ -132,22 +134,22 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
                 style={{ marginBottom: 10 }}
               />
             }
-          
+
             className='tab-format'
             disableTouchRipple
-        />
+          />
           :
           <Tab
-          label="Hive Exchange"
-          icon=
-            {theme === "dark" ? 
+            label="Hive Exchange"
+            icon=
+            {theme === "dark" ?
               <img
                 src={hive_all_white}
                 alt="Home"
                 width={'40px'}
                 style={{ marginBottom: 10 }}
               />
-            :
+              :
               <img
                 src={hive_all}
                 alt="Home"
@@ -155,29 +157,29 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
                 style={{ marginBottom: 10 }}
               />
             }
-          
+
             className='tab-format'
             disableTouchRipple
-        />
+          />
         }
-        
+
         <Tab
           label="Tokens"
           icon={
-            theme === "dark" ? 
-            <img
-              src={token_white}
-              alt="Home"
-              width={'42px'}
-              style={{ marginBottom: 10 }}
-            />
-            :
-            <img
-              src={token}
-              alt="Home"
-              width={'42px'}
-              style={{ marginBottom: 10 }}
-            />
+            theme === "dark" ?
+              <img
+                src={token_white}
+                alt="Home"
+                width={'42px'}
+                style={{ marginBottom: 10 }}
+              />
+              :
+              <img
+                src={token}
+                alt="Home"
+                width={'42px'}
+                style={{ marginBottom: 10 }}
+              />
           }
           className='tab-format'
           disableTouchRipple
@@ -186,14 +188,14 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
         <Tab
           label="Wallstreet"
           icon={
-            theme === "dark" ? 
-            <img src={wallstreet_white} alt="Home" width={'70px'} 
-          style={{ marginBottom: 16, marginTop:10}}
-          />
-          :
-          <img src={wallstreet} alt="Home" width={'70px'} 
-          style={{ marginBottom: 16, marginTop:10}}
-          />}
+            theme === "dark" ?
+              <img src={wallstreet_white} alt="Home" width={'70px'}
+                style={{ marginBottom: 16, marginTop: 10 }}
+              />
+              :
+              <img src={wallstreet} alt="Home" width={'70px'}
+                style={{ marginBottom: 16, marginTop: 10 }}
+              />}
           className='tab-format'
           disableTouchRipple
         />
@@ -220,124 +222,124 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
           className='tab-format'
           disableTouchRipple
         /> */}
-        {selectedTab === 2 && 
-          <SubTabs value={selectedSubTab} change={handleETFTabChange} theme={theme}/>
+        {selectedTab === 2 &&
+          <SubTabs value={selectedSubTab} change={handleETFTabChange} theme={theme} />
         }
         <Tab
           label="Power Packs"
           icon={
-            theme === "dark" ? 
+            theme === "dark" ?
               <img
                 src={power_white}
                 alt="Home"
                 width={'63px'}
                 style={{ marginBottom: "11px" }}
               />
-            :
-            <img
-              src={power}
-              alt="Home"
-              width={'63px'}
-              style={{ marginBottom: "11px" }}
-            />
+              :
+              <img
+                src={power}
+                alt="Home"
+                width={'63px'}
+                style={{ marginBottom: "11px" }}
+              />
           }
           component={Link}
           to='/indexx-exchange/power-pack'
           className='tab-format'
           disableTouchRipple
         />
-      {localStorage.getItem("userlogged") === 'normal' ?
+        {localStorage.getItem("userlogged") === 'normal' ?
 
+          <Tab
+            label="Staking"
+            icon={
+              theme === "dark" ?
+                <img
+                  src={stack_white}
+                  alt="Home"
+                  width={'45px'}
+                  style={{ marginBottom: "10px" }}
+                />
+                :
+                <img
+                  src={stack}
+                  alt="Home"
+                  width={'45px'}
+                  style={{ marginBottom: "10px" }}
+                />
+            }
+            component={Link}
+            to='/indexx-exchange/buy-sell/staking'
+            className='tab-format'
+            disableTouchRipple
+          />
+          :
+          <Tab
+            label="Nectar/Staking"
+            icon={
+              theme === "dark" ?
+                <img
+                  src={nectar_white}
+                  alt="Home"
+                  width={'40px'}
+                  style={{ marginBottom: "6px" }}
+                />
+                :
+                <img
+                  src={nectar}
+                  alt="Home"
+                  width={'40px'}
+                  style={{ marginBottom: "6px" }}
+                />
+            }
+            component={Link}
+            to='/indexx-exchange/buy-sell/staking'
+            className='tab-format'
+            disableTouchRipple
+          />
+        }
+        {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
+          <Tab
+            label="Waggle Dance"
+            icon={
+              theme === "dark" ?
+                <img
+                  src={waggle_white}
+                  alt="Home"
+                  width={'55px'}
+                  style={{ marginBottom: "15px" }}
+                />
+                :
+                <img
+                  src={waggle}
+                  alt="Home"
+                  width={'55px'}
+                  style={{ marginBottom: "15px" }}
+                />
+            }
+            component={Link}
+            to='/indexx-exchange/dashboard'
+            className='tab-format'
+            disableTouchRipple
+          />
+          : null}
         <Tab
-          label="Staking"
-          icon={
-            theme === "dark" ? 
-              <img
-                src={stack_white}
-                alt="Home"
-                width={'45px'}
-                style={{ marginBottom: "10px" }}
-              />
-            :
-            <img
-              src={stack}
-              alt="Home"
-              width={'45px'}
-              style={{ marginBottom: "10px" }}
-            />
-          }
-          component={Link}
-          to='/indexx-exchange/buy-sell/staking'
-          className='tab-format'
-          disableTouchRipple
-        />
-        :
-        <Tab
-          label="Nectar/Staking"
-          icon={
-            theme === "dark" ? 
-              <img
-                src={nectar_white}
-                alt="Home"
-                width={'40px'}
-                style={{ marginBottom: "6px" }}
-              />
-            :
-            <img
-              src={nectar}
-              alt="Home"
-              width={'40px'}
-              style={{ marginBottom: "6px" }}
-            />
-          }
-          component={Link}
-          to='/indexx-exchange/buy-sell/staking'
-          className='tab-format'
-          disableTouchRipple
-        />
-      }
-      {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
-        <Tab
-          label="Waggle Dance"
-          icon={
-            theme === "dark" ? 
-              <img
-                src={waggle_white}
-                alt="Home"
-                width={'55px'}
-                style={{ marginBottom: "15px" }}
-              />
-            :
-            <img
-              src={waggle}
-              alt="Home"
-              width={'55px'}
-              style={{ marginBottom: "15px" }}
-            />
-          }
-          component={Link}
-          to='/indexx-exchange/dashboard'
-          className='tab-format'
-          disableTouchRipple
-        />
-      :null}
-      <Tab
           label="Funding Wallet"
           icon={
-            theme === "dark" ? 
+            theme === "dark" ?
               <img
                 src={wallet_white}
                 alt="Home"
                 width={'45px'}
                 style={{ marginBottom: "15px" }}
               />
-            :
-            <img
-              src={wallet}
-              alt="Home"
-              width={'45px'}
-              style={{ marginBottom: "15px" }}
-            />
+              :
+              <img
+                src={wallet}
+                alt="Home"
+                width={'45px'}
+                style={{ marginBottom: "15px" }}
+              />
           }
           component={Link}
           to='/indexx-exchange/buy-sell/wallet'
