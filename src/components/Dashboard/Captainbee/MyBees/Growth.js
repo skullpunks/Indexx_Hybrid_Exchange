@@ -62,7 +62,7 @@ const Growth = () => {
                   width:`${isMobile ? "100%" : "50%"}`,
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -109,7 +109,6 @@ const Growth = () => {
                       size="small"
                       disableUnderline
                     >
-                      {/* <MenuItem value="">Select Platform</MenuItem> */}
                       <MenuItem key="Exchange" value="Exchange">
                         Indexx Exchange
                       </MenuItem>
@@ -209,24 +208,8 @@ const Growth = () => {
                       </MenuItem>
                     </Select>
 
-                    {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                   </Box>
-                </Box>
+                </Box> */}
                 <Box
                   sx={{
                     display: 'flex',
@@ -251,7 +234,7 @@ const Growth = () => {
                       fontSize={'12px'}
                       fontWeight={600}
                       textAlign={'left'}
-                      pr={"50%"}
+                      alignSelf={'flex-start'}
                     >
                       Total Honey Bees/Users
                     </Typography>
@@ -296,7 +279,7 @@ const Growth = () => {
                       fontSize={'12px'}
                       fontWeight={600}
                       textAlign={'left'}
-                      pr={"70%"}
+                      alignSelf={'flex-start'}
                     >
                       Total Orders
                     </Typography>
@@ -325,7 +308,7 @@ const Growth = () => {
                     </Typography>
                   </Box>
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     background: 'var(--body_background)',
                     color:"var(--body_color)",
@@ -344,7 +327,7 @@ const Growth = () => {
                       color:"var(--body_color)"
                     }}
                   />
-                </Box>
+                </Box> */}
               </Box>
 
               <Box

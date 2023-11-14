@@ -196,7 +196,7 @@ const BeeDash = () => {
                 </div>
 
               </div>
-              <div className="honeybee-container">
+              <div className="honeybee-container" style={{marginTop:`${isMobile ? "65px": "0px"}`}}>
                 <BeeTabs honeyBeeEmail={honeyBeeEmail} />
               </div>
             </div>
