@@ -32,7 +32,7 @@ const BeeWalletTop = () => {
         //     }
         //     setTotalBalanceInUSD(totalBalInUSD)
         // });
-    });
+    }, []);
 
 
 
