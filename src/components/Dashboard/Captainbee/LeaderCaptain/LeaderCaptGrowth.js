@@ -114,7 +114,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
             >
               My Honey Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -161,7 +161,6 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -261,24 +260,8 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   </MenuItem>
                 </Select>
 
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',
@@ -421,7 +404,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
             >
               My Captain Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -468,7 +451,6 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -567,25 +549,8 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                     August-September
                   </MenuItem>
                 </Select>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',

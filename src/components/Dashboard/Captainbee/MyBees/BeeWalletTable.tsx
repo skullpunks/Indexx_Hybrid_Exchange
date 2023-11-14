@@ -138,7 +138,7 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
                 multiple: 5,
             },
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
 
     ];
@@ -255,7 +255,11 @@ const BeeWalletTable: React.FC<(BeeWalletTableProps)> = ({ BeeEmail }) => {
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange}
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}
+
+                        />
                         <MyPagination
                             total={sortedData && sortedData.length}
                             current={current}
