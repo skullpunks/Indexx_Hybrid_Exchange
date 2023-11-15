@@ -446,7 +446,7 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start  mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div>
                     <span className='fw-bold'>
                       Invite Honey Bee :
@@ -497,13 +497,13 @@ const CaptainDash = () => {
                   <div className="font_20x mt-3">
                     {staticsData?.nextPurchaseDate}
                   </div>
-                  <div className="font_20x mt-3">
-                    {timeRemaining.days > 0 ? "Time Remaining:" : ""}
+                  {/* <div className="font_20x mt-3">
+                    {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
                     <br />
-                    {timeRemaining.days > 0 && `${timeRemaining.days} days `}
-                    {timeRemaining.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
-                  </div>
-                  {timeRemaining.days < 15 && (
+                    {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
+                    {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
+                  </div> */}
+                  {timeRemaining?.days < 15 && (
                     <div>
                       <Button
                         type="primary"
@@ -536,7 +536,7 @@ const CaptainDash = () => {
                   :
                   (<div className="d-flex flex-direction-column align-items-start mt-5">
                     <div className="font_20x">
-                      Your Monthly $300 INEX Purchase Subscription Details
+                      Your Monthly $300 INEX Investment Subscription Details
                     </div>
                     <div className="font_13x mt-3">
                       Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
@@ -547,15 +547,16 @@ const CaptainDash = () => {
                     <div className="font_13x">
                       Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
                     </div>
-                    <div>
+                    {/* <div>
                       <Button
                         type="danger"
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
                         onClick={handleCancelSubscription}
+
                       >
                         Cancel Subscription
                       </Button>
-                    </div>
+                    </div> */}
                   </div>)
                 }
               </div>
