@@ -380,7 +380,8 @@ export const BSWithdarwCryptoContent = () => {
             >
               {initialTokens
                 .filter(
-                  (token) => token.title !== 'BTC' && token.title !== 'LTC'
+                  (token) => token.title !== 'SOL' && token.title !== 'MATIC' && token.title !== 'DOT' && 
+                  token.title !== 'SOL' && token.title !== 'LTC' && token.title !== 'DOGE' && token.title !== 'XRP'
                 )
                 .map((token, index) => {
                   return (
