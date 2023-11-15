@@ -53,7 +53,7 @@ import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainDash = () => {
   const [userType, setUserType] = useState("");
@@ -75,16 +75,18 @@ const TeamCaptainDash = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        console.log(data?.data);
-        setStaticsData(data.data);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
-        } else {
-          setPowerPackPhoto(undefined);
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          console.log(data?.data);
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+        });
+      }
       console.log("I am if")
     } else {
       console.log("I am else")
@@ -150,7 +152,7 @@ const TeamCaptainDash = () => {
           >
             <div
               className="bee-hexagon"
-              // style={{ marginBottom: '7px' }}
+            // style={{ marginBottom: '7px' }}
             >
               <img
                 alt=""
@@ -265,7 +267,7 @@ const TeamCaptainDash = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
-        <img src={greyman} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
+          <img src={greyman} alt="man" style={{ zIndex: 1, width: "80px", height: "80px" }} />
 
           <Box
             className=" d-flex justify-content-center"
@@ -316,7 +318,7 @@ const TeamCaptainDash = () => {
               boxShadow: 'none',
               transition: "0.3s ease-in-out",
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
+                borderColor: '#E1E1E1', // Grey border color
               },
             }}
           >
@@ -340,7 +342,7 @@ const TeamCaptainDash = () => {
               transition: "0.3s ease-in-out",
               ml: 0.3,
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
+                borderColor: '#E1E1E1', // Grey border color
               },
             }}
           >
@@ -356,26 +358,25 @@ const TeamCaptainDash = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
+        (<div style={{ paddingTop: `${isMobile ? "250px" : "220px"}` }}>
           {/* {---} */}
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
-            {availableBeesCount === 0 ? <>
-              Please invite the Captain Bees using this {" "}
-              <a href={`${
-              baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode
-              }`}
-               className='hive_link'>
-              referral link
-              </a>
-              {" "} to guide them. 
-            </>
-            :
-            <>
-              These are the Captain Bees that are part of your Hex Colony. Select one to guide them
-            </>}
+            <div style={{ width: `${isMobile ? "95%" : "30%"}`, textAlign: "center" }}>
+              {availableBeesCount === 0 ? <>
+                Please invite the Captain Bees using this {" "}
+                <a href={`${baseHiveURL +
+                  "/sign-up?referral=" +
+                  staticsData?.userFullData?.referralCode
+                  }`}
+                  className='hive_link'>
+                  referral link
+                </a>
+                {" "} to guide them.
+              </>
+                :
+                <>
+                  These are the Captain Bees that are part of your Hex Colony. Select one to guide them
+                </>}
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -383,7 +384,7 @@ const TeamCaptainDash = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
-                flexDirection: `${isMobile? "column" : "row"}`,
+                flexDirection: `${isMobile ? "column" : "row"}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,

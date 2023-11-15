@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/token-icons/APPL.png';
-import { marketsData, stockMarketsData } from '../../services/api';
+import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 import ETFComponentsTable from '../ETFComponentsTable/ETFComponentsTable';
 import { ETFData } from './ETFData';
@@ -11,8 +11,14 @@ const TokenBlendETF = () => {
     const [data, setData] = useState() as any;
     const [aboutData, setAboutData] = useState() as any;
     useEffect(() => {
-        stockMarketsData("AAPL").then((res) => {
-            let requiredData = res.data;
+        // stockMarketsData("TOB").then((res) => {
+        //     let requiredData = res.data;
+        //     console.log("res.data", requiredData);
+        //     setData(requiredData);
+        // });
+        marketsData().then((res) => {
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "TOB");
+            console.log("requiredData",requiredData)
             setData(requiredData);
         });
       const allDetails = ETFData.filter((item) => item.symbol === "TOB")[0];
@@ -124,7 +130,7 @@ const TokenBlendETF = () => {
                                 {aboutData?.desc}
                             </p>
                             <p style={{ fontSize: 25, fontWeight:"bold", marginBottom:25 }}>Components of {aboutData?.name} </p>
-                            <ETFComponentsTable symbol={"TOB"} />
+                            <ETFComponentsTable symbol={"TOB"} data={data}/>
                         </div>
                     </Panel>
                 </Collapse>

@@ -11,8 +11,13 @@ const AlphaCryptoETF = () => {
     const [data, setData] = useState() as any;
     const [aboutData, setAboutData] = useState() as any;
     useEffect(() => {
-        stockMarketsData("AAPL").then((res) => {
-            let requiredData = res.data;
+        // stockMarketsData("ALCRYP").then((res) => {
+        //     let requiredData = res.data;
+        //     setData(requiredData);
+        // });
+        marketsData().then((res) => {
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "ALCRYP");
+            console.log("requiredData",requiredData)
             setData(requiredData);
         });
       const allDetails = ETFData.filter((item) => item.symbol === "ALCRYP")[0];
@@ -124,7 +129,7 @@ const AlphaCryptoETF = () => {
                                 {aboutData?.desc}
                             </p>
                             <p style={{ fontSize: 25, fontWeight:"bold", marginBottom:25 }}>Components of {aboutData?.name} </p>
-                            <ETFComponentsTable symbol={"ALCRYP"} />
+                            <ETFComponentsTable symbol={"ALCRYP"} data={data}/>
                         </div>
                     </Panel>
                 </Collapse>

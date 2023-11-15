@@ -1,8 +1,26 @@
 import { Box, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import man from "../../assets/man paint 1.svg";
+import { formatReadableDate, getPaypalSubscription } from '../../services/api';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const SubscribeSuccess = () => {
+
+  const [paypalSubscriptionId, setPaypalSubscriptionId] = useState("");
+  const [subscriptionId] = useSearchParams();
+  const [paypalSubscriptionData , setPaypalSubscriptionData] = useState();
+
+  useEffect(() => {
+    setPaypalSubscriptionId(String(subscriptionId.get("subscription_id")));
+    if (subscriptionId.get("subscription_id") !== undefined) {
+      getPaypalSubscription(String(subscriptionId.get("subscription_id"))).then((res) => {
+        if (res.status === 200) {
+            setPaypalSubscriptionData(res.data.data)
+        }
+    });
+    }
+  }, [subscriptionId])
 
   return (
     <Box mt={18}>
@@ -26,7 +44,10 @@ const SubscribeSuccess = () => {
           Subscription Plan: $300 Monthly Purchase
         </Typography>
         <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
-          Next Billing Date :  {"date"}
+         Subscription Id :  {paypalSubscriptionId}
+        </Typography>
+        <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
+          Next Billing Date :  {formatReadableDate(paypalSubscriptionData?.paypalSubscriptionData?.billing_info?.next_billing_time)}
         </Typography>
         <Box
           sx={{

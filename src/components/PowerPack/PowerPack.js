@@ -41,7 +41,7 @@ const PowerPack = () => {
 
         <Box sx={{ textAlign: "center" }}>
           <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
-            Power Pack
+          Investor's Power Pack
           </Typography>
         </Box>
 

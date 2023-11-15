@@ -17,7 +17,7 @@ import './ETFComponentsTable.css';
 import { useTheme } from '@emotion/react';
 import { ETFData } from '../MarketAbout/ETFData';
 
-const ETFComponentsTable = ({ symbol }) => {
+const ETFComponentsTable = ({ symbol, data }) => {
   const [sorted, setsorted] = useState([]);
   const [allInfo, setAllInfo] = useState([]);
   // const [fdata, setFdata] = useState([]);
@@ -30,10 +30,23 @@ const ETFComponentsTable = ({ symbol }) => {
 
   useEffect(() => {
     const allDetails = ETFData.filter((item) => item.symbol === symbol)[0];
-    console.log(allDetails.components, 'all');
-    setAllInfo(allDetails);
-    setsorted(allDetails.components);
-  }, [symbol]);
+    // console.log(allDetails.components, 'all');
+    // setAllInfo(allDetails);
+    // setsorted(allDetails.components);
+
+    if (allDetails && data?.allStockPrice) {
+      const updatedComponents = allDetails.components.map(component => {
+        const stockPriceInfo = data.allStockPrice.find(stock => stock.symbol === component.symbol);
+        return {
+          ...component,
+          market_value: stockPriceInfo?.price || component.market_value,
+          percentage_value: stockPriceInfo?.weightedPrice || component.percentage_value
+        };
+      });
+      setAllInfo({ ...allDetails, components: updatedComponents });
+      setsorted(updatedComponents);
+    }
+  }, [symbol, data]);
 
   console.log(sorted, 'sorted');
 
@@ -137,20 +150,19 @@ const ETFComponentsTable = ({ symbol }) => {
                     gap: isMobile ? 0.8 : 2,
                   }}
                 >
-                  <Box 
+                  <Box
                   // width={isMobile ? '15px' : '60px'}
                   >
                     <img
                       src={collection.image}
                       alt="image"
                       style={{
-                        width: `${
-                          isMobile
-                            ? '15px'
-                            : collection?.type.includes('Stock')
+                        width: `${isMobile
+                          ? '15px'
+                          : collection?.type.includes('Stock')
                             ? '70px'
                             : '35px'
-                        }`,
+                          }`,
                       }}
                     />
                   </Box>
@@ -168,15 +180,32 @@ const ETFComponentsTable = ({ symbol }) => {
                 {collection.asset_class}
               </TableCell>
               <TableCell style={{ textDecoration: 'none' }}>
-                $ {Math.floor(collection.market_value * 10000) / 10000}{' '}
-                <span
-                  style={{
-                    fontSize: `${isMobile ? '6px' : '10px'}`,
-                    opacity: '0.9',
-                  }}
-                >
-                  USD
-                </span>
+                $ {
+                  collection?.market_value < 0.0001 ?
+                    <>
+                      {(collection.market_value.toFixed(8))}{' '}
+                      <span
+                        style={{
+                          fontSize: `${isMobile ? '6px' : '10px'}`,
+                          opacity: '0.9',
+                        }}
+                      >
+                        USD
+                      </span>
+                    </> :
+                    <>
+                      {collection.market_value.toFixed(2)}{' '}
+                      <span
+                        style={{
+                          fontSize: `${isMobile ? '6px' : '10px'}`,
+                          opacity: '0.9',
+                        }}
+                      >
+                        USD
+                      </span>
+                    </>
+                }
+
               </TableCell>
               <TableCell style={{ textDecoration: 'none' }}>
                 {collection.percentage}%

@@ -21,10 +21,11 @@ const Permissions = () => {
     
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        
+      if (username) {
+      getCaptainBeeStatics(username).then((data) => {        
         setStaticsData(data.data);
       });
+    }
     } else {
       
       getHoneyUserDetails(user).then((data) => {

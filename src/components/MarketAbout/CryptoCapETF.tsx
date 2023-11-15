@@ -11,11 +11,16 @@ const CryptoCapETF = () => {
     const [data, setData] = useState() as any;
     const [aboutData, setAboutData] = useState() as any;
     useEffect(() => {
-        stockMarketsData("AAPL").then((res) => {
-            let requiredData = res.data;
+        // stockMarketsData("CRYC10").then((res) => {
+        //     let requiredData = res.data;
+        //     setData(requiredData);
+        // });
+        marketsData().then((res) => {
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "CRYC10");
+            console.log("requiredData", requiredData)
             setData(requiredData);
         });
-      const allDetails = ETFData.filter((item) => item.symbol === "CRYC10")[0];
+        const allDetails = ETFData.filter((item) => item.symbol === "CRYC10")[0];
         setAboutData(allDetails);
     }, []);
     return (
@@ -119,12 +124,12 @@ const CryptoCapETF = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={aboutData?.small_logo}></Image><br />
-                            <p style={{ fontSize: 20, marginBottom:20 }}>{aboutData?.name} </p>
-                            <p style={{ fontSize: 15, lineHeight: 2, marginBottom:40 }}>
+                            <p style={{ fontSize: 20, marginBottom: 20 }}>{aboutData?.name} </p>
+                            <p style={{ fontSize: 15, lineHeight: 2, marginBottom: 40 }}>
                                 {aboutData?.desc}
                             </p>
-                            <p style={{ fontSize: 25, fontWeight:"bold", marginBottom:25 }}>Components of {aboutData?.name} </p>
-                            <ETFComponentsTable symbol={"CRYC10"} />
+                            <p style={{ fontSize: 25, fontWeight: "bold", marginBottom: 25 }}>Components of {aboutData?.name} </p>
+                            <ETFComponentsTable symbol={"CRYC10"} data={data} />
                         </div>
                     </Panel>
                 </Collapse>

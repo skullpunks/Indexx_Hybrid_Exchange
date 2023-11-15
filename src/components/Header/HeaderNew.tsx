@@ -102,7 +102,7 @@ const HeaderNew = () => {
   const [haspowerpack, setHaspowerpack] = useState(false);
 
   console.log(haspowerpack, "has pack");
-  
+
   let pageName = searchParams.get("page");
   // alert(pageName)
   useEffect(() => {
@@ -134,15 +134,15 @@ const HeaderNew = () => {
 
     if (userType === "CaptainBee") {
       setisCaptain(true);
-
-      getCaptainBeeStatics(String(username)).then((data) => {
-
-        setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
-        setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== ""){
-          setHaspowerpack(true);
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(String(username)).then((data) => {
+          setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "") {
+            setHaspowerpack(true);
+          }
+        });
+      }
     } else {
       setisCaptain(false);
 
@@ -159,7 +159,7 @@ const HeaderNew = () => {
   useEffect(() => {
     let access_token = String(localStorage.getItem("access_token"));
     console.log("access", access_token);
-    if (access_token) { 
+    if (access_token) {
       try {
         let decoded = decodeJWT(access_token);
         const userEmail = decoded.email;
@@ -181,10 +181,10 @@ const HeaderNew = () => {
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
   useEffect(() => {
     const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
-    const handleStorageChange = (event:any) => {
+    const handleStorageChange = (event: any) => {
       // console.log(event);
-      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
-      setUserLogged(event.currentTarget.localStorage.userlogged);
+      if (setUserLogged !== event.currentTarget.localStorage.userlogged)
+        setUserLogged(event.currentTarget.localStorage.userlogged);
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -237,11 +237,11 @@ const HeaderNew = () => {
               <NavDropdown title="Platforms" id="basic-nav-dropdown" className="my-menu" renderMenuOnMount={true}>
                 <div className="main-div"
                 //  style={{ width: "200vw" }}
-                 >
+                >
 
                   <div className="black-div"
                   // style={{ height: "26px", background: "black" }}
-                  >  
+                  >
                   </div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
@@ -881,42 +881,42 @@ const HeaderNew = () => {
                     <div className="d-flex align-items-center justify-content-center" >
                       {localStorage.getItem("userlogged") !== 'normal' &&
 
-                      <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
+                        <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
 
-                        <div
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            backgroundImage: `url(${isCaptain === true ? frame : beeframe})`,
-                            // backgroundImage: `url(${frame})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                            backgroundPosition: 'center',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            // border:"none"
-                          }}
-                        >
                           <div
-                            className="bee-hexagon"
-                            style={{ marginBottom: `${isCaptain === true ? 0 : "7px"}` }}
+                            style={{
+                              width: '80px',
+                              height: '80px',
+                              backgroundImage: `url(${isCaptain === true ? frame : beeframe})`,
+                              // backgroundImage: `url(${frame})`,
+                              backgroundRepeat: 'no-repeat',
+                              backgroundSize: 'contain',
+                              backgroundPosition: 'center',
+                              position: 'relative',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              alignSelf: 'center',
+                              // border:"none"
+                            }}
                           >
-                            <img
-                              alt=""
-                              src={userProfile ? userProfile : dummy}
-                              width={'63px'}
-                              height={'66px'}
-                              style={{
-                                border: "none"
-                              }}
-                            />
+                            <div
+                              className="bee-hexagon"
+                              style={{ marginBottom: `${isCaptain === true ? 0 : "7px"}` }}
+                            >
+                              <img
+                                alt=""
+                                src={userProfile ? userProfile : dummy}
+                                width={'63px'}
+                                height={'66px'}
+                                style={{
+                                  border: "none"
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
                       }
                       <div style={{
                         color: "var(--primary-color)"
@@ -926,7 +926,7 @@ const HeaderNew = () => {
                       </div>
                     </div>
 
-                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{minWidth:"353px"}}>
+                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{ minWidth: "353px" }}>
                     <div style={{ width: "200vw", marginBottom: "-10px" }}>
 
                       <div style={{ height: "16px", background: "black" }}></div>
@@ -949,12 +949,12 @@ const HeaderNew = () => {
                           </NavDropdown.Item>
                           {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) &&
 
-                          <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
-                            <Link to="/indexx-exchange/dashboard" className="link-style">
-                              Waggle Dance / Dashboard
-                            </Link>
-                          </NavDropdown.Item>
-}
+                            <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
+                              <Link to="/indexx-exchange/dashboard" className="link-style">
+                                Waggle Dance / Dashboard
+                              </Link>
+                            </NavDropdown.Item>
+                          }
                           <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
                             <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="link-style">
                               Deposit
@@ -1061,9 +1061,9 @@ const HeaderNew = () => {
                         </div>
                       </div>
                       {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
-                          <div className="back profile-back"> </div>
+                        <div className="back profile-back"> </div>
                         :
-                          <div className="back profile-back" style={{top:"548px"}}> </div>
+                        <div className="back profile-back" style={{ top: "548px" }}> </div>
                       }
                     </div>
                   </NavDropdown>

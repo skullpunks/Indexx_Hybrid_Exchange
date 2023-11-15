@@ -55,7 +55,7 @@ import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useParams } from 'react-router-dom';
 import { RankData } from '../../RankData';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainDashIndividual = () => {
   const { id } = useParams();
@@ -75,23 +75,25 @@ const TeamCaptainDashIndividual = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(id).then((data) => {
-        console.log("teamcaptaindash",data?.data);
-        setStaticsData(data.data);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
-        } else {
-          setPowerPackPhoto(undefined);
-        }
-        if (data?.data?.affiliateUserProfile?.rank) {
-          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-          setRankPhoto(getRank?.photo);
-        } else {
-          const getRank = RankData.find(x => x.name === "Bronze")
-          setRankPhoto(getRank?.photo);
-        }
-      });
+      if (id) {
+        getCaptainBeeStatics(id).then((data) => {
+          console.log("teamcaptaindash", data?.data);
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+        });
+      }
       console.log("I am if")
     } else {
       console.log("I am else")
@@ -160,7 +162,7 @@ const TeamCaptainDashIndividual = () => {
           >
             <div
               className="bee-hexagon"
-              // style={{ marginBottom: '7px' }}
+            // style={{ marginBottom: '7px' }}
             >
               <img
                 alt=""
@@ -275,7 +277,7 @@ const TeamCaptainDashIndividual = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column">
         <div className="d-flex align-items-center">
-        <img src={greyman} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
+          <img src={greyman} alt="man" style={{ zIndex: 1, width: "80px", height: "80px" }} />
 
           <Box
             className=" d-flex justify-content-center"
@@ -326,7 +328,7 @@ const TeamCaptainDashIndividual = () => {
               boxShadow: 'none',
               transition: "0.3s ease-in-out",
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
+                borderColor: '#E1E1E1', // Grey border color
               },
             }}
           >
@@ -350,7 +352,7 @@ const TeamCaptainDashIndividual = () => {
               transition: "0.3s ease-in-out",
               ml: 0.3,
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
+                borderColor: '#E1E1E1', // Grey border color
               },
             }}
           >
@@ -405,14 +407,14 @@ const TeamCaptainDashIndividual = () => {
         </>
       } */}
       <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-484px"}`, textAlign: `${isMobile ? "center" : ""}`}}>
- 
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-484px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
+
           Team Captain Bee {staticsData?.affiliateUserProfile?.accname} Dashboard
         </div>
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
-            style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
+            style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
           >
             <div className="d-flex flex-direction-column align-items-center mt-1 ps-4">
               <div
@@ -450,7 +452,7 @@ const TeamCaptainDashIndividual = () => {
                     position: 'absolute',
                     bottom: '-25px',
                     right: '17px',
-                    width: '79px', 
+                    width: '79px',
                     height: '81px',
                   }}
                 />
@@ -490,7 +492,7 @@ const TeamCaptainDashIndividual = () => {
                       :
                       <img alt="man" src={pin} className="me-2" />
                     }
-                    {staticsData?.affiliateUserProfile?.country? staticsData?.affiliateUserProfile?.country :" NA"}
+                    {staticsData?.affiliateUserProfile?.country ? staticsData?.affiliateUserProfile?.country : " NA"}
                   </div>
                   <div className="font_13x d-flex align-items-center">
                     {theme === "dark" ?
@@ -564,31 +566,31 @@ const TeamCaptainDashIndividual = () => {
 
                 <div className="d-flex flex-direction-column align-items-start mt-5">
                   <div>
-                  <span className='fw-bold'>
-                    Invite Honey Bee : 
+                    <span className='fw-bold'>
+                      Invite Honey Bee :
                     </span>
-                    <br/>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                   <br />
                   <div>
-                  <span className='fw-bold'>
-                    Invite Captain Bee : 
-                  </span>
-                  <br />
+                    <span className='fw-bold'>
+                      Invite Captain Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseHiveURL +
+                        "/sign-up?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -608,8 +610,8 @@ const TeamCaptainDashIndividual = () => {
 
               </div>
             </div>
-            <div className="side-container" style={{marginLeft:`${isMobile ? "0" : "10px"}`, marginTop:`${isMobile ? "40px" : "0px"}`}}>
-              <TeamCaptainTabs email={staticsData?.userFullData?.email}/>
+            <div className="side-container" style={{ marginLeft: `${isMobile ? "0" : "10px"}`, marginTop: `${isMobile ? "40px" : "0px"}` }}>
+              <TeamCaptainTabs email={staticsData?.userFullData?.email} />
             </div>
           </div>
         </div>

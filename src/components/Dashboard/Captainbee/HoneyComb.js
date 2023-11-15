@@ -44,7 +44,7 @@ import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, postPublicMessage, getPu
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import { RankData } from '../RankData';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const HoneyComb = () => {
 
@@ -94,23 +94,25 @@ const HoneyComb = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        console.log(data?.data?.powerPackData?.type);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
-        } else {
-          setPowerPackPhoto(undefined);
-        }
-        if (data?.data?.affiliateUserProfile?.rank) {
-          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-          setRankPhoto(getRank?.photo);
-        } else {
-          const getRank = RankData.find(x => x.name === "Bronze")
-          setRankPhoto(getRank?.photo);
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          console.log(data?.data?.powerPackData?.type);
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+        });
+      }
     }
   }, [])
 
@@ -131,9 +133,11 @@ const HoneyComb = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
-  const options = { year: 'numeric', month: 'long', day: 'numeric',   hour: '2-digit',
-  minute: '2-digit',
-  hour12: true };
+  const options = {
+    year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
 
   return (
     <>
@@ -148,11 +152,11 @@ const HoneyComb = () => {
         <div className="hive-container">
           <div
             className="d-flex justify-content-between"
-            style={{ width:`${isMobile ? "90%" : "70%"}`, maxWidth: '1200px', flexDirection:`${isMobile ? "column" : "row"}` }}
+            style={{ width: `${isMobile ? "90%" : "70%"}`, maxWidth: '1200px', flexDirection: `${isMobile ? "column" : "row"}` }}
           >
             <div
               className="d-flex flex-direction-column mt-1"
-              style={{ width: `${isMobile ? "100%" : "30%"}`  }}
+              style={{ width: `${isMobile ? "100%" : "30%"}` }}
             >
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
@@ -184,26 +188,26 @@ const HoneyComb = () => {
                   </div>
 
                   <img
-                      alt=""
-                      src={rankPhoto}
-                      style={{
-                        position: 'absolute',
-                        bottom: '-25px',
-                        right: '17px',
-                        width: '79px', 
-                        height: '81px',
-                      }}
-                    />
+                    alt=""
+                    src={rankPhoto}
+                    style={{
+                      position: 'absolute',
+                      bottom: '-25px',
+                      right: '17px',
+                      width: '79px',
+                      height: '81px',
+                    }}
+                  />
                 </div>
               </div>
-              <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{justifyContent:`${isMobile ? "center" : "start"}`}}>
+              <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
                 Captain Bee {staticsData?.affiliateUserProfile?.accname}
               </div>
               {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                 (<div className="justify-content-center d-flex">
                   <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                 </div>) : (
-                  <div className="justify-content-center d-flex flex-direction-column" style={{marginLeft:`${isMobile ? "40px" : 0}`}}>
+                  <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
                     Please purchase the powerpack from the below URL: <br />
                     <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                       Power Pack Purchase
@@ -211,8 +215,8 @@ const HoneyComb = () => {
                   </div>
                 )
               }
-              <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
-                <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+              <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
+                <div className="d-flex flex-direction-column align-items-start mt-4" style={{ fontsixe: `${isMobile ? "12px" : "17px"}` }}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
@@ -273,7 +277,7 @@ const HoneyComb = () => {
                 }
               </div>
 
-              <div className="align-items-start lh_32x mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
+              <div className="align-items-start lh_32x mt-5" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
                 <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                   {theme === 'dark' ? (
                     <img alt="man" src={discord_dark} className="me-3" />
@@ -303,38 +307,38 @@ const HoneyComb = () => {
                   )}
                 </a>
               </div>
-              <div className="d-flex flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
+              <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
                 <div>
-                <span className='fw-bold'>
-                  Invite Honey Bee : 
-                </span>
-                <br/>
+                  <span className='fw-bold'>
+                    Invite Honey Bee :
+                  </span>
+                  <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
                     onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                      "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                      staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
                 <br />
                 <div>
-                <span className='fw-bold'>
-                  Invite Captain Bee : 
-                </span>
-                <br/>
+                  <span className='fw-bold'>
+                    Invite Captain Bee :
+                  </span>
+                  <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
                     fontSize="13px"
-                    onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                    onClick={() => copyClick(baseHiveURL +
+                      "/sign-up?referral=" +
+                      staticsData?.userFullData?.referralCode)}
                     style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                   />
                 </div>
               </div>
-              <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "40px": "0px"}`}}>
+              <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
                 <div className="font_13x ">Your Rating</div>
                 <div className="mt-4">
                   <Rating name="read-only" value={4} readOnly size="large" />
@@ -505,77 +509,77 @@ const HoneyComb = () => {
                 </Box>
 
                 {allTexts && allTexts?.map((message) => (
-                <Box className="d-flex flex-direction-column" key={message._id} sx={{
-                  // border: '1px solid var(--border-color)',
-                  // borderRadius: "2px",
-                  pr:2,
-                  pb:2
-                }}>
-                  <MoreHorizIcon style={{ alignSelf: "flex-end", fontSize: "20px", marginBottom: "-20px" }} />
-                  <Box className="d-flex align-items-center">
-                    <Box
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundImage: `url(${frame})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'contain',
-                        backgroundPosition: 'center',
-                        position: 'relative',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'center',
-                        // border:"none"
-                      }}
-                    >
-                      <Box className="bee-hexagon">
-                        <img
-                          alt=""
-                          src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                          width={'63px'}
-                          height={'66px'}
-                          ml={'-6px'}
-                          border={'none'}
-                        />
+                  <Box className="d-flex flex-direction-column" key={message._id} sx={{
+                    // border: '1px solid var(--border-color)',
+                    // borderRadius: "2px",
+                    pr: 2,
+                    pb: 2
+                  }}>
+                    <MoreHorizIcon style={{ alignSelf: "flex-end", fontSize: "20px", marginBottom: "-20px" }} />
+                    <Box className="d-flex align-items-center">
+                      <Box
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                          backgroundImage: `url(${frame})`,
+                          backgroundRepeat: 'no-repeat',
+                          backgroundSize: 'contain',
+                          backgroundPosition: 'center',
+                          position: 'relative',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          alignSelf: 'center',
+                          // border:"none"
+                        }}
+                      >
+                        <Box className="bee-hexagon">
+                          <img
+                            alt=""
+                            src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                            width={'63px'}
+                            height={'66px'}
+                            ml={'-6px'}
+                            border={'none'}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "baseline",
-                        backgroundColor: 'transparent',
-                        border: "none",
-                        height: '50px',
-                        marginLeft: '-35px',
-                        pl: 4,
-                        width: '211px',
-                        transition: "0.3s ease-in-out",
-                      }}
-                    >
-                      <div className="font_15x d-flex align-items-center">
-                        Captin Bee {staticsData?.affiliateUserProfile?.accname}
-                      </div>
-                      <div className="font_10x d-flex align-items-center">
-                      {new Date(message.createdData).toLocaleString('en-US', options)}
-                      </div>
-                    </Box>
-                    <br />
-                    {/* {allTexts &&
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "baseline",
+                          backgroundColor: 'transparent',
+                          border: "none",
+                          height: '50px',
+                          marginLeft: '-35px',
+                          pl: 4,
+                          width: '211px',
+                          transition: "0.3s ease-in-out",
+                        }}
+                      >
+                        <div className="font_15x d-flex align-items-center">
+                          Captin Bee {staticsData?.affiliateUserProfile?.accname}
+                        </div>
+                        <div className="font_10x d-flex align-items-center">
+                          {new Date(message.createdData).toLocaleString('en-US', options)}
+                        </div>
+                      </Box>
+                      <br />
+                      {/* {allTexts &&
                       <MessageList data={allTexts} />
                     } */}
 
 
+                    </Box>
+                    <Box sx={{ paddingLeft: "77px" }}>
+                      {message.publicMessage}
+                    </Box>
                   </Box>
-                  <Box sx={{ paddingLeft: "77px" }}>
-                  {message.publicMessage}
-                  </Box>
-                </Box>
-        ))}
+                ))}
               </Box>
             </div>
           </div>
@@ -599,7 +603,7 @@ export default HoneyComb;
 //           backgroundColor: 'transparent',
 //           border: '1px solid #e0e0e0',
 //           borderRadius: '4px',
-//           padding: '80px',  
+//           padding: '80px',
 //           margin: '8px 0',
 //         }}
 //       >

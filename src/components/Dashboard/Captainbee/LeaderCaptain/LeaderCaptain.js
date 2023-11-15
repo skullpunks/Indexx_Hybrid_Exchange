@@ -46,7 +46,7 @@ import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { RankData } from '../../RankData';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const LeaderCaptain = () => {
   const [captainBeeData, setRefferedUserData] = useState();
@@ -66,9 +66,11 @@ const LeaderCaptain = () => {
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
     setEmail(email);
-    getCaptainBeeStatics(username).then((data) => {
-      setStaticsData(data.data);
-    });
+    if (username) {
+      getCaptainBeeStatics(username).then((data) => {
+        setStaticsData(data.data);
+      });
+    }
     getReferredUserDetails(email).then((data) => {
       console.log(data?.data)
       console.log(data?.data?.powerPackData)
@@ -140,12 +142,13 @@ const LeaderCaptain = () => {
           <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
             <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "295px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
-              <div className='font_20x fw-bold justify-content-center align-items-center d-flex' 
-              style={{ width: `${isMobile ? "100%" : "1150px"}`,
-              flexDirection:`${isMobile ? "column" : "row"}`
-               }}>
+              <div className='font_20x fw-bold justify-content-center align-items-center d-flex'
+                style={{
+                  width: `${isMobile ? "100%" : "1150px"}`,
+                  flexDirection: `${isMobile ? "column" : "row"}`
+                }}>
                 <div style={{ width: `${isMobile ? "100%" : "74%"}` }}>
-                  <img src={hat} alt="hat" style={{marginRight:"10px"}} />
+                  <img src={hat} alt="hat" style={{ marginRight: "10px" }} />
                   Leader Captain Bee’s  Dashboard
                 </div>
                 <div className='d-flex justify-content-between' style={{ width: `${isMobile ? "83%" : "29.5%"}`, marginTop: `${isMobile ? "20px" : "0"}` }}>
@@ -202,11 +205,11 @@ const LeaderCaptain = () => {
             <div className="hive-container justify-content-center">
               <div
                 className="d-flex justify-content-between"
-                style={{ flexDirection:`${isMobile ? "column" : "row"}` }}
+                style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
               // style={{ width: '76%', maxWidth: '1140px' }}
               >
-                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" :"16%"}` }}>
-                  <div className="d-flex  flex-direction-row align-items-center"  style={{marginLeft:`${isMobile ? "35px": "0px"}`}}>
+                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" : "16%"}` }}>
+                  <div className="d-flex  flex-direction-row align-items-center" style={{ marginLeft: `${isMobile ? "35px" : "0px"}` }}>
 
                     <div className="d-flex  flex-direction-column align-items-center">
                       <div
@@ -244,7 +247,7 @@ const LeaderCaptain = () => {
                             position: 'absolute',
                             bottom: '-25px',
                             right: '17px',
-                            width: '79px', 
+                            width: '79px',
                             height: '81px',
                           }}
                         />
@@ -281,10 +284,10 @@ const LeaderCaptain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x"  style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     Leader Captain {captainBeeData?.Username}
                   </div>
-                  <div className="font_10x mb-3 lh_32x align-items-start"  style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                  <div className="font_10x mb-3 lh_32x align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     Leader Captain Bee of Captain Willie’s Team
                   </div>
                   {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
@@ -296,7 +299,7 @@ const LeaderCaptain = () => {
                       </div>
                     )
                   }
-                  <div className="align-items-start lh_32x" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                  <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <div className="font_13x d-flex align-items-center mt-4">
                       {theme === "dark" ?
                         <img alt="man" src={man_dark} className="me-1" />
@@ -330,28 +333,28 @@ const LeaderCaptain = () => {
                       {captainbeeCreateDate}
                     </div>
                     {captainBeeData?.isPhonePublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={phone_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={phone} className="me-2" />
-                      )}
-                      {String(`(${captainBeeData?.Phone.slice(0, 3)}) ${captainBeeData?.Phone.slice(3, 6)}-${captainBeeData?.Phone.slice(6)}`)}
-                    </div>
-                  }
-                  {captainBeeData?.isEmailPublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={email_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={email_icon} className="me-2" />
-                      )}
-                      {captainBeeData?.Email}
-                    </div>
-                  }
+                      <div className="font_13x d-flex align-items-center">
+                        {theme === 'dark' ? (
+                          <img alt="man" src={phone_dark} className="me-2" />
+                        ) : (
+                          <img alt="man" src={phone} className="me-2" />
+                        )}
+                        {String(`(${captainBeeData?.Phone.slice(0, 3)}) ${captainBeeData?.Phone.slice(3, 6)}-${captainBeeData?.Phone.slice(6)}`)}
+                      </div>
+                    }
+                    {captainBeeData?.isEmailPublic &&
+                      <div className="font_13x d-flex align-items-center">
+                        {theme === 'dark' ? (
+                          <img alt="man" src={email_dark} className="me-2" />
+                        ) : (
+                          <img alt="man" src={email_icon} className="me-2" />
+                        )}
+                        {captainBeeData?.Email}
+                      </div>
+                    }
                   </div>
 
-                  <div className="align-items-start lh_32x mt-4" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                  <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                       <img alt="Discord" src={discord} className="me-3" />
                     </a>
@@ -368,37 +371,37 @@ const LeaderCaptain = () => {
                     <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div>
                         <span className='fw-bold'>
-                        Invite Honey Bee : 
+                          Invite Honey Bee :
                         </span>
                         <br />
                         {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
                           onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    captainBeeFullData?.referralCode)}
+                            "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                            captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
                       <br />
                       <div>
-                      <span className='fw-bold'>
-                        Invite Captain Bee : 
+                        <span className='fw-bold'>
+                          Invite Captain Bee :
                         </span>
                         <br />
                         {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick(baseHiveURL +
+                            "/sign-up?referral=" +
+                            captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
                     </div>
 
                   </div>
-                  <div className="d-flex  flex-direction-column align-items-start mt-5" style={{marginLeft:`${isMobile ? "65px": "0px"}`}}>
+                  <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <div className="font_13x ">
                       Your Rating
                     </div>
@@ -410,8 +413,8 @@ const LeaderCaptain = () => {
                     </div>
                   </div>
                 </div>
-                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}`, marginTop:`${isMobile ? "65px": "0px"}`}}>
-                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
+                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}`, marginTop: `${isMobile ? "65px" : "0px"}` }}>
+                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email} />
                 </div>
               </div>
             </div>

@@ -24,7 +24,7 @@ import './PowerPackHeader.css'
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from 'antd';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 import { getCaptainBeeStatics } from '../../../services/api';
 
 const PowerPackHeader = () => {
@@ -46,7 +46,7 @@ const PowerPackHeader = () => {
     };
 
     window.addEventListener('storage', handleStorageChange);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -67,61 +67,64 @@ const PowerPackHeader = () => {
     setUserType(userType);
     if (userType === "CaptainBee") {
       setisCaptain(true);
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "" ){
-          setHaspowerpack(true);
-        }
-        else{
-          setHaspowerpack(false);
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "") {
+            setHaspowerpack(true);
+          }
+          else {
+            setHaspowerpack(false);
+          }
+        });
+      }
     }
   }, [])
   return (
 
-    <div style={{position:"fixed", 
-        top: `${isMobile ? '60px' : '90px'}`,
-    width:"100%", zIndex:999, background:"var(--main-body)", 
-    height:"95px",
-    paddingTop:"15px"
-    
+    <div style={{
+      position: "fixed",
+      top: `${isMobile ? '60px' : '90px'}`,
+      width: "100%", zIndex: 999, background: "var(--main-body)",
+      height: "95px",
+      paddingTop: "15px"
+
     }}>
 
-    <div className="container power-page">
+      <div className="container power-page">
 
-    <div className="row row-cols-1 row-cols-md-4 g-4 up-logos"  style={{justifyContent:"center"}}>
-    
-        <div className="col">
-        <Link to="/indexx-exchange/buy-sell?type=buy">
-            <div className="card">
-            {theme === "dark" ? 
-            <img src={localStorage.getItem("userlogged") === 'normal' ? all_white : hive_all_white} className="card-img-top" alt="..."/>
-            :
-            <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..."/>
-            }
-            <div className="card-body">
-                <h5 className="card-title mt-1">
-                {localStorage.getItem("userlogged") === 'normal' ? "Exchange" : "Hive Exchange"}
-                </h5>
-                <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/buy-sell'
-                    ? {
-                      height: '0.07px',
-                      width: '66px',
-                      backgroundColor: 'var(--body_color)',
-                    }
-                    : null
+        <div className="row row-cols-1 row-cols-md-4 g-4 up-logos" style={{ justifyContent: "center" }}>
+
+          <div className="col">
+            <Link to="/indexx-exchange/buy-sell?type=buy">
+              <div className="card">
+                {theme === "dark" ?
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? all_white : hive_all_white} className="card-img-top" alt="..." />
+                  :
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..." />
                 }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
-        
-        {/* <div className="col" onClick={handleActive}>
+                <div className="card-body">
+                  <h5 className="card-title mt-1">
+                    {localStorage.getItem("userlogged") === 'normal' ? "Exchange" : "Hive Exchange"}
+                  </h5>
+                  <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/buy-sell'
+                        ? {
+                          height: '0.07px',
+                          width: '66px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
+                    }
+                  ></Typography>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* <div className="col" onClick={handleActive}>
             <div className="card">
             {theme === "dark" ? 
             <img src={wallstreet_white} className="card-img-top mt-2 mb-1" alt="..." style={{width:"75px", borderRadius:0}}/>
@@ -200,129 +203,129 @@ const PowerPackHeader = () => {
             </div>
           </>
         } */}
-        <div className="col">
-        <Link to="/indexx-exchange/power-pack">
-            <div className="card">
-            {theme === "dark" ? 
-            <img src={power_white} className="card-img-top" alt="..." style={{width:"60px"}}/>
-            :
-            <img src={power} className="card-img-top" alt="..." style={{width:"60px"}}/>
-            }
-            <div className="card-body">
-                <h5 className="card-title mt-1">Power Packs</h5>
-            <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/power-pack'
-                    ? {
-                      height: '0.07px',
-                      width: '59px',
-                      backgroundColor: 'var(--body_color)',
-                    }
-                    : null
+          <div className="col">
+            <Link to="/indexx-exchange/power-pack">
+              <div className="card">
+                {theme === "dark" ?
+                  <img src={power_white} className="card-img-top" alt="..." style={{ width: "60px" }} />
+                  :
+                  <img src={power} className="card-img-top" alt="..." style={{ width: "60px" }} />
                 }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
-        <div className="col">
-        <Link to="/indexx-exchange/buy-sell/staking">
-            <div className="card">
-            {theme === "dark" ? 
-            <img src={localStorage.getItem("userlogged") === 'normal' ? stack_white : nectar_white} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            :
-            <img src={localStorage.getItem("userlogged") === 'normal' ? stack : nectar} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            }
-            <div className="card-body">
-                <h5 className="card-title mt-1">
-                
-                {localStorage.getItem("userlogged") === 'normal' ? "Staking" : "Nectar/Staking"}
-                </h5>
-                <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/buy-sell/staking'
-                    ? {
-                      height: '0.07px',
-                      width: '66px',
-                      backgroundColor: 'var(--body_color)',
+                <div className="card-body">
+                  <h5 className="card-title mt-1">Power Packs</h5>
+                  <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/power-pack'
+                        ? {
+                          height: '0.07px',
+                          width: '59px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
                     }
-                    : null
+                  ></Typography>
+                </div>
+              </div>
+            </Link>
+          </div>
+          <div className="col">
+            <Link to="/indexx-exchange/buy-sell/staking">
+              <div className="card">
+                {theme === "dark" ?
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? stack_white : nectar_white} className="card-img-top" alt="..."
+                    style={{ height: "34px" }}
+                  />
+                  :
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? stack : nectar} className="card-img-top" alt="..."
+                    style={{ height: "34px" }}
+                  />
                 }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
-      {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
-        <div className="col">
-        <Link to="/indexx-exchange/dashboard">
-            <div className="card">
-            {theme === "dark" ? 
-            <img src={waggle_white} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            :
-            <img src={waggle} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            }
-            <div className="card-body">
-                <h5 className="card-title mt-1">Waggle Dance</h5>
-                <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/dashboard'
-                    ? {
-                      height: '0.07px',
-                      width: '66px',
-                      backgroundColor: 'var(--body_color)',
+                <div className="card-body">
+                  <h5 className="card-title mt-1">
+
+                    {localStorage.getItem("userlogged") === 'normal' ? "Staking" : "Nectar/Staking"}
+                  </h5>
+                  <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/buy-sell/staking'
+                        ? {
+                          height: '0.07px',
+                          width: '66px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
                     }
-                    : null
+                  ></Typography>
+                </div>
+              </div>
+            </Link>
+          </div>
+          {(localStorage.getItem("userlogged") === 'captain' || localStorage.getItem("userlogged") === 'honeyb') && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
+            <div className="col">
+              <Link to="/indexx-exchange/dashboard">
+                <div className="card">
+                  {theme === "dark" ?
+                    <img src={waggle_white} className="card-img-top" alt="..."
+                      style={{ height: "34px" }}
+                    />
+                    :
+                    <img src={waggle} className="card-img-top" alt="..."
+                      style={{ height: "34px" }}
+                    />
+                  }
+                  <div className="card-body">
+                    <h5 className="card-title mt-1">Waggle Dance</h5>
+                    <Typography
+                      component='p'
+                      style={
+                        location.pathname === '/indexx-exchange/dashboard'
+                          ? {
+                            height: '0.07px',
+                            width: '66px',
+                            backgroundColor: 'var(--body_color)',
+                          }
+                          : null
+                      }
+                    ></Typography>
+                  </div>
+                </div>
+              </Link>
+            </div>
+            : null}
+          <div className="col">
+            <Link to="/indexx-exchange/buy-sell/wallet">
+              <div className="card">
+                {theme === "dark" ?
+                  <img src={wallet_white} className="card-img-top" alt="..."
+                    style={{ height: "34px" }}
+                  />
+                  :
+                  <img src={wallet} className="card-img-top" alt="..."
+                    style={{ height: "34px" }}
+                  />
                 }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
-      :null}
-      <div className="col">
-        <Link to="/indexx-exchange/buy-sell/wallet">
-            <div className="card">
-            {theme === "dark" ? 
-            <img src={wallet_white} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            :
-            <img src={wallet} className="card-img-top" alt="..."
-              style={{height:"34px"}}
-            />
-            }
-            <div className="card-body">
-                <h5 className="card-title mt-1">Funding Wallet</h5>
-                <Typography
-                component='p'
-                style={
-                  location.pathname === '/indexx-exchange/buy-sell/wallet'
-                    ? {
-                      height: '0.07px',
-                      width: '66px',
-                      backgroundColor: 'var(--body_color)',
+                <div className="card-body">
+                  <h5 className="card-title mt-1">Funding Wallet</h5>
+                  <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/buy-sell/wallet'
+                        ? {
+                          height: '0.07px',
+                          width: '66px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
                     }
-                    : null
-                }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
+                  ></Typography>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
-    </div>
-    </div>
+      </div>
 
     </div>
   )
