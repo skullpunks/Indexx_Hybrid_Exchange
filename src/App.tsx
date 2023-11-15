@@ -96,6 +96,7 @@ import Footer from "./components/Footer/Footer";
 import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
 import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
 import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
+import HorizontalLinearStepper2 from "./components/Send/HorizontalLinearStepper2";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -189,6 +190,8 @@ function App() {
           }
 
         <Route element={<PrivateRoutes/>}>
+          <Route path="/indexx-exchange/send" element={<HorizontalLinearStepper2 />} />
+
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />

@@ -68,7 +68,7 @@
 .orange_input.ant-input-affix-wrapper:hover,
 .orange_input input,
 .orange_input input:hover {
-  border-color: rgba(246, 96, 54, 0.3);
+  border-color: var(--primary-color) !important;
 }
 
 .orange_input.ant-input-affix-wrapper {
@@ -76,7 +76,8 @@
 }
 
 .bs_wallet .ant-input-prefix {
-  border-color: rgba(246, 96, 54, 0.3);
+  /* border-color: rgba(246, 96, 54, 0.3); */
+  border-color: var(--primary-color) !important;
 }
 
 .bs_wallet .ant-tabs-extra-content {

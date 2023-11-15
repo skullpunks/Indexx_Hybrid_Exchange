@@ -384,8 +384,14 @@ a.link.text-white:hover {
 
 .light_button {
   padding: 6px 15px 10px 15px;
-  border: 1px solid rgba(246, 96, 54, 0.3);
+  border: 1px solid var(--primary-color);
   border-radius: 3px;
+}
+
+.light_button:hover,
+.light_button:active,
+.light_button:focus {
+  border: 1px solid var(--secondary-color);
 }
 
 .flex_1 {

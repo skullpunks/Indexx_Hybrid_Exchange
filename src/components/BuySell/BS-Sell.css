@@ -37,6 +37,15 @@
 .withdraw_btn:hover,
 .withdraw_btn:focus,
 .withdraw_btn:active {
+    background-image: url("../../assets/arts/uploadicon.svg");
+    background-color: var(--body_background);
+    color: var(--body_color) !important;
+}
+
+.send_btn,
+.send_btn:hover,
+.send_btn:focus,
+.send_btn:active {
     background-image: url("../../assets/arts/rocketIcon.svg");
     background-color: var(--body_background);
     color: var(--body_color) !important;
