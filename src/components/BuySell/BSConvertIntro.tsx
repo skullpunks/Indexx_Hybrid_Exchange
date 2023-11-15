@@ -10,7 +10,7 @@ import { decodeJWT, getHoneyBeeDataByUsername, getWalletBalance } from '../../se
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
-
+import { Option } from 'antd/lib/mentions';
 import { useNavigate, useParams } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
 
@@ -50,18 +50,18 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         let newTokens: any[] = [];
 
         if (tokenType === 2) {
-            if(subtokenType === 0){
+            if (subtokenType === 0) {
                 newTokens = initialTokens.filter(item =>
                     (item.subTitle.toLowerCase().includes('stock') ||
-                    item.subTitle.toLowerCase().includes('snp500')) &&
+                        item.subTitle.toLowerCase().includes('snp500')) &&
                     !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
                 );
-                }
-                else if(subtokenType === 1){
-                    newTokens = initialTokens.filter(item =>
-                        item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
-                    );
-                }
+            }
+            else if (subtokenType === 1) {
+                newTokens = initialTokens.filter(item =>
+                    item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+                );
+            }
         } else if (tokenType === 1) {
             newTokens = initialTokens.filter(item =>
                 !item.subTitle.toLowerCase().includes('stock') &&
@@ -84,6 +84,20 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     }, [filteredtokens]);
 
+
+    const categorizeTokens = (tokens: any) => {
+        return {
+            Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
+            Stocks: tokens.filter((token: any) => token.isStock),
+            //ETFs: tokens.filter((token: any) => token.isETF)
+        };
+    };
+
+    // Categorized tokens for 'From Token' Select
+    const categorizedFromTokens = categorizeTokens(filteredtokens.filter(token => token.address !== BSvalue?.toToken));
+
+    // Categorized tokens for 'To Token' Select
+    const categorizedToTokens = categorizeTokens(filteredtokens.filter(token => token.address !== BSvalue?.fromToken));
 
     useEffect(() => {
         return () => {
@@ -224,11 +238,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         let getGraphCoin = graphTokens.find(x => x.address === tempToToken);
 
         if (BSvalue && tempFromToken && tempToToken) {
-            setBSvalue(prevValue => ({ 
-                ...prevValue, 
-                fromToken: tempToToken, 
+            setBSvalue(prevValue => ({
+                ...prevValue,
+                fromToken: tempToToken,
                 toToken: tempFromToken,
-                fromGraph: String(getGraphCoin?.graph) 
+                fromGraph: String(getGraphCoin?.graph)
             }));
             // Find the token object corresponding to the new 'fromToken' after swap
             let swappedToken = filteredtokens.find(token => token.address === tempToToken);
@@ -264,40 +278,105 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
 
-                <Select className='width-100 border-0'
-                    onChange={handleChange} value={BSvalue?.fromToken} key={BSvalue.fromToken}
+                {/* <Select className='width-100 border-0'
+                    onChange={handleChange}
+                    value={BSvalue?.fromToken}
+                    key={BSvalue.fromToken}
                 >
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                <div className='d-flex bs_token_num'>
+                                    <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" />
+                                    <div className=' padding-l-1x d-flex flex-align-center'>{token.title}
+                                        <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}
+                                        </span>
+                                    </div>
+                                </div>
                             </Select.Option>
                         })
                     }
+                </Select> */}
+
+                <Select className='width-100 border-0'
+                    onChange={handleChange} value={BSvalue?.fromToken} key={BSvalue.fromToken}
+                >
+                    {Object.entries(categorizedFromTokens).map(([category, tokens]) => (
+                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            {tokens.map((token: any) => (
+                                <Option
+                                    key={token.address}
+                                    value={token.address}
+                                    className="common__token d-flex bs_token_container"
+                                    data-address={token.address}
+                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                >
+                                    <div className='d-flex bs_token_num'>
+                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="38" />
+                                        <div className='padding-l-1x d-flex flex-align-center'>
+                                            {token.title}
+                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                {token.subTitle}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select.OptGroup>
+                    ))}
                 </Select>
+
+
             </div>
 
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
-                <Select className='width-100 border-0'
+                {/* <Select className='width-100 border-0'
                     onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}>
                     {
                         filteredtokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
                             return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
+                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
                             </Select.Option>
                         })
                     }
+                </Select> */}
+                <Select className='width-100 border-0'
+                    onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}
+                >
+                    {Object.entries(categorizedToTokens).map(([category, tokens]) => (
+                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            {tokens.map((token: any) => (
+                                <Option
+                                    key={token.address}
+                                    value={token.address}
+                                    className="common__token d-flex bs_token_container"
+                                    data-address={token.address}
+                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                >
+                                    <div className='d-flex bs_token_num'>
+                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="38" />
+                                        <div className='padding-l-1x d-flex flex-align-center'>
+                                            {token.title}
+                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                {token.subTitle}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select.OptGroup>
+                    ))}
                 </Select>
             </div>
             <div className="bs_footer_action " >
-            <button 
-                style={{ marginTop: 5 }} 
-                className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val) ? "disable_icon" : ""} 
-                disabled={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val)}
-                onClick={checkPurchase} 
-            >
-                Preview Convert
-            </button>
+                <button
+                    style={{ marginTop: 5 }}
+                    className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val) ? "disable_icon" : ""}
+                    disabled={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val)}
+                    onClick={checkPurchase}
+                >
+                    Preview Convert
+                </button>
             </div>
 
             {/* {showUserBalance && */}

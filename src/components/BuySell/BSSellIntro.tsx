@@ -28,7 +28,7 @@ interface Props {
     subtokenType: number;
 }
 const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType }) => {
-    
+
     const ref = useRef<HTMLInputElement>(null);
     const [val, setVal] = useState("");
     const navigate = useNavigate();
@@ -44,50 +44,59 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
     const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
-  const [filteredtokens, setFilteredtokens] = useState(initialTokens);
+    const [filteredtokens, setFilteredtokens] = useState(initialTokens);
     // useEffect(() => {
     //     if (ref.current) {
     //       ref.current.value = '';
     //     }
     //   });
 
-      
-  useEffect(() => {
-    if(tokenType === 2) {
-      if(subtokenType === 0){
-        const filtered = initialTokens.filter(item =>
-          (item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
-          item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())) &&
-          !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
-        );
-        setFilteredtokens(filtered);
-        handleChange(filtered[0].address);
-        }
-        else if(subtokenType === 1){
-          const filtered = initialTokens.filter(item =>
-            item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
-          );
-          setFilteredtokens(filtered);
-          handleChange(filtered[0].address);  
-        }
-    }
 
-    else if (tokenType === 1){
-      const filtered = initialTokens.filter(item =>
-        !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
-        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase()) &&
-        !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
-      );
-      setFilteredtokens(filtered);
-      handleChange(filtered[0].address);
-    }
+    useEffect(() => {
+        if (tokenType === 2) {
+            if (subtokenType === 0) {
+                const filtered = initialTokens.filter(item =>
+                    (item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
+                        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())) &&
+                    !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+                );
+                setFilteredtokens(filtered);
+                handleChange(filtered[0].address);
+            }
+            else if (subtokenType === 1) {
+                const filtered = initialTokens.filter(item =>
+                    item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+                );
+                setFilteredtokens(filtered);
+                handleChange(filtered[0].address);
+            }
+        }
 
-    else if (tokenType === 0){
-      setFilteredtokens(initialTokens);
-      handleChange(initialTokens[0].address);
-    }
-  }, [tokenType, subtokenType])
-  
+        else if (tokenType === 1) {
+            const filtered = initialTokens.filter(item =>
+                !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
+                !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase()) &&
+                !item.subTitle.toLowerCase().includes('ETF'.toLowerCase())
+            );
+            setFilteredtokens(filtered);
+            handleChange(filtered[0].address);
+        }
+
+        else if (tokenType === 0) {
+            setFilteredtokens(initialTokens);
+            handleChange(initialTokens[0].address);
+        }
+    }, [tokenType, subtokenType])
+
+    const categorizeTokens = (tokens: any) => {
+        return {
+            Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
+            Stocks: tokens.filter((token: any) => token.isStock),
+            ETFs: tokens.filter((token: any) => token.isETF)
+        };
+    };
+
+    const categorizedTokens = categorizeTokens(filteredtokens);
 
     useEffect(() => {
         // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
@@ -107,7 +116,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         }
         getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
             setMinMaxData(x);
-            
+
             // getWalletBalance(decoded.email, 'INEX').then((res) => {
             //     if (res.status === 200) {
             //         setUserBalance(res.data.balance);
@@ -122,7 +131,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         if (id) {
             setHoneyBeeId(String(id));
             getHoneyBeeDataByUsername(String(id)).then((data) => {
-                
+
                 setHoneyBeeEmail(data.data.userFullData?.email);
             });
 
@@ -134,7 +143,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
     }, [email, BSvalue])
 
     const getCoinBalance = async (value: string) => {
-        
+
         if (honeyBeeId && honeyBeeEmail) {
             const res = await getWalletBalance(honeyBeeEmail, value);
             setSelectedCoin(value);
@@ -203,11 +212,11 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
             e.currentTarget.style.fontSize = charFontSize + "ch";
 
             let value = BSvalue?.fromTitle;
-            
-            
+
+
             //let getRequiredCoin = initialTokens.find(x => x.address === value);
             //
-            
+
             await checkMinMaxValue(String(value), parseInt(testVal));
 
             handleChange(String(BSvalue?.fromToken))
@@ -221,7 +230,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
 
     const getMinMaxValue = async (value: string) => {
         let res = await getMinAndMaxOrderValues(value, "SELL");
-        
+
         return res;
     }
 
@@ -239,7 +248,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
     }
 
     const formSubmit = () => {
-        
+
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
@@ -324,8 +333,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                         IN500  <span className="token_grey">Index500</span><Link to="" className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</Link>
                     </div>
                 </div> */}
-                <Select className='width-100 border-0'
-                    onChange={handleChange} value={BSvalue?.fromToken}
+                {/* <Select className='width-100 border-0'
+                    onChange={handleChange} 
+                    value={BSvalue?.fromToken}
                     dropdownStyle={{ backgroundColor: "var(--body_background)", }}
                 >
                     {
@@ -339,6 +349,41 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                             })
                     }
 
+                </Select> */}
+
+                <Select
+                    className="width-100 border-0"
+                    onChange={handleChange}
+                    value={BSvalue?.fromToken}
+                    dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
+                >
+                    {Object.entries(categorizedTokens).map(([category, tokens]) => (
+                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            {tokens.map((token: any) => (
+                                <Option
+                                    key={token.address}
+                                    value={token.address}
+                                    className="common__token d-flex bs_token_container"
+                                    data-address={token.address}
+                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                >
+                                    <div className="d-flex bs_token_num select-drop">
+                                        <img
+                                            src={require(`../../assets/token-icons/${token.image}.png`).default}
+                                            alt={token.title}
+                                            width="38"
+                                        />
+                                        <div className="padding-l-1x d-flex flex-align-center">
+                                            {token.title}
+                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                {token.subTitle}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select.OptGroup>
+                    ))}
                 </Select>
 
             </div>
@@ -346,8 +391,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
             <div className="bs_token d-flex cursor-pointer py-4" style={{ alignItems: "center" }}>
                 <div className="bs_token_left d-flex justify-between">
 
-                    <div className="bs_token_num d-flex flex-align-center pe-3" style={{paddingLeft:"12px"}}>
-                        <img src={bsDollar} alt="Index icon" width="38"   style={{ marginRight: 11, }} />
+                    <div className="bs_token_num d-flex flex-align-center pe-3" style={{ paddingLeft: "12px" }}>
+                        <img src={bsDollar} alt="Index icon" width="38" style={{ marginRight: 11, }} />
                         USD  <span className="token_grey">US Dollar</span>
                     </div>
                 </div>
@@ -359,9 +404,9 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                     (userBalance === 0 || (userBalance < parseFloat(val))) ? "disable_icon" : ""} onClick={formSubmit}>Preview Sell </button>
             </div>
             {/* {showUserBalance && */}
-                <div>
-                    <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {filteredFromArray[0].title} </h6>
-                </div>
+            <div>
+                <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {filteredFromArray[0].title} </h6>
+            </div>
             {/* } */}
 
 

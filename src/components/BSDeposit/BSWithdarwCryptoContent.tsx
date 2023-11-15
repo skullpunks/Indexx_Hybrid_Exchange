@@ -51,6 +51,16 @@ export const BSWithdarwCryptoContent = () => {
   //const [max, setMax] = useState();
   const [email, setEmail] = useState('');
 
+  const categorizeTokens = (tokens :any) => {
+    return {
+        Stocks: tokens.filter((token: any) => token.isStock),
+        ETFs: tokens.filter((token: any)=> token.isETF),
+        Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF)
+    };
+};
+
+const categorizedTokens = categorizeTokens(initialTokens);
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
