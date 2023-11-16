@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import wallet from '../../assets/BSheader/funding grey 1.svg';
+import wallet from '../../assets/BSheader/funding wallet_icon_new.svg';
 // import comingSoon from "../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/api';
 
@@ -44,7 +44,7 @@ const BSWalletTop = () => {
         <>
             <div className='border-b-1x orange width-100 padding-t-2x padding-b-2x d-flex flex-direction-column align-items-center'>
                 <h1 className='padding-b-1x padding-t-1x fw-bold font_40x'>
-                    <img src={wallet} alt="logo" style={{ marginRight: "20px" }} />
+                    <img src={wallet} alt="logo" style={{ marginRight: "20px", width:"71px" }} />
                     Funding Wallet
                 </h1>
                 <div className='font_20x padding-b-3x'>

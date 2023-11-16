@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -16,12 +16,7 @@ import { Select } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
 
 const Final = () => {
-  const [type, setType] = useState('mail');
-  const [email, setEmail] = useState();
-  const [username, setUserName] = useState();
-  const handleChange = (event) => {
-    setType(event.target.value);
-  };
+  
   return (
     <Box
       sx={{
@@ -62,10 +57,18 @@ const Final = () => {
 const FileComponent1 = ({ onNext }) => {
   const [type, setType] = useState('mail');
   const [email, setEmail] = useState();
+  const [emailError, setEmailError] = useState('');
   const [username, setUserName] = useState();
   const handleChange = (event) => {
     setType(event.target.value);
   };
+
+  const validateEmail = () => {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setEmailError(isValid ? '' : 'Invalid email address');
+    return isValid;
+  };
+
   return (
     <Box
       sx={{
@@ -191,10 +194,12 @@ const FileComponent1 = ({ onNext }) => {
                     size="small" // Make the input box smaller
                     value={email}
                     onChange={(e) => {
+                      validateEmail();
                       setEmail(e.target.value);
                     }}
-                    // error={!!error}
-                    // helperText={error}
+                    error={emailError !== ''}
+                    helperText={emailError}
+                    // onBlur={validateEmail}
                   />
                 </Box>
               </>
@@ -226,6 +231,7 @@ const FileComponent1 = ({ onNext }) => {
             className="continue-btn"
             variant="contained"
             onClick={onNext}
+            disabled={(username === undefined || username.trim() === '' || username === null) && (email === undefined || email.trim() === '' || email === null || emailError !== '')}
             disableTouchRipple
           >
             Continue
@@ -236,15 +242,16 @@ const FileComponent1 = ({ onNext }) => {
   );
 };
 
-const FileComponent2 = ({ onNext }) => {
+const FileComponent2 = ({ onNext, onStateChange }) => {
   const [token, setToken] = useState('crypto');
+  const [filteredtokens, setFilteredtokens] = useState();
   const [receiveAmountt, setReceiveAmount] = useState('');
-  const [selectedCoin, setSelectedCoin] = useState('');
+  const [selectedCoin, setSelectedCoin] = useState('IN500');
   const [selectedCoinObj, setSelectedCoinObj] = useState(
     '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A'
   );
   const handleChangeCurrency = async (value) => {
-    let getRequiredCoin = initialTokens.find((x) => x.address === value);
+    let getRequiredCoin = filteredtokens.find((x) => x.address === value);
     setSelectedCoin(String(getRequiredCoin?.title));
     setSelectedCoinObj(String(getRequiredCoin?.title));   
   };
@@ -258,8 +265,36 @@ const FileComponent2 = ({ onNext }) => {
     let val = e.currentTarget.value;
     setReceiveAmount(val + '');
   };
-
   const { Option } = Select;
+
+  useEffect(() => {
+    if(token === 'crypto'){
+      const filter =  initialTokens.filter((x) => x.isStock === false && x.isETF === false);
+      setFilteredtokens(filter);
+      setSelectedCoin(filter[0].title);
+      setSelectedCoinObj(filter[0].title);
+    }
+    else if(token === 'stocktokens'){
+      const filter =  initialTokens.filter((x) => x.isStock === true);
+      setFilteredtokens(filter);
+      setSelectedCoin(filter[0].title);
+      setSelectedCoinObj(filter[0].title);
+    }
+    else if(token === 'etf'){
+      const filter =  initialTokens.filter((x) => x.isETF === true);
+      setFilteredtokens(filter);
+      setSelectedCoin(filter[0].title);
+      setSelectedCoinObj(filter[0].title);
+    }
+  }, [token])
+  
+  React.useEffect(() => {
+    onStateChange({ selectedCoin, receiveAmountt });
+    console.log('changing');
+  }, [selectedCoin, receiveAmountt]);
+
+
+  
   return (
     <Box
       sx={{
@@ -319,8 +354,7 @@ const FileComponent2 = ({ onNext }) => {
               defaultValue="Select a Coin to Withdraw"
               value={selectedCoinObj}
             >
-              {initialTokens
-                .filter(
+              {filteredtokens?.filter(
                   (seltoken) => seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
                 )
                 .map((seltoken, index) => {
@@ -386,6 +420,7 @@ const FileComponent2 = ({ onNext }) => {
             className="continue-btn"
             variant="contained"
             onClick={onNext}
+            disabled={receiveAmountt === undefined || receiveAmountt.trim() === '' || receiveAmountt === null}
             disableTouchRipple
           >
             Continue
@@ -396,29 +431,20 @@ const FileComponent2 = ({ onNext }) => {
   );
 };
 
-const FileComponent3 = ({ onPrev, onNext }) => {
-  const [token, setToken] = useState('crypto');
-  const [receiveAmountt, setReceiveAmount] = useState('');
-  const [selectedCoin, setSelectedCoin] = useState('INEX');
+const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
   const [selectedCoinObj, setSelectedCoinObj] = useState(
     '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A'
   );
-  const handleChangeCurrency = async (value) => {
-    let getRequiredCoin = initialTokens.find((x) => x.address === value);
-    setSelectedCoinObj(String(getRequiredCoin?.title));   
-  };
-
-  const handleChangeType =  (value) => {
-    setToken(value);   
-  };
-
-  const onChangeReceiveAmt = (e) => {
-    // if (e.currentTarget.value) {
-    let val = e.currentTarget.value;
-    setReceiveAmount(val + '');
-  };
-
+  // const handleChangeCurrency = async (value) => {
+  //   let getRequiredCoin = initialTokens.find((x) => x.title === selectedCoin);
+  //   setSelectedCoinObj(String(getRequiredCoin?.title));   
+  // };
   const { Option } = Select;
+  useEffect(() => {
+    let getRequiredCoin = initialTokens.find((x) => x.title === selectedCoin);
+    setSelectedCoinObj(String(getRequiredCoin?.title));   
+  }, [selectedCoin])
+  
   return (
     <Box
       sx={{
@@ -453,7 +479,7 @@ const FileComponent3 = ({ onPrev, onNext }) => {
               Payee receives
               </div>
               <div className="font_20x fw-bold">
-              100 {selectedCoin}
+              {receiveAmountt} {selectedCoin}
               </div>
         </div>
           </div>
@@ -467,7 +493,7 @@ const FileComponent3 = ({ onPrev, onNext }) => {
           <div className="font_15x">
             Funding Wallet
           <br />
-          <span className='font_13x'>INEX Balance: 2000 INEX</span>
+          <span className='font_13x'>{selectedCoin} Balance: 2000 {selectedCoin}</span>
           </div>
         </div>
         <br />
@@ -478,9 +504,10 @@ const FileComponent3 = ({ onPrev, onNext }) => {
             <Select
               dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
               className="width-100"
-              onChange={handleChangeCurrency}
+              // onChange={handleChangeCurrency}
               defaultValue="Select a Coin to Withdraw"
               value={selectedCoinObj}
+              disabled
             >
               {initialTokens
                 .filter(
@@ -564,6 +591,7 @@ const steps = [
 
 export default function HorizontalLinearStepper2() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [coinFromStep2, setCoinFromStep2] = React.useState({ selectedCoin: '', receiveAmountt:'' });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -575,6 +603,10 @@ export default function HorizontalLinearStepper2() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleStateChange = (state) => {
+    setCoinFromStep2(state);
   };
 
   return (
@@ -607,7 +639,9 @@ export default function HorizontalLinearStepper2() {
         {activeStep === steps.length ? <Final /> : (
           React.cloneElement(steps[activeStep].component, {
             onNext: handleNext,
-            onPrev: handleBack
+            onPrev: handleBack,
+            onStateChange: handleStateChange,
+            ...coinFromStep2,
           })
         )}
         </Box>
