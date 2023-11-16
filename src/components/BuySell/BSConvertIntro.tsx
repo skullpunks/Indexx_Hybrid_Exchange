@@ -88,7 +88,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
     const categorizeTokens = (tokens: any) => {
         return {
             Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
-            Stocks: tokens.filter((token: any) => token.isStock),
+            StockTokens: tokens.filter((token: any) => token.isStock),
             //ETFs: tokens.filter((token: any) => token.isETF)
         };
     };
@@ -312,7 +312,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                     style={{ paddingLeft: "15px", paddingRight: 0 }}
                                 >
                                     <div className='d-flex bs_token_num'>
-                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="38" />
+                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
                                         <div className='padding-l-1x d-flex flex-align-center'>
                                             {token.title}
                                             <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
@@ -354,7 +354,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                     style={{ paddingLeft: "15px", paddingRight: 0 }}
                                 >
                                     <div className='d-flex bs_token_num'>
-                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="38" />
+                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
                                         <div className='padding-l-1x d-flex flex-align-center'>
                                             {token.title}
                                             <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">

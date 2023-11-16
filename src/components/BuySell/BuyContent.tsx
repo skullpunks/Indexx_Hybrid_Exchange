@@ -100,7 +100,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
   const categorizeTokens = (tokens: any) => {
     return {
       Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
-      Stocks: tokens.filter((token: any) => token.isStock),
+      StockTokens: tokens.filter((token: any) => token.isStock),
       ETFs: tokens.filter((token: any) => token.isETF)
     };
   };
@@ -264,7 +264,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
             <img
               src={bsDollar}
               alt="Index icon"
-              width="38"
+              width="40"
 
               style={{ marginRight: 11 }}
             />
@@ -339,7 +339,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
                         <img
                           src={require(`../../assets/token-icons/${token.image}.png`).default}
                           alt={token.title}
-                          width="38"
+                          width="40"
                         />
                         <div className="padding-l-1x d-flex flex-align-center">
                           {token.title}
