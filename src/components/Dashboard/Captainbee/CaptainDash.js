@@ -26,7 +26,7 @@ import twitter_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/twit
 import insta_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
 import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
 import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
-
+import loadingGif from './beeloade.gif';
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
 // import bronze from "../../../assets/Rank Badges/1 bronze.svg";
@@ -62,6 +62,8 @@ let appSettingArr = [];
 let priceData = {};
 
 const CaptainDash = () => {
+
+  const [isLoading, setIsLoading] = useState(true);
   const [platform, setPlatform] = useState('Exchange');
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
@@ -109,6 +111,10 @@ const CaptainDash = () => {
   const [loadings, setLoadings] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
+
+
+
+
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -192,22 +198,25 @@ const CaptainDash = () => {
       console.log("err", err)
     }
   };
-
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      if (username) {
-        getCaptainBeeStatics(username).then((data) => {
+    const fetchData = async () => {
+      try {
+        const userType = localStorage.getItem("userType") || undefined;
+        const username = localStorage.getItem("username") || undefined;
+  
+        setUserType(userType);
+  
+        if (userType === "CaptainBee" && username) {
+          const data = await getCaptainBeeStatics(username);
           setStaticsData(data.data);
+  
           if (data?.data?.powerPackData) {
             const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
             setPowerPackPhoto(getPowerPack?.photo);
           } else {
             setPowerPackPhoto(undefined);
           }
+  
           if (data?.data?.affiliateUserProfile?.rank) {
             const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
             setRankPhoto(getRank?.photo);
@@ -215,21 +224,23 @@ const CaptainDash = () => {
             const getRank = RankData.find(x => x.name === "Bronze")
             setRankPhoto(getRank?.photo);
           }
+  
           if (data?.data?.paypalSubscriptionDetails) {
             setSubscription(data?.data?.paypalSubscriptionDetails);
-            console.log("subscription", data?.data?.paypalSubscriptionDetails)
             const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
-            console.log("hasValidSubscription", hasValidSubscription)
             setCheckSubscription(hasValidSubscription);
-            //paypalSubscriptionDetails":{"paypalSubscriptionDBData":null}
           }
-        });
+        }
+  
+        setIsLoading(false); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); 
       }
-    }
-    getAllSetting();
-    getPricesData();
-  }, [])
-
+    };
+  
+    fetchData();
+  }, []);
 
 
   const [theme, setTheme] = useState(
@@ -281,7 +292,32 @@ const CaptainDash = () => {
   return (
     <>
       <SubHeader />
-      {userType === "CaptainBee" ?
+      {isLoading && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 9999,
+      pointerEvents: 'none',
+    }}
+  >
+    <img src={loadingGif} alt="Loading" />
+    <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+      Please wait while Waggle Dance loads
+      <span className="dots-animation"></span>
+    </p>
+  </div>
+)}
+
+    {(!isLoading && userType === "CaptainBee") ? 
         (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
           <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
             <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
@@ -1245,7 +1281,8 @@ const CaptainDash = () => {
             </div>
           </div>
         </div>) :
-        <><BeeDash2 />
+        <>
+        {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
         </>
       }
     </>
