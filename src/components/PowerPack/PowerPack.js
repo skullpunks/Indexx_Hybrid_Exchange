@@ -50,8 +50,13 @@ const PowerPack = () => {
           src={hive}
           alt='logo'
           width={90}
+          marginRight={-3}
         />
+          <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
+          Indexx Hive
+          </Typography>
       </Box>
+    
       <Typography variant="body1" fontSize={"20px"} sx={{ mt: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
         To unlock the full potential of earning as a "Captain Bee," you must invest in a minimum of the Captain Bee Power Pack or a higher tier. This investment is your ticket to financial growth and success.
       </Typography>

@@ -148,7 +148,7 @@ const PowerCard = ({ card }) => {
                             </Typography>
 
                             <Typography variant="text" component="p" fontSize={"13px"} fontWeight={300} style={{ color: "#FFB300" }} lineHeight={"22.8px"} my={1}>
-                                {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                                {card.level === "Captain Bee" ? `Indexx Hive ${card.level} Level` : '\u00A0'}
                             </Typography>
 
                             <a href="https://indexx.ai/indexx-exchange/token-details/inex" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -266,7 +266,7 @@ const PowerCard = ({ card }) => {
                                 justifyContent: "flex-start", flexDirection: "column"
                             }}>
                                 <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
-                                    {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                                  {card.level === "Captain Bee" ? `Indexx Hive ${card.level} Level` : '\u00A0'}
                                 </Typography>
                                 
                                 {card.features.map((item) =>
