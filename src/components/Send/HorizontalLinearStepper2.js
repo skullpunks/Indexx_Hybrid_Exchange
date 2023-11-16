@@ -247,13 +247,15 @@ const FileComponent2 = ({ onNext, onStateChange }) => {
   const [filteredtokens, setFilteredtokens] = useState();
   const [receiveAmountt, setReceiveAmount] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('IN500');
-  const [selectedCoinObj, setSelectedCoinObj] = useState(
-    '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A'
-  );
+  const [selectedCoinObj, setSelectedCoinObj] = useState({
+    address: '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A',
+    title: '',
+  });
   const handleChangeCurrency = async (value) => {
     let getRequiredCoin = filteredtokens.find((x) => x.address === value);
     setSelectedCoin(String(getRequiredCoin?.title));
-    setSelectedCoinObj(String(getRequiredCoin?.title));   
+    // setSelectedCoinObj(String(getRequiredCoin?.title));
+    setSelectedCoinObj(getRequiredCoin);   
   };
 
   const handleChangeType =  (value) => {
@@ -272,19 +274,19 @@ const FileComponent2 = ({ onNext, onStateChange }) => {
       const filter =  initialTokens.filter((x) => x.isStock === false && x.isETF === false);
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
-      setSelectedCoinObj(filter[0].title);
+      setSelectedCoinObj(filter[0]);   
     }
     else if(token === 'stocktokens'){
       const filter =  initialTokens.filter((x) => x.isStock === true);
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
-      setSelectedCoinObj(filter[0].title);
+      setSelectedCoinObj(filter[0]);   
     }
     else if(token === 'etf'){
       const filter =  initialTokens.filter((x) => x.isETF === true);
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
-      setSelectedCoinObj(filter[0].title);
+      setSelectedCoinObj(filter[0]);   
     }
   }, [token])
   
@@ -352,7 +354,7 @@ const FileComponent2 = ({ onNext, onStateChange }) => {
               className="width-100"
               onChange={handleChangeCurrency}
               defaultValue="Select a Coin to Withdraw"
-              value={selectedCoinObj}
+              value={selectedCoinObj?.address}
             >
               {filteredtokens?.filter(
                   (seltoken) => seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
@@ -432,9 +434,10 @@ const FileComponent2 = ({ onNext, onStateChange }) => {
 };
 
 const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
-  const [selectedCoinObj, setSelectedCoinObj] = useState(
-    '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A'
-  );
+  const [selectedCoinObj, setSelectedCoinObj] = useState({
+    address: '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A',
+    title: '',
+  });
   // const handleChangeCurrency = async (value) => {
   //   let getRequiredCoin = initialTokens.find((x) => x.title === selectedCoin);
   //   setSelectedCoinObj(String(getRequiredCoin?.title));   
@@ -442,7 +445,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
   const { Option } = Select;
   useEffect(() => {
     let getRequiredCoin = initialTokens.find((x) => x.title === selectedCoin);
-    setSelectedCoinObj(String(getRequiredCoin?.title));   
+    setSelectedCoinObj(getRequiredCoin);   
   }, [selectedCoin])
   
   return (
@@ -506,7 +509,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
               className="width-100"
               // onChange={handleChangeCurrency}
               defaultValue="Select a Coin to Withdraw"
-              value={selectedCoinObj}
+              value={selectedCoinObj?.address}
               disabled
             >
               {initialTokens
