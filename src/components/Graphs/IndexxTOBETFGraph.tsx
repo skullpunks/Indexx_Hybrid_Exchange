@@ -88,7 +88,7 @@ const IndexxTOBETFGraph = () => {
                                     .default
                             }
                             alt="bitcoin"
-                            width="30"
+                            width="40"
                         />
                         &emsp;
                         <h1>

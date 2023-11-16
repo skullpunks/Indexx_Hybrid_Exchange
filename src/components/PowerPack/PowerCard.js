@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
+import hive from '../../assets/powerpack/hive.svg';
 import './PowerCard.css'
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
@@ -246,6 +247,7 @@ const PowerCard = ({ card }) => {
                         className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}>
 
                             <img alt="" src={card.photo} width={"82px"} style={{ marginBottom: "15px" }} />
+                            {card.level === "Captain Bee" ? <img alt="" src={hive} width={"42px"} style={{ marginBottom: "15px" }}/> : <></>}
 
                             <Typography variant="text" component="p" fontSize={"20px"} fontWeight={600} lineHeight={2.1} mb={2}
                                 style={{ color: `${card.level === "Captain Bee" ? "#FFB300" : "inherit"}` }}

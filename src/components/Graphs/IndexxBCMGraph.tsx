@@ -32,7 +32,7 @@ const IndexxBCMGraph = () => {
                 
                 if (data.status === 'ok') {
                     let array = data.values.reverse();
-                    setCoinValue((Math.round((array[0].close / 1000) * 1000) / 1000));
+                    setCoinValue((Math.round((array[0].close / 1000) * 1000)));
                     setChartData(array);
                 }
             });
@@ -90,7 +90,7 @@ const IndexxBCMGraph = () => {
                                     .default
                             }
                             alt="bitcoin"
-                            width="30"
+                            width="40"
                         />
                         &emsp;
                         <h1>

@@ -32,7 +32,7 @@ const IndexxPEPGraph = () => {
                 
                 if (data.status === 'ok') {
                     let array = data.values.reverse();
-                    setCoinValue((Math.round((array[0].close / 1000) * 1000) / 1000));
+                    setCoinValue((Math.round((array[0].close / 1000) * 1000)));
                     setChartData(array);
                 }
             });
@@ -45,7 +45,7 @@ const IndexxPEPGraph = () => {
 
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
-            setCoinValue((Math.round((payload[0]?.payload?.open /1000) * 1000) / 1000));
+            setCoinValue((Math.round((payload[0]?.payload?.open /1000) * 1000)));
             return (
                 <div className="custom-tooltip dark:text-lighthover">
                     <p className="label">{`${dateFormatter3(label)}`}</p>
@@ -90,7 +90,7 @@ const IndexxPEPGraph = () => {
                                     .default
                             }
                             alt="bitcoin"
-                            width="30"
+                            width="40"
                         />
                         &emsp;
                         <h1>
