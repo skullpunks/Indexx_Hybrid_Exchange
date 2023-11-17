@@ -21,6 +21,7 @@ import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
+import loadingGif from '../../../../assets/beeloade.gif';
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
 // import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
@@ -60,44 +61,54 @@ const LeaderCaptain = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpench, setIsModalOpenCh] = useState(false);
   const [staticsData, setStaticsData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
-    setEmail(email);
-    if (username) {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-      });
-    }
-    getReferredUserDetails(email).then((data) => {
-      console.log(data?.data)
-      console.log(data?.data?.powerPackData)
-      console.log(data?.data?.refferedUserAffilateData)
-      if (data?.data) {
-        setRefferedUserData(data.data.refferedUserAffilateData);
-        console.log(data.data.refferedUserAffilateData)
-        setRefferedFullData(data.data.referredUserData);
-        setCaptainbeeCreateDate(data.data.accountCreationDate);
-        setCaptainbeeOrders(data.data.totalOrder);
-        setCaptainbeeUsers(data.data.honeyBeesCount);
-      }
-      if (data?.data?.powerPackData) {
-        const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-        setPowerPackPhoto(getPowerPack?.photo);
-      } else {
-        setPowerPackPhoto(undefined);
-      }
-      if (data?.data?.affiliateUserProfile?.rank) {
-        const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-        setRankPhoto(getRank?.photo);
-      } else {
-        const getRank = RankData.find(x => x.name === "Bronze")
-        setRankPhoto(getRank?.photo);
-      }
-    })
+    const fetchData = async () => {
+      try {
+        const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+        const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
+        setEmail(email);
+        if (username) {
+          getCaptainBeeStatics(username).then((data) => {
+            setStaticsData(data.data);
+          });
+        }
+        const data = await getReferredUserDetails(email);
+          console.log(data?.data)
+          console.log(data?.data?.powerPackData)
+          console.log(data?.data?.refferedUserAffilateData)
+          if (data?.data) {
+            setRefferedUserData(data.data.refferedUserAffilateData);
+            console.log(data.data.refferedUserAffilateData)
+            setRefferedFullData(data.data.referredUserData);
+            setCaptainbeeCreateDate(data.data.accountCreationDate);
+            setCaptainbeeOrders(data.data.totalOrder);
+            setCaptainbeeUsers(data.data.honeyBeesCount);
+          }
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+        setIsLoading(false); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); 
+      }
+};
+
+fetchData();
   }, []);
 
   const [theme, setTheme] = useState(
@@ -128,6 +139,31 @@ const LeaderCaptain = () => {
   return (
     <>
       <SubHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your Captain Bee's profile is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       {!captainBeeData ?
         (<>
           <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
@@ -140,7 +176,7 @@ const LeaderCaptain = () => {
         </>) :
         (<>
           <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
-            <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "295px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
+            <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "308px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
               <div className='font_20x fw-bold justify-content-center align-items-center d-flex'
                 style={{
@@ -208,7 +244,7 @@ const LeaderCaptain = () => {
                 style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
               // style={{ width: '76%', maxWidth: '1140px' }}
               >
-                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" : "16%"}` }}>
+                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" : "300px"}` }}>
                   <div className="d-flex  flex-direction-row align-items-center" style={{ marginLeft: `${isMobile ? "35px" : "0px"}` }}>
 
                     <div className="d-flex  flex-direction-column align-items-center">
@@ -413,7 +449,7 @@ const LeaderCaptain = () => {
                     </div>
                   </div>
                 </div>
-                <div className="side-container" style={{ marginLeft: 0, width: `${isMobile ? "auto" : "1150px"}`, marginTop: `${isMobile ? "65px" : "0px"}` }}>
+                <div className="side-container" style={{ marginLeft:`${isMobile ? "0" : "10px"}`, width: `${isMobile ? "auto" : "1150px"}`, marginTop: `${isMobile ? "65px" : "0px"}` }}>
                   <LeaderCaptainTabs leaderEmail={captainBeeData?.Email} />
                 </div>
               </div>

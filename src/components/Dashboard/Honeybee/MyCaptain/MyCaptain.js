@@ -66,13 +66,13 @@ const MyCaptain = () => {
     <>
       <BeeHeader />
       <div style={{paddingTop:"220px"}}>
-      <div className='d-flex justify-content-center' style={{marginLeft:"260px"}}>
+      <div className='d-flex justify-content-center' style={{marginLeft:"268px"}}>
 
         <div className='font_20x fw-bold justify-content-center d-flex' style={{width:"1200px"}}>
-        <div style={{width:"74%"}}>
+        <div style={{width:"85%"}}>
           Your Captain Bee’s  Dashboard
         </div>
-          <div className='d-flex justify-content-between' style={{width:"25.5%"}}>
+          <div className='d-flex justify-content-between' style={{width:"29.5%"}}>
 
           <Button
               variant="outlined"
@@ -125,10 +125,10 @@ const MyCaptain = () => {
 
       <div className="hive-container">
         <div
-          className="d-flex justify-content-between"
+          className="d-flex justify-content-center"
           // style={{ width: '76%', maxWidth: '1140px' }}
         >
-        <div className="d-flex flex-direction-column mt-1" style={{width:"16%"}}>
+        <div className="d-flex flex-direction-column mt-1" style={{width:"240px"}}>
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
                   style={{

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SubHeader from './SubHeader/SubHeader';
 import frame from '../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
+import loadingGif from '../../../assets/beeloade.gif';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { getCaptainBeeStatics, updateCaptainBeeProfile } from '../../../services/api';
 import AWS from 'aws-sdk';
@@ -43,11 +44,14 @@ const CaptainProfile = () => {
   const [userType, setUserType] = useState("");
   const [loadings, setLoadings] = useState(false);
   const [bio, setBio] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
@@ -55,7 +59,8 @@ const CaptainProfile = () => {
 
     if (userType === "CaptainBee") {
       if (username) {
-        getCaptainBeeStatics(username, "yes").then((data) => {
+        const data = await getCaptainBeeStatics(username, "yes");
+
           setStaticsData(data.data);
           const profile = data.data.affiliateUserProfile || {};
           const socialMediaLink = profile.socialMediaLink || {};
@@ -75,9 +80,19 @@ const CaptainProfile = () => {
           setUseEmail(profile.isEmailPublic || false);
           setUsePhone(profile.isPhonePublic || false);
           setBio(profile.PublicBio || '');
-        });
       }
     }
+    setIsLoading(false); 
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false); 
+          }
+          finally {
+            setIsLoading(false);
+          }
+    };
+
+    fetchData();
   }, [])
 
   const handleSubmit = async () => {
@@ -132,6 +147,31 @@ const CaptainProfile = () => {
   return (
     <>
       <SubHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your profile is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       {userType === "CaptainBee" ?
         (<div className="hive-container" style={{ paddingTop: "280px" }}>
           <div

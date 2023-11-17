@@ -242,7 +242,7 @@ const TeamCaptWalletTable: React.FC<TeamCaptWalletTableProps> = ({ email }) => {
 
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
                 <Tabs.TabPane tab="Balance" key="1" className=''>
-                    <div className='border-b-1x margin-b-2x'>
+                    <div className='margin-b-2x'>
                         <div className='checkbox-container my-2' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance

@@ -45,6 +45,7 @@ import OpenNotification from '../../OpenNotification/OpenNotification';
 import { RankData } from '../RankData';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
+import loadingGif from '../../../assets/beeloade.gif';
 
 const HoneyComb = () => {
 
@@ -53,6 +54,7 @@ const HoneyComb = () => {
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
   const [allTexts, setAllTexts] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
@@ -89,13 +91,16 @@ const HoneyComb = () => {
   }, [])
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
     setUserType(userType);
     if (userType === "CaptainBee") {
       if (username) {
-        getCaptainBeeStatics(username).then((data) => {
+        const data = await getCaptainBeeStatics(username);
+
           setStaticsData(data.data);
           console.log(data?.data?.powerPackData?.type);
           if (data?.data?.powerPackData) {
@@ -111,9 +116,19 @@ const HoneyComb = () => {
             const getRank = RankData.find(x => x.name === "Bronze")
             setRankPhoto(getRank?.photo);
           }
-        });
       }
     }
+    setIsLoading(false); 
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    setIsLoading(false); 
+  }
+  finally {
+    setIsLoading(false);
+  }
+};
+
+fetchData();
   }, [])
 
   const handleSubmitPostMessage = async () => {
@@ -142,6 +157,31 @@ const HoneyComb = () => {
   return (
     <>
       <SubHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while Honeycomb is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
         <div
           className="fw-bold justify-content-center d-flex"

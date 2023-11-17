@@ -86,7 +86,7 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
 
       const response = await validateUserEmail(email);
       const data = await response;
-      
+
       if (data.status === 200) {
         if (data?.data?.profilePic) {
           setProfilePhoto(data.data.profilePic);
@@ -636,7 +636,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
         <div className="font_15x">
           Send to
         </div>
-        <div className='d-flex padding-t-1x align-items-center'>
+        <div className='d-flex padding-t-1x'>
           <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" }} />
           <div className="font_13x">
             {recipient}
@@ -667,13 +667,13 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
           <div className="font_15x">
             Funding Wallet
             <br />
-            <span className='font_13x'>{selectedCoin} Balance: {currentUserBalance} {selectedCoin}</span>
+            <span className='font_13x'>Balance: {currentUserBalance} {" "} {selectedCoin}</span>
           </div>
         </div>
         <br />
         <Box className="d-flex justify-content-between padding-t-1x">
           <Box minWidth={"100%"}>
-            <label className='fw-bold'>Payment Currency</label>
+            <label className='font_15x fw-bold'>Sending Asset</label>
             <div className=" d-flex flex-justify-between flex-align-center">
               <Select
                 dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
@@ -730,7 +730,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
         <div className="">
           <br />
           <div className="font_13x">
-            Please make sure the payee and amount information is correct. Refunds are not supporrted
+            Please make sure the payee and amount information is correct. Refunds are not supported
           </div>
           <br />
           <div className='d-flex' style={{ gap: 10 }}>
@@ -751,11 +751,13 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
               Confirm
             </Button>
           </div>
-          {error && (
-            <Typography color="error" style={{ marginTop: '10px' }}>
-              {error}
-            </Typography>
-          )}
+          {
+            error && (
+              <Typography color="error" style={{ marginTop: '10px' }}>
+                {error}
+              </Typography>
+            )
+          }
         </div>
       </Box>
     </Box>

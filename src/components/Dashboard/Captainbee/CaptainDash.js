@@ -26,7 +26,7 @@ import twitter_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/twit
 import insta_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
 import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
 import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
-import loadingGif from './beeloade.gif';
+import loadingGif from '../../../assets/beeloade.gif';
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
 // import bronze from "../../../assets/Rank Badges/1 bronze.svg";
@@ -64,14 +64,14 @@ let priceData = {};
 const CaptainDash = () => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [platform, setPlatform] = useState('Exchange');
-  const [Order, setOrder] = useState('buysell');
-  const [selectedDate, setSelectedDate] = useState('aug-sept');
+  // const [platform, setPlatform] = useState('Exchange');
+  // const [Order, setOrder] = useState('buysell');
+  // const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
-  const [platformCapt, setPlatformCapt] = useState('Exchange');
-  const [OrderCapt, setOrderCapt] = useState('buysell');
-  const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
+  // const [platformCapt, setPlatformCapt] = useState('Exchange');
+  // const [OrderCapt, setOrderCapt] = useState('buysell');
+  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
   const [userType, setUserType] = useState("");
   // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -300,18 +300,19 @@ const CaptainDash = () => {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      backdropFilter:"blur(8px)",
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      zIndex: 9999,
+      zIndex: 995,
       pointerEvents: 'none',
     }}
   >
     <img src={loadingGif} alt="Loading" />
     <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
-      Please wait while Waggle Dance loads
+      Please wait while Waggle Dance is loading
       <span className="dots-animation"></span>
     </p>
   </div>
@@ -325,11 +326,11 @@ const CaptainDash = () => {
           </div>
           <div className="hive-container">
             <div
-              className="d-flex justify-content-between"
+              className="d-flex justify-content-center"
               // style={{ width: '74%', maxWidth: '1140px' }}
               style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
             >
-              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "17%"}` }}>
+              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
                 <div className="d-flex  flex-direction-column align-items-center">
                   <div
                     style={{
@@ -387,6 +388,51 @@ const CaptainDash = () => {
                     </div>
                   )
                 }
+                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                {(!subscription?.paypalSubscriptionDBData) ?
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_15x">
+                      Subscribe to your $300 monthly INEX investment today
+                    </div>
+                    <div style={{width:"100%"}}>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                        onClick={handleCreateSubscription}
+                        style={{width:"100%", height:"auto", color:"#393939"}}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>)
+                  :
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      $300 INEX Subscription Details
+                    </div>
+                    <div className="font_13x mt-3">
+                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                    </div>
+                    <div className="font_13x">
+                      Status: {subscription?.paypalSubscriptionDetails?.status}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                    </div>
+                    {/* <div>
+                      <Button
+                        type="danger"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCancelSubscription}
+
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div> */}
+                  </div>)
+                }
+                </div>
+
                 <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
 
                   {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
@@ -395,7 +441,6 @@ const CaptainDash = () => {
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
                   in indexx hive`}
                 </div> */}
-
                   <div className="font_13x d-flex align-items-center mt-4">
                     {theme === "dark" ?
                       <img alt="man" src={man_dark} className="me-1" />
@@ -525,7 +570,8 @@ const CaptainDash = () => {
                     95%
                   </div>
                 </div>
-
+{/* 
+                {timeRemaining?.days &&
                 <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
                     Next Monthly INEX Order Deadline
@@ -533,13 +579,15 @@ const CaptainDash = () => {
                   <div className="font_20x mt-3">
                     {staticsData?.nextPurchaseDate}
                   </div>
+                </div>
+                } */}
                   {/* <div className="font_20x mt-3">
                     {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
                     <br />
                     {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
                     {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
                   </div> */}
-                  {timeRemaining?.days < 15 && (
+                  {/* {timeRemaining?.days < 15 && (
                     <div>
                       <Button
                         type="primary"
@@ -551,50 +599,10 @@ const CaptainDash = () => {
                         Buy 300 INEX now
                       </Button>
                     </div>
-                  )}
-                </div>
+                  )} */}
+                {/* </div> */}
 
-                {(!subscription?.paypalSubscriptionDBData) ?
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_20x">
-                      You do not have an active Monthly $300 INEX subscription
-                    </div>
-                    <div>
-                      <Button
-                        type="primary"
-                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
-                        onClick={handleCreateSubscription}
-                      >
-                        Please subscribe now
-                      </Button>
-                    </div>
-                  </div>)
-                  :
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_20x">
-                      Your Monthly $300 INEX Investment Subscription Details
-                    </div>
-                    <div className="font_13x mt-3">
-                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
-                    </div>
-                    <div className="font_13x">
-                      Status: {subscription?.paypalSubscriptionDetails?.status}
-                    </div>
-                    <div className="font_13x">
-                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
-                    </div>
-                    {/* <div>
-                      <Button
-                        type="danger"
-                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
-                        onClick={handleCancelSubscription}
 
-                      >
-                        Cancel Subscription
-                      </Button>
-                    </div> */}
-                  </div>)
-                }
               </div>
               <div className="side-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
                 <Box
@@ -637,7 +645,7 @@ const CaptainDash = () => {
                       >
                         My Honey Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -684,7 +692,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -783,25 +790,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
@@ -963,7 +953,7 @@ const CaptainDash = () => {
                       >
                         My Captain Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -1010,7 +1000,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -1109,25 +1098,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',

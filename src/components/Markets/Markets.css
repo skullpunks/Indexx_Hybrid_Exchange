@@ -179,18 +179,6 @@
 }
 
 
-.ant-pagination-item {
-  color: var(--body_color);
-  background-color: var(--body_background);
-}
-
-.ant-pagination-item-link, .ant-pagination-item-ellipsis {
-    /* display: inline-block;
-    min-width: 32px;
-    height: 32px; */
-    color: var(--body_color) !important;
-  background-color: var(--body_background) !important;
-}
 
 /* .ant-select, .ant-pagination-options {
   color: var(--body_color) !important;
