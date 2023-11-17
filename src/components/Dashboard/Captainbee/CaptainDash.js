@@ -824,7 +824,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {staticsData?.honeyBeesCount}
@@ -870,7 +870,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             ${'0.00'}
@@ -887,7 +887,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {'0.00'}{" "}
@@ -1132,7 +1132,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {staticsData?.captainsCount}
@@ -1178,7 +1178,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
@@ -1198,7 +1198,7 @@ const CaptainDash = () => {
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '25px' : '50px'}
-                            fontWeight={600}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {(staticsData?.affiliateUserTotalEarnings?.amountInINEX

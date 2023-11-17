@@ -295,7 +295,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 <Typography
                   variant="text"
                   fontSize={isMobile ? '25px' : '50px'}
-                  fontWeight={600}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   {captainBeeData?.honeyBees.length}
@@ -584,7 +584,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 <Typography
                   variant="text"
                   fontSize={isMobile ? '25px' : '50px'}
-                  fontWeight={600}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   {captainBeeData?.captainBees.length}
