@@ -83,7 +83,7 @@ const MyBees = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
               '&:hover': {
                 backgroundColor: '#FFB300',
@@ -113,7 +113,7 @@ const MyBees = () => {
               borderColor: '#FFB300',
               borderRadius: '2px',
               color: 'var(--body_color)',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -141,7 +141,7 @@ const MyBees = () => {
               borderRadius: '2px',
               color: 'var(--body_color)',
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -187,7 +187,7 @@ const MyBees = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
             }}
           >
@@ -212,7 +212,7 @@ const MyBees = () => {
               borderColor: '#E1E1E1', // Grey border color
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -236,7 +236,7 @@ const MyBees = () => {
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -293,7 +293,7 @@ const MyBees = () => {
             >
               <Grid
                 container
-                columns={{ xs: 1, sm: 12, md: 12 }}
+                columns={{ xs: 1, sm: 12, md: 9 }}
                 spacing={{ xs: 12, md: 2 }}
                 maxWidth={"1150px"}
                 rowSpacing={12}
