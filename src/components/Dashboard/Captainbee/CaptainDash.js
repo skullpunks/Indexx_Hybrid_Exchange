@@ -64,14 +64,14 @@ let priceData = {};
 const CaptainDash = () => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [platform, setPlatform] = useState('Exchange');
-  const [Order, setOrder] = useState('buysell');
-  const [selectedDate, setSelectedDate] = useState('aug-sept');
+  // const [platform, setPlatform] = useState('Exchange');
+  // const [Order, setOrder] = useState('buysell');
+  // const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
-  const [platformCapt, setPlatformCapt] = useState('Exchange');
-  const [OrderCapt, setOrderCapt] = useState('buysell');
-  const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
+  // const [platformCapt, setPlatformCapt] = useState('Exchange');
+  // const [OrderCapt, setOrderCapt] = useState('buysell');
+  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
   const [userType, setUserType] = useState("");
   // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -645,7 +645,7 @@ const CaptainDash = () => {
                       >
                         My Honey Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -692,7 +692,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -791,25 +790,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
@@ -971,7 +953,7 @@ const CaptainDash = () => {
                       >
                         My Captain Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -1018,7 +1000,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -1117,25 +1098,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',

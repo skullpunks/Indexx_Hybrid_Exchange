@@ -1,11 +1,15 @@
-import { Pagination, Table, Tabs } from 'antd';
+import { Button, Pagination, Table, Tabs } from 'antd';
 import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
 import { commissionList, decodeJWT, getCaptainBeeStatics, getUserWallets } from '../../../services/api'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { DatePicker  } from 'antd';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import moment, { Moment } from 'moment';
 
+const { RangePicker } = DatePicker;
 interface DataType {
   beeType?: string; // Made it optional since the response doesn't have this
   captainBeeEmail: string;
@@ -170,6 +174,25 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     },
   ];
 
+  const [selectedDateRange, setSelectedDateRange] = useState<[Moment | null, Moment | null]>([null, null]);
+  const handleDateChange = (dates:any) => {
+    setSelectedDateRange(dates);
+    console.log('Selected Date Range:', dates);
+  };
+
+  const filterDataByDate = (data: DataType[]): DataType[] => {
+    return selectedDateRange
+      ? data.filter((record) => {
+          const recordDate = new Date(record.created);
+          const startDate = selectedDateRange[0]?.startOf('day').toDate(); // Convert Moment to Date
+          const endDate = selectedDateRange[1]?.endOf('day').toDate(); // Convert Moment to Date
+          return startDate && endDate
+            ? recordDate >= startDate && recordDate <= endDate
+            : true;
+        })
+      : data;
+  };
+  
 
   const [sortedData, setSortedData] = useState<DataType[]>([]);
   const [commissionPaidData, setCommissionPaidData] = useState<CommissionDataType[]>([]);
@@ -178,7 +201,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
 
   useEffect(() => {
     getCommissionHistory();
-  }, []);
+  }, [selectedDateRange]);
 
   useEffect(() => {
     if (id) {
@@ -216,22 +239,53 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     }
   }
 
+  // const getData = (current: number, pageSize: number) => {
+  //   // Normally you should get the data from the server
+  //   const xx =
+  //     sortedData &&
+  //     sortedData.slice((current - 1) * pageSize, current * pageSize);
+
+  //   return xx;
+  // };
+
   const getData = (current: number, pageSize: number) => {
     // Normally you should get the data from the server
-    const xx =
-      sortedData &&
-      sortedData.slice((current - 1) * pageSize, current * pageSize);
+    const filteredData = filterDataByDate(sortedData);
+    const paginatedData =
+      filteredData && filteredData.slice((current - 1) * pageSize, current * pageSize);
 
-    return xx;
+    return paginatedData;
   };
-  const MyPagination = ({ total, onChange, current }: any) => {
+
+  // const MyPagination = ({ total, onChange, current }: any) => {
+  //   return (
+  //     <Pagination
+  //       onChange={onChange}
+  //       total={total}
+  //       current={current}
+  //       pageSize={pageSize}
+  //       // responsive={true}
+  //       style={{
+  //         padding: '5px',
+  //         textAlign: 'center',
+  //       }}
+  //     />
+  //   );
+  // };
+
+  const MyPagination: React.FC<{ total: number; onChange: (page: number) => void; current: number }> = ({
+    total,
+    onChange,
+    current,
+  }) => {
+    const totalPageCount = Math.ceil(total / pageSize);
+  
     return (
       <Pagination
         onChange={onChange}
-        total={total}
+        total={totalPageCount * pageSize} // Adjust the total based on the number of pages
         current={current}
         pageSize={pageSize}
-        // responsive={true}
         style={{
           padding: '5px',
           textAlign: 'center',
@@ -239,12 +293,44 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       />
     );
   };
+  
+  const navigate = useNavigate();
+
+
+  const disabledDate = (current: Moment) => {
+    return current && current > moment().endOf('day');
+  };
+
+  const handlePaginationChange = (page: number) => {
+    setCurrent(page);
+  };
 
   return (
     <div>
       <div
         className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
         Affiliate Report / Commission Report
+      </div>
+      <div className='d-flex ' style={{gap:10}}>
+        <div className='d-flex flex-direction-column w-50'>
+          Date Range
+          <RangePicker disabledDate={disabledDate} style={{height:"40px"}}
+           onChange={handleDateChange}  
+           />
+        </div>
+      <div className='d-flex w-50 align-items-end'  style={{gap:10}}>
+        <div className='w-50'>
+        <Button className='margin-r-1x com-btn w-100' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+        Withdraw INEX
+          </Button>
+        </div>
+        <div className='w-50'>
+        <Button className='margin-r-1x com-btn w-100' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
+          Withdraw USD
+          </Button>
+        </div>
+
+        </div>
       </div>
       <div className="margin-b-2x pt-3">
         <Table<CommissionDataType>
@@ -262,11 +348,12 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
           onChange={onChange}
           scroll={{ x: true }}
         />
-        <MyPagination
+        {/* <MyPagination
           total={sortedData && sortedData.length}
           current={current}
           onChange={setCurrent}
-        />
+        /> */}
+         <MyPagination total={filterDataByDate(sortedData).length} onChange={handlePaginationChange} current={current} />
       </div>
     </div>
   );

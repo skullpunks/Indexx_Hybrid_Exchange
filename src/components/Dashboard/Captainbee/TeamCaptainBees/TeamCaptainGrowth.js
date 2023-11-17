@@ -14,13 +14,13 @@ import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainGrowth = () => {
   const { id } = useParams();
-  const [platform, setPlatform] = useState('Exchange');
-  const [Order, setOrder] = useState('buysell');
-  const [selectedDate, setSelectedDate] = useState('aug-sept');
+  // const [platform, setPlatform] = useState('Exchange');
+  // const [Order, setOrder] = useState('buysell');
+  // const [selectedDate, setSelectedDate] = useState('aug-sept');
 
-  const [platformCapt, setPlatformCapt] = useState('Exchange');
-  const [OrderCapt, setOrderCapt] = useState('buysell');
-  const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
+  // const [platformCapt, setPlatformCapt] = useState('Exchange');
+  // const [OrderCapt, setOrderCapt] = useState('buysell');
+  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
 
   const [userType, setUserType] = useState("");
   const [staticsData, setStaticsData] = useState();
@@ -125,7 +125,7 @@ const TeamCaptainGrowth = () => {
             >
               My Honey Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -172,7 +172,6 @@ const TeamCaptainGrowth = () => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -271,25 +270,8 @@ const TeamCaptainGrowth = () => {
                     August-September
                   </MenuItem>
                 </Select>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',
@@ -451,7 +433,7 @@ const TeamCaptainGrowth = () => {
             >
               My Captain Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -498,7 +480,6 @@ const TeamCaptainGrowth = () => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -597,25 +578,8 @@ const TeamCaptainGrowth = () => {
                     August-September
                   </MenuItem>
                 </Select>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',

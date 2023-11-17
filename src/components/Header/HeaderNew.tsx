@@ -227,7 +227,9 @@ const HeaderNew = () => {
               index.ai
             </Navbar.Brand>
             {localStorage.getItem("userlogged") === 'normal' ? <></> :
-            <img src={hive} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  />
+            <a href={baseHiveURL}>
+              <img src={hive} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  />
+            </a>
             }
 
             {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
