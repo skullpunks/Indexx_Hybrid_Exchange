@@ -15,20 +15,6 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
   let allTxsdata = [];
   let access_token = String(localStorage.getItem("access_token"));
   let decoded: any = decodeJWT(access_token);
-  // onChange =>()= {
-  // let userWallets = await getUserWallets(decoded.email);
-  // // }
-  // useEffect( async() {
-  // await getUserWallets(decoded.email);
-  // }, []);
-
-  // getUserWallets(decoded.email).then((userWallets) => {
-  //     data = userWallets.data;
-  //     userWallets.data.map((wallet: any) => {
-  //         totalBalanceInUSD += parseFloat(wallet.coinWalletBalanceInUSD);
-  //     })
-  //     
-  // })
 
   getAllTransactions(decoded.email).then((userTxs) => {
     

@@ -77,7 +77,6 @@ const TeamCaptainDash = () => {
     if (userType === "CaptainBee") {
       if (username) {
         getCaptainBeeStatics(username).then((data) => {
-          console.log(data?.data);
           setStaticsData(data.data);
           if (data?.data?.powerPackData) {
             const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
@@ -87,10 +86,7 @@ const TeamCaptainDash = () => {
           }
         });
       }
-      console.log("I am if")
     } else {
-      console.log("I am else")
-
       getHoneyUserDetails(user).then((data) => {
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
@@ -112,7 +108,6 @@ const TeamCaptainDash = () => {
 
   useEffect(() => {
     const handleStorageChange = (event) => {
-      console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
     };
 
@@ -165,6 +160,7 @@ const TeamCaptainDash = () => {
             </div>
           </div>
 
+
           <Box
             className=" d-flex justify-content-center"
             sx={{
@@ -177,7 +173,7 @@ const TeamCaptainDash = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
               '&:hover': {
                 backgroundColor: '#FFB300',
@@ -189,7 +185,7 @@ const TeamCaptainDash = () => {
               CaptainBee
             </div>
             <div className="font_15x d-flex align-items-center">
-              {item.username}
+              {item.username} ({ item?.firstName + " " + item?.lastName})
             </div>
           </Box>
         </div>
@@ -207,7 +203,7 @@ const TeamCaptainDash = () => {
               borderColor: '#FFB300',
               borderRadius: '2px',
               color: 'var(--body_color)',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -235,7 +231,7 @@ const TeamCaptainDash = () => {
               borderRadius: '2px',
               color: 'var(--body_color)',
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -281,7 +277,7 @@ const TeamCaptainDash = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
               '&:hover': {
               },
@@ -311,7 +307,7 @@ const TeamCaptainDash = () => {
               borderColor: '#E1E1E1', // Grey border color
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -334,7 +330,7 @@ const TeamCaptainDash = () => {
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -392,7 +388,7 @@ const TeamCaptainDash = () => {
             >
               <Grid
                 container
-                columns={{ xs: 1, sm: 12, md: 12 }}
+                columns={{ xs: 1, sm: 12, md: 9 }}
                 spacing={{ xs: 12, md: 2 }}
                 maxWidth={"1150px"}
                 rowSpacing={12}
