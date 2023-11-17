@@ -733,6 +733,10 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
             Please make sure the payee and amount information is correct. Refunds are not supported
           </div>
           <br />
+          <div className="font_13x">
+            Please make sure the payee and amount information is correct. Refunds are not supported
+          </div>
+          <br />
           <div className='d-flex' style={{ gap: 10 }}>
             <Button
               className="continue-outlined-btn"
