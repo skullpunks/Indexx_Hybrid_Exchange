@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -1304,6 +1304,34 @@ export const commissionList = async (email: string) => {
   }
 };
 
+export const validateUserEmail = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getUserByEmail/${email}`
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (validateUserEmail)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const validateUsername = async (username: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getUserByUsername/${username}`
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (validateUsername)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
 export const redeemValue = async (voucher: string, email: string) => {
   try {
     const result = await API.post(
@@ -1448,6 +1476,54 @@ export const createFiatDeposit = async (
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createFiatWithdraw)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createSendTxByUsername = async (
+  toUsername: string,
+  amount: number,
+  fromEmail: string,
+  coin: string = 'USD'
+) => {
+  try {
+    const result = await API.post(
+      '/api/v1/inex/transaction/sendTxByUsername',
+      {
+        toUsername: toUsername,
+        amount: amount,
+        fromEmail: fromEmail,
+        coin: coin,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createSendTxByUsername)');
+    return e.response.data;
+  }
+};
+
+export const createSendTxByEmail = async (
+  toEmail: string,
+  amount: number,
+  fromEmail: string,
+  coin: string
+) => {
+  try {
+    const result = await API.post(
+      '/api/v1/inex/transaction/sendTxByEmail',
+      {
+        toEmail: toEmail,
+        amount: amount,
+        fromEmail: fromEmail,
+        coin: coin,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createSendTxByEmail)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
