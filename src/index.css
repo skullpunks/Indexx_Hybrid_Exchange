@@ -251,3 +251,22 @@ iframe {
     min-width: -webkit-fill-available;
   }
 }
+
+.ant-pagination-item, .ant-pagination-prev, .ant-pagination-next {
+  color: var(--body_color);
+  background-color: transparent !important;
+  border: none;
+}
+
+.ant-pagination-item-active{
+  color: var(--dark_text) !important;
+  font-weight: bolder;
+  background-color: transparent !important;
+  font-size: 16px;
+}
+
+.ant-pagination-item-link, .ant-pagination-item-ellipsis {
+    background-color: transparent !important;
+    color: var(--body_color) !important;
+    border: none !important;
+}

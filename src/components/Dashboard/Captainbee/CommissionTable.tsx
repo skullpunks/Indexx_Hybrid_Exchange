@@ -246,7 +246,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
         className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
         Affiliate Report / Commission Report
       </div>
-      <div className="border-b-1x margin-b-2x pt-3">
+      <div className="margin-b-2x pt-3">
         <Table<CommissionDataType>
           className="custom_table2"
           style={{ maxWidth: "94vw" }}

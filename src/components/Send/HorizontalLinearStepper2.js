@@ -414,6 +414,9 @@ const FileComponent2 = ({ onNext, onStateChange }) => {
               </div>
             </div>
           </div>
+          <div className="font_15x padding-t-1x">
+            Balance : 500 {selectedCoin}
+            </div>
           <br />
         <div className="">
           
@@ -496,13 +499,13 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
           <div className="font_15x">
             Funding Wallet
           <br />
-          <span className='font_13x'>{selectedCoin} Balance: 2000 {selectedCoin}</span>
+          <span className='font_13x'>Balance: 2000 {selectedCoin}</span>
           </div>
         </div>
         <br />
           <Box className="d-flex justify-content-between padding-t-1x">
           <Box minWidth={"100%"}>
-          <label className='fw-bold'>Payment Currency</label>
+          <label className='font_15x fw-bold'>Sending Asset</label>
           <div className=" d-flex flex-justify-between flex-align-center">
             <Select
               dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
@@ -559,7 +562,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmountt }) => {
         <div className="">
         <br />
         <div className="font_13x">
-          Please make sure the payee and amount information is correct. Refunds are not supporrted
+          Please make sure the payee and amount information is correct. Refunds are not supported
         </div>
           <br />
           <div className='d-flex' style={{gap:10}}>

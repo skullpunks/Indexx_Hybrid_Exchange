@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import wallet from '../../assets/BSheader/funding wallet_icon_new.svg';
+import wallet from '../../assets/BSheader/funding grey 1.svg';
 // import comingSoon from "../../assets/coming_soon.png";
 import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/api';
 

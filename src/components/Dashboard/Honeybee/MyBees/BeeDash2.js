@@ -67,7 +67,7 @@ const BeeDash2 = () => {
     <>
       <BeeHeader />
       <div style={{ paddingTop: "220px" }}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-556px" }}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-562px" }}>
           <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
           Waggle Dance / My Dashboard
         </div>
@@ -76,7 +76,7 @@ const BeeDash2 = () => {
             className="d-flex justify-content-between"
           // style={{ width: '76%', maxWidth: '1140px' }}
           >
-            <div className="d-flex flex-direction-column align-items-center mt-1">
+            <div className="d-flex flex-direction-column align-items-center mt-1" style={{ width: "280px" }}>
               <div className="d-flex  flex-direction-row align-items-center">
                 <div
                   style={{

@@ -31,6 +31,7 @@ import { useParams } from 'react-router-dom';
 import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndividual';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
+import loadingGif from '../../../../assets/beeloade.gif';
 
 const BeeDash = () => {
   const { id, userType } = useParams();
@@ -39,23 +40,36 @@ const BeeDash = () => {
   const [captainBeeData, setCaptainBeeData] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
   const [staticsData, setStaticsData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
 
-    getHoneyBeeDataByUsername(id).then((data) => {
-      console.log("Data.", data?.data);
-      setHoneyBeeData(data.data);
-      setHoneyBeeEmail(data?.data?.userFullData?.email);
-      setCaptainBeeData(data?.data?.referredUserData?.data2);
-    });
-    if (id) {
-      getCaptainBeeStatics(id).then((data) => {
-        setStaticsData(data.data);
-      });
-    }
+    const fetchData = async () => {
+      try {
+        const data = await getHoneyBeeDataByUsername(id);
+
+        console.log("Data.", data?.data);
+        setHoneyBeeData(data.data);
+        setHoneyBeeEmail(data?.data?.userFullData?.email);
+        setCaptainBeeData(data?.data?.referredUserData?.data2);
+        if (id) {
+          const captdata = await getCaptainBeeStatics(id);
+            setStaticsData(captdata.data);
+        }
+        setIsLoading(false); 
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false); 
+          }
+          finally {
+            setIsLoading(false);
+          }
+    };
+
+    fetchData();
   }, [id])
 
   const [theme, setTheme] = useState(
@@ -78,18 +92,43 @@ const BeeDash = () => {
   return (
     <>
       <SubHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your Honey Bee's Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       {userType === "HoneyBee" ?
         (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-422px"}` }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-429px"}` }}>
             {userType === "CaptainBee" ? "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" : "Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
           </div>
           <div className="hive-container">
             <div
-              className="d-flex justify-content-between"
+              className="d-flex justify-content-center"
               // style={{ width: '86%', maxWidth: '1140px' }}
               style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
             >
-              <div className="d-flex flex-direction-column align-items-center mt-1">
+              <div className="d-flex flex-direction-column align-items-center mt-1" style={{ width: `${isMobile ? "100%" : "280px"}` }}>
                 <div className="d-flex  flex-direction-row align-items-center">
                   <div
                     style={{

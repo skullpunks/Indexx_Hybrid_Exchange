@@ -9,6 +9,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
+import hive from "../../assets/BSheader/hive logo HD2 1.svg";
 // import Bellicon from "../../assets/arts/Bellicon.png";
 // import headerstar from "../../assets/header-icons/Products/CEX.png";
 // import headerdex from "../../assets/header-icons/Products/DEX.png";
@@ -221,10 +222,14 @@ const HeaderNew = () => {
     return (
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container style={{ maxWidth: "1360px" }}>
-          <div className="d-flex logo__holder">
+          <div className="d-flex logo__holder" style={{marginLeft:`${localStorage.getItem("userlogged") === 'normal' ? "" : "-50px"}`}}>
             <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
+            {localStorage.getItem("userlogged") === 'normal' ? <></> :
+            <img src={hive} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  />
+            }
+
             {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
               {pageName || showText[0]}
             </Nav.Link> */}
