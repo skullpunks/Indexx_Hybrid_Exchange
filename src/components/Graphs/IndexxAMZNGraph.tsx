@@ -209,9 +209,17 @@ const IndexxAMZNGraph = () => {
                             padding={{ right: 20 }}
                         />
                         <YAxis
-                            stroke="#5f5f5f"
+                            // stroke="#5f5f5f"
+                            // padding={{ top: 20 }}
+                            // tick={{ fill: '#5f5f5f' }}
+                            // domain={['auto', 'auto']}
+                            // // remove this line or set it to false
+                            // // hide={true} 
+                            // minTickGap={90}
+
+                            stroke="var(--body_color)"
                             padding={{ top: 20 }}
-                            tick={{ fill: '#5f5f5f' }}
+                            tick={{ fill: 'var(--body_color)' }}
                             domain={['auto', 'auto']}
                             // remove this line or set it to false
                             // hide={true} 

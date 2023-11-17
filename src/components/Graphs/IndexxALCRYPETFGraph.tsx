@@ -172,7 +172,7 @@ const IndexxALCRYPETFGraph = () => {
                     <br></br>
                     {/* Chart Display */}
                     <AreaChart
-                        margin={{ left: -60, right: -19, top: 10 }}
+                         margin={{ left: -9, right: -40, top: 10 }}
                         className={styles.graphBackground}
                         width={width}
                         height={height}
