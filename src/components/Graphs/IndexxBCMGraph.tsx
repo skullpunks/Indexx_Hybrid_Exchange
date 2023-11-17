@@ -174,7 +174,7 @@ const IndexxBCMGraph = () => {
                     <br></br>
                     {/* Chart Display */}
                     <AreaChart
-                        margin={{ left: -60, right: -19, top: 10 }}
+                         margin={{ left: -9, right: -40, top: 10 }}
                         className={styles.graphBackground}
                         width={width}
                         height={height}
@@ -207,13 +207,21 @@ const IndexxBCMGraph = () => {
                             padding={{ right: 20 }}
                         />
                         <YAxis
-                          stroke="#5f5f5f"
-                          padding={{ top: 20 }}
-                          tick={{ fill: '#5f5f5f' }}
-                          domain={['auto', 'auto']}
-                          // remove this line or set it to false
-                          // hide={true} 
-                          minTickGap={90}
+                         // stroke="#5f5f5f"
+                            // padding={{ top: 20 }}
+                            // tick={{ fill: '#5f5f5f' }}
+                            // domain={['auto', 'auto']}
+                            // // remove this line or set it to false
+                            // // hide={true} 
+                            // minTickGap={90}
+
+                            stroke="var(--body_color)"
+                            padding={{ top: 20 }}
+                            tick={{ fill: 'var(--body_color)' }}
+                            domain={['auto', 'auto']}
+                            // remove this line or set it to false
+                            // hide={true} 
+                            minTickGap={90}
                         />
                         <Tooltip
                             // className={styles.customTooltip}
