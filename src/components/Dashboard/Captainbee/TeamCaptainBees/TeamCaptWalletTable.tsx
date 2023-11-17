@@ -136,7 +136,7 @@ const TeamCaptWalletTable: React.FC<TeamCaptWalletTableProps> = ({ email }) => {
                 compare: (a, b) => a.coinBalance - b.coinBalance,
                 multiple: 5,
             },
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
 
     ];
@@ -242,13 +242,17 @@ const TeamCaptWalletTable: React.FC<TeamCaptWalletTableProps> = ({ email }) => {
 
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
                 <Tabs.TabPane tab="Balance" key="1" className=''>
-                    <div className='border-b-1x margin-b-2x'>
+                    <div className='margin-b-2x'>
                         <div className='checkbox-container my-2' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}
+                                        
+                        />
                         <MyPagination
                             total={sortedData && sortedData.length}
                             current={current}

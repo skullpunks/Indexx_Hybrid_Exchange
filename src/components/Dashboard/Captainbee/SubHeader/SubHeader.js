@@ -55,35 +55,13 @@ const SubHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col"  style={{marginLeft:"-17px"}}>
-        <Link to="/indexx-exchange/dashboard/capt-mybees">
-            <div className="card">
-            <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
-            <div className="card-body">
-                <h5 className="card-title">My Honey Bees</h5>
-            <Typography
-                component='p'
-                sx={
-                  location.pathname === '/indexx-exchange/dashboard/capt-mybees' ||
-                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('HoneyBee'))
-                    ? {
-                      height: '0.07px',
-                      width: '72px',
-                      backgroundColor: '#000',
-                    }
-                    : null
-                }
-              ></Typography>
-            </div>
-            </div>
-        </Link>
-        </div>
+        
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-mycaptains">
             <div className="card">
             <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
-                <h5 className="card-title">Captain Bee's Colony</h5>
+                <h5 className="card-title">My Colony</h5>
             <Typography
                 component='p'
                 sx={
@@ -123,7 +101,30 @@ const SubHeader = () => {
             </div>
         </Link>
         </div>
-        <div className="col" style={{marginLeft:"-5px"}}>
+        <div className="col"  style={{marginLeft:"-5px"}}>
+        <Link to="/indexx-exchange/dashboard/capt-mybees">
+            <div className="card">
+            <img src={bee} className="card-img-top" alt="..." style={{marginTop:"6.5px"}}/>
+            <div className="card-body">
+                <h5 className="card-title">My Honey Bees</h5>
+            <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-mybees' ||
+                  (location.pathname.startsWith('/indexx-exchange/dashboard/capt-mybees') && location.pathname.endsWith('HoneyBee'))
+                    ? {
+                      height: '0.07px',
+                      width: '72px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </Link>
+        </div>
+        <div className="col" style={{marginLeft:"-15px"}}>
         <a href="/indexx-exchange/dashboard/capt-profile">
             <div className="card">
             <img src={pen} className="card-img-top " alt="..." />

@@ -26,7 +26,7 @@ import twitter_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/twit
 import insta_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
 import linkedin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
 import discord_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
-
+import loadingGif from '../../../assets/beeloade.gif';
 
 import arrow from '../../../assets/hive-dashboard/Arrow 1.svg';
 // import bronze from "../../../assets/Rank Badges/1 bronze.svg";
@@ -49,22 +49,29 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import CommissionTable from './CommissionTable';
+import { Button } from 'antd';
+let appSettingArr = [];
+let priceData = {};
 
 const CaptainDash = () => {
-  const [platform, setPlatform] = useState('Exchange');
-  const [Order, setOrder] = useState('buysell');
-  const [selectedDate, setSelectedDate] = useState('aug-sept');
+
+  const [isLoading, setIsLoading] = useState(true);
+  // const [platform, setPlatform] = useState('Exchange');
+  // const [Order, setOrder] = useState('buysell');
+  // const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
-  const [platformCapt, setPlatformCapt] = useState('Exchange');
-  const [OrderCapt, setOrderCapt] = useState('buysell');
-  const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
+  // const [platformCapt, setPlatformCapt] = useState('Exchange');
+  // const [OrderCapt, setOrderCapt] = useState('buysell');
+  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
   const [userType, setUserType] = useState("");
   // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -90,32 +97,150 @@ const CaptainDash = () => {
   //   'Page G',
   // ];
 
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
+  const [message, setMessage] = useState();
   const [staticsData, setStaticsData] = useState();
+  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState({
+    total: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+  });
+  const [rateData, setRateData] = useState();
+  const [adminFee, setAdminFees] = useState('');
+  const [loadings, setLoadings] = useState(false);
+  const [subscription, setSubscription] = useState(null);
+  const [checkSubscription, setCheckSubscription] = useState(null);
+
+
+
+
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    const nextPurchaseDate = staticsData?.nextPurchaseDate;
+    if (!nextPurchaseDate) return;
 
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
-        } else {
-          setPowerPackPhoto(undefined);
+    const updateTimer = () => {
+      const remaining = calculateTimeRemaining(nextPurchaseDate);
+      setTimeRemaining(remaining);
+    };
+
+    updateTimer();
+    const intervalId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [staticsData?.nextPurchaseDate]);
+
+  function calculateTimeRemaining(endTime) {
+    const total = Date.parse(endTime) - Date.now();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    return {
+      total, days, hours, minutes, seconds
+    };
+  }
+
+  const getPricesData = async () => {
+    const res = await getCoinPriceByName(String("INEX"));
+    priceData = res.data.results.data;
+    setRateData(priceData);
+
+    let oneUsdValue = await oneUSDHelper(
+      priceData,
+      "INEX"
+    );
+    const finalPay =
+      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    setTotalAmountToPay(finalPay);
+  };
+
+  const getAllSetting = async () => {
+    const res = await getAppSettings();
+    appSettingArr = res.data;
+    let adminFees = appSettingArr.find(
+      (item) => item.key === 'IndexxTokensAdminFees'
+    );
+    setAdminFees(adminFees.value);
+    return;
+  };
+
+
+  const handleCreateSubscription = async () => {
+    try {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
+      if (res.status === 200) {
+        console.log("res", res);
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes("approve")) {
+            window.location.href = res.data.links[i].href;
+          }
         }
-        if (data?.data?.affiliateUserProfile?.rank) {
-          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-          setRankPhoto(getRank?.photo);
-        } else {
-          const getRank = RankData.find(x => x.name === "Bronze")
-          setRankPhoto(getRank?.photo);
-        }
-      });
+      } else {
+        console.log("something went wrong");
+      }
+    } catch (err) {
+      console.log("err", err)
     }
-  }, [])
+  };
+
+  const handleCancelSubscription = async () => {
+    try {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await cancelMonthlyINEXsubscription(decoded.email, subscription?.paypalSubscriptionDetails?.id, "Cancelling the subscription");
+      console.log("Res", res);
+
+    } catch (err) {
+      console.log("err", err)
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userType = localStorage.getItem("userType") || undefined;
+        const username = localStorage.getItem("username") || undefined;
+  
+        setUserType(userType);
+  
+        if (userType === "CaptainBee" && username) {
+          const data = await getCaptainBeeStatics(username);
+          setStaticsData(data.data);
+  
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+  
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+  
+          if (data?.data?.paypalSubscriptionDetails) {
+            setSubscription(data?.data?.paypalSubscriptionDetails);
+            const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+            setCheckSubscription(hasValidSubscription);
+          }
+        }
+  
+        setIsLoading(false); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); 
+      }
+    };
+  
+    fetchData();
+  }, []);
 
 
   const [theme, setTheme] = useState(
@@ -141,21 +266,71 @@ const CaptainDash = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
+  const createNewBuyOrder = async () => {
+    setLoadings(true);
+    let basecoin = "INEX";
+    let quotecoin = "USD";
+    let amount = 300;
+    let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+    let res;
+    res = await createINEXBuyOrder(basecoin, quotecoin, amount, outAmount);
+    if (res.status === 200) {
+      setLoadings(false);
+      //--Below code is to enable paypal Order---
+      for (let i = 0; i < res.data.links.length; i++) {
+        if (res.data.links[i].rel.includes("approve")) {
+          window.location.href = res.data.links[i].href;
+        }
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+    }
+  };
+
   return (
     <>
       <SubHeader />
-      {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: "220px" }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-570px" }}>
+      {isLoading && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      backdropFilter:"blur(8px)",
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 995,
+      pointerEvents: 'none',
+    }}
+  >
+    <img src={loadingGif} alt="Loading" />
+    <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+      Please wait while Waggle Dance is loading
+      <span className="dots-animation"></span>
+    </p>
+  </div>
+)}
+
+    {(!isLoading && userType === "CaptainBee") ? 
+        (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
             <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
             Waggle Dance / My Dashboard
           </div>
           <div className="hive-container">
             <div
-              className="d-flex justify-content-between"
-            // style={{ width: '74%', maxWidth: '1140px' }}
+              className="d-flex justify-content-center"
+              // style={{ width: '74%', maxWidth: '1140px' }}
+              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
             >
-              <div className="d-flex flex-direction-column mt-1" style={{ width: "17%" }}>
+              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
                 <div className="d-flex  flex-direction-column align-items-center">
                   <div
                     style={{
@@ -198,14 +373,14 @@ const CaptainDash = () => {
                     />
                   </div>
                 </div>
-                <div className="font_20x align-items-start fw-bold mt-4 mb-4 lh_32x">
+                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
                 {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                   (<div className="justify-content-center d-flex">
-                    <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                    <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                   </div>) : (
-                    <div>
+                    <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
                       Please purchase the powerpack from the below URL: <br />
                       <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                         Power Pack Purchase
@@ -213,8 +388,59 @@ const CaptainDash = () => {
                     </div>
                   )
                 }
-                <div className="align-items-start lh_32x">
+                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                {(!subscription?.paypalSubscriptionDBData) ?
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_15x">
+                      Subscribe to your $300 monthly INEX investment today
+                    </div>
+                    <div style={{width:"100%"}}>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                        onClick={handleCreateSubscription}
+                        style={{width:"100%", height:"auto", color:"#393939"}}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>)
+                  :
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      $300 INEX Subscription Details
+                    </div>
+                    <div className="font_13x mt-3">
+                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                    </div>
+                    <div className="font_13x">
+                      Status: {subscription?.paypalSubscriptionDetails?.status}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                    </div>
+                    {/* <div>
+                      <Button
+                        type="danger"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCancelSubscription}
 
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div> */}
+                  </div>)
+                }
+                </div>
+
+                <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+
+                  {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+                  <div className="fw-bold">Bio :</div>
+                  {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
+                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
+                  in indexx hive`}
+                </div> */}
                   <div className="font_13x d-flex align-items-center mt-4">
                     {theme === "dark" ?
                       <img alt="man" src={man_dark} className="me-1" />
@@ -269,7 +495,7 @@ const CaptainDash = () => {
                   }
                 </div>
 
-                <div className="align-items-start lh_32x mt-4">
+                <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                     {theme === "dark" ?
                       <img alt="man" src={discord_dark} className="me-3" />
@@ -301,39 +527,39 @@ const CaptainDash = () => {
 
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start  mt-5">
+                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div>
-                  <span className='fw-bold'>
-                    Invite Honey Bee : 
-                  </span>
-                    <br/>
+                    <span className='fw-bold'>
+                      Invite Honey Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                   <br />
                   <div>
-                  <span className='fw-bold'>
-                    Invite Captain Bee : 
-                  </span>
-                    <br/>
+                    <span className='fw-bold'>
+                      Invite Captain Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseHiveURL +
+                        "/sign-up?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                 </div>
 
-                <div className="d-flex  flex-direction-column align-items-start mt-5">
+                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
                     Your Rating
                   </div>
@@ -344,8 +570,41 @@ const CaptainDash = () => {
                     95%
                   </div>
                 </div>
+{/* 
+                {timeRemaining?.days &&
+                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                  <div className="font_13x ">
+                    Next Monthly INEX Order Deadline
+                  </div>
+                  <div className="font_20x mt-3">
+                    {staticsData?.nextPurchaseDate}
+                  </div>
+                </div>
+                } */}
+                  {/* <div className="font_20x mt-3">
+                    {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
+                    <br />
+                    {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
+                    {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
+                  </div> */}
+                  {/* {timeRemaining?.days < 15 && (
+                    <div>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover"
+                        block
+                        onClick={() => createNewBuyOrder()}
+                        loading={loadings}
+                      >
+                        Buy 300 INEX now
+                      </Button>
+                    </div>
+                  )} */}
+                {/* </div> */}
+
+
               </div>
-              <div className="side-container">
+              <div className="side-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -358,8 +617,8 @@ const CaptainDash = () => {
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'row',
-                      gap: 2,
+                      flexDirection: `${isMobile ? "column" : "row"}`,
+                      gap: isMobile ? 4 : 2,
                       mt: 2
                     }}
                   >
@@ -368,7 +627,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: '50%',
+                        width: `${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography
@@ -386,7 +645,7 @@ const CaptainDash = () => {
                       >
                         My Honey Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -433,7 +692,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -532,25 +790,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
@@ -566,14 +807,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -582,8 +823,8 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {staticsData?.honeyBeesCount}
@@ -612,14 +853,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -628,15 +869,15 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
-                             ${'0.00'}
+                            ${'0.00'}
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -645,13 +886,13 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {'0.00'}{" "}
                             <span className='font_17x'>
-                            INEX
+                              INEX
                             </span>
                           </Typography>
                           <Typography
@@ -694,7 +935,7 @@ const CaptainDash = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: '50%',
+                        width: `${isMobile ? "100%" : "50%"}`,
                       }}
                     >
                       <Typography
@@ -712,7 +953,7 @@ const CaptainDash = () => {
                       >
                         My Captain Bee Statistics
                       </Typography>
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -759,7 +1000,6 @@ const CaptainDash = () => {
                             size="small"
                             disableUnderline
                           >
-                            {/* <MenuItem value="">Select Platform</MenuItem> */}
                             <MenuItem key="Exchange" value="Exchange">
                               Indexx Exchange
                             </MenuItem>
@@ -858,25 +1098,8 @@ const CaptainDash = () => {
                               August-September
                             </MenuItem>
                           </Select>
-
-                          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
                         </Box>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
@@ -892,14 +1115,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -908,8 +1131,8 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {staticsData?.captainsCount}
@@ -938,14 +1161,14 @@ const CaptainDash = () => {
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: 2,
+                            px: isMobile ? 1 : 2,
                             py: 1,
                             aspectRatio: 1
                           }}
                         >
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -954,8 +1177,8 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
@@ -965,7 +1188,7 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'12px'}
+                            fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
                             textAlign={'left'}
                             alignSelf={'flex-start'}
@@ -974,8 +1197,8 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
+                            fontSize={isMobile ? '25px' : '50px'}
+                            // fontWeight={600}
                             textAlign={'left'}
                           >
                             {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
@@ -983,7 +1206,7 @@ const CaptainDash = () => {
                               : '0.00')
                             } {" "}
                             <span className='font_17x'>
-                            INEX
+                              INEX
                             </span>
                           </Typography>
                           <Typography
@@ -1030,7 +1253,8 @@ const CaptainDash = () => {
             </div>
           </div>
         </div>) :
-        <><BeeDash2 />
+        <>
+        {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
         </>
       }
     </>

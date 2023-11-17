@@ -16,6 +16,7 @@ import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/hou
 import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
 import email_dark from '../../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone_dark from '../../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
+import loadingGif from '../../../../assets/beeloade.gif';
 
 import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
 import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
@@ -54,6 +55,8 @@ import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useParams } from 'react-router-dom';
 import { RankData } from '../../RankData';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainDashIndividual = () => {
   const { id } = useParams();
@@ -67,48 +70,64 @@ const TeamCaptainDashIndividual = () => {
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
 
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      getCaptainBeeStatics(id).then((data) => {
-        console.log("teamcaptaindash",data?.data);
-        setStaticsData(data.data);
-        if (data?.data?.powerPackData) {
-          const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-          setPowerPackPhoto(getPowerPack?.photo);
+    const fetchData = async () => {
+      try {
+        const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+        const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+
+        setUserType(userType);
+        if (userType === "CaptainBee") {
+          if (id) {
+
+              const data = await getCaptainBeeStatics(id);
+              setStaticsData(data.data);
+              if (data?.data?.powerPackData) {
+                const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+                setPowerPackPhoto(getPowerPack?.photo);
+              } else {
+                setPowerPackPhoto(undefined);
+              }
+              if (data?.data?.affiliateUserProfile?.rank) {
+                const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+                setRankPhoto(getRank?.photo);
+              } else {
+                const getRank = RankData.find(x => x.name === "Bronze")
+                setRankPhoto(getRank?.photo);
+              }
+          }
+          console.log("I am if")
         } else {
-          setPowerPackPhoto(undefined);
-        }
-        if (data?.data?.affiliateUserProfile?.rank) {
-          const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-          setRankPhoto(getRank?.photo);
-        } else {
-          const getRank = RankData.find(x => x.name === "Bronze")
-          setRankPhoto(getRank?.photo);
-        }
-      });
-      console.log("I am if")
-    } else {
-      console.log("I am else")
+          console.log("I am else")
 
-      getHoneyUserDetails(user).then((data) => {
-        setHoneybeeCreateDate(data.data.accountCreationDate);
-        setHoneyBeeData(data?.data?._doc);
-      })
+          const honeyUserData = await getHoneyUserDetails(user);
+            setHoneybeeCreateDate(honeyUserData.data.accountCreationDate);
+            setHoneyBeeData(honeyUserData?.data?._doc);
+          
 
-      getReferredUserDetails(user).then((data) => {
-        setRefferedUserData(data.data)
-        setCaptainbeeCreateDate(data.data.accountCreationDate);
-        setCaptainbeeOrders(data.data.totalOrder);
-        setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
-    }
+          const referredUserData = await getReferredUserDetails(user);
+            setRefferedUserData(referredUserData.data)
+            setCaptainbeeCreateDate(referredUserData.data.accountCreationDate);
+            setCaptainbeeOrders(referredUserData.data.totalOrder);
+            setCaptainbeeUsers(referredUserData.data.honeyBeesCount);
+        }
+        setIsLoading(false); 
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false); 
+          }
+          finally {
+            setIsLoading(false);
+          }
+    };
+
+    fetchData();
   }, [])
 
-  console.log(staticsData, "data");
+  console.log(isLoading, "load");
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || "light"
   );
@@ -131,284 +150,48 @@ const TeamCaptainDashIndividual = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
-  // Define a function to render a single Honey Bee box.
-  const renderHoneyBeeBox = (item) => (
-    <Grid item xs={1} sm={6} md={3} >
-      <div className="d-flex flex-direction-column">
-        <div className="d-flex align-items-center">
-          <div
-            style={{
-              width: '80px',
-              height: '80px',
-              backgroundImage: `url(${frame})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              position: 'relative',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-              // border:"none"
-            }}
-          >
-            <div
-              className="bee-hexagon"
-              // style={{ marginBottom: '7px' }}
-            >
-              <img
-                alt=""
-                src={item?.profilePic === undefined ? dummy : item?.profilePic}
-                width={'63px'}
-                height={'66px'}
-                ml={'-6px'}
-                border={'none'}
-              />
-            </div>
-          </div>
-
-          <Box
-            className=" d-flex justify-content-center"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
-              backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
-              height: '50px',
-              marginLeft: '-35px',
-              pl: 4,
-              width: '211px',
-              transition: "0.3s ease-in-out",
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-              },
-            }}
-          >
-            <div className="font_15x d-flex align-items-center">
-              CaptainBee
-            </div>
-            <div className="font_15x d-flex align-items-center">
-              {item.username}
-            </div>
-          </Box>
-        </div>
-        <div
-          className="d-flex align-items-center justify-content-start mt-1"
-          style={{ marginLeft: '14px' }}
-        >
-          <Button
-            variant="outlined"
-            href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
-            // onClick={handleSubmit}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              color: 'var(--body_color)',
-              width: '120px',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '10px',
-              boxShadow: 'none',
-              transition: "0.3s ease-in-out",
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                boxShadow: 'none',
-                color: 'var(--body_color)',
-                // color: '#282828',
-              },
-            }}
-          >
-            Exchange
-          </Button>
-          <Button
-            variant="outlined"
-            // onClick={handleSubmit}
-            href={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/CaptainBee`}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              color: 'var(--body_color)',
-              // color: '#282828',
-              width: '120px',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '10px',
-              boxShadow: 'none',
-              transition: "0.3s ease-in-out",
-              ml: 0.3,
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                // color: '#282828',
-                color: 'var(--body_color)',
-                boxShadow: 'none',
-              },
-            }}
-          >
-            DashBoard
-          </Button>
-        </div>
-      </div>
-    </Grid>
-  );
-
-  // Calculate the number of empty boxes to render.
-  const availableBeesCount = staticsData?.captainBeeRegisteredRequiredData?.length || 0;
-  const emptyBoxesCount = Math.max(6 - availableBeesCount, 0);
-
-  // Define a function to render an empty Honey Bee box with the same styling as available users.
-  const renderEmptyHoneyBeeBox = (index) => (
-    <Grid item xs={1} sm={6} md={3}>
-      <div className="d-flex flex-direction-column">
-        <div className="d-flex align-items-center">
-        <img src={greyman} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
-
-          <Box
-            className=" d-flex justify-content-center"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
-              backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
-              height: '50px',
-              marginLeft: '-35px',
-              pl: 4,
-              width: '211px',
-              transition: "0.3s ease-in-out",
-              '&:hover': {
-              },
-            }}
-          >
-            <div className="font_15x d-flex align-items-center">
-              Captain Bee
-            </div>
-            <div className="font_15x d-flex align-items-center">
-              {/* You can add any placeholder text here */}
-            </div>
-          </Box>
-        </div>
-        <div
-          className="d-flex align-items-center justify-content-start mt-1"
-          style={{ marginLeft: '14px' }}
-        >
-          <Button
-            variant="outlined"
-            // onClick={handleSubmit}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              // borderColor: '#FFB300',
-              // borderRadius: '2px',
-              // color: 'var(--body_color)',
-              borderColor: '#E1E1E1', // Grey border color
-              borderRadius: '2px',
-              color: '#E1E1E1', // Grey text color
-              width: '120px',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '10px',
-              boxShadow: 'none',
-              transition: "0.3s ease-in-out",
-              '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
-              },
-            }}
-          >
-            Exchange
-          </Button>
-          <Button
-            variant="outlined"
-            // onClick={handleSubmit}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#E1E1E1', // Grey border color
-              borderRadius: '2px',
-              color: '#E1E1E1', // Grey text color
-              // color: '#282828',
-              width: '120px',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '10px',
-              boxShadow: 'none',
-              transition: "0.3s ease-in-out",
-              ml: 0.3,
-              '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
-              },
-            }}
-          >
-            DashBoard
-          </Button>
-        </div>
-      </div>
-    </Grid>
-  );
-
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
     <>
       <SubHeader />
-      {/* {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: "220px" }}>
-          <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: "30%", textAlign: "center" }}>
-              These are the Captain Bees that are part of your Hex Colony. Select one to guide them
-            </div>
-          </div>
-          <div className="hive-container d-flex">
-            <Box
-              sx={{
-                width: '73%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 2,
-              }}
-            >
-              <Grid
-                container
-                // columns={{ xs: 1, sm: 12, md: 12 }}
-                spacing={{ xs: 1, md: 2 }}
-                maxWidth={"1150px"}
-                rowSpacing={12}
-              >
+      {isLoading ?
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your Team Captain Bee's Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      :
+      <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-480px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
-                {staticsData?.captainBeeRegisteredRequiredData?.map(renderHoneyBeeBox)}
-                {Array.from({ length: emptyBoxesCount }, (_, index) => (
-                  renderEmptyHoneyBeeBox(index)
-                ))}
-              </Grid>
-
-            </Box>
-          </div>
-          <div>
-          </div>
-        </div>) :
-        <><HoneyBeeComingSoon />
-        </>
-      } */}
-      <div style={{ paddingTop: "220px" }}>
-        <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-484px" }}>
- 
-          Team Captain Bee {staticsData?.affiliateUserProfile?.accname} Dashboard
+          Team Captain Bee's Waggle Dance / Dashboard
         </div>
         <div className="hive-container">
           <div
-            className="d-flex justify-content-between"
+            className="d-flex justify-content-center"
+            style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
           >
-            <div className="d-flex flex-direction-column align-items-center mt-1 ps-4">
+            <div className="d-flex flex-direction-column align-items-center mt-1"  style={{ width: `${isMobile ? "100%" : "258px"}` }}>
               <div
                 style={{
                   width: '193px',
@@ -444,7 +227,7 @@ const TeamCaptainDashIndividual = () => {
                     position: 'absolute',
                     bottom: '-25px',
                     right: '17px',
-                    width: '79px', 
+                    width: '79px',
                     height: '81px',
                   }}
                 />
@@ -484,7 +267,7 @@ const TeamCaptainDashIndividual = () => {
                       :
                       <img alt="man" src={pin} className="me-2" />
                     }
-                    {staticsData?.affiliateUserProfile?.country? staticsData?.affiliateUserProfile?.country :" NA"}
+                    {staticsData?.affiliateUserProfile?.country ? staticsData?.affiliateUserProfile?.country : " NA"}
                   </div>
                   <div className="font_13x d-flex align-items-center">
                     {theme === "dark" ?
@@ -558,31 +341,31 @@ const TeamCaptainDashIndividual = () => {
 
                 <div className="d-flex flex-direction-column align-items-start mt-5">
                   <div>
-                  <span className='fw-bold'>
-                    Invite Honey Bee : 
+                    <span className='fw-bold'>
+                      Invite Honey Bee :
                     </span>
-                    <br/>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
                   <br />
                   <div>
-                  <span className='fw-bold'>
-                    Invite Captain Bee : 
-                  </span>
-                  <br />
+                    <span className='fw-bold'>
+                      Invite Captain Bee :
+                    </span>
+                    <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    staticsData?.userFullData?.referralCode)}
+                      onClick={() => copyClick(baseHiveURL +
+                        "/sign-up?referral=" +
+                        staticsData?.userFullData?.referralCode)}
                       style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                     />
                   </div>
@@ -602,12 +385,13 @@ const TeamCaptainDashIndividual = () => {
 
               </div>
             </div>
-            <div className="side-container" style={{marginLeft:"10px"}}>
-              <TeamCaptainTabs email={staticsData?.userFullData?.email}/>
+            <div className="side-container" style={{  marginTop: `${isMobile ? "40px" : "0px"}` }}>
+              <TeamCaptainTabs email={staticsData?.userFullData?.email} />
             </div>
           </div>
         </div>
       </div>
+      }
     </>
   );
 };

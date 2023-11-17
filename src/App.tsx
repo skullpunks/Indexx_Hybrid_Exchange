@@ -94,7 +94,9 @@ import Bridge from "./components/Bridge/Bridge";
 import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
 import Footer from "./components/Footer/Footer";
 import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
-// import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
+import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
+import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
+import HorizontalLinearStepper2 from "./components/Send/HorizontalLinearStepper2";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -150,7 +152,6 @@ function App() {
   const themeClass = `theme-${userLogged}`;
   
   const PrivateRoutes = () => {
-    // let auth = {'token':true}
   const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
   const isAllowed =  localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false"
 
@@ -167,8 +168,8 @@ function App() {
     return <Outlet/>
 
   }
+  console.log(window.location.pathname, "path");
   
-  // const isAuthenticated = localStorage.getItem("access_token") !== undefined || localStorage.getItem("access_token") !== null
   return (
     <ThemeProvider theme={theme}>
     <div className={themeClass}>
@@ -176,7 +177,11 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew /> 
-        {/* <PowerPackHeader/> */}
+        { (!window.location.pathname.includes("login") && !window.location.pathname.includes("dashboard") &&
+          !window.location.pathname.includes("get-started") && !((localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) && window.location.pathname === "/")) ? 
+          <PowerPackHeader/>
+          :null
+        }
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />
@@ -185,6 +190,8 @@ function App() {
           }
 
         <Route element={<PrivateRoutes/>}>
+          <Route path="/indexx-exchange/send" element={<HorizontalLinearStepper2 />} />
+
           <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
           <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
@@ -209,6 +216,7 @@ function App() {
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
+          <Route path="/indexx-exchange/subscribe-success" element={<SubscribeSuccess />} />
 
           <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
           <Route path="/indexx-exchange/bridge" element={<Bridge />} />

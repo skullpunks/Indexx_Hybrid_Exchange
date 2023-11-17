@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import AdvanceVerfication from "../../assets/arts/AdvanceVerfication.svg";
 import BasicVerfication from "../../assets/arts/BasicVerfication.svg";
+import HiveVerfication from "../../assets/arts/new_arts/3 dots.svg";
 import { decodeJWT, getUserDetails } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 
@@ -67,7 +68,7 @@ const BasicInfo = () => {
                                 Personal Verification
                             </span>
                             <div className="d-flex align-items-center border-1x-orange padding-1x">
-                                <div><img src={BasicVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
+                                <div><img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"} /></div>
                                 <div>
                                     <h2 className="font_18x margin-b-0">Basic Verification</h2>
                                     {/* <div className="font_12x text_link">Region currently not supported </div> */}
@@ -77,7 +78,7 @@ const BasicInfo = () => {
                             <div className={(!userData?.isKYCPass) ? "d-flex align-items-center border margin-t-2x padding-1x" : "d-flex align-items-center border-1x-orange padding-1x"}>
                                 {(!userData?.isKYCPass)
                                     ? <div><img src={AdvanceVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
-                                    : <div><img src={BasicVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
+                                    : <div><img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  /></div>
                                 }
                                 <div>
                                     <h2 className="font_18x margin-b-0">Advanced Verification

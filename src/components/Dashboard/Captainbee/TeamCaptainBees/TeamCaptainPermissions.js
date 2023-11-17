@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 import { useParams } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainPermissions = ({ email }) => {
 
@@ -15,6 +17,8 @@ const TeamCaptainPermissions = ({ email }) => {
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [permissionData, setPermissionData] = useState();
   const { id, userType } = useParams();
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
   useEffect(() => {
     const userTypel = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
     const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
@@ -29,16 +33,18 @@ const TeamCaptainPermissions = ({ email }) => {
     // }
     // else 
     if (userTypel === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-        console.log("in else if in persmssopn",data?.data)
-        let captainbeePermissions = data?.data?.captainBeeRegisteredRequiredData;
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+          console.log("in else if in persmssopn", data?.data)
+          let captainbeePermissions = data?.data?.captainBeeRegisteredRequiredData;
 
-        let c = captainbeePermissions.find(x => x.username === id);
-        console.log("captainbeePermissions", captainbeePermissions, c)
+          let c = captainbeePermissions.find(x => x.username === id);
+          console.log("captainbeePermissions", captainbeePermissions, c)
 
-        setPermissionData(c)
-      });
+          setPermissionData(c)
+        });
+      }
     } else {
 
       getHoneyUserDetails(user).then((data) => {
@@ -67,7 +73,7 @@ const TeamCaptainPermissions = ({ email }) => {
   return (
     <div >
       <div className='pt-2' style={{ background: "#FFB300" }}></div>
-      <div className="px-5 pt-4 pb-5" style={{ background: "white" }}>
+      <div className="pt-4 pb-5" style={{ background: "white", paddingInline: `${isMobile ? '20px' : '45px'}` }}>
 
         <div className="font_15x fw-bold">
           Permissions given by TEAM CaptainBee {permissionData?.username} to  LEADER captainbee {staticsData?.affiliateUserProfile?.Username}
@@ -78,7 +84,7 @@ const TeamCaptainPermissions = ({ email }) => {
         >
           <div
             className="d-flex justify-content-center align-items-center "
-            style={{ gap: '100px' }}
+            style={{ gap: `${isMobile ? '20px' : '100px'}` }}
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
@@ -95,7 +101,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -113,7 +119,7 @@ const TeamCaptainPermissions = ({ email }) => {
 
           <div
             className="d-flex justify-content-center align-items-center "
-            style={{ gap: '98px' }}
+            style={{ gap: `${isMobile ? '19px' : '98px'}` }}
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
@@ -130,7 +136,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -148,7 +154,7 @@ const TeamCaptainPermissions = ({ email }) => {
 
           <div
             className="d-flex justify-content-center align-items-center "
-            style={{ gap: '60px' }}
+            style={{ gap: `${isMobile ? '15px' : '60px'}` }}
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
@@ -165,7 +171,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
+                  width: `${isMobile ? '100%' : '217px'}`,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',

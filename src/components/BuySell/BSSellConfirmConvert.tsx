@@ -86,18 +86,18 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
 
-    
+
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
-        
+
         setHoneyBeeEmail(data.data.userFullData?.email);
         let captainbeePermissions = data.data.referredUserData?.data.relationships;
-        
-        
+
+
         let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-        
+
         setPermissionData(c)
       });
 
@@ -113,12 +113,12 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       'Sell'
     );
     priceData = res.data.results.data;
-    
+
     setRateData(priceData);
     let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
-    
-    
-    
+
+
+
     setTotalAmountToPay(
       priceData * Number(BSvalue?.amount) -
       (priceData * Number(BSvalue?.amount) * Number(adminFee)) / 100
@@ -132,8 +132,8 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let amount: number = Number(BSvalue?.amount);
     let res;
     if (id) {
-      
-      
+
+
       if (!permissionData?.permissions?.sell) {
         setLoadings(false);
         OpenNotification('error', "As Captain bee, Please apply for sell approval from honey bee");
@@ -148,7 +148,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         totalAmountToPay
       );
     }
-    
+
     if (res.status === 200) {
       //setisFirstEnabled(false);
       //setisSecondEnabled(true);
@@ -168,7 +168,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
   const processSellOrder = async (order: any) => {
     let basecoin: string = filteredFromArray[0].title;
-    
+
     if (basecoin === 'INEX') {
       setLoadings(false);
       OpenNotification('error', 'Failed to Process Sell Order. INEX token not allowed to sell');
@@ -197,7 +197,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title.includes('I')) {
+    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );

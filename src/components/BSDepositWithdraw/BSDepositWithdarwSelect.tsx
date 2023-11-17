@@ -26,7 +26,7 @@ export const BSDepositWithdarwSelect = () => {
         <div className='margin-t-2x'>
           <label>Currency</label>
           <div className='select_container d-flex flex-justify-between flex-align-center'>
-            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" width="38" height="38" /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }}>US Dollar</span> </div></div>
+            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" width="38"   /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }}>US Dollar</span> </div></div>
             {/* <RightOutlined /> */}
           </div>
         </div>
@@ -35,7 +35,7 @@ export const BSDepositWithdarwSelect = () => {
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
-          <span className='radio_text'>Bank Transfer(SWIFT) <br />
+          <span className='radio_text'>Bank Transfer <br />
             <span className='helper_text'>Fee: 5 USD, 2-5 Business days</span>
           </span></Radio>
         <Button type="primary">

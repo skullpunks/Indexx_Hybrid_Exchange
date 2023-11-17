@@ -21,6 +21,7 @@ import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
+import loadingGif from '../../../../assets/beeloade.gif';
 
 import copper from "../../../../assets/powerpack/copper hat.svg";
 // import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
@@ -45,7 +46,8 @@ import SubHeader from '../SubHeader/SubHeader';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { RankData } from '../../RankData';
-
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 const LeaderCaptain = () => {
   const [captainBeeData, setRefferedUserData] = useState();
@@ -59,42 +61,54 @@ const LeaderCaptain = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpench, setIsModalOpenCh] = useState(false);
   const [staticsData, setStaticsData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
-    setEmail(email);
-    getCaptainBeeStatics(username).then((data) => {
-      setStaticsData(data.data);
-    });
-    getReferredUserDetails(email).then((data) => {
-      console.log(data?.data)
-      console.log(data?.data?.powerPackData)
-      console.log(data?.data?.refferedUserAffilateData)
-      if (data?.data) {
-        setRefferedUserData(data.data.refferedUserAffilateData);
-        console.log(data.data.refferedUserAffilateData)
-        setRefferedFullData(data.data.referredUserData);
-        setCaptainbeeCreateDate(data.data.accountCreationDate);
-        setCaptainbeeOrders(data.data.totalOrder);
-        setCaptainbeeUsers(data.data.honeyBeesCount);
-      }
-      if (data?.data?.powerPackData) {
-        const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
-        setPowerPackPhoto(getPowerPack?.photo);
-      } else {
-        setPowerPackPhoto(undefined);
-      }
-      if (data?.data?.affiliateUserProfile?.rank) {
-        const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
-        setRankPhoto(getRank?.photo);
-      } else {
-        const getRank = RankData.find(x => x.name === "Bronze")
-        setRankPhoto(getRank?.photo);
-      }
-    })
+    const fetchData = async () => {
+      try {
+        const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+        const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
 
+        setEmail(email);
+        if (username) {
+          getCaptainBeeStatics(username).then((data) => {
+            setStaticsData(data.data);
+          });
+        }
+        const data = await getReferredUserDetails(email);
+          console.log(data?.data)
+          console.log(data?.data?.powerPackData)
+          console.log(data?.data?.refferedUserAffilateData)
+          if (data?.data) {
+            setRefferedUserData(data.data.refferedUserAffilateData);
+            console.log(data.data.refferedUserAffilateData)
+            setRefferedFullData(data.data.referredUserData);
+            setCaptainbeeCreateDate(data.data.accountCreationDate);
+            setCaptainbeeOrders(data.data.totalOrder);
+            setCaptainbeeUsers(data.data.honeyBeesCount);
+          }
+          if (data?.data?.powerPackData) {
+            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            setPowerPackPhoto(getPowerPack?.photo);
+          } else {
+            setPowerPackPhoto(undefined);
+          }
+          if (data?.data?.affiliateUserProfile?.rank) {
+            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            setRankPhoto(getRank?.photo);
+          } else {
+            const getRank = RankData.find(x => x.name === "Bronze")
+            setRankPhoto(getRank?.photo);
+          }
+        setIsLoading(false); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); 
+      }
+};
+
+fetchData();
   }, []);
 
   const [theme, setTheme] = useState(
@@ -119,30 +133,61 @@ const LeaderCaptain = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
     <>
       <SubHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your Captain Bee's profile is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       {!captainBeeData ?
         (<>
-          <div style={{ paddingTop: "220px" }}>
+          <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
             <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-              <div style={{ width: "30%", textAlign: "center" }}>
+              <div style={{ width: `${isMobile ? "80%" : "30%"}`, textAlign: "center" }}>
                 There are no Leader Captain Bee for you
               </div>
             </div>
           </div>
         </>) :
         (<>
-          <div style={{ paddingTop: "220px" }}>
-            <div className='d-flex justify-content-center' style={{ marginLeft: "295px" }}>
+          <div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
+            <div className='d-flex justify-content-center' style={{ marginLeft: `${isMobile ? "0" : "308px"}`, textAlign: `${isMobile ? "center" : ""}` }}>
 
-              <div className='font_20x fw-bold justify-content-center d-flex' style={{ width: "1150px" }}>
-                <div style={{ width: "74%" }}>
-                  <img src={hat} alt="hat" style={{marginRight:"10px"}} />
+              <div className='font_20x fw-bold justify-content-center align-items-center d-flex'
+                style={{
+                  width: `${isMobile ? "100%" : "1150px"}`,
+                  flexDirection: `${isMobile ? "column" : "row"}`
+                }}>
+                <div style={{ width: `${isMobile ? "100%" : "74%"}` }}>
+                  <img src={hat} alt="hat" style={{ marginRight: "10px" }} />
                   Leader Captain Bee’s  Dashboard
                 </div>
-                <div className='d-flex justify-content-between' style={{ width: "29.5%" }}>
+                <div className='d-flex justify-content-between' style={{ width: `${isMobile ? "83%" : "29.5%"}`, marginTop: `${isMobile ? "20px" : "0"}` }}>
 
                   <Button
                     variant="outlined"
@@ -193,13 +238,14 @@ const LeaderCaptain = () => {
               </div>
             </div>
 
-            <div className="hive-container">
+            <div className="hive-container justify-content-center">
               <div
                 className="d-flex justify-content-between"
+                style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
               // style={{ width: '76%', maxWidth: '1140px' }}
               >
-                <div className="d-flex flex-direction-column mt-1" style={{ width: "16%" }}>
-                  <div className="d-flex  flex-direction-row align-items-center">
+                <div className="d-flex flex-direction-column mt-1 " style={{ width: `${isMobile ? "100%" : "300px"}` }}>
+                  <div className="d-flex  flex-direction-row align-items-center" style={{ marginLeft: `${isMobile ? "35px" : "0px"}` }}>
 
                     <div className="d-flex  flex-direction-column align-items-center">
                       <div
@@ -237,7 +283,7 @@ const LeaderCaptain = () => {
                             position: 'absolute',
                             bottom: '-25px',
                             right: '17px',
-                            width: '79px', 
+                            width: '79px',
                             height: '81px',
                           }}
                         />
@@ -274,22 +320,22 @@ const LeaderCaptain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
+                  <div className="font_20x fw-bold align-items-start mt-4 lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     Leader Captain {captainBeeData?.Username}
                   </div>
-                  <div className="font_10x mb-3 lh_32x align-items-start">
+                  <div className="font_10x mb-3 lh_32x align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     Leader Captain Bee of Captain Willie’s Team
                   </div>
                   {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                     (<div className="justify-content-center d-flex">
-                      <img src={powerPackPhoto} alt='pack' width={"80%"} />
+                      <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
                     </div>) : (
                       <div className="justify-content-start d-flex">
                         Leader has not purchased any powerpack.
                       </div>
                     )
                   }
-                  <div className="align-items-start lh_32x">
+                  <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <div className="font_13x d-flex align-items-center mt-4">
                       {theme === "dark" ?
                         <img alt="man" src={man_dark} className="me-1" />
@@ -323,28 +369,28 @@ const LeaderCaptain = () => {
                       {captainbeeCreateDate}
                     </div>
                     {captainBeeData?.isPhonePublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={phone_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={phone} className="me-2" />
-                      )}
-                      {String(`(${captainBeeData?.Phone.slice(0, 3)}) ${captainBeeData?.Phone.slice(3, 6)}-${captainBeeData?.Phone.slice(6)}`)}
-                    </div>
-                  }
-                  {captainBeeData?.isEmailPublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={email_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={email_icon} className="me-2" />
-                      )}
-                      {captainBeeData?.Email}
-                    </div>
-                  }
+                      <div className="font_13x d-flex align-items-center">
+                        {theme === 'dark' ? (
+                          <img alt="man" src={phone_dark} className="me-2" />
+                        ) : (
+                          <img alt="man" src={phone} className="me-2" />
+                        )}
+                        {String(`(${captainBeeData?.Phone.slice(0, 3)}) ${captainBeeData?.Phone.slice(3, 6)}-${captainBeeData?.Phone.slice(6)}`)}
+                      </div>
+                    }
+                    {captainBeeData?.isEmailPublic &&
+                      <div className="font_13x d-flex align-items-center">
+                        {theme === 'dark' ? (
+                          <img alt="man" src={email_dark} className="me-2" />
+                        ) : (
+                          <img alt="man" src={email_icon} className="me-2" />
+                        )}
+                        {captainBeeData?.Email}
+                      </div>
+                    }
                   </div>
 
-                  <div className="align-items-start lh_32x mt-4">
+                  <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
                       <img alt="Discord" src={discord} className="me-3" />
                     </a>
@@ -361,37 +407,37 @@ const LeaderCaptain = () => {
                     <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div>
                         <span className='fw-bold'>
-                        Invite Honey Bee : 
+                          Invite Honey Bee :
                         </span>
                         <br />
                         {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
                           onClick={() => copyClick(baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    captainBeeFullData?.referralCode)}
+                            "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                            captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
                       <br />
                       <div>
-                      <span className='fw-bold'>
-                        Invite Captain Bee : 
+                        <span className='fw-bold'>
+                          Invite Captain Bee :
                         </span>
                         <br />
                         {captainBeeFullData?.referralCode}
                         <ContentCopyIcon
                           fontSize="13px"
-                          onClick={() => copyClick( baseHiveURL +
-                    "/sign-up?referral=" +
-                    captainBeeFullData?.referralCode)}
+                          onClick={() => copyClick(baseHiveURL +
+                            "/sign-up?referral=" +
+                            captainBeeFullData?.referralCode)}
                           style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
                         />
                       </div>
                     </div>
 
                   </div>
-                  <div className="d-flex  flex-direction-column align-items-start mt-5">
+                  <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <div className="font_13x ">
                       Your Rating
                     </div>
@@ -403,8 +449,8 @@ const LeaderCaptain = () => {
                     </div>
                   </div>
                 </div>
-                <div className="side-container" style={{ marginLeft: 0, width: "1150px" }}>
-                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email}/>
+                <div className="side-container" style={{ marginLeft:`${isMobile ? "0" : "10px"}`, width: `${isMobile ? "auto" : "1150px"}`, marginTop: `${isMobile ? "65px" : "0px"}` }}>
+                  <LeaderCaptainTabs leaderEmail={captainBeeData?.Email} />
                 </div>
               </div>
             </div>

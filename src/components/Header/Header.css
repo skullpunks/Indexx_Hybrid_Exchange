@@ -2,7 +2,7 @@
   --bs-navbar-color: #fff;
   --bs-navbar-hover-color: #c8c5c5;
   /* --bs-navbar-active-color: #c8c5c5; */
-  --bs-nav-link-font-size: 15px;
+  --bs-nav-link-font-size: 12px;
   --bs-navbar-nav-link-padding-x: 1rem;
   --bs-navbar-padding-y: 0.8rem;
 }
@@ -384,8 +384,14 @@ a.link.text-white:hover {
 
 .light_button {
   padding: 6px 15px 10px 15px;
-  border: 1px solid rgba(246, 96, 54, 0.3);
+  border: 1px solid var(--primary-color);
   border-radius: 3px;
+}
+
+.light_button:hover,
+.light_button:active,
+.light_button:focus {
+  border: 1px solid var(--secondary-color);
 }
 
 .flex_1 {
@@ -670,7 +676,7 @@ button.navbar-toggler {
 }
 
 .profile-menu .dropdown-toggle::after {
-  color: #FFB300;
+  color: var(--primary-color);
 }
 
 

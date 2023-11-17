@@ -67,7 +67,7 @@ const Bridge = () => {
   }
 
   return (
-    <div style={{ paddingTop: "200px" }}>
+    <div style={{ paddingTop: "220px" }}>
       <div className='d-flex justify-content-center font_30x'>
         Please select Destination
       </div>

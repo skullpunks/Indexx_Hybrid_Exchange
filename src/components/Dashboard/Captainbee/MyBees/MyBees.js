@@ -11,7 +11,7 @@ import FlowDiagram2 from '../../graph';
 import FlowDiagram from '../../reactFlow';
 import man from "../../../../assets/hive-dashboard/man4 2.svg";
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 const MyBees = () => {
   const [staticsData, setStaticsData] = useState();
@@ -26,9 +26,11 @@ const MyBees = () => {
     setUserType(userType);
 
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(username).then((data) => {
-        setStaticsData(data.data);
-      });
+      if (username) {
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+        });
+      }
     }
   }, [])
 
@@ -81,7 +83,7 @@ const MyBees = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
               '&:hover': {
                 backgroundColor: '#FFB300',
@@ -93,7 +95,7 @@ const MyBees = () => {
               Honey Bee
             </div>
             <div className="font_15x d-flex align-items-center">
-              {item.username}
+              {item.username} ({ item?.firstName + " " + item?.lastName})
             </div>
           </Box>
         </div>
@@ -111,7 +113,7 @@ const MyBees = () => {
               borderColor: '#FFB300',
               borderRadius: '2px',
               color: 'var(--body_color)',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -139,7 +141,7 @@ const MyBees = () => {
               borderRadius: '2px',
               color: 'var(--body_color)',
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -171,7 +173,7 @@ const MyBees = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
-          <img src={man} alt="man" style={{zIndex:1, width:"80px", height:"80px"}}/>
+          <img src={man} alt="man" style={{ zIndex: 1, width: "80px", height: "80px" }} />
 
           <Box
             className=" d-flex justify-content-center"
@@ -185,7 +187,7 @@ const MyBees = () => {
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
-              width: '211px',
+              width: '311px',
               transition: "0.3s ease-in-out",
             }}
           >
@@ -210,15 +212,15 @@ const MyBees = () => {
               borderColor: '#E1E1E1', // Grey border color
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
               transition: "0.3s ease-in-out",
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
-              boxShadow: 'none',
+                borderColor: '#E1E1E1', // Grey border color
+                boxShadow: 'none',
               },
             }}
           >
@@ -234,7 +236,7 @@ const MyBees = () => {
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
               // color: '#282828',
-              width: '120px',
+              width: '170px',
               height: '32px',
               textTransform: 'none',
               fontSize: '10px',
@@ -242,8 +244,8 @@ const MyBees = () => {
               transition: "0.3s ease-in-out",
               ml: 0.3,
               '&:hover': {
-              borderColor: '#E1E1E1', // Grey border color
-              boxShadow: 'none',
+                borderColor: '#E1E1E1', // Grey border color
+                boxShadow: 'none',
               },
             }}
           >
@@ -258,25 +260,24 @@ const MyBees = () => {
     <>
       <SubHeader />
       {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: `${isMobile? "250px" : "220px"}` }}>
+        (<div style={{ paddingTop: `${isMobile ? "250px" : "220px"}` }}>
           <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: `${isMobile? "95%" : "30%"}`, textAlign: "center" }}>
-            {availableBeesCount === 0 ? <>
-              Please invite the Honey Bees using this {" "}
-              <a href={`${
-              baseCEXURL +
-                    "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                    staticsData?.userFullData?.referralCode
-              }`}
-               className='hive_link'>
-              referral link
-              </a>
-               {" "} to guide them. 
-            </>
-            :
-            <>
-              These are the Honey Bees that are part of your Colony. Select one to guide them
-            </>}
+            <div style={{ width: `${isMobile ? "95%" : "30%"}`, textAlign: "center" }}>
+              {availableBeesCount === 0 ? <>
+                Please invite the Honey Bees using this {" "}
+                <a href={`${baseCEXURL +
+                  "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                  staticsData?.userFullData?.referralCode
+                  }`}
+                  className='hive_link'>
+                  referral link
+                </a>
+                {" "} to guide them.
+              </>
+                :
+                <>
+                  These are the Honey Bees that are part of your Colony. Select one to guide them
+                </>}
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -284,7 +285,7 @@ const MyBees = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
-                flexDirection: `${isMobile? "column" : "row"}`,
+                flexDirection: `${isMobile ? "column" : "row"}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,
@@ -292,7 +293,7 @@ const MyBees = () => {
             >
               <Grid
                 container
-                columns={{ xs: 1, sm: 12, md: 12 }}
+                columns={{ xs: 1, sm: 12, md: 9 }}
                 spacing={{ xs: 12, md: 2 }}
                 maxWidth={"1150px"}
                 rowSpacing={12}

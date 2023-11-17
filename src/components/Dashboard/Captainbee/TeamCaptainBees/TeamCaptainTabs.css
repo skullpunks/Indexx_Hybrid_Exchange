@@ -16,3 +16,11 @@
   .capt-tabs .ant-tabs-top > .ant-tabs-nav::before{
     display: none;
   }
+
+  @media screen and (min-width: 350px) and (max-width: 1000px) {
+  
+    .capt-tabs .ant-tabs-tab {
+      font-size: 14px;
+    }
+  
+  }

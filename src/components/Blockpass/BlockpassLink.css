@@ -20,6 +20,14 @@
 .withdraw_btn:hover,
 .withdraw_btn:focus,
 .withdraw_btn:active {
+    background-image: url("../../assets/arts/uploadicon.svg");
+
+}
+
+.send_btn,
+.send_btn:hover,
+.send_btn:focus,
+.send_btn:active {
     background-image: url("../../assets/arts/rocketIcon.svg");
 
 }

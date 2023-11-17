@@ -30,7 +30,7 @@ const IndexxAPPLGraph = () => {
             .then(data => {
                 if (data.status === 'ok') {
                     let array = data.values.reverse();
-                    setCoinValue((Math.round((array[0].close / 1000) * 1000) / 1000));
+                    setCoinValue((Math.round((array[0].close / 1000) * 1000)));
                     setChartData(array);
                 }
             });
@@ -43,7 +43,7 @@ const IndexxAPPLGraph = () => {
 
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
-            setCoinValue((Math.round((payload[0]?.payload?.open /1000) * 1000) / 1000));
+            setCoinValue((Math.round((payload[0]?.payload?.open / 1000) * 1000)));
             return (
                 <div className="custom-tooltip dark:text-lighthover">
                     <p className="label">{`${dateFormatter3(label)}`}</p>
@@ -77,7 +77,7 @@ const IndexxAPPLGraph = () => {
                         borderRight: 'none',
                     }}
                 >
-                      <div
+                    <div
                         className="chart_header d-flex flex-align-center"
                         style={{ marginLeft: 2 }}
                     >
@@ -88,7 +88,7 @@ const IndexxAPPLGraph = () => {
                                     .default
                             }
                             alt="bitcoin"
-                            width="30"
+                            width="40"
                         />
                         &emsp;
                         <h1>
@@ -206,9 +206,12 @@ const IndexxAPPLGraph = () => {
                         />
                         <YAxis
                             stroke="#5f5f5f"
+                            padding={{ top: 20 }}
                             tick={{ fill: '#5f5f5f' }}
                             domain={['auto', 'auto']}
-                            hide={true}
+                            // remove this line or set it to false
+                            // hide={true} 
+                            minTickGap={90}
                         />
                         <Tooltip
                             // className={styles.customTooltip}

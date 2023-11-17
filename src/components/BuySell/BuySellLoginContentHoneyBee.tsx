@@ -119,7 +119,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
       <h1 className="text-center margin-lr-auto top_heading">
-      <img src={bee} alt="bee" />
+      <img src={bee} alt="bee" style={{marginLeft:"-10px"}} />
         HoneyBee Log In</h1>
       <div className="text-center margin-lr-auto padding-tb-2x">
         Please make sure you are visiting the correct URL

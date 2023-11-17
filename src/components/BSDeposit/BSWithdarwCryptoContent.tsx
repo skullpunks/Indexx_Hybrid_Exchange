@@ -38,9 +38,10 @@ export const BSWithdarwCryptoContent = () => {
   const [singleWallet, setSingleWallet] = useState() as any;
   const [selectedCoin, setSelectedCoin] = useState('');
   const [receiveAmountt, setReceiveAmount] = useState('');
-  const [selectedCoinObj, setSelectedCoinObj] = useState(
-    '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A'
-  );
+  const [selectedCoinObj, setSelectedCoinObj] = useState({
+    address: '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A',
+    title: '', // Add any other properties you need
+  });
   const [isWalletAddrValid, setIsWalletAddrValid] = useState(true);
   const [, copy] = useCopyToClipboard();
   const [loadings, setLoadings] = useState<boolean>(false);
@@ -50,6 +51,16 @@ export const BSWithdarwCryptoContent = () => {
   const [walletAddress, setWalletAddre] = useState('');
   //const [max, setMax] = useState();
   const [email, setEmail] = useState('');
+
+  const categorizeTokens = (tokens :any) => {
+    return {
+        Stocks: tokens.filter((token: any) => token.isStock),
+        ETFs: tokens.filter((token: any)=> token.isETF),
+        Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF)
+    };
+};
+
+const categorizedTokens = categorizeTokens(initialTokens);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -254,32 +265,26 @@ export const BSWithdarwCryptoContent = () => {
     setWalletAddre(val);
     checkWalletAddress(val);
   };
-
+  
   const handleChangeCurrency = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-
-
-    setSelectedCoin(String(getRequiredCoin?.title));
-    setSelectedCoinObj(String(getRequiredCoin?.title));
-
+  
+    setSelectedCoinObj(getRequiredCoin || {} as { address: string; title: string }); // Specify the type here
+    setSelectedCoin(getRequiredCoin?.title || ''); // Set the title if needed
     setSingleWallet(userWallet[0]);
-    // /let res =
-    // setMinMax()
-    //qrcode(userWallet[0].coinWalletAddress);
-    // if (setBSvalue && BSvalue) {
-    //   setBSvalue({ ...BSvalue, fromToken: value });
-    // }
-
+  
     let res = await getMinAndMaxOrderValues(
       String(getRequiredCoin?.title),
       'WITHDRAW_CRYPTO'
     );
-
+  
     setValues(res);
   };
+  
+  
 
   const withdrawFiat = async () => {
 
@@ -371,51 +376,50 @@ export const BSWithdarwCryptoContent = () => {
         <div className="">
           <label>Currency</label>
           <div className=" d-flex flex-justify-between flex-align-center">
-            <Select
-              dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
-              className="width-100"
-              onChange={handleChangeCurrency}
-              defaultValue="Select a Coin to Withdraw"
-              value={selectedCoinObj}
-            >
-              {initialTokens
-                .filter(
-                  (token) => token.title !== 'BTC' && token.title !== 'LTC'
-                )
-                .map((token, index) => {
-                  return (
-                    <Option
-                      key={index}
-                      value={token.address}
-                      type="link"
-                      className="common__token d-flex bs_token_container"
-                      data-address={token.address}
-                    >
-                      <div className="d-flex">
-                        <img
-                          src={
-                            require(`../../assets/token-icons/${token.image}.png`)
-                              .default
-                          }
-                          alt="IN500"
-                          width="35"
-                          height="35"
-                        />
-                        <div className="font_20x padding-l-1x d-flex flex-align-center">
-                          {token.title}{' '}
-                          <span
-                            style={{ color: 'rgba(95, 95, 95, 0.5)' }}
-                            className="margin-l-0_5x"
-                          >
-                            {token.subTitle}
-                          </span>{' '}
-                        </div>
-                      </div>
-                    </Option>
-                  );
-                })}
-            </Select>
-            {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38" height="38" /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
+          <Select
+  dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
+  className="width-100"
+  onChange={handleChangeCurrency}
+  defaultValue="Select a Coin to Withdraw"
+  value={selectedCoinObj?.address} // Use the address property as the value
+>
+  {initialTokens
+    .filter(
+      (token) => token.title !== 'SOL' && token.title !== 'MATIC' && token.title !== 'DOT' && 
+      token.title !== 'SOL' && token.title !== 'LTC' && token.title !== 'DOGE' && token.title !== 'XRP'
+    )
+    .map((token, index) => {
+      return (
+        <Option
+          key={index}
+          value={token.address}
+          type="link"
+          className="common__token d-flex bs_token_container"
+          data-address={token.address}
+        >
+          <div className="d-flex">
+            <img
+              src={require(`../../assets/token-icons/${token.image}.png`).default}
+              alt="IN500"
+              width="35"
+              height="35"
+            />
+            <div className="font_20x padding-l-1x d-flex flex-align-center">
+              {token.title}{' '}
+              <span
+                style={{ color: 'rgba(95, 95, 95, 0.5)' }}
+                className="margin-l-0_5x"
+              >
+                {token.subTitle}
+              </span>{' '}
+            </div>
+          </div>
+        </Option>
+      );
+    })}
+</Select>
+
+            {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
             {/* <CaretDownOutlined /> */}
 
             {/* <RightOutlined /> */}
@@ -640,7 +644,7 @@ export const BSWithdarwCryptoContent = () => {
             dataSource={txList}
             className="transaction_crypto_history"
           />
-          {/* <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38" height="38" /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
+          {/* <div className='d-flex d_crypto_status'><div className='d-flex'><img src={bsDollar} alt="bsDollar" width="38"   /><div className='font_20x padding-l-1x'>0.07 BNB</div></div><Button danger className='margin-l-2x'>Completed</Button></div>
           <div className='d-flex flex-justify-between padding-t-1x responsive_recent_deposits '>
 
             <div className='d-flex '><div className='wallet_funding'>

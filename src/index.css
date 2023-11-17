@@ -27,6 +27,9 @@
   --link-hover: #1890ff;
   --dropdown-hover: #1890ff;
   --staking-color: #e7e7e7;
+  --table-light:#eeeeee;
+  --scroller: 193, 193, 193;
+
 }
 
 [data-bs-theme="dark"] {
@@ -59,6 +62,8 @@
   --link-hover: #1890ff;
   --dropdown-hover: #1890ff;
   --staking-color: #171C26;
+  --table-light:#040404;
+  --scroller:46, 46, 46;
 }
 
 
@@ -245,4 +250,23 @@ iframe {
   .card {
     min-width: -webkit-fill-available;
   }
+}
+
+.ant-pagination-item, .ant-pagination-prev, .ant-pagination-next {
+  color: var(--body_color);
+  background-color: transparent !important;
+  border: none;
+}
+
+.ant-pagination-item-active{
+  color: var(--dark_text) !important;
+  font-weight: bolder;
+  background-color: transparent !important;
+  font-size: 16px;
+}
+
+.ant-pagination-item-link, .ant-pagination-item-ellipsis {
+    background-color: transparent !important;
+    color: var(--body_color) !important;
+    border: none !important;
 }

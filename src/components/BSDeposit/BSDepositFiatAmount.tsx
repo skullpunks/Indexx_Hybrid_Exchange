@@ -56,7 +56,7 @@ export const BSDepositFiatAmount = () => {
                     </div>
                     <div className='padding-l-1x'>
 
-                        <div className='font_13x brand_opacity_5 padding-tb-1x'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' />Bank Transfer(SWIFT)</div>
+                        <div className='font_13x brand_opacity_5 padding-tb-1x'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' />Bank Transfer</div>
                         <div className='font_13x brand_opacity_5'>0.00 iUSD+  </div>
                     </div>
                 </div>

@@ -34,7 +34,7 @@ const IndexxGOOGLGraph = () => {
                 
                 if (data.status === 'ok') {
                     let array = data.values.reverse();
-                    setCoinValue((Math.round((array[0].close / 1000) * 1000) / 1000));
+                    setCoinValue((Math.round((array[0].close / 1000) * 1000)));
                     setChartData(array);
                 }
             });
@@ -92,7 +92,7 @@ const IndexxGOOGLGraph = () => {
                                     .default
                             }
                             alt="bitcoin"
-                            width="30"
+                            width="40"
                         />
                         &emsp;
                         <h1>
@@ -209,10 +209,13 @@ const IndexxGOOGLGraph = () => {
                             padding={{ right: 20 }}
                         />
                         <YAxis
-                            stroke="#5f5f5f"
-                            tick={{ fill: '#5f5f5f' }}
-                            domain={['auto', 'auto']}
-                            hide={true}
+                         stroke="#5f5f5f"
+                         padding={{ top: 20 }}
+                         tick={{ fill: '#5f5f5f' }}
+                         domain={['auto', 'auto']}
+                         // remove this line or set it to false
+                         // hide={true} 
+                         minTickGap={90}
                         />
                         <Tooltip
                             // className={styles.customTooltip}

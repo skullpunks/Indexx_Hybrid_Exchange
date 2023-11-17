@@ -25,7 +25,7 @@ export const BSDepositFiatSelect = () => {
         <div className='margin-t-2x'>
           <label>Currency</label>
           <div className='select_container d-flex flex-justify-between flex-align-center'>
-            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" width="38" height="38" /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">US Dollar</span> </div></div>
+            <div className='d-flex flex-align-center'><img src={bsDollar} alt="bsDollar" width="38"   /><div className='font_23x padding-l-1x'>USD<span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">US Dollar</span> </div></div>
             {/* <RightOutlined /> */}
           </div>
         </div>
@@ -37,7 +37,7 @@ export const BSDepositFiatSelect = () => {
           Recommended
         </Button>
         <Radio checked className='orange margin-t-2x font_15x' >
-          <div className='d-flex'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 5 }} /><div> <span className='radio_text'>Bank Transfer(SWIFT) <br />
+          <div className='d-flex'><img src={doubleArrow} alt="doubleArrow" className='bg_icon margin-r-0_5x' style={{ marginTop: 5 }} /><div> <span className='radio_text'>Bank Transfer <br />
             <span className='helper_text'>1-4 Business days</span>
           </span></div></div></Radio>
         <Button type="primary" className='margin-b-2x margin-t-2x'>

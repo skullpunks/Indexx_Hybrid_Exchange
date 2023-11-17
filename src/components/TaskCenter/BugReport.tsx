@@ -72,7 +72,7 @@ const BugReport = () => {
         src={require(`../../assets/arts/loaderIcon.gif`).default}
         alt="loader"
         width="38"
-        height="38"
+         
       />
     ),
   };

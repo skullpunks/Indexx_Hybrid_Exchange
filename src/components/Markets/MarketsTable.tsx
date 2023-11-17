@@ -43,7 +43,7 @@ const MarketsTable: React.FC<(Props)> = ({ search }) => {
 
     const tableLoading = {
         spinning: isLoading,
-        indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="38" height="38" />,
+        indicator: <img src={require(`../../assets/arts/loaderIcon.gif`).default} alt="loader" width="38"   />,
     }
     useEffect(() => {
         if (!calledOnce) {

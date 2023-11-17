@@ -4,7 +4,7 @@ import '../BuySell/BuySellDummy.css';
 // import Footer from '../Footer/Footer';
 import StakingTable from './StakingTable';
 import StakingTop from './StakingTop';
-import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
+// import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
 // import { Link } from 'react-router-dom';
 // import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
@@ -23,7 +23,7 @@ const Staking = () => {
   return (
     <div>
 
-      <PowerPackHeader />
+      {/* <PowerPackHeader /> */}
       <div className="bs_wallet" style={{ paddingTop: "200px" }}>
         {/* <div className='d-flex bs_wallet_top'>
                 <div>

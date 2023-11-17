@@ -9,6 +9,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
 import loaderGif from "../../assets/arts/loaderIcon.gif";
+import hive from "../../assets/BSheader/hive logo HD2 1.svg";
 // import Bellicon from "../../assets/arts/Bellicon.png";
 // import headerstar from "../../assets/header-icons/Products/CEX.png";
 // import headerdex from "../../assets/header-icons/Products/DEX.png";
@@ -102,7 +103,7 @@ const HeaderNew = () => {
   const [haspowerpack, setHaspowerpack] = useState(false);
 
   console.log(haspowerpack, "has pack");
-  
+
   let pageName = searchParams.get("page");
   // alert(pageName)
   useEffect(() => {
@@ -134,15 +135,15 @@ const HeaderNew = () => {
 
     if (userType === "CaptainBee") {
       setisCaptain(true);
-
-      getCaptainBeeStatics(String(username)).then((data) => {
-
-        setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
-        setStaticsData(data.data);
-        if(data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== ""){
-          setHaspowerpack(true);
-        }
-      });
+      if (username) {
+        getCaptainBeeStatics(String(username)).then((data) => {
+          setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl)
+          setStaticsData(data.data);
+          if (data?.data?.powerPackData !== undefined && data?.data?.powerPackData !== null && data?.data?.powerPackData !== "") {
+            setHaspowerpack(true);
+          }
+        });
+      }
     } else {
       setisCaptain(false);
 
@@ -159,7 +160,7 @@ const HeaderNew = () => {
   useEffect(() => {
     let access_token = String(localStorage.getItem("access_token"));
     console.log("access", access_token);
-    if (access_token) { 
+    if (access_token) {
       try {
         let decoded = decodeJWT(access_token);
         const userEmail = decoded.email;
@@ -181,10 +182,10 @@ const HeaderNew = () => {
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
   useEffect(() => {
     const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
-    const handleStorageChange = (event:any) => {
+    const handleStorageChange = (event: any) => {
       // console.log(event);
-      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
-      setUserLogged(event.currentTarget.localStorage.userlogged);
+      if (setUserLogged !== event.currentTarget.localStorage.userlogged)
+        setUserLogged(event.currentTarget.localStorage.userlogged);
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -221,10 +222,16 @@ const HeaderNew = () => {
     return (
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container style={{ maxWidth: "1360px" }}>
-          <div className="d-flex logo__holder">
+          <div className="d-flex logo__holder" style={{marginLeft:`${localStorage.getItem("userlogged") === 'normal' ? "" : "-50px"}`}}>
             <Navbar.Brand href={baseURL} className={userLogged === "normal" ? "logo__icon" : "hive_icon"}>
               index.ai
             </Navbar.Brand>
+            {localStorage.getItem("userlogged") === 'normal' ? <></> :
+            <a href={baseHiveURL}>
+              <img src={hive} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  />
+            </a>
+            }
+
             {/* <Nav.Link as={Link} to={showUrl[0]} href="#" className="logo__text">
               {pageName || showText[0]}
             </Nav.Link> */}
@@ -237,11 +244,11 @@ const HeaderNew = () => {
               <NavDropdown title="Platforms" id="basic-nav-dropdown" className="my-menu" renderMenuOnMount={true}>
                 <div className="main-div"
                 //  style={{ width: "200vw" }}
-                 >
+                >
 
                   <div className="black-div"
                   // style={{ height: "26px", background: "black" }}
-                  >  
+                  >
                   </div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
@@ -862,7 +869,7 @@ const HeaderNew = () => {
 
               {localStorage.getItem("user") ? (
                 <>
-                  <Nav.Link
+                  {/* <Nav.Link
                     as={Link}
                     to="/indexx-exchange/buy-sell/"
                     href="/"
@@ -870,7 +877,7 @@ const HeaderNew = () => {
                     style={{ height: "41px", zIndex: "10000" }}
                   >
                     Buy Crypto
-                  </Nav.Link>
+                  </Nav.Link> */}
                   {/* <img src={Bellicon} alt="Notifications"
                     className="ms-3 my-2 text-white cursor-pointer"
                     style={{ maxHeight: 26, alignSelf: "center" }}
@@ -878,62 +885,64 @@ const HeaderNew = () => {
                   /> */}
 
                   <NavDropdown title={
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center" >
                       {localStorage.getItem("userlogged") !== 'normal' &&
 
-                      <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
+                        <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
 
-                        <div
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            backgroundImage: `url(${isCaptain === true ? frame : beeframe})`,
-                            // backgroundImage: `url(${frame})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                            backgroundPosition: 'center',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            // border:"none"
-                          }}
-                        >
                           <div
-                            className="bee-hexagon"
-                            style={{ marginBottom: `${isCaptain === true ? 0 : "7px"}` }}
+                            style={{
+                              width: '80px',
+                              height: '80px',
+                              backgroundImage: `url(${isCaptain === true ? frame : beeframe})`,
+                              // backgroundImage: `url(${frame})`,
+                              backgroundRepeat: 'no-repeat',
+                              backgroundSize: 'contain',
+                              backgroundPosition: 'center',
+                              position: 'relative',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              alignSelf: 'center',
+                              // border:"none"
+                            }}
                           >
-                            <img
-                              alt=""
-                              src={userProfile ? userProfile : dummy}
-                              width={'63px'}
-                              height={'66px'}
-                              style={{
-                                border: "none"
-                              }}
-                            />
+                            <div
+                              className="bee-hexagon"
+                              style={{ marginBottom: `${isCaptain === true ? 0 : "7px"}` }}
+                            >
+                              <img
+                                alt=""
+                                src={userProfile ? userProfile : dummy}
+                                width={'63px'}
+                                height={'66px'}
+                                style={{
+                                  border: "none"
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
                       }
                       <div style={{
-                        color: "#FFB300"
+                        color: "var(--primary-color)"
                       }}>
 
                         {title}
                       </div>
                     </div>
 
-                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true}>
+                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{ minWidth: "353px" }}>
                     <div style={{ width: "200vw", marginBottom: "-10px" }}>
 
                       <div style={{ height: "16px", background: "black" }}></div>
                       <div className="d-flex flex-row my-menu main-menu">
                         <div style={{ justifyContent: "center", fontSize: "13px" }}>
                           <div className="action-link-div" style={{ paddingBottom: "18px" }}>
-                            Explore Profile
+                            Explore {" "}
+                            {localStorage.getItem("userlogged") === 'normal' ? "" : "Hive"}{" "}
+                            Profile
                           </div>
                           <NavDropdown.Item href="/indexx-exchange/account" className="link-div">
                             <Link to="/indexx-exchange/account" className="link-style">
@@ -947,12 +956,12 @@ const HeaderNew = () => {
                           </NavDropdown.Item>
                           {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) &&
 
-                          <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
-                            <Link to="/indexx-exchange/dashboard" className="link-style">
-                              Waggle Dance / Dashboard
-                            </Link>
-                          </NavDropdown.Item>
-}
+                            <NavDropdown.Item href="/indexx-exchange/dashboard" className="link-div">
+                              <Link to="/indexx-exchange/dashboard" className="link-style">
+                                Waggle Dance / Dashboard
+                              </Link>
+                            </NavDropdown.Item>
+                          }
                           <NavDropdown.Item href="/indexx-exchange/buy-sell/deposit-crypto" className="link-div">
                             <Link to="/indexx-exchange/buy-sell/deposit-crypto" className="link-style">
                               Deposit
@@ -1059,9 +1068,9 @@ const HeaderNew = () => {
                         </div>
                       </div>
                       {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
-                          <div className="back profile-back"> </div>
+                        <div className="back profile-back"> </div>
                         :
-                          <div className="back profile-back" style={{top:"548px"}}> </div>
+                        <div className="back profile-back" style={{ top: "548px" }}> </div>
                       }
                     </div>
                   </NavDropdown>

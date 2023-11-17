@@ -53,7 +53,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     const res = await getCoinPriceByName(String(filteredFromArray[0].title));
     priceData = res.data.results.data;
     setRateData(priceData);
-    
+
     let oneUsdValue: any = await oneUSDHelper(
       priceData,
       filteredFromArray[0].title
@@ -66,7 +66,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title.includes('I')) {
+    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -124,9 +124,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
     if (id) {
-      
-      
-      if(!permissionData?.permissions?.buy) {
+
+
+      if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
         setIsModalOpen(true);
         setMessage("As Captain bee, Please apply for buy approval from honey bee");
@@ -140,7 +140,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
-      
+
       for (let i = 0; i < res.data.links.length; i++) {
         if (res.data.links[i].rel.includes("approve")) {
           window.location.href = res.data.links[i].href;
@@ -151,7 +151,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       setLoadings(false);
       // OpenNotification('error', res.data);
       setIsModalOpen(true);
-      setMessage(res.data);      
+      setMessage(res.data);
     }
   };
 
@@ -166,21 +166,21 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   };
 
   useEffect(() => {
-    
+
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
-        
+
         setHoneyBeeEmail(data.data.userFullData?.email);
         let captainbeePermissions = data.data.referredUserData?.data.relationships;
-        
-        
+
+
         let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-        
+
         setPermissionData(c)
       });
-     
+
     }
     getAllSetting();
     getPricesData();
@@ -226,157 +226,157 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
 
   return (
     <>
-    <div className="bs_container card check-out">
-      <div className="card__header flex-justify-between d-flex flex-align-center">
-        <h1 className="centered" style={{ color: '#5f5f5f' }}>
-          <span
-            className="cursor-pointer"
-            onClick={() => {
-              if (honeyBeeId === "undefined" || honeyBeeId === "")
-                navigate('/indexx-exchange/buy-sell/');
-              else
-                navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}`);
-            }
-            }
-          >
-            &#60;
-          </span>{' '}
-          &nbsp; Confirm Purchase
-        </h1>
-        {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}
-      </div>
-
-      <div className="card-body padding-0">
-        <div className="bs_curreny d-flex position-relative ">
-          <div
-            className="bs_curreny_left flex-align-center padding-b-2x"
-            style={{ alignItems: 'baseline', padding: '50px 20px' }}
-          >
-            <span className="font_20x" style={{ lineHeight: 4, color: "var(--body_color)" }}>
-              $
-            </span>
+      <div className="bs_container card check-out">
+        <div className="card__header flex-justify-between d-flex flex-align-center">
+          <h1 className="centered" style={{ color: '#5f5f5f' }}>
             <span
-              placeholder="0"
-              className="font_60x color_general padding-l-1x"
-              id="input_get_value"
-              style={{
-                width: '1.2ch',
-                minHeight: '100px',
-                lineHeight: '100px',
-              }}
+              className="cursor-pointer"
+              onClick={() => {
+                if (honeyBeeId === "undefined" || honeyBeeId === "")
+                  navigate('/indexx-exchange/buy-sell/');
+                else
+                  navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}`);
+              }
+              }
             >
-              {BSvalue?.amount}
-            </span>
-            {/* <span placeholder="0" id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
-          </div>
-          {/* <div className='swap_Arrow_icon'>
-                        <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
-                    </div> */}
-        </div>
-        <div
-          className="bs_token d-flex cursor-pointer justify-between font_20x"
-          style={{ alignItems: 'center', color: "var(--body_color)" }}
-        >
-          <span>Rate</span>
-          <span>
-            {rateData} USD / {filteredFromArray[0].title}
-          </span>
-        </div>
-        <div
-          className="bs_token d-flex cursor-pointer justify-between font_20x"
-          style={{ alignItems: 'center', color: "var(--body_color)" }}
-        >
-          <span>Total</span>
-          <span>
-            {Math.floor(totalAmountToPay * 1000000) / 1000000}{' '}
-            {filteredFromArray[0].title}
-          </span>
-        </div>
-        <div
-          className="d-flex pe-3"
-          style={{
-            justifyContent: 'flex-end',
-          }}
-        >
-          {' '}
-          <small>Transaction/Admin Fee: {adminFee || '0.00'} %</small>
+              &#60;
+            </span>{' '}
+            &nbsp; Confirm Purchase
+          </h1>
+          {/* <CloseOutlined style={{ fontSize: "16" }} onClick={() => { }} /> */}
         </div>
 
-        <div className="footer bs_footer_action">
-          {Number(BSvalue?.amount) > 50 &&
-            taskCenterDetails?.tradeToEarnPercentage > 0 && (
-              <h6 className="text-center">
-                Rewards Applied for this order:{' '}
-                {Math.floor(
-                  ((Number(BSvalue?.amount) *
-                    taskCenterDetails?.tradeToEarnPercentage) /
-                    100) *
-                  100
-                ) / 100}{' '}
-                INEX
-              </h6>
-            )}
-          {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
-          <Button
-            type="primary"
-            className="atn-btn atn-btn-round"
-            block
-            onClick={() => createNewBuyOrder()}
-            loading={loadings}
-          >
-            {' '}
-            Confirm Purchase
-          </Button>
-
-          <Modal
-            title="indexx.ai"
-            open={isTransferModalVisible}
-            onOk={handleTransferOk}
-            onCancel={handleTransferCancel}
-            footer={null}
-            width={850}
-            maskClosable={false}
-            className="buy_purchase_modal custom-modal"
-            bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
-
-          >
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm />
-              </Elements>
-            )}
-          </Modal>
-
-          {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
-
-            {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
-            <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-              <PayPalScriptProvider
-                options={{
-                  "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
-                  components: "buttons",
-                  currency: "USD"
+        <div className="card-body padding-0">
+          <div className="bs_curreny d-flex position-relative ">
+            <div
+              className="bs_curreny_left flex-align-center padding-b-2x"
+              style={{ alignItems: 'baseline', padding: '50px 20px' }}
+            >
+              <span className="font_20x" style={{ lineHeight: 4, color: "var(--body_color)" }}>
+                $
+              </span>
+              <span
+                placeholder="0"
+                className="font_60x color_general padding-l-1x"
+                id="input_get_value"
+                style={{
+                  width: '1.2ch',
+                  minHeight: '100px',
+                  lineHeight: '100px',
                 }}
               >
-                {/* <Button
+                {BSvalue?.amount}
+              </span>
+              {/* <span placeholder="0" id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
+            </div>
+            {/* <div className='swap_Arrow_icon'>
+                        <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />
+                    </div> */}
+          </div>
+          <div
+            className="bs_token d-flex cursor-pointer justify-between font_20x"
+            style={{ alignItems: 'center', color: "var(--body_color)" }}
+          >
+            <span>Rate</span>
+            <span>
+              {Number(rateData).toFixed(2)} USD / {filteredFromArray[0].title}
+            </span>
+          </div>
+          <div
+            className="bs_token d-flex cursor-pointer justify-between font_20x"
+            style={{ alignItems: 'center', color: "var(--body_color)" }}
+          >
+            <span>Total</span>
+            <span>
+              {Math.floor(totalAmountToPay * 1000000) / 1000000}{' '}
+              {filteredFromArray[0].title}
+            </span>
+          </div>
+          <div
+            className="d-flex pe-3"
+            style={{
+              justifyContent: 'flex-end',
+            }}
+          >
+            {' '}
+            <small>Transaction/Admin Fee: {adminFee || '0.00'} %</small>
+          </div>
+
+          <div className="footer bs_footer_action">
+            {Number(BSvalue?.amount) > 50 &&
+              taskCenterDetails?.tradeToEarnPercentage > 0 && (
+                <h6 className="text-center">
+                  Rewards Applied for this order:{' '}
+                  {Math.floor(
+                    ((Number(BSvalue?.amount) *
+                      taskCenterDetails?.tradeToEarnPercentage) /
+                      100) *
+                    100
+                  ) / 100}{' '}
+                  INEX
+                </h6>
+              )}
+            {/* <Button type="primary" className="atn-btn atn-btn-round" block onClick={() => setScreenName("BSBuyInProgress")}> Confirm Purchase (11s)</Button> */}
+            <Button
+              type="primary"
+              className="atn-btn atn-btn-round"
+              block
+              onClick={() => createNewBuyOrder()}
+              loading={loadings}
+            >
+              {' '}
+              Confirm Purchase
+            </Button>
+
+            <Modal
+              title="indexx.ai"
+              open={isTransferModalVisible}
+              onOk={handleTransferOk}
+              onCancel={handleTransferCancel}
+              footer={null}
+              width={850}
+              maskClosable={false}
+              className="buy_purchase_modal custom-modal"
+              bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
+
+            >
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
+              )}
+            </Modal>
+
+            {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
+
+              {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
+              <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+                <PayPalScriptProvider
+                  options={{
+                    "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
+                    components: "buttons",
+                    currency: "USD"
+                  }}
+                >
+                  {/* <Button
                   currency={"USD"}
                   showSpinner={false}
                 /> */}
-              </PayPalScriptProvider>
-            </div>
-          </Modal>}
+                </PayPalScriptProvider>
+              </div>
+            </Modal>}
 
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-          <NeedPermission
-            isVisible={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            message={message}
-            id={id}
-          />
-        </div>
+      <div>
+        <NeedPermission
+          isVisible={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message={message}
+          id={id}
+        />
+      </div>
     </>
   );
 };

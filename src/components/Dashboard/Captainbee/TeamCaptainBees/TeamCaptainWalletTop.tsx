@@ -36,7 +36,7 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({ email }) => 
         //     }
         //     setTotalBalanceInUSD(totalBalInUSD)
         // });
-    });
+    }, []);
 
 
 

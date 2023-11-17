@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
+import hive from '../../assets/powerpack/hive.svg';
 import './PowerCard.css'
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);
@@ -143,17 +144,39 @@ const PowerCard = ({ card }) => {
                             </Typography>
 
                             <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} >
-                                Features
+                            <b>Investment Highlights</b>
                             </Typography>
 
                             <Typography variant="text" component="p" fontSize={"13px"} fontWeight={300} style={{ color: "#FFB300" }} lineHeight={"22.8px"} my={1}>
-                                {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                                {card.level === "Captain Bee" ? `Indexx Hive ${card.level} Level` : '\u00A0'}
                             </Typography>
 
-                            <Typography variant="text" component="p" fontSize={"15px"} fontWeight={800} mb={0.5} lineHeight={"22.8px"}>
-                                <img src={inex} alt="inex" style={{ paddingRight: "4px" }} />
-                                {card.coins}  INEX Tokens ($2 each)
-                            </Typography>
+                            <a href="https://indexx.ai/indexx-exchange/token-details/inex" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Typography variant="text" component="p" fontSize={"20px"} fontWeight={1200} mb={0.5} lineHeight={"22.8px"}>
+        <img src={inex} alt="inex" style={{ paddingRight: "4px" }} />
+        {card.coins} INEX Tokens <br/>($2 each)
+      </Typography>
+    </a>
+    <a href="https://www.docdroid.net/wrk4t3t/indexx-exchange-tokenomics-v12-pdf" target="_blank" rel="noopener noreferrer"  >
+      <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} mb={0.5} lineHeight={"22.8px"} sx={{
+                                       
+                                       color: "#FFB300",
+                                       textTransform: "none",
+                                       backgroundColor: "transparent",
+                                       boxShadow: 'none',
+                                       
+                                      
+                                      
+                                       '&:hover': {
+                                           backgroundColor: 'transparent',
+                                           boxShadow: 'none',
+                                           color: "#FFD000",
+                                       },
+                                   }} >
+       
+       Tokenomics
+      </Typography>
+    </a>
                             {card.features.slice(1, 3).map((item) =>
                                 <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
                                     {item}
@@ -196,7 +219,7 @@ const PowerCard = ({ card }) => {
                                         textTransform: "none",
                                         backgroundColor: "transparent",
                                         boxShadow: 'none',
-                                        mt: 5,
+                                        mt: -1,
                                         width: "fit-content",
                                         height: "fit-content",
                                         '&:hover': {
@@ -224,6 +247,7 @@ const PowerCard = ({ card }) => {
                         className={card.level === "Captain Bee" ? "highlighted-captain-bee-card" : ""}>
 
                             <img alt="" src={card.photo} width={"82px"} style={{ marginBottom: "15px" }} />
+                            {card.level === "Captain Bee" ? <img alt="" src={hive} width={"42px"} style={{ marginBottom: "15px" }}/> : <></>}
 
                             <Typography variant="text" component="p" fontSize={"20px"} fontWeight={600} lineHeight={2.1} mb={2}
                                 style={{ color: `${card.level === "Captain Bee" ? "#FFB300" : "inherit"}` }}
@@ -242,9 +266,9 @@ const PowerCard = ({ card }) => {
                                 justifyContent: "flex-start", flexDirection: "column"
                             }}>
                                 <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
-                                    {card.level === "Captain Bee" ? `${card.level} Level` : '\u00A0'}
+                                  {card.level === "Captain Bee" ? `Indexx Hive ${card.level} Level` : '\u00A0'}
                                 </Typography>
-
+                                
                                 {card.features.map((item) =>
                                     <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
                                         {item}

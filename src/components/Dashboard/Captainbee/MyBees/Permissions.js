@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getHoneyBeeDataByUsername, requestPermissionsByEmail } from '../../../../services/api';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery} from '@mui/material'
 
 const Permissions = () => {
 
@@ -12,6 +14,8 @@ const Permissions = () => {
   const [captainBeeEmail, setCaptainBeeEmail] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState();
   const [loadings, setLoadings] = useState(false);
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
 
@@ -66,7 +70,7 @@ const Permissions = () => {
       >
         <div
           className="d-flex justify-content-center align-items-center "
-          style={{ gap: '100px' }}
+          style={{ gap: `${isMobile ? '80px' : '100px'}` }}
         >
           <div>
             <Typography variant="text" component="p" fontSize={'15px'} style={{ color: "#393939" }}>
@@ -83,7 +87,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width: "217px",
+                width: `${isMobile ? '100%' : '217px'}`,
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -110,8 +114,8 @@ const Permissions = () => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
-                  ml: 2,
+                  width: `${isMobile ? '100%' : '217px'}`,
+                  ml: isMobile ? 0 : 2,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -129,10 +133,11 @@ const Permissions = () => {
         </div>
 
         <div
-          className="d-flex justify-content-center align-items-center "
-          style={{ gap: '98px' }}
+          className="d-flex justify-content-center align-items-center"
+          style={{ gap: `${isMobile ? '80px' : '98px'}` }}
         >
-          <div>
+          <div> 
+          {/* // className="d-flex align-items-center justify-content-center" style={{width:`${isMobile ? '80%' : 'auto'}`,}}> */}
             <Typography variant="text" component="p" fontSize={'15px'} style={{ color: "#393939" }}>
               Permission to SELL
             </Typography>
@@ -147,7 +152,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width: "217px",
+                width: `${isMobile ? '100%' : '217px'}`,
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -173,8 +178,8 @@ const Permissions = () => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
-                  ml: 2,
+                  width: `${isMobile ? '100%' : '217px'}`,
+                  ml: isMobile ? 0 : 2,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',
@@ -210,7 +215,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width: "217px",
+                width: `${isMobile ? '100%' : '217px'}`,
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -237,8 +242,8 @@ const Permissions = () => {
                   borderRadius: '2px',
                   color: '#282828',
                   height: '40px',
-                  width: "217px",
-                  ml: 2,
+                  width: `${isMobile ? '100%' : '217px'}`,
+                  ml: isMobile ? 0 : 2,
                   px: 8,
                   textTransform: 'none',
                   fontSize: '15px',

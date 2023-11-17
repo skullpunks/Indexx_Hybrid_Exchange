@@ -23,6 +23,13 @@ const BlockpassLink = () => {
             <br></br>
             <br></br>
             <br></br>
+            <br></br>
+            <br></br>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br></br>
             <div className='col-2'>
 
                 <Button className='margin-r-1x btn btn-danger' onClick={() => openBlockpassLink()}>

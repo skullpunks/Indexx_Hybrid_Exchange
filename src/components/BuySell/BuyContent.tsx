@@ -16,40 +16,51 @@ import { useNavigate, useParams } from 'react-router-dom';
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
   tokenType: number;
+  subtokenType: number;
 }
 
-const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
+const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType }) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [filteredtokens, setFilteredtokens] = useState(initialTokens);
-  
+
   useEffect(() => {
-    if(tokenType === 2) {
-      const filtered = initialTokens.filter(item =>
-        item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) ||
-        item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-      );
-      setFilteredtokens(filtered);
-      
-      handleChange(filtered[0].address);
+    const topCryptoTokens = ["IN500", "INEX", "IUSD+", "INXC"];
+
+    let filtered: any[] = [];
+    if (tokenType === 2) {
+      if (subtokenType === 0) {
+        // Stock tokens
+        filtered = initialTokens.filter(item => item.isStock || item.subTitle.includes('SNP500'));
+      } else if (subtokenType === 1) {
+        // ETF tokens
+        filtered = initialTokens.filter(item => item.isETF);
+      }
+      // Sort alphabetically for Stocks and ETFs
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (tokenType === 1) {
+      // Crypto tokens
+      filtered = initialTokens.filter(item => !item.isStock && !item.isETF);
+
+      // Custom sorting for Crypto: top tokens first, then alphabetically
+      filtered.sort((a, b) => {
+        if (topCryptoTokens.includes(a.title) && topCryptoTokens.includes(b.title)) {
+          return topCryptoTokens.indexOf(a.title) - topCryptoTokens.indexOf(b.title);
+        } else if (topCryptoTokens.includes(a.title)) {
+          return -1;
+        } else if (topCryptoTokens.includes(b.title)) {
+          return 1;
+        }
+        return a.title.localeCompare(b.title);
+      });
+    } else {
+      // All tokens
+      filtered = [...initialTokens];
     }
 
-    else if (tokenType === 1){
-      const filtered = initialTokens.filter(item =>
-        !item.subTitle.toLowerCase().includes('Stock'.toLowerCase()) &&
-        !item.subTitle.toLowerCase().includes('SNP500'.toLowerCase())
-
-      );
-      setFilteredtokens(filtered);
-      handleChange(filtered[0].address);
-    }
-
-    else if (tokenType === 0){
-      setFilteredtokens(initialTokens);
-      handleChange(initialTokens[0].address);
-    }
-  }, [tokenType])
-  
+    setFilteredtokens(filtered);
+    handleChange(filtered[0]?.address);
+  }, [tokenType, subtokenType]);
 
   const navigateUser = () => {
     let getRequiredCoin = filteredtokens.find(
@@ -86,8 +97,18 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
   const { id } = useParams();
   const [honeyBeeId, setHoneyBeeId] = useState("");
 
+  const categorizeTokens = (tokens: any) => {
+    return {
+      Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
+      StockTokens: tokens.filter((token: any) => token.isStock),
+      ETFs: tokens.filter((token: any) => token.isETF)
+    };
+  };
+
+  const categorizedTokens = categorizeTokens(filteredtokens);
+
   useEffect(() => {
-    
+
 
     if (id) {
       setHoneyBeeId(String(id));
@@ -243,8 +264,8 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
             <img
               src={bsDollar}
               alt="Index icon"
-              width="38"
-              height="38"
+              width="40"
+
               style={{ marginRight: 11 }}
             />
             USD <span className="token_grey">US Dollar</span>
@@ -257,7 +278,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
       >
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
-            <Select
+            {/* <Select
               className="width-100 border-0"
               onChange={handleChange}
               value={BSvalue?.fromToken}
@@ -272,7 +293,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
                       value={token.address}
                       className="common__token d-flex bs_token_container"
                       data-address={token.address}
-                      style={{paddingLeft : "15px", paddingRight : 0}}
+                      style={{ paddingLeft: "15px", paddingRight: 0 }}
                     >
                       <div className="d-flex bs_token_num select-drop">
                         <img
@@ -282,7 +303,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
                           }
                           alt="IN500"
                           width="38"
-                          height="38"
+                        //  
                         />
                         <div className=" padding-l-1x d-flex flex-align-center">
                           {token.title}{' '}
@@ -297,6 +318,40 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType }) => {
                     </Select.Option>
                   );
                 })}
+            </Select> */}
+            <Select
+              className="width-100 border-0"
+              onChange={handleChange}
+              value={BSvalue?.fromToken}
+              dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
+            >
+              {Object.entries(categorizedTokens).map(([category, tokens]) => (
+                <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                  {tokens.map((token: any) => (
+                    <Select.Option
+                      key={token.address}
+                      value={token.address}
+                      className="common__token d-flex bs_token_container"
+                      data-address={token.address}
+                      style={{ paddingLeft: "15px", paddingRight: 0 }}
+                    >
+                      <div className="d-flex bs_token_num select-drop">
+                        <img
+                          src={require(`../../assets/token-icons/${token.image}.png`).default}
+                          alt={token.title}
+                          width="40"
+                        />
+                        <div className="padding-l-1x d-flex flex-align-center">
+                          {token.title}
+                          <span style={{ color: 'var(--body_color)' }} className="margin-l-0_5x">
+                            {token.subTitle}
+                          </span>
+                        </div>
+                      </div>
+                    </Select.Option>
+                  ))}
+                </Select.OptGroup>
+              ))}
             </Select>
           </div>
         </div>

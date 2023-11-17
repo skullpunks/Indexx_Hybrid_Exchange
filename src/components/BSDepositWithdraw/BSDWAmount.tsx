@@ -27,7 +27,11 @@ export const BSDWAmount = () => {
         bankName,
         swiftCode,
         addressLine1,
-        addressLine2 } = location.state || {};
+        addressLine2,  
+        city,
+        state,
+        country,
+        zipCode } = location.state || {};
     const [email, setEmail] = useState('');
     const [singleWallet, setSingleWallet] = useState() as any;
     const [amount, setAmount] = useState('');
@@ -52,7 +56,12 @@ export const BSDWAmount = () => {
             bankName,
             swiftCode,
             addressLine1,
-            addressLine2, finalAmount);
+            addressLine2,  
+            city,
+            state,
+            country,
+            zipCode,
+            finalAmount);
         if (res.status === 200) {
             OpenNotification('success', res.data.message);
             setLoadings(false);
@@ -75,7 +84,11 @@ export const BSDWAmount = () => {
                 bankName,
                 swiftCode,
                 addressLine1,
-                addressLine2
+                addressLine2,
+                city,
+                state,
+                country,
+                zipCode
             }
         });
     };
@@ -127,7 +140,7 @@ export const BSDWAmount = () => {
                             <span className='text_link' onClick={handleEdit}>Edit Account</span></div>
                         <div className='font_13x brand_opacity_5'>Transaction method: Bank Transfer(SWIFT) - {swiftCode}</div>
                         <div className='font_13x brand_opacity_5'>Transaction Fee:  5.00 USD </div>
-                        <div className='font_13x brand_opacity_5'>Maximum withdraw:  50.00 USD </div>
+                        <div className='font_13x brand_opacity_5'>Minimum withdraw:  50.00 USD </div>
                     </div>
                 </div>
                 <div className='d-flex flex_buttons flex-justify-between margin-b-2x margin-t-auto'>

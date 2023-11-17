@@ -29,6 +29,11 @@
   flex: 1;
 }
 
+.custom-optgroup-label {
+  font-size: 2.2em;  
+  font-weight: bold;
+}
+
 .bs_curreny_left {
   flex: 1;
   text-align: center;

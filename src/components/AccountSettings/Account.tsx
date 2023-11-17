@@ -11,7 +11,7 @@ import Security from './Security';
 
 const Account = () => {
     return (
-        <div style={{ paddingTop: 90 }} className="accounts_container">
+        <div style={{ paddingTop: 190 }} className="accounts_container">
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="Basic Info" key="1">
 

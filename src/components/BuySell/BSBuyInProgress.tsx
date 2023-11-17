@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import InProgressClock from "../../assets/arts/InProgressClock.svg";
+import InProgressClock from "../../assets/arts/new_arts/clock green.svg";
+import HiveInProgressClock from "../../assets/arts/new_arts/clock yellow hive.svg";
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { getPaypalOrder } from '../../services/api';
+import { getPaypalOrder, getPaypalSubscription } from '../../services/api';
+import CanStake from './Notification/CanStake';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -21,28 +23,38 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
     const [outcurr, setoutcurr] = useState("");
     const [outAmt, setoutAmt] = useState(0);
     const [, setToken] = useState("");
+    const [, setSubscriptionId] = useState("");
     const [tokenValue] = useSearchParams();
-
+    const [subscriptionId] = useSearchParams();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(() => {
         const orderCurr = String(orderCurrency.get("orderCurrency"));
         setIncurr(orderCurr)
         setInAmt(Number(orderAmount.get("orderAmount")));
         setoutcurr(String(payCurrency.get("payCurrency")));
         setoutAmt(Number(payAmount.get("payAmount")));
-        //---Below commented code is for Paypal payments---
         setToken(String(tokenValue.get("token")));
-        if (tokenValue.get("token") !== undefined) {
+        setSubscriptionId(String(subscriptionId.get("subscription_id")));
+        if (subscriptionId.get("subscription_id") !== undefined && tokenValue.get("token") !== undefined) {
+            getPaypalSubscription(String(subscriptionId.get('subscription_id'))).then((res) => {
+                if (res.status === 200) {
+                    let subId = String(subscriptionId.get("subscription_id"));
+                    navigate(`/indexx-exchange/subscribe-success?subscription_id=${String(subId)}`);
+                }
+            });
+        } else if (tokenValue.get("token") !== undefined) {
             getPaypalOrder(String(tokenValue.get('token'))).then((res) => {
-                
+
                 if (res.status === 200) {
                     let orderData = res.data.data;
-                    if(orderData?.orderType == "Buy" || orderData?.orderType == "Sell" || orderData?.orderType == "Convert") {
-                    setoutAmt(orderData.breakdown.outAmount)
-                    setoutcurr(orderData.breakdown.outCurrencyName)
+                    if (orderData?.orderType == "Buy" || orderData?.orderType == "Sell" || orderData?.orderType == "Convert") {
+                        setoutAmt(orderData.breakdown.outAmount)
+                        setoutcurr(orderData.breakdown.outCurrencyName)
+                        setIsModalOpen(true);
                     } else {
                         navigate(`/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`);
                     }
-                    
+
                 }
             });
         }
@@ -62,7 +74,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </h1>
             </div>
             <div className='card_body text-center'>
-                <img src={InProgressClock} alt="InProgressClock" className='padding-t-2x' />
+                <img src={localStorage.getItem("userlogged") === 'normal' ? InProgressClock : HiveInProgressClock} alt="InProgressClock" className='padding-t-2x' width={"90px"} />
 
                 {/* <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px 0 20px" }}>
@@ -73,7 +85,7 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                         <img src={SwapArrowIcon} className="hover_icon" alt="ddd" />
                     </div>
                 </div> */}
-                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline", color:"var(--body_color)" }}>
+                <div className="bs_curreny_left p-3 " style={{ transform: "scale(1)", paddingBottom: "50px", paddingTop: 0, alignItems: "baseline", color: "var(--body_color)" }}>
 
                     <span placeholder="0" className="font_20x " style={{ fontSize: 60 }} >{Math.floor(outAmt * 10000) / 10000}</span>
                     <span className="font_20x" style={{
@@ -85,6 +97,12 @@ const BSBuyInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 <div className='font_20x padding-b-2x'>Your buy order is being processed. A confirmation email will be sent once the order is complete.</div>
                 <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block onClick={() => navigate("/indexx-exchange/buy-sell/wallet")}> Go to Wallet</Button>
                 <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=buy" >New Buy</Link>
+            </div>
+            <div>
+                <CanStake
+                    isVisible={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
             </div>
         </div>
     )

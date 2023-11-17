@@ -9,45 +9,47 @@ import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
 import CommissionTable from '../CommissionTable';
 import { useParams } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 const TeamCaptainGrowth = () => {
   const { id } = useParams();
-  const [platform, setPlatform] = useState('Exchange');
-  const [Order, setOrder] = useState('buysell');
-  const [selectedDate, setSelectedDate] = useState('aug-sept');
+  // const [platform, setPlatform] = useState('Exchange');
+  // const [Order, setOrder] = useState('buysell');
+  // const [selectedDate, setSelectedDate] = useState('aug-sept');
 
-  const [platformCapt, setPlatformCapt] = useState('Exchange');
-  const [OrderCapt, setOrderCapt] = useState('buysell');
-  const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
+  // const [platformCapt, setPlatformCapt] = useState('Exchange');
+  // const [OrderCapt, setOrderCapt] = useState('buysell');
+  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
 
   const [userType, setUserType] = useState("");
   const [staticsData, setStaticsData] = useState();
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [email, setEmail] = useState('');
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  // const xLabels = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
-  const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  const xLabelsCapt = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-  ];
+  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
+  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
+  // const xLabelsCapt = [
+  //   'Page A',
+  //   'Page B',
+  //   'Page C',
+  //   'Page D',
+  //   'Page E',
+  //   'Page F',
+  //   'Page G',
+  // ];
 
 
   const [powerPackPhoto, setPowerPackPhoto] = useState();
@@ -64,18 +66,23 @@ const TeamCaptainGrowth = () => {
 
     setUserType(userType);
     if (userType === "CaptainBee") {
-      getCaptainBeeStatics(id).then((data) => {
-        setStaticsData(data.data);
-        console.log("Data", data?.data);
-        console.log("Data", data?.data.userFullData?.email);
-        setCaptainbeeEmail(data?.data?.userFullData?.email);
-      });
-      console.log("I am if")
+      if (id) {
+        getCaptainBeeStatics(id).then((data) => {
+          setStaticsData(data.data);
+          console.log("Data", data?.data);
+          console.log("Data", data?.data.userFullData?.email);
+          setCaptainbeeEmail(data?.data?.userFullData?.email);
+        });
+      }
     } else {
       console.log("I am else")
 
     }
   }, [captainbeesEmail])
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
   return (
     <div style={{ paddingTop: "10px" }}>
       <Box
@@ -90,8 +97,8 @@ const TeamCaptainGrowth = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 2,
+            flexDirection: `${isMobile ? "column" : "row"}`,
+            gap: isMobile ? 4 : 2,
             mt: 2
           }}
         >
@@ -100,7 +107,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width: `${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -118,7 +125,7 @@ const TeamCaptainGrowth = () => {
             >
               My Honey Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -165,7 +172,6 @@ const TeamCaptainGrowth = () => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -264,25 +270,8 @@ const TeamCaptainGrowth = () => {
                     August-September
                   </MenuItem>
                 </Select>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',
@@ -298,14 +287,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -314,8 +303,8 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
-                  fontWeight={600}
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   {staticsData?.honeyBeesCount}
@@ -344,14 +333,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -360,15 +349,15 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
-                  fontWeight={600}
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   ${'0.00'}
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -377,8 +366,8 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
-                  fontWeight={600}
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   {'0.00'} {" "}
@@ -426,7 +415,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: '50%',
+              width: `${isMobile ? "100%" : "50%"}`,
             }}
           >
             <Typography
@@ -444,7 +433,7 @@ const TeamCaptainGrowth = () => {
             >
               My Captain Bee Statistics
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -491,7 +480,6 @@ const TeamCaptainGrowth = () => {
                   size="small"
                   disableUnderline
                 >
-                  {/* <MenuItem value="">Select Platform</MenuItem> */}
                   <MenuItem key="Exchange" value="Exchange">
                     Indexx Exchange
                   </MenuItem>
@@ -590,25 +578,8 @@ const TeamCaptainGrowth = () => {
                     August-September
                   </MenuItem>
                 </Select>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        views={['year', 'month']}
-                        label="Month/Year"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        inputFormat="MM/yy"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            margin="normal"
-                          />
-                        )}
-                      />
-                    </LocalizationProvider> */}
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: 'flex',
@@ -624,14 +595,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -640,8 +611,8 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
-                  fontWeight={600}
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   {staticsData?.honeyBeesCount}
@@ -670,14 +641,14 @@ const TeamCaptainGrowth = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  px: 2,
+                  px: isMobile ? 1 : 2,
                   py: 1,
                   aspectRatio: 1
                 }}
               >
                 <Typography
                   variant="text"
-                  fontSize={'12px'}
+                  fontSize={isMobile ? '10px' : '12px'}
                   fontWeight={600}
                   textAlign={'left'}
                   alignSelf={'flex-start'}
@@ -686,8 +657,8 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={'50px'}
-                  fontWeight={600}
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
                   textAlign={'left'}
                 >
                   ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
@@ -696,28 +667,28 @@ const TeamCaptainGrowth = () => {
                   }
                 </Typography>
                 <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
-                          >
-                            Total Commision Earned in INEX
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={'50px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
-                              : '0.00')
-                            } {" "}
-                            <span className='font_17x'>
-                            INEX
-                            </span>
-                          </Typography>
+                  variant="text"
+                  fontSize={isMobile ? '10px' : '12px'}
+                  fontWeight={600}
+                  textAlign={'left'}
+                  alignSelf={'flex-start'}
+                >
+                  Total Commision Earned in INEX
+                </Typography>
+                <Typography
+                  variant="text"
+                  fontSize={isMobile ? '25px' : '50px'}
+                  // fontWeight={600}
+                  textAlign={'left'}
+                >
+                  {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                    : '0.00')
+                  } {" "}
+                  <span className='font_17x'>
+                    INEX
+                  </span>
+                </Typography>
                 <Typography
                   variant="text"
                   fontSize={'22px'}
@@ -755,7 +726,7 @@ const TeamCaptainGrowth = () => {
         </Box>
 
         <Box>
-          <CommissionTable leaderEmail={captainbeesEmail}/>
+          <CommissionTable leaderEmail={captainbeesEmail} />
         </Box>
       </Box>
     </div>

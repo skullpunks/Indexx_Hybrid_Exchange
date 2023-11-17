@@ -3,7 +3,8 @@ import PowerCard from './PowerCard';
 import { Box, Grid, Typography } from '@mui/material';
 import { PackData } from './PackData';
 import powerp from "../../assets/powerpack/power page logo 1.svg";
-import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
+import hive from "../../assets/powerpack/hive.svg";
+// import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 
@@ -18,7 +19,7 @@ const PowerPack = () => {
 
   return (
     <Box mt={18} pb={5}>
-      <PowerPackHeader />
+      {/* <PowerPackHeader /> */}
       <Box
         sx={{
           display: "flex",
@@ -41,11 +42,21 @@ const PowerPack = () => {
 
         <Box sx={{ textAlign: "center" }}>
           <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
-            Power Pack
+          Investor's Power Pack
           </Typography>
         </Box>
-
+        <Box
+          component={"img"}
+          src={hive}
+          alt='logo'
+          width={90}
+          marginRight={-3}
+        />
+          <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
+          Indexx Hive
+          </Typography>
       </Box>
+    
       <Typography variant="body1" fontSize={"20px"} sx={{ mt: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
         To unlock the full potential of earning as a "Captain Bee," you must invest in a minimum of the Captain Bee Power Pack or a higher tier. This investment is your ticket to financial growth and success.
       </Typography>
