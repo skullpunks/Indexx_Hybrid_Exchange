@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import StepIcon from '@mui/material/StepIcon';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import people from '../../assets/arts/people.svg';
+import step from '../../assets/arts/stepper-img.svg';
 import check from '../../assets/arts/check 2 3.svg';
 import wallet from '../../assets/BSheader/funding grey 1.svg';
 import './HorizontalLinearStepper2.css';
@@ -14,6 +16,7 @@ import '../BuySell/BuySellDummy.css';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import { Select } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
+import { makeStyles } from '@mui/styles';
 import { createSendTxByEmail, createSendTxByUsername, decodeJWT, getWalletBalance, validateUserEmail, validateUsername } from '../../services/api';
 
 const Final = () => {
@@ -733,10 +736,6 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
             Please make sure the payee and amount information is correct. Refunds are not supported
           </div>
           <br />
-          <div className="font_13x">
-            Please make sure the payee and amount information is correct. Refunds are not supported
-          </div>
-          <br />
           <div className='d-flex' style={{ gap: 10 }}>
             <Button
               className="continue-outlined-btn"
@@ -774,9 +773,71 @@ const steps = [
   { label: 'Confirm Payment', component: <FileComponent3 /> },
 ];
 
+// const useStyles = makeStyles((theme) => ({
+//   customIcon: {
+//     // backgroundImage: 'url("./HC3.png")', // Replace with your image path
+//     backgroundImage: `url(${require('./HC3.png').default})`,
+//     backgroundSize: 'cover',
+//     width: 24,
+//     height: 30,
+//   },
+// }));
+
+const useStyles = makeStyles((theme) => ({
+  customIconContainer: {
+    position: 'relative',
+    width: 24,
+    height: 30,
+  },
+  activeIcon: {
+    // backgroundImage: 'url("./activeIcon.png")', // Replace with your active image path
+    backgroundImage: `url(${require('./HC3.png').default})`,
+    backgroundSize: 'cover',
+    width: '100%',
+    height: '100%',
+  },
+  inactiveIcon: {
+    // backgroundImage: 'url("./inactiveIcon.png")', // Replace with your inactive image path
+    backgroundImage: `url(${require('./HC4.png').default})`,
+    backgroundSize: 'cover',
+    width: '100%',
+    height: '100%',
+  },
+  completedIcon: {
+    // backgroundImage: 'url("./completedIcon.png")', // Replace with your completed image path
+    backgroundImage: `url(${require('./HC3.png').default})`,
+    backgroundSize: 'cover',
+    width: '100%',
+    height: '100%',
+  },
+  customIcon: {
+    // backgroundImage: 'url("./HC3.png")', // Replace with your image path
+    backgroundImage: `url(${require('./HC3.png').default})`,
+    backgroundSize: 'cover',
+    width: '100%',
+    height: '100%',
+  },
+  stepNumber: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  checkIcon: {
+    color: 'white',
+    width:'5px',
+    height:'5px',
+  },
+}));
+
 export default function HorizontalLinearStepper2() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [coinFromStep2, setCoinFromStep2] = React.useState({ selectedCoin: '', receiveAmount: '', email: '', username: '', profilePic: '', userBalance: 0 });
+
+  const classes = useStyles();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -812,13 +873,42 @@ export default function HorizontalLinearStepper2() {
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          sx={{ fill: 'yellow' }}
+          sx={{ fill: 'var(--primary_color)' }}
         >
-          {steps.map((step, index) => (
+        {localStorage.getItem("userlogged") === 'normal' ? 
+          (steps.map((step, index) => (
             <Step key={step.label}>
               <StepLabel>{step.label}</StepLabel>
             </Step>
-          ))}
+          )))
+          :
+          (steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepLabel
+            StepIconComponent={({ completed, active }) => (
+              <div className={classes.customIconContainer}>
+                {/* <div
+                  className={active ? classes.activeIcon : classes.inactiveIcon}
+                /> */}
+                <div
+                  className={
+                    completed
+                      ? classes.completedIcon
+                      : activeStep === index
+                      ? classes.activeIcon
+                      : classes.inactiveIcon
+                  }
+                />
+                <div className={classes.stepNumber}>{index + 1}</div>
+              </div>
+            )}
+
+          >
+            {step.label}
+          </StepLabel>
+            </Step>
+          )))
+        }
         </Stepper>
         <Box>
           {activeStep === steps.length ? <Final /> : (

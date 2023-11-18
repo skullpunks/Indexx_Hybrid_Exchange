@@ -314,9 +314,11 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       <div className='d-flex ' style={{gap:10}}>
         <div className='d-flex flex-direction-column w-50'>
           Date Range
-          <RangePicker disabledDate={disabledDate} style={{height:"40px"}}
-           onChange={handleDateChange}  
-           />
+            <RangePicker disabledDate={disabledDate} style={{height:"40px"}}
+            onChange={handleDateChange} 
+            className="createDateRangePicker"
+            dropdownClassName= "createDateRangePicker"
+            />
         </div>
       <div className='d-flex w-50 align-items-end'  style={{gap:10}}>
         <div className='w-50'>

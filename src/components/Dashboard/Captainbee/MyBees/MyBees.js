@@ -95,7 +95,8 @@ const MyBees = () => {
               Honey Bee
             </div>
             <div className="font_15x d-flex align-items-center">
-              {item.username} ({ item?.firstName + " " + item?.lastName})
+              {item.username} 
+              {/* ({ item?.firstName + " " + item?.lastName}) */}
             </div>
           </Box>
         </div>
