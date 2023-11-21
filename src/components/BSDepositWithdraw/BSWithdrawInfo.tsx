@@ -18,13 +18,12 @@ export const BSWithdrawInfo = () => {
   const [swiftCode, setSwiftCode] = useState(initialState.swiftCode || '');
   const [routingNumber,setRoutingNumber] = useState(initialState.routingNumber|| '')
   const [addressLine1, setAddressLine1] = useState(initialState.addressLine1 || '');
-  const [addressLine2, setAddressLine2] = useState(initialState.addressLine2 || '');
   const [city, setCity] = useState(initialState.city || '');
   const [state, setState] = useState(initialState.state || '');
   const [country, setCountry] = useState(initialState.country || '');
   const [zipCode, setZipCode] = useState(initialState.zipCode || '');
   const [states, setStates] = useState<IState[]>([]);
-
+  const [countryCode, setCountryCode] = useState('');
 
   const handleContinue = () => {
     navigate("/indexx-exchange/buy-sell/withdraw/amount", {
@@ -32,9 +31,9 @@ export const BSWithdrawInfo = () => {
         beneficiaryName,
         accountNumber,
         bankName,
+        routingNumber,
         swiftCode,
         addressLine1,
-        addressLine2,
         city,
         state,
         country,
@@ -43,37 +42,27 @@ export const BSWithdrawInfo = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (country) {
-  //     setStates(State.getStatesOfCountry(country));
-  //   }
-  // }, [country]);
 
   const handleOrderHistoryClick = () => {
     navigate('/indexx-exchange/buy-sell/order-history');
   };
 
   useEffect(() => {
-    // Function to fetch states for a country
-    const fetchStates = (countryCode: string) => {
-      const states = State.getStatesOfCountry(countryCode) || [];
+    const fetchStates = (countryIsoCode: string) => {
+      const states = State.getStatesOfCountry(countryIsoCode) || [];
       setStates(states);
-      return states;
+      // Reset state if it's not valid for the new country
+      if (!states.some(st => st.name === state)) {
+        setState('');
+      }
     };
 
-    if (country) {
-      const states = fetchStates(country);
-
-      // Check if the previously selected state exists in the new country's states
-      if (states.some(st => st.isoCode === state)) {
-        setState(state); // Set to user-selected state if it's valid
-      } else {
-        setState(''); // Reset the state if it's not valid for the new country
-      }
+    if (countryCode) {
+      fetchStates(countryCode);
     } else {
-      setStates([]); // Reset states if no country is selected
+      setStates([]);
     }
-  }, [country]);
+  }, [countryCode]);
 
   return (
 
@@ -136,22 +125,30 @@ export const BSWithdrawInfo = () => {
               <span className='placeholder_info'>Please input the address in English</span>
             </Form.Item>
             <Form.Item label="Country">
-              <Select
-                placeholder="Select Country"
-                value={country}
-                onChange={(value) => setCountry(value)}
-              >
-                {Country.getAllCountries().map((cntry: any) => (
-                  <Option key={cntry.isoCode} value={cntry.isoCode}>{cntry.name}</Option>
-                ))}
-              </Select>
+            <Select
+          placeholder="Select Country"
+          value={country}
+          onChange={(value) => {
+            const selectedCountry = Country.getCountryByCode(value);
+            setCountry(String(selectedCountry?.name));
+            setCountryCode(String(selectedCountry?.isoCode)); // Set the country code
+          }}
+        >
+          {Country.getAllCountries().map((cntry: any) => (
+            <Option key={cntry.isoCode} value={cntry.isoCode}>{cntry.name}</Option>
+          ))}
+        </Select>
             </Form.Item>
             <Form.Item label="State">
               <Select
                 
                 placeholder="Select State"
                 value={state}
-                onChange={(value) => setState(value)}
+                //onChange={(value) => setState(value)}
+                onChange={(value) => {
+                  const selectedState = states.find(st => st.isoCode === value)?.name;
+                  setState(selectedState);
+                }}
                 disabled={!country}
               >
                 {states.map((st: any) => (
