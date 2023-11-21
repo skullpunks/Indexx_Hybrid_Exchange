@@ -661,8 +661,8 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
+                  ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD
+                    ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD).toFixed(2)
                     : '0.00')
                   }
                 </Typography>
@@ -681,10 +681,10 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                   ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX
+                    ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX).toFixed(2)
                     : '0.00')
-                  } {" "}
+                  }
                   <span className='font_17x'>
                     INEX
                   </span>

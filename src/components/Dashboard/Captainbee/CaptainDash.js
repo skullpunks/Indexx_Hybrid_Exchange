@@ -873,10 +873,15 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                            {/* ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
                               : '0.00')
-                            }
+                            } */}
+                            {/* ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD).toFixed(2)
+                              : '0.00')
+                            } */}
+                            $0.00
                           </Typography>
                           <Typography
                             variant="text"
@@ -1187,8 +1192,12 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                            {/* ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
+                              : '0.00')
+                            } */}
+                              ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD).toFixed(2)
                               : '0.00')
                             }
                           </Typography>
@@ -1207,10 +1216,14 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                            {/* {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
                               : '0.00')
-                            } {" "}
+                            } {" "} */}
+                            ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX).toFixed(2)
+                              : '0.00')
+                            }
                             <span className='font_17x'>
                               INEX
                             </span>
@@ -1228,7 +1241,7 @@ const CaptainDash = () => {
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                            <img alt="up" src={arrow} />  {staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX ? "20%" : "0%"}
                           </Typography>
                         </Box>
                       </Box>
