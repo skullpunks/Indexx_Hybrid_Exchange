@@ -615,7 +615,7 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  {staticsData?.honeyBeesCount}
+                  {staticsData?.captainsCount}
                 </Typography>
                 <Typography
                   variant="text"
@@ -630,7 +630,7 @@ const TeamCaptainGrowth = () => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                  <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
                 </Typography>
               </Box>
               <Box
