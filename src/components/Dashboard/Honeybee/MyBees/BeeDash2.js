@@ -8,7 +8,7 @@ import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
 import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
-
+import { Button } from 'antd';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -62,6 +62,8 @@ const BeeDash2 = () => {
       })
     }
   }, [])
+
+  const subscription = true;
 
   return (
     <>
@@ -138,14 +140,64 @@ const BeeDash2 = () => {
                   </div>
                 </div>
               </div>
-              <div className="align-items-start lh_32x">
+              <div className="align-items-start">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
                   Honey Bee {honeyBeeData?.username}
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
                   Honey Bee of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
-                <div className="align-items-start lh_32x">
+                <div className="align-items-start" 
+                // style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}
+                >
+                {/* {(!subscription?.paypalSubscriptionDBData) ? */}
+                {(!subscription) ?
+                  (<div className="d-flex flex-direction-column align-items-start mt-3">
+                    <div className="font_15x">
+                      Subscribe to your $150 monthly INEX investment today
+                    </div>
+                    <div style={{width:"100%"}}>
+                      <Button
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                        // onClick={handleCreateSubscription}
+                        style={{width:"100%", height:"auto", color:"#393939"}}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>)
+                  :
+                  (<div className="d-flex flex-direction-column align-items-start mt-3">
+                    <div className="font_20x">
+                      $150 INEX Subscription Details
+                    </div>
+                    <div className="font_13x mt-3">
+                      Subscription ID: H-HDDJF89JDFJ08
+                      {/* {subscription?.paypalSubscriptionDetails?.id} */}
+                    </div>
+                    <div className="font_13x">
+                      Status: ACTIVE
+                      {/* {subscription?.paypalSubscriptionDetails?.status} */}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date: December 14, 2023 at 3:30 PM
+                      {/* {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)} */}
+                    </div>
+                    {/* <div>
+                      <Button
+                        type="danger"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCancelSubscription}
+
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div> */}
+                  </div>)
+                }
+                </div>
+                <div className="align-items-start lh_32x mt-4">
                   <div className="font_13x d-flex align-items-center ">
                     <img alt="man" src={man} className="me-2" />
                     {honeyBeeData?.accname ? `@${honeyBeeData?.accname}` : "NA"}
