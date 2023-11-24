@@ -1,7 +1,7 @@
 :root {
   --main-body:#fff;
   --body_background: #fff;
-  --body_color: #5f5f5f;
+  --body_color: #333336;
   --dark_text:#000;
   --err-clr:rgba(246, 96, 54, 0.2);
   --light-gr-color:rgba(18, 18, 18, 0.4);
@@ -36,7 +36,7 @@
 [data-bs-theme="dark"] {
   --main-body:#000;
   --body_background: #171717;
-  --body_color: #e0e0e0;
+  --body_color: #e8e8ed;
   --dark_text:#fff;
   --err-clr:rgba(246, 96, 54, 0.5);
   --light-gr-color:rgba(226, 220, 220, 0.5);

@@ -179,8 +179,8 @@ const EliteLearnMore = () => {
         >
           <Box component={'img'} src={data?.photo} alt="logo" width={'450px'} />
           <Typography
-            fontWeight={'bold'}
-            fontSize={'94px'}
+            // fontWeight={'bold'}
+            fontSize={'54px'}
             textAlign="left"
             mt={5}
           >

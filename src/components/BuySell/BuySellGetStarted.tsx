@@ -271,7 +271,7 @@ console.log(refcode === "null");
             <br />
             Captain Bee now!
             </div>
-            <a href={baseHiveURL} >
+            <a href={baseHiveURL} target='blank'>
 
             <Image
               className="text-center mt-5 hive-img"
