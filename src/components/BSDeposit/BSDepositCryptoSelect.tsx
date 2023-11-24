@@ -283,7 +283,7 @@ export const BSDepositCryptoSelect = () => {
 
     if (res.status === 200) {
       setLoadings(false);
-      OpenNotification('success', 'Your Deposit is successfully');
+      OpenNotification('success', 'Your Deposit is successfull');
     } else {
       setLoadings(false);
       OpenNotification('error', res.data.message);

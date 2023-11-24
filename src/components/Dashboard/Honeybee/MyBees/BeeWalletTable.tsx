@@ -83,7 +83,7 @@ const columns: ColumnsType<DataType> = [
         // },
     },
     {
-        title: 'Coin Rate',
+        title: 'Coin Rate in USD',
         dataIndex: 'coinPrice',
         sorter: {
             compare: (a, b) => a.coinPrice - b.coinPrice,

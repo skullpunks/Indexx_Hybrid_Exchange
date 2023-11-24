@@ -97,6 +97,10 @@ import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
 import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
 import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
 import HorizontalLinearStepper2 from "./components/Send/HorizontalLinearStepper2";
+import BuySellVerifyEmail from "./components/BuySell/BuySellVerifyEmail";
+import EliteClub from "./components/EliteClub/EliteClub";
+import EliteLearnMore from "./components/EliteClub/EliteLearnMore";
+import SecondaryHeader from "./SecondaryHeader";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -177,11 +181,12 @@ function App() {
         {/* <Header /> */}
         <ScrollToTop />
         <HeaderNew /> 
-        { (!window.location.pathname.includes("login") && !window.location.pathname.includes("dashboard") &&
+        {/* { (!window.location.pathname.includes("login") && !window.location.pathname.includes("elite-learn") && !window.location.pathname.includes("dashboard") &&
           !window.location.pathname.includes("get-started") && !((localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) && window.location.pathname === "/")) ? 
           <PowerPackHeader/>
           :null
-        }
+        } */}
+        <SecondaryHeader/>
         <Routes>
           {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
             <Route path="/*" element={<BuySellLogin />} />
@@ -213,6 +218,9 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
         </Route>
+
+          <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
+          <Route path="/indexx-exchange/elite-learn/:id" element={<EliteLearnMore />} />
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
@@ -356,6 +364,7 @@ function App() {
           <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
           <Route path="/indexx-exchange/welcome" element={<WelcomePage />} />
           <Route path="/indexx-exchange/account" element={<Account />} />
+          <Route path="/indexx-exchange/account/email-auth" element={<BuySellVerifyEmail />} />
           <Route
             path="/indexx-exchange/change-password"
             element={<SecurityChange />}

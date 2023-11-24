@@ -53,9 +53,8 @@ import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getA
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
-
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CommissionTable from './CommissionTable';
 import { Button } from 'antd';
 let appSettingArr = [];
@@ -109,6 +108,7 @@ const CaptainDash = () => {
   const [rateData, setRateData] = useState();
   const [adminFee, setAdminFees] = useState('');
   const [loadings, setLoadings] = useState(false);
+  const [loadingsubs, setLoadingsubs] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
 
@@ -169,21 +169,27 @@ const CaptainDash = () => {
 
   const handleCreateSubscription = async () => {
     try {
+      setLoadingsubs(true);
       let access_token = String(localStorage.getItem("access_token"));
       let decoded = decodeJWT(access_token);
       let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
       if (res.status === 200) {
         console.log("res", res);
         for (let i = 0; i < res.data.links.length; i++) {
+          OpenNotification('success', "Subscription success");
           if (res.data.links[i].rel.includes("approve")) {
             window.location.href = res.data.links[i].href;
           }
         }
       } else {
-        console.log("something went wrong");
+        console.log("res", res);
+        OpenNotification('error', res.data);
       }
     } catch (err) {
+      OpenNotification('error', "Something went wrong. Please try again after sometime.");
       console.log("err", err)
+    } finally {
+      setLoadingsubs(false);
     }
   };
 
@@ -396,6 +402,7 @@ const CaptainDash = () => {
                       </div>
                       <div style={{ width: "100%" }}>
                         <Button
+                          loading={loadings}
                           type="primary"
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           onClick={handleCreateSubscription}

@@ -87,7 +87,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
     const categorizeTokens = (tokens: any) => {
         return {
-            Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
+            Crypto: tokens.filter((token: any) => !token.isStock && !token.isETF),
             StockTokens: tokens.filter((token: any) => token.isStock),
             //ETFs: tokens.filter((token: any) => token.isETF)
         };
@@ -302,6 +302,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                     onChange={handleChange} value={BSvalue?.fromToken} key={BSvalue.fromToken}
                 >
                     {Object.entries(categorizedFromTokens).map(([category, tokens]) => (
+                        tokens.length > 0 && (
                         <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
                             {tokens.map((token: any) => (
                                 <Option
@@ -323,6 +324,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                 </Option>
                             ))}
                         </Select.OptGroup>
+                        )
                     ))}
                 </Select>
 
@@ -344,6 +346,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                     onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}
                 >
                     {Object.entries(categorizedToTokens).map(([category, tokens]) => (
+                        tokens.length > 0 && (
                         <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
                             {tokens.map((token: any) => (
                                 <Option
@@ -365,6 +368,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                 </Option>
                             ))}
                         </Select.OptGroup>
+                        )
                     ))}
                 </Select>
             </div>

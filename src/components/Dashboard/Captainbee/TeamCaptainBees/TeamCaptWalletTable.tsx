@@ -87,7 +87,7 @@ const TeamCaptWalletTable: React.FC<TeamCaptWalletTableProps> = ({ email }) => {
             // },
         },
         {
-            title: 'Coin Rate',
+            title: 'Coin Rate in USD',
             dataIndex: 'coinPrice',
             sorter: {
                 compare: (a, b) => a.coinPrice - b.coinPrice,

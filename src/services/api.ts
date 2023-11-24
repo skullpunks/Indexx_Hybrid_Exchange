@@ -735,6 +735,35 @@ export const createMonthlyINEXsubscription = async (
   }
 };
 
+export const createMonthlyHoneyBeeINEXsubscription = async (
+  email: string,
+  currencyIn: string,
+  currencyOut: string,
+  amount: string,
+  outAmount: string,
+  orderType: string
+) => {
+  try {
+    const result = await API.post(
+      `/api/v1/inex/order/createMonthlyHoneyBeeINEXsubscription`,
+      {
+        email: email,
+        currencyIn: currencyIn,
+        currencyOut: currencyOut,
+        amount: amount,
+        outAmount: outAmount,
+        orderType: orderType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getCoinPriceByName)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const cancelMonthlyINEXsubscription = async (
   email: string,
   subscriptionId: string,
@@ -1394,9 +1423,9 @@ export const createFiatWithdraw = async (
   beneficiaryName: string,
   accountNumber: string,
   bankName: string,
+  routingNumber: string,
   swiftCode: string,
   addressLine1: string,
-  addressLine2: string,
   city: string,
   state: string,
   country: string,
@@ -1412,9 +1441,9 @@ export const createFiatWithdraw = async (
         beneficiaryName: beneficiaryName,
         accountNumber: accountNumber,
         bankName: bankName,
+        routingNumber: routingNumber,
         swiftCode: swiftCode,
         addressLine1: addressLine1,
-        addressLine2: addressLine2,
         city: city,
         state: state,
         country: country,

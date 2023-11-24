@@ -30,8 +30,11 @@
 }
 
 .custom-optgroup-label {
-  font-size: 2.2em;  
+  font-size: 1.5em;  
   font-weight: bold;
+  color: var(--body_color);
+  display: flex;
+  justify-content: center;
 }
 
 .bs_curreny_left {
@@ -116,7 +119,7 @@ button:active{
 }
 
 .bs_token_num {
-  font-size: 25px;
+  font-size: 20px;
   color: var(--body_color);
 }
 

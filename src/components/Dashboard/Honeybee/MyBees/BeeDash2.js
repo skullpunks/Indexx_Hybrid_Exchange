@@ -8,22 +8,15 @@ import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
 import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import { Button } from 'antd';
+import loadingGif from '../../../../assets/beeloade.gif';
 
-
-// import { LocalizationProvider, DatePicker } from '@mui/lab';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import MobileDatePicker from '@mui/lab/MobileDatePicker';
-
-// import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 import '../../Captainbee/CaptainDash.css';
 import BeeTabs from './BeeTabs';
 import BeeHeader from '../BeeHeader/BeeHeader';
-import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import { createMonthlyHoneyBeeINEXsubscription, decodeJWT, formatReadableDate, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 
 const BeeDash2 = () => {
   const [userType, setUserType] = useState("");
@@ -34,38 +27,109 @@ const BeeDash2 = () => {
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [subscription, setSubscription] = useState(null);
+  const [loadings, setLoadings] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      if (username) {
-        getCaptainBeeStatics(username).then((data) => {
-          setStaticsData(data.data);
-        });
+    const loadData = async () => {
+      const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+      const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+  
+      setUserType(userType);
+  
+      if (userType === "CaptainBee") {
+        if (username) {
+          try {
+            const data = await getCaptainBeeStatics(username);
+            setStaticsData(data.data);
+            setIsLoading(false); 
+          } catch (error) {
+            // Handle error
+            console.error("Error loading CaptainBee statics:", error);
+          }
+        }
+      } else {
+        try {
+          const honeyUserData = await getHoneyUserDetails(user);
+          if (honeyUserData?.data?.paypalSubscriptionDetails) {
+            setSubscription(honeyUserData?.data?.paypalSubscriptionDetails);
+            //const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+          }
+          setHoneybeeCreateDate(honeyUserData.data.accountCreationDate);
+          setHoneyBeeData(honeyUserData?.data?._doc);
+  
+          const referredUserData = await getReferredUserDetails(user);
+          setRefferedUserData(referredUserData.data);
+          setCaptainbeeCreateDate(referredUserData.data.accountCreationDate);
+          setCaptainbeeOrders(referredUserData?.data?.totalOrders?.length);
+          setCaptainbeeUsers(referredUserData.data.honeyBeesCount);
+          setIsLoading(false); 
+        } catch (error) {
+          // Handle error
+          console.error("Error loading Honey User details or Referred User details:", error);
+        }
       }
-    } else {
+    };
+  
+    loadData();
+  }, []);
+  
 
-      getHoneyUserDetails(user).then((data) => {
-
-        setHoneybeeCreateDate(data.data.accountCreationDate);
-        setHoneyBeeData(data?.data?._doc);
-      })
-
-      getReferredUserDetails(user).then((data) => {
-        setRefferedUserData(data.data)
-        setCaptainbeeCreateDate(data.data.accountCreationDate);
-        setCaptainbeeOrders(data.data.totalOrder);
-        setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
+  const handleCreateSubscription = async () => {
+    try {
+      setLoadings(true);
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await createMonthlyHoneyBeeINEXsubscription(decoded.email, "USD", "INEX", "150", "", "");
+      if (res.status === 200) {
+        for (let i = 0; i < res.data.links.length; i++) {
+          OpenNotification('success', "Subscription success");
+          if (res.data.links[i].rel.includes("approve")) {
+            window.location.href = res.data.links[i].href;
+          }
+        }
+      } else {
+        OpenNotification('error', res.data);
+      }
+    } catch (err) {
+      OpenNotification('error', "Something went wrong. Please try again after sometime.");
+      console.log("err", err)
+    } finally {
+      setLoadings(false);
     }
-  }, [])
+  };
 
   return (
     <>
       <BeeHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-562px" }}>
           <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
@@ -138,14 +202,62 @@ const BeeDash2 = () => {
                   </div>
                 </div>
               </div>
-              <div className="align-items-start lh_32x">
+              <div className="align-items-start">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
                   Honey Bee {honeyBeeData?.username}
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
                   Honey Bee of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
-                <div className="align-items-start lh_32x">
+                <div className="align-items-start"
+                // style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}
+                >
+                  {/* {(!subscription?.paypalSubscriptionDBData) ? */}
+                  {(!subscription?.paypalSubscriptionDBData) ?
+                    (<div className="d-flex flex-direction-column align-items-start mt-3">
+                      <div className="font_15x">
+                        Subscribe to your $150 monthly INEX investment today
+                      </div>
+                      <div style={{ width: "100%" }}>
+                        <Button
+                          loading={loadings}
+                          type="primary"
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          onClick={handleCreateSubscription}
+                          style={{ width: "100%", height: "auto", color: "#393939" }}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
+                    </div>)
+                    :
+                    (<div className="d-flex flex-direction-column align-items-start mt-3">
+                      <div className="font_20x">
+                        $150 INEX Subscription Details
+                      </div>
+                      <div className="font_13x mt-3">
+                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                      </div>
+                      <div className="font_13x">
+                        Status: {subscription?.paypalSubscriptionDetails?.status}
+                      </div>
+                      <div className="font_13x">
+                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                      </div>
+                      {/* <div>
+                      <Button
+                        type="danger"
+                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
+                        onClick={handleCancelSubscription}
+
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div> */}
+                    </div>)
+                  }
+                </div>
+                <div className="align-items-start lh_32x mt-4">
                   <div className="font_13x d-flex align-items-center ">
                     <img alt="man" src={man} className="me-2" />
                     {honeyBeeData?.accname ? `@${honeyBeeData?.accname}` : "NA"}

@@ -171,6 +171,83 @@
 
 }
 
+/* .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before{
+  border-color: #ffb300;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+.ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before, .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before
+{
+  background: #ffb30060;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background: #ffb300;
+} */
+.ant-picker-range .ant-picker-active-bar{
+  background: #ffb300;
+  height: 0px;
+
+}
+.ant-picker-focused, .ant-picker{
+  border-color: #ffb300 !important;
+  box-shadow: none;
+}
+
+.ant-picker-focused:hover{
+  border-color: #ffb300;
+}
+
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-range-start
+  .ant-picker-cell-inner {
+  background-color: #FFD000 !important;
+}
+
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-range-end
+  .ant-picker-cell-inner {
+  background-color: #FFD000 !important;
+}
+
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border-color: #FFB300 !important;
+}
+.createDateRangePicker
+.ant-picker-cell-in-view.ant-picker-cell-range-hover::after,
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-start::after,
+  .ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after{
+  border-color: #FFB300 !important;
+  fill: #FFB300 !important;
+
+}
+
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+.createDateRangePicker
+  .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+.createDateRangePicker
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: #ffb30060 !important;
+}
+
+.createDateRangePicker
+.ant-picker-cell-inner::after{
+  background: #ffd000 !important;
+
+}
+
+.createDateRangePicker .ant-btn-primary {
+  background-color: #FFB300 !important;
+  border-color: #FFB300 !important;
+}
+
 .com-btn{
   background-color: var(--body_background);
   color: var(--dark_text);

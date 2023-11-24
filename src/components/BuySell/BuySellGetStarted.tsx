@@ -11,8 +11,10 @@ import {
   Image,
 } from 'antd';
 
-import { signupAPI, baseDEXURL } from '../../services/api';
-import hands from '../../assets/arts/normal_login.svg';
+import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
+// import normal_login from '../../assets/arts/normal_login.svg';
+import hands from '../../assets/arts/hand 5 edited 3.svg';
+import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellGetStarted: React.FC = () => {
@@ -70,7 +72,7 @@ console.log(refcode === "null");
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
-      <div className="row">
+      <div className="row" style={{gap:"200px"}}>
         <div className="col">
           <div
             className="text-center justify-center"
@@ -252,15 +254,33 @@ console.log(refcode === "null");
           </div>
         </div>
 
-        <div className="col log-img">
-          <div style={{  marginBottom:-100,paddingLeft: 100 }}>
+        <div className="col log-img" style={{width:"400px"}}>
+          <div style={{  marginBottom:-100 }}>
                     <br/>  <br/>  <br/>
+            <div className='d-flex flex-direction-column justify-content-center align-items-center'>
             <Image
-              className="text-center"
+              className="text-center mb-5"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 0, paddingTop: 70 }}
+              style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
             ></Image>
+            <div style={{fontSize:"32px", textAlign:"center"}}>
+            New to crypto?
+            <br />
+            Take help from a 
+            <br />
+            Captain Bee now!
+            </div>
+            <a href={baseHiveURL} >
+
+            <Image
+              className="text-center mt-5 hive-img"
+              preview={false}
+              src={hive}
+              style={{  width:"initial" }}
+              ></Image>
+              </a>
+            </div>
           </div>
         </div>
       </div>

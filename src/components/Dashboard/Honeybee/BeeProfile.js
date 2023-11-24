@@ -3,6 +3,7 @@ import frame from '../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import BeeHeader from './BeeHeader/BeeHeader';
+import loadingGif from '../../../assets/beeloade.gif';
 import { getCaptainBeeStatics, getHoneyUserDetails, updateHoneyBeeProfile } from '../../../services/api';
 import AWS from 'aws-sdk';
 import { notification } from 'antd';
@@ -29,6 +30,7 @@ const BeeProfile = () => {
   const [staticsData, setStaticsData] = useState();
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handlePhotoChange = (event) => {
 
@@ -76,31 +78,69 @@ const BeeProfile = () => {
   }
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      if (username) {
-        getCaptainBeeStatics(username).then((data) => {
-          setStaticsData(data.data);
-        });
-      }
-    } else {
+    const loadData = async () => {
+      const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+      const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
 
-      getHoneyUserDetails(user).then((data) => {
-        setUserData(data.data?._doc);
-        setEmail(data.data?._doc?.email);
-        setFirstname(data.data?._doc?.firstName);
-        setLastname(data.data?._doc?.lastName);
-        setPhoto(data.data?._doc?.profilePic);
-      })
-    }
-  }, [])
+      setUserType(userType);
+
+      if (userType === "CaptainBee") {
+        if (username) {
+          try {
+            const data = await getCaptainBeeStatics(username);
+            setStaticsData(data.data);
+          } catch (error) {
+            console.error("Error loading CaptainBee statics:", error);
+          }
+        }
+      } else {
+        try {
+          const data = await getHoneyUserDetails(user);
+          setUserData(data.data?._doc);
+          setEmail(data.data?._doc?.email);
+          setFirstname(data.data?._doc?.firstName);
+          setLastname(data.data?._doc?.lastName);
+          setPhoto(data.data?._doc?.profilePic);
+        } catch (error) {
+          console.error("Error loading Honey User details:", error);
+        }
+      }
+
+      setIsLoading(false);
+    };
+
+    loadData();
+  }, []);
 
   return (
     <>
       <BeeHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your profile is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       <div className="hive-container" style={{ paddingTop: "280px" }}>
         <div
           className="d-flex flex-direction-column justify-content-center"
