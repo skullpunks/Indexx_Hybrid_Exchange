@@ -99,7 +99,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
 
   const categorizeTokens = (tokens: any) => {
     return {
-      Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
+      Crypto: tokens.filter((token: any) => !token.isStock && !token.isETF),
       StockTokens: tokens.filter((token: any) => token.isStock),
       ETFs: tokens.filter((token: any) => token.isETF)
     };
@@ -326,6 +326,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
               dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
             >
               {Object.entries(categorizedTokens).map(([category, tokens]) => (
+                tokens.length > 0 && (
                 <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
                   {tokens.map((token: any) => (
                     <Select.Option
@@ -351,6 +352,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
                     </Select.Option>
                   ))}
                 </Select.OptGroup>
+                )
               ))}
             </Select>
           </div>

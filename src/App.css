@@ -42,6 +42,15 @@
   color: #61dafb;
 }
 
+.hive-img{
+  transition: transform 330ms ease-in-out;
+}
+
+.hive-img:hover{
+  transform: scale(1.1);
+  transition: transform 330ms ease-in-out;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -108,7 +117,7 @@
   --secondary-color: #0ea55a;
   --highlight-color: lightgreen;
   --link-hover: #1890ff;
-  --dropdown-hover: #1890ff;
+  --dropdown-hover: #11be6a;
 }
 
 /* CaptainBee theme */

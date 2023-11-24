@@ -112,7 +112,7 @@ export const BSWithdrawInfo = () => {
                 onChange={(e) => setBankName(e.target.value)} />
             </Form.Item>
             <Form.Item label="Routing Number (for ACH Transfer):">
-              <Input placeholder="Enter account number" value={routingNumber}
+              <Input placeholder="Enter routing number" value={routingNumber}
                 onChange={(e) => setRoutingNumber(e.target.value)} />
             </Form.Item>
             <Form.Item label="SWIFT/BIC Code (for International Transfers):">
