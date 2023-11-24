@@ -9,16 +9,8 @@ import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
 import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
 import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 import { Button } from 'antd';
+import loadingGif from '../../../../assets/beeloade.gif';
 
-// import { LocalizationProvider, DatePicker } from '@mui/lab';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import MobileDatePicker from '@mui/lab/MobileDatePicker';
-
-// import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 import '../../Captainbee/CaptainDash.css';
@@ -38,37 +30,53 @@ const BeeDash2 = () => {
   const [subscription, setSubscription] = useState(null);
   const [loadings, setLoadings] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-
-    setUserType(userType);
-    if (userType === "CaptainBee") {
-      if (username) {
-        getCaptainBeeStatics(username).then((data) => {
-          setStaticsData(data.data);
-        });
-      }
-    } else {
-
-      getHoneyUserDetails(user).then((data) => {
-        if (data?.data?.paypalSubscriptionDetails) {
-          setSubscription(data?.data?.paypalSubscriptionDetails);
-          //const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+    const loadData = async () => {
+      const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
+      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+      const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+  
+      setUserType(userType);
+  
+      if (userType === "CaptainBee") {
+        if (username) {
+          try {
+            const data = await getCaptainBeeStatics(username);
+            setStaticsData(data.data);
+            setIsLoading(false); 
+          } catch (error) {
+            // Handle error
+            console.error("Error loading CaptainBee statics:", error);
+          }
         }
-        setHoneybeeCreateDate(data.data.accountCreationDate);
-        setHoneyBeeData(data?.data?._doc);
-      })
-
-      getReferredUserDetails(user).then((data) => {
-        setRefferedUserData(data.data)
-        setCaptainbeeCreateDate(data.data.accountCreationDate);
-        setCaptainbeeOrders(data?.data?.totalOrders?.length);
-        setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
-    }
-  }, [])
+      } else {
+        try {
+          const honeyUserData = await getHoneyUserDetails(user);
+          if (honeyUserData?.data?.paypalSubscriptionDetails) {
+            setSubscription(honeyUserData?.data?.paypalSubscriptionDetails);
+            //const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+          }
+          setHoneybeeCreateDate(honeyUserData.data.accountCreationDate);
+          setHoneyBeeData(honeyUserData?.data?._doc);
+  
+          const referredUserData = await getReferredUserDetails(user);
+          setRefferedUserData(referredUserData.data);
+          setCaptainbeeCreateDate(referredUserData.data.accountCreationDate);
+          setCaptainbeeOrders(referredUserData?.data?.totalOrders?.length);
+          setCaptainbeeUsers(referredUserData.data.honeyBeesCount);
+          setIsLoading(false); 
+        } catch (error) {
+          // Handle error
+          console.error("Error loading Honey User details or Referred User details:", error);
+        }
+      }
+    };
+  
+    loadData();
+  }, []);
+  
 
   const handleCreateSubscription = async () => {
     try {
@@ -97,6 +105,31 @@ const BeeDash2 = () => {
   return (
     <>
       <BeeHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-562px" }}>
           <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;

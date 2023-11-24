@@ -5,14 +5,18 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
-import { Select } from 'antd';
-import React, { useEffect, useState } from 'react';
-import wallet from '../../assets/BSheader/funding grey 1.svg';
-import check from '../../assets/arts/check 2 3.svg';
 import people from '../../assets/arts/people.svg';
-import { createSendTxByEmail, createSendTxByUsername, decodeJWT, getWalletBalance, validateUserEmail, validateUsername } from '../../services/api';
+import people_green from '../../assets/arts/man_icon.svg';
+import check from '../../assets/arts/check 2 3.svg';
+import wallet from '../../assets/BSheader/funding grey 1.svg';
+import './HorizontalLinearStepper2.css';
+import '../BuySell/BuySellDummy.css';
+import '../BSDepositWithdraw/BSWithdraw.css';
+import { Select } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
+import { makeStyles } from '@mui/styles';
+import React, { useEffect, useState } from 'react';
+import { createSendTxByEmail, createSendTxByUsername, decodeJWT, getWalletBalance, validateUserEmail, validateUsername } from '../../services/api';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import '../BuySell/BuySellDummy.css';
 import './HorizontalLinearStepper2.css';
@@ -340,8 +344,9 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
     setSelectedCoinObj(getRequiredCoin);
   };
 
+  const user_img = localStorage.getItem("userlogged") === 'normal' ? people_green : people;
   const recipient = email || username;
-  const recipientProfilePic = profilePic || people;
+  const recipientProfilePic = profilePic || user_img;
   const handleChangeType = (value) => {
     setToken(value);
   };
@@ -445,7 +450,7 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
           Send to
         </div>
         <div className='d-flex padding-t-1x align-items-center'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" }} />
+          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px", width:"32px" }} />
           <div className="font_13x">
             {recipient}
           </div>
@@ -590,8 +595,9 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
     title: '',
   });
 
+  const user_img = localStorage.getItem("userlogged") === 'normal' ? people_green : people;
   const recipient = email || username;
-  const recipientProfilePic = profilePic || people;
+  const recipientProfilePic = profilePic || user_img;
   const [error, setError] = useState('');
 
   const { Option } = Select;
@@ -638,7 +644,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
           Send to
         </div>
         <div className='d-flex padding-t-1x'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" }} />
+          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" , width:"32px" }} />
           <div className="font_13x">
             {recipient}
           </div>

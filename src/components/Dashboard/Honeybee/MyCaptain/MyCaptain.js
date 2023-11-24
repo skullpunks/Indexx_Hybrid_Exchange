@@ -12,16 +12,9 @@ import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
 import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
 import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
 
+import loadingGif from '../../../../assets/beeloade.gif';
+
 import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
-// import { LocalizationProvider, DatePicker } from '@mui/lab';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import MobileDatePicker from '@mui/lab/MobileDatePicker';
-
-// import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import '../../Captainbee/CaptainDash.css';
 import MyCaptainTabs from './MyCaptainTabs';
@@ -42,29 +35,66 @@ const MyCaptain = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpench, setIsModalOpenCh] = useState(false);
   const [rankPhoto, setRankPhoto] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    setEmail(email);
-    getReferredUserDetails(email).then((data) => {
-      setRefferedUserData(data.data.refferedUserAffilateData)
-      setCaptainbeeCreateDate(data.data.accountCreationDate);
-      setCaptainbeeOrders(data.data.totalOrder);
-      setCaptainbeeUsers(data.data.honeyBeesCount);
-      if (data?.data?.refferedUserAffilateData?.rank) {
-        const getRank = RankData.find(x => x.name === data?.data?.refferedUserAffilateData?.rank)
-        setRankPhoto(getRank?.photo);
-      } else {
-        const getRank = RankData.find(x => x.name === "Bronze")
-        setRankPhoto(getRank?.photo);
+    const loadData = async () => {
+      const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+      setEmail(email);
+  
+      try {
+        const data = await getReferredUserDetails(email);
+        setRefferedUserData(data.data.refferedUserAffilateData);
+        setCaptainbeeCreateDate(data.data.accountCreationDate);
+        setCaptainbeeOrders(data.data.totalOrder);
+        setCaptainbeeUsers(data.data.honeyBeesCount);
+  
+        if (data?.data?.refferedUserAffilateData?.rank) {
+          const getRank = RankData.find(x => x.name === data?.data?.refferedUserAffilateData?.rank);
+          setRankPhoto(getRank?.photo);
+        } else {
+          const getRank = RankData.find(x => x.name === "Bronze");
+          setRankPhoto(getRank?.photo);
+        }
+        setIsLoading(false); 
+      } catch (error) {
+        // Handle error
+        console.error("Error loading referred user details:", error);
       }
-    })
-
+    };
+  
+    loadData();
   }, []);
+  
 
   return (
     <>
       <BeeHeader />
+      {isLoading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter:"blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while your Captain Bee's Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      }
       <div style={{paddingTop:"220px"}}>
       <div className='d-flex justify-content-center' style={{marginLeft:"268px"}}>
 

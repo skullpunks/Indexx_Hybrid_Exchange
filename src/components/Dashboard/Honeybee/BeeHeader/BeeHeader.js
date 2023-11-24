@@ -4,6 +4,7 @@ import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
 import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
 import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
 import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
+import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
 import './BeeHeader.css'
 import { Link, useLocation } from 'react-router-dom';
@@ -87,7 +88,28 @@ const BeeHeader = () => {
             </div>
         </a>
         </div>
-
+        <div className="col">
+        <a href="/indexx-exchange/buy-sell">
+            <div className="card">
+            <img src={exch} className="card-img-top" alt="..." style={{marginBottom:"3px" }}/>
+            <div className="card-body">
+                <h5 className="card-title">Hive Exchange</h5>
+                <Typography
+                component='p'
+                sx={
+                  location.pathname === '/'
+                    ? {
+                      height: '0.07px',
+                      width: '58px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </a>
+        </div>
 
         {/* <div className="col">
         <a href="/indexx-exchange/bee-dashboard/honeycomb">

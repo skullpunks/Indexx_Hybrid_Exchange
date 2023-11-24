@@ -29,6 +29,7 @@
   --staking-color: #e7e7e7;
   --table-light:#eeeeee;
   --scroller: 193, 193, 193;
+  --overlay: 255,255,255;
 
 }
 
@@ -64,6 +65,7 @@
   --staking-color: #171C26;
   --table-light:#040404;
   --scroller:46, 46, 46;
+  --overlay: 0,0,0;
 }
 
 

@@ -1,0 +1,78 @@
+.MuiDrawer-paper{
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: var(--dark-text) !important;
+}
+
+.my-drawer{
+    z-index: 1000 !important;
+    background-color: rgba(var(--overlay), 0.6) !important;
+}
+
+.over-bg{
+    background-color: rgba(var(--overlay), 0.6) !important;
+    backdrop-filter: blur(5px);
+}
+
+.over-bg-2{
+    background-color: rgba(var(--overlay), 0.7) !important;
+}
+
+.over-bg-3{
+    background-color: rgba(var(--overlay), 0.9) !important;
+}
+
+.main-btn{
+    /* background: none; */
+    background: transparent !important;
+
+}
+.menu-tabs .MuiTab-root.Mui-selected{
+    color: var(--dark-text) !important;
+}
+
+.menu-tabs .MuiTabs-indicator{
+    display: none;
+}
+
+.menu-tabs{
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.menu-tabs .menu-tab{
+    font-size: 20px !important;
+    text-transform: none;
+    text-align: right;
+    padding-right: 0;
+    display: flex;
+    align-items: end;
+    color: var(--disabled-btn-text);
+}
+.my-drawer button{
+    background: transparent;
+}
+
+.my-drawer button:hover{
+    background: transparent;
+}
+
+.menu-btns{
+    background: #5E5E5E !important;
+    color: #fff !important;
+    border: 1px solid #5E5E5E !important;
+    border-radius: 5px;
+    margin-top: 12px;
+    width: 148px;
+    height: 36px;
+    font-size: 13px;
+    font-weight: 100;
+    text-transform: none !important;
+    z-index: 5;
+}
+
+.menu-btns:hover{
+    background: #3e3e3e !important;
+    border-color: #3e3e3e;
+}
+
