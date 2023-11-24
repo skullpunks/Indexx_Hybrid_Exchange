@@ -11,11 +11,12 @@ import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
 import { Button } from 'antd';
 import loadingGif from '../../../../assets/beeloade.gif';
 
+import OpenNotification from '../../../OpenNotification/OpenNotification';
 
 import '../../Captainbee/CaptainDash.css';
 import BeeTabs from './BeeTabs';
 import BeeHeader from '../BeeHeader/BeeHeader';
-import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import { createMonthlyHoneyBeeINEXsubscription, decodeJWT, formatReadableDate, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
 
 const BeeDash2 = () => {
   const [userType, setUserType] = useState("");
@@ -26,6 +27,9 @@ const BeeDash2 = () => {
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const [subscription, setSubscription] = useState(null);
+  const [loadings, setLoadings] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -50,13 +54,17 @@ const BeeDash2 = () => {
       } else {
         try {
           const honeyUserData = await getHoneyUserDetails(user);
+          if (honeyUserData?.data?.paypalSubscriptionDetails) {
+            setSubscription(honeyUserData?.data?.paypalSubscriptionDetails);
+            //const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+          }
           setHoneybeeCreateDate(honeyUserData.data.accountCreationDate);
           setHoneyBeeData(honeyUserData?.data?._doc);
   
           const referredUserData = await getReferredUserDetails(user);
           setRefferedUserData(referredUserData.data);
           setCaptainbeeCreateDate(referredUserData.data.accountCreationDate);
-          setCaptainbeeOrders(referredUserData.data.totalOrder);
+          setCaptainbeeOrders(referredUserData?.data?.totalOrders?.length);
           setCaptainbeeUsers(referredUserData.data.honeyBeesCount);
           setIsLoading(false); 
         } catch (error) {
@@ -70,7 +78,29 @@ const BeeDash2 = () => {
   }, []);
   
 
-  const subscription = true;
+  const handleCreateSubscription = async () => {
+    try {
+      setLoadings(true);
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res = await createMonthlyHoneyBeeINEXsubscription(decoded.email, "USD", "INEX", "150", "", "");
+      if (res.status === 200) {
+        for (let i = 0; i < res.data.links.length; i++) {
+          OpenNotification('success', "Subscription success");
+          if (res.data.links[i].rel.includes("approve")) {
+            window.location.href = res.data.links[i].href;
+          }
+        }
+      } else {
+        OpenNotification('error', res.data);
+      }
+    } catch (err) {
+      OpenNotification('error', "Something went wrong. Please try again after sometime.");
+      console.log("err", err)
+    } finally {
+      setLoadings(false);
+    }
+  };
 
   return (
     <>
@@ -179,44 +209,42 @@ const BeeDash2 = () => {
                 <div className="font_10x mb-3 lh_32x align-items-start">
                   Honey Bee of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
-                <div className="align-items-start" 
+                <div className="align-items-start"
                 // style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}
                 >
-                {/* {(!subscription?.paypalSubscriptionDBData) ? */}
-                {(!subscription) ?
-                  (<div className="d-flex flex-direction-column align-items-start mt-3">
-                    <div className="font_15x">
-                      Subscribe to your $150 monthly INEX investment today
-                    </div>
-                    <div style={{width:"100%"}}>
-                      <Button
-                        type="primary"
-                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                        // onClick={handleCreateSubscription}
-                        style={{width:"100%", height:"auto", color:"#393939"}}
-                      >
-                        Subscribe
-                      </Button>
-                    </div>
-                  </div>)
-                  :
-                  (<div className="d-flex flex-direction-column align-items-start mt-3">
-                    <div className="font_20x">
-                      $150 INEX Subscription Details
-                    </div>
-                    <div className="font_13x mt-3">
-                      Subscription ID: H-HDDJF89JDFJ08
-                      {/* {subscription?.paypalSubscriptionDetails?.id} */}
-                    </div>
-                    <div className="font_13x">
-                      Status: ACTIVE
-                      {/* {subscription?.paypalSubscriptionDetails?.status} */}
-                    </div>
-                    <div className="font_13x">
-                      Next Billing Date: December 14, 2023 at 3:30 PM
-                      {/* {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)} */}
-                    </div>
-                    {/* <div>
+                  {/* {(!subscription?.paypalSubscriptionDBData) ? */}
+                  {(!subscription?.paypalSubscriptionDBData) ?
+                    (<div className="d-flex flex-direction-column align-items-start mt-3">
+                      <div className="font_15x">
+                        Subscribe to your $150 monthly INEX investment today
+                      </div>
+                      <div style={{ width: "100%" }}>
+                        <Button
+                          loading={loadings}
+                          type="primary"
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          onClick={handleCreateSubscription}
+                          style={{ width: "100%", height: "auto", color: "#393939" }}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
+                    </div>)
+                    :
+                    (<div className="d-flex flex-direction-column align-items-start mt-3">
+                      <div className="font_20x">
+                        $150 INEX Subscription Details
+                      </div>
+                      <div className="font_13x mt-3">
+                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                      </div>
+                      <div className="font_13x">
+                        Status: {subscription?.paypalSubscriptionDetails?.status}
+                      </div>
+                      <div className="font_13x">
+                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                      </div>
+                      {/* <div>
                       <Button
                         type="danger"
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
@@ -226,8 +254,8 @@ const BeeDash2 = () => {
                         Cancel Subscription
                       </Button>
                     </div> */}
-                  </div>)
-                }
+                    </div>)
+                  }
                 </div>
                 <div className="align-items-start lh_32x mt-4">
                   <div className="font_13x d-flex align-items-center ">

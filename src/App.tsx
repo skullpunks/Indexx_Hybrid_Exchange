@@ -97,6 +97,7 @@ import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
 import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
 import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
 import HorizontalLinearStepper2 from "./components/Send/HorizontalLinearStepper2";
+import BuySellVerifyEmail from "./components/BuySell/BuySellVerifyEmail";
 import EliteClub from "./components/EliteClub/EliteClub";
 import EliteLearnMore from "./components/EliteClub/EliteLearnMore";
 import SecondaryHeader from "./SecondaryHeader";
@@ -363,6 +364,7 @@ function App() {
           <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
           <Route path="/indexx-exchange/welcome" element={<WelcomePage />} />
           <Route path="/indexx-exchange/account" element={<Account />} />
+          <Route path="/indexx-exchange/account/email-auth" element={<BuySellVerifyEmail />} />
           <Route
             path="/indexx-exchange/change-password"
             element={<SecurityChange />}

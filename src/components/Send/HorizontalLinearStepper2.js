@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
+import Button from '@mui/material/Button';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import StepIcon from '@mui/material/StepIcon';
+import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
@@ -17,7 +17,16 @@ import '../BSDepositWithdraw/BSWithdraw.css';
 import { Select } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
 import { makeStyles } from '@mui/styles';
+import { Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import wallet from '../../assets/BSheader/funding grey 1.svg';
+import check from '../../assets/arts/check 2 3.svg';
+import people from '../../assets/arts/people.svg';
 import { createSendTxByEmail, createSendTxByUsername, decodeJWT, getWalletBalance, validateUserEmail, validateUsername } from '../../services/api';
+import initialTokens from '../../utils/Tokens.json';
+import '../BSDepositWithdraw/BSWithdraw.css';
+import '../BuySell/BuySellDummy.css';
+import './HorizontalLinearStepper2.css';
 
 const Final = () => {
 

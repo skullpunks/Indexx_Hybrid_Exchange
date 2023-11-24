@@ -53,9 +53,8 @@ import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getA
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
-
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CommissionTable from './CommissionTable';
 import { Button } from 'antd';
 let appSettingArr = [];
@@ -109,6 +108,7 @@ const CaptainDash = () => {
   const [rateData, setRateData] = useState();
   const [adminFee, setAdminFees] = useState('');
   const [loadings, setLoadings] = useState(false);
+  const [loadingsubs, setLoadingsubs] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
 
@@ -169,21 +169,27 @@ const CaptainDash = () => {
 
   const handleCreateSubscription = async () => {
     try {
+      setLoadingsubs(true);
       let access_token = String(localStorage.getItem("access_token"));
       let decoded = decodeJWT(access_token);
       let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
       if (res.status === 200) {
         console.log("res", res);
         for (let i = 0; i < res.data.links.length; i++) {
+          OpenNotification('success', "Subscription success");
           if (res.data.links[i].rel.includes("approve")) {
             window.location.href = res.data.links[i].href;
           }
         }
       } else {
-        console.log("something went wrong");
+        console.log("res", res);
+        OpenNotification('error', res.data);
       }
     } catch (err) {
+      OpenNotification('error', "Something went wrong. Please try again after sometime.");
       console.log("err", err)
+    } finally {
+      setLoadingsubs(false);
     }
   };
 
@@ -203,20 +209,20 @@ const CaptainDash = () => {
       try {
         const userType = localStorage.getItem("userType") || undefined;
         const username = localStorage.getItem("username") || undefined;
-  
+
         setUserType(userType);
-  
+
         if (userType === "CaptainBee" && username) {
           const data = await getCaptainBeeStatics(username);
           setStaticsData(data.data);
-  
+
           if (data?.data?.powerPackData) {
             const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
             setPowerPackPhoto(getPowerPack?.photo);
           } else {
             setPowerPackPhoto(undefined);
           }
-  
+
           if (data?.data?.affiliateUserProfile?.rank) {
             const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
             setRankPhoto(getRank?.photo);
@@ -224,21 +230,21 @@ const CaptainDash = () => {
             const getRank = RankData.find(x => x.name === "Bronze")
             setRankPhoto(getRank?.photo);
           }
-  
+
           if (data?.data?.paypalSubscriptionDetails) {
             setSubscription(data?.data?.paypalSubscriptionDetails);
             const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
             setCheckSubscription(hasValidSubscription);
           }
         }
-  
-        setIsLoading(false); 
+
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -293,32 +299,32 @@ const CaptainDash = () => {
     <>
       <SubHeader />
       {isLoading && (
-  <div
-    style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      backdropFilter:"blur(8px)",
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 995,
-      pointerEvents: 'none',
-    }}
-  >
-    <img src={loadingGif} alt="Loading" />
-    <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
-      Please wait while Waggle Dance is loading
-      <span className="dots-animation"></span>
-    </p>
-  </div>
-)}
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: "blur(8px)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 995,
+            pointerEvents: 'none',
+          }}
+        >
+          <img src={loadingGif} alt="Loading" />
+          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+            Please wait while Waggle Dance is loading
+            <span className="dots-animation"></span>
+          </p>
+        </div>
+      )}
 
-    {(!isLoading && userType === "CaptainBee") ? 
+      {(!isLoading && userType === "CaptainBee") ?
         (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
           <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
             <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
@@ -389,37 +395,38 @@ const CaptainDash = () => {
                   )
                 }
                 <div className="align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                {(!subscription?.paypalSubscriptionDBData) ?
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_15x">
-                      Subscribe to your $300 monthly INEX investment today
-                    </div>
-                    <div style={{width:"100%"}}>
-                      <Button
-                        type="primary"
-                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                        onClick={handleCreateSubscription}
-                        style={{width:"100%", height:"auto", color:"#393939"}}
-                      >
-                        Subscribe
-                      </Button>
-                    </div>
-                  </div>)
-                  :
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_20x">
-                      $300 INEX Subscription Details
-                    </div>
-                    <div className="font_13x mt-3">
-                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
-                    </div>
-                    <div className="font_13x">
-                      Status: {subscription?.paypalSubscriptionDetails?.status}
-                    </div>
-                    <div className="font_13x">
-                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
-                    </div>
-                    {/* <div>
+                  {(!subscription?.paypalSubscriptionDBData) ?
+                    (<div className="d-flex flex-direction-column align-items-start mt-5">
+                      <div className="font_15x">
+                        Subscribe to your $300 monthly INEX investment today
+                      </div>
+                      <div style={{ width: "100%" }}>
+                        <Button
+                          loading={loadings}
+                          type="primary"
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          onClick={handleCreateSubscription}
+                          style={{ width: "100%", height: "auto", color: "#393939" }}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
+                    </div>)
+                    :
+                    (<div className="d-flex flex-direction-column align-items-start mt-5">
+                      <div className="font_20x">
+                        $300 INEX Subscription Details
+                      </div>
+                      <div className="font_13x mt-3">
+                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                      </div>
+                      <div className="font_13x">
+                        Status: {subscription?.paypalSubscriptionDetails?.status}
+                      </div>
+                      <div className="font_13x">
+                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                      </div>
+                      {/* <div>
                       <Button
                         type="danger"
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
@@ -429,8 +436,8 @@ const CaptainDash = () => {
                         Cancel Subscription
                       </Button>
                     </div> */}
-                  </div>)
-                }
+                    </div>)
+                  }
                 </div>
 
                 <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
@@ -570,7 +577,7 @@ const CaptainDash = () => {
                     95%
                   </div>
                 </div>
-{/* 
+                {/* 
                 {timeRemaining?.days &&
                 <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
@@ -581,13 +588,13 @@ const CaptainDash = () => {
                   </div>
                 </div>
                 } */}
-                  {/* <div className="font_20x mt-3">
+                {/* <div className="font_20x mt-3">
                     {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
                     <br />
                     {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
                     {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
                   </div> */}
-                  {/* {timeRemaining?.days < 15 && (
+                {/* {timeRemaining?.days < 15 && (
                     <div>
                       <Button
                         type="primary"
@@ -1254,7 +1261,7 @@ const CaptainDash = () => {
           </div>
         </div>) :
         <>
-        {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
+          {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
         </>
       }
     </>

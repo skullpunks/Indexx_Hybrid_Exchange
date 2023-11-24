@@ -14,6 +14,8 @@ const Growth = () => {
   const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [userType, setUserType] = useState("");
   const [staticsData, setStaticsData] = useState();
+  const [captainbeeOrders, setCaptainbeeOrders] = useState();
+  const [captainbeesUsers, setCaptainbeeUsers] = useState();
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [email, setEmail] = useState('');
@@ -44,6 +46,8 @@ const Growth = () => {
       getHoneyUserDetails(user).then((data) => {
         setUserData(data.data?._doc);
         setEmail(data.data?._doc?.email);
+        setCaptainbeeOrders(data?.data?.totalOrders?.length);
+        setCaptainbeeUsers(data.data.honeyBeesCount);
       })
     }
   }, [])
@@ -262,7 +266,7 @@ const Growth = () => {
                 fontWeight={600}
                 textAlign={'left'}
               >
-                30
+                {userData?.relationships?.length > 0 ? userData?.relationships?.length : 0}
               </Typography>
               <Typography
                 variant="text"
@@ -277,7 +281,7 @@ const Growth = () => {
                   gap: 1,
                 }}
               >
-                <img alt="up" src={arrow} /> 30%
+                <img alt="up" src={arrow} /> {userData?.relationships?.length > 0 ? "30%" : "0%"}
               </Typography>
             </Box>
             <Box
@@ -307,7 +311,7 @@ const Growth = () => {
                 fontWeight={600}
                 textAlign={'left'}
               >
-                50
+                {captainbeeOrders > 0 ? captainbeeOrders : 0}
               </Typography>
               <Typography
                 variant="text"
@@ -322,7 +326,7 @@ const Growth = () => {
                   gap: 1,
                 }}
               >
-                <img alt="up" src={arrow} /> 20%
+                <img alt="up" src={arrow} /> {userData?.relationships?.length > 0 ? "20%" : "0%"}
               </Typography>
             </Box>
           </Box>

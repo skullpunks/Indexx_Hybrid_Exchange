@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -718,6 +718,35 @@ export const createMonthlyINEXsubscription = async (
   try {
     const result = await API.post(
       `/api/v1/inex/order/createMonthlyINEXsubscription`,
+      {
+        email: email,
+        currencyIn: currencyIn,
+        currencyOut: currencyOut,
+        amount: amount,
+        outAmount: outAmount,
+        orderType: orderType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getCoinPriceByName)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createMonthlyHoneyBeeINEXsubscription = async (
+  email: string,
+  currencyIn: string,
+  currencyOut: string,
+  amount: string,
+  outAmount: string,
+  orderType: string
+) => {
+  try {
+    const result = await API.post(
+      `/api/v1/inex/order/createMonthlyHoneyBeeINEXsubscription`,
       {
         email: email,
         currencyIn: currencyIn,

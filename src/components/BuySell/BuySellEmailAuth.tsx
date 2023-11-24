@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import envelop from '../../assets/arts/envelop.svg';
 import Timer from '../../utils/Timer';
 import { CheckCircleFilled } from '@ant-design/icons';
-import { validateEmail } from '../../services/api';
+import { resendEmailCode, validateEmail } from '../../services/api';
 import { useEffect, useState } from 'react';
 import React, { ClipboardEvent } from 'react';
 import OpenNotification from '../OpenNotification/OpenNotification';
@@ -12,11 +12,14 @@ const BuySellEmailAuth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [loadings, setLoadings] = useState<boolean>(false);
+  const [isTimerDone, setIsTimerDone] = useState<boolean>(false);
+  const [timerKey, setTimerKey] = useState<number>(0);
 
   const otpCode = new Array(6);
   useEffect(() => {
     setEmail(String(localStorage.getItem('tempAuthEmail')));
   }, [email]);
+
   const moveToNext = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { maxLength, value } = e.currentTarget;
     if (value.length > maxLength)
@@ -41,6 +44,23 @@ const BuySellEmailAuth = () => {
     return /^-?\d+$/.test(value);
   }
 
+  const resendEmail = async () => {
+    setLoadings(true);
+    let res = await resendEmailCode(email);
+    if (res.status === 200) {
+      OpenNotification('success', res.data);
+      setIsTimerDone(false);
+      setTimerKey(prevKey => prevKey + 3); // Increment key to re-render Timer
+      setLoadings(false);
+    } else {
+      setLoadings(false);
+      OpenNotification('error', res.data);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Timer Done:', isTimerDone);
+  }, [isTimerDone]);
   const pastePassowrd = (e: ClipboardEvent<HTMLInputElement>) => {
     let clipboardData, pastedData;
     // Stop data actually being pasted into div
@@ -66,15 +86,15 @@ const BuySellEmailAuth = () => {
 
   const verifyCode = async () => {
     setLoadings(true);
-    
-    
+
+
     const res = await validateEmail(email, otpCode.join('').toString());
     if (res.status === 200) {
       OpenNotification('success', res.data);
       navigate('/indexx-exchange/kyc');
       setLoadings(false);
     } else {
-      
+
       OpenNotification('error', res.data);
       setLoadings(false);
     }
@@ -92,7 +112,7 @@ const BuySellEmailAuth = () => {
 
   const handleInput1 = (e: any) => {
     let val = e.currentTarget.value;
-    
+
     otpCode[0] = val[0];
   };
 
@@ -231,11 +251,26 @@ const BuySellEmailAuth = () => {
         >
           Verify
         </Button>
-        {
+        {isTimerDone ? (
           <div className="margin-lr-auto padding-t-2x">
-            Resend Email (<Timer initMins={1} initSecs={0} /> )
+            <Button
+              loading={loadings}
+              type="primary" style={{ height: "45px" }} onClick={resendEmail}>Resend Email</Button>
           </div>
-        }
+        ) : (
+          <div className="margin-lr-auto padding-t-2x disable_icon" style={{ color: "var(--body_color)" }}>
+            Resend Email (
+            <Timer
+              key={timerKey}
+              initMins={3}
+              initSecs={0}
+              onFinish={() => {
+                console.log('Timer finished');
+                setIsTimerDone(true);
+              }}
+            />)
+          </div>
+        )}
 
         <div
           className="margin-lr-auto padding-tb-2x"
