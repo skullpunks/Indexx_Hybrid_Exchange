@@ -12,7 +12,7 @@ import {
 } from 'antd';
 
 import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
-import normal_login from '../../assets/arts/normal_login.svg';
+// import normal_login from '../../assets/arts/normal_login.svg';
 import hands from '../../assets/arts/hand 5 edited 3.svg';
 import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';

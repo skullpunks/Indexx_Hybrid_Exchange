@@ -45,7 +45,10 @@ const BuySellVerifyEmail = () => {
     }, [isTimerDone]);
 
     return (
-        <div className='d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center'>
+        <div className='scan-container flex-align-stretch bs_main'>
+
+        <div className='d-flex flex-direction-column col-lg-5 col-md-12 responsive_container flex-align-center' 
+        style={{paddingTop:"20px"}}>
             <h1 className='text-center margin-lr-auto top_heading'>Verify your Email</h1>
 
             <div className="bs_container bs_form card">
@@ -94,6 +97,7 @@ const BuySellVerifyEmail = () => {
                 {/* onClick={() => setScreenName("SecureSteps")} */}
                 <div className="margin-lr-auto padding-tb-2x"><Link to="" className="text_link " onClick={() => navigate("email-auth")}>Didn’t receive an email?</Link></div>
             </div>
+        </div>
         </div>
     )
 }
