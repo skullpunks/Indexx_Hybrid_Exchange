@@ -110,7 +110,7 @@ const TeamCaptainDashIndividual = () => {
 
           const referredUserData = await getReferredUserDetails(user);
             setRefferedUserData(referredUserData.data)
-            setCaptainbeeCreateDate(referredUserData.data.accountCreationDate);
+            setCaptainbeeCreateDate(referredUserData?.data?.accountCreationDate);
             setCaptainbeeOrders(referredUserData.data.totalOrder);
             setCaptainbeeUsers(referredUserData.data.honeyBeesCount);
         }
