@@ -4,33 +4,57 @@ import { useEffect, useState } from 'react';
 import AdvanceVerfication from "../../assets/arts/AdvanceVerfication.svg";
 import BasicVerfication from "../../assets/arts/BasicVerfication.svg";
 import HiveVerfication from "../../assets/arts/new_arts/3 dots.svg";
-import { decodeJWT, getUserDetails } from '../../services/api';
+import { decodeJWT, getUserDetails, resendEmailCode } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
+import OpenNotification from '../OpenNotification/OpenNotification';
+import { useNavigate } from "react-router-dom";
 
 const BasicInfo = () => {
     const [email, setEmail] = useState('');
     const [userData, setUserData] = useState() as any;
     const [copiedValue, copy] = useCopyToClipboard();
-    
+    const [loadings, setLoadings] = useState(false);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
-        
+
         setEmail(decoded.email)
         getUserDetails(decoded.email).then((res) => {
             if (res.status === 200) {
-                
+                console.log("res.data", res.data)
                 setUserData(res.data);
             }
         });
     }, [email]);
 
     const openBlockpassLink = async () => {
-        // route to new page by changing window.location
-        window.open("https://verify-with.blockpass.org/?clientId=indexx_2c1c1&serviceName=Indexx.ai&env=prod", "_blank") //to open new page
+        console.log("userData?.verification?.emailVerified", userData?.verification?.emailVerified)
+        if (userData?.verification?.emailVerified) {
+            // route to new page by changing window.location
+            window.open("https://verify-with.blockpass.org/?clientId=indexx_2c1c1&serviceName=Indexx.ai&env=prod", "_blank") //to open new page
+        } else {
+            OpenNotification('error', "Verify your email to continue.");
+
+        }
     }
 
+
+    const resendEmail = async () => {
+        setLoadings(true);
+        let res = await resendEmailCode(email);
+        if (res.status === 200) {
+            OpenNotification('success', res.data);
+            setLoadings(false);
+            navigate('email-auth');
+
+        } else {
+            setLoadings(false);
+            OpenNotification('error', res.data);
+        }
+    };
     return (
         <div>
             <div className="basic_info container margin-t-2x padding-t-3x">
@@ -68,17 +92,25 @@ const BasicInfo = () => {
                                 Personal Verification
                             </span>
                             <div className="d-flex align-items-center border-1x-orange padding-1x">
-                                <div><img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"} /></div>
-                                <div>
-                                    <h2 className="font_18x margin-b-0">Basic Verification</h2>
-                                    {/* <div className="font_12x text_link">Region currently not supported </div> */}
-                                </div>
+                                <h2 className="font_18x margin-b-0">Basic Verification</h2>
+
+                                {userData?.verification?.emailVerified ?
+                                    (<div>
+                                        <img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"} />
+                                    </div>)
+                                    : (<div>
+                                        <Button type="primary" className="margin-l-2x" loading={loadings}
+                                            onClick={() => resendEmail()}>
+                                            Verify Email
+                                        </Button>
+                                    </div>)
+                                }
                             </div>
                             <br></br>
                             <div className={(!userData?.isKYCPass) ? "d-flex align-items-center border margin-t-2x padding-1x" : "d-flex align-items-center border-1x-orange padding-1x"}>
                                 {(!userData?.isKYCPass)
                                     ? <div><img src={AdvanceVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" /></div>
-                                    : <div><img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"}  /></div>
+                                    : <div><img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"} /></div>
                                 }
                                 <div>
                                     <h2 className="font_18x margin-b-0">Advanced Verification

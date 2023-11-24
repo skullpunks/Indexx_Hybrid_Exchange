@@ -16,7 +16,7 @@ const SubscribeSuccess = () => {
     if (subscriptionId.get("subscription_id") !== undefined) {
       getPaypalSubscription(String(subscriptionId.get("subscription_id"))).then((res) => {
         if (res.status === 200) {
-            setPaypalSubscriptionData(res.data.data)
+            setPaypalSubscriptionData(res.data.data);
         }
     });
     }
@@ -41,7 +41,7 @@ const SubscribeSuccess = () => {
           Monthly INEX Purchase plan.
         </Typography>
         <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
-          Subscription Plan: $300 Monthly Purchase
+          Subscription Plan: ${paypalSubscriptionData?.paypalSubscriptionDataFromDb?.orderAmount} Monthly Purchase
         </Typography>
         <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
          Subscription Id :  {paypalSubscriptionId}
