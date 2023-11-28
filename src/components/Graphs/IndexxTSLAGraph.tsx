@@ -26,7 +26,7 @@ const IndexxTLSAGraph = () => {
     useEffect(() => {
         
         // Fetch data based on interval
-        fetch(`${baseAPIURL}/api/v1/inex/basic/stockdata?interval=${interval}&symbol=${"TLSA"}`)
+        fetch(`${baseAPIURL}/api/v1/inex/basic/stockdata?interval=${interval}&symbol=${"TSLA"}`)
             .then(response => response.json())
             .then(data => {
                 
