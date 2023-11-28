@@ -1,4 +1,16 @@
 const tokens = [
+  {
+    "title": "IN500",
+    "subTitle": "Indexx500",
+    "image": "IN500",
+    "address": "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
+    "commonToken": true,
+    "isStock": false,
+    "isETF": false,
+    "graph": "Indexx500Graph",
+    "stakingPercentage6months": 2,
+    "stakingPercentage1year": 5
+  },
     {
       "title": "INEX",
       "subTitle": "IndexxExchange",
@@ -22,19 +34,7 @@ const tokens = [
       "graph": "IndexxCrypto",
       "stakingPercentage6months": 2,
       "stakingPercentage1year": 5
-    },
-    {
-      "title": "IN500",
-      "subTitle": "Indexx500",
-      "image": "IN500",
-      "address": "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A",
-      "commonToken": true,
-      "isStock": false,
-      "isETF": false,
-      "graph": "Indexx500Graph",
-      "stakingPercentage6months": 2,
-      "stakingPercentage1year": 5
-    },
+    },    
     {
       "title": "IUSD+",
       "subTitle": "IndexxUSD+",
