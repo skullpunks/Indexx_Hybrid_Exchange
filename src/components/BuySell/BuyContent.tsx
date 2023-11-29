@@ -140,7 +140,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       // 
       setMinMaxData(x);
     });
-  }, [BSvalue.fromTitle, BSvalue.amount, id]);
+
+    if (BSvalue?.fromToken) {
+      handleChange(BSvalue.fromToken);
+    }
+    
+  }, [BSvalue.fromTitle, BSvalue.amount, id, BSvalue.fromToken]);
 
   const handleChange = async (value: string) => {
     let getRequiredCoin = filteredtokens.find((x) => x.address === value);
@@ -242,15 +247,6 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
         ) : (
           <></>
         )}
-        {/* <div className="bs_purchase d-flex">
-                <Dropdown overlay={menu} trigger={['click']} >
-                    <Space style={{ color: "#11be6a" }}>
-                        <ReloadOutlined className='swap_icons' style={{ fontSize: 16, marginRight: 10 }} />
-                        One-time purchase
-                    </Space>
-                </Dropdown>
-            </div> */}
-        {/* <div>Rate {BSvalue?.lastPrice} USD</div> */}
       </div>
       <div
         className="bs_token d-flex cursor-pointer py-3"
@@ -278,47 +274,6 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       >
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
-            {/* <Select
-              className="width-100 border-0"
-              onChange={handleChange}
-              value={BSvalue?.fromToken}
-              dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
-            >
-              {filteredtokens
-                //  .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
-                .map((token, index) => {
-                  return (
-                    <Select.Option
-                      key={token.address}
-                      value={token.address}
-                      className="common__token d-flex bs_token_container"
-                      data-address={token.address}
-                      style={{ paddingLeft: "15px", paddingRight: 0 }}
-                    >
-                      <div className="d-flex bs_token_num select-drop">
-                        <img
-                          src={
-                            require(`../../assets/token-icons/${token.image}.png`)
-                              .default
-                          }
-                          alt="IN500"
-                          width="38"
-                        //  
-                        />
-                        <div className=" padding-l-1x d-flex flex-align-center">
-                          {token.title}{' '}
-                          <span
-                            style={{ color: 'var(--body_color)' }}
-                            className="margin-l-0_5x"
-                          >
-                            {token.subTitle}
-                          </span>{' '}
-                        </div>
-                      </div>
-                    </Select.Option>
-                  );
-                })}
-            </Select> */}
             <Select
               className="width-100 border-0"
               onChange={handleChange}

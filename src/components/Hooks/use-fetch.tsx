@@ -64,6 +64,7 @@ const useFetch = () => {
         value: value,
         Error: Error,
         api: api,
+        day
     };
 };
 
