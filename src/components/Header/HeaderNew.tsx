@@ -39,6 +39,8 @@ import frame from '../../assets/hive-dashboard/frame.svg';
 import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 
 import {
   baseURL, baseCEXURL, getCaptainBeeStatics, getHoneyUserDetails,
@@ -52,6 +54,7 @@ import {
   decodeJWT
 } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
+import MobileHeader from "./MobileHeader";
 
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
@@ -195,6 +198,8 @@ const HeaderNew = () => {
     };
   }, []);
 
+  const isMobile = useMediaQuery('(max-width:768px)');
+
   if (
     //window.location.pathname.includes("/") ||
     ((localStorage.getItem("user") === null || localStorage.getItem("user") === undefined)) ||
@@ -220,6 +225,10 @@ const HeaderNew = () => {
     );
   } else
     return (
+      <>
+    {isMobile ? (
+      <MobileHeader />
+    ) : (
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Container style={{ maxWidth: "1360px" }}>
           <div className="d-flex logo__holder" style={{marginLeft:`${localStorage.getItem("userlogged") === 'normal' ? "" : "-50px"}`}}>
@@ -1205,6 +1214,8 @@ const HeaderNew = () => {
           <img src={loaderGif} alt="loader" />
         </div>
       </Navbar>
+    )}
+    </>
     );
 };
 

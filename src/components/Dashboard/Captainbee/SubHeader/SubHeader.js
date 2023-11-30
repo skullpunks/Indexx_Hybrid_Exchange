@@ -22,10 +22,12 @@ const SubHeader = () => {
 
     <div style={{position:"fixed", 
     // top:"90px", 
-    top:`${isMobile ? "60px" : "90px"}`, 
+    top:`${isMobile ? "56px" : "90px"}`, 
     width:"100%", zIndex:999, background:"#FFB300", 
     // height:"90px"}}>
-    height:`${isMobile ? "162px" : "90px"}`, }}>
+    height:`${isMobile ? "162px" : "90px"}`,
+    maxWidth:"100vw"
+     }}>
 
 
     <div className="container sub-page">

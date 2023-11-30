@@ -14,8 +14,8 @@ import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/pin.s
 import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
 import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
 import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
-import email_dark from '../../../../assets/hive-dashboard/sidebar/email icon 1.svg';
-import phone_dark from '../../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
+import email_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/email white.svg';
+import phone_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/phone white.svg';
 import loadingGif from '../../../../assets/beeloade.gif';
 
 import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';

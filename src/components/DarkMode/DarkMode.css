@@ -74,3 +74,9 @@
 .dark_mode_input:checked + .dark_mode_label svg.moon {
     fill: #fff;
 }
+
+/* @media screen and (max-width: 768px) {
+    .dark_mode {
+        margin-top: -28px;
+    }
+} */

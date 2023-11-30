@@ -105,7 +105,7 @@ const EqStocksETF = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About"
+                        header="About EqStocks ETF"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>

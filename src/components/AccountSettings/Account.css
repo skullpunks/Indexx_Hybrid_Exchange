@@ -131,3 +131,10 @@
 .dis-btn:hover {
   background-color: var(--body_background);
 }
+
+@media screen and (max-width: 768px) {
+
+.basic-det{
+  flex-direction: column;
+}
+}

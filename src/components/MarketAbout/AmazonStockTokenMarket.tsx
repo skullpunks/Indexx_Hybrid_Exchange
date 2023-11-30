@@ -95,8 +95,9 @@ const AmazonStockTokenMarket = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About"
+                        header="About Indexx Amazon Stock Token"
                         key="2"
+                        
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />

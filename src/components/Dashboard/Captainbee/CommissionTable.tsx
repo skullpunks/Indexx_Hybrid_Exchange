@@ -311,32 +311,30 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
         className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
         Affiliate Report / Commission Report
       </div>
-      <div className='d-flex ' style={{gap:10}}>
-        <div className='d-flex flex-direction-column w-50'>
+      <div className='d-flex mt-2' style={{gap:10}}>
+        <div className='d-flex flex-direction-column w-50' style={{color:"#333336"}}>
           Date Range
             <RangePicker disabledDate={disabledDate} style={{height:"40px"}}
             onChange={handleDateChange} 
-            className="createDateRangePicker"
-            dropdownClassName= "createDateRangePicker"
+            // className="createDateRangePicker"
+            // dropdownClassName= "createDateRangePicker"
+            className="createDateRangePicker dark-mode"
+            dropdownClassName="createDateRangePicker dark-mode"
             />
         </div>
-      <div className='d-flex w-50 align-items-end'  style={{gap:10}}>
-        <div className='w-50'>
-        <Button className='margin-r-1x com-btn w-100' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+      <div className='d-flex w-50 align-items-end'>
+        <Button className='margin-r-1x com-btn ' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
         Withdraw INEX
           </Button>
-        </div>
-        <div className='w-50'>
-        <Button className='margin-r-1x com-btn w-100' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
+        <Button className='com-btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
           Withdraw USD
           </Button>
-        </div>
 
         </div>
       </div>
       <div className="margin-b-2x pt-3">
         <Table<CommissionDataType>
-          className="custom_table2"
+          className="custom_table"
           style={{ maxWidth: "94vw" }}
           columns={topcolumns}
           dataSource={commissionPaidData}
