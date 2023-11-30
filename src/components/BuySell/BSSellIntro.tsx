@@ -1,18 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import IN500 from "../../assets/token-icons/33.png";
-// import arrowAddress from "../../assets/arts/arrowAddress.svg";
-// import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
-// import ethereum from "../../assets/arts/ethereum.svg";
 import bsDollar from "../../assets/arts/usd icon 1.svg";
 import "./BS-Sell.css";
-// import { Link } from 'react-router-dom';
 import { Select, Modal, Button } from 'antd';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { Option } from 'antd/lib/mentions';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
 import { getMinAndMaxOrderValues, getWalletBalance, decodeJWT, getHoneyBeeDataByUsername } from '../../services/api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import OpenNotification from '../OpenNotification/OpenNotification';
+
 export interface TokensObj {
     title: string;
     subTitle: string;
@@ -45,12 +42,6 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
     const [honeyBeeId, setHoneyBeeId] = useState("");
     const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
     const [filteredtokens, setFilteredtokens] = useState(initialTokens);
-    // useEffect(() => {
-    //     if (ref.current) {
-    //       ref.current.value = '';
-    //     }
-    //   });
-
 
     useEffect(() => {
         if (tokenType === 2) {
@@ -98,49 +89,112 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
 
     const categorizedTokens = categorizeTokens(filteredtokens);
 
+    // useEffect(() => {
+    //     // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
+    //     let access_token = String(localStorage.getItem("access_token"));
+    //     let decoded: any = decodeJWT(access_token);
+    //     setEmail(decoded.email)
+    //     if (BSvalue && BSvalue.amount !== 0) {
+    //         setVal(BSvalue?.amount.toString());
+    //         let amount = BSvalue?.amount.toString();
+    //         let charFontSize = amount.length < 7 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
+    //         let charWidth = amount.length <= 1 ? 1.2 : 0.9
+    //         if (document.getElementsByClassName("input_currency")[0]) {
+    //             let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
+    //             element.style.width = ((amount.length + 1) * charWidth) + 'ch';
+    //             element.style.fontSize = charFontSize + "ch";
+    //         }
+    //     }
+    //     getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
+    //         setMinMaxData(x);
+
+    //     });
+
+    //     if (id) {
+    //         setHoneyBeeId(String(id));
+    //         getHoneyBeeDataByUsername(String(id)).then((data) => {
+
+    //             setHoneyBeeEmail(data.data.userFullData?.email);
+    //         });
+
+    //     }
+
+    //     if (BSvalue?.fromToken) {
+    //         handleChange(BSvalue.fromToken);
+    //     }
+
+    //     // Set initial input field value
+    //     if (BSvalue?.amount) {
+    //         setVal(BSvalue.amount.toString());
+    //     }
+    // }, [email, BSvalue])
+
+
+    // On Component Mount
     useEffect(() => {
-        // initialTokens = initialTokens.filter((x) => !(x.title === "INXP" || x.title === "FTT"))
-        let access_token = String(localStorage.getItem("access_token"));
-        let decoded: any = decodeJWT(access_token);
-        setEmail(decoded.email)
-        if (BSvalue && BSvalue.amount !== 0) {
-            setVal(BSvalue?.amount.toString());
-            let amount = BSvalue?.amount.toString();
-            let charFontSize = amount.length < 7 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
-            let charWidth = amount.length <= 1 ? 1.2 : 0.9
-            if (document.getElementsByClassName("input_currency")[0]) {
-                let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
-                element.style.width = ((amount.length + 1) * charWidth) + 'ch';
-                element.style.fontSize = charFontSize + "ch";
+        const access_token = localStorage.getItem("access_token");
+        if (access_token) {
+            const decoded = decodeJWT(access_token);
+            setEmail(decoded.email)
+            if (BSvalue && BSvalue.amount !== 0) {
+                setVal(BSvalue?.amount.toString());
+                let amount = BSvalue?.amount.toString();
+                let charFontSize = amount.length < 7 ? "1.1" : amount.length < 9 ? "0.9" : amount.length < 12 ? "0.8" : amount.length < 15 ? "0.6" : "0.4";
+                let charWidth = amount.length <= 1 ? 1.2 : 0.9
+                if (document.getElementsByClassName("input_currency")[0]) {
+                    let element = document.getElementsByClassName("input_currency")[0] as HTMLBodyElement;
+                    element.style.width = ((amount.length + 1) * charWidth) + 'ch';
+                    element.style.fontSize = charFontSize + "ch";
+                }
             }
-        }
-        getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
-            setMinMaxData(x);
+            getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
+                setMinMaxData(x);
 
-            // getWalletBalance(decoded.email, 'INEX').then((res) => {
-            //     if (res.status === 200) {
-            //         setUserBalance(res.data.balance);
-            //         setShowUserBalance(true);
-            //     } else {
-            //         setUserBalance(0);
-            //         setShowUserBalance(true);
-            //     }
-            // });
-        });
-
-        if (id) {
-            setHoneyBeeId(String(id));
-            getHoneyBeeDataByUsername(String(id)).then((data) => {
-
-                setHoneyBeeEmail(data.data.userFullData?.email);
             });
 
-        }
-        //removing INEX for sell
-        //     const filteredPeople = initialTokens.filter((item) => item.title !== 'INEX');
-        //    setUpdateInitialTokens(filteredPeople);
+            if (id) {
+                setHoneyBeeId(String(id));
+                getHoneyBeeDataByUsername(String(id)).then((data) => {
 
-    }, [email, BSvalue])
+                    setHoneyBeeEmail(data.data.userFullData?.email);
+                });
+
+            }
+        }
+    }, []); // Empty dependency array to run only once
+
+    const location = useLocation();
+
+    // For handling BSvalue.amount changes
+    useEffect(() => {
+        if (BSvalue?.amount !== 0) {
+            setVal(BSvalue.amount.toString());
+            // ... update element styles as needed ...
+        }
+    }, [BSvalue?.amount]);
+
+    // For handling BSvalue.fromTitle changes
+    useEffect(() => {
+        if (BSvalue?.fromTitle) {
+            getMinMaxValue(BSvalue.fromTitle).then(setMinMaxData);
+        }
+    }, [BSvalue?.fromTitle]);
+
+    // For handling BSvalue.fromToken changes
+    useEffect(() => {
+        if (BSvalue?.fromToken) {
+            handleChange(BSvalue.fromToken);
+        }
+    }, [BSvalue?.fromToken]);
+
+
+    useEffect(() => {
+        if (BSvalue?.fromToken) {
+            const selectedToken = filteredtokens.find(token => token.address === BSvalue.fromToken);
+            getCoinBalance(String(selectedToken?.title));
+        }
+    }, [location]);
+
 
     const getCoinBalance = async (value: string) => {
 
@@ -155,7 +209,10 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                 setShowUserBalance(true);
             }
         } else {
-            const res = await getWalletBalance(email, value);
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            let email = decoded.email;
+            const res = await getWalletBalance(email, String(value));
             setSelectedCoin(value);
             if (res.status === 200) {
                 setUserBalance(res.data.balance);
@@ -175,7 +232,36 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         setIsTransferModalVisible(false);
     };
 
+    // Function to update the user balance
+    const updateUserBalance = async (tokenTitle: string) => {
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        let email = decoded.email;
+        const balanceResponse = await getWalletBalance(email, tokenTitle);
+        if (balanceResponse.status === 200) {
+            setUserBalance(balanceResponse.data.balance);
+        } else {
+            setUserBalance(0); // Handle error or set default balance
+        }
+    };
 
+
+    useEffect(() => {
+        // Function to be called when the location changes
+        const handleLocationChange = () => {
+            // Update the balance here
+            const selectedToken = filteredtokens.find(token => token.address === BSvalue.fromToken);
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            setEmail(decoded.email)
+            if (selectedToken) {
+                updateUserBalance(selectedToken.title);
+            }
+        };
+
+        // Call the function when the component mounts or location changes
+        handleLocationChange();
+    }, [location, filteredtokens, BSvalue.fromToken]);
 
     const handleChange = async (value: string) => {
 
@@ -196,8 +282,10 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         await getCoinBalance(String(getRequiredCoin?.title));
     };
 
+
     const updateVal = async (e: React.FormEvent<HTMLInputElement>) => {
-        let testVal: string = "";
+        let testVal: string = e.currentTarget.value;
+
         if (e.currentTarget != null) {
             testVal = e?.currentTarget?.value;
             if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
@@ -213,14 +301,8 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
 
             let value = BSvalue?.fromTitle;
 
-
-            //let getRequiredCoin = initialTokens.find(x => x.address === value);
-            //
-
             await checkMinMaxValue(String(value), parseInt(testVal));
-
             handleChange(String(BSvalue?.fromToken))
-
         }
     }
 
@@ -247,9 +329,23 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         }
     }
 
+    // Utility function to check if a token is an Indexx token
+    const isIndexxToken = (tokenTitle: string) => {
+        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+"];
+        return indexxTokens.includes(tokenTitle);
+    };
+
     const formSubmit = () => {
 
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
+
+        // Check for disallowed selling of Indexx Tokens
+        if (isIndexxToken(String(getRequiredCoin?.title))) {
+            //alert("Selling of Indexx tokens is not allowed.");
+            OpenNotification("error","Feature of selling Indexx tokens is coming soon.");
+            return;
+        }
+
         if (getRequiredCoin?.title === "INXP" || getRequiredCoin?.title === "FTT") {
             setIsTransferModalVisible(true);
             return;
@@ -266,8 +362,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
             }
         }
     }
-    // 
-    // debugger;
+    
     return (
         <div className='sell_screens'>
 
@@ -327,29 +422,6 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                 </Modal>
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
-                {/* <div className="bs_token_left d-flex justify-between">
-                    <div className="bs_token_num d-flex flex-align-center" >
-                        <img src={require(`../../assets/token-icons/IN500.png`).default} alt="Index icon" width="30" height="30" style={{ marginRight: 11, }} />
-                        IN500  <span className="token_grey">Index500</span><Link to="" className="font_15x bs_link padding-l-2x" style={{ paddingTop: "5px", }}>Max</Link>
-                    </div>
-                </div> */}
-                {/* <Select className='width-100 border-0'
-                    onChange={handleChange} 
-                    value={BSvalue?.fromToken}
-                    dropdownStyle={{ backgroundColor: "var(--body_background)", }}
-                >
-                    {
-                        filteredtokens
-                            // .filter((x) => !(x.title === "INXP" || x.title === "FTT"))
-                            .map((token, index) => {
-
-                                return <Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} style={{paddingLeft : "15px", paddingRight : 0}}>
-                                    <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38"   /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                                </Option>
-                            })
-                    }
-
-                </Select> */}
 
                 <Select
                     className="width-100 border-0"
@@ -359,31 +431,31 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                 >
                     {Object.entries(categorizedTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
-                            {tokens.map((token: any) => (
-                                <Option
-                                    key={token.address}
-                                    value={token.address}
-                                    className="common__token d-flex bs_token_container"
-                                    data-address={token.address}
-                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
-                                >
-                                    <div className="d-flex bs_token_num select-drop">
-                                        <img
-                                            src={require(`../../assets/token-icons/${token.image}.png`).default}
-                                            alt={token.title}
-                                            width="40"
-                                        />
-                                        <div className="padding-l-1x d-flex flex-align-center">
-                                            {token.title}
-                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
-                                                {token.subTitle}
-                                            </span>
+                            <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                                {tokens.map((token: any) => (
+                                    <Option
+                                        key={token.address}
+                                        value={token.address}
+                                        className="common__token d-flex bs_token_container"
+                                        data-address={token.address}
+                                        style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                    >
+                                        <div className="d-flex bs_token_num select-drop">
+                                            <img
+                                                src={require(`../../assets/token-icons/${token.image}.png`).default}
+                                                alt={token.title}
+                                                width="40"
+                                            />
+                                            <div className="padding-l-1x d-flex flex-align-center">
+                                                {token.title}
+                                                <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                    {token.subTitle}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Option>
-                            ))}
-                        </Select.OptGroup>
+                                    </Option>
+                                ))}
+                            </Select.OptGroup>
                         )
                     ))}
                 </Select>
