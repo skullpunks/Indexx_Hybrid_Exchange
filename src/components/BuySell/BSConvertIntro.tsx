@@ -218,38 +218,37 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     }
 
-    // Utility function to check if a token is an Indexx token
     const isIndexxToken = (tokenTitle: string) => {
-        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+"];
+        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+", "ALCRYP", "AMZN", "APPL", "BCM", "CRYC10",
+            "EQSTK", "GOOGL", "INDXXF", "META", "MSFT", "NVDA", "PEP", "SNP500", "TLSA", "TOB"];
         return indexxTokens.includes(tokenTitle);
     };
-
+    
     const checkPurchase = () => {
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
-
-        // Check for disallowed conversions from Indexx to non-Indexx tokens
-        if (isIndexxToken(String(getRequiredCoin?.title)) && !isIndexxToken(String(getRequiredToCoin?.title))) {
-            //alert("Conversion from Indexx tokens to non-Indexx tokens is not allowed.");
-            OpenNotification("error","Feature of conversion from Indexx tokens to Non-Indexx tokens is coming soon.");
+    
+        // If either the fromToken or toToken is not in the allowed list of indexxTokens, show an error notification
+        if (!isIndexxToken(String(getRequiredCoin?.title)) || !isIndexxToken(String(getRequiredToCoin?.title))) {
+            OpenNotification("error", "Feature of conversion from Indexx tokens to Non-Indexx tokens is coming soon.");
             return;
         }
 
         if (getRequiredCoin?.title === "FTT" && getRequiredToCoin?.title !== "INXP") {
             //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
-            OpenNotification("error","You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredCoin?.title === "INXP") {
             //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
-            OpenNotification("error","You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredToCoin?.title === "INXP" && getRequiredCoin?.title !== "FTT") {
             //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
-            OpenNotification("error","You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredToCoin?.title === "FTT" && getRequiredCoin?.title !== "INXP") {
             //alert("You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
-            OpenNotification("error","You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
+            OpenNotification("error", "You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
             return;
         }
         if (val) {
@@ -315,7 +314,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     };
 
-    
+
     const swapCoin = () => {
         let tempFromToken = BSvalue?.fromToken;
         let tempToToken = BSvalue?.toToken;

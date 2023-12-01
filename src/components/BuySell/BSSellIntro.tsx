@@ -331,7 +331,21 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
 
     // Utility function to check if a token is an Indexx token
     const isIndexxToken = (tokenTitle: string) => {
-        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+"];
+        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+", "ALCRYP",
+            "AMZN",
+            "APPL",
+            "BCM",
+            "CRYC10",
+            "EQSTK",
+            "GOOGL",
+            "INDXXF",
+            "META",
+            "MSFT",
+            "NVDA",
+            "PEP",
+            "SNP500",
+            "TLSA",
+            "TOB"];
         return indexxTokens.includes(tokenTitle);
     };
 
@@ -342,7 +356,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
         // Check for disallowed selling of Indexx Tokens
         if (isIndexxToken(String(getRequiredCoin?.title))) {
             //alert("Selling of Indexx tokens is not allowed.");
-            OpenNotification("error","Feature of selling Indexx tokens is coming soon.");
+            OpenNotification("error", "Feature of selling Indexx tokens is coming soon.");
             return;
         }
 
@@ -362,7 +376,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
             }
         }
     }
-    
+
     return (
         <div className='sell_screens'>
 
