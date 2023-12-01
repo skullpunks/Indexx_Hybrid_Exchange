@@ -32,6 +32,7 @@ import {
   baseWalletURL,
   baseXnftURL,
   decodeJWT,
+  baseAcademyUrl,
 } from '../../services/api';
 import { Typography } from '@mui/material';
 import DarkMode from '../DarkMode/DarkMode';
@@ -197,6 +198,7 @@ const MobileHeader = () => {
     {
       name: 'Platforms',
       subItems: [
+        { name: 'Academy', url: baseAcademyUrl },
         { name: 'Exchange', url: baseCEXURL },
         { name: 'Fortune Daily', url: 'https://fortune.daily.indexx.ai/' },
         { name: 'Shop', url: baseShopURL },

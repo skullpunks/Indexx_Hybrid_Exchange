@@ -26,7 +26,7 @@ const EqStocksETF = () => {
     return (
         <div
             className="d-flex justify-content-center"
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 200 }}
         >
             <div className="coll">
                 <Collapse
@@ -39,6 +39,7 @@ const EqStocksETF = () => {
                         alignContent: 'center',
                         color: 'var(--body_color)',
                     }}
+                    defaultActiveKey={2}
                 >
                     <Panel
                         showArrow={false}

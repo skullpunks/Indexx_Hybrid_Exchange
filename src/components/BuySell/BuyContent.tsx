@@ -282,7 +282,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
             >
               {Object.entries(categorizedTokens).map(([category, tokens]) => (
                 tokens.length > 0 && (
-                <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
                   {tokens.map((token: any) => (
                     <Select.Option
                       key={token.address}

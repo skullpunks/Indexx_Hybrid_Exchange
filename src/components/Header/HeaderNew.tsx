@@ -51,6 +51,7 @@ import {
   baseWSURL,
   baseWalletURL,
   baseXnftURL,
+  baseAcademyUrl,
   decodeJWT
 } from "../../services/api";
 import DarkMode from "../DarkMode/DarkMode";
@@ -264,6 +265,11 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Platforms
                       </div>
+                      <NavDropdown.Item href={baseAcademyUrl} className="link-div">
+                        <a href={baseAcademyUrl} className="link-style">
+                          Academy
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={baseCEXURL} className="link-div">
                         <a href={baseCEXURL} className="link-style">
                           Exchange

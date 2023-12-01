@@ -17,7 +17,7 @@ const BinanceMarket = () => {
     return (
         <div
             className="d-flex justify-content-center"
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 200 }}
         >
             <div className="coll">
                 <Collapse
@@ -30,6 +30,7 @@ const BinanceMarket = () => {
                         alignContent: 'center',
                         color: 'var(--body_color)',
                     }}
+                    defaultActiveKey={2}
                 >
                     <Panel
                         showArrow={false}
@@ -96,7 +97,7 @@ const BinanceMarket = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About"
+                        header="About Binance Coin"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>

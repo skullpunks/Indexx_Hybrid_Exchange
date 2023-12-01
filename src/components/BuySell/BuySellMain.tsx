@@ -422,7 +422,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       </div>
       {/* <div
         className="d-flex justify-content-center"
-        style={{ marginBottom: 300 }}
+        style={{ marginBottom: 200 }}
       >
         <div className="coll">
           <Collapse

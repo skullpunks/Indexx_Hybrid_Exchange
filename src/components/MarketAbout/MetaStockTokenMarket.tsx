@@ -16,7 +16,7 @@ const MetaStockTokenMarket = () => {
     return (
         <div
             className="d-flex justify-content-center"
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 200 }}
         >
             <div className="coll">
                 <Collapse
@@ -29,6 +29,8 @@ const MetaStockTokenMarket = () => {
                         alignContent: 'center',
                         color: 'var(--body_color)',
                     }}
+                    defaultActiveKey={2}
+
                 >
                     <Panel
                         showArrow={false}
@@ -95,7 +97,7 @@ const MetaStockTokenMarket = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About"
+                        header="About Indexx Meta Stock Token"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>

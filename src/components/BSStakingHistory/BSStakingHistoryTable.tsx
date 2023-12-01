@@ -52,7 +52,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
             dataIndex: 'startDate',
             key: 'startDate',
             render: (text) => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            responsive: ['sm'],
+            // responsive: ['sm'],
             sorter: (a, b) => moment(a.startDate).valueOf() - moment(b.startDate).valueOf(),
             sortDirections: ['descend', 'ascend'],
         },
@@ -61,7 +61,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
             dataIndex: 'endDate',
             key: 'endDate',
             render: (text) => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            responsive: ['sm'],
+            // responsive: ['sm'],
             sorter: (a, b) => moment(a.endDate).valueOf() - moment(b.endDate).valueOf(),
             sortDirections: ['descend', 'ascend'],
         },
@@ -74,7 +74,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
                     {parseFloat(text).toFixed(2)} {record.coin}
                 </span>
             ),
-            responsive: ['sm'],
+            // responsive: ['sm'],
             sorter: (a, b) => a.stakedAmount - b.stakedAmount,
             sortDirections: ['descend', 'ascend'],
         },
@@ -87,7 +87,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
                     {parseFloat(text).toFixed(2)} {record.rewardCoin}
                 </span>
             ),
-            responsive: ['sm'],
+            // responsive: ['sm'],
             sorter: (a, b) => a.rewardAmount - b.rewardAmount,
             sortDirections: ['descend', 'ascend'],
         },
@@ -108,7 +108,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
                     }     
                 </span>
             ),
-            responsive: ['sm'],
+            // responsive: ['sm'],
             //sorter: (a, b) => a.stakedAmount.localeCompare(b.stakedAmount), // sorting based on stakedAmount as a simple reference
             sortDirections: ['descend', 'ascend'],
         },    
@@ -124,7 +124,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
             title: 'Duration',
             dataIndex: 'duration',
             key: 'duration',
-            responsive: ['sm'],
+            // responsive: ['sm'],
             sorter: (a, b) => a.duration.localeCompare(b.duration),
             sortDirections: ['descend', 'ascend'],
         },
@@ -135,7 +135,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
             render: (percentage) => (
                 <span>{percentage * 100}%</span>
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
             sorter: (a, b) => (a.percentage * 100) - (b.percentage * 100),
             sortDirections: ['descend', 'ascend'],
         },
@@ -146,7 +146,7 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
             render: (isActive) => (
                 <span>{isActive ? "Active" : "Inactive"}</span>
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
     ];
 
@@ -437,7 +437,11 @@ const BSStakingHistoryTable: React.FC<HistoryProps> = ({refresh}) => {
                     <Input size="large" placeholder="Search Transaction hash" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div> */}
             </div>
-            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} 
+            // className="transaction_crypto_history"
+            scroll={{x:true}}
+                style={{maxWidth:"94vw"}}  
+            />
             <MyPagination
                 total={txListFilter && txListFilter.length}
                 current={current}
