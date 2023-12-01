@@ -226,16 +226,16 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     localStorage.getItem('selectedTheme') || "light"
   );
   useEffect(() => {
-    const handleStorageChange = (event:any) => {
+    const handleStorageChange = (event: any) => {
       console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
-      if(window.location.pathname.includes("for-honeybee")){
+      if (window.location.pathname.includes("for-honeybee")) {
         setTheme("light")
       }
     };
 
     window.addEventListener('storage', handleStorageChange);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -250,7 +250,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedSubTab, setSelectedSubTab] = useState(0);
-  
+
   const handleETFTabChange = (event: any, newValue: number) => {
     setSelectedSubTab(newValue);
   };
@@ -262,15 +262,15 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   return (
     <div className="swap_container">
-      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange}  />
+      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange} />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
           <p style={{ marginTop: 220, fontSize: 40 }}>
-            <img src={logo} alt="logo" style={{marginRight:"20px"}}/>
+            <img src={logo} alt="logo" style={{ marginRight: "20px" }} />
             Indexx Exchange
             {selectedTab === 1 && (
               <>
-                {" "} - 
+                {" "} -
                 <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
               </>
             )}
@@ -279,7 +279,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               <>
                 {selectedSubTab === 0 && (
                   <>
-                    {" "} - 
+                    {" "} -
                     <a href={baseWSURL}>
                       <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
                     </a>
@@ -289,7 +289,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
                 {selectedSubTab === 1 && (
                   <>
-                    {" "} - 
+                    {" "} -
                     <a href={baseWSURL}>
                       <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
                     </a>
@@ -302,11 +302,11 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
           </p>
           :
           <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? "300px" : "280px"}`, fontSize: 40 }}>
-            <img src={hivelogo} alt="logo" style={{marginRight:"20px", width:"64px"}}/>
+            <img src={hivelogo} alt="logo" style={{ marginRight: "20px", width: "64px" }} />
             Hive Exchange
             {selectedTab === 1 && (
               <>
-                {" "} - 
+                {" "} -
                 <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
               </>
             )}
@@ -315,7 +315,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               <>
                 {selectedSubTab === 0 && (
                   <>
-                    {" "} - 
+                    {" "} -
                     <a href={baseWSURL}>
                       <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
                     </a>
@@ -325,7 +325,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
                 {selectedSubTab === 1 && (
                   <>
-                    {" "} - 
+                    {" "} -
                     <a href={baseWSURL}>
                       <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
                     </a>
@@ -334,9 +334,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                 )}
               </>
             )}
-            </p>
+          </p>
         }
-        <p style={{ fontSize: 15, marginTop:"10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+        <p style={{ fontSize: 15, marginTop: "10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
       </span>
 
 

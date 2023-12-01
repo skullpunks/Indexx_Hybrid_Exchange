@@ -3,6 +3,7 @@ import LineGraph from "../LineGraph/LineGraph";
 import useFetch from "../Hooks/use-fetch";
 import styles from "./Graph.module.css";
 import { getCryptoPrice } from "../../services/api";
+import AdvancedRealTimeChartComponent from "./TradingView";
 
 const url = "https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=";
 const currencyName = "Ethereum";
@@ -36,11 +37,11 @@ const EthereumGraph = () => {
     const res = await getCryptoPrice('ETH');
     setETHPrice(res.data.lastPrice);
     setETHPriceChange(res.data.priceChangePercent)
-}
+  }
 
   return (
     <React.Fragment>
-      {!error ? (
+      {/* {!error ? (
         <LineGraph
           currencyName={currencyName}
           yearClickHandler={yearClickHandler}
@@ -58,7 +59,9 @@ const EthereumGraph = () => {
         <div className={styles.error}>
           <h5>{error}</h5>
         </div>
-      )}
+      )} */}
+
+      <AdvancedRealTimeChartComponent coin={"ETH"} />
     </React.Fragment>
   );
 };
