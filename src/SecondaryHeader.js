@@ -8,6 +8,7 @@ const SecondaryHeader = () => {
   return (
     <div>
         { (!location.pathname.includes("login") && !location.pathname.includes("elite-learn") && !location.pathname.includes("dashboard") &&
+          !(location.pathname === "/indexx-exchange/buy-sell") && !(location.pathname === "/") &&
           !location.pathname.includes("get-started") && !((localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) && location.pathname === "/")) ? 
           <PowerPackHeader/>
           :null

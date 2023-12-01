@@ -369,7 +369,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                 >
                     {Object.entries(categorizedFromTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                            <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
                                 {tokens.map((token: any) => (
                                     <Option
                                         key={token.address}
@@ -403,7 +403,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                 >
                     {Object.entries(categorizedToTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                            <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
                                 {tokens.map((token: any) => (
                                     <Option
                                         key={token.address}
@@ -441,7 +441,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
             {/* {showUserBalance && */}
             <div>
-                <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
+                <h6 className='text-center'> Current Available balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
             </div>
         </div >
     )

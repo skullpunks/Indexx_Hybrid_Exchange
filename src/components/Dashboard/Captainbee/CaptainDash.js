@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import frame from '../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
+import waggle_dark from '../../../assets/hive-dashboard/waggle icon white.svg';
 
 import pin from '../../../assets/hive-dashboard/sidebar/pin- 1.svg';
 import man from '../../../assets/hive-dashboard/sidebar/man- 2.svg';
@@ -14,8 +15,8 @@ import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg'
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
 import house_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
 import clock_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
-import email_dark from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
-import phone_dark from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
+import email_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/email white.svg';
+import phone_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/phone white.svg';
 
 import twitter from '../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
 import insta from '../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
@@ -327,7 +328,7 @@ const CaptainDash = () => {
       {(!isLoading && userType === "CaptainBee") ?
         (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
           <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
-            <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
+            <img src={theme === "dark" ? waggle_dark : waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
             Waggle Dance / My Dashboard
           </div>
           <div className="hive-container">
@@ -394,7 +395,7 @@ const CaptainDash = () => {
                     </div>
                   )
                 }
-                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
                   {(!subscription?.paypalSubscriptionDBData) ?
                     (<div className="d-flex flex-direction-column align-items-start mt-5">
                       <div className="font_15x">

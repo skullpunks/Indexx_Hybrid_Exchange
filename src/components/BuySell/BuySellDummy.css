@@ -52,7 +52,7 @@
 .large_card {
   margin: 0 auto;
   max-width: calc(100% - 160px);
-  margin-bottom: 300px;
+  /* margin-bottom: 300px; */
   padding-top: 0;
 }
 

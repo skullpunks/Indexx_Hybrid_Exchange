@@ -33,8 +33,10 @@
   font-size: 1.5em;  
   font-weight: bold;
   color: var(--body_color);
+  background-color: var(--primary-color);
   display: flex;
   justify-content: center;
+  padding-block: 10px;
 }
 
 .bs_curreny_left {
@@ -706,7 +708,7 @@ a.bs_link:hover {
 
   .bs_wallet .card,
   .bs_wallet .border-b-1x {
-    min-width: unset;
+    min-width: 95%;
     border-color: #d7d7d7;
   }
 
@@ -769,7 +771,7 @@ a.bs_link:hover {
   }
 
   .scan-container.bs_main {
-    padding-top: 80px;
+    padding-top: 160px;
   }
 
   .bs_container.card {

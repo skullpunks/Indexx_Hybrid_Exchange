@@ -84,7 +84,7 @@ const PowerPackHeader = () => {
 
     <div style={{
       position: "fixed",
-      top: `${isMobile ? '60px' : '90px'}`,
+      top: `${isMobile ? '56px' : '90px'}`,
       width: "100%", zIndex: 999, background: "var(--main-body)",
       height: "95px",
       paddingTop: "15px"
@@ -104,7 +104,7 @@ const PowerPackHeader = () => {
                   <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..." />
                 }
                 <div className="card-body">
-                  <h5 className="card-title mt-1">
+                  <h5 className="card-title mt-1 mt-sm-2">
                     {localStorage.getItem("userlogged") === 'normal' ? "Exchange" : "Hive Exchange"}
                   </h5>
                   <Typography

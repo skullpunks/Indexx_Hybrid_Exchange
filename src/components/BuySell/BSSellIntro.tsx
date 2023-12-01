@@ -431,7 +431,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
                 >
                     {Object.entries(categorizedTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                            <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
+                            <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
                                 {tokens.map((token: any) => (
                                     <Option
                                         key={token.address}
@@ -479,7 +479,7 @@ const BSSellIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenType
             </div>
             {/* {showUserBalance && */}
             <div>
-                <h6 className='text-center mb-0'> Current Avaliable Balance : {Math.floor(userBalance * 10000) / 10000}  {filteredFromArray[0].title} </h6>
+                <h6 className='text-center mb-0'> Current Available Balance : {Math.floor(userBalance * 10000) / 10000}  {filteredFromArray[0].title} </h6>
             </div>
             {/* } */}
 

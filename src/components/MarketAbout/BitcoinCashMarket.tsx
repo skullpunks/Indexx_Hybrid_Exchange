@@ -17,7 +17,7 @@ const BitcoinCashMarket = () => {
     return (
         <div
             className="d-flex justify-content-center"
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 200 }}
         >
             <div className="coll">
                 <Collapse
@@ -30,6 +30,7 @@ const BitcoinCashMarket = () => {
                         alignContent: 'center',
                         color: 'var(--body_color)',
                     }}
+                    defaultActiveKey={2}
                 >
                     <Panel
                         showArrow={false}
@@ -96,7 +97,7 @@ const BitcoinCashMarket = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About"
+                        header="About BCH"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
