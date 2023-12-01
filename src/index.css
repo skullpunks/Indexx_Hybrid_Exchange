@@ -227,10 +227,6 @@ div.flex-justify-center {
   justify-content: center;
 }
 
-iframe {
-  display: none;
-}
-
 .flex-justify-between {
   justify-content: space-between;
 }

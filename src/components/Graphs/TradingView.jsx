@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets';
 
-const AdvancedRealTimeChartComponent = (coin) => {
+const AdvancedRealTimeChartComponent = ({ coin }) => {
   const [size, setSize] = useState({ width: 870, height: 500 });
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || 'light'
+  ); // default theme from localStorage
 
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia('(max-width: 560px)').matches) {
         setSize({ width: 250, height: 250 });
       } else {
-        setSize({ width: 900, height: 650 });
+        setSize({ width: 900, height: 655 });
       }
     };
 
-    // Call the function initially
     handleResize();
-
-    // Set up event listener for resize events
     window.addEventListener('resize', handleResize);
-
-    // Clean up event listener
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const getSymbol = (coin) => {
-    console.log(coin);
-    // Add logic here if you have specific symbol mappings
-    return coin.coin + 'USD'; // Example: 'BTC' becomes 'BTCUSD'
+    return coin + 'USD'; // Example: 'BTC' becomes 'BTCUSD'
   };
 
   return (
@@ -35,7 +40,7 @@ const AdvancedRealTimeChartComponent = (coin) => {
         style={{ display: 'block' }}
         symbol={getSymbol(coin)}
         autosize={false}
-        theme={'light'}
+        theme={theme}
         width={size.width}
         height={size.height}
       />
