@@ -60,6 +60,19 @@
 
 @media (max-width: 767px) {
 .up-logos .col{
-    width: 25%;
+    width: 20%;
+}
+.power-page{
+    display: flex;
+    justify-content: center;
+}
+.power-page .card{
+    width: 70px;
+    height: 50px;
+}
+
+.power-page .card-img-top{
+    width: auto;
+    height: 30px !important;
 }
 }

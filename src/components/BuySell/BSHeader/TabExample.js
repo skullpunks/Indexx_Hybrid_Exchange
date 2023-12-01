@@ -99,10 +99,13 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
   }, [])
 
   console.log(selectedTab, selectedSubTab, "main, sub");
+
+  const tabsProps = isMobile ? { variant: 'scrollable', scrollButtons: 'auto' } : {};
+
   return (
     <div
       style={{
-        top: `${isMobile ? '60px' : '90px'}`,
+        top: `${isMobile ? '56px' : '90px'}`,
       }}
       className={window.location.pathname.includes("for-honeybee") || (isCaptain === true && haspowerpack === false) === true ? "other-tabs" : "ext-tabs"}
     >
@@ -113,6 +116,7 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
         aria-label="icon label tabs example"
         style={{ marginTop: "6px" }}
         className='tabs-tab'
+        {...tabsProps}
       // variant='scrollable'
       >
         {localStorage.getItem("userlogged") === 'normal' ?

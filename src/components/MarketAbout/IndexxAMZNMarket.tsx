@@ -16,7 +16,7 @@ const IndexxAMZNMarket = () => {
     return (
         <div
             className="d-flex justify-content-center"
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 200 }}
         >
             <div className="coll">
                 <Collapse
@@ -29,6 +29,7 @@ const IndexxAMZNMarket = () => {
                         alignContent: 'center',
                         color: '#5f5f5f',
                     }}
+                    defaultActiveKey={2}
                 >
                     <Panel
                         showArrow={false}
@@ -95,7 +96,7 @@ const IndexxAMZNMarket = () => {
                             fontSize: 30,
                             color: '#5F5F5F',
                         }}
-                        header="About"
+                        header="About Indexx Amazon Stock Token"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: '#5F5F5F' }}>

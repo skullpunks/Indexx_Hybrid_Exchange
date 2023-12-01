@@ -63,7 +63,7 @@ const BasicInfo = () => {
                     <header className="font_25x border-b-1x padding-lr-2x padding-tb-1x">Account Info</header>
                     <div className="padding-2x">
                         <p className="font_20x">{userData?.email}</p>
-                        <div className="d-flex">
+                        <div className="d-flex basic-det">
                             <div>{userData?.vipLevel}</div>
                             <div className="padding-lr-1x">Personal</div>
                             <div>User ID</div>
@@ -91,18 +91,20 @@ const BasicInfo = () => {
                             <span className="font_18x margin-b-3x d-block">
                                 Personal Verification
                             </span>
-                            <div className="d-flex align-items-center border-1x-orange padding-1x">
-                                <h2 className="font_18x margin-b-0">Basic Verification</h2>
+                            <div className={(userData?.verification?.emailVerified) ? "d-flex align-items-center border-1x-orange padding-1x" : "d-flex align-items-center border padding-1x"}>
 
                                 {userData?.verification?.emailVerified ?
-                                    (<div>
+                                    (<div className='d-flex align-items-center'>
                                         <img src={localStorage.getItem("userlogged") === 'normal' ? BasicVerfication : HiveVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" width={"40px"} />
+                                        <h2 className="font_18x margin-b-0">Basic Verification</h2>
                                     </div>)
-                                    : (<div>
-                                        <Button type="primary" className="margin-l-2x" loading={loadings}
+                                    : (<div className='d-flex align-items-center'>
+                                        <img src={AdvanceVerfication} alt="AdvanceVerfication" className="font_30x margin-r-1x" />
+                                        <h2 className="font_18x margin-b-0" style={{minWidth:"fit-content"}}>Basic Verification</h2>
+                                        {/* <Button type="primary" className="margin-l-2x" loading={loadings}
                                             onClick={() => resendEmail()}>
                                             Verify Email
-                                        </Button>
+                                        </Button> */}
                                     </div>)
                                 }
                             </div>
@@ -122,9 +124,9 @@ const BasicInfo = () => {
                                 </div>
                             </div>
                             {(!userData?.isKYCPass) &&
-                                <div className="d-flex align-items-center align-items-stretch border margin-t-2x padding-1x col-lg-8 margin-lr-auto">
+                                <div className="d-flex align-items-center align-items-stretch margin-t-2x  padding-1x">
 
-                                    <div className="font_12x ">Please verify your identity first in order to start
+                                    <div className="font_12x w-100">Please verify your identity first in order to start
                                         advanced verification</div>
 
                                 </div>
@@ -143,13 +145,19 @@ const BasicInfo = () => {
                             {/* <div className="padding-tb-1x apple_pay">Apple Pay</div> */}
                             {/* <div className="api_trading">API Trading</div> */}
                             {/* <h1 className="padding-tb-1x font_18x  font_weight_800 margin-tb-2x padding-l-24px">Advanced Functions</h1> */}
-                            <div className="staking">Staking</div>
+                            <div className="padding-tb-1x staking">Staking</div>
                             {/* <div className="padding-tb-1x otc_trading">OTC Trading</div>
                             <div className="wire_transfer">Wire Transfer</div>
                             <div className="padding-tb-1x ">Region currently not supported</div> */}
                             <br>
                             </br>
-                            {(!userData?.isKYCPass) &&
+                            {(!userData?.verification?.emailVerified) &&
+                                <Button type="primary" className="margin-l-2x" loading={loadings}
+                                onClick={() => resendEmail()}>
+                                Verify Email
+                                </Button>
+                            }
+                            {(userData?.verification?.emailVerified && !userData?.isKYCPass) &&
                                 <Button type="primary" className="margin-l-2x"
                                     onClick={() => openBlockpassLink()}>
                                     Verify Identity

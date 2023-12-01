@@ -3,6 +3,7 @@ import LineGraph from "../LineGraph/LineGraph";
 import useFetch from "../Hooks/use-fetch";
 import styles from "./Graph.module.css";
 import { getCryptoPrice } from "../../services/api";
+import AdvancedRealTimeChartComponent from "./TradingView";
 
 const url = "https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=usd&days=";
 const currencyName = "Binance Coin";
@@ -41,7 +42,7 @@ const BinanceGraph = () => {
 
   return (
     <React.Fragment>
-      {!error ? (
+      {/* {!error ? (
         <LineGraph
           currencyName={currencyName}
           yearClickHandler={yearClickHandler}
@@ -59,9 +60,11 @@ const BinanceGraph = () => {
         <div className={styles.error}>
           <h5>{error}</h5>
         </div>
-      )}
+      )} */}
+      <AdvancedRealTimeChartComponent coin={"BNB"} />
     </React.Fragment>
   );
 };
 
 export default BinanceGraph;
+

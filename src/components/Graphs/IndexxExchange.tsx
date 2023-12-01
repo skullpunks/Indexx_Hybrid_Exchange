@@ -29,32 +29,48 @@ const IndexxExchangeGraph = () => {
     hourClickHandler,
     value,
     api,
+    day
   } = useFetch();
 
   useEffect(() => {
-    setDate(Date);
-    getINEXCoinPrice();
-    fetchData();
-  }, [api]);
+    const fetchData = async () => {
+      // Add a condition to avoid unnecessary fetching
+      if (!modifiedData || modifiedData.length === 0) {
+        try {
+          await api(url);
+          if (value && value.length > 0) {
+            const modified = value.map((item: any) => ({
+              ...item,
+              price: item.price + 1
+            }));
+            setModifiedData(modified);
+          }
+        } catch (error: any) {
+          setError(error.message);
+        }
+      }
+    };
 
-  const fetchData = async () => {
-    try {
-      await api(url);
-      const modified = value.map((item: any) => ({
-        ...item,
-        price: item.price + 1 // Add 1 to the USDT price for INEX
-      }));
-      setModifiedData(modified); // Update the modified data
-    } catch (error: any) {
-      setError(error.message);
+    const fetchINEXPrice = async () => {
+      // Fetch price data only if not already fetched
+      if (!INEXPrice || !INEXPriceChange) {
+        try {
+          const res = await getIndexxTokenPrices();
+          setINEXPrice(res.data?.INEXPrice);
+          setINEXPriceChange(res.data?.INEXpriceChangePercent);
+        } catch (error: any) {
+          setError(error.message);
+        }
+      }
+    };
+
+    if (!date) {
+      setDate(Date);
     }
-  };
+    fetchData();
+    fetchINEXPrice();
+  }, [api, url, value, modifiedData, INEXPrice, INEXPriceChange, date, day]);
 
-  const getINEXCoinPrice = async () => {
-    const res = await getIndexxTokenPrices();
-    setINEXPrice(res.data?.INEXPrice);
-    setINEXPriceChange(res.data?.INEXpriceChangePercent)
-  }
 
   return (
     <React.Fragment>

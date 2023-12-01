@@ -55,7 +55,7 @@ const PaymentSuccess = () => {
           on purchasing the
         </Typography>
         <Typography variant="text" component="p" fontSize={"40px"} fontWeight={400}>
-          Power Pack. Your orderId is {orderID}
+          Power Pack. Your order ID is {orderID}
         </Typography>
         <Typography variant="text" component="p" fontSize={"15px"} lineHeight={"30px"}>
           The INEX tokens have been dropped automatically in your wallet.

@@ -26,9 +26,16 @@ import React from 'react';
 import Web3 from 'web3';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import ShortenText from '../../utils/ShortenText';
+import * as bitcoin from 'bitcoinjs-lib';
 
 const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
 const { Text } = Typography;
+
+const networks = {
+  'BTC': bitcoin.networks.testnet, // mainnet
+  //'BTC': bitcoin.networks.mainnet // testnet
+};
+
 export const BSWithdarwCryptoContent = () => {
   const navigate = useNavigate();
   const [network, setNetwork] = useState<any>();
@@ -52,15 +59,15 @@ export const BSWithdarwCryptoContent = () => {
   //const [max, setMax] = useState();
   const [email, setEmail] = useState('');
 
-  const categorizeTokens = (tokens :any) => {
+  const categorizeTokens = (tokens: any) => {
     return {
-        Stocks: tokens.filter((token: any) => token.isStock),
-        ETFs: tokens.filter((token: any)=> token.isETF),
-        Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF)
+      Stocks: tokens.filter((token: any) => token.isStock),
+      ETFs: tokens.filter((token: any) => token.isETF),
+      Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF)
     };
-};
+  };
 
-const categorizedTokens = categorizeTokens(initialTokens);
+  const categorizedTokens = categorizeTokens(initialTokens);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -235,10 +242,48 @@ const categorizedTokens = categorizeTokens(initialTokens);
   //   
   // };
 
-  const checkWalletAddress = async (address: string) => {
-    const res = web3.utils.checkAddressChecksum(address);
+  // const checkWalletAddress = async (address: string) => {
+  //   const res = web3.utils.checkAddressChecksum(address);
 
-    setIsWalletAddrValid(res);
+  //   setIsWalletAddrValid(res);
+  // };
+
+  // const checkWalletAddress = async (address: string, currency: string) => {
+  //   let isValid = false;
+
+  //   if (currency === 'ETH') {
+  //     isValid = web3.utils.isAddress(address);
+  //   } else if (currency === 'BTC') {
+  //     try {
+  //       bitcoin.address.toOutputScript(address, bitcoin.networks.bitcoin);
+  //       isValid = true;
+  //     } catch (error) {
+  //       isValid = false;
+  //     }
+  //   }
+
+  //   setIsWalletAddrValid(isValid);
+  // };
+
+  const checkWalletAddress = async (address: string, currency: string) => {
+    let isValid = false;
+
+    if (currency === 'BTC') {
+      // Determine network based on the currency
+      const network = networks[currency];
+      try {
+        // Validate Bitcoin address using the specified network
+        bitcoin.address.toOutputScript(address, network);
+        isValid = true;
+      } catch (error) {
+        isValid = false;
+      }
+    } else {
+      // Validate Ethereum address
+      isValid = web3.utils.checkAddressChecksum(address);
+    }
+
+    setIsWalletAddrValid(isValid);
   };
 
   const onChangeReceiveAmt = (e: any) => {
@@ -263,28 +308,28 @@ const categorizedTokens = categorizeTokens(initialTokens);
     let val = e.currentTarget.value;
 
     setWalletAddre(val);
-    checkWalletAddress(val);
+    checkWalletAddress(val, selectedCoin);
   };
-  
+
   const handleChangeCurrency = async (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-  
+
     setSelectedCoinObj(getRequiredCoin || {} as { address: string; title: string }); // Specify the type here
     setSelectedCoin(getRequiredCoin?.title || ''); // Set the title if needed
     setSingleWallet(userWallet[0]);
-  
+
     let res = await getMinAndMaxOrderValues(
       String(getRequiredCoin?.title),
       'WITHDRAW_CRYPTO'
     );
-  
+
     setValues(res);
   };
-  
-  
+
+
 
   const withdrawFiat = async () => {
 
@@ -376,48 +421,53 @@ const categorizedTokens = categorizeTokens(initialTokens);
         <div className="">
           <label>Currency</label>
           <div className=" d-flex flex-justify-between flex-align-center">
-          <Select
-  dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
-  className="width-100"
-  onChange={handleChangeCurrency}
-  defaultValue="Select a Coin to Withdraw"
-  value={selectedCoinObj?.address} // Use the address property as the value
->
-  {initialTokens
-    .filter(
-      (token) => token.title !== 'SOL' && token.title !== 'MATIC' && token.title !== 'DOT' && 
-      token.title !== 'SOL' && token.title !== 'LTC' && token.title !== 'DOGE' && token.title !== 'XRP'
-    )
-    .map((token, index) => {
-      return (
-        <Option
-          key={index}
-          value={token.address}
-          type="link"
-          className="common__token d-flex bs_token_container"
-          data-address={token.address}
-        >
-          <div className="d-flex">
-            <img
-              src={require(`../../assets/token-icons/${token.image}.png`).default}
-              alt="IN500"
-              width="35"
-              height="35"
-            />
-            <div className="font_20x padding-l-1x d-flex flex-align-center">
-              {token.title}{' '}
-              <span
-                style={{ color: 'rgba(95, 95, 95, 0.5)' }}
-                className="margin-l-0_5x"
-              >
-                {token.subTitle}
-              </span>{' '}
-            </div>
-          </div>
-        </Option>
-      );
-    })}
-</Select>
+            <Select
+              dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
+              className="width-100"
+              onChange={handleChangeCurrency}
+              defaultValue="Select a Coin to Withdraw"
+              value={selectedCoinObj?.address} // Use the address property as the value
+            >
+              {initialTokens
+                .filter(
+                  // (token) => token.title !== 'SOL' && token.title !== 'MATIC' && token.title !== 'DOT' &&
+                  //   token.title !== 'SOL' && token.title !== 'LTC' && token.title !== 'DOGE' && token.title !== 'XRP'
+                  (token) => 
+                  token.title === 'INEX' || 
+                  token.title === 'INXC' ||
+                  token.title === 'IN500' || 
+                  token.title === 'IUSD+'
+                )
+                .map((token, index) => {
+                  return (
+                    <Option
+                      key={index}
+                      value={token.address}
+                      type="link"
+                      className="common__token d-flex bs_token_container"
+                      data-address={token.address}
+                    >
+                      <div className="d-flex">
+                        <img
+                          src={require(`../../assets/token-icons/${token.image}.png`).default}
+                          alt="IN500"
+                          width="35"
+                          height="35"
+                        />
+                        <div className="font_20x padding-l-1x d-flex flex-align-center">
+                          {token.title}{' '}
+                          <span
+                            style={{ color: 'rgba(95, 95, 95, 0.5)' }}
+                            className="margin-l-0_5x"
+                          >
+                            {token.subTitle}
+                          </span>{' '}
+                        </div>
+                      </div>
+                    </Option>
+                  );
+                })}
+            </Select>
 
             {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
             {/* <CaretDownOutlined /> */}

@@ -15,12 +15,15 @@ interface DataType {
     key: string;
     time: string;
     type: string;
+    benificaryAddress: string;
     wallet: string;
     currencyRef: string;
+    status: string;
     amount: number;
     destination: string;
     txid: string;
 }
+
 
 
 const BSTransactionHistoryTable: React.FC = () => {
@@ -38,6 +41,25 @@ const BSTransactionHistoryTable: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const [copiedValue, copy] = useCopyToClipboard();
     
+    const formatBeneficiaryAddress = (address: string) => {
+        try {
+            const parsedAddress = JSON.parse(address);
+            const formattedAddress = (
+                <>
+                    <div><strong>Name:</strong> {parsedAddress.beneficiaryName || "NA"}</div>
+                    <div><strong>Account No:</strong> {parsedAddress.accountNumber || "NA"}</div>
+                    <div><strong>Bank: </strong>{parsedAddress.bankName || "NA"}</div>
+                    <div><strong>SWIFT:</strong> {parsedAddress.swiftCode || "NA"}</div>
+                    <div><strong>Routing Number: </strong>{parsedAddress.routingNumber || "NA"}</div>
+                    <div><strong>Address: </strong>{`${parsedAddress.addressLine1 || "NA"}, ${parsedAddress.city || "NA"}, ${parsedAddress.state || "NA"}, ${parsedAddress.country || "NA"}, ZIP: ${parsedAddress.zipCode || "NA"}`}</div>
+                </>
+            );
+            return formattedAddress;
+        } catch (e) {
+            return <div>No Beneficiary Details</div>;
+        }
+    };
+
     const columns: ColumnsType<DataType> = [
 
         {
@@ -93,6 +115,20 @@ const BSTransactionHistoryTable: React.FC = () => {
             title: 'Amount',
             key: 'amount',
             dataIndex: 'amount',
+            responsive: ["sm"],
+        },
+        {
+            title: 'Status',
+            key: 'status',
+            dataIndex: 'status',
+            responsive: ["sm"],
+        },
+        {
+            title: 'Beneficiary Details',
+            key: 'benificaryAddress',
+            render: (_, record) => (
+                <span>{formatBeneficiaryAddress(record.benificaryAddress)}</span>
+            ),
             responsive: ["sm"],
         },
         {

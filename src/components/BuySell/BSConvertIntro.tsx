@@ -11,8 +11,9 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import initialTokens from "../../utils/Tokens.json";
 import graphTokens from "../../utils/graphs.json";
 import { Option } from 'antd/lib/mentions';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import { Option } from 'antd/lib/mentions';
+import OpenNotification from '../OpenNotification/OpenNotification';
 
 interface Props {
     setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -79,11 +80,62 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
     useEffect(() => {
         // This effect triggers when filteredtokens changes
         if (filteredtokens && filteredtokens.length) {
-            handleChange(filteredtokens[0]?.address || "");
-            handleChangeToToken(filteredtokens[1]?.address || "");
+            // Check if BSvalue.fromToken and BSvalue.toToken are already set
+            if (!BSvalue.fromToken && !BSvalue.toToken) {
+                handleChange(filteredtokens[0]?.address || "");
+                handleChangeToToken(filteredtokens[1]?.address || "");
+            }
         }
-    }, [filteredtokens]);
+    }, [filteredtokens, BSvalue.fromToken, BSvalue.toToken]);
 
+    // Function to update the user balance
+    const updateUserBalance = async (tokenTitle: string) => {
+        let access_token = String(localStorage.getItem("access_token"));
+        let decoded: any = decodeJWT(access_token);
+        let email = decoded.email;
+        const balanceResponse = await getWalletBalance(email, tokenTitle);
+        if (balanceResponse.status === 200) {
+            setUserBalance(balanceResponse.data.balance);
+        } else {
+            setUserBalance(0); // Handle error or set default balance
+        }
+    };
+
+    useEffect(() => {
+        // Initial user balance update on component mount
+        if (filteredtokens.length > 0) {
+            updateUserBalance(filteredtokens[0]?.title || '');
+        }
+    }, []);
+
+    useEffect(() => {
+        // Update user balance when the first dropdown selection changes
+        if (BSvalue?.fromToken) {
+            const selectedToken = filteredtokens.find(token => token.address === BSvalue.fromToken);
+            if (selectedToken) {
+                updateUserBalance(selectedToken.title);
+            }
+        }
+    }, [BSvalue?.fromToken]);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        // Function to be called when the location changes
+        const handleLocationChange = () => {
+            // Update the balance here
+            const selectedToken = filteredtokens.find(token => token.address === BSvalue.fromToken);
+            let access_token = String(localStorage.getItem("access_token"));
+            let decoded: any = decodeJWT(access_token);
+            setEmail(decoded.email)
+            if (selectedToken) {
+                updateUserBalance(selectedToken.title);
+            }
+        };
+
+        // Call the function when the component mounts or location changes
+        handleLocationChange();
+    }, [location, filteredtokens, BSvalue.fromToken]);
 
     const categorizeTokens = (tokens: any) => {
         return {
@@ -131,40 +183,72 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     }, [BSvalue]);
 
-    // const [flag, setFlag] = useState(false);
-    const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
-        let testVal: string = "";
-        if (e.currentTarget != null) {
-            testVal = e?.currentTarget?.value;
+    // // const [flag, setFlag] = useState(false);
+    // const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
+    //     let testVal: string = "";
+    //     if (e.currentTarget != null) {
+    //         testVal = e?.currentTarget?.value;
 
-            if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
-                e.preventDefault();
-                return;
-            }
+    //         if (!/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
+    //             e.preventDefault();
+    //             return;
+    //         }
+    //         setVal(testVal);
+    //         let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
+    //         let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+    //         e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
+    //         e.currentTarget.style.fontSize = charFontSize + "ch";
+
+    //         handleChange(String(BSvalue?.fromToken))
+    //     }
+    // }
+
+    const updateVal = (e: React.FormEvent<HTMLInputElement>) => {
+        let testVal: string = e.currentTarget.value;
+
+        // Ensure that the input adheres to the desired format
+        if (/^\d{0,6}(?:\.\d{0,5})?$/.test(testVal)) {
             setVal(testVal);
+
+            // Update styling based on input length
             let charFontSize = testVal.length < 7 ? "1.1" : testVal.length < 9 ? "0.9" : testVal.length < 12 ? "0.8" : testVal.length < 15 ? "0.6" : "0.4";
-            let charWidth = testVal.length <= 1 ? 1.1 : 0.9
+            let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
             e.currentTarget.style.width = ((testVal.length + 1) * charWidth) + 'ch';
             e.currentTarget.style.fontSize = charFontSize + "ch";
-
-            handleChange(String(BSvalue?.fromToken))
         }
     }
 
+    const isIndexxToken = (tokenTitle: string) => {
+        const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+", "ALCRYP", "AMZN", "APPL", "BCM", "CRYC10",
+            "EQSTK", "GOOGL", "INDXXF", "META", "MSFT", "NVDA", "PEP", "SNP500", "TLSA", "TOB"];
+        return indexxTokens.includes(tokenTitle);
+    };
+    
     const checkPurchase = () => {
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
+    
+        // If either the fromToken or toToken is not in the allowed list of indexxTokens, show an error notification
+        if (!isIndexxToken(String(getRequiredCoin?.title)) || !isIndexxToken(String(getRequiredToCoin?.title))) {
+            OpenNotification("error", "Feature of conversion from Indexx tokens to Non-Indexx tokens is coming soon.");
+            return;
+        }
+
         if (getRequiredCoin?.title === "FTT" && getRequiredToCoin?.title !== "INXP") {
-            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredCoin?.title === "INXP") {
-            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredToCoin?.title === "INXP" && getRequiredCoin?.title !== "FTT") {
-            alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            //alert("You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
+            OpenNotification("error", "You can only convert FTX Token(FTT) to Indexx Phoenix(INXP)");
             return;
         } else if (getRequiredToCoin?.title === "FTT" && getRequiredCoin?.title !== "INXP") {
-            alert("You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
+            //alert("You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
+            OpenNotification("error", "You can only convert Indexx Phoenix(INXP) to FTX Token(FTT)");
             return;
         }
         if (val) {
@@ -230,6 +314,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     };
 
+
     const swapCoin = () => {
         let tempFromToken = BSvalue?.fromToken;
         let tempToToken = BSvalue?.toToken;
@@ -278,52 +363,32 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             </div>
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
 
-                {/* <Select className='width-100 border-0'
-                    onChange={handleChange}
-                    value={BSvalue?.fromToken}
-                    key={BSvalue.fromToken}
-                >
-                    {
-                        filteredtokens.filter(token => token.address !== BSvalue?.toToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'>
-                                    <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" />
-                                    <div className=' padding-l-1x d-flex flex-align-center'>{token.title}
-                                        <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}
-                                        </span>
-                                    </div>
-                                </div>
-                            </Select.Option>
-                        })
-                    }
-                </Select> */}
-
                 <Select className='width-100 border-0'
                     onChange={handleChange} value={BSvalue?.fromToken} key={BSvalue.fromToken}
                 >
                     {Object.entries(categorizedFromTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
-                            {tokens.map((token: any) => (
-                                <Option
-                                    key={token.address}
-                                    value={token.address}
-                                    className="common__token d-flex bs_token_container"
-                                    data-address={token.address}
-                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
-                                >
-                                    <div className='d-flex bs_token_num'>
-                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
-                                        <div className='padding-l-1x d-flex flex-align-center'>
-                                            {token.title}
-                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
-                                                {token.subTitle}
-                                            </span>
+                            <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
+                                {tokens.map((token: any) => (
+                                    <Option
+                                        key={token.address}
+                                        value={token.address}
+                                        className="common__token d-flex bs_token_container"
+                                        data-address={token.address}
+                                        style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                    >
+                                        <div className='d-flex bs_token_num'>
+                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
+                                            <div className='padding-l-1x d-flex flex-align-center'>
+                                                {token.title}
+                                                <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                    {token.subTitle}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Option>
-                            ))}
-                        </Select.OptGroup>
+                                    </Option>
+                                ))}
+                            </Select.OptGroup>
                         )
                     ))}
                 </Select>
@@ -332,42 +397,32 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             </div>
 
             <div className="bs_token d-flex cursor-pointer py-3" style={{ alignItems: "center" }}>
-                {/* <Select className='width-100 border-0'
-                    onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}>
-                    {
-                        filteredtokens.filter(token => token.address !== BSvalue?.fromToken).map((token, index) => {
-                            return <Select.Option key={token.address} value={token.address} className='common__token d-flex bs_token_container' data-address={token.address} data-title={token.title} style={{ paddingLeft: "15px", paddingRight: 0 }}>
-                                <div className='d-flex bs_token_num'><img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="IN500" width="38" /><div className=' padding-l-1x d-flex flex-align-center'>{token.title} <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">{token.subTitle}</span> </div></div>
-                            </Select.Option>
-                        })
-                    }
-                </Select> */}
                 <Select className='width-100 border-0'
                     onChange={handleChangeToToken} value={BSvalue?.toToken} key={BSvalue.toToken}
                 >
                     {Object.entries(categorizedToTokens).map(([category, tokens]) => (
                         tokens.length > 0 && (
-                        <Select.OptGroup key={category} label={<span className="custom-optgroup-label">{category}</span>}>
-                            {tokens.map((token: any) => (
-                                <Option
-                                    key={token.address}
-                                    value={token.address}
-                                    className="common__token d-flex bs_token_container"
-                                    data-address={token.address}
-                                    style={{ paddingLeft: "15px", paddingRight: 0 }}
-                                >
-                                    <div className='d-flex bs_token_num'>
-                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
-                                        <div className='padding-l-1x d-flex flex-align-center'>
-                                            {token.title}
-                                            <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
-                                                {token.subTitle}
-                                            </span>
+                            <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
+                                {tokens.map((token: any) => (
+                                    <Option
+                                        key={token.address}
+                                        value={token.address}
+                                        className="common__token d-flex bs_token_container"
+                                        data-address={token.address}
+                                        style={{ paddingLeft: "15px", paddingRight: 0 }}
+                                    >
+                                        <div className='d-flex bs_token_num'>
+                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
+                                            <div className='padding-l-1x d-flex flex-align-center'>
+                                                {token.title}
+                                                <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
+                                                    {token.subTitle}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Option>
-                            ))}
-                        </Select.OptGroup>
+                                    </Option>
+                                ))}
+                            </Select.OptGroup>
                         )
                     ))}
                 </Select>
@@ -385,11 +440,8 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
             {/* {showUserBalance && */}
             <div>
-                <h6 className='text-center'> Current avaliable balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
+                <h6 className='text-center'> Current Available balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
             </div>
-            {/* } */}
-            {/* <div className='font_15x text-center d-block'>Convert all your (too) small balances directly</div>
-            <Link to="" className="font_15x bs_link text-center d-block padding-tb-2x" onClick={() => setScreenName("confirmConvert")}>Convert Small Balances</Link> */}
         </div >
     )
 }
