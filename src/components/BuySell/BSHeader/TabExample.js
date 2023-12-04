@@ -21,7 +21,7 @@ import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 // import etf_white from '../../../assets/BSheader/etf white.svg';
 import wallet from '../../../assets/BSheader/funding wallet icon_black.svg';
 import wallet_white from '../../../assets/BSheader/funding wallet icon_White.svg';
-import wallstreet from '../../../assets/BSheader/wall street icon 3 2.svg';
+import wallstreet from '../../../assets/BSheader/wall street_icon.svg';
 import wallstreet_white from '../../../assets/BSheader/wall 4 1.svg';
 // import certif from '../../../assets/BSheader/stock cert white.svg';
 // import certif_white from '../../../assets/BSheader/cert icon.svg';
