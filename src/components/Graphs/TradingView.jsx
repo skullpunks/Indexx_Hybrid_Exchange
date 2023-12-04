@@ -30,8 +30,11 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+  const STOCK_SYMBOLS = ['AMZN', 'APPL', 'BCM', 'GOOGL', 'META', 'MSFT', 'NVDA', 'PEP', 'SNP500', 'TSLA'];
+
   const getSymbol = (coin) => {
-    return coin + 'USD'; // Example: 'BTC' becomes 'BTCUSD'
+    // If the coin is a known stock symbol, return it as is. Otherwise, append 'USD'.
+    return STOCK_SYMBOLS.includes(coin.toUpperCase()) ? coin : `${coin}USD`;
   };
 
   return (
