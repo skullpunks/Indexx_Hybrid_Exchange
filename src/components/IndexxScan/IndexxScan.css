@@ -225,9 +225,9 @@
     box-shadow: none;
   }
 
-  .chart_buy {
+  /* .chart_buy {
     display: none;
-  }
+  } */
 
   .buy_sell_bg {
     background-size: contain;

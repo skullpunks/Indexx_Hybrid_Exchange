@@ -429,7 +429,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             </div>
             <div className="bs_footer_action " >
                 <button
-                    style={{ marginTop: 5 }}
+                    // style={{ marginTop: 5 }}
                     className={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val) ? "disable_icon" : ""}
                     disabled={(parseFloat(val) < 0.0007 || isNaN(parseFloat(val))) || userBalance < parseFloat(val)}
                     onClick={checkPurchase}
@@ -440,7 +440,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
             {/* {showUserBalance && */}
             <div>
-                <h6 className='text-center'> Current Available balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
+                <h6 className='text-center mb-0'> Current Available balance : {Math.floor(userBalance * 10000) / 10000}  {filteredtokens.find(token => token.address === BSvalue?.fromToken)?.title || ''} </h6>
             </div>
         </div >
     )

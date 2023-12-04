@@ -9,6 +9,7 @@ import { AreaChart, Area, XAxis, Tooltip, YAxis } from 'recharts';
 import moment from 'moment';
 //0import numeral from "numeral";
 import styles from './LineGraph.module.css';
+import './LineGraph.module.css';
 
 //const numberFormatter = (item : any) => numeral(item).format("0,00");
 const dateFormatter = (item: any) => moment(item).format('MMM DD');
@@ -27,7 +28,7 @@ const LineGraph = (props: any) => {
   const media = () => {
     const mobile = window.matchMedia('(max-width: 560px)');
     if (mobile.matches) {
-      width = 250;
+      width = 320;
       height = 250;
     } else {
       width = 870;
@@ -53,6 +54,13 @@ const LineGraph = (props: any) => {
     }
     return null;
   };
+
+  useEffect(() => {
+    window.addEventListener('resize', media);
+    return () => {
+        window.removeEventListener('resize', media);
+    }
+}, []);
   media();
   return (
     <div>
@@ -60,8 +68,9 @@ const LineGraph = (props: any) => {
         <div
           className="card chart_buy"
           style={{
-            minWidth: 900,
+            minWidth: `calc(${width}px + 30px)`,
             maxWidth: 900,
+            minHeight:450,
             padding: 15,
             borderColor: 'var(--border-color)',
             borderRight: 'none',
@@ -87,7 +96,7 @@ const LineGraph = (props: any) => {
 
           <div
             className="chart_inner_right"
-            style={{ marginTop: -35, marginRight: -25 }}
+            // style={{ marginTop: -35, marginRight: -25 }}
           >
             <Segmented
               className="chart_dynamic"

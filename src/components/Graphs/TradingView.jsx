@@ -10,7 +10,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia('(max-width: 560px)').matches) {
-        setSize({ width: 250, height: 250 });
+        setSize({ width: 350, height: 350 });
       } else {
         setSize({ width: 900, height: 655 });
       }
@@ -42,7 +42,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
         autosize={false}
         theme={theme}
         width={size.width}
-        height={size.height}
+        height={size.height + 35}
       />
     </div>
   );
