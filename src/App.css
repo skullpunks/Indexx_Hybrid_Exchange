@@ -51,6 +51,10 @@
   transition: transform 330ms ease-in-out;
 }
 
+.tradingview-widget-copyright{
+  display: none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -63,6 +67,11 @@
 
 .chart_inner_middle {
   font-size: 30;
+}
+
+.chart_inner_right {
+  margin-top: -35px;
+  margin-right: -25px;
 }
 
 .chart_inner_right .ant-segmented {
@@ -111,6 +120,14 @@
   opacity: 1;
 }
 
+@media (max-width: 420px) {
+
+  .chart_inner_right {
+    margin-top: 5px;
+    margin-right: 0px;
+  }
+
+}
 /* Default theme */
 .theme-normal {
   --primary-color: #11be6a;
