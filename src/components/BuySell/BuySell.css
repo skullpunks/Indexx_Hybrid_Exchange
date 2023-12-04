@@ -594,7 +594,7 @@ button.ant-btn-primary [disabled] {
 
 .bs_main > .card {
   min-height: auto;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 .ant-btn-dangerous.ant-btn-primary {
@@ -785,6 +785,12 @@ a.bs_link:hover {
 
   .bs_curreny_left .font_60x {
     font-size: 60px;
+  }
+
+  .with-graph{
+    flex-direction: column;
+    height: max-content;
+    min-height: 500px !important;
   }
 }
 

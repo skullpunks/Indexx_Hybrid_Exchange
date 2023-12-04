@@ -10,7 +10,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia('(max-width: 560px)').matches) {
-        setSize({ width: 250, height: 250 });
+        setSize({ width: 350, height: 350 });
       } else {
         setSize({ width: 900, height: 655 });
       }
@@ -30,8 +30,11 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+  const STOCK_SYMBOLS = ['AMZN', 'AAPL', 'AVGO', 'GOOGL', 'META', 'MSFT', 'NVDA', 'PEP', 'SNP500', 'TSLA'];
+
   const getSymbol = (coin) => {
-    return coin + 'USD'; // Example: 'BTC' becomes 'BTCUSD'
+    // If the coin is a known stock symbol, return it as is. Otherwise, append 'USD'.
+    return STOCK_SYMBOLS.includes(coin.toUpperCase()) ? coin : `${coin}USD`;
   };
 
   return (
@@ -42,7 +45,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
         autosize={false}
         theme={theme}
         width={size.width}
-        height={size.height}
+        height={size.height + 35}
       />
     </div>
   );

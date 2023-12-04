@@ -340,7 +340,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       </span>
 
 
-      <div className="scan-container flex-align-stretch bs_main" style={{ marginTop: -140 }}>
+      <div className="scan-container flex-align-stretch bs_main with-graph" style={{ marginTop: -140 }}>
 
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}

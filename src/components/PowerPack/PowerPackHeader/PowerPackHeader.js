@@ -15,6 +15,8 @@ import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
 // import etf_white from '../../../assets/BSheader/etf white.svg';
 import wallet from '../../../assets/BSheader/funding wallet icon_black.svg';
 import wallet_white from '../../../assets/BSheader/funding wallet icon_White.svg';
+import elite from '../../../assets/BSheader/elite icon blk.svg';
+import elite_white from '../../../assets/BSheader/elite icon wht.svg';
 // import wallstreet from '../../../assets/BSheader/wall street icon 3 2.svg';
 // import wallstreet_white from '../../../assets/BSheader/wall 4 1.svg';
 // import stock from '../../../assets/BSheader/Stock token icon_black.svg';
@@ -217,6 +219,32 @@ const PowerPackHeader = () => {
                     component='p'
                     style={
                       location.pathname === '/indexx-exchange/power-pack'
+                        ? {
+                          height: '0.07px',
+                          width: '59px',
+                          backgroundColor: 'var(--body_color)',
+                        }
+                        : null
+                    }
+                  ></Typography>
+                </div>
+              </div>
+            </Link>
+          </div>
+          <div className="col">
+            <Link to="/indexx-exchange/elite-club">
+              <div className="card">
+                {theme === "dark" ?
+                  <img src={elite_white} className="card-img-top" alt="..." style={{ width: "34px" }} />
+                  :
+                  <img src={elite} className="card-img-top" alt="..." style={{ width: "34px" }} />
+                }
+                <div className="card-body">
+                  <h5 className="card-title mt-1">Elite Club</h5>
+                  <Typography
+                    component='p'
+                    style={
+                      location.pathname === '/indexx-exchange/elite-club'
                         ? {
                           height: '0.07px',
                           width: '59px',
