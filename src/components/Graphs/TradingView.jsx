@@ -46,6 +46,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
         theme={theme}
         width={size.width}
         height={size.height + 35}
+        allow_symbol_change={false}
       />
     </div>
   );
