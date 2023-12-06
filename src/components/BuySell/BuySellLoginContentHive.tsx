@@ -68,9 +68,8 @@ const BuySellLoginContentHive: React.FC = () => {
           : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
       }
     } else {
-
       setLoadings(false);
-      OpenNotification('error', res.data);
+      OpenNotification('error', res.data.message);
     }
   };
 
