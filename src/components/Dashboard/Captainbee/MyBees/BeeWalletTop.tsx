@@ -44,6 +44,8 @@ const BeeWalletTop = () => {
                 let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
                 let price = Number(res.data.results.data);
                 totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+                if (usersWallet[i]?.coinStakedBalance)
+                    totalBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
             } else {
                 totalBalInUSD += Number(usersWallet[i]?.coinBalance);
             }
@@ -54,25 +56,25 @@ const BeeWalletTop = () => {
     const [isVisible, setIsVisible] = useState(true);
 
     const toggleVisibility = () => {
-      setIsVisible(!isVisible);
+        setIsVisible(!isVisible);
     };
-  
+
     return (
         <>
             <div className='border-b-1x orange width-100 pt-3 font_15x'>
-                <h1 className='font_15x' style={{color:"#393939"}}>Funding Wallet</h1>
+                <h1 className='font_15x' style={{ color: "#393939" }}>Funding Wallet</h1>
             </div>
             <div className='padding-t-1x width-100 position-relative' >
                 <h2 className='font_15x'>Estimated Balance</h2>
                 <div className='d-flex flex-align-center color_general'>
                     <h2 className='margin-b-0 font_15x'>$</h2>
-                    {isVisible ? 
-                    <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
-                    :
-                    <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                    {isVisible ?
+                        <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
+                        :
+                        <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
                     }
                     <div onClick={toggleVisibility}>
-                        {isVisible ? <VisibilityIcon/> : <VisibilityOffIcon />} 
+                        {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </div>
                 </div>
                 {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>

@@ -73,10 +73,17 @@ const BSWalletTable = () => {
             title: 'Total Value in USD',
             dataIndex: 'coinBalanceInUSD',
             sorter: {
-                compare: (a, b) => (a.coinBalance * a.coinPrice) - (b.coinBalance * b.coinPrice),
+                compare: (a, b) => {
+                    const balanceA = a.coinStakedBalance !== undefined ? a.coinStakedBalance : a.coinBalance;
+                    const balanceB = b.coinStakedBalance !== undefined ? b.coinStakedBalance : b.coinBalance;
+                    return (balanceA * a.coinPrice) - (balanceB * b.coinPrice);
+                },
                 multiple: 4,
             },
-            render: (_, record) => record.coinBalance * record.coinPrice
+            render: (_, record) => {
+                const balance = record.coinStakedBalance !== undefined ? (record.coinStakedBalance + record.coinBalance) : record.coinBalance;
+                return balance * record.coinPrice;
+            }
         },
         {
             title: 'Staked Balance',

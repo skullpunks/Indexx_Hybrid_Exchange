@@ -64,6 +64,8 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({ email }) => 
                     let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
                     let price = Number(res.data.results.data);
                     totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+                    if (usersWallet[i]?.coinStakedBalance)
+                        totalBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
                 } else {
                     totalBalInUSD += Number(usersWallet[i]?.coinBalance);
                 }
