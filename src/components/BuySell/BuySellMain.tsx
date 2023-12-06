@@ -110,7 +110,8 @@ import IndexxINDXXFETFGraph from '../Graphs/IndexxINDXXFETFGraph';
 import IndexxCRYC10ETFGraph from '../Graphs/IndexxCRYC10ETFGraph';
 import TabExample from './BSHeader/TabExample';
 import { baseWSURL } from '../../services/api';
-
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material'
 // import { BSProvider } from '../../utils/SwapContext';
 
 interface Props {
@@ -214,6 +215,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     MarketCoin = markets[BSvalue.fromGraph];
   }
 
+  
+  const themes = useTheme();
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   useEffect(() => {
     const userId = localStorage.getItem('user');
@@ -265,7 +269,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange} />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
-          <p style={{ marginTop: 220, fontSize: 40 }}>
+          <p style={{ marginTop: `${ isMobile ? "180px" : "220px"}`, fontSize: `${ isMobile ? "30px" : "40px"}` }}>
             <img src={logo} alt="logo" style={{ marginRight: "20px" }} />
             Indexx Exchange
             {selectedTab === 1 && (
@@ -301,7 +305,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
           </p>
           :
-          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? "300px" : "280px"}`, fontSize: 40 }}>
+          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? `${ isMobile ? "250px" : "300px"}` :  `${ isMobile ? "180px" : "280px"}`}`, fontSize: `${ isMobile ? "30px" : "40px"}` }}>
             <img src={hivelogo} alt="logo" style={{ marginRight: "20px", width: "64px" }} />
             Hive Exchange
             {selectedTab === 1 && (

@@ -101,6 +101,8 @@ import BuySellVerifyEmail from "./components/BuySell/BuySellVerifyEmail";
 import EliteClub from "./components/EliteClub/EliteClub";
 import EliteLearnMore from "./components/EliteClub/EliteLearnMore";
 import SecondaryHeader from "./SecondaryHeader";
+import Payment from "./components/Send/Payment";
+import PaymentWire from "./components/Send/PaymentWire";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -221,6 +223,9 @@ function App() {
 
           <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
           <Route path="/indexx-exchange/elite-learn/:id" element={<EliteLearnMore />} />
+
+          <Route path="/indexx-exchange/payment-zelle" element={<Payment />} />
+          <Route path="/indexx-exchange/payment-wire" element={<PaymentWire />} />
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
           <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />

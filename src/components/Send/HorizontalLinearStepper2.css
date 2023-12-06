@@ -45,3 +45,8 @@
   .MuiSvgIcon-root.MuiStepIcon-root.Mui-active{
     color: var(--primary-color);
   }
+
+
+  .Mui-error .MuiOutlinedInput-notchedOutline {
+    border-color: red !important;
+  }

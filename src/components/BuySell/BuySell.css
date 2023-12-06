@@ -696,6 +696,21 @@ a.bs_link:hover {
 .ant-form-item-required {
   color: var(--body_color) !important;
 }
+
+.notif{
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+  color: #e0e0e0;
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  position: fixed;
+  top: 190px;
+  z-index: 999;
+  padding-block: 7px;
+}
+
 @media (max-width: 767px) {
   .responsive_container .card,
   .responsive_container .bs_container,
@@ -792,6 +807,15 @@ a.bs_link:hover {
     height: max-content;
     min-height: 500px !important;
   }
+  
+  .notif{
+  font-size: 12px;
+  width: 100vw;
+  top: 156px;
+  padding-inline: 10px;
+  text-align: center;
+
+  }
 }
 
 .bs_main .hive-btn {
@@ -820,19 +844,6 @@ a.bs_link:hover {
   cursor: pointer;
 }
 
-.notif{
-  display: flex;
-  justify-content: center;
-  background-color: #000;
-  color: #e0e0e0;
-  font-size: 17px;
-  font-weight: bold;
-  width: 100%;
-  position: fixed;
-  top: 190px;
-  z-index: 999;
-  padding-block: 7px;
-}
 
 .walls{
   transition: transform 330ms ease-in-out;

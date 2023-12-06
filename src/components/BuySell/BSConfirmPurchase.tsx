@@ -25,6 +25,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Stripe/CheckoutForm';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import NeedPermission from './Notification/NeedPermission';
+import PaymentOptions from './Notification/PaymentOptions';
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -92,6 +93,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const [permissionData, setPermissionData] = useState() as any;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [message, setMessage] = useState<String>();
 
   const showTransferModal = () => {
@@ -321,7 +323,8 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               type="primary"
               className="atn-btn atn-btn-round"
               block
-              onClick={() => createNewBuyOrder()}
+              onClick={() => setIsModalOpen2(true)}
+              // onClick={() => createNewBuyOrder()}
               loading={loadings}
             >
               {' '}
@@ -375,6 +378,13 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           onClose={() => setIsModalOpen(false)}
           message={message}
           id={id}
+        />
+      </div>
+      <div>
+        <PaymentOptions
+          isVisible={isModalOpen2}
+          onClose={() => setIsModalOpen2(false)}
+          message={message}
         />
       </div>
     </>

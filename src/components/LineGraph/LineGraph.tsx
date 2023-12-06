@@ -29,7 +29,7 @@ const LineGraph = (props: any) => {
     const mobile = window.matchMedia('(max-width: 560px)');
     if (mobile.matches) {
       width = 320;
-      height = 250;
+      height = 450;
     } else {
       width = 870;
       height = 500;
