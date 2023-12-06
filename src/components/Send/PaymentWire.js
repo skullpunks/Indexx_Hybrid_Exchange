@@ -40,14 +40,7 @@ const Final = () => {
       }}
     >
       <Box className="d-flex flex-direction-column align-items-center" width={"55%"}>
-        <br />
-        <br />
-
-        <img src={fortune} alt="check" 
-        // style={{ width: "128px" }} 
-
-        />
-        <br />
+        <img src={fortune} alt="check" style={{ width: "60%" }} />
         <div className="font_60x">
         Thank you
         </div>
@@ -57,7 +50,6 @@ const Final = () => {
         <div className="font_10x mt-4">
         Our team is diligently verifying your order, and your tokens will be in your wallet within 1-2 business days. We appreciate your trust and patience!
         </div>
-        <br />
         <br />
         <div className='d-flex mb-2' style={{ gap: 10, minWidth: "100%" }}>
             <Button
@@ -640,7 +632,7 @@ const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
             gap: 1,
           }}>
             <Typography variant="text" fontSize={"13px"} width={"100%"} textAlign={"left"} mb={2}>
-              Upload supporting file
+              Upload supporting file (jpeg, png, pdf, Maximum 10MB file size)
               {photoIdFileerror &&
                 <span style={{ color: "#d32f2f", fontSize: "12px", paddingLeft: "20px" }}>
                   {photoIdFileerror}
@@ -748,7 +740,7 @@ const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
 };
 
 const steps = [
-  { label: 'Scan QR Code', component: <FileComponent1 /> },
+  { label: 'Fill in the information', component: <FileComponent1 /> },
   { label: 'Upload proof of Payment', component: <FileComponent2 /> },
   { label: ' Payment Confirmation', component: <Final /> },
 ];

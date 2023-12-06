@@ -13,6 +13,7 @@
     border-radius: 2px !important;
     box-shadow: none !important;
     text-transform: none !important;
+    height: 40px;
   }
   
   .continue-btn:hover,
