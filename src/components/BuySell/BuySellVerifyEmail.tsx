@@ -33,16 +33,21 @@ const BuySellVerifyEmail = () => {
 
 
     const resendEmail = async () => {
-        setLoadings(true);
-        let res = await resendEmailCode(email);
-        if (res.status === 200) {
-            OpenNotification('success', res.data);
-            setIsTimerDone(false);
-            setTimerKey(prevKey => prevKey + 3); // Increment key to re-render Timer
-            setLoadings(false);
-        } else {
-            setLoadings(false);
-            OpenNotification('error', res.data);
+        try {
+            setLoadings(true);
+            let res = await resendEmailCode(email);
+            if (res.status === 200) {
+                OpenNotification('success', res.data);
+                setIsTimerDone(false);
+                setTimerKey(prevKey => prevKey + 3); // Increment key to re-render Timer
+                setLoadings(false);
+            } else {
+                console.log("res,data", res)
+                setLoadings(false);
+                OpenNotification('error', res.data);
+            }
+        } catch (err: any) {
+            console.log(err);
         }
     };
 
@@ -71,24 +76,21 @@ const BuySellVerifyEmail = () => {
     }
 
     const pastePassowrd = (e: ClipboardEvent<HTMLInputElement>) => {
-        let clipboardData, pastedData;
-        // Stop data actually being pasted into div
-        e.stopPropagation();
         e.preventDefault();
+        const pastedData = e.clipboardData.getData('Text').slice(0, 6); // Get only the first 6 characters
 
-        // Get pasted data via clipboard API
-        clipboardData = e.clipboardData;
-        pastedData = clipboardData.getData('Text');
         if (isNumeric(pastedData)) {
-            let arr: any = document.querySelectorAll('.otp_container input');
-            let pastedArr = pastedData.split('');
-            if (arr) {
-                for (let i = 0; i < arr.length; i++) {
-                    arr[i].value = pastedArr[i];
+            const inputFields: any = document.querySelectorAll('.otp_container input');
+            pastedData.split('').forEach((char: any, index: any) => {
+                if (inputFields[index]) {
+                    inputFields[index].value = char;
+                    otpCode[index] = char;
                 }
+            });
 
-                if (document.getElementById('verify_btn'))
-                    document.getElementById('verify_btn')?.focus();
+            // Automatically focus the verify button if all digits are pasted
+            if (pastedData.length === 6 && document.getElementById('verify_btn')) {
+                document.getElementById('verify_btn')?.focus();
             }
         }
     };
@@ -124,6 +126,14 @@ const BuySellVerifyEmail = () => {
         otpCode[5] = val[0];
     };
 
+    const clearOtpInputs = () => {
+        console.log("I am here");
+        document.querySelectorAll<HTMLInputElement>('.otp_container input').forEach(input => {
+          input.value = '';
+        });
+        otpCode.fill(''); // Clear the otpCode array
+      };
+
     const verifyCode = async () => {
         setLoadings(true);
         console.log("I am here", email)
@@ -134,8 +144,8 @@ const BuySellVerifyEmail = () => {
             navigate('/indexx-exchange/account');
             setLoadings(false);
         } else {
-
             OpenNotification('error', res.data);
+            clearOtpInputs();
             setLoadings(false);
         }
     };
