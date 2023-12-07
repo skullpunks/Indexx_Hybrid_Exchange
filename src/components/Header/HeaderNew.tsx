@@ -1090,7 +1090,7 @@ const HeaderNew = () => {
                       {localStorage.getItem("userlogged") !== 'normal' && ((isCaptain === true && haspowerpack === true) || isCaptain === false) ?
                         <div className="back profile-back"> </div>
                         :
-                        <div className="back profile-back" style={{ top: "548px" }}> </div>
+                        <div className="back profile-back" style={{ top: "620px" }}> </div>
                       }
                     </div>
                   </NavDropdown>

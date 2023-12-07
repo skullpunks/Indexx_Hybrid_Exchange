@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import crown from "../../assets/elite_club/Crown logo.svg";
+import crown from "../../assets/elite_club/elite crown 2.svg";
 // import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
@@ -40,6 +40,7 @@ const EliteClub = () => {
           component={"img"}
           src={crown}
           alt='logo'
+          width={"100px"}
         />
 
         <Box sx={{ textAlign: "center", marginTop:"-35px" }}>

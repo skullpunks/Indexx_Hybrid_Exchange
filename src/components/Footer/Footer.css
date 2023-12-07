@@ -195,6 +195,7 @@
     .mobile-row .btn{
         box-shadow: none !important;
         border: none !important;
+        color: var(--body_color);
     }
     
     .footer-drop{
