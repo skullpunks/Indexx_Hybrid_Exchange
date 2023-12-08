@@ -27,12 +27,17 @@ interface DataType {
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
+    const [hideZeroStakedBalance, setHideZeroStakedBalance] = useState(false);
     const [valueInput, setValueInput] = useState('');
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
     };
 
     const handleCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroBalance(e.target.checked);
+    };
+
+    const handleStakedCheckboxChange = (e: CheckboxChangeEvent) => {
+        setHideZeroStakedBalance(e.target.checked);
     };
 
     const columns: ColumnsType<DataType> = [
@@ -60,6 +65,7 @@ const BSWalletTable = () => {
                 multiple: 2,
             },
             title: 'Balance',
+            render: (_, record) => (record.coinBalance)?.toLocaleString()
         },
         {
             title: 'Coin Rate in USD',
@@ -68,6 +74,7 @@ const BSWalletTable = () => {
                 compare: (a, b) => a.coinPrice - b.coinPrice,
                 multiple: 3,
             },
+            render: (_, record) => (record.coinPrice)?.toLocaleString()
         },
         {
             title: 'Total Value in USD',
@@ -76,19 +83,19 @@ const BSWalletTable = () => {
                 compare: (a, b) => (a.coinBalance * a.coinPrice) - (b.coinBalance * b.coinPrice),
                 multiple: 4,
             },
-            render: (_, record) => record.coinBalance * record.coinPrice
+            render: (_, record) => (record.coinBalance * record.coinPrice)?.toLocaleString()
         },
         {
             title: 'Staked Balance',
             dataIndex: 'coinStakedBalance',
             render: (_, record) => {
-                return record.coinStakedBalance || 0;
+                return (record.coinStakedBalance)?.toLocaleString() || 0;
             },
             sorter: {
                 compare: (a, b) => (a.coinStakedBalance || 0) - (b.coinStakedBalance || 0),
                 multiple: 5,
             },
-            responsive: ["sm"],
+            // responsive: ["sm"],
         }
 
     ];
@@ -97,6 +104,8 @@ const BSWalletTable = () => {
     const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
     const [sortedData, setSortedData] = useState<DataType[]>([]);
 
+    console.log(sortedData);
+    
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
 
@@ -113,8 +122,15 @@ const BSWalletTable = () => {
     }, []);
 
     useEffect(() => {
-        setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
-    }, [filteredWalletData, hideZeroBalance])
+        setSortedData(filteredWalletData
+            ? filteredWalletData.filter((item: DataType) => 
+                (!hideZeroBalance || item.coinBalance !== 0) &&
+                (!hideZeroStakedBalance || item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0 )
+            )
+            : []
+        );
+    }, [filteredWalletData, hideZeroBalance, hideZeroStakedBalance]);
+    
 
     useEffect(() => {
         const filteredData = walletData.filter(item =>
@@ -122,8 +138,10 @@ const BSWalletTable = () => {
             item.coinName.toLowerCase().includes(valueInput.toLowerCase())
         );
         const finalData = hideZeroBalance ? filteredData.filter(item => item.coinBalance !== 0) : filteredData;
-        setSortedData(finalData);
-    }, [walletData, valueInput, hideZeroBalance]);
+        const finalFilteredData = hideZeroStakedBalance ? finalData.filter(item => item.coinStakedBalance !== undefined  && item.coinStakedBalance !== 0) : finalData;
+
+        setSortedData(finalFilteredData);
+    }, [walletData, valueInput, hideZeroBalance, hideZeroStakedBalance]);
 
     useEffect(() => {
         if (valueInput === "") {
@@ -180,8 +198,14 @@ const BSWalletTable = () => {
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
                         <MyPagination
                             total={sortedData && sortedData.length}
                             current={current}
