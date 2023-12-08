@@ -3,10 +3,6 @@ import paypal from '../../../assets/arts/pay/paypal.svg';
 import wire from '../../../assets/arts/pay/wire.svg';
 import zelle from '../../../assets/arts/pay/zelle.svg';
 
-import paypal_sel from '../../../assets/arts/pay/paypal_sel.svg';
-import wire_sel from '../../../assets/arts/pay/wire-sel.svg';
-import zelle_sel from '../../../assets/arts/pay/zelle-sel.svg';
-
 import { useNavigate } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -75,11 +71,10 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                   <div className="label-content">
                     <img
                       alt="Female"
-                      className='pay-image'
-                      src={selectedValue === 'paypal' ? paypal_sel : paypal}
-                    //   className={`pay-image ${
-                    //     selectedValue === 'paypal' ? 'selected' : ''
-                    //   }`}
+                      src={paypal}
+                      className={`pay-image ${
+                        selectedValue === 'paypal' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       {' '}
@@ -96,12 +91,11 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                 label={
                   <div className="label-content">
                     <img
-                      src={selectedValue === 'zelle' ? zelle_sel : zelle}
+                      src={zelle}
                       alt="Male"
-                      className='pay-image'
-                    //   className={`pay-image ${
-                    //     selectedValue === 'zelle' ? 'selected' : ''
-                    //   }`}
+                      className={`pay-image ${
+                        selectedValue === 'zelle' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       Swift and secure money transfers, effortlessly sending and
@@ -118,12 +112,11 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                 label={
                   <div className="label-content">
                     <img
-                      src={selectedValue === 'wire' ? wire_sel : wire}
+                      src={wire}
                       alt="Other"
-                      className='pay-image'
-                    //   className={`pay-image ${
-                    //     selectedValue === 'wire' ? 'selected' : ''
-                    //   }`}
+                      className={`pay-image ${
+                        selectedValue === 'wire' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       Swift and secure direct electronic transfers, renowned for

@@ -84,29 +84,29 @@ const PowerPackHeader = () => {
   }, [])
   return (
 
-    <div style={{
+    <div className='power-header' style={{
       position: "fixed",
       top: `${isMobile ? '56px' : '90px'}`,
       width: "100%", zIndex: 999, background: "var(--main-body)",
       height: "95px",
-      paddingTop: "15px"
-
+      paddingTop: "15px",
+      overflowX:"auto"
     }}>
 
       <div className="container power-page">
 
-        <div className="row row-cols-1 row-cols-md-4 g-4 up-logos" style={{ justifyContent: "center" }}>
+        <div className={isMobile ? 'scrollable-head' : "row row-cols-1 row-cols-md-4 g-4 up-logos justify-content-center"}>
 
           <div className="col">
             <Link to="/indexx-exchange/buy-sell?type=buy">
               <div className="card">
                 {theme === "dark" ?
-                  <img src={localStorage.getItem("userlogged") === 'normal' ? all_white : hive_all_white} className="card-img-top" alt="..." />
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? all_white : hive_all_white} className="card-img-top" alt="..." height={"34px"} />
                   :
-                  <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..." />
+                  <img src={localStorage.getItem("userlogged") === 'normal' ? all : hive_all} className="card-img-top" alt="..." height={"34px"}/>
                 }
                 <div className="card-body">
-                  <h5 className="card-title mt-1 mt-sm-2">
+                  <h5 className="card-title mt-1">
                     {localStorage.getItem("userlogged") === 'normal' ? "Exchange" : "Hive Exchange"}
                   </h5>
                   <Typography
