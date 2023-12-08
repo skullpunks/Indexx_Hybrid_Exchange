@@ -25,6 +25,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Stripe/CheckoutForm';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import NeedPermission from './Notification/NeedPermission';
+import PaymentOptions from './Notification/PaymentOptions';
 // import { CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -92,6 +93,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const [permissionData, setPermissionData] = useState() as any;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [message, setMessage] = useState<String>();
 
   const showTransferModal = () => {
@@ -152,6 +154,40 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       // OpenNotification('error', res.data);
       setIsModalOpen(true);
       setMessage(res.data);
+    }
+  };
+
+  const createBuyOrderForZelleAndWire = async (paymentMethod: string) => {
+    setLoadings(true);
+    let basecoin: string = filteredFromArray[0].title;
+    let quotecoin: string = 'USD';
+    let amount: number = Number(BSvalue?.amount);
+    let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+    let res;
+    console.log("paymentMethod", paymentMethod)
+    if (id) {
+
+
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setIsModalOpen(true);
+        setMessage("As Captain bee, Please apply for buy approval from honey bee");
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, honeyBeeEmail, true, paymentMethod);
+    } else {
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, "", false, paymentMethod);
+    }
+    if (res.status === 200) {
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      // OpenNotification('error', res.data);
+      setIsModalOpen(true);
+      setMessage(res.data);
+      return null;
     }
   };
 
@@ -321,7 +357,8 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               type="primary"
               className="atn-btn atn-btn-round"
               block
-              onClick={() => createNewBuyOrder()}
+              onClick={() => setIsModalOpen2(true)}
+              // onClick={() => createNewBuyOrder()}
               loading={loadings}
             >
               {' '}
@@ -375,6 +412,15 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           onClose={() => setIsModalOpen(false)}
           message={message}
           id={id}
+        />
+      </div>
+      <div>
+        <PaymentOptions
+          isVisible={isModalOpen2}
+          onClose={() => setIsModalOpen2(false)}
+          onConfirm={createNewBuyOrder}
+          onZelleAndWireConfirm={(paymentMethod: string) => createBuyOrderForZelleAndWire(paymentMethod)} // For Zelle and Wire
+          message={message}
         />
       </div>
     </>

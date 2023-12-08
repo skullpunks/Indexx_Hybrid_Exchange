@@ -13,6 +13,7 @@
     border-radius: 2px !important;
     box-shadow: none !important;
     text-transform: none !important;
+    height: 40px;
   }
   
   .continue-btn:hover,
@@ -44,4 +45,9 @@
   .MuiSvgIcon-root.MuiStepIcon-root.Mui-completed,
   .MuiSvgIcon-root.MuiStepIcon-root.Mui-active{
     color: var(--primary-color);
+  }
+
+
+  .Mui-error .MuiOutlinedInput-notchedOutline {
+    border-color: red !important;
   }

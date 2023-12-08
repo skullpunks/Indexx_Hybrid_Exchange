@@ -35,7 +35,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-// baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -848,7 +848,8 @@ export const createBuyOrder = async (
   outAmount: number,
   price?: number,
   email?: string,
-  isHoneyBeeOrder: boolean = false
+  isHoneyBeeOrder: boolean = false,
+  paymentType: string = "paypal"
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -860,10 +861,32 @@ export const createBuyOrder = async (
       outAmount: outAmount,
       email: email ? email : localStorage.getItem('user'),
       isHoneyBeeOrder: isHoneyBeeOrder,
+      paymentType
     });
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+
+export const createFiatDepositForOrder = async (
+  email:string, 
+  orderId: string,
+  fromDetails: any, 
+  toDetails:any, 
+  paymentReceiptUrl: string
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/transaction/createFiatDepositForOrder', {
+      email, orderId, fromDetails, toDetails, paymentReceiptUrl,      
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createFiatDepositForOrder)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

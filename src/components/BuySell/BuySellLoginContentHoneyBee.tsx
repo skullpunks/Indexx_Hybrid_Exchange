@@ -57,9 +57,9 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
-
+      console.log("res", res?.data)
       setLoadings(false);
-      OpenNotification('error', res.data);
+      OpenNotification('error', res.data.message);
     }
   };
 

@@ -1,0 +1,130 @@
+.main-pay-box{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+}
+
+.pay-box{
+    position: relative;
+    padding-inline: 50px;
+    top: 28px;
+    width: 788px;
+    background-color: var(--body_background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+
+.pay-text-box {
+    color: var(--dark_text);
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    font-size: 25px;
+    /* font-family: "Inter"; */
+    width: 80%;
+    text-align: left;
+}
+
+
+.pay-button-box {
+    color: var(--dark_text);
+    margin-left: 1.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* font-family: "Inter"; */
+    font-size: 13px;
+}
+
+.pay-button-btn {
+    width: 25%;
+    background-color: #FFB300;
+    /* padding-left: 4.2rem; */
+    /* padding-right: 4.2rem; */
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    /* border-radius: 0.125rem;  */
+    border: 0;
+    border-radius: 2px;
+    color: var(--dark_text);
+}
+
+.button-btn:hover {
+    background-color: #FFD000;
+}
+
+.close-button-pay {
+    position: relative;
+    top: -13%;
+    /* right: 35%; */
+    left: 104%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--dark_text);
+    z-index: 1000;
+}
+
+
+.pay-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .pay-label {
+    margin-bottom: 10px;
+  }
+  
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .radio-button {
+    margin-left: 10px;
+}
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked{
+    color: #ffb300 !important; /* Change this color to your preferred color */
+    
+  }
+  .label-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .pay-image {
+    width: 120px;
+    /* height: 30px; */
+    margin-right: 30px;
+  }
+  
+  .pay-description {
+    margin: 0;
+    font-size: 13px;
+  }
+  
+  .selected {
+    border: 2px solid var(--secondary-color); /* Adjust the color as needed */
+    border-radius: 4px;
+    padding: 5px;
+    width: 120px;
+  }
+  

@@ -24,15 +24,32 @@ interface DataType {
     coinBalanceInBTC: any;
     coinPrice: any;
     coinStakedBalance: any;
+    type: 'Crypto' | 'Stock' | 'ETF';
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
+    const [hideZeroStakedBalance, setHideZeroStakedBalance] = useState(false);
     const [valueInput, setValueInput] = useState('');
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
     };
 
     const handleCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroBalance(e.target.checked);
+    };
+
+    const etfs = [
+        "ALCRYP", "CRYC10", "EQSTK", "INDXXF", "TOB"
+    ];
+
+    const stocks = [
+        "AMZN", "APPL", "BCM", "GOOGL", "META", "MSFT", "NVDA", "PEP"
+    ];
+
+    const cryptocurrencies = [
+        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP"
+    ];
+    const handleStakedCheckboxChange = (e: CheckboxChangeEvent) => {
+        setHideZeroStakedBalance(e.target.checked);
     };
 
     const columns: ColumnsType<DataType> = [
@@ -60,6 +77,7 @@ const BSWalletTable = () => {
                 multiple: 2,
             },
             title: 'Balance',
+            render: (_, record) => (record.coinBalance)?.toLocaleString()
         },
         {
             title: 'Coin Rate in USD',
@@ -68,6 +86,7 @@ const BSWalletTable = () => {
                 compare: (a, b) => a.coinPrice - b.coinPrice,
                 multiple: 3,
             },
+            render: (_, record) => (record.coinPrice)?.toLocaleString()
         },
         {
             title: 'Total Value in USD',
@@ -89,13 +108,13 @@ const BSWalletTable = () => {
             title: 'Staked Balance',
             dataIndex: 'coinStakedBalance',
             render: (_, record) => {
-                return record.coinStakedBalance || 0;
+                return (record.coinStakedBalance)?.toLocaleString() || 0;
             },
             sorter: {
                 compare: (a, b) => (a.coinStakedBalance || 0) - (b.coinStakedBalance || 0),
                 multiple: 5,
             },
-            responsive: ["sm"],
+            // responsive: ["sm"],
         }
 
     ];
@@ -103,7 +122,12 @@ const BSWalletTable = () => {
     const [walletData, setWalletData] = useState<DataType[]>([]);
     const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
     const [sortedData, setSortedData] = useState<DataType[]>([]);
+    const [sortedCryptoData, setSortedCryptoData] = useState<DataType[]>([]);
+    const [sortedStockData, setSortedStockData] = useState<DataType[]>([]);
+    const [sortedEtfData, setSortedEtfData] = useState<DataType[]>([]);
 
+    console.log(sortedData);
+    
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
 
@@ -113,24 +137,63 @@ const BSWalletTable = () => {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
             let userWallets = await getUserWallets(decoded.email);
-            const formattedData = userWallets.data.map((item: any) => ({ ...item, key: item._id }));
+            const formattedData = userWallets.data.map((item: any) => ({
+                ...item,
+                key: item._id,
+                type: cryptocurrencies.includes(item.coinSymbol) ? 'Crypto' :
+                    stocks.includes(item.coinSymbol) ? 'Stock' :
+                        etfs.includes(item.coinSymbol) ? 'ETF' : 'Unknown'
+            }));
             setWalletData(formattedData);
+            setWalletData(formattedData);        
         };
         getAllUserWallet();
     }, []);
 
     useEffect(() => {
-        setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
-    }, [filteredWalletData, hideZeroBalance])
+        setSortedData(filteredWalletData
+            ? filteredWalletData.filter((item: DataType) => 
+                (!hideZeroBalance || item.coinBalance !== 0) &&
+                (!hideZeroStakedBalance || item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0 )
+            )
+            : []
+        );
+    }, [filteredWalletData, hideZeroBalance, hideZeroStakedBalance]);
+    
 
     useEffect(() => {
-        const filteredData = walletData.filter(item =>
-            item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
-            item.coinName.toLowerCase().includes(valueInput.toLowerCase())
-        );
+
+        let filteredData = walletData;
+        if (valueInput) {
+            filteredData = walletData.filter(item =>
+                item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
+                item.coinName.toLowerCase().includes(valueInput.toLowerCase())
+            );
+        }
+        if (hideZeroBalance) {
+            filteredData = filteredData.filter(item => item.coinBalance !== 0);
+        }
+        
         const finalData = hideZeroBalance ? filteredData.filter(item => item.coinBalance !== 0) : filteredData;
         setSortedData(finalData);
-    }, [walletData, valueInput, hideZeroBalance]);
+
+        const cryptoData = filteredData.filter(item => cryptocurrencies.includes(item.coinSymbol));
+        const stockData = filteredData.filter(item => stocks.includes(item.coinSymbol));
+        const etfData = filteredData.filter(item => etfs.includes(item.coinSymbol));
+
+        setSortedCryptoData(cryptoData);
+        setSortedStockData(stockData);
+        setSortedEtfData(etfData);
+        
+        const finalFilteredData = hideZeroStakedBalance ? finalData.filter(item => item.coinStakedBalance !== undefined  && item.coinStakedBalance !== 0) : finalData;
+
+        setSortedData(finalFilteredData);
+    }, [walletData, valueInput, hideZeroBalance, hideZeroStakedBalance]);
+
+    useEffect(() => {
+
+    }, [walletData]);
+
 
     useEffect(() => {
         if (valueInput === "") {
@@ -151,6 +214,24 @@ const BSWalletTable = () => {
         let val = e.currentTarget.value;
         setValueInput(val);
     }
+
+
+    const renderTableSection = (data: any, heading: any) => {
+        if (data.length === 0) return null;
+
+        return (
+            <>
+                <h3>{heading}</h3>
+                <Table
+                    className='custom_table'
+                    columns={columns}
+                    dataSource={data}
+                    pagination={false} // Handle pagination separately if needed
+                    onChange={onChange}
+                />
+            </>
+        );
+    };
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} value={valueInput} onChange={onChageSearch} />;
 
@@ -187,13 +268,30 @@ const BSWalletTable = () => {
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
+                        <br />
+                        {/* Render Stocks Section */}
+                        {renderTableSection(sortedStockData, "Stock Tokens")}
+
+                        <br />
+                        {/* Render ETFs Section */}
+                        {renderTableSection(sortedEtfData, "ETF Tokens")}
+                        {/* <MyPagination
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
                         <MyPagination
                             total={sortedData && sortedData.length}
                             current={current}
                             onChange={setCurrent}
-                        />
+                        /> */}
                     </div>
                 </Tabs.TabPane>
                 {/* <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>

@@ -45,23 +45,27 @@ const BuySellEmailAuth = () => {
   }
 
   const resendEmail = async () => {
-    setLoadings(true);
-    let res = await resendEmailCode(email);
-    if (res.status === 200) {
-      OpenNotification('success', res.data);
-      setIsTimerDone(false);
-      setTimerKey(prevKey => prevKey + 3); // Increment key to re-render Timer
-      setLoadings(false);
-    } else {
-      setLoadings(false);
-      OpenNotification('error', res.data);
+    try {
+      setLoadings(true);
+      let res = await resendEmailCode(email);
+      if (res.status === 200) {
+        OpenNotification('success', res.data);
+        setIsTimerDone(false);
+        setTimerKey(prevKey => prevKey + 3); // Increment key to re-render Timer
+        setLoadings(false);
+      } else {
+        setLoadings(false);
+        OpenNotification('error', res.data);
+      }
+    } catch (err: any) {
+      console.log(err);
     }
   };
 
   useEffect(() => {
     console.log('Timer Done:', isTimerDone);
   }, [isTimerDone]);
-  const pastePassowrd = (e: ClipboardEvent<HTMLInputElement>) => {
+  const pastePassowrd0 = (e: ClipboardEvent<HTMLInputElement>) => {
     let clipboardData, pastedData;
     // Stop data actually being pasted into div
     e.stopPropagation();
@@ -84,18 +88,43 @@ const BuySellEmailAuth = () => {
     }
   };
 
+  const pastePassowrd = (e: ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('Text').slice(0, 6); // Get only the first 6 characters
+
+    if (isNumeric(pastedData)) {
+      const inputFields: any = document.querySelectorAll('.otp_container input');
+      pastedData.split('').forEach((char: any, index: any) => {
+        if (inputFields[index]) {
+          inputFields[index].value = char;
+          otpCode[index] = char;
+        }
+      });
+
+      // Automatically focus the verify button if all digits are pasted
+      if (pastedData.length === 6 && document.getElementById('verify_btn')) {
+        document.getElementById('verify_btn')?.focus();
+      }
+    }
+  };
+  const clearOtpInputs = () => {
+    console.log("I am here");
+    document.querySelectorAll<HTMLInputElement>('.otp_container input').forEach(input => {
+      input.value = '';
+    });
+    otpCode.fill(''); // Clear the otpCode array
+  };
+
   const verifyCode = async () => {
     setLoadings(true);
-
-
     const res = await validateEmail(email, otpCode.join('').toString());
     if (res.status === 200) {
-      OpenNotification('success', res.data);
-      navigate('/indexx-exchange/kyc');
+      OpenNotification('success', "Email successfully verified");
+      navigate('/indexx-exchange/buy-sell/login-honeybee/');
       setLoadings(false);
     } else {
-
       OpenNotification('error', res.data);
+      clearOtpInputs();
       setLoadings(false);
     }
   };

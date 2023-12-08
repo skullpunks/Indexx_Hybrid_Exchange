@@ -58,9 +58,9 @@ const BSWalletTop = () => {
                 <div className='d-flex flex-align-center color_general'>
                     <h2 className='margin-b-0'>$</h2>
                     {isVisible ?
-                        <h1 className='margin-b-0 '>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
+                        <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString()}&nbsp;&nbsp;&nbsp;</h1>
                         :
-                        <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                        <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
                     }
                     <div onClick={toggleVisibility}>
                         {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
