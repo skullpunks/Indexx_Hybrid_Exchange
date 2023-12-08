@@ -15,23 +15,33 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState } from 'react';
 
-const PaymentOptions = ({ isVisible, onClose, message }) => {
+const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, message }) => {
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState('wire');
+  const [isLoading, setIsLoading] = useState(false);
   if (!isVisible) return null;
-  const handleClick = () => {
-    if(selectedValue === 'zelle'){
-      navigate('/indexx-exchange/payment-zelle')
+  const handleClick = async () => {
+    setIsLoading(true);
+    let orderId;
+    if (selectedValue === 'zelle' || selectedValue === 'wire') {
+      // Use the special function for Zelle and Wire
+      orderId = await onZelleAndWireConfirm(selectedValue);
+      if (orderId) {
+        navigate(`/indexx-exchange/payment-${selectedValue}?orderId=${orderId}`);
+      }
+    } else if (selectedValue === 'paypal'){
+      onConfirm();
     }
-    else if(selectedValue === 'wire'){
-      navigate('/indexx-exchange/payment-wire')
-    }
+    setIsLoading(false);
     onClose();
   };
+
+  console.log("selected value", selectedValue)
 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
+  
 
   return (
     <>
@@ -126,8 +136,8 @@ const PaymentOptions = ({ isVisible, onClose, message }) => {
             </RadioGroup>
           </FormControl>
           <div class="pay-button-box mt-5">
-            <button class="pay-button-btn" onClick={handleClick}>
-              Continue
+            <button className="pay-button-btn" onClick={handleClick} disabled={isLoading}>
+              {isLoading ? 'Processing...' : 'Continue'}
             </button>
           </div>
         </div>

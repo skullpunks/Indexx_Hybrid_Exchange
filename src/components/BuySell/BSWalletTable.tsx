@@ -24,6 +24,7 @@ interface DataType {
     coinBalanceInBTC: any;
     coinPrice: any;
     coinStakedBalance: any;
+    type: 'Crypto' | 'Stock' | 'ETF';
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
@@ -34,6 +35,18 @@ const BSWalletTable = () => {
     const handleCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroBalance(e.target.checked);
     };
+
+    const etfs = [
+        "ALCRYP", "CRYC10", "EQSTK", "INDXXF", "TOB"
+    ];
+
+    const stocks = [
+        "AMZN", "APPL", "BCM", "GOOGL", "META", "MSFT", "NVDA", "PEP"
+    ];
+
+    const cryptocurrencies = [
+        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP"
+    ];
 
     const columns: ColumnsType<DataType> = [
         {
@@ -96,6 +109,9 @@ const BSWalletTable = () => {
     const [walletData, setWalletData] = useState<DataType[]>([]);
     const [filteredWalletData, setFilteredWalletData] = useState<DataType[]>([]);
     const [sortedData, setSortedData] = useState<DataType[]>([]);
+    const [sortedCryptoData, setSortedCryptoData] = useState<DataType[]>([]);
+    const [sortedStockData, setSortedStockData] = useState<DataType[]>([]);
+    const [sortedEtfData, setSortedEtfData] = useState<DataType[]>([]);
 
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
@@ -106,8 +122,15 @@ const BSWalletTable = () => {
             let access_token = String(localStorage.getItem("access_token"));
             let decoded: any = decodeJWT(access_token);
             let userWallets = await getUserWallets(decoded.email);
-            const formattedData = userWallets.data.map((item: any) => ({ ...item, key: item._id }));
+            const formattedData = userWallets.data.map((item: any) => ({
+                ...item,
+                key: item._id,
+                type: cryptocurrencies.includes(item.coinSymbol) ? 'Crypto' :
+                    stocks.includes(item.coinSymbol) ? 'Stock' :
+                        etfs.includes(item.coinSymbol) ? 'ETF' : 'Unknown'
+            }));
             setWalletData(formattedData);
+            setWalletData(formattedData);        
         };
         getAllUserWallet();
     }, []);
@@ -117,13 +140,35 @@ const BSWalletTable = () => {
     }, [filteredWalletData, hideZeroBalance])
 
     useEffect(() => {
-        const filteredData = walletData.filter(item =>
-            item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
-            item.coinName.toLowerCase().includes(valueInput.toLowerCase())
-        );
+
+        let filteredData = walletData;
+        if (valueInput) {
+            filteredData = walletData.filter(item =>
+                item.coinSymbol.toLowerCase().includes(valueInput.toLowerCase()) ||
+                item.coinName.toLowerCase().includes(valueInput.toLowerCase())
+            );
+        }
+        if (hideZeroBalance) {
+            filteredData = filteredData.filter(item => item.coinBalance !== 0);
+        }
+        
         const finalData = hideZeroBalance ? filteredData.filter(item => item.coinBalance !== 0) : filteredData;
         setSortedData(finalData);
+
+        const cryptoData = filteredData.filter(item => cryptocurrencies.includes(item.coinSymbol));
+        const stockData = filteredData.filter(item => stocks.includes(item.coinSymbol));
+        const etfData = filteredData.filter(item => etfs.includes(item.coinSymbol));
+
+        setSortedCryptoData(cryptoData);
+        setSortedStockData(stockData);
+        setSortedEtfData(etfData);
+        
     }, [walletData, valueInput, hideZeroBalance]);
+
+    useEffect(() => {
+
+    }, [walletData]);
+
 
     useEffect(() => {
         if (valueInput === "") {
@@ -144,6 +189,24 @@ const BSWalletTable = () => {
         let val = e.currentTarget.value;
         setValueInput(val);
     }
+
+
+    const renderTableSection = (data: any, heading: any) => {
+        if (data.length === 0) return null;
+
+        return (
+            <>
+                <h3>{heading}</h3>
+                <Table
+                    className='custom_table'
+                    columns={columns}
+                    dataSource={data}
+                    pagination={false} // Handle pagination separately if needed
+                    onChange={onChange}
+                />
+            </>
+        );
+    };
 
     const operations = <Input size="small" className='orange_input' placeholder=" Search" prefix={<SearchOutlined />} value={valueInput} onChange={onChageSearch} />;
 
@@ -181,12 +244,21 @@ const BSWalletTable = () => {
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div>
-                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} />
-                        <MyPagination
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
+                        <br />
+                        {/* Render Stocks Section */}
+                        {renderTableSection(sortedStockData, "Stocks")}
+
+                        <br />
+                        {/* Render ETFs Section */}
+                        {renderTableSection(sortedEtfData, "ETFs")}
+                        {/* <MyPagination
                             total={sortedData && sortedData.length}
                             current={current}
                             onChange={setCurrent}
-                        />
+                        /> */}
                     </div>
                 </Tabs.TabPane>
                 {/* <Tabs.TabPane tab="Deposits & Withdrawals" key="2" className='padding-2x'>

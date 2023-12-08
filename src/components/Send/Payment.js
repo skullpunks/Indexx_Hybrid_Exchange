@@ -12,22 +12,48 @@ import React, { useEffect, useState } from 'react';
 import zelle from '../../assets/arts/pay/zelle.svg';
 import zelle_qr from '../../assets/arts/pay/zel-qr.svg';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import tick from "../../assets/arts/pay/tick.svg";
 import upload from "../../assets/arts/pay/upload 1.svg";
 import fortune from "../../assets/arts/pay/fortune-10 1.svg";
+import { createFiatDepositForOrder, decodeJWT, getOrderDetails } from '../../services/api';
+import AWS from 'aws-sdk';
 
-const Final = () => {
+const S3_BUCKET = 'indexx-exchange';
+const REGION = 'ap-northeast-1';
+AWS.config.update({
+  accessKeyId: 'AKIA5FBFFKSZP5B37GOS',
+  secretAccessKey: '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',
+  region: REGION,
+});
+var s3 = new AWS.S3();
+const Final = ({ orderData, fromDetails, toDetails, photoIdFile, photoIdUrl }) => {
 
   const navigate = useNavigate();
-  const handleWallet = () =>{
+  const handleWallet = () => {
     navigate('/indexx-exchange/buy-sell/wallet');
   }
-  const handleExchange = () =>{
+  const handleExchange = () => {
     navigate('/');
   }
+
+  // Add this inside your component to log the data when it's rendered
+  useEffect(() => {
+    async function finalDetails() {
+      const access_token = String(localStorage.getItem('access_token'));
+      const decoded = await decodeJWT(access_token);
+      let email = String(decoded.email);
+      fromDetails = email;
+      toDetails = "lili@Indexx500Graph.ai";
+      if (photoIdUrl) {
+        let res = await createFiatDepositForOrder(email, orderData?.orderId, fromDetails, toDetails, photoIdUrl);
+      }
+    }
+    finalDetails();
+  }, [photoIdUrl]);
+
 
   return (
     <Box
@@ -41,44 +67,47 @@ const Final = () => {
       <Box className="d-flex flex-direction-column align-items-center" width={"55%"}>
         <img src={fortune} alt="check" style={{ width: "60%" }} />
         <div className="font_60x">
-        Thank you
+          Thank you
         </div>
-        <div className="font_17x" style={{width:"350px"}}>
-        for choosing Indexx for your crypto purchase! 
+        <div className="font_17x" style={{ width: "350px" }}>
+          for choosing Indexx for your crypto purchase!
         </div>
         <div className="font_10x mt-4">
-        Our team is diligently verifying your order, and your tokens will be in your wallet within 1-2 business days. We appreciate your trust and patience!
+          Our team is diligently verifying your order, and your tokens will be in your wallet within 1-2 business days. We appreciate your trust and patience!
         </div>
         <br />
         <div className='d-flex mb-2' style={{ gap: 10, minWidth: "100%" }}>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={handleWallet}
-              disableTouchRipple
-            >
-              Go to Wallet
-            </Button>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={handleExchange}
-              disableTouchRipple
-            >
-              Go to Exchange
-            </Button>
-          </div>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={handleWallet}
+            disableTouchRipple
+          >
+            Go to Wallet
+          </Button>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={handleExchange}
+            disableTouchRipple
+          >
+            Go to Exchange
+          </Button>
+        </div>
       </Box>
     </Box>
   );
 };
 
-const FileComponent1 = ({ onNext, onStateChange }) => {
+const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange, onToDetailsChange }) => {
 
   const navigate = useNavigate();
-  const handlePrev = () =>{
+  const handlePrev = () => {
     navigate('/')
   }
+
+
+
   return (
     <Box
       sx={{
@@ -87,16 +116,16 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection:"column"
+        flexDirection: "column"
       }}
     >
-        <div className="font_15x mt-4">
-        <WarningAmberIcon/>
+      <div className="font_15x mt-4">
+        <WarningAmberIcon />
         Kindly transfer the exact amount specified above using the provided recipient details
         <h1 className="font_30x text-center mt-5">
-        Order Amount: 200 USD
+          Order Amount: {orderData?.breakdown?.inAmount} {orderData?.breakdown?.inCurrenyName}
         </h1>
-        </div>
+      </div>
       <Box className="send-box mt-5">
         <Box
           component={"img"}
@@ -105,39 +134,41 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
           width={"100%"}
         />
         <div className='d-flex mt-4 mb-2' style={{ gap: 10 }}>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={handlePrev}
-              disableTouchRipple
-            >
-              Cancel
-            </Button>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={onNext}
-              disableTouchRipple
-            >
-              Confirm payment
-            </Button>
-          </div>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={handlePrev}
+            disableTouchRipple
+          >
+            Cancel
+          </Button>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={onNext}
+            disableTouchRipple
+          >
+            Confirm payment
+          </Button>
+        </div>
       </Box>
     </Box>
   );
 };
 
-const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
+const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onStateChange, onPhotoIdUrlChange }) => {
 
   const [photoIdFile, setPhotoIdFile] = useState(null);
   const [photoIdFileerror, setPhotoIdFileerror] = useState(null);
+  const [photoIdUrl, setPhotoIdUrl] = useState(null);
+
 
   const preventDefault = (e) => {
     e.preventDefault();
   };
-  
+
   const handleNext = () => {
-    if(photoIdFile === null){
+    if (photoIdFile === null) {
       setPhotoIdFileerror("Please add a proof")
       return;
     }
@@ -191,11 +222,31 @@ const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
 
       setPhotoIdFile(file);
       setPhotoIdFileerror("");
-      // uploadToS3(file, 'photoId');
+      uploadToS3(file, "Receipt");
     }
   };
 
-  
+  const uploadToS3 = async (file, fileType) => {
+    const params = {
+      Bucket: S3_BUCKET,
+      Key: file.name,
+      Body: file,
+      ContentType: file.type
+    };
+
+    try {
+      await s3.putObject(params).promise();
+      // Construct and set the file URL
+      const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
+
+      console.log("url", url)
+      setPhotoIdUrl(url);
+      onPhotoIdUrlChange(url);
+    } catch (error) {
+      alert('Error uploading file:', error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -207,57 +258,57 @@ const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
     >
       <Box className="send-box staking-toggle">
         <h1 className="font_28x">
-        Upload proof of payment
+          Upload proof of payment
         </h1>
         <br />
         <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            width: "100%",
-            mb: 4,
-            gap: 1,
-          }}>
-            <Typography variant="text" fontSize={"13px"} width={"100%"} textAlign={"left"} mb={2}>
-              Upload supporting file (jpeg, png, pdf, Maximum 10MB file size)
-              {photoIdFileerror &&
-                <span style={{ color: "#d32f2f", fontSize: "12px", paddingLeft: "20px" }}>
-                  {photoIdFileerror}
-                </span>
-              }
-            </Typography>
-            <div
-              onDrop={handleDropProfile}
-              onDragOver={preventDefault}
-              style={{
-                border: '2px dashed var(--border-color)',
-                borderRadius: '4px',
-                width: '100%',
-                padding: '16px',
-                textAlign: 'center',
-                cursor: 'pointer',
-              }}
-            >
-              {photoIdFile ? (
-                <div>
-                  <p>
-                  <img  src={tick} alt="tick" style={{marginRight : "10px", width:"40px"}}/>
-                    {photoIdFile.name}
-                    <Button
-                      onClick={() => setPhotoIdFile(null)}
-                      disableTouchRipple
-                      sx={{width:"auto", color:"var(--body_color)", boxShadow:"none"}}
-                    >
-                      <CloseIcon
-                        fontSize={'1rem'}
-                        color='#171c26'
-                      />
-                    </Button>
-                  </p>
-                </div>
-              ) : (
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          width: "100%",
+          mb: 4,
+          gap: 1,
+        }}>
+          <Typography variant="text" fontSize={"13px"} width={"100%"} textAlign={"left"} mb={2}>
+            Upload supporting file (jpeg, png, pdf, Maximum 10MB file size)
+            {photoIdFileerror &&
+              <span style={{ color: "#d32f2f", fontSize: "12px", paddingLeft: "20px" }}>
+                {photoIdFileerror}
+              </span>
+            }
+          </Typography>
+          <div
+            onDrop={handleDropProfile}
+            onDragOver={preventDefault}
+            style={{
+              border: '2px dashed var(--border-color)',
+              borderRadius: '4px',
+              width: '100%',
+              padding: '16px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            {photoIdFile ? (
+              <div>
                 <p>
+                  <img src={tick} alt="tick" style={{ marginRight: "10px", width: "40px" }} />
+                  {photoIdFile.name}
+                  <Button
+                    onClick={() => setPhotoIdFile(null)}
+                    disableTouchRipple
+                    sx={{ width: "auto", color: "var(--body_color)", boxShadow: "none" }}
+                  >
+                    <CloseIcon
+                      fontSize={'1rem'}
+                      color='#171c26'
+                    />
+                  </Button>
+                </p>
+              </div>
+            ) : (
+              <p>
                 <Box
                   component={"img"}
                   src={upload}
@@ -267,70 +318,70 @@ const FileComponent2 = ({ onPrev, onNext, onStateChange }) => {
                 />
                 <br />
                 Drag and drop a file here or</p>
-              )}
-              <label htmlFor="profileInput">
-                <Button
-                  variant="outlined"
-                  component="span"
-                  disableTouchRipple
-                  sx={{
+            )}
+            <label htmlFor="profileInput">
+              <Button
+                variant="outlined"
+                component="span"
+                disableTouchRipple
+                sx={{
+                  borderColor: 'var(--border-color)',
+                  borderRadius: '4px',
+                  color: 'var(--body_color)',
+                  px: 10,
+                  py: 1,
+                  my: 3,
+                  textTransform: 'none',
+                  fontSize: '13px',
+                  boxShadow: 'none',
+                  '&:hover': {
+                    backgroundColor: 'transparent',
                     borderColor: 'var(--border-color)',
-                    borderRadius: '4px',
-                    color: 'var(--body_color)',
-                    px: 10,
-                    py: 1,
-                    my:3,
-                    textTransform: 'none',
-                    fontSize: '13px',
                     boxShadow: 'none',
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      borderColor: 'var(--border-color)',
-                      boxShadow: 'none',
-                      borderWidth:"4px",
-                    },
-                  }}
-                >
-                  Browse File
-                </Button>
-                <input
-                  type="file"
-                  onChange={handlePhotoIdFileChange}
-                  style={{ display: 'none' }}
-                  id="profileInput"
-                  accept='image/*'
-                />
-              </label>
-            </div>
-          </Box>
-        <div className='d-flex mt-4 mb-2' style={{ gap: 10 }}>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={onPrev}
-              disableTouchRipple
-            >
-              Cancel
-            </Button>
-            <Button
-              className="continue-btn"
-              variant="contained"
-              onClick={handleNext}
-              disabled={photoIdFile === null}
-              disableTouchRipple
-            >
-              Confirm payment
-            </Button>
+                    borderWidth: "4px",
+                  },
+                }}
+              >
+                Browse File
+              </Button>
+              <input
+                type="file"
+                onChange={handlePhotoIdFileChange}
+                style={{ display: 'none' }}
+                id="profileInput"
+                accept='image/*'
+              />
+            </label>
           </div>
+        </Box>
+        <div className='d-flex mt-4 mb-2' style={{ gap: 10 }}>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={onPrev}
+            disableTouchRipple
+          >
+            Cancel
+          </Button>
+          <Button
+            className="continue-btn"
+            variant="contained"
+            onClick={handleNext}
+            disabled={photoIdFile === null}
+            disableTouchRipple
+          >
+            Confirm payment
+          </Button>
+        </div>
       </Box>
     </Box>
   );
 };
 
 const steps = [
-  { label: 'Scan QR Code', component: <FileComponent1 /> },
-  { label: 'Upload proof of Payment', component: <FileComponent2 /> },
-  { label: ' Payment Confirmation', component: <Final /> },
+  { label: 'Scan QR Code', component: (orderData) => <FileComponent1 orderData={orderData} /> },
+  { label: 'Upload Proof of Payment', component: (orderData) => <FileComponent2 orderData={orderData} /> },
+  { label: 'Payment Confirmation', component: (orderData) => <Final orderData={orderData} /> },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -378,8 +429,8 @@ const useStyles = makeStyles((theme) => ({
   },
   checkIcon: {
     color: 'white',
-    width:'5px',
-    height:'5px',
+    width: '5px',
+    height: '5px',
   },
 }));
 
@@ -388,6 +439,44 @@ export default function Payment() {
   const [coinFromStep2, setCoinFromStep2] = React.useState({ selectedCoin: '', receiveAmount: '', email: '', username: '', profilePic: '', userBalance: 0 });
 
   const classes = useStyles();
+  const [orderData, setOrderData] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [fromDetails, setFromDetails] = useState({});
+  const [toDetails, setToDetails] = useState({});
+  const [photoIdFile, setPhotoIdFile] = useState(null);
+  const [photoIdUrl, setPhotoIdUrl] = useState(null);
+
+  // Define handler functions
+  const handleFromDetailsChange = (details) => {
+    setFromDetails(details);
+  };
+
+  const handleToDetailsChange = (details) => {
+    setToDetails(details);
+  };
+
+  const handlePhotoIdFileChange = (file) => {
+    console.log("I am here", file)
+    setPhotoIdFile(file);
+  };
+
+  useEffect(() => {
+    const orderIdFromParam = searchParams.get("orderId");
+    if (orderIdFromParam !== undefined) {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
+        if (res.status === 200) {
+          let orderData = res.data;
+          setOrderData(orderData);
+        } else {
+          alert("Something went wrong. Please try again.")
+        }
+      })
+    }
+  }, [searchParams])
+
+
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -404,6 +493,46 @@ export default function Payment() {
   const handleStateChange = (newState) => {
     setCoinFromStep2(prevState => ({ ...prevState, ...newState }));
   };
+
+  const steps = [
+    {
+      label: 'Scan QR Code',
+      component: () => (
+        <FileComponent1
+          orderData={orderData}
+          onNext={handleNext}
+          onFromDetailsChange={handleFromDetailsChange}
+          onToDetailsChange={handleToDetailsChange}
+        />
+      )
+    },
+    {
+      label: 'Upload Proof of Payment',
+      component: () => (
+        <FileComponent2
+          orderData={orderData}
+          fromDetails={fromDetails}
+          toDetails={toDetails}
+          onPrev={handleBack}
+          onNext={handleNext}
+          onPhotoIdFileChange={handlePhotoIdFileChange}
+          onPhotoIdUrlChange={setPhotoIdUrl}
+        />
+      )
+    },
+    {
+      label: 'Payment Confirmation',
+      component: () => (
+        <Final
+          orderData={orderData}
+          fromDetails={fromDetails}
+          toDetails={toDetails}
+          photoIdFile={photoIdFile}
+          photoIdUrl={photoIdUrl}
+        />
+      )
+    },
+  ];
 
   return (
     <Box
@@ -431,51 +560,59 @@ export default function Payment() {
           alternativeLabel
           sx={{ fill: 'var(--primary_color)' }}
         >
-        {localStorage.getItem("userlogged") === 'normal' ? 
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel>{step.label}</StepLabel>
-            </Step>
-          )))
-          :
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel
-            StepIconComponent={({ completed, active }) => (
-              <div className={classes.customIconContainer}>
-                {/* <div
+          {localStorage.getItem("userlogged") === 'normal' ?
+            (steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel>{step.label}</StepLabel>
+              </Step>
+            )))
+            :
+            (steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel
+                  StepIconComponent={({ completed, active }) => (
+                    <div className={classes.customIconContainer}>
+                      {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                <div
-                  className={
-                    completed
-                      ? classes.completedIcon
-                      : activeStep === index
-                      ? classes.activeIcon
-                      : classes.inactiveIcon
-                  }
-                />
-                <div className={classes.stepNumber}>{index + 1}</div>
-              </div>
-            )}
+                      <div
+                        className={
+                          completed
+                            ? classes.completedIcon
+                            : activeStep === index
+                              ? classes.activeIcon
+                              : classes.inactiveIcon
+                        }
+                      />
+                      <div className={classes.stepNumber}>{index + 1}</div>
+                    </div>
+                  )}
 
-          >
-            {step.label}
-          </StepLabel>
-            </Step>
-          )))
-        }
+                >
+                  {step.label}
+                </StepLabel>
+              </Step>
+            )))
+          }
         </Stepper>
         <Box>
-          {activeStep === steps.length ? <Final /> : (
-            React.cloneElement(steps[activeStep].component, {
+          {activeStep === steps.length ? (
+            <Final orderData={orderData} fromDetails={fromDetails} toDetails={toDetails} photoIdFile={photoIdFile} />
+          ) : (
+            steps[activeStep].component()
+          )}
+        </Box>
+        {/* <Box>
+          {activeStep === steps.length ? <Final orderData={orderData} /> : (
+            React.cloneElement(
+              steps[activeStep].component(orderData), {
               onNext: handleNext,
               onPrev: handleBack,
               onStateChange: handleStateChange,
               ...coinFromStep2,
             })
           )}
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
