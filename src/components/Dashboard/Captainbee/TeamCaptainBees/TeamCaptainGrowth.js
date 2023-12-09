@@ -662,7 +662,10 @@ const TeamCaptainGrowth = () => {
                   textAlign={'left'}
                 >
                   ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
+                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                     : '0.00')
                   }
                 </Typography>
@@ -677,12 +680,15 @@ const TeamCaptainGrowth = () => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={isMobile ? '25px' : '50px'}
+                  fontSize={isMobile ? '25px' : '49px'}
                   // fontWeight={600}
                   textAlign={'left'}
                 >
                   {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                     : '0.00')
                   } {" "}
                   <span className='font_17x'>

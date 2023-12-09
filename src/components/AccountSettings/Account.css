@@ -117,6 +117,7 @@
 
 .ant-tabs-ink-bar {
   background: var(--primary-color);
+  height: 0.3px !important;
 }
 .font_17x {
   font-size: 17px;

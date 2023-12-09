@@ -1,7 +1,7 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
 import * as crypto from 'crypto';
-let baseAPIURL = '';
+export let baseAPIURL = '';
 export let baseCEXURL = '';
 export let baseDEXURL = '';
 export let baseURL = '';
