@@ -157,6 +157,40 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     }
   };
 
+  const createBuyOrderForZelleAndWire = async (paymentMethod: string) => {
+    setLoadings(true);
+    let basecoin: string = filteredFromArray[0].title;
+    let quotecoin: string = 'USD';
+    let amount: number = Number(BSvalue?.amount);
+    let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
+    let res;
+    console.log("paymentMethod", paymentMethod)
+    if (id) {
+
+
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setIsModalOpen(true);
+        setMessage("As Captain bee, Please apply for buy approval from honey bee");
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, honeyBeeEmail, true, paymentMethod);
+    } else {
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, "", false, paymentMethod);
+    }
+    if (res.status === 200) {
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      // OpenNotification('error', res.data);
+      setIsModalOpen(true);
+      setMessage(res.data);
+      return null;
+    }
+  };
+
   const getStripePaymentIntent = async (orderId: string, email: string) => {
     const res = await createStripePaymentIntent(
       Number(BSvalue?.amount),
@@ -384,6 +418,8 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
         <PaymentOptions
           isVisible={isModalOpen2}
           onClose={() => setIsModalOpen2(false)}
+          onConfirm={createNewBuyOrder}
+          onZelleAndWireConfirm={(paymentMethod: string) => createBuyOrderForZelleAndWire(paymentMethod)} // For Zelle and Wire
           message={message}
         />
       </div>
