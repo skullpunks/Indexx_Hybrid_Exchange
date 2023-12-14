@@ -72,7 +72,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
       const userEmail = urlSearchParams.get('useremail');
       const userKey = urlSearchParams.get('userkey');
       const userType = urlSearchParams.get('usertype');
-     
+
       if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
         let userPassword = (String(userKey));
         // You can now use userEmail and userKey as needed in your component
@@ -119,7 +119,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
       <h1 className="text-center margin-lr-auto top_heading">
-      <img src={bee} alt="bee" style={{marginLeft:"-10px"}} />
+        <img src={bee} alt="bee" style={{ marginLeft: "-10px" }} />
         HoneyBee Log In</h1>
       <div className="text-center margin-lr-auto padding-tb-2x">
         Please make sure you are visiting the correct URL
@@ -232,6 +232,20 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
               {' '}
               Sign up to be an indexxer
             </p> */}
+          <br />
+          <br />
+          <Link
+            // to="https://hive.indexx.ai/sign-up"
+            to="/indexx-exchange/buy-sell/hive-login"
+            style={{ color: '#ffb300' }}
+          // onClick={handleClick}
+          >
+
+            <p style={{ color: '#ffb300', fontSize: 15 }}>
+              {' '}
+              Not a Honey Bee? Login as Captain Bee instead
+            </p>
+          </Link>
         </div>
         <br />
       </div>

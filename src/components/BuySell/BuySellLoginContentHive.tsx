@@ -82,7 +82,7 @@ const BuySellLoginContentHive: React.FC = () => {
       const userEmail = urlSearchParams.get('useremail');
       const userKey = urlSearchParams.get('userkey');
       const userType = urlSearchParams.get('usertype');
-     
+
       if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
         let userPassword = (String(userKey));
         // You can now use userEmail and userKey as needed in your component
@@ -138,7 +138,7 @@ const BuySellLoginContentHive: React.FC = () => {
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
         <h1 className="text-center margin-lr-auto top_heading">
-        <img src={hat} alt="hat" style={{marginRight:"10px"}} />
+          <img src={hat} alt="hat" style={{ marginRight: "10px" }} />
           CaptainBee Log In</h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -235,7 +235,7 @@ const BuySellLoginContentHive: React.FC = () => {
               to=""
               className="text_link"
               onClick={handleClick}
->
+                >
               <Button
                 type="primary"
                 className="atn-btn atn-btn-round margin-b-1x hive-btn-2"
@@ -263,7 +263,7 @@ const BuySellLoginContentHive: React.FC = () => {
               // to="https://hive.indexx.ai/sign-up"
               to="/indexx-exchange/buy-sell/login-honeybee"
               style={{ color: '#ffb300' }}
-              // onClick={handleClick}
+            // onClick={handleClick}
             >
 
               <p style={{ color: '#ffb300', fontSize: 15 }}>

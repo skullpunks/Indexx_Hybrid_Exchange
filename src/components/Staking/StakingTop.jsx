@@ -34,9 +34,9 @@ import lock from '../../assets/arts/lock4 2.png';
 import tokensList from '../../utils/Tokens.json';
 import OpenNotification from '../../components/OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 
-const StakingTop = ({refresh, handleRefresh}) => {
+const StakingTop = ({ refresh, handleRefresh }) => {
   const navigate = useNavigate();
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   let access_token = String(localStorage.getItem('access_token'));
@@ -74,19 +74,28 @@ const StakingTop = ({refresh, handleRefresh}) => {
   }, []);
 
   const getAllUserWallet = async () => {
-    let userWallets = await getUserWallets(decoded.email);
-    let usersWallet = userWallets.data;
-    let totalBalInUSD = 0;
-    for (let i = 0; i < usersWallet.length; i++) {
-      if (usersWallet[i].coinType === 'Crypto') {
-        let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-        let price = Number(res.data.results.data);
-        totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
-      } else {
-        totalBalInUSD += Number(usersWallet[i]?.coinBalance);
-      }
+    try {
+      const userWallets = await getUserWallets(decoded.email);
+      const usersWallet = userWallets.data;
+      let totalBalInUSD = 0;
+
+      usersWallet.forEach((wallet) => {
+        const balance = Number(wallet.coinBalance);
+        if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
+          const price = Number(wallet.coinPrice);
+          if (!isNaN(price)) {
+            totalBalInUSD += balance * price;
+          }
+        } else {
+          totalBalInUSD += balance;
+        }
+      });
+
+      console.log('final total balance in USD', totalBalInUSD);
+      setTotalBalanceInUSD(totalBalInUSD);
+    } catch (err) {
+      console.error('Error in getAllUserWallet', err);
     }
-    setTotalBalanceInUSD(totalBalInUSD);
   };
 
   const toggleVisibility = () => {
@@ -326,561 +335,625 @@ const StakingTop = ({refresh, handleRefresh}) => {
 
   return (
     <>
-    {isMobile === true ? 
-    <>
-    <div className="orange width-100 align-items-center d-flex flex-direction-column justify-content-center mb-4">
-        <div className="padding-b-1x font_28x d-flex flex-column align-items-center">
-        {localStorage.getItem("userlogged") === 'normal' ?
-          <>
-          <img src={pig} alt="pig" width={"56px"} />
-          Staking
-          </>
-          :
-          <>
-          <img src={nectar} alt="nectar" width={"56px"} />
-          Nectar / Staking
-          </>
-        }
-        </div>
-        <Typography variant="body1" fontSize={"15px"} sx={{ my: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
-          To maximize your Indexx Staking earnings, stake tokens or stock tokens for a minimum of 6 or 12 months. 
-      </Typography>
-          <Box
-            sx={{
-              borderRadius: '2px',
-              fontSize: '15px',
-              height: '40px',
-              py: 0.7,
-              px: 2,
-              alignSelf: 'center',
-            }}
-          >
-            <img
-              src={bnb}
-              alt="BSC"
-              width={30}
-              height={30}
-              style={{ marginRight: '8px' }}
-            />
-            BSC Mainnet
-          </Box>
-          <div className='font_28x'>
+      {isMobile === true ? (
+        <>
+          <div className="orange width-100 align-items-center d-flex flex-direction-column justify-content-center mb-4">
+            <div className="padding-b-1x font_28x d-flex flex-column align-items-center">
+              {localStorage.getItem('userlogged') === 'normal' ? (
+                <>
+                  <img src={pig} alt="pig" width={'56px'} />
+                  Staking
+                </>
+              ) : (
+                <>
+                  <img src={nectar} alt="nectar" width={'56px'} />
+                  Nectar / Staking
+                </>
+              )}
+            </div>
+            <Typography
+              variant="body1"
+              fontSize={'15px'}
+              sx={{
+                my: 2,
+                color: 'var(--body_color)',
+                textAlign: 'center',
+                maxWidth: '1000px',
+                mx: 'auto',
+                lineHeight: '1.5',
+              }}
+            >
+              To maximize your Indexx Staking earnings, stake tokens or stock
+              tokens for a minimum of 6 or 12 months.
+            </Typography>
+            <Box
+              sx={{
+                borderRadius: '2px',
+                fontSize: '15px',
+                height: '40px',
+                py: 0.7,
+                px: 2,
+                alignSelf: 'center',
+              }}
+            >
+              <img
+                src={bnb}
+                alt="BSC"
+                width={30}
+                height={30}
+                style={{ marginRight: '8px' }}
+              />
+              BSC Mainnet
+            </Box>
+            <div className="font_28x">
               APR:
               {type === 'Short'
                 ? selectedToken?.stakingPercentage6months
                 : selectedToken?.stakingPercentage1year}
               %
             </div>
-      </div>
-      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            width: '100%',
-            background: 'var(--main-body)',
-            //   pl: 1,
-            pt: 0.4,
-          }}
-        >
-          <Typography
-            fontSize={'15px'}
-            textAlign={'left'}
-          >
-            Staking type
-          </Typography>
-          <Select
-            value={stakingtype}
-            onChange={(e) => {
-              setStakingtype(e.target.value);
-            }}
-            variant="standard"
-            //   InputLabelProps={{ shrink: true }}
-            sx={{
-              width: '100%',
-              borderRadius: 0,
-              background: 'var(--main-body)',
-              color: 'var(--body_color)',
-              border: 'none',
-              outline: 'none',
-              padding: 0,
-              fontSize: '12px',
-            }}
-            size="small"
-            disableUnderline
-          >
-            <MenuItem key="token" value="token">
-              Token
-            </MenuItem>
-            <MenuItem key="stock-token" value="stock-token">
-              Stock Token
-            </MenuItem>
-          </Select>
-          </Box>
-          
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'start',
-            alignItems: 'baseline',
-            width: '100%',
-            background: 'var(--main-body)',
-            //   pl: 1,
-            pt: 0.4,
-            mt: 1,
-          }}
-        >
-          <Typography
-            //   variant="text"
-            fontSize={'15px'}
-            //   fontWeight={600}
-            textAlign={'left'}
-          >
-            Select Token
-          </Typography>
-          <Select
-            value={token}
-            onChange={(e) => {
-              setToken(e.target.value);
-              let selectedCoin = initialTokens.find(
-                (x) => x.title === e.target.value
-              );
-              setSelectedToken(selectedCoin);
-              getCoinBalance(e.target.value);
-              let inputAmt = amt;
-              let minimumRequired = 50;
-              // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-              if (
-                ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
-              ) {
-                minimumRequired = 0.01;
-              }
-
-              if (inputAmt < minimumRequired) {
-                setError(
-                  `Minimum staking amount must be at least ${minimumRequired}.`
-                );
-              } else if (inputAmt > userBalance) {
-                setError(
-                  `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
-                );
-              } else {
-                setError('');
-
-                if (type === 'Long') {
-                  setRewards(inputAmt * selectedCoin.stakingPercentage1year);
-                  setFinalAmount(
-                    inputAmt * (1 + selectedCoin.stakingPercentage1year)
-                  );
-                } else if (type === 'Short') {
-                  setRewards(inputAmt * selectedCoin.stakingPercentage6months);
-                  setFinalAmount(
-                    inputAmt * (1 + selectedCoin.stakingPercentage6months)
-                  );
-                }
-              }
-            }}
-            variant="standard"
-            //   InputLabelProps={{ shrink: true }}
-            sx={{
-              width: '100%',
-              borderRadius: 0,
-              background: 'var(--main-body)',
-              color: 'var(--body_color)',
-              border: 'none',
-              outline: 'none',
-              padding: 0,
-              fontSize: '12px',
-            }}
-            size="small"
-            disableUnderline
-          >
-            {initialTokens.map((token) => (
-              <MenuItem key={token.title} value={token.title}>
-                <img
-                  src={
-                    require(`../../assets/token-icons/${token.image}.png`)
-                      .default
-                  }
-                  alt={token.title}
-                  width={30}
-                  height={30}
-                  style={{ marginRight: '8px' }}
-                />
-                {token.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            width: '100%',
-            background: 'var(--main-body)',
-            gap: 5,
-            //   pl: 1,
-            pt: 0.4,
-            mt: 3,
-          }}
-        >
-          <Box className="d-flex flex-direction-column" width={'100%'}>
-            
-          <Box
-              className="d-flex flex-direction-column"
+          </div>
+          <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
+            <Box
               sx={{
-                mt: 1,
-                backgroundColor: 'var(--primary-color)',
-                color:"#343434",
-                p: 2,
-                pt: 1,
-                borderRadius: '2px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                width: '100%',
+                background: 'var(--main-body)',
+                //   pl: 1,
+                pt: 0.4,
               }}
             >
-              <Typography variant="text" fontSize={'25px'} textAlign={'left'}>
-                Balance: {userBalance}
+              <Typography fontSize={'15px'} textAlign={'left'}>
+                Staking type
               </Typography>
-              <Box className="d-flex align-items-center" sx={{ gap: 3, mt: 1 }}>
-              <Box sx={{  mt: 1 }}>
-                <TextField
-                  variant="outlined"
-                  placeholder="Enter Amount"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{ width: '100%', backgroundColor:"var(--main-body)" }}
-                  size="small" // Make the input box smaller
-                  value={amt}
-                  onChange={(e) => {
-                    const inputAmt = e.target.value;
-                    setAmt(inputAmt);
-                    let minimumRequired = 50;
-                    // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-                    if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)) {
-                      minimumRequired = 0.01;
-                    }
-
-                    if (inputAmt < minimumRequired) {
-                      setError(
-                        `Minimum staking amount must be at least ${minimumRequired}.`
-                      );
-                    } else if (inputAmt > userBalance) {
-                      setError(
-                        `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
-                      );
-                    } else {
-                      setError('');
-
-                      if (type === 'Long') {
-                        setRewards(
-                          inputAmt *
-                            (selectedToken?.stakingPercentage1year / 100) ?? 0
-                        );
-                        setFinalAmount(
-                          inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year / 100 ??
-                              0)
-                        );
-                      } else if (type === 'Short') {
-                        setRewards(
-                          inputAmt *
-                            (selectedToken?.stakingPercentage1year / 100) ?? 0
-                        );
-                        setFinalAmount(
-                          inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year / 100 ??
-                              0)
-                        );
-                      }
-                    }
-                  }}
-                  // error={!!error}
-                  // helperText={error}
-                />
-              </Box>
-                <Box className='d-flex align-items-center'>
-                  <img
-                    src={
-                      require(`../../assets/token-icons/${token}.png`).default
-                    }
-                    alt={token}
-                    width={30}
-                    height={30}
-                    style={{ marginRight: '8px' }}
-                  />
-                  {token}
-                </Box>
-              </Box>
-              <Typography variant="text" fontSize={'10px'} textAlign={'left'} mt={2}>
-                 {error}
-              </Typography>
-            </Box>
-            
-            <Box className="d-flex" sx={{ gap: 1, mt:3, mb: 8.7 }}>
-              <Button
-                variant="contained"
-                disableTouchRipple
-                onClick={() =>
-                  navigate('/indexx-exchange/buy-sell/deposit-crypto')
-                }
-                className='ant-btn ant-btn-primary stake-btn'
-                style={{height:"44px"}}
-              >
-                Deposit
-              </Button>
-              <Button
-                variant="outlined"
-                disableTouchRipple
-                className='ant-btn stake-outlined-btn'
-                onClick={() =>
-                  navigate('/indexx-exchange/buy-sell/withdraw-crypto')
-                }
-                // sx={{
-                //   borderColor: 'var(--primary-color)',
-                //   borderRadius: '2px',
-                //   color: 'var(--primary-color)',
-                //   height: '44px',
-                //   px: 1,
-                //   textTransform: 'none',
-                //   fontSize: '16px',
-                //   boxShadow: 'none',
-                //   '&:hover': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //   },
-                //   '&:active': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //     background: 'transparent',
-                //   },
-                //   '&:focus': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //     background: 'transparent',
-                //   },
-                // }}
-              >
-                Withdraw
-              </Button>
-            </Box>
-
-            
-
-            <Box
-              className="d-flex flex-direction-column staking-toggle"
-              sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
-            >
-              <Typography
-                variant="text"
-                fontSize={'18px'}
-                textAlign={'left'}
-                pb={0.4}
-              >
-                <img
-                  src={lock}
-                  alt="lock"
-                  style={{ height: '25px', marginRight: '10px' }}
-                />
-                Lock-up Period
-              </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                value={type}
-                exclusive
-                onChange={handleChange}
-                aria-label="Platform"
+              <Select
+                value={stakingtype}
+                onChange={(e) => {
+                  setStakingtype(e.target.value);
+                }}
+                variant="standard"
+                //   InputLabelProps={{ shrink: true }}
                 sx={{
                   width: '100%',
-                  gap: 1,
-                  justifyContent: 'space-between',
+                  borderRadius: 0,
+                  background: 'var(--main-body)',
+                  color: 'var(--body_color)',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  fontSize: '12px',
                 }}
+                size="small"
+                disableUnderline
               >
-                <ToggleButton
-                  value="Short"
-                  disableTouchRipple
-                  sx={{
-                    color: 'var(--primary-color)',
-                    borderRadius: '2px',
-                    height: '44px',
-                    width: '49%',
-                    border: '1px solid var(--border-color)',
-                    '&:hover': {
-                      background: 'var(--staking-color)',
-                    },
-                    '&:active': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&:focus': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&.Mui-selected': {
-                      color: '#282828',
-                      background: 'var(--primary-color)',
-                      '&:hover': {
-                        background: 'var(--primary-color)',
-                      },
-                    },
-                  }}
-                >
-                  6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
-                </ToggleButton>
-
-                <ToggleButton
-                  value="Long"
-                  disableTouchRipple
-                  sx={{
-                    color: 'var(--primary-color)',
-                    borderRadius: '2px',
-                    height: '44px',
-                    width: '49%',
-                    border: '1px solid var(--border-color)',
-                    '&:hover': {
-                      background: 'var(--staking-color)',
-                    },
-                    '&:active': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&:focus': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&.Mui-selected': {
-                      color: '#282828',
-                      background: 'var(--primary-color)',
-                      '&:hover': {
-                        background: 'var(--primary-color)',
-                      },
-                    },
-                  }}
-                >
-                  1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <Box className="d-flex" sx={{ gap: 3, mt: 1 }}></Box>
+                <MenuItem key="token" value="token">
+                  Token
+                </MenuItem>
+                <MenuItem key="stock-token" value="stock-token">
+                  Stock Token
+                </MenuItem>
+              </Select>
             </Box>
 
-            <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  Rewards you will receive in INEX
-                </Typography>
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  {rewards} INEX
-                </Typography>
-              </Box>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  Final Amount you will receive
-                </Typography>
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  {amt} {token} + {rewards} INEX
-                </Typography>
-              </Box>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  Transaction Cost
-                </Typography>
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  N/A
-                </Typography>
-              </Box>
-              <Button
-            type="primary"
-            className="atn-btn atn-btn-round stake-btn"
-            block
-                onClick={submitStake}
-                disabled={!!error || !amt || !type}
-            loading={loadings}
-            style={{marginTop:25}}
-          >
-            {' '}
-            Stake
-          </Button>
-            </Box>
-          </Box>
-
-          <Box className="d-flex flex-direction-column" width={'100%'} sx={{
-            backgroundColor:"var(--staking-color)",
-            p:2
-            
-          }}>
-            
-
-            <Box className="d-flex flex-direction-column">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                alignItems: 'baseline',
+                width: '100%',
+                background: 'var(--main-body)',
+                //   pl: 1,
+                pt: 0.4,
+                mt: 1,
+              }}
+            >
               <Typography
+                //   variant="text"
                 fontSize={'15px'}
+                //   fontWeight={600}
                 textAlign={'left'}
               >
-                Calculate your approximate rewards
+                Select Token
               </Typography>
-              <Box className="d-flex" sx={{ gap: 3, mt: 2 }}>
-                <TextField
-                  variant="outlined"
-                  placeholder="Enter Amount"
-                  InputLabelProps={{ shrink: true }}
-                  // InputProps={{ style: { color: 'red' } }} 
-                  sx={{ mb: 2, width: '60%', color:"red" }}
-                  size="small" // Make the input box smaller
-                  value={calcAmt}
-                  onChange={(e) => {
-                    setcalcAmt(e.target.value);
-                    setSixMonthReward(
-                      Number(e.target.value) *
-                        (selectedToken?.stakingPercentage6months / 100) ?? 0
+              <Select
+                value={token}
+                onChange={(e) => {
+                  setToken(e.target.value);
+                  let selectedCoin = initialTokens.find(
+                    (x) => x.title === e.target.value
+                  );
+                  setSelectedToken(selectedCoin);
+                  getCoinBalance(e.target.value);
+                  let inputAmt = amt;
+                  let minimumRequired = 50;
+                  // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                  if (
+                    ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
+                  ) {
+                    minimumRequired = 0.01;
+                  }
+
+                  if (inputAmt < minimumRequired) {
+                    setError(
+                      `Minimum staking amount must be at least ${minimumRequired}.`
                     );
-                    setOneYearReward(
-                      Number(e.target.value) *
-                        (selectedToken?.stakingPercentage1year / 100) ?? 0
+                  } else if (inputAmt > userBalance) {
+                    setError(
+                      `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
                     );
-                  }}
-                />
-                <Box>
-                  <img
-                    src={
-                      require(`../../assets/token-icons/${token}.png`).default
+                  } else {
+                    setError('');
+
+                    if (type === 'Long') {
+                      setRewards(
+                        inputAmt * selectedCoin.stakingPercentage1year
+                      );
+                      setFinalAmount(
+                        inputAmt * (1 + selectedCoin.stakingPercentage1year)
+                      );
+                    } else if (type === 'Short') {
+                      setRewards(
+                        inputAmt * selectedCoin.stakingPercentage6months
+                      );
+                      setFinalAmount(
+                        inputAmt * (1 + selectedCoin.stakingPercentage6months)
+                      );
                     }
-                    alt={token}
-                    width={30}
-                    height={30}
-                    style={{ marginRight: '8px' }}
-                  />
-                  {token}
+                  }
+                }}
+                variant="standard"
+                //   InputLabelProps={{ shrink: true }}
+                sx={{
+                  width: '100%',
+                  borderRadius: 0,
+                  background: 'var(--main-body)',
+                  color: 'var(--body_color)',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  fontSize: '12px',
+                }}
+                size="small"
+                disableUnderline
+              >
+                {initialTokens.map((token) => (
+                  <MenuItem key={token.title} value={token.title}>
+                    <img
+                      src={
+                        require(`../../assets/token-icons/${token.image}.png`)
+                          .default
+                      }
+                      alt={token.title}
+                      width={30}
+                      height={30}
+                      style={{ marginRight: '8px' }}
+                    />
+                    {token.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                width: '100%',
+                background: 'var(--main-body)',
+                gap: 5,
+                //   pl: 1,
+                pt: 0.4,
+                mt: 3,
+              }}
+            >
+              <Box className="d-flex flex-direction-column" width={'100%'}>
+                <Box
+                  className="d-flex flex-direction-column"
+                  sx={{
+                    mt: 1,
+                    backgroundColor: 'var(--primary-color)',
+                    color: '#343434',
+                    p: 2,
+                    pt: 1,
+                    borderRadius: '2px',
+                  }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'25px'}
+                    textAlign={'left'}
+                  >
+                    Balance: {userBalance}
+                  </Typography>
+                  <Box
+                    className="d-flex align-items-center"
+                    sx={{ gap: 3, mt: 1 }}
+                  >
+                    <Box sx={{ mt: 1 }}>
+                      <TextField
+                        variant="outlined"
+                        placeholder="Enter Amount"
+                        InputLabelProps={{ shrink: true }}
+                        sx={{
+                          width: '100%',
+                          backgroundColor: 'var(--main-body)',
+                        }}
+                        size="small" // Make the input box smaller
+                        value={amt}
+                        onChange={(e) => {
+                          const inputAmt = e.target.value;
+                          setAmt(inputAmt);
+                          let minimumRequired = 50;
+                          // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                          if (
+                            ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)
+                          ) {
+                            minimumRequired = 0.01;
+                          }
+
+                          if (inputAmt < minimumRequired) {
+                            setError(
+                              `Minimum staking amount must be at least ${minimumRequired}.`
+                            );
+                          } else if (inputAmt > userBalance) {
+                            setError(
+                              `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
+                            );
+                          } else {
+                            setError('');
+
+                            if (type === 'Long') {
+                              setRewards(
+                                inputAmt *
+                                  (selectedToken?.stakingPercentage1year /
+                                    100) ?? 0
+                              );
+                              setFinalAmount(
+                                inputAmt *
+                                  (1 +
+                                    selectedToken?.stakingPercentage1year /
+                                      100 ?? 0)
+                              );
+                            } else if (type === 'Short') {
+                              setRewards(
+                                inputAmt *
+                                  (selectedToken?.stakingPercentage1year /
+                                    100) ?? 0
+                              );
+                              setFinalAmount(
+                                inputAmt *
+                                  (1 +
+                                    selectedToken?.stakingPercentage1year /
+                                      100 ?? 0)
+                              );
+                            }
+                          }
+                        }}
+                        // error={!!error}
+                        // helperText={error}
+                      />
+                    </Box>
+                    <Box className="d-flex align-items-center">
+                      <img
+                        src={
+                          require(`../../assets/token-icons/${token}.png`)
+                            .default
+                        }
+                        alt={token}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {token}
+                    </Box>
+                  </Box>
+                  <Typography
+                    variant="text"
+                    fontSize={'10px'}
+                    textAlign={'left'}
+                    mt={2}
+                  >
+                    {error}
+                  </Typography>
+                </Box>
+
+                <Box className="d-flex" sx={{ gap: 1, mt: 3, mb: 8.7 }}>
+                  <Button
+                    variant="contained"
+                    disableTouchRipple
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/deposit-crypto')
+                    }
+                    className="ant-btn ant-btn-primary stake-btn"
+                    style={{ height: '44px' }}
+                  >
+                    Deposit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    disableTouchRipple
+                    className="ant-btn stake-outlined-btn"
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+                    }
+                    // sx={{
+                    //   borderColor: 'var(--primary-color)',
+                    //   borderRadius: '2px',
+                    //   color: 'var(--primary-color)',
+                    //   height: '44px',
+                    //   px: 1,
+                    //   textTransform: 'none',
+                    //   fontSize: '16px',
+                    //   boxShadow: 'none',
+                    //   '&:hover': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //   },
+                    //   '&:active': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //     background: 'transparent',
+                    //   },
+                    //   '&:focus': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //     background: 'transparent',
+                    //   },
+                    // }}
+                  >
+                    Withdraw
+                  </Button>
+                </Box>
+
+                <Box
+                  className="d-flex flex-direction-column staking-toggle"
+                  sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'18px'}
+                    textAlign={'left'}
+                    pb={0.4}
+                  >
+                    <img
+                      src={lock}
+                      alt="lock"
+                      style={{ height: '25px', marginRight: '10px' }}
+                    />
+                    Lock-up Period
+                  </Typography>
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={type}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="Platform"
+                    sx={{
+                      width: '100%',
+                      gap: 1,
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <ToggleButton
+                      value="Short"
+                      disableTouchRipple
+                      sx={{
+                        color: 'var(--primary-color)',
+                        borderRadius: '2px',
+                        height: '44px',
+                        width: '49%',
+                        border: '1px solid var(--border-color)',
+                        '&:hover': {
+                          background: 'var(--staking-color)',
+                        },
+                        '&:active': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&:focus': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&.Mui-selected': {
+                          color: '#282828',
+                          background: 'var(--primary-color)',
+                          '&:hover': {
+                            background: 'var(--primary-color)',
+                          },
+                        },
+                      }}
+                    >
+                      6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
+                    </ToggleButton>
+
+                    <ToggleButton
+                      value="Long"
+                      disableTouchRipple
+                      sx={{
+                        color: 'var(--primary-color)',
+                        borderRadius: '2px',
+                        height: '44px',
+                        width: '49%',
+                        border: '1px solid var(--border-color)',
+                        '&:hover': {
+                          background: 'var(--staking-color)',
+                        },
+                        '&:active': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&:focus': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&.Mui-selected': {
+                          color: '#282828',
+                          background: 'var(--primary-color)',
+                          '&:hover': {
+                            background: 'var(--primary-color)',
+                          },
+                        },
+                      }}
+                    >
+                      1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <Box className="d-flex" sx={{ gap: 3, mt: 1 }}></Box>
+                </Box>
+
+                <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      Rewards you will receive in INEX
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      {rewards} INEX
+                    </Typography>
+                  </Box>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      Final Amount you will receive
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      {amt} {token} + {rewards} INEX
+                    </Typography>
+                  </Box>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      Transaction Cost
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      N/A
+                    </Typography>
+                  </Box>
+                  <Button
+                    type="primary"
+                    className="atn-btn atn-btn-round stake-btn"
+                    block
+                    onClick={submitStake}
+                    disabled={!!error || !amt || !type}
+                    loading={loadings}
+                    style={{ marginTop: 25 }}
+                  >
+                    {' '}
+                    Stake
+                  </Button>
                 </Box>
               </Box>
-            </Box>
 
-            <Box className="d-flex flex-direction-column" sx={{ pt: 1, gap:1 }}>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  Rewards
-                </Typography>
-                <Box className="d-flex align-items-center">
-                  <img
-                    src={require(`../../assets/token-icons/INEX.png`).default}
-                    alt={'INEX'}
-                    width={30}
-                    height={30}
-                    style={{ marginRight: '8px' }}
-                  />
-                  {'INEX'}
-                  {/* <Box
+              <Box
+                className="d-flex flex-direction-column"
+                width={'100%'}
+                sx={{
+                  backgroundColor: 'var(--staking-color)',
+                  p: 2,
+                }}
+              >
+                <Box className="d-flex flex-direction-column">
+                  <Typography fontSize={'15px'} textAlign={'left'}>
+                    Calculate your approximate rewards
+                  </Typography>
+                  <Box className="d-flex" sx={{ gap: 3, mt: 2 }}>
+                    <TextField
+                      variant="outlined"
+                      placeholder="Enter Amount"
+                      InputLabelProps={{ shrink: true }}
+                      // InputProps={{ style: { color: 'red' } }}
+                      sx={{ mb: 2, width: '60%', color: 'red' }}
+                      size="small" // Make the input box smaller
+                      value={calcAmt}
+                      onChange={(e) => {
+                        setcalcAmt(e.target.value);
+                        setSixMonthReward(
+                          Number(e.target.value) *
+                            (selectedToken?.stakingPercentage6months / 100) ?? 0
+                        );
+                        setOneYearReward(
+                          Number(e.target.value) *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
+                        );
+                      }}
+                    />
+                    <Box>
+                      <img
+                        src={
+                          require(`../../assets/token-icons/${token}.png`)
+                            .default
+                        }
+                        alt={token}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {token}
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box
+                  className="d-flex flex-direction-column"
+                  sx={{ pt: 1, gap: 1 }}
+                >
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      Rewards
+                    </Typography>
+                    <Box className="d-flex align-items-center">
+                      <img
+                        src={
+                          require(`../../assets/token-icons/INEX.png`).default
+                        }
+                        alt={'INEX'}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {'INEX'}
+                      {/* <Box
                     className="d-flex align-items-center"
                     sx={{
                       backgroundColor: 'var(--primary-color)',
@@ -893,482 +966,520 @@ const StakingTop = ({refresh, handleRefresh}) => {
                   >
                     Vesting
                   </Box> */}
+                    </Box>
+                  </Box>
+
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      6 months ({selectedToken?.stakingPercentage6months}%)
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      {sixMonthReward.toFixed(2)}
+                    </Typography>
+                  </Box>
+
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      1 year ({selectedToken?.stakingPercentage1year}%)
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                    >
+                      {oneYearReward.toFixed(2)}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  6 months ({selectedToken?.stakingPercentage6months}%)
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'13px'}
-                  textAlign={'left'}
-                >
-                  {sixMonthReward.toFixed(2)}
-                </Typography>
-              </Box>
-
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
-                  1 year ({selectedToken?.stakingPercentage1year}%)
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'13px'}
-                  textAlign={'left'}
-                >
-                  {oneYearReward.toFixed(2)}
-                </Typography>
-              </Box>
             </Box>
-          </Box>
-        </Box>
-      </div>
-    </>
-    :
-
-    <>
-      <div className="orange width-100 padding-t-2x align-items-center d-flex flex-direction-column justify-content-center mb-4">
-        <h1 className="padding-b-1x font_40x">
-        {localStorage.getItem("userlogged") === 'normal' ?
-          <>
-          <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
-          Staking
-          </>
-          :
-          <>
-          <img src={nectar} alt="nectar" style={{ marginRight: '30px' }} />
-          Nectar / Staking
-          </>
-        }
-        </h1>
-        <Typography variant="body1" fontSize={"18px"} sx={{ my: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
-        To unlock the full potential of earning with Indexx Staking, you should consider staking either tokens or stock tokens for a minimum period of 6 or 12 months. This strategic move paves the way for substantial financial growth and success in your investment journey.
-      </Typography>
-      </div>
-      <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            width: '100%',
-            background: 'var(--main-body)',
-            gap: 5,
-            //   pl: 1,
-            pt: 0.4,
-          }}
-        >
-          <Box className="d-flex " width={'48%'} sx={{gap:4}}>
-          <Typography
-            fontSize={'25px'}
-            textAlign={'left'}
-          >
-            Staking type
-          </Typography>
-          <Select
-            value={stakingtype}
-            onChange={(e) => {
-              setStakingtype(e.target.value);
-            }}
-            variant="standard"
-            //   InputLabelProps={{ shrink: true }}
-            sx={{
-              width: '72.5%',
-              borderRadius: 0,
-              background: 'var(--main-body)',
-              color: 'var(--body_color)',
-              border: 'none',
-              outline: 'none',
-              padding: 0,
-              fontSize: '25px',
-            }}
-            size="small"
-            disableUnderline
-          >
-            <MenuItem key="token" value="token">
-              Token
-            </MenuItem>
-            <MenuItem key="stock-token" value="stock-token">
-              Stock Token
-            </MenuItem>
-          </Select>
-          </Box>
-          <Box className="d-flex " width={'45%'}>
-          <Typography fontSize={'25px'} textAlign={'left'}>
-            Blockchain
-          </Typography>
-          <Box
-            sx={{
-              backgroundColor: 'var(--staking-color)',
-              borderRadius: '2px',
-              fontSize: '16px',
-              height: '40px',
-              py: 0.7,
-              px: 2,
-              ml: 6,
-              alignSelf: 'center',
-            }}
-          >
-            <img
-              src={bnb}
-              alt="BSC"
-              width={30}
-              height={30}
-              style={{ marginRight: '8px' }}
-            />
-            BSC Mainnet
-          </Box>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'start',
-            alignItems: 'baseline',
-            width: '100%',
-            background: 'var(--main-body)',
-            gap: 3,
-            //   pl: 1,
-            pt: 0.4,
-            mt: 1,
-          }}
-        >
-          <Typography
-            //   variant="text"
-            fontSize={'25px'}
-            //   fontWeight={600}
-            textAlign={'left'}
-          >
-            Select Token
-          </Typography>
-          <Select
-            value={token}
-            onChange={(e) => {
-              setToken(e.target.value);
-              let selectedCoin = initialTokens.find(
-                (x) => x.title === e.target.value
-              );
-              setSelectedToken(selectedCoin);
-              getCoinBalance(e.target.value);
-              let inputAmt = amt;
-              let minimumRequired = 50;
-              // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-              if (
-                ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
-              ) {
-                minimumRequired = 0.01;
-              }
-
-              if (inputAmt < minimumRequired) {
-                setError(
-                  `Minimum staking amount must be at least ${minimumRequired}.`
-                );
-              } else if (inputAmt > userBalance) {
-                setError(
-                  `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
-                );
-              } else {
-                setError('');
-
-                if (type === 'Long') {
-                  setRewards(inputAmt * selectedCoin.stakingPercentage1year);
-                  setFinalAmount(
-                    inputAmt * (1 + selectedCoin.stakingPercentage1year)
-                  );
-                } else if (type === 'Short') {
-                  setRewards(inputAmt * selectedCoin.stakingPercentage6months);
-                  setFinalAmount(
-                    inputAmt * (1 + selectedCoin.stakingPercentage6months)
-                  );
-                }
-              }
-            }}
-            variant="standard"
-            //   InputLabelProps={{ shrink: true }}
-            sx={{
-              width: '35%',
-              borderRadius: 0,
-              background: 'var(--main-body)',
-              color: 'var(--body_color)',
-              border: 'none',
-              outline: 'none',
-              padding: 0,
-              fontSize: '25px',
-            }}
-            size="small"
-            disableUnderline
-          >
-            {initialTokens.map((token) => (
-              <MenuItem key={token.title} value={token.title}>
-                <img
-                  src={
-                    require(`../../assets/token-icons/${token.image}.png`)
-                      .default
-                  }
-                  alt={token.title}
-                  width={30}
-                  height={30}
-                  style={{ marginRight: '8px' }}
-                />
-                {token.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            width: '100%',
-            background: 'var(--main-body)',
-            gap: 5,
-            //   pl: 1,
-            pt: 0.4,
-            mt: 3,
-          }}
-        >
-          <Box className="d-flex flex-direction-column" width={'48%'}>
-            <Box className="d-flex" sx={{ gap: 1, mb: 8.7 }}>
-              <Button
-                variant="contained"
-                disableTouchRipple
-                onClick={() =>
-                  navigate('/indexx-exchange/buy-sell/deposit-crypto')
-                }
-                className='ant-btn ant-btn-primary stake-btn'
-                style={{height:"44px"}}
-              >
-                Deposit
-              </Button>
-              <Button
-                variant="outlined"
-                disableTouchRipple
-                className='ant-btn stake-outlined-btn'
-                onClick={() =>
-                  navigate('/indexx-exchange/buy-sell/withdraw-crypto')
-                }
-                // sx={{
-                //   borderColor: 'var(--primary-color)',
-                //   borderRadius: '2px',
-                //   color: 'var(--primary-color)',
-                //   height: '44px',
-                //   px: 1,
-                //   textTransform: 'none',
-                //   fontSize: '16px',
-                //   boxShadow: 'none',
-                //   '&:hover': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //   },
-                //   '&:active': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //     background: 'transparent',
-                //   },
-                //   '&:focus': {
-                //     borderColor: 'var(--secondary-color)',
-                //     color: 'var(--secondary-color)',
-                //     boxShadow: 'none',
-                //     background: 'transparent',
-                //   },
-                // }}
-              >
-                Withdraw
-              </Button>
-            </Box>
-
-            <Box
-              className="d-flex flex-direction-column"
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="orange width-100 padding-t-2x align-items-center d-flex flex-direction-column justify-content-center mb-4">
+            <h1 className="padding-b-1x font_40x">
+              {localStorage.getItem('userlogged') === 'normal' ? (
+                <>
+                  <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
+                  Staking
+                </>
+              ) : (
+                <>
+                  <img
+                    src={nectar}
+                    alt="nectar"
+                    style={{ marginRight: '30px' }}
+                  />
+                  Nectar / Staking
+                </>
+              )}
+            </h1>
+            <Typography
+              variant="body1"
+              fontSize={'18px'}
               sx={{
-                mt: 1,
-                backgroundColor: 'var(--staking-color)',
-                pl: 2,
-                pt: 1,
-                borderRadius: '2px',
+                my: 2,
+                color: 'var(--body_color)',
+                textAlign: 'center',
+                maxWidth: '1000px',
+                mx: 'auto',
+                lineHeight: '1.5',
               }}
             >
-              <Typography variant="text" fontSize={'25px'} textAlign={'left'}>
-                Balance: {userBalance}
-              </Typography>
-              <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
-                <TextField
-                  variant="outlined"
-                  placeholder="Enter Amount"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{ mb: 2, width: '60%' }}
-                  size="small" // Make the input box smaller
-                  value={amt}
+              To unlock the full potential of earning with Indexx Staking, you
+              should consider staking either tokens or stock tokens for a
+              minimum period of 6 or 12 months. This strategic move paves the
+              way for substantial financial growth and success in your
+              investment journey.
+            </Typography>
+          </div>
+          <div className="padding-t-1x width-100 bs_wallet_top_banner position-relative">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                width: '100%',
+                background: 'var(--main-body)',
+                gap: 5,
+                //   pl: 1,
+                pt: 0.4,
+              }}
+            >
+              <Box className="d-flex " width={'48%'} sx={{ gap: 4 }}>
+                <Typography fontSize={'25px'} textAlign={'left'}>
+                  Staking type
+                </Typography>
+                <Select
+                  value={stakingtype}
                   onChange={(e) => {
-                    const inputAmt = e.target.value;
-                    setAmt(inputAmt);
-                    let minimumRequired = 50;
-                    // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-                    if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)) {
-                      minimumRequired = 0.01;
-                    }
-
-                    if (inputAmt < minimumRequired) {
-                      setError(
-                        `Minimum staking amount must be at least ${minimumRequired}.`
-                      );
-                    } else if (inputAmt > userBalance) {
-                      setError(
-                        `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
-                      );
-                    } else {
-                      setError('');
-
-                      if (type === 'Long') {
-                        setRewards(
-                          inputAmt *
-                            (selectedToken?.stakingPercentage1year / 100) ?? 0
-                        );
-                        setFinalAmount(
-                          inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year / 100 ??
-                              0)
-                        );
-                      } else if (type === 'Short') {
-                        setRewards(
-                          inputAmt *
-                            (selectedToken?.stakingPercentage1year / 100) ?? 0
-                        );
-                        setFinalAmount(
-                          inputAmt *
-                            (1 + selectedToken?.stakingPercentage1year / 100 ??
-                              0)
-                        );
-                      }
-                    }
+                    setStakingtype(e.target.value);
                   }}
-                  error={!!error}
-                  helperText={error}
-                />
-                <Box>
+                  variant="standard"
+                  //   InputLabelProps={{ shrink: true }}
+                  sx={{
+                    width: '72.5%',
+                    borderRadius: 0,
+                    background: 'var(--main-body)',
+                    color: 'var(--body_color)',
+                    border: 'none',
+                    outline: 'none',
+                    padding: 0,
+                    fontSize: '25px',
+                  }}
+                  size="small"
+                  disableUnderline
+                >
+                  <MenuItem key="token" value="token">
+                    Token
+                  </MenuItem>
+                  <MenuItem key="stock-token" value="stock-token">
+                    Stock Token
+                  </MenuItem>
+                </Select>
+              </Box>
+              <Box className="d-flex " width={'45%'}>
+                <Typography fontSize={'25px'} textAlign={'left'}>
+                  Blockchain
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: 'var(--staking-color)',
+                    borderRadius: '2px',
+                    fontSize: '16px',
+                    height: '40px',
+                    py: 0.7,
+                    px: 2,
+                    ml: 6,
+                    alignSelf: 'center',
+                  }}
+                >
                   <img
-                    src={
-                      require(`../../assets/token-icons/${token}.png`).default
-                    }
-                    alt={token}
+                    src={bnb}
+                    alt="BSC"
                     width={30}
                     height={30}
                     style={{ marginRight: '8px' }}
                   />
-                  {token}
+                  BSC Mainnet
                 </Box>
               </Box>
             </Box>
-
             <Box
-              className="d-flex flex-direction-column staking-toggle"
-              sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'start',
+                alignItems: 'baseline',
+                width: '100%',
+                background: 'var(--main-body)',
+                gap: 3,
+                //   pl: 1,
+                pt: 0.4,
+                mt: 1,
+              }}
             >
               <Typography
-                variant="text"
-                fontSize={'18px'}
+                //   variant="text"
+                fontSize={'25px'}
+                //   fontWeight={600}
                 textAlign={'left'}
-                pb={0.4}
               >
-                <img
-                  src={lock}
-                  alt="lock"
-                  style={{ height: '25px', marginRight: '10px' }}
-                />
-                Lock-up Period
+                Select Token
               </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                value={type}
-                exclusive
-                onChange={handleChange}
-                aria-label="Platform"
-                sx={{
-                  width: '100%',
-                  gap: 1,
-                  justifyContent: 'space-between',
-                }}
-              >
-                <ToggleButton
-                  value="Short"
-                  disableTouchRipple
-                  sx={{
-                    color: 'var(--primary-color)',
-                    borderRadius: '2px',
-                    height: '44px',
-                    width: '49%',
-                    border: '1px solid var(--border-color)',
-                    '&:hover': {
-                      background: 'var(--staking-color)',
-                    },
-                    '&:active': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&:focus': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&.Mui-selected': {
-                      color: '#282828',
-                      background: 'var(--primary-color)',
-                      '&:hover': {
-                        background: 'var(--primary-color)',
-                      },
-                    },
-                  }}
-                >
-                  6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
-                </ToggleButton>
+              <Select
+                value={token}
+                onChange={(e) => {
+                  setToken(e.target.value);
+                  let selectedCoin = initialTokens.find(
+                    (x) => x.title === e.target.value
+                  );
+                  setSelectedToken(selectedCoin);
+                  getCoinBalance(e.target.value);
+                  let inputAmt = amt;
+                  let minimumRequired = 50;
+                  // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                  if (
+                    ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(e.target.value)
+                  ) {
+                    minimumRequired = 0.01;
+                  }
 
-                <ToggleButton
-                  value="Long"
-                  disableTouchRipple
+                  if (inputAmt < minimumRequired) {
+                    setError(
+                      `Minimum staking amount must be at least ${minimumRequired}.`
+                    );
+                  } else if (inputAmt > userBalance) {
+                    setError(
+                      `Insufficient balance available to stake. Please buy ${e.target.value} or deposit ${e.target.value}.`
+                    );
+                  } else {
+                    setError('');
+
+                    if (type === 'Long') {
+                      setRewards(
+                        inputAmt * selectedCoin.stakingPercentage1year
+                      );
+                      setFinalAmount(
+                        inputAmt * (1 + selectedCoin.stakingPercentage1year)
+                      );
+                    } else if (type === 'Short') {
+                      setRewards(
+                        inputAmt * selectedCoin.stakingPercentage6months
+                      );
+                      setFinalAmount(
+                        inputAmt * (1 + selectedCoin.stakingPercentage6months)
+                      );
+                    }
+                  }
+                }}
+                variant="standard"
+                //   InputLabelProps={{ shrink: true }}
+                sx={{
+                  width: '35%',
+                  borderRadius: 0,
+                  background: 'var(--main-body)',
+                  color: 'var(--body_color)',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  fontSize: '25px',
+                }}
+                size="small"
+                disableUnderline
+              >
+                {initialTokens.map((token) => (
+                  <MenuItem key={token.title} value={token.title}>
+                    <img
+                      src={
+                        require(`../../assets/token-icons/${token.image}.png`)
+                          .default
+                      }
+                      alt={token.title}
+                      width={30}
+                      height={30}
+                      style={{ marginRight: '8px' }}
+                    />
+                    {token.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                width: '100%',
+                background: 'var(--main-body)',
+                gap: 5,
+                //   pl: 1,
+                pt: 0.4,
+                mt: 3,
+              }}
+            >
+              <Box className="d-flex flex-direction-column" width={'48%'}>
+                <Box className="d-flex" sx={{ gap: 1, mb: 8.7 }}>
+                  <Button
+                    variant="contained"
+                    disableTouchRipple
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/deposit-crypto')
+                    }
+                    className="ant-btn ant-btn-primary stake-btn"
+                    style={{ height: '44px' }}
+                  >
+                    Deposit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    disableTouchRipple
+                    className="ant-btn stake-outlined-btn"
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+                    }
+                    // sx={{
+                    //   borderColor: 'var(--primary-color)',
+                    //   borderRadius: '2px',
+                    //   color: 'var(--primary-color)',
+                    //   height: '44px',
+                    //   px: 1,
+                    //   textTransform: 'none',
+                    //   fontSize: '16px',
+                    //   boxShadow: 'none',
+                    //   '&:hover': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //   },
+                    //   '&:active': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //     background: 'transparent',
+                    //   },
+                    //   '&:focus': {
+                    //     borderColor: 'var(--secondary-color)',
+                    //     color: 'var(--secondary-color)',
+                    //     boxShadow: 'none',
+                    //     background: 'transparent',
+                    //   },
+                    // }}
+                  >
+                    Withdraw
+                  </Button>
+                </Box>
+
+                <Box
+                  className="d-flex flex-direction-column"
                   sx={{
-                    color: 'var(--primary-color)',
+                    mt: 1,
+                    backgroundColor: 'var(--staking-color)',
+                    pl: 2,
+                    pt: 1,
                     borderRadius: '2px',
-                    height: '44px',
-                    width: '49%',
-                    border: '1px solid var(--border-color)',
-                    '&:hover': {
-                      background: 'var(--staking-color)',
-                    },
-                    '&:active': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&:focus': {
-                      borderColor: 'var(--secondary-color)',
-                      color: 'var(--secondary-color)',
-                      boxShadow: 'none',
-                      background: 'transparent',
-                    },
-                    '&.Mui-selected': {
-                      color: '#282828',
-                      background: 'var(--primary-color)',
-                      '&:hover': {
-                        background: 'var(--primary-color)',
-                      },
-                    },
                   }}
                 >
-                  1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
-                </ToggleButton>
-              </ToggleButtonGroup>
-              {/* <FormControl>
+                  <Typography
+                    variant="text"
+                    fontSize={'25px'}
+                    textAlign={'left'}
+                  >
+                    Balance: {userBalance}
+                  </Typography>
+                  <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
+                    <TextField
+                      variant="outlined"
+                      placeholder="Enter Amount"
+                      InputLabelProps={{ shrink: true }}
+                      sx={{ mb: 2, width: '60%' }}
+                      size="small" // Make the input box smaller
+                      value={amt}
+                      onChange={(e) => {
+                        const inputAmt = e.target.value;
+                        setAmt(inputAmt);
+                        let minimumRequired = 50;
+                        // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                        if (
+                          ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(token)
+                        ) {
+                          minimumRequired = 0.01;
+                        }
+
+                        if (inputAmt < minimumRequired) {
+                          setError(
+                            `Minimum staking amount must be at least ${minimumRequired}.`
+                          );
+                        } else if (inputAmt > userBalance) {
+                          setError(
+                            `Insufficient balance available to stake. Please buy ${token} or deposit ${token}.`
+                          );
+                        } else {
+                          setError('');
+
+                          if (type === 'Long') {
+                            setRewards(
+                              inputAmt *
+                                (selectedToken?.stakingPercentage1year / 100) ??
+                                0
+                            );
+                            setFinalAmount(
+                              inputAmt *
+                                (1 +
+                                  selectedToken?.stakingPercentage1year / 100 ??
+                                  0)
+                            );
+                          } else if (type === 'Short') {
+                            setRewards(
+                              inputAmt *
+                                (selectedToken?.stakingPercentage1year / 100) ??
+                                0
+                            );
+                            setFinalAmount(
+                              inputAmt *
+                                (1 +
+                                  selectedToken?.stakingPercentage1year / 100 ??
+                                  0)
+                            );
+                          }
+                        }
+                      }}
+                      error={!!error}
+                      helperText={error}
+                    />
+                    <Box>
+                      <img
+                        src={
+                          require(`../../assets/token-icons/${token}.png`)
+                            .default
+                        }
+                        alt={token}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {token}
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box
+                  className="d-flex flex-direction-column staking-toggle"
+                  sx={{ mt: 3, pt: 0.6, borderRadius: '2px' }}
+                >
+                  <Typography
+                    variant="text"
+                    fontSize={'18px'}
+                    textAlign={'left'}
+                    pb={0.4}
+                  >
+                    <img
+                      src={lock}
+                      alt="lock"
+                      style={{ height: '25px', marginRight: '10px' }}
+                    />
+                    Lock-up Period
+                  </Typography>
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={type}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="Platform"
+                    sx={{
+                      width: '100%',
+                      gap: 1,
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <ToggleButton
+                      value="Short"
+                      disableTouchRipple
+                      sx={{
+                        color: 'var(--primary-color)',
+                        borderRadius: '2px',
+                        height: '44px',
+                        width: '49%',
+                        border: '1px solid var(--border-color)',
+                        '&:hover': {
+                          background: 'var(--staking-color)',
+                        },
+                        '&:active': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&:focus': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&.Mui-selected': {
+                          color: '#282828',
+                          background: 'var(--primary-color)',
+                          '&:hover': {
+                            background: 'var(--primary-color)',
+                          },
+                        },
+                      }}
+                    >
+                      6 Months ({selectedToken?.stakingPercentage6months ?? 0}%)
+                    </ToggleButton>
+
+                    <ToggleButton
+                      value="Long"
+                      disableTouchRipple
+                      sx={{
+                        color: 'var(--primary-color)',
+                        borderRadius: '2px',
+                        height: '44px',
+                        width: '49%',
+                        border: '1px solid var(--border-color)',
+                        '&:hover': {
+                          background: 'var(--staking-color)',
+                        },
+                        '&:active': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&:focus': {
+                          borderColor: 'var(--secondary-color)',
+                          color: 'var(--secondary-color)',
+                          boxShadow: 'none',
+                          background: 'transparent',
+                        },
+                        '&.Mui-selected': {
+                          color: '#282828',
+                          background: 'var(--primary-color)',
+                          '&:hover': {
+                            background: 'var(--primary-color)',
+                          },
+                        },
+                      }}
+                    >
+                      1 Year ({selectedToken?.stakingPercentage1year ?? 0}%)
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  {/* <FormControl>
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
@@ -1407,47 +1518,71 @@ const StakingTop = ({refresh, handleRefresh}) => {
                   />
                 </RadioGroup>
               </FormControl> */}
-              <Box className="d-flex" sx={{ gap: 3, mt: 1 }}></Box>
-            </Box>
+                  <Box className="d-flex" sx={{ gap: 3, mt: 1 }}></Box>
+                </Box>
 
-            <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Rewards you will receive in INEX
-                </Typography>
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {rewards} INEX
-                </Typography>
-              </Box>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Final Amount you will receive
-                </Typography>
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  {amt} {token} + {rewards} INEX
-                </Typography>
-              </Box>
-              <Box className="d-flex justify-content-between">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Transaction Cost
-                </Typography>
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  N/A
-                </Typography>
-              </Box>
-              <Button
-            type="primary"
-            className="atn-btn atn-btn-round stake-btn"
-            block
-                onClick={submitStake}
-                disabled={!!error || !amt || !type}
-            loading={loadings}
-            style={{marginTop:12}}
-          >
-            {' '}
-            Stake
-          </Button>
-              {/* <Button
+                <Box className="d-flex flex-direction-column" sx={{ mt: 2 }}>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      Rewards you will receive in INEX
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      {rewards} INEX
+                    </Typography>
+                  </Box>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      Final Amount you will receive
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      {amt} {token} + {rewards} INEX
+                    </Typography>
+                  </Box>
+                  <Box className="d-flex justify-content-between">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      Transaction Cost
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      N/A
+                    </Typography>
+                  </Box>
+                  <Button
+                    type="primary"
+                    className="atn-btn atn-btn-round stake-btn"
+                    block
+                    onClick={submitStake}
+                    disabled={!!error || !amt || !type}
+                    loading={loadings}
+                    style={{ marginTop: 12 }}
+                  >
+                    {' '}
+                    Stake
+                  </Button>
+                  {/* <Button
                 variant="contained"
                 disableTouchRipple
                 disabled={!!error || !amt || !type}
@@ -1471,30 +1606,30 @@ const StakingTop = ({refresh, handleRefresh}) => {
               >
                 Stake
               </Button> */}
-            </Box>
-          </Box>
+                </Box>
+              </Box>
 
-          <Box className="d-flex flex-direction-column" width={'45%'}>
-            <Box
-              className="d-flex"
-              sx={{
-                gap: 3,
-                mb: 2.5,
-                background: 'var(--primary-color)',
-                fontSize: '50px',
-                width: '91%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#343434',
-                py: 1,
-              }}
-            >
-              APR:
-              {type === 'Short'
-                ? selectedToken?.stakingPercentage6months
-                : selectedToken?.stakingPercentage1year}
-              %
-              {/* <Box
+              <Box className="d-flex flex-direction-column" width={'45%'}>
+                <Box
+                  className="d-flex"
+                  sx={{
+                    gap: 3,
+                    mb: 2.5,
+                    background: 'var(--primary-color)',
+                    fontSize: '50px',
+                    width: '91%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#343434',
+                    py: 1,
+                  }}
+                >
+                  APR:
+                  {type === 'Short'
+                    ? selectedToken?.stakingPercentage6months
+                    : selectedToken?.stakingPercentage1year}
+                  %
+                  {/* <Box
                 sx={{
                   backgroundColor: 'var(--staking-color)',
                   borderRadius: '2px',
@@ -1506,116 +1641,133 @@ const StakingTop = ({refresh, handleRefresh}) => {
               >
                 APR:14.03%
               </Box> */}
-            </Box>
-
-            <Box className="d-flex flex-direction-column" sx={{ mt: 1, pt: 1 }}>
-              <Typography
-                //   variant="text"
-                fontSize={'25px'}
-                //   fontWeight={600}
-                textAlign={'left'}
-              >
-                Calculate your approximate rewards
-              </Typography>
-              <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
-                <TextField
-                  variant="outlined"
-                  placeholder="Enter Amount"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{ mb: 2, width: '60%' }}
-                  size="small" // Make the input box smaller
-                  value={calcAmt}
-                  onChange={(e) => {
-                    setcalcAmt(e.target.value);
-                    setSixMonthReward(
-                      Number(e.target.value) *
-                        (selectedToken?.stakingPercentage6months / 100) ?? 0
-                    );
-                    setOneYearReward(
-                      Number(e.target.value) *
-                        (selectedToken?.stakingPercentage1year / 100) ?? 0
-                    );
-                  }}
-                />
-                <Box>
-                  <img
-                    src={
-                      require(`../../assets/token-icons/${token}.png`).default
-                    }
-                    alt={token}
-                    width={30}
-                    height={30}
-                    style={{ marginRight: '8px' }}
-                  />
-                  {token}
                 </Box>
-              </Box>
-            </Box>
 
-            <Box className="d-flex" sx={{ gap: 7, mt: 3, pt: 1 }}>
-              <Box className="d-flex flex-direction-column">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  Rewards
-                </Typography>
-                <Box className="d-flex align-items-center" sx={{ mt: 0.1 }}>
-                  <img
-                    src={require(`../../assets/token-icons/INEX.png`).default}
-                    alt={'INEX'}
-                    width={30}
-                    height={30}
-                    style={{ marginRight: '8px' }}
-                  />
-                  {'INEX'}
-                  <Box
-                    className="d-flex align-items-center"
-                    sx={{
-                      backgroundColor: 'var(--primary-color)',
-                      color: '#282828',
-                      px: 1,
-                      ml: 1,
-                      height: '44px',
-                      borderRadius: '2px',
-                    }}
+                <Box
+                  className="d-flex flex-direction-column"
+                  sx={{ mt: 1, pt: 1 }}
+                >
+                  <Typography
+                    //   variant="text"
+                    fontSize={'25px'}
+                    //   fontWeight={600}
+                    textAlign={'left'}
                   >
-                    Vesting
+                    Calculate your approximate rewards
+                  </Typography>
+                  <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
+                    <TextField
+                      variant="outlined"
+                      placeholder="Enter Amount"
+                      InputLabelProps={{ shrink: true }}
+                      sx={{ mb: 2, width: '60%' }}
+                      size="small" // Make the input box smaller
+                      value={calcAmt}
+                      onChange={(e) => {
+                        setcalcAmt(e.target.value);
+                        setSixMonthReward(
+                          Number(e.target.value) *
+                            (selectedToken?.stakingPercentage6months / 100) ?? 0
+                        );
+                        setOneYearReward(
+                          Number(e.target.value) *
+                            (selectedToken?.stakingPercentage1year / 100) ?? 0
+                        );
+                      }}
+                    />
+                    <Box>
+                      <img
+                        src={
+                          require(`../../assets/token-icons/${token}.png`)
+                            .default
+                        }
+                        alt={token}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {token}
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box className="d-flex" sx={{ gap: 7, mt: 3, pt: 1 }}>
+                  <Box className="d-flex flex-direction-column">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      Rewards
+                    </Typography>
+                    <Box className="d-flex align-items-center" sx={{ mt: 0.1 }}>
+                      <img
+                        src={
+                          require(`../../assets/token-icons/INEX.png`).default
+                        }
+                        alt={'INEX'}
+                        width={30}
+                        height={30}
+                        style={{ marginRight: '8px' }}
+                      />
+                      {'INEX'}
+                      <Box
+                        className="d-flex align-items-center"
+                        sx={{
+                          backgroundColor: 'var(--primary-color)',
+                          color: '#282828',
+                          px: 1,
+                          ml: 1,
+                          height: '44px',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        Vesting
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  <Box className="d-flex flex-direction-column">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      6 months ({selectedToken?.stakingPercentage6months}%)
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                      sx={{ pt: 0.85 }}
+                    >
+                      {sixMonthReward.toFixed(2)}
+                    </Typography>
+                  </Box>
+
+                  <Box className="d-flex flex-direction-column">
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                    >
+                      1 year ({selectedToken?.stakingPercentage1year}%)
+                    </Typography>
+                    <Typography
+                      variant="text"
+                      fontSize={'18px'}
+                      textAlign={'left'}
+                      sx={{ pt: 0.85 }}
+                    >
+                      {oneYearReward.toFixed(2)}
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
-
-              <Box className="d-flex flex-direction-column">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  6 months ({selectedToken?.stakingPercentage6months}%)
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'18px'}
-                  textAlign={'left'}
-                  sx={{ pt: 0.85 }}
-                >
-                  {sixMonthReward.toFixed(2)}
-                </Typography>
-              </Box>
-
-              <Box className="d-flex flex-direction-column">
-                <Typography variant="text" fontSize={'18px'} textAlign={'left'}>
-                  1 year ({selectedToken?.stakingPercentage1year}%)
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'18px'}
-                  textAlign={'left'}
-                  sx={{ pt: 0.85 }}
-                >
-                  {oneYearReward.toFixed(2)}
-                </Typography>
-              </Box>
             </Box>
-          </Box>
-        </Box>
-      </div>
-    </>
-  }
-
+          </div>
+        </>
+      )}
     </>
   );
 };

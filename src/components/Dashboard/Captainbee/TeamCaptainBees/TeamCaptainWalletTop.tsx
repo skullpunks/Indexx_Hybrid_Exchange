@@ -42,33 +42,69 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({ email }) => 
 
     const getAllUserWallet = async () => {
         if (email) {
-            let userWallets = await getUserWallets(email);
-            let usersWallet = userWallets.data;
+            // let userWallets = await getUserWallets(email);
+            // let usersWallet = userWallets.data;
+            // let totalBalInUSD = 0;
+            // for (let i = 0; i < usersWallet.length; i++) {
+            //     if (usersWallet[i].coinType === "Crypto") {
+            //         let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
+            //         let price = Number(res.data.results.data);
+            //         totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+            //     } else {
+            //         totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+            //     }
+            // }
+            // setTotalBalanceInUSD(totalBalInUSD)
+
+            const userWallets = await getUserWallets(email);
+            const usersWallet = userWallets.data;
             let totalBalInUSD = 0;
-            for (let i = 0; i < usersWallet.length; i++) {
-                if (usersWallet[i].coinType === "Crypto") {
-                    let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                    let price = Number(res.data.results.data);
-                    totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+    
+            usersWallet.forEach((wallet: any) => {
+                const balance = Number(wallet.coinBalance);
+                if (wallet.coinType === "Crypto" && wallet.coinPrice) {
+                    const price = Number(wallet.coinPrice);
+                    if (!isNaN(price)) {
+                        totalBalInUSD += balance * price;
+                    }
                 } else {
-                    totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+                    totalBalInUSD += balance;
                 }
-            }
-            setTotalBalanceInUSD(totalBalInUSD)
+            });
+    
+            setTotalBalanceInUSD(totalBalInUSD);
         } else {
-            let userWallets = await getUserWallets(decoded.email);
-            let usersWallet = userWallets.data;
+            // let userWallets = await getUserWallets(decoded.email);
+            // let usersWallet = userWallets.data;
+            // let totalBalInUSD = 0;
+            // for (let i = 0; i < usersWallet.length; i++) {
+            //     if (usersWallet[i].coinType === "Crypto") {
+            //         let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
+            //         let price = Number(res.data.results.data);
+            //         totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+            //     } else {
+            //         totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+            //     }
+            // }
+            // setTotalBalanceInUSD(totalBalInUSD)
+
+            const userWallets = await getUserWallets(decoded.email);
+            const usersWallet = userWallets.data;
             let totalBalInUSD = 0;
-            for (let i = 0; i < usersWallet.length; i++) {
-                if (usersWallet[i].coinType === "Crypto") {
-                    let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                    let price = Number(res.data.results.data);
-                    totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
+    
+            usersWallet.forEach((wallet: any) => {
+                const balance = Number(wallet.coinBalance);
+                if (wallet.coinType === "Crypto" && wallet.coinPrice) {
+                    const price = Number(wallet.coinPrice);
+                    if (!isNaN(price)) {
+                        totalBalInUSD += balance * price;
+                    }
                 } else {
-                    totalBalInUSD += Number(usersWallet[i]?.coinBalance);
+                    totalBalInUSD += balance;
                 }
-            }
-            setTotalBalanceInUSD(totalBalInUSD)
+            });
+    
+            setTotalBalanceInUSD(totalBalInUSD);
         }
     }
 
