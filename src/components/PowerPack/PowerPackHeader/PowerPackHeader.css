@@ -76,7 +76,22 @@
     justify-content: center;
     overflow-x: auto;
     width: 200%;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    overflow: -moz-scrollbars-none;
 }
+
+.scrollable-head::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .power-header{
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+.power-header::-webkit-scrollbar {
+    display: none;
+  }
 .power-header .container {
     width: 45em;
     height: 80px;

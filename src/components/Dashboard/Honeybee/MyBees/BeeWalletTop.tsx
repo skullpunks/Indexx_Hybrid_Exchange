@@ -1,11 +1,11 @@
 import { Button } from 'antd';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import openEye from "../../../../assets/arts/openEye.svg";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 // import comingSoon from "../../../../assets/coming_soon.png";
-import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../../../services/api';
+import { decodeJWT, getUserWallets } from '../../../../services/api';
 
 const BeeWalletTop = () => {
     const navigate = useNavigate();
@@ -34,32 +34,36 @@ const BeeWalletTop = () => {
         // });
     }, []);
 
-
-
     const getAllUserWallet = async () => {
-        let userWallets = await getUserWallets(decoded.email);
-        let usersWallet = userWallets.data;
-        let totalBalInUSD = 0;
-        for (let i = 0; i < usersWallet.length; i++) {
-            if (usersWallet[i].coinType === "Crypto") {
-                let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                let price = Number(res.data.results.data);
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
-                if (usersWallet[i]?.coinStakedBalance)
-                    totalBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
-            } else {
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance);
-            }
+        try {
+            const userWallets = await getUserWallets(decoded.email);
+            const usersWallet = userWallets.data;
+            let totalBalInUSD = 0;
+
+            usersWallet.forEach((wallet: any) => {
+                const balance = Number(wallet.coinBalance);
+                if (wallet.coinType === "Crypto" && wallet.coinPrice) {
+                    const price = Number(wallet.coinPrice);
+                    if (!isNaN(price)) {
+                        totalBalInUSD += balance * price;
+                    }
+                } else {
+                    totalBalInUSD += balance;
+                }
+            });
+
+            setTotalBalanceInUSD(totalBalInUSD);
+        } catch (err) {
+            console.error("Error in getAllUserWallet", err);
         }
-        setTotalBalanceInUSD(totalBalInUSD)
-    }
+    };
 
     const [isVisible, setIsVisible] = useState(true);
 
     const toggleVisibility = () => {
-      setIsVisible(!isVisible);
+        setIsVisible(!isVisible);
     };
-  
+
     return (
         <>
             <div className='border-b-1x orange width-100 pt-3 font_15x'>
@@ -69,13 +73,13 @@ const BeeWalletTop = () => {
                 <h2 className='font_15x'>Estimated Balance</h2>
                 <div className='d-flex flex-align-center color_general'>
                     <h2 className='margin-b-0 font_15x'>$</h2>
-                    {isVisible ? 
-                    <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
-                    :
-                    <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                    {isVisible ?
+                        <h1 className='margin-b-0 font_15x'>{Math.floor(totalBalanceInUSD * 100) / 100}&nbsp;&nbsp;&nbsp;</h1>
+                        :
+                        <h1 className='margin-b-0 font_15x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
                     }
                     <div onClick={toggleVisibility}>
-                        {isVisible ? <VisibilityIcon/> : <VisibilityOffIcon />} 
+                        {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </div>
                 </div>
                 {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>

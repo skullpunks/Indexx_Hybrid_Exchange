@@ -13,7 +13,7 @@ import Bull_back from '../../assets/elite_club/bull_coin.svg';
 import Eagle_back from '../../assets/elite_club/eagle coin.svg';
 import Foxtail_back from '../../assets/elite_club/fox coin.svg';
 
-import crown from '../../assets/elite_club/list_crown.svg';
+import crown from '../../assets/elite_club/elite crown 3.svg';
 import chest from '../../assets/elite_club/chest 1.svg';
 import nft from '../../assets/elite_club/nft logo 1.svg';
 import affiliate from '../../assets/elite_club/affiliate blue 1.svg';

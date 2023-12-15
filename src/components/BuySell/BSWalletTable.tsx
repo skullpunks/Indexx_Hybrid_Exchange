@@ -125,11 +125,7 @@ const BSWalletTable = () => {
     const [sortedCryptoData, setSortedCryptoData] = useState<DataType[]>([]);
     const [sortedStockData, setSortedStockData] = useState<DataType[]>([]);
     const [sortedEtfData, setSortedEtfData] = useState<DataType[]>([]);
-
-    console.log(sortedData);
-    
     const pageSize = 10;
-    const [current, setCurrent] = useState(1);
 
 
     useEffect(() => {

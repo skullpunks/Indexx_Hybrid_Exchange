@@ -34,17 +34,17 @@ const EliteClub = () => {
           gap: 3,
         }}
       >
-      <Menu />
+      {!isMobile && <Menu />}
 
         <Box
           component={"img"}
           src={crown}
           alt='logo'
-          width={"100px"}
+          width={isMobile ? "75px" : "100px"}
         />
 
         <Box sx={{ textAlign: "center", marginTop:"-35px" }}>
-          <Typography fontSize={"60px"} fontWeight={"bold"} textAlign="center" color="var(--primary_color)">
+          <Typography fontSize={isMobile ? "25px" : "60px"} fontWeight={"bold"} textAlign="center" color="var(--primary_color)">
           Indexx Investor Elite Club
           </Typography>
         </Box>

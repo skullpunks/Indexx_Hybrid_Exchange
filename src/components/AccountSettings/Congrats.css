@@ -1,0 +1,107 @@
+.main-box{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--main-body);
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.second-box{
+    position: relative;
+    top: 75px;
+    width: 950px;
+    background-color: var(--main-body);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+}
+
+.congrats {
+    justify-content: center;
+    font-size: 50px;
+    color: #FFB300;
+    font-weight: bold;
+}
+
+.logo-img {
+    width: 150px;
+    height: 150px;
+}
+
+.large-text {
+    color: var(--body_color);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Inter";
+}
+.text-box {
+    color: var(--body_color);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0.5rem;
+    padding-top: 1.5rem;
+    font-size: 13px;
+    font-family: "Inter";
+}
+
+.text-box-2 {
+    color: var(--body_color);
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    /* padding-top: 1.5rem; */
+    font-size: 20px;
+    font-family: "Inter";
+}
+
+.button-box {
+    color: #fff;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 1.5rem;
+    /* margin-bottom: 1.5rem; */
+    display: flex;
+    justify-content: center;
+    font-family: "Inter";
+    font-size: 13px;
+}
+
+.button-btn {
+    background-color: #FFB300;
+    padding-left: 5.2rem;
+    padding-right: 5.2rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    /* border-radius: 0.125rem;  */
+    border: 0;
+    color: #000;
+}
+
+.button-btn:hover {
+    background-color: #FFD000;
+}
+
+@media screen and (min-width: 350px) and (max-width: 1000px) {
+    .second-box{
+        top: 75px;
+        width: 100vw;
+    }
+    
+    .logo-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .congrats {
+        font-size: 30px;
+    }
+} 

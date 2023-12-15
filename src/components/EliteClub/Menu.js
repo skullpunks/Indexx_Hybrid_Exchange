@@ -19,6 +19,8 @@ import Eagle_gif from '../../assets/elite_club/eagle_opt.gif';
 import Foxtail_gif from '../../assets/elite_club/fox_opt.gif';
 import Lion_gif from '../../assets/elite_club/lion_opt.gif';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material';
 
 const Menu = () => {
   const [value, setValue] = useState(0);
@@ -36,6 +38,9 @@ const Menu = () => {
     setDrawerOpen(false);
     // setValue(0);
   };
+
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   const getBackgroundImage = () => {
     switch (value) {
@@ -62,8 +67,8 @@ const Menu = () => {
     <div>
       <button onClick={handleDrawerOpen} style={{
         position:"fixed",
-        top:"110px",
-        left:"45px",
+        top: `${isMobile ? '135px' : '110px'}`,
+        left: `${isMobile ? '25px' : '45px'}`,
         zIndex:"999",
         width:"fit-content",
         background:"transparent",

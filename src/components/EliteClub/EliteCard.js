@@ -18,7 +18,7 @@ const EliteCard = ({ card }) => {
                     <Button
                         // onClick={}
                         sx={{
-                            background: "#5E5E5E",
+                            background: "#000",
                             color: "#fff",
                             border: "1px solid #5E5E5E",
                             borderRadius: "5px",

@@ -906,10 +906,11 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                            {/* {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
                               ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
                               : '0.00')
-                            } {" "}
+                            }  */}
+                            0.00{" "}
                             <span className='font_17x'>
                               INEX
                             </span>
@@ -1196,16 +1197,15 @@ const CaptainDash = () => {
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '49px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {/* ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toFixed(2)
-                              : '0.00')
-                            } */}
-                              ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD
-                              ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInUSD).toFixed(2)
+                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
                               : '0.00')
                             }
                           </Typography>
@@ -1224,18 +1224,17 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {/* {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toFixed(2)
+                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
                               : '0.00')
-                            } {" "} */}
-                            ${(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX).toFixed(2)
-                              : '0.00')
-                            }
+                            } {" "}
                             <span className='font_17x'>
                               INEX
                             </span>
-                          </Typography>
+                          </Typography >
                           <Typography
                             variant="text"
                             fontSize={'22px'}
@@ -1251,8 +1250,8 @@ const CaptainDash = () => {
                           >
                             <img alt="up" src={arrow} />  {staticsData?.affiliateUserProfile?.totalCommissionEarned?.amountInINEX ? "20%" : "0%"}
                           </Typography>
-                        </Box>
-                      </Box>
+                        </Box >
+                      </Box >
                       {/* <Box
                       sx={{
                         background: 'var(--body_background)',
@@ -1269,17 +1268,17 @@ const CaptainDash = () => {
                         xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
                       />
                     </Box> */}
-                    </Box>
-                  </Box>
+                    </Box >
+                  </Box >
 
                   <Box>
                     <CommissionTable />
                   </Box>
-                </Box>
-              </div>
-            </div>
-          </div>
-        </div>) :
+                </Box >
+              </div >
+            </div >
+          </div >
+        </div >) :
         <>
           {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
         </>

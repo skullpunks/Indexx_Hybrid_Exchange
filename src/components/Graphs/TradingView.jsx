@@ -40,13 +40,18 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
   return (
     <div className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
       <AdvancedRealTimeChart
-        style={{ display: 'block' }}
+        //style={{ display: 'block' }}
+        style={
+          "1"
+        }
+        toolbar_bg={"#f1f3f6"}
         symbol={getSymbol(coin)}
         autosize={false}
         theme={theme}
         width={size.width}
         height={size.height + 35}
         allow_symbol_change={false}
+        settings={true}
       />
     </div>
   );

@@ -33,25 +33,30 @@ const BeeWalletTop = () => {
         // });
     });
 
-
-
     const getAllUserWallet = async () => {
-        let userWallets = await getUserWallets(decoded.email);
-        let usersWallet = userWallets.data;
-        let totalBalInUSD = 0;
-        for (let i = 0; i < usersWallet.length; i++) {
-            if (usersWallet[i].coinType === "Crypto") {
-                let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                let price = Number(res.data.results.data);
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
-                if (usersWallet[i]?.coinStakedBalance)
-                    totalBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
-            } else {
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance);
-            }
+        try {
+            const userWallets = await getUserWallets(decoded.email);
+            const usersWallet = userWallets.data;
+            let totalBalInUSD = 0;
+    
+            usersWallet.forEach((wallet: any) => {
+                const balance = Number(wallet.coinBalance);
+                if (wallet.coinType === "Crypto" && wallet.coinPrice) {
+                    const price = Number(wallet.coinPrice);
+                    if (!isNaN(price)) {
+                        totalBalInUSD += balance * price;
+                    }
+                } else {
+                    totalBalInUSD += balance;
+                }
+            });
+    
+            setTotalBalanceInUSD(totalBalInUSD);
+        } catch (err) {
+            console.error("Error in getAllUserWallet", err);
         }
-        setTotalBalanceInUSD(totalBalInUSD)
-    }
+    };
+    
 
     const [isVisible, setIsVisible] = useState(true);
 

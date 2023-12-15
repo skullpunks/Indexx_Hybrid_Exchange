@@ -1,0 +1,31 @@
+div.custom-sel::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+div.custom-sel::-webkit-scrollbar-thumb {
+  background-color: #a9a9a9;
+  border-radius: 6px;
+}
+
+
+@keyframes dots {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75%, 100% {
+    content: '...';
+  }
+}
+
+
+.dots-animation::after {
+  display: inline-block;
+  content: '';
+  animation: dots 1.5s infinite;
+}

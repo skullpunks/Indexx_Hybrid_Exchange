@@ -85,7 +85,13 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       //render: (_, record) => formatCurrency(record.finalCommissionAmountInUSD),
       render: (_, record) => {
         // Assuming you want to format it as "USD: $amount, INEX: $amount"
-        return `USD: $${record.finalCommissionAmountInUSD.toFixed(2)} + INEX: ${record.finalCommissionAmountInINEX.toFixed(2)}`;
+        return `USD: $${record.finalCommissionAmountInUSD.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })} + INEX: ${record.finalCommissionAmountInINEX.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`;
       },
     },
     {
@@ -103,7 +109,10 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       dataIndex: 'orderAmount',
       sorter: (a, b) => a.orderAmount - b.orderAmount,
       render: (_, record) => {
-        return "$" + parseFloat(String(record.orderAmount)).toFixed(2);
+        return "$" + parseFloat(String(record.orderAmount)).toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       },
     },
   ];
@@ -129,7 +138,10 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     if (typeof amount === 'undefined') {
       return "$0.00";
     }
-    return `$${amount.toFixed(2)}`;
+    return `$${amount.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
   };
 
   const topcolumns: ColumnsType<CommissionDataType> = [

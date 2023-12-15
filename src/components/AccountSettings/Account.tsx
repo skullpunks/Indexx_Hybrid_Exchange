@@ -7,6 +7,7 @@ import BasicInfo from './BasicInfo';
 import { PaymentMethod } from './PaymentMethod';
 import Preferences from './Preferences';
 import Security from './Security';
+import Signup from './Signup';
 
 
 const Account = () => {
@@ -28,6 +29,11 @@ const Account = () => {
                 <Tabs.TabPane tab="Payment Method" key="4">
                 <PaymentMethod/>
                 </Tabs.TabPane>
+                {localStorage.getItem("userlogged") === 'normal' &&
+                <Tabs.TabPane tab="Convert to Captain Bee" key="5">
+                <Signup/>
+                </Tabs.TabPane>
+                }
             </Tabs>
         </div>
     );
