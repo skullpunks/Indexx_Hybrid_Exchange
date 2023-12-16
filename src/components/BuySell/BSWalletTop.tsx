@@ -20,29 +20,37 @@ const BSWalletTop = () => {
 
 
     const getAllUserWallet = async () => {
-        let userWallets = await getUserWallets(decoded.email);
-        let usersWallet = userWallets.data;
-        let totalBalInUSD = 0;
-        let totalStakedBalInUSD = 0;
-        console.log(usersWallet, "users");
-        for (let i = 0; i < usersWallet.length; i++) {
-            if (usersWallet[i].coinType === "Crypto") {
-                let res = await getCoinPriceByName(usersWallet[i]?.coinSymbol);
-                let price = Number(res.data.results.data);
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance) * price;
-                if(!isNaN(usersWallet[i]?.coinStakedBalance)){
-                totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
+        try {
+            const userWallets = await getUserWallets(decoded.email);
+            const usersWallet = userWallets.data;
+            let totalBalInUSD = 0;
+            let totalStakedBalInUSD = 0;
+
+            usersWallet.forEach((wallet: any) => {
+                const balance = Number(wallet.coinBalance);
+                if (wallet.coinType === "Crypto" && wallet.coinPrice) {
+                    const price = Number(wallet.coinPrice);
+                    if (!isNaN(price)) {
+                        totalBalInUSD += balance * price;
+                    }
+                    if(!isNaN(usersWallet[i]?.coinStakedBalance)){
+                        totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
+                        }
+                } else {
+                    totalBalInUSD += balance;
+                    if(!isNaN(usersWallet[i]?.coinStakedBalance)){
+                        totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance);
+                    }
                 }
-            } else {
-                totalBalInUSD += Number(usersWallet[i]?.coinBalance);
-                if(!isNaN(usersWallet[i]?.coinStakedBalance)){
-                    totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance);
-                }
-            }
+            });
+    
+            setTotalBalanceInUSD(totalBalInUSD);
+            setTotalStakedBalanceInUSD(totalStakedBalInUSD);
+        } catch (err) {
+            console.error("Error in getAllUserWallet", err);
         }
-        setTotalBalanceInUSD(totalBalInUSD)
-        setTotalStakedBalanceInUSD(totalStakedBalInUSD)
-    }
+    };
+    
 
     const [isVisible, setIsVisible] = useState(true);
     const [isVisibleStaked, setIsVisibleStaked] = useState(true);
