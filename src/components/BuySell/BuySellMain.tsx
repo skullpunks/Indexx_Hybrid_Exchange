@@ -12,7 +12,7 @@ import logo from "../../assets/arts/exchange logo_green 5.svg";
 import hivelogo from "../../assets/BSheader/hive exchange.png";
 import etf from "../../assets/BSheader/ETF_DM.png";
 import etf_light from "../../assets/BSheader/ETF_LM.png";
-import token from "../../assets/BSheader/token.png";
+import token from "../../assets/BSheader/token.svg";
 import stock_token from "../../assets/BSheader/stock tiken.png";
 import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
 // import BuySellSelect from './BuySellSelect';
@@ -275,7 +275,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             {selectedTab === 1 && (
               <>
                 {" "} -
-                <img src={token} alt="logo" style={{ marginInline: "10px", width: `${ isMobile ? "40px" : "64px"}` }} /> Tokens
+                <img src={token} alt="logo" style={{ marginLeft: "10px", marginTop: "-10px", width: `${ isMobile ? "40px" : "64px"}` }} /> Tokens
               </>
             )}
 
@@ -311,7 +311,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             {selectedTab === 1 && (
               <>
                 {" "} -
-                <img src={token} alt="logo" style={{ marginInline: "10px", width:`${ isMobile ? "40px" : "64px"}` }} /> Tokens
+                <img src={token} alt="logo" style={{ marginLeft: "10px", marginTop: "-10px", width:`${ isMobile ? "40px" : "64px"}` }} /> Tokens
               </>
             )}
 
