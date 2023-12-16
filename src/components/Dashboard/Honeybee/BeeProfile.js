@@ -267,7 +267,7 @@ const BeeProfile = () => {
                 >
                   Email
                 </Typography>
-                <TextField
+                {/* <TextField
                   //   label="Email"
                   placeholder="you@yourdomain.com"
                   type="email"
@@ -282,7 +282,11 @@ const BeeProfile = () => {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                />
+                /> */}
+                <Box
+                      sx={{ mb: 2, px:2, width: '64%', fontSize: "15px", }}>
+                      {email}
+                    </Box>
               </Box>
             </Box>
 

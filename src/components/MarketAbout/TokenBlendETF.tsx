@@ -5,11 +5,13 @@ import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 import ETFComponentsTable from '../ETFComponentsTable/ETFComponentsTable';
 import { ETFData } from './ETFData';
+import { useMediaQuery  } from '@mui/material'
 
 const TokenBlendETF = () => {
     const { Panel } = Collapse;
     const [data, setData] = useState() as any;
     const [aboutData, setAboutData] = useState() as any;
+    const isMobile = useMediaQuery('(max-width:768px)');
     useEffect(() => {
         // stockMarketsData("TOB").then((res) => {
         //     let requiredData = res.data;
@@ -130,7 +132,9 @@ const TokenBlendETF = () => {
                             <p style={{ fontSize: 15, lineHeight: 2, marginBottom:40 }}>
                                 {aboutData?.desc}
                             </p>
-                            <p style={{ fontSize: 25, fontWeight:"bold", marginBottom:25 }}>Components of {aboutData?.name} </p>
+                            <p style={{ fontSize: 25, fontWeight: "bold", marginBottom: 25 }}>Components of 
+                            {isMobile ? <br/> : <>&nbsp;</>}
+                            {aboutData?.name} </p>
                             <ETFComponentsTable symbol={"TOB"} data={data}/>
                         </div>
                     </Panel>

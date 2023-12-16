@@ -908,7 +908,7 @@ const HeaderNew = () => {
                     <div className="d-flex align-items-center justify-content-center" >
                       {localStorage.getItem("userlogged") !== 'normal' &&
 
-                        <div style={{ marginBottom: "-60px", zIndex: "10000" }}>
+                        <div style={{ marginBottom: "-43px", zIndex: "10000" }}>
 
                           <div
                             style={{

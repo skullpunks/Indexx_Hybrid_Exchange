@@ -1,19 +1,19 @@
-import bronze from "../../assets/Rank Badges/1 bronze.svg";
-import copper from "../../assets/Rank Badges/2 copper.svg";
-import Silver from "../../assets/Rank Badges/3 Silver.svg";
+import bronze from "../../assets/Rank Badges/bronze.png";
+import copper from "../../assets/Rank Badges/copper.png";
+import Silver from "../../assets/Rank Badges/silver.png";
 import Electrum from "../../assets/Rank Badges/4 Electrum.svg";
-import Gold from "../../assets/Rank Badges/5 Gold.svg";
-import Platinum from "../../assets/Rank Badges/6  Platinum.svg";
-import Diamond from "../../assets/Rank Badges/7 Diamond.svg";
+import Gold from "../../assets/Rank Badges/gold.png";
+import Platinum from "../../assets/Rank Badges/platinum.png";
+import Diamond from "../../assets/Rank Badges/diamond.png";
 import Diamond_Pollinated from "../../assets/Rank Badges/8 Diamond_Pollinated.svg";
-import Carpenter from "../../assets/Rank Badges/9 Carpenter.svg";
-import Carpenter_Pollinated from "../../assets/Rank Badges/10 Carpenter_Pollinated.svg";
-import Hornet from "../../assets/Rank Badges/11 Hornet.svg";
-import Hrnet_pollinated from "../../assets/Rank Badges/13 Hrnet_pollinated.svg";
-import Wasp from "../../assets/Rank Badges/11 Wasp.svg";
-import Wasp_Pollinated from "../../assets/Rank Badges/12 Wasp_Pollinated.svg";
-import Royal from "../../assets/Rank Badges/14 Royal.svg";
-import Royal_Pollinated from "../../assets/Rank Badges/4 Royal_Pollinated.svg";
+import Carpenter from "../../assets/Rank Badges/carpenter.png";
+import Carpenter_Pollinated from "../../assets/Rank Badges/carpenter pollinated.png";
+import Hornet from "../../assets/Rank Badges/hornet.png";
+import Hrnet_pollinated from "../../assets/Rank Badges/hornet pollinated.png";
+import Wasp from "../../assets/Rank Badges/wasp.png";
+import Wasp_Pollinated from "../../assets/Rank Badges/wasp pollinated.png";
+import Royal from "../../assets/Rank Badges/royal.png";
+import Royal_Pollinated from "../../assets/Rank Badges/royal_pollinated.png";
 
 
 export const RankData = [

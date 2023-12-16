@@ -29,6 +29,10 @@
   flex: 1;
 }
 
+.ant-select-item-group{
+  padding: 0;
+}
+
 .custom-optgroup-label {
   font-size: 1.5em;  
   font-weight: bold;
@@ -37,6 +41,8 @@
   display: flex;
   justify-content: center;
   padding-block: 10px;
+  width: 100%;
+  padding-block: 15px;
 }
 
 .bs_curreny_left {

@@ -40,98 +40,98 @@ const BSSellOrderHistoryTable: React.FC = () => {
     }
 
     const columns: ColumnsType<DataType> = [
-        {
-            title: "Time Type",
-            render: (record) => (
-                <React.Fragment>
-                    {record.modified}
-                    <br />
-                    {record.modified}
-                </React.Fragment>
-            ),
-            responsive: ["xs"]
-        },
-        {
-            title: "Amount",
-            render: (record) => (
-                <React.Fragment>
-                    {record.breakdown.inAamount}
+        // {
+        //     title: "Time Type",
+        //     render: (record) => (
+        //         <React.Fragment>
+        //             {record.modified}
+        //             <br />
+        //             {record.modified}
+        //         </React.Fragment>
+        //     ),
+        //     responsive: ["xs"]
+        // },
+        // {
+        //     title: "Amount",
+        //     render: (record) => (
+        //         <React.Fragment>
+        //             {record.breakdown.inAamount}
 
-                    {record.breakdown.inCurrenyName}
-                </React.Fragment>
-            ),
-            responsive: ["xs"]
-        },
-        {
-            title: "Final Amount",
-            render: (record) => (
-                <React.Fragment>
-                    {record.breakdown.outAmount}
+        //             {record.breakdown.inCurrenyName}
+        //         </React.Fragment>
+        //     ),
+        //     responsive: ["xs"]
+        // },
+        // {
+        //     title: "Final Amount",
+        //     render: (record) => (
+        //         <React.Fragment>
+        //             {record.breakdown.outAmount}
 
-                    {record.breakdown.outCurrencyName}
-                </React.Fragment>
-            ),
-            responsive: ["xs"]
-        },
+        //             {record.breakdown.outCurrencyName}
+        //         </React.Fragment>
+        //     ),
+        //     responsive: ["xs"]
+        // },
         {
             title: 'Order Date and Time',
             dataIndex: 'created',
             key: 'created',
             render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Order Id',
             dataIndex: 'orderId',
             key: 'orderId',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Order Rate',
             dataIndex: 'orderRate',
             key: 'orderRate',
             render: text => <span>{text.rate} USD</span>,
-            responsive: ["sm"]
+            // responsive: ["sm"]
         },
         {
             title: 'Order Type',
             dataIndex: 'orderType',
             key: 'orderType',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Amount',
             key: 'amount',
             dataIndex: 'breakdown',
             render: text => <span>{text.inAmount} {text.inCurrenyName}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Final Amount',
             key: 'amount',
             dataIndex: 'breakdown',
             render: text => <span>{Math.floor(text.outAmount * 1000) / 1000} {text.outCurrencyName}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Payment Type',
             key: 'paymentType',
             dataIndex: 'paymentType',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Exchange Fees',
             key: 'exchangeFees',
             dataIndex: 'exchangeFees',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
 
     ];
@@ -363,7 +363,11 @@ const BSSellOrderHistoryTable: React.FC = () => {
                     <Input size="large" placeholder="Search Order Id" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
-            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" loading={tableLoading} />
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} 
+            // className="transaction_crypto_history" 
+            scroll={{x:true}}
+            style={{maxWidth:"94vw"}} 
+            loading={tableLoading} />
             <MyPagination
                 total={orderListFilter && orderListFilter.length}
                 current={current}

@@ -39,66 +39,62 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [valueInput, setValueInput] = useState('');
     const columns: ColumnsType<DataType> = [
 
-        {
-            title: "Time Type",
-            render: (record) => (
-                <React.Fragment>
-                    {record.modified}
-                    <br />
-                    {record.modified}
-                </React.Fragment>
-            ),
-            responsive: ["xs"]
-        },
-        {
-            title: "Amount",
-            render: (record) => (
-                <React.Fragment>
-                    {record.amount}
+        // {
+        //     title: "Time",
+        //     dataIndex: 'modified',
+        //     key: 'modified',
+        //     render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
+        //     responsive: ["xs"]
+        // },
+        // {
+        //     title: "Amount",
+        //     render: (record) => (
+        //         <React.Fragment>
+        //             {record.amount}
 
-                    {record.currencyRef}
-                </React.Fragment>
-            ),
-            responsive: ["xs"]
-        },
+        //             {record.currencyRef}
+        //         </React.Fragment>
+        //     ),
+        //     responsive: ["xs"]
+        // },
         {
             title: 'Time',
             dataIndex: 'modified',
             key: 'modified',
             render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Asset',
             dataIndex: 'currencyRef',
             key: 'currencyRef',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Type',
             dataIndex: 'transactionType',
             key: 'transactionType',
-            responsive: ["sm"]
+            // responsive: ["sm"]
         },
         {
             title: 'Deposit Wallet',
             dataIndex: 'walletType',
             key: 'walletType',
             render: text => <span>{text}</span>,
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Amount',
             key: 'amount',
             dataIndex: 'amount',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Transaction Hash',
@@ -112,7 +108,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 </span>
 
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
         {
             title: 'Destination',
@@ -131,7 +127,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     </span>
                 </span>
             ),
-            responsive: ["sm"],
+            // responsive: ["sm"],
         },
     ];
 
@@ -423,7 +419,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <Input size="large" placeholder="Search Transaction hash" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
-            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} className="transaction_crypto_history" />
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} 
+            // className="transaction_crypto_history" 
+            scroll={{x:true}}
+            style={{maxWidth:"94vw"}} 
+            />
             <MyPagination
                 total={txListFilter && txListFilter.length}
                 current={current}

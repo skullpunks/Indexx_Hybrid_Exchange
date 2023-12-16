@@ -2,19 +2,28 @@ import React, { useEffect, useState } from 'react';
 import frame from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
-import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
-import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
-import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
-import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import pin from '../../../../assets/hive-dashboard/sidebar/location.png';
+import man from '../../../../assets/hive-dashboard/sidebar/man.png';
+import house from '../../../../assets/hive-dashboard/sidebar/home.png';
+import clock from '../../../../assets/hive-dashboard/sidebar/clock.png';
 
-import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
-import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
-import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
-import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
+import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
+import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
+import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
+import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock.png';
+
+import twitter from '../../../../assets/hive-dashboard/sidebar/twitter.png';
+import insta from '../../../../assets/hive-dashboard/sidebar/instagram.png';
+import linkedin from '../../../../assets/hive-dashboard/sidebar/linkedin.png';
+import discord from '../../../../assets/hive-dashboard/sidebar/discord.png';
+
+import twitter_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/twitter.png';
+import insta_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/instagram.png';
+import linkedin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/linkedin.png';
+import discord_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/discord.png';
 
 import loadingGif from '../../../../assets/beeloade.gif';
 
-import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 
 import '../../Captainbee/CaptainDash.css';
 import MyCaptainTabs from './MyCaptainTabs';
@@ -66,6 +75,23 @@ const MyCaptain = () => {
     loadData();
   }, []);
   
+
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   return (
     <>
@@ -205,35 +231,35 @@ const MyCaptain = () => {
                 </div>
               <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">
-                  <img alt="man" src={man} className="me-2" />
+                  <img alt="man" src={theme === "dark" ? man_dark : man} className="me-2" />
                   @{captainBeeData?.accname}
                 </div>
                 <div className="font_13x d-flex align-items-center">
-                  <img alt="man" src={pin} className="me-2" />
+                  <img alt="man" src={theme === "dark" ? pin_dark : pin} className="me-2" />
                   {captainBeeData?.country}
                 </div>
                 <div className="font_13x d-flex align-items-center">
-                  <img alt="man" src={house} className="me-2" />
+                  <img alt="man" src={theme === "dark" ? house_dark : house} className="me-2" />
                   {captainBeeData?.city}
                 </div>
                 <div className="font_13x d-flex align-items-center">
-                  <img alt="man" src={clock} className="me-2" />
+                  <img alt="man" src={theme === "dark" ? clock_dark : clock} className="me-2" />
                   {captainbeeCreateDate}
                 </div>
             </div>
 
               <div className="align-items-start lh_32x mt-4">
                 <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="Discord" src={discord} className="me-3" />
+                  <img alt="Discord" src={theme === "dark" ? discord_dark : discord} className="me-3" />
                 </a>
                 <a href={captainBeeData?.socialMediaLink?.instagram ? captainBeeData?.socialMediaLink?.instagram : "#"} target={captainBeeData?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="Instagram" src={insta} className="me-3" />
+                  <img alt="Instagram" src={theme === "dark" ? insta_dark : insta} className="me-3" />
                 </a>
                 <a href={captainBeeData?.socialMediaLink?.linkedin ? captainBeeData?.socialMediaLink?.linkedin : "#"} target={captainBeeData?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="LinkedIn" src={linkedin} className="me-3" />
+                  <img alt="LinkedIn" src={theme === "dark" ? linkedin_dark : linkedin} className="me-3" />
                 </a>
                 <a href={captainBeeData?.socialMediaLink?.twitter ? captainBeeData?.socialMediaLink?.twitter : "#"} target={captainBeeData?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                  <img alt="Twitter" src={twitter} />
+                  <img alt="Twitter" src={theme === "dark" ? twitter_dark : twitter} />
                 </a>
 
               </div>

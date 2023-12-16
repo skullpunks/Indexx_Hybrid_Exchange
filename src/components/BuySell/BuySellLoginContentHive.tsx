@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/hive_exchange.svg";
+import hive from "../../assets/Hive exchange.png";
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
@@ -18,7 +18,7 @@ import {
 } from '../../services/api';
 import "./BuySellLoginContentHive.css";
 import OpenNotification from '../OpenNotification/OpenNotification';
-import hat from "../../assets/arts/hat2 5.svg";
+import hat from "../../assets/arts/hat2.png";
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 

@@ -15,14 +15,20 @@ const IndexxTOBETFGraph = () => {
     const media = () => {
         const mobile = window.matchMedia('(max-width: 560px)');
         if (mobile.matches) {
-            width = 250;
-            height = 250;
+            width = 320;
+            height = 450;
         } else {
             width = 870;
             height = 500;
         }
     };
     media();
+    useEffect(() => {
+        window.addEventListener('resize', media);
+        return () => {
+            window.removeEventListener('resize', media);
+        }
+    }, []);
     useEffect(() => {
         // Fetch data based on interval
         fetch(`${baseAPIURL}/api/v1/inex/basic/stockdata?interval=${interval}&symbol=${"AAPL"}`)
@@ -70,8 +76,9 @@ const IndexxTOBETFGraph = () => {
                 <div
                     className="card chart_buy"
                     style={{
-                        minWidth: 900,
+                        minWidth: `calc(${width}px + 30px)`,
                         maxWidth: 900,
+                        minHeight:450,
                         padding: 15,
                         borderColor: 'var(--border-color)',
                         borderRight: 'none',
@@ -97,7 +104,7 @@ const IndexxTOBETFGraph = () => {
                     </div>
                     <div
                         className="chart_inner_right"
-                        style={{ marginTop: -35, marginRight: -25 }}
+                        // style={{ marginTop: -35, marginRight: -25 }}
                     >
                         <Segmented
                             className="chart_dynamic"

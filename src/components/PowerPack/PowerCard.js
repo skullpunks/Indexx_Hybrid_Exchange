@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from "react-card-flip";
 import { createPowerPackOrder, getDiscountCode } from '../../services/api';
 import inex from '../../assets/INEX 5.svg';
-import hive from '../../assets/powerpack/hive.svg';
+import hive from '../../assets/powerpack/Hive Logo.png';
 import './PowerCard.css'
 const PowerCard = ({ card }) => {
     const [flip, setFlip] = useState(false);

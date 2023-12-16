@@ -1,37 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import frame from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
-import waggle from '../../../../assets/hive-dashboard/waggle dance icon.svg';
-
-import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
-import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
-import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
-import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
-import email from '../../../../assets/hive-dashboard/sidebar/email icon 1.svg';
-import phone from '../../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
-
-import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
-import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
-import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
-import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
-import email_dark from '../../../../assets/hive-dashboard/sidebar/email icon 1.svg';
-import phone_dark from '../../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
-
-import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
-import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
-import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
-import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
-
-import twitter_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/twitter logo.svg';
-import insta_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/insta.svg';
-import linkedin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/LinkeIn.svg';
-import discord_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/discord.svg';
-
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
-import copper from "../../../../assets/powerpack/copper hat.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import greyman from "../../../../assets/hive-dashboard/man4 2.svg";
+import greyman from "../../../../assets/hive-dashboard/empty_man_frame.png";
 import { Rating } from '@mui/material';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';

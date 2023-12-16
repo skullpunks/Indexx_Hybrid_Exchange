@@ -9,11 +9,11 @@ import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
 import logo from "../../assets/arts/exchange logo_green 5.svg";
-import hivelogo from "../../assets/BSheader/indexx exchange logo new 1.svg";
-import etf from "../../assets/BSheader/bescket-06 2.svg";
-import etf_light from "../../assets/BSheader/bescket-08 1.svg";
-import token from "../../assets/BSheader/token-12 2.svg";
-import stock_token from "../../assets/BSheader/Stock Token 2.svg";
+import hivelogo from "../../assets/BSheader/hive exchange.png";
+import etf from "../../assets/BSheader/ETF_DM.png";
+import etf_light from "../../assets/BSheader/ETF_LM.png";
+import token from "../../assets/BSheader/token.png";
+import stock_token from "../../assets/BSheader/stock tiken.png";
 import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
@@ -269,13 +269,13 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange} />
       <span style={{ textAlign: 'center' }}>
         {localStorage.getItem("userlogged") === 'normal' ?
-          <p style={{ marginTop: `${ isMobile ? "180px" : "220px"}`, fontSize: `${ isMobile ? "30px" : "40px"}` }}>
-            <img src={logo} alt="logo" style={{ marginRight: "20px" }} />
+          <p style={{ marginTop: `${ isMobile ? "180px" : "220px"}`, fontSize: `${ isMobile ? "20px" : "40px"}` }}>
+            <img src={logo} alt="logo" style={{ marginRight: `${ isMobile ? "10px" : "20px"}`, width: `${ isMobile ? "40px" : "64px"}` }} />
             Indexx Exchange
             {selectedTab === 1 && (
               <>
                 {" "} -
-                <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
+                <img src={token} alt="logo" style={{ marginInline: "10px", width: `${ isMobile ? "40px" : "64px"}` }} /> Tokens
               </>
             )}
 
@@ -285,9 +285,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                   <>
                     {" "} -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
                     </a>
-                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} /> Stock Tokens
+                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width:`${ isMobile ? "45px" : "64px"}` }} /> Stock Tokens
                   </>
                 )}
 
@@ -295,9 +295,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                   <>
                     {" "} -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
                     </a>
-                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} />
+                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "0px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} />
                   </>
                 )}
               </>
@@ -305,13 +305,13 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
           </p>
           :
-          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? `${ isMobile ? "250px" : "300px"}` :  `${ isMobile ? "180px" : "280px"}`}`, fontSize: `${ isMobile ? "30px" : "40px"}` }}>
-            <img src={hivelogo} alt="logo" style={{ marginRight: "20px", width: "64px" }} />
+          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? `${ isMobile ? "250px" : "300px"}` :  `${ isMobile ? "180px" : "280px"}`}`, fontSize: `${ isMobile ? "20px" : "40px"}` }}>
+            <img src={hivelogo} alt="logo" style={{ marginRight: `${ isMobile ? "10px" : "20px"}`, width: `${ isMobile ? "40px" : "64px"}` }} />
             Hive Exchange
             {selectedTab === 1 && (
               <>
                 {" "} -
-                <img src={token} alt="logo" style={{ marginInline: "10px", width: "64px" }} /> Tokens
+                <img src={token} alt="logo" style={{ marginInline: "10px", width:`${ isMobile ? "40px" : "64px"}` }} /> Tokens
               </>
             )}
 
@@ -321,9 +321,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                   <>
                     {" "} -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}`  }} className='walls' />
                     </a>
-                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} /> Stock Tokens
+                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} /> Stock Tokens
                   </>
                 )}
 
@@ -331,9 +331,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                   <>
                     {" "} -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: "114px" }} className='walls' />
+                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
                     </a>
-                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: "64px" }} />
+                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "0px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} />
                   </>
                 )}
               </>

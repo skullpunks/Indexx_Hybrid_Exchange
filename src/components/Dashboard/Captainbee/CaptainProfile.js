@@ -309,8 +309,7 @@ const CaptainProfile = () => {
                     >
                       Email
                     </Typography>
-                    <TextField
-                      //   label="Email"
+                    {/* <TextField
                       placeholder="you@yourdomain.com"
                       type="email"
                       InputLabelProps={{ shrink: true, readOnly: true, }}
@@ -318,13 +317,14 @@ const CaptainProfile = () => {
                       sx={{ width: '64%' }}
                       size="small" // Make the input box smaller
                       value={staticsData?.affiliateUserProfile.Email}
-                      //  error={emailError !== ''}
-                      // helperText={emailError}
-                      // onBlur={validateEmail}
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
-                    />
+                    /> */}
+                     <Box
+                      sx={{ mb: 2, width: '64%', fontSize: "15px", }}>
+                      {staticsData?.affiliateUserProfile.Email}
+                    </Box>
                   </Box>
                   <Box
                     sx={{
@@ -382,7 +382,7 @@ const CaptainProfile = () => {
                   >
                     Username
                   </Typography>
-                  <TextField
+                  {/* <TextField
                     //   label="Username"
                     variant="outlined"
                     // color='var(--body_color)'
@@ -398,7 +398,11 @@ const CaptainProfile = () => {
                     onChange={(e) => {
                       setUsername(e.target.value);
                     }}
-                  />
+                  /> */}
+                  <Box
+                      sx={{ mb: 2, width: '64%', fontSize: "15px", }}>
+                      {staticsData?.affiliateUserProfile.Username}
+                    </Box>
                 </Box>
                 <Box
                   sx={{
