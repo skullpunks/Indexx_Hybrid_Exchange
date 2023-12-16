@@ -28,18 +28,19 @@ const BSWalletTop = () => {
 
             usersWallet.forEach((wallet: any) => {
                 const balance = Number(wallet.coinBalance);
+                const StakedBalance = Number(wallet.coinStakedBalance);
                 if (wallet.coinType === "Crypto" && wallet.coinPrice) {
                     const price = Number(wallet.coinPrice);
                     if (!isNaN(price)) {
                         totalBalInUSD += balance * price;
                     }
-                    if(!isNaN(usersWallet[i]?.coinStakedBalance)){
-                        totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance) * price;
+                    if(!isNaN(StakedBalance)){
+                        totalStakedBalInUSD += StakedBalance * price;
                         }
                 } else {
                     totalBalInUSD += balance;
-                    if(!isNaN(usersWallet[i]?.coinStakedBalance)){
-                        totalStakedBalInUSD += Number(usersWallet[i]?.coinStakedBalance);
+                    if(!isNaN(StakedBalance)){
+                        totalStakedBalInUSD += StakedBalance;
                     }
                 }
             });
