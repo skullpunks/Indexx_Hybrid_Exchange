@@ -24,7 +24,7 @@ interface DataType {
     coinBalanceInBTC: any;
     coinPrice: any;
     coinStakedBalance: any;
-    type: 'Crypto' | 'Stock' | 'ETF';
+    type: 'Crypto' | 'Stock' | 'ETF' | 'Fiat';
 }
 const BSWalletTable = () => {
     const [hideZeroBalance, setHideZeroBalance] = useState(false);
@@ -91,11 +91,10 @@ const BSWalletTable = () => {
         {
             title: 'Total Value in USD',
             dataIndex: 'coinBalanceInUSD',
-            sorter: {
-                compare: (a, b) => (a.coinBalance * a.coinPrice) - (b.coinBalance * b.coinPrice),
-                multiple: 4,
-            },
-            render: (_, record) => (record.coinBalance * record.coinPrice)?.toLocaleString()
+            sorter: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
+            render: (_, record) => record.type === 'Fiat' ?
+                `$${record.coinBalance.toFixed(2)}` :
+                `$${(record.coinBalance * record.coinPrice).toFixed(2)}`
         },
         {
             title: 'Staked Balance',
@@ -118,6 +117,8 @@ const BSWalletTable = () => {
     const [sortedCryptoData, setSortedCryptoData] = useState<DataType[]>([]);
     const [sortedStockData, setSortedStockData] = useState<DataType[]>([]);
     const [sortedEtfData, setSortedEtfData] = useState<DataType[]>([]);
+    const [sortedFiatData, setSortedFiatData] = useState<DataType[]>([]);
+
     const pageSize = 10;
 
 
@@ -129,26 +130,26 @@ const BSWalletTable = () => {
             const formattedData = userWallets.data.map((item: any) => ({
                 ...item,
                 key: item._id,
-                type: cryptocurrencies.includes(item.coinSymbol) ? 'Crypto' :
-                    stocks.includes(item.coinSymbol) ? 'Stock' :
-                        etfs.includes(item.coinSymbol) ? 'ETF' : 'Unknown'
+                type: item.coinType === 'Fiat' ? 'Fiat' :
+                    cryptocurrencies.includes(item.coinSymbol) ? 'Crypto' :
+                        stocks.includes(item.coinSymbol) ? 'Stock' :
+                            etfs.includes(item.coinSymbol) ? 'ETF' : 'Unknown',
             }));
             setWalletData(formattedData);
-            setWalletData(formattedData);        
         };
         getAllUserWallet();
     }, []);
 
     useEffect(() => {
         setSortedData(filteredWalletData
-            ? filteredWalletData.filter((item: DataType) => 
+            ? filteredWalletData.filter((item: DataType) =>
                 (!hideZeroBalance || item.coinBalance !== 0) &&
-                (!hideZeroStakedBalance || item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0 )
+                (!hideZeroStakedBalance || item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0)
             )
             : []
         );
     }, [filteredWalletData, hideZeroBalance, hideZeroStakedBalance]);
-    
+
 
     useEffect(() => {
 
@@ -168,24 +169,21 @@ const BSWalletTable = () => {
         const finalData = hideZeroBalance ? filteredData.filter(item => item.coinBalance !== 0) : filteredData;
         // setSortedData(finalData);
 
-        const finalFilteredData = hideZeroStakedBalance ? finalData.filter(item => item.coinStakedBalance !== undefined  && item.coinStakedBalance !== 0) : finalData;
+        const finalFilteredData = hideZeroStakedBalance ? finalData.filter(item => item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0) : finalData;
 
         setSortedData(finalFilteredData);
 
         const cryptoData = filteredData.filter(item => cryptocurrencies.includes(item.coinSymbol));
         const stockData = filteredData.filter(item => stocks.includes(item.coinSymbol));
         const etfData = filteredData.filter(item => etfs.includes(item.coinSymbol));
+        const fiatData = filteredData.filter(item => item.type === 'Fiat');
 
+        setSortedFiatData(fiatData);
         setSortedCryptoData(cryptoData);
         setSortedStockData(stockData);
         setSortedEtfData(etfData);
-        
+
     }, [walletData, valueInput, hideZeroBalance, hideZeroStakedBalance]);
-
-    // useEffect(() => {
-
-    // }, [walletData]);
-
 
     useEffect(() => {
         if (valueInput === "") {
@@ -220,8 +218,8 @@ const BSWalletTable = () => {
                     dataSource={data}
                     pagination={false} // Handle pagination separately if needed
                     onChange={onChange}
-                    scroll={{x:true}}
-                    style={{maxWidth:"94vw"}}  
+                    scroll={{ x: true }}
+                    style={{ maxWidth: "94vw" }}
                 />
             </>
         );
@@ -276,6 +274,9 @@ const BSWalletTable = () => {
                         <br />
                         {/* Render ETFs Section */}
                         {renderTableSection(sortedEtfData, "ETF Tokens")}
+
+                        <br />
+                        {renderTableSection(sortedFiatData, "Fiat Currencies")}
                         {/* <MyPagination
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
                         scroll={{x:true}}
