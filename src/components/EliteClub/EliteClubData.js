@@ -1,7 +1,7 @@
-import Bull from '../../assets/elite_club/bull_new.svg';
-import Eagle from '../../assets/elite_club/Eagle_new.svg';
-import Foxtail from '../../assets/elite_club/fox_new.svg';
-import Lion from '../../assets/elite_club/lion_New.svg';
+import Bull from '../../assets/elite_club/bull-run.png';
+import Eagle from '../../assets/elite_club/eagle.png';
+import Foxtail from '../../assets/elite_club/fox.png';
+import Lion from '../../assets/elite_club/lion.png';
 
 import Bull_gif from '../../assets/elite_club/bull_opt.gif';
 import Eagle_gif from '../../assets/elite_club/eagle_opt.gif';

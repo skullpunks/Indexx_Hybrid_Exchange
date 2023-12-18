@@ -64,6 +64,7 @@
     border: 0;
     border-radius: 2px;
     color: var(--dark_text);
+    height: 40px;
 }
 
 .button-btn:hover {
@@ -128,3 +129,37 @@
     width: 120px;
   }
   
+@media (max-width: 767px) {
+
+  .pay-image {
+    width: 60px;
+    margin-right: 10px;
+  }
+  
+  .pay-box{
+    padding-inline: 10px;
+    width: 100vw;
+  }
+
+  .close-button-pay {
+    top: -13%;
+    left: 96%;
+    font-size: 1.5rem;
+}
+
+.pay-text-box {
+  padding-left: 1rem;
+  padding-bottom: 0;
+  padding-top: 1rem;
+}
+
+.pay-button-btn {
+  font-size: 15px;
+  width: 25%;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  border: 0;
+  border-radius: 2px;
+}
+
+}

@@ -3,15 +3,15 @@ import framecapt from '../../../../assets/hive-dashboard/frame.svg';
 import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
-import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
-import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
-import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
-import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import pin from '../../../../assets/hive-dashboard/sidebar/location.png';
+import man from '../../../../assets/hive-dashboard/sidebar/man.png';
+import house from '../../../../assets/hive-dashboard/sidebar/home.png';
+import clock from '../../../../assets/hive-dashboard/sidebar/clock.png';
 
-import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
-import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
-import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
-import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
+import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
+import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
+import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
+import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock.png';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import power from '../../../assets/BSheader/power pack 1.svg';
+import power from '../../../assets/BSheader/power pack.png';
 import all from '../../../assets/BSheader/EX-010.png';
 import hive_all from '../../../assets/BSheader/hive exchange black 1.svg';
 import stack from '../../../assets/BSheader/staking icon black.svg';
 import nectar from '../../../assets/BSheader/nectar black.svg';
-import power_white from '../../../assets/BSheader/power pack 1-white.svg';
+import power_white from '../../../assets/BSheader/power pack_white.png';
 import all_white from '../../../assets/BSheader/EX-011.png';
 import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
 import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
-import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
-import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
+import waggle from '../../../assets/hive-dashboard/Waggle_LM.png';
+import waggle_white from '../../../assets/hive-dashboard/waggle_DM.png';
 // import etf from '../../../assets/BSheader/etf logo 3.svg';
 // import etf_white from '../../../assets/BSheader/etf white.svg';
 import wallet from '../../../assets/BSheader/funding wallet icon_black.svg';
@@ -296,11 +296,11 @@ const PowerPackHeader = () => {
                 <div className="card">
                   {theme === "dark" ?
                     <img src={waggle_white} className="card-img-top" alt="..."
-                      style={{ height: "34px" }}
+                      style={{ marginBlock:"6px" }}
                     />
                     :
                     <img src={waggle} className="card-img-top" alt="..."
-                      style={{ height: "34px" }}
+                      style={{ marginBlock:"6px" }}
                     />
                   }
                   <div className="card-body">

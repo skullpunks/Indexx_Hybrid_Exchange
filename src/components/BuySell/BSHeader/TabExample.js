@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 // import stock from '../../../assets/BSheader/Stock token icon_black.svg';
-import power from '../../../assets/BSheader/power pack 1.svg';
+import power from '../../../assets/BSheader/power pack.png';
 import token from '../../../assets/BSheader/tokens icon 1.svg';
 import all from '../../../assets/BSheader/EX-010.png';
 import hive_all from '../../../assets/BSheader/hive exchange black 1.svg';
 import stack from '../../../assets/BSheader/staking icon black.svg';
-import power_white from '../../../assets/BSheader/power pack 1-white.svg';
+import power_white from '../../../assets/BSheader/power pack_white.png';
 import all_white from '../../../assets/BSheader/EX-011.png';
 import hive_all_white from '../../../assets/BSheader/hive exchange white 1.svg';
 import token_white from '../../../assets/BSheader/tokens icon  white (1).svg';
 // import stock_white from '../../../assets/BSheader/Stock token bnw 3.svg';
 import stack_white from '../../../assets/BSheader/satking icon white.svg';
-import waggle from '../../../assets/hive-dashboard/waggle dance icon.svg';
-import waggle_white from '../../../assets/hive-dashboard/waggle icon white.svg';
+import waggle from '../../../assets/BSheader/waggle.png';
+import waggle_white from '../../../assets/BSheader/waggle_white.png';
 import nectar from '../../../assets/BSheader/nectar black.svg';
 import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 // import etf from '../../../assets/BSheader/etf logo 3.svg';
 // import etf_white from '../../../assets/BSheader/etf white.svg';
-import wallet from '../../../assets/BSheader/funding wallet icon_black.svg';
-import wallet_white from '../../../assets/BSheader/funding wallet icon_White.svg';
+import wallet from '../../../assets/BSheader/funding wallet.png';
+import wallet_white from '../../../assets/BSheader/funding wallet_white.png';
 import wallstreet from '../../../assets/BSheader/wall street_icon.svg';
 import wallstreet_white from '../../../assets/BSheader/wall street for DM.svg';
 import elite from '../../../assets/BSheader/elite icon blk.svg';
@@ -335,15 +335,15 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
                 <img
                   src={waggle_white}
                   alt="Home"
-                  width={'55px'}
-                  style={{ marginBottom: "15px" }}
+                  width={'60px'}
+                  style={{ marginBottom: "5px", marginTop:"5px" }}
                 />
                 :
                 <img
                   src={waggle}
                   alt="Home"
-                  width={'55px'}
-                  style={{ marginBottom: "15px" }}
+                  width={'60px'}
+                  style={{ marginBottom: "5px", marginTop:"5px" }}
                 />
             }
             component={Link}
@@ -358,16 +358,16 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
             theme === "dark" ?
               <img
                 src={wallet_white}
-                alt="Home"
-                width={'45px'}
-                style={{ marginBottom: "15px" }}
+                alt="Home"                
+                width={'65px'}
+                style={{ marginBottom: "5px", marginTop:"3px" }}
               />
               :
               <img
                 src={wallet}
                 alt="Home"
-                width={'45px'}
-                style={{ marginBottom: "15px" }}
+                width={'65px'}
+                style={{ marginBottom: "5px", marginTop:"3px" }}
               />
           }
           component={Link}

@@ -2,29 +2,33 @@ import React, { useEffect, useState } from 'react';
 import frame from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
-import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
-import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
-import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
-import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import pin from '../../../../assets/hive-dashboard/sidebar/location.png';
+import man from '../../../../assets/hive-dashboard/sidebar/man.png';
+import house from '../../../../assets/hive-dashboard/sidebar/home.png';
+import clock from '../../../../assets/hive-dashboard/sidebar/clock.png';
 import email_icon from '../../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
-import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/pin.svg';
-import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.svg';
-import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/house.svg';
-import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock 1 1.svg';
+import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
+import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
+import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
+import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock.png';
 import email_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/email white.svg';
 import phone_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/phone white.svg';
 
-import twitter from '../../../../assets/hive-dashboard/sidebar/twitter logo- 1.svg';
-import insta from '../../../../assets/hive-dashboard/sidebar/insta icon 2.svg';
-import linkedin from '../../../../assets/hive-dashboard/sidebar/in icon.svg';
-import discord from '../../../../assets/hive-dashboard/sidebar/discord.svg';
-import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
+import twitter from '../../../../assets/hive-dashboard/sidebar/twitter.png';
+import insta from '../../../../assets/hive-dashboard/sidebar/instagram.png';
+import linkedin from '../../../../assets/hive-dashboard/sidebar/linkedin.png';
+import discord from '../../../../assets/hive-dashboard/sidebar/discord.png';
+
+import twitter_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/twitter.png';
+import insta_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/instagram.png';
+import linkedin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/linkedin.png';
+import discord_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/discord.png';
+
+import hat from "../../../../assets/hive-dashboard/subheader/captain bee.png";
 import loadingGif from '../../../../assets/beeloade.gif';
 
-import copper from "../../../../assets/powerpack/copper hat.svg";
-// import bronze from "../../../../assets/Rank Badges/1 bronze.svg";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -392,16 +396,16 @@ fetchData();
 
                   <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                     <a href={captainBeeData?.socialMediaLink?.discord ? captainBeeData?.socialMediaLink?.discord : "#"} target={captainBeeData?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                      <img alt="Discord" src={discord} className="me-3" />
+                      <img alt="Discord" src={theme === "dark" ? discord_dark : discord} className="me-3" />
                     </a>
                     <a href={captainBeeData?.socialMediaLink?.instagram ? captainBeeData?.socialMediaLink?.instagram : "#"} target={captainBeeData?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                      <img alt="Instagram" src={insta} className="me-3" />
+                      <img alt="Instagram" src={theme === "dark" ? insta_dark : insta} className="me-3" />
                     </a>
                     <a href={captainBeeData?.socialMediaLink?.linkedin ? captainBeeData?.socialMediaLink?.linkedin : "#"} target={captainBeeData?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                      <img alt="LinkedIn" src={linkedin} className="me-3" />
+                      <img alt="LinkedIn" src={theme === "dark" ? linkedin_dark : linkedin} className="me-3" />
                     </a>
                     <a href={captainBeeData?.socialMediaLink?.twitter ? captainBeeData?.socialMediaLink?.twitter : "#"} target={captainBeeData?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                      <img alt="Twitter" src={twitter} />
+                      <img alt="Twitter" src={theme === "dark" ? twitter_dark : twitter} />
                     </a>
 
                     <div className="d-flex flex-direction-column align-items-start mt-5">

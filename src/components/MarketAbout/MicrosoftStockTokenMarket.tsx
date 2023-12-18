@@ -1,6 +1,6 @@
 
 import { Collapse, Divider, Image } from 'antd';
-import ca from '../../assets/token-icons/MSFT.png';
+import ca from '../../assets/about-icons/msft-token.png';
 import { marketsData, stockMarketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 

@@ -5,7 +5,7 @@ import qrCode from '../../assets/arts/qrCode.svg';
 import { Button, Form, Input, Divider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import normaluser from "../../assets/arts/normal user 1.svg"
-import hat from "../../assets/arts/hat2 5.svg"
+import hat from "../../assets/arts/hat2.png"
 import bee from "../../assets/arts/bee color 1.svg"
 import {
   loginAPI,

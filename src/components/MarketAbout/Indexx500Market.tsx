@@ -1,6 +1,6 @@
 
 import { Collapse, Divider, Image } from 'antd';
-import ca from '../../assets/token-icons/IN500.png';
+import ca from '../../assets/about-icons/in500_3_11zon.png';
 import { marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 

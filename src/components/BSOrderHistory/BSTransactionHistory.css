@@ -84,4 +84,8 @@
     > .ant-tabs-tab {
     min-width: 97px;
   }
+
+  .transaction_filters > div > .ant-select {
+    width: calc(100%);
+  }
 }

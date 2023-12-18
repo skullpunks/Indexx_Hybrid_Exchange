@@ -9,7 +9,7 @@ import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComing
 import NodeGraph from '../../graph';
 import FlowDiagram2 from '../../graph';
 import FlowDiagram from '../../reactFlow';
-import man from "../../../../assets/hive-dashboard/man4 2.svg";
+import man from "../../../../assets/hive-dashboard/empty_man_frame.png";
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
 

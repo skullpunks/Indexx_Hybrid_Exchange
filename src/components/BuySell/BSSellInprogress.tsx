@@ -46,7 +46,7 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
 
                 <div className='font_18x padding-b-2x'>Your sell order is being processed. A confirmation email will be sent once the order is complete.</div>
-                <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" block > Go to Wallet</Button>
+                <Button type="primary" className="atn-btn atn-btn-round margin-b-1x" onClick={() => navigate("/indexx-exchange/buy-sell/wallet")} block > Go to Wallet</Button>
                 <Link className="font_15x bs_link text-center d-block padding-t-3x" to="/indexx-exchange/buy-sell?type=sell" >New Sell</Link>
             </div>
         </div>

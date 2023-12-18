@@ -117,7 +117,7 @@ const ETFComponentsTable = ({ symbol, data }) => {
   // }, []);
 
   return (
-    <TableContainer className="etf_table" component={Paper} style={{ maxWidth: '100%', overflowX: 'auto' }}>
+    <TableContainer className="etf_table" component={Paper} style={{ maxWidth: '90vw', overflowX: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>

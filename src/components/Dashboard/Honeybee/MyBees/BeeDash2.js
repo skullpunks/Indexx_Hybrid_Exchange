@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import framecapt from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
-import waggle from '../../../../assets/hive-dashboard/waggle dance icon.svg';
+import waggle from '../../../../assets/hive-dashboard/Waggle_LM.png';
+import waggle_dark from '../../../../assets/hive-dashboard/waggle_DM.png';
 
-import pin from '../../../../assets/hive-dashboard/sidebar/pin- 1.svg';
-import man from '../../../../assets/hive-dashboard/sidebar/man- 2.svg';
-import house from '../../../../assets/hive-dashboard/sidebar/house 2 1.svg';
-import clock from '../../../../assets/hive-dashboard/sidebar/clock 1.svg';
+import pin from '../../../../assets/hive-dashboard/sidebar/location.png';
+import man from '../../../../assets/hive-dashboard/sidebar/man.png';
+import house from '../../../../assets/hive-dashboard/sidebar/home.png';
+import clock from '../../../../assets/hive-dashboard/sidebar/clock.png';
+
+import pin_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
+import man_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
+import house_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
+import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clock.png';
+
 import { Button } from 'antd';
 import loadingGif from '../../../../assets/beeloade.gif';
 
@@ -102,6 +109,23 @@ const BeeDash2 = () => {
     }
   };
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
       <BeeHeader />
@@ -132,7 +156,7 @@ const BeeDash2 = () => {
       }
       <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-562px" }}>
-          <img src={waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
+          <img src={theme === "dark" ? waggle_dark : waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
           Waggle Dance / My Dashboard
         </div>
         <div className="hive-container">
@@ -259,19 +283,19 @@ const BeeDash2 = () => {
                 </div>
                 <div className="align-items-start lh_32x mt-4">
                   <div className="font_13x d-flex align-items-center ">
-                    <img alt="man" src={man} className="me-2" />
+                    <img alt="man" src={theme === "dark" ? man_dark : man} className="me-2" />
                     {honeyBeeData?.accname ? `@${honeyBeeData?.accname}` : "NA"}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    <img alt="man" src={pin} className="me-2" />
+                    <img alt="man" src={theme === "dark" ? pin_dark : pin} className="me-2" />
                     {honeyBeeData?.country ? honeyBeeData?.country : "NA"}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    <img alt="man" src={house} className="me-2" />
+                    <img alt="man" src={theme === "dark" ? house_dark : house} className="me-2" />
                     {honeyBeeData?.city ? `@${honeyBeeData?.city}` : "NA"}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    <img alt="man" src={clock} className="me-2" />
+                    <img alt="man" src={theme === "dark" ? clock_dark : clock} className="me-2" />
                     {honeybeeCreateDate}
                   </div>
                 </div>

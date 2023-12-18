@@ -1,6 +1,6 @@
 
 import { Collapse, Divider, Image } from 'antd';
-import ca from '../../assets/token-icons/GOOGL.png';
+import ca from '../../assets/about-icons/google__token.png';
 import { marketsData, stockMarketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 

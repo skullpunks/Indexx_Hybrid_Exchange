@@ -1,11 +1,11 @@
 import React from 'react'
-import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
-import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
-import colony from "../../../../assets/hive-dashboard/subheader/colony icon 1.svg";
-import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
-import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
-import calendar from "../../../../assets/hive-dashboard/subheader/calendar 1.svg";
-import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
+import bee from "../../../../assets/hive-dashboard/subheader/Honeybee.png";
+import hat from "../../../../assets/hive-dashboard/subheader/captain bee.png";
+import colony from "../../../../assets/hive-dashboard/subheader/colony.png";
+import honey from "../../../../assets/hive-dashboard/subheader/honeycomb.png";
+import pen from "../../../../assets/hive-dashboard/subheader/Edit.png";
+import calendar from "../../../../assets/hive-dashboard/subheader/resources.png";
+import waggle from "../../../../assets/hive-dashboard/subheader/waggle dance.png";
 import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
 import './SubHeader.css'
@@ -61,7 +61,7 @@ const SubHeader = () => {
         <div className="col">
         <Link to="/indexx-exchange/dashboard/capt-mycaptains">
             <div className="card">
-            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"1.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
+            <img src={colony} className="card-img-top" alt="..." style={{marginBottom:"0.8px", marginTop: `${isMobile ? "5px" : 0 }`}}/>
             <div className="card-body">
                 <h5 className="card-title">My Colony</h5>
             <Typography
@@ -177,7 +177,7 @@ const SubHeader = () => {
         <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/capt-resource-mkt">
             <div className="card">
-            <img src={calendar} className="card-img-top" alt="..."/>
+            <img src={calendar} className="card-img-top" alt="..." style={{marginBottom:"1.5px"}}/>
             <div className="card-body">
                 <h5 className="card-title">Resources</h5>
                 <Typography

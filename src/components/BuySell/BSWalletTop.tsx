@@ -10,6 +10,7 @@ import { decodeJWT, getUserWallets, getCoinPriceByName } from '../../services/ap
 const BSWalletTop = () => {
     const navigate = useNavigate();
     const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
+    const [totalStakedBalanceInUSD, setTotalStakedBalanceInUSD] = useState(0);
     let access_token = String(localStorage.getItem("access_token"));
     let decoded: any = decodeJWT(access_token);
 
@@ -23,20 +24,29 @@ const BSWalletTop = () => {
             const userWallets = await getUserWallets(decoded.email);
             const usersWallet = userWallets.data;
             let totalBalInUSD = 0;
-    
+            let totalStakedBalInUSD = 0;
+
             usersWallet.forEach((wallet: any) => {
                 const balance = Number(wallet.coinBalance);
+                const StakedBalance = Number(wallet.coinStakedBalance);
                 if (wallet.coinType === "Crypto" && wallet.coinPrice) {
                     const price = Number(wallet.coinPrice);
                     if (!isNaN(price)) {
                         totalBalInUSD += balance * price;
                     }
+                    if(!isNaN(StakedBalance)){
+                        totalStakedBalInUSD += StakedBalance * price;
+                        }
                 } else {
                     totalBalInUSD += balance;
+                    if(!isNaN(StakedBalance)){
+                        totalStakedBalInUSD += StakedBalance;
+                    }
                 }
             });
     
             setTotalBalanceInUSD(totalBalInUSD);
+            setTotalStakedBalanceInUSD(totalStakedBalInUSD);
         } catch (err) {
             console.error("Error in getAllUserWallet", err);
         }
@@ -44,9 +54,14 @@ const BSWalletTop = () => {
     
 
     const [isVisible, setIsVisible] = useState(true);
+    const [isVisibleStaked, setIsVisibleStaked] = useState(true);
 
     const toggleVisibility = () => {
         setIsVisible(!isVisible);
+    };
+
+    const toggleVisibilityStaked = () => {
+        setIsVisibleStaked(!isVisibleStaked);
     };
 
     return (
@@ -56,24 +71,44 @@ const BSWalletTop = () => {
                     <img src={wallet} alt="logo" style={{ marginRight: "20px", width: "71px" }} />
                     Funding Wallet
                 </h1>
-                <div className='font_20x padding-b-3x'>
+                <div className='font_20x padding-b-3x text-center'>
                     Your trusted financial companion for managing, saving, and investing your money.
                 </div>
             </div>
-            <div className='padding-t-1x width-100 bs_wallet_top_banner position-relative' >
-                <h2>Estimated Balance</h2>
+            <div className='padding-t-1x width-100 bs_wallet_top_banner position-relative d-flex' >
+                <div>
+
+                <div className='font_18x fw-bold'>Available Balance</div>
                 <div className='d-flex flex-align-center color_general'>
-                    <h2 className='margin-b-0'>$</h2>
+                    <div className='margin-b-0 font_18x'>$</div>
                     {isVisible ?
-                        <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString()}&nbsp;&nbsp;&nbsp;</h1>
+                        <div className='margin-b-0 font_18x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString()}&nbsp;&nbsp;&nbsp;</div>
                         :
-                        <h1 className='margin-b-0 '>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</h1>
+                        <div className='margin-b-0 font_18x'>{(Math.floor(totalBalanceInUSD * 100) / 100).toLocaleString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</div>
                     }
                     <div onClick={toggleVisibility}>
                         {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </div>
 
                 </div>
+                </div>
+
+                <div className='ms-5'>
+                <div className='font_18x fw-bold'>Staked Balance</div>
+                <div className='d-flex flex-align-center color_general'>
+                    <div className='margin-b-0 font_18x'>$</div>
+                    {isVisibleStaked ?
+                        <div className='margin-b-0 font_18x'>{(Math.floor(totalStakedBalanceInUSD * 100) / 100).toLocaleString()}&nbsp;&nbsp;&nbsp;</div>
+                        :
+                        <div className='margin-b-0 font_18x'>{(Math.floor(totalStakedBalanceInUSD * 100) / 100).toLocaleString().replace(/./g, '•')}&nbsp;&nbsp;&nbsp;</div>
+                    }
+                    <div onClick={toggleVisibilityStaked}>
+                        {isVisibleStaked ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </div>
+
+                </div>
+</div>
+
                 {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
                     <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  objectFit: 'cover' }} />
                 </div> */}

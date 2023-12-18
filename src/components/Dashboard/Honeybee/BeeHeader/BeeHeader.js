@@ -1,9 +1,9 @@
 import React from 'react'
-import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
-import hat from "../../../../assets/hive-dashboard/subheader/new_hat.svg";
-import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
-import pen from "../../../../assets/hive-dashboard/subheader/pen, 1.svg";
-import waggle from "../../../../assets/hive-dashboard/subheader/wiggle icon 1.svg";
+// import bee from "../../../../assets/hive-dashboard/subheader/bee wings BnW 1.svg";
+import hat from "../../../../assets/hive-dashboard/subheader/captain bee.png";
+// import honey from "../../../../assets/hive-dashboard/subheader/honeyc 1.svg";
+import pen from "../../../../assets/hive-dashboard/subheader/Edit.png";
+import waggle from "../../../../assets/hive-dashboard/subheader/waggle dance.png";
 import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
 import './BeeHeader.css'

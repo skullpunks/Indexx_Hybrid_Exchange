@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react'
 // import acc from "../../../../../assets/hive-dashboard/resource-header/acc 1.svg";
 // import affiliate from "../../../../../assets/hive-dashboard/resource-header/affiliate icon 2.svg";
-import hammer from "../../../../../assets/hive-dashboard/resource-header/hfhfhf 1.svg";
-import mkt from "../../../../../assets/hive-dashboard/resource-header/megaphone 1.svg";
-import hammer_dark from "../../../../../assets/hive-dashboard/resource-header/Legal.svg";
-import mkt_dark from "../../../../../assets/hive-dashboard/resource-header/Marketing.svg";
-import sales from "../../../../../assets/hive-dashboard/resource-header/sales icon 1.svg";
-import sales_dark from "../../../../../assets/hive-dashboard/resource-header/sales icon for DM.svg";
-import technical from "../../../../../assets/hive-dashboard/resource-header/gear01 1.svg";
-import technical_dark from "../../../../../assets/hive-dashboard/resource-header/gear01_dark.svg";
+import hammer from "../../../../../assets/hive-dashboard/resource-header/legal.png";
+import mkt from "../../../../../assets/hive-dashboard/resource-header/marketing.png";
+import hammer_dark from "../../../../../assets/hive-dashboard/resource-header/Legal DM.png";
+import mkt_dark from "../../../../../assets/hive-dashboard/resource-header/Marketing DM.png";
+// import sales from "../../../../../assets/hive-dashboard/resource-header/sales icon 1.svg";
+// import sales_dark from "../../../../../assets/hive-dashboard/resource-header/sales icon for DM.svg";
+import technical from "../../../../../assets/hive-dashboard/resource-header/gear LM.png";
+import technical_dark from "../../../../../assets/hive-dashboard/resource-header/gear DM.png";
 
 
 // import setting from "../../../../../assets/hive-dashboard/resource-header/technicalb 1.svg";
