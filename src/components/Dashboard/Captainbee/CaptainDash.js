@@ -880,7 +880,13 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${'0.00'}
+                            ${(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
+                              ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00')
+                            }
                           </Typography>
                           <Typography
                             variant="text"
@@ -897,7 +903,13 @@ const CaptainDash = () => {
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {'0.00'}{" "}
+                        
+                            {(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
+                              ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00')}
                             <span className='font_17x'>
                               INEX
                             </span>
@@ -915,7 +927,7 @@ const CaptainDash = () => {
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} />  {"0%"}
+                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "15%" : "0%"}
                           </Typography>
                         </Box>
                       </Box>
