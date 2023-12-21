@@ -1,11 +1,11 @@
 import bronze from "../../assets/Rank Badges/bronze.png";
 import copper from "../../assets/Rank Badges/copper.png";
 import Silver from "../../assets/Rank Badges/silver.png";
-import Electrum from "../../assets/Rank Badges/4 Electrum.svg";
+import Electrum from "../../assets/Rank Badges/electrum.png";
 import Gold from "../../assets/Rank Badges/gold.png";
 import Platinum from "../../assets/Rank Badges/platinum.png";
 import Diamond from "../../assets/Rank Badges/diamond.png";
-import Diamond_Pollinated from "../../assets/Rank Badges/8 Diamond_Pollinated.svg";
+import Diamond_Pollinated from "../../assets/Rank Badges/daimond pollinated.png";
 import Carpenter from "../../assets/Rank Badges/carpenter.png";
 import Carpenter_Pollinated from "../../assets/Rank Badges/carpenter pollinated.png";
 import Hornet from "../../assets/Rank Badges/hornet.png";

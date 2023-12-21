@@ -336,6 +336,10 @@ const MobileHeader = () => {
       name: 'Program',
       subItems: [
         {
+          name: 'Airdrop',
+          url: `${baseURL}/airdrop`,
+        },
+        {
           name: 'Affiliate Program',
           url: 'https://register.affiliate.indexx.ai/',
         },

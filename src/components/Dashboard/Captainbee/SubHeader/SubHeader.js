@@ -5,6 +5,7 @@ import colony from "../../../../assets/hive-dashboard/subheader/colony.png";
 import honey from "../../../../assets/hive-dashboard/subheader/honeycomb.png";
 import pen from "../../../../assets/hive-dashboard/subheader/Edit.png";
 import calendar from "../../../../assets/hive-dashboard/subheader/resources.png";
+import greetcard from "../../../../assets/hive-dashboard/subheader/Greeting card icon 1.png";
 import waggle from "../../../../assets/hive-dashboard/subheader/waggle dance.png";
 import exch from "../../../../assets/BSheader/hive exchange black 1.svg";
 
@@ -174,6 +175,32 @@ const SubHeader = () => {
             </div>
         </a>
         </div>
+
+        <div className="col" style={{marginLeft:"-20px"}}>
+        <a href="/indexx-exchange/dashboard/capt-greet">
+            <div className="card">
+            <img src={greetcard} className="card-img-top mt-sm-2" alt="..." style={{
+                width:"auto"
+            }}/>
+            <div className="card-body">
+                <h5 className="card-title">Greeting Cards</h5>
+                <Typography
+                component='p'
+                sx={
+                  location.pathname === '/indexx-exchange/dashboard/capt-greet'
+                    ? {
+                      height: '0.07px',
+                      width: '68px',
+                      backgroundColor: '#000',
+                    }
+                    : null
+                }
+              ></Typography>
+            </div>
+            </div>
+        </a>
+        </div>
+
         <div className="col" style={{marginLeft:"-20px"}}>
         <a href="/indexx-exchange/dashboard/capt-resource-mkt">
             <div className="card">

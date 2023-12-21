@@ -621,6 +621,11 @@ const HeaderNew = () => {
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
                         Explore Program
                       </div>
+                      <NavDropdown.Item href={`${baseURL}/airdrop`} className="link-div">
+                        <a href={`${baseURL}/airdrop`} className="link-style">
+                          Airdrop
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href="https://register.affiliate.indexx.ai/" className="link-div">
                         <a href="https://register.affiliate.indexx.ai/" className="link-style">
                           Affiliate Program
