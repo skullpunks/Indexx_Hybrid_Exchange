@@ -103,6 +103,7 @@ import EliteLearnMore from "./components/EliteClub/EliteLearnMore";
 import SecondaryHeader from "./SecondaryHeader";
 import Payment from "./components/Send/Payment";
 import PaymentWire from "./components/Send/PaymentWire";
+import CaptainGreetCard from "./components/Dashboard/Captainbee/CaptainGreetCard";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -212,6 +213,7 @@ function App() {
           <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
           <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
           <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
+          <Route path="/indexx-exchange/dashboard/capt-greet" element={<CaptainGreetCard />} />
 
 
           {/* Routes for Honey Bee DashBoard   */}

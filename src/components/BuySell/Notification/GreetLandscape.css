@@ -1,0 +1,97 @@
+.main-pay-box{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+}
+
+.pay-box{
+    position: relative;
+    padding-inline: 50px;
+    top: 28px;
+    width: 788px;
+    background-color: var(--body_background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+.greet-portrait-box{
+    position: relative;
+    padding-inline: 20px;
+    top: 28px;
+    width: 400px;
+    background-color: var(--body_background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+.close-button-pay {
+    position: relative;
+    top: -13%;
+    /* right: 35%; */
+    left: 104%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--dark_text);
+    z-index: 1000;
+}
+
+.close-button-greet {
+    position: relative;
+    top: -13%;
+    /* right: 35%; */
+    left: 100%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--dark_text);
+    z-index: 1000;
+}
+
+.main-head {
+    color: var(--dark_text);
+    /* padding-bottom: 1.5rem; */
+    /* padding-top: 1.5rem; */
+    font-size: 30px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.greet-text {
+    color: var(--dark_text);
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    font-size: 17px;
+    /* font-family: "Inter"; */
+    width: 100%;
+    text-align: left;
+}
+
+.greet-text-portrait {
+    color: var(--dark_text);
+    padding-bottom: 0.8rem;
+    padding-top: 0.8rem;
+    font-size: 17px;
+    line-height: 23px;
+    /* font-family: "Inter"; */
+    width: 100%;
+    text-align: left;
+}
