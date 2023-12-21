@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
 import { commissionList, decodeJWT, getCaptainBeeStatics, getUserWallets } from '../../../services/api'
 import { useNavigate, useParams } from 'react-router-dom';
-import { DatePicker  } from 'antd';
+import { DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment, { Moment } from 'moment';
 
@@ -123,13 +123,21 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       amountInINEX: number;
       amountInUSD: number;
     };
+    totalHoneyBeeCommissionEarned: {
+      amountInINEX: number;
+      amountInUSD: number;
+    };
     totalCommissionToBePaid: {
+      amountInINEX: number;
+      amountInUSD: number;
+    };
+    totalHoneyBeeCommissionToBePaid: {
       amountInINEX: number;
       amountInUSD: number;
     };
     commissionPercentage: number;
     rank: string;
-  }
+  };
 
 
   // Provide a fallback for the currency formatting
@@ -150,7 +158,9 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Earned',
       align: "center",
       render: (_, record) => {
-        return `${formatCurrency(record.totalCommissionEarned?.amountInUSD)} / INEX: ${formatCurrency(record.totalCommissionEarned?.amountInINEX)}`;
+        const totalEarnedUSD = (record.totalCommissionEarned?.amountInUSD || 0) + (record.totalHoneyBeeCommissionEarned?.amountInUSD || 0);
+        const totalEarnedINEX = (record.totalCommissionEarned?.amountInINEX || 0) + (record.totalHoneyBeeCommissionEarned?.amountInINEX || 0);
+        return `${formatCurrency(totalEarnedUSD)} / INEX: ${formatCurrency(totalEarnedINEX)}`;
       },
     },
     {
@@ -158,7 +168,9 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Due',
       align: "center",
       render: (_, record) => {
-        return `${formatCurrency(record.totalCommissionToBePaid?.amountInUSD)} / INEX: ${formatCurrency(record.totalCommissionToBePaid?.amountInINEX)}`;
+        const totalDueUSD = (record.totalCommissionToBePaid?.amountInUSD || 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInUSD || 0);
+        const totalDueINEX = (record.totalCommissionToBePaid?.amountInINEX || 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInINEX || 0);
+        return `${formatCurrency(totalDueUSD)} / INEX: ${formatCurrency(totalDueINEX)}`;
       },
     },
     {
@@ -166,12 +178,17 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       title: 'Commission Paid',
       align: "center",
       render: (_, record) => {
-        const earnedUSD = record.totalCommissionEarned?.amountInUSD ?? 0;
-        const earnedINEX = record.totalCommissionEarned?.amountInINEX ?? 0;
-        const dueUSD = record.totalCommissionToBePaid?.amountInUSD ?? 0;
-        const dueINEX = record.totalCommissionToBePaid?.amountInINEX ?? 0;
-        // We're assuming that undefined - undefined should be zero
-        return `${formatCurrency(earnedUSD - dueUSD)} / INEX: ${formatCurrency(earnedINEX - dueINEX)}`;
+        // Calculate the total earned and due for both USD and INEX
+        const totalEarnedUSD = (record.totalCommissionEarned?.amountInUSD ?? 0) + (record.totalHoneyBeeCommissionEarned?.amountInUSD ?? 0);
+        const totalEarnedINEX = (record.totalCommissionEarned?.amountInINEX ?? 0) + (record.totalHoneyBeeCommissionEarned?.amountInINEX ?? 0);
+        const totalDueUSD = (record.totalCommissionToBePaid?.amountInUSD ?? 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInUSD ?? 0);
+        const totalDueINEX = (record.totalCommissionToBePaid?.amountInINEX ?? 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInINEX ?? 0);
+
+        // Calculate the total commission paid for both USD and INEX
+        const paidUSD = totalEarnedUSD - totalDueUSD;
+        const paidINEX = totalEarnedINEX - totalDueINEX;
+
+        return `${formatCurrency(paidUSD)} / INEX: ${formatCurrency(paidINEX)}`;
       },
     },
     {
@@ -187,7 +204,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   ];
 
   const [selectedDateRange, setSelectedDateRange] = useState<[Moment | null, Moment | null]>([null, null]);
-  const handleDateChange = (dates:any) => {
+  const handleDateChange = (dates: any) => {
     setSelectedDateRange(dates);
     console.log('Selected Date Range:', dates);
   };
@@ -195,16 +212,16 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   const filterDataByDate = (data: DataType[]): DataType[] => {
     return selectedDateRange
       ? data.filter((record) => {
-          const recordDate = new Date(record.created);
-          const startDate = selectedDateRange[0]?.startOf('day').toDate(); // Convert Moment to Date
-          const endDate = selectedDateRange[1]?.endOf('day').toDate(); // Convert Moment to Date
-          return startDate && endDate
-            ? recordDate >= startDate && recordDate <= endDate
-            : true;
-        })
+        const recordDate = new Date(record.created);
+        const startDate = selectedDateRange[0]?.startOf('day').toDate(); // Convert Moment to Date
+        const endDate = selectedDateRange[1]?.endOf('day').toDate(); // Convert Moment to Date
+        return startDate && endDate
+          ? recordDate >= startDate && recordDate <= endDate
+          : true;
+      })
       : data;
   };
-  
+
 
   const [sortedData, setSortedData] = useState<DataType[]>([]);
   const [commissionPaidData, setCommissionPaidData] = useState<CommissionDataType[]>([]);
@@ -291,7 +308,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     current,
   }) => {
     const totalPageCount = Math.ceil(total / pageSize);
-  
+
     return (
       <Pagination
         onChange={onChange}
@@ -305,7 +322,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       />
     );
   };
-  
+
   const navigate = useNavigate();
 
 
@@ -323,23 +340,23 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
         className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
         Affiliate Report / Commission Report
       </div>
-      <div className='d-flex mt-2' style={{gap:10}}>
-        <div className='d-flex flex-direction-column w-50' style={{color:"#333336"}}>
+      <div className='d-flex mt-2' style={{ gap: 10 }}>
+        <div className='d-flex flex-direction-column w-50' style={{ color: "#333336" }}>
           Date Range
-            <RangePicker disabledDate={disabledDate} style={{height:"40px"}}
-            onChange={handleDateChange} 
+          <RangePicker disabledDate={disabledDate} style={{ height: "40px" }}
+            onChange={handleDateChange}
             // className="createDateRangePicker"
             // dropdownClassName= "createDateRangePicker"
             className="createDateRangePicker dark-mode"
             dropdownClassName="createDateRangePicker dark-mode"
-            />
+          />
         </div>
-      <div className='d-flex w-50 align-items-end'>
-        <Button className='margin-r-1x com-btn ' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
-        Withdraw INEX
+        <div className='d-flex w-50 align-items-end'>
+          <Button className='margin-r-1x com-btn ' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+            Withdraw INEX
           </Button>
-        <Button className='com-btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
-          Withdraw USD
+          <Button className='com-btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
+            Withdraw USD
           </Button>
 
         </div>
@@ -365,7 +382,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
           current={current}
           onChange={setCurrent}
         /> */}
-         <MyPagination total={filterDataByDate(sortedData).length} onChange={handlePaginationChange} current={current} />
+        <MyPagination total={filterDataByDate(sortedData).length} onChange={handlePaginationChange} current={current} />
       </div>
     </div>
   );
