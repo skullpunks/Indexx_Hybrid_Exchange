@@ -32,7 +32,7 @@ const GreetLandscape = ({ isVisible, onClose, name, amount, captainName, refCode
             <br />
             💰 Instant bonus in your wallet of {" "}
             <span className='fw-bold'>
-            {amount.replace(/-/g, ' ').toUpperCase()}
+            {amount} {" INEX"}
             </span>
             <br />
             <br />

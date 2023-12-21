@@ -58,6 +58,7 @@ const CaptainGreetCard = () => {
   const [userType, setUserType] = useState("");
 
   const [amount, setAmount] = useState('30-inex');
+  const [codeAmount, setCodeAmount] = useState(0);
   const [inviteType, setInviteType] = useState('captainbee');
   const [greetWords, setGreetWords] = useState('[ADD GREETING WORDS HERE]');
   const [recName, setRecName] = useState('Friend');
@@ -154,6 +155,7 @@ const CaptainGreetCard = () => {
     // Find the selected greeting card based on its code
     const selectedCard = greetingCards.find(card => card.code === amount);
     setSelectedGreetingCards(selectedCard);
+    setCodeAmount(selectedCard?.numberOfTokens || 0)
     if (selectedCard) {
       // Determine the card type ('30-inex' or '50-inex') based on numberOfTokens
       const cardType = selectedCard.numberOfTokens === 30 ? '30-inex' : '50-inex';
@@ -1041,7 +1043,7 @@ const CaptainGreetCard = () => {
                         }
                       </li>
                       <li>
-                        Instant bonus of {amount.replace(/-/g, ' ').toUpperCase()} in your wallet upon registration
+                        Instant bonus of {codeAmount} INEX in your wallet upon registration
 
                       </li>
                     </ul>
@@ -1096,7 +1098,7 @@ const CaptainGreetCard = () => {
         <GreetLandscape
           isVisible={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          amount={amount}
+          amount={codeAmount}
           type={inviteType}
           name={recName}
           captainName={staticsData?.affiliateUserProfile?.accname}
@@ -1108,7 +1110,7 @@ const CaptainGreetCard = () => {
         <GreetPortrait
           isVisible={isModalOpenPort}
           onClose={() => setIsModalOpenPort(false)}
-          amount={amount}
+          amount={codeAmount}
           type={inviteType}
           name={recName}
           captainName={staticsData?.affiliateUserProfile?.accname}
