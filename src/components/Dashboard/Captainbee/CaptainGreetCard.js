@@ -37,7 +37,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating, TextField, IconButton } from '@mui/material';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, shareGreetingCard, checkEmail } from '../../../services/api';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
 import OpenNotification from '../../OpenNotification/OpenNotification';
@@ -67,25 +67,29 @@ const CaptainGreetCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenPort, setIsModalOpenPort] = useState(false);
 
-  useEffect(() => {
-    if(amount === '30-inex'){
-      const filtered = GreetData.filter((item) => item.type === '30-inex');
-      setImages(filtered);
-    }
-    else if(amount === '50-inex'){
-      const filtered = GreetData.filter((item) => item.type === '50-inex');
-      setImages(filtered);
-    }
-  }, [amount])
-  
+  // useEffect(() => {
+  //   if (amount === '30-inex') {
+  //     const filtered = GreetData.filter((item) => item.type === '30-inex');
+  //     setImages(filtered);
+  //   }
+  //   else if (amount === '50-inex') {
+  //     const filtered = GreetData.filter((item) => item.type === '50-inex');
+  //     setImages(filtered);
+  //   }
+  // }, [amount])
+
+
+
+
+
   const handleMessage = () => {
-  if(images[currentSlideIndex]?.orient === "portrait"){
-    setIsModalOpenPort(true);
-  }
-  else{
-    setIsModalOpen(true);
-  }
-    
+    if (images[currentSlideIndex]?.orient === "portrait") {
+      setIsModalOpenPort(true);
+    }
+    else {
+      setIsModalOpen(true);
+    }
+
   }
 
   const liveSlideRef = useRef();
@@ -94,7 +98,7 @@ const CaptainGreetCard = () => {
   const previousButtonLive = () => liveSlideRef.current.slickPrev();
 
   const CustomArrow = ({ onClick, icon }) => (
-    <IconButton onClick={onClick} style={{width:"fit-content", height:"fit-content", padding:0}}>
+    <IconButton onClick={onClick} style={{ width: "fit-content", height: "fit-content", padding: 0 }}>
       {icon}
     </IconButton>
   );
@@ -128,7 +132,8 @@ const CaptainGreetCard = () => {
   const [loadingsubs, setLoadingsubs] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
-
+  const [greetingCards, setGreetingCards] = useState([]);
+  const [selectedGreetingCard, setSelectedGreetingCards] = useState();
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -144,6 +149,21 @@ const CaptainGreetCard = () => {
 
     return () => clearInterval(intervalId);
   }, [staticsData?.nextPurchaseDate]);
+
+  useEffect(() => {
+    // Find the selected greeting card based on its code
+    const selectedCard = greetingCards.find(card => card.code === amount);
+    setSelectedGreetingCards(selectedCard);
+    if (selectedCard) {
+      // Determine the card type ('30-inex' or '50-inex') based on numberOfTokens
+      const cardType = selectedCard.numberOfTokens === 30 ? '30-inex' : '50-inex';
+
+      // Filter the GreetData based on the determined card type
+      const filtered = GreetData.filter(item => item.type === cardType);
+      setImages(filtered);
+      console.log(currentSlideIndex)
+    }
+  }, [amount, greetingCards]);
 
   function calculateTimeRemaining(endTime) {
     const total = Date.parse(endTime) - Date.now();
@@ -218,6 +238,7 @@ const CaptainGreetCard = () => {
       console.log("err", err)
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -228,8 +249,9 @@ const CaptainGreetCard = () => {
 
         if (userType === "CaptainBee" && username) {
           const data = await getCaptainBeeStatics(username);
+          console.log(data.data);
           setStaticsData(data.data);
-
+          setGreetingCards(data.data.affiliateUserProfile.greetingCards)
           if (data?.data?.powerPackData) {
             const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
             setPowerPackPhoto(getPowerPack?.photo);
@@ -286,26 +308,35 @@ const CaptainGreetCard = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
-  const createNewBuyOrder = async () => {
+  const handleSubmit = async () => {
     setLoadings(true);
-    let basecoin = "INEX";
-    let quotecoin = "USD";
-    let amount = 300;
-    let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
-    let res;
-    res = await createINEXBuyOrder(basecoin, quotecoin, amount, outAmount);
-    if (res.status === 200) {
+
+    //first check the email which is new
+    const res = await checkEmail(String(emailid).toLowerCase());
+    console.log(res);
+    if (res.status === 200 && !res.success) {
+      OpenNotification('error', `${emailid} is already existing indexx user. Please send Greeting Cards to invite to new users.`);
       setLoadings(false);
-      //--Below code is to enable paypal Order---
-      for (let i = 0; i < res.data.links.length; i++) {
-        if (res.data.links[i].rel.includes("approve")) {
-          window.location.href = res.data.links[i].href;
-        }
+      return;
+    }
+    else {
+      setLoadings(true);
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      let res;
+      let greetingCardUrl = images[currentSlideIndex].imageUrl;
+      console.log(greetingCardUrl)
+      console.log(selectedGreetingCard)
+      console.log(decoded?.email, recName, emailid, greetWords, inviteType, selectedGreetingCard?.code, greetingCardUrl);
+      setLoadings(false);
+      res = await shareGreetingCard(decoded?.email, recName, emailid, greetWords, inviteType, selectedGreetingCard?.code, greetingCardUrl);
+      if (res.status === 200) {
+        OpenNotification('success', `Greeting Cards to invite successfully sent to ${emailid}.`);
+      } else {
+        setLoadings(false);
+        setMessage(res.data);
+        OpenNotification('error', `Something went wrong. Please try again after sometime.`);
       }
-      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
-    } else {
-      setLoadings(false);
-      setMessage(res.data);
     }
   };
 
@@ -339,103 +370,103 @@ const CaptainGreetCard = () => {
       )}
 
       <div style={{ paddingTop: `${isMobile ? "250px" : '180px'}` }}>
-          <div className="hive-container">
-            <div
-              className="d-flex justify-content-center"
-              // style={{ width: '74%', maxWidth: '1140px' }}
-              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
-            >
-              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
-                <div className="d-flex  flex-direction-column align-items-center">
-                  <div
-                    style={{
-                      width: '193px',
-                      height: '193px',
-                      backgroundImage: `url(${frame})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center',
-                      position: 'relative',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      // border:"none"
-                    }}
-                  >
-                    <div className="hexagon">
-                      <img
-                        alt=""
-                        src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                        width={'63px'}
-                        height={'66px'}
-                        ml={'-6px'}
-                        border={'none'}
-                      />
-                    </div>
-
+        <div className="hive-container">
+          <div
+            className="d-flex justify-content-center"
+            // style={{ width: '74%', maxWidth: '1140px' }}
+            style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
+          >
+            <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
+              <div className="d-flex  flex-direction-column align-items-center">
+                <div
+                  style={{
+                    width: '193px',
+                    height: '193px',
+                    backgroundImage: `url(${frame})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    // border:"none"
+                  }}
+                >
+                  <div className="hexagon">
                     <img
                       alt=""
-                      src={rankPhoto}
-                      style={{
-                        position: 'absolute',
-                        bottom: '-25px',
-                        right: '17px',
-                        width: '79px',
-                        height: '81px',
-                      }}
+                      src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                      width={'63px'}
+                      height={'66px'}
+                      ml={'-6px'}
+                      border={'none'}
                     />
                   </div>
+
+                  <img
+                    alt=""
+                    src={rankPhoto}
+                    style={{
+                      position: 'absolute',
+                      bottom: '-25px',
+                      right: '17px',
+                      width: '79px',
+                      height: '81px',
+                    }}
+                  />
                 </div>
-                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
-                  Captain Bee {staticsData?.affiliateUserProfile?.accname}
-                </div>
-                {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
-                  (<div className="justify-content-center d-flex">
-                    <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
-                  </div>) : (
-                    <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
-                      Please purchase the powerpack from the below URL: <br />
-                      <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                        Power Pack Purchase
-                      </a>
+              </div>
+              <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
+                Captain Bee {staticsData?.affiliateUserProfile?.accname}
+              </div>
+              {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
+                (<div className="justify-content-center d-flex">
+                  <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
+                </div>) : (
+                  <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
+                    Please purchase the powerpack from the below URL: <br />
+                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                      Power Pack Purchase
+                    </a>
+                  </div>
+                )
+              }
+              <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
+                {(!subscription?.paypalSubscriptionDBData) ?
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_15x">
+                      Subscribe to your $300 monthly INEX investment today
                     </div>
-                  )
-                }
-                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
-                  {(!subscription?.paypalSubscriptionDBData) ?
-                    (<div className="d-flex flex-direction-column align-items-start mt-5">
-                      <div className="font_15x">
-                        Subscribe to your $300 monthly INEX investment today
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        <Button
-                          loading={loadings}
-                          type="primary"
-                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          onClick={handleCreateSubscription}
-                          style={{ width: "100%", height: "auto", color: "#393939" }}
-                        >
-                          Subscribe
-                        </Button>
-                      </div>
-                    </div>)
-                    :
-                    (<div className="d-flex flex-direction-column align-items-start mt-5">
-                      <div className="font_20x">
-                        $300 INEX Subscription Details
-                      </div>
-                      <div className="font_13x mt-3">
-                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
-                      </div>
-                      <div className="font_13x">
-                        Status: {subscription?.paypalSubscriptionDetails?.status}
-                      </div>
-                      <div className="font_13x">
-                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
-                      </div>
-                      {/* <div>
+                    <div style={{ width: "100%" }}>
+                      <Button
+                        loading={loadings}
+                        type="primary"
+                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                        onClick={handleCreateSubscription}
+                        style={{ width: "100%", height: "auto", color: "#393939" }}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>)
+                  :
+                  (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      $300 INEX Subscription Details
+                    </div>
+                    <div className="font_13x mt-3">
+                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
+                    </div>
+                    <div className="font_13x">
+                      Status: {subscription?.paypalSubscriptionDetails?.status}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                    </div>
+                    {/* <div>
                       <Button
                         type="danger"
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
@@ -445,148 +476,148 @@ const CaptainGreetCard = () => {
                         Cancel Subscription
                       </Button>
                     </div> */}
-                    </div>)
-                  }
-                </div>
+                  </div>)
+                }
+              </div>
 
-                <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+              <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
 
-                  {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+                {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
                   in indexx hive`}
                 </div> */}
-                  <div className="font_13x d-flex align-items-center mt-4">
-                    {theme === "dark" ?
-                      <img alt="man" src={man_dark} className="me-1" />
-                      :
-                      <img alt="man" src={man} className="me-1" />
-                    }
-                    @{staticsData?.affiliateUserProfile?.Username}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
-                      <img alt="man" src={pin_dark} className="me-2" />
-                      :
-                      <img alt="man" src={pin} className="me-2" />
-                    }
-                    {staticsData?.affiliateUserProfile?.country}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
-                      <img alt="man" src={house_dark} className="me-1" />
-                      :
-                      <img alt="man" src={house} className="me-1" />
-                    }
-                    {staticsData?.affiliateUserProfile?.city}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
-                      <img alt="man" src={clock_dark} className="me-1" />
-                      :
-                      <img alt="man" src={clock} className="me-1" />
-                    }
-                    {staticsData?.formatedAccountCreationDate}
-                  </div>
-                  {staticsData?.affiliateUserProfile?.isPhonePublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={phone_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={phone} className="me-2" />
-                      )}
-                      {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
-                    </div>
+                <div className="font_13x d-flex align-items-center mt-4">
+                  {theme === "dark" ?
+                    <img alt="man" src={man_dark} className="me-1" />
+                    :
+                    <img alt="man" src={man} className="me-1" />
                   }
-                  {staticsData?.affiliateUserProfile?.isEmailPublic &&
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={email_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={email} className="me-2" />
-                      )}
-                      {staticsData?.affiliateUserProfile?.Email}
-                    </div>
+                  @{staticsData?.affiliateUserProfile?.Username}
+                </div>
+                <div className="font_13x d-flex align-items-center">
+                  {theme === "dark" ?
+                    <img alt="man" src={pin_dark} className="me-2" />
+                    :
+                    <img alt="man" src={pin} className="me-2" />
                   }
+                  {staticsData?.affiliateUserProfile?.country}
                 </div>
-
-                <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
-                      <img alt="man" src={discord_dark} className="me-3" />
-                      :
-                      <img alt="Discord" src={discord} className="me-3" />
-                    }
-                  </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
-                      <img alt="man" src={insta_dark} className="me-3" />
-                      :
-                      <img alt="Instagram" src={insta} className="me-3" />
-                    }
-                  </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
-                      <img alt="man" src={linkedin_dark} className="me-3" />
-                      :
-                      <img alt="LinkedIn" src={linkedin} className="me-3" />
-                    }
-                  </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
-                      <img alt="man" src={twitter_dark} />
-                      :
-                      <img alt="Twitter" src={twitter} />
-                    }
-                  </a>
-
+                <div className="font_13x d-flex align-items-center">
+                  {theme === "dark" ?
+                    <img alt="man" src={house_dark} className="me-1" />
+                    :
+                    <img alt="man" src={house} className="me-1" />
+                  }
+                  {staticsData?.affiliateUserProfile?.city}
                 </div>
-
-                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <div>
-                    <span className='fw-bold'>
-                      Invite Honey Bee :
-                    </span>
-                    <br />
-                    {staticsData?.userFullData?.referralCode}
-                    <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() => copyClick(baseCEXURL +
-                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                    />
+                <div className="font_13x d-flex align-items-center">
+                  {theme === "dark" ?
+                    <img alt="man" src={clock_dark} className="me-1" />
+                    :
+                    <img alt="man" src={clock} className="me-1" />
+                  }
+                  {staticsData?.formatedAccountCreationDate}
+                </div>
+                {staticsData?.affiliateUserProfile?.isPhonePublic &&
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={phone_dark} className="me-2" />
+                    ) : (
+                      <img alt="man" src={phone} className="me-2" />
+                    )}
+                    {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
                   </div>
+                }
+                {staticsData?.affiliateUserProfile?.isEmailPublic &&
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={email_dark} className="me-2" />
+                    ) : (
+                      <img alt="man" src={email} className="me-2" />
+                    )}
+                    {staticsData?.affiliateUserProfile?.Email}
+                  </div>
+                }
+              </div>
+
+              <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
+                  {theme === "dark" ?
+                    <img alt="man" src={discord_dark} className="me-3" />
+                    :
+                    <img alt="Discord" src={discord} className="me-3" />
+                  }
+                </a>
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
+                  {theme === "dark" ?
+                    <img alt="man" src={insta_dark} className="me-3" />
+                    :
+                    <img alt="Instagram" src={insta} className="me-3" />
+                  }
+                </a>
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
+                  {theme === "dark" ?
+                    <img alt="man" src={linkedin_dark} className="me-3" />
+                    :
+                    <img alt="LinkedIn" src={linkedin} className="me-3" />
+                  }
+                </a>
+                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
+                  {theme === "dark" ?
+                    <img alt="man" src={twitter_dark} />
+                    :
+                    <img alt="Twitter" src={twitter} />
+                  }
+                </a>
+
+              </div>
+
+              <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <div>
+                  <span className='fw-bold'>
+                    Invite Honey Bee :
+                  </span>
                   <br />
-                  <div>
-                    <span className='fw-bold'>
-                      Invite Captain Bee :
-                    </span>
-                    <br />
-                    {staticsData?.userFullData?.referralCode}
-                    <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() => copyClick(baseHiveURL +
-                        "/sign-up?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                    />
-                  </div>
+                  {staticsData?.userFullData?.referralCode}
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() => copyClick(baseCEXURL +
+                      "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                      staticsData?.userFullData?.referralCode)}
+                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                  />
                 </div>
+                <br />
+                <div>
+                  <span className='fw-bold'>
+                    Invite Captain Bee :
+                  </span>
+                  <br />
+                  {staticsData?.userFullData?.referralCode}
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() => copyClick(baseHiveURL +
+                      "/sign-up?referral=" +
+                      staticsData?.userFullData?.referralCode)}
+                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                  />
+                </div>
+              </div>
 
-                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <div className="font_13x ">
-                    Your Rating
-                  </div>
-                  <div className='mt-4'>
-                    <Rating name="read-only" value={4} readOnly size='large' />
-                  </div>
-                  <div className="font_40x mt-3">
-                    95%
-                  </div>
+              <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <div className="font_13x ">
+                  Your Rating
                 </div>
-                {/* 
+                <div className='mt-4'>
+                  <Rating name="read-only" value={4} readOnly size='large' />
+                </div>
+                <div className="font_40x mt-3">
+                  95%
+                </div>
+              </div>
+              {/* 
                 {timeRemaining?.days &&
                 <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
@@ -597,13 +628,13 @@ const CaptainGreetCard = () => {
                   </div>
                 </div>
                 } */}
-                {/* <div className="font_20x mt-3">
+              {/* <div className="font_20x mt-3">
                     {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
                     <br />
                     {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
                     {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
                   </div> */}
-                {/* {timeRemaining?.days < 15 && (
+              {/* {timeRemaining?.days < 15 && (
                     <div>
                       <Button
                         type="primary"
@@ -616,375 +647,427 @@ const CaptainGreetCard = () => {
                       </Button>
                     </div>
                   )} */}
-                {/* </div> */}
+              {/* </div> */}
 
 
-              </div>
-              <div className="greet-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
+            </div>
+            <div className="greet-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  mt: 2
+                }}
+              >
+
+                <Box>
+                  <Typography
+                    variant="text"
+                    component="p"
+                    fontSize={'20px'}
+                    fontWeight={'bold'}
+                    textAlign={'left'}
+                    mb={2}
+                  >
+                    Send Greeting Cards to invite users to the HIVE!
+                  </Typography>
+                  <Typography
+                    variant="text"
+                    component="p"
+                    fontSize={'13px'}
+                    textAlign={'left'}
+                    mb={2}
+                  >
+                    Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
+                  </Typography>
+                </Box>
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                    mt: 2
+                    flexDirection: `${isMobile ? "column" : "row"}`,
+                    gap: isMobile ? 4 : 2,
+                    mt: 3
                   }}
                 >
-
-                  <Box>
-                  <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'20px'}
-                        fontWeight={'bold'}
-                        textAlign={'left'}
-                        mb={2}
-                      >
-                        Send Greeting Cards to invite users to the HIVE!
-                      </Typography>
-                      <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'13px'}
-                        textAlign={'left'}
-                        mb={2}
-                      >
-                      Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
-                      </Typography>
-                  </Box>
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: `${isMobile ? "column" : "row"}`,
-                      gap: isMobile ? 4 : 2,
-                      mt: 3
+                      flexDirection: 'column',
+                      alignItems: "center",
+                      width: `${isMobile ? "100%" : "48%"}`,
+                    }}
+                  >
+                    <Slider
+                      ref={liveSlideRef}
+                      {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
+
+                      {images?.map((token, index) => (
+                        <div key={index} style={{ maxWidth: "100%", maxHeight: "500px" }}>
+                          <img src={token.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </div>
+                      ))}
+
+                    </Slider>
+                    <Button
+                      type="text"
+                      className="atn-btn atn-btn-round link-btn"
+                      onClick={() => handleMessage()}
+                    >
+                      See message
+                    </Button>
+                  </Box>
+
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                      width: `${isMobile ? "100%" : "52%"}`,
                     }}
                   >
                     <Box
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems:"center",
-                        width: `${isMobile ? "100%" : "48%"}`,
+                        // gap: 1,
                       }}
                     >
-                      <Slider 
-                      ref={liveSlideRef}
-                       {...sliderSettings} style={{maxWidth:"100%", display:"flex", alignItems:"center", height:"fit-content"}}>
-
-                            {images?.map((token, index) => (
-                              <div key={index} style={{maxWidth:"100%", maxHeight:"500px"}}>
-                                <img src={token.photo} alt="" style={{width:"100%", height:"100%", objectFit:"cover"}} />
-                              </div>
-                              ))}
-
-                            </Slider>
-                            <Button
-                        type="text"
-                        className="atn-btn atn-btn-round link-btn"
-                        onClick={() => handleMessage()}
+                      {/* <Box
+                        sx={{
+                          display: 'flex',
+                          // flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1
+                        }}
                       >
-                        See message
-                      </Button>
-                    </Box>
-                    
-
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        width: `${isMobile ? "100%" : "52%"}`,
-                      }}
-                    >
+                        <Typography
+                          variant="text"
+                          fontSize={'20px'}
+                          textAlign={'left'}
+                          width={'50%'}
+                        >
+                          Select INEX Amount
+                        </Typography>
+                        <Select
+                          value={amount}
+                          onChange={(e) => {
+                            setAmount(e.target.value);
+                          }}
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
+                          sx={{
+                            width: '60%',
+                            borderRadius: 0,
+                            background: 'var(--body_background)',
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '20px',
+                          }}
+                          size="small"
+                          disableUnderline
+                        >
+                          <MenuItem key="50-inex" value="50-inex">
+                            50 INEX Greeting Card X2pcs
+                          </MenuItem>
+                          <MenuItem key="30-inex" value="30-inex">
+                            30 INEX Greeting Card X8pcs
+                          </MenuItem>
+                        </Select>
+                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
-                          flexDirection: 'column',
-                          // gap: 1,
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1
                         }}
                       >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            // flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '100%',
-                            background: 'var(--body_background)',
-                            p:1
-                          }}
+                        <Typography
+                          variant="text"
+                          fontSize={'20px'}
+                          textAlign={'left'}
+                          width={'50%'}
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={'20px'}
-                            textAlign={'left'}
-                            width={'50%'}
-                          >
-                            Select INEX Amount
-                          </Typography>
-                          <Select
-                            value={amount}
-                            onChange={(e) => {
-                              setAmount(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '60%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '20px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="50-inex" value="50-inex">
-                            50 INEX Greeting Card X2pcs
+                          Select INEX Amount
+                        </Typography>
+                        <Select
+                          value={amount}
+                          onChange={(e) => {
+                            setAmount(e.target.value);
+                          }}
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
+                          sx={{
+                            width: '60%',
+                            borderRadius: 0,
+                            background: 'var(--body_background)',
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '20px',
+                          }}
+                          size="small"
+                          disableUnderline
+                        >
+                          {greetingCards?.map((card) => (
+                            <MenuItem
+                              key={card._id}
+                              value={card.code}
+                              disabled={card.isUsed}
+                            >
+                              {`${card.title} (${card.code})${card.isUsed ? ` - Used by ${card.receiverEmail}` : ''}`}
                             </MenuItem>
-                            <MenuItem key="30-inex" value="30-inex">
-                            30 INEX Greeting Card X8pcs
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '100%',
-                            background: 'var(--body_background)',
-                            p: 1,
-                          }}
+                          ))}
+                        </Select>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={'20px'}
+                          textAlign={'left'}
+                          width={'50%'}
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={'20px'}
-                            textAlign={'left'}
-                            width={'50%'}
-                          >
-                            Invite Type
-                          </Typography>
-                          <Select
-                            value={inviteType}
-                            onChange={(e) => {
-                              setInviteType(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '60%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '20px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="captainbee" value="captainbee">
-                              Captain Bee
-                            </MenuItem>
-                            <MenuItem key="honeybee" value="honeybee">
-                              Honey Bee
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '100%',
-                            background: 'var(--body_background)',
-                            p: 1,
+                          Invite Type
+                        </Typography>
+                        <Select
+                          value={inviteType}
+                          onChange={(e) => {
+                            setInviteType(e.target.value);
                           }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '12px' : '13px'}
-                            fontWeight={400}
-                            width={'35%'}
-                            textAlign={'left'}
-                          >
-                            Greeting Words
-                          </Typography>
-                          <TextField
-                            type="email"
-                            InputLabelProps={{ shrink: true, readOnly: true, }}
-                            variant="outlined"
-                            sx={{ width: '74%' }}
-                            size="small" // Make the input box smaller
-                            value={greetWords}
-                            onChange={(e) => {
-                              setGreetWords(e.target.value);
-                            }}
-                            InputProps={{
-                              style: { fontSize: '13px', borderRadius:0 }
-                            }}
-                          />
-                        </Box>
-                        <Box
+                          variant="standard"
+                          InputLabelProps={{ shrink: true }}
                           sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '100%',
+                            width: '60%',
+                            borderRadius: 0,
                             background: 'var(--body_background)',
-                            p: 1,
+                            color: "var(--body_color)",
+                            border: 'none',
+                            outline: 'none',
+                            padding: 0,
+                            fontSize: '20px',
                           }}
+                          size="small"
+                          disableUnderline
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '12px' : '13px'}
-                            fontWeight={400}
-                            width={'35%'}
-                            textAlign={'left'}
-                          >
-                            Receiver’s Name
-                          </Typography>
-                          <TextField
-                            type="email"
-                            InputLabelProps={{ shrink: true, readOnly: true, }}
-                            variant="outlined"
-                            sx={{ width: '74%' }}
-                            size="small" // Make the input box smaller
-                            value={recName}
-                            onChange={(e) => {
-                              setRecName(e.target.value);
-                            }}
-                            InputProps={{
-                              style: { fontSize: '13px', borderRadius:0 } // Set the desired font size
-                            }}
-                          />
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '100%',
-                            background: 'var(--body_background)',
-                            p: 1,
+                          <MenuItem key="captainbee" value="captainbee">
+                            Captain Bee
+                          </MenuItem>
+                          <MenuItem key="honeybee" value="honeybee">
+                            Honey Bee
+                          </MenuItem>
+                        </Select>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '12px' : '13px'}
+                          fontWeight={400}
+                          width={'35%'}
+                          textAlign={'left'}
+                        >
+                          Greeting Words
+                        </Typography>
+                        <TextField
+                          type="email"
+                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          variant="outlined"
+                          sx={{ width: '74%' }}
+                          size="small" // Make the input box smaller
+                          value={greetWords}
+                          onChange={(e) => {
+                            setGreetWords(e.target.value);
                           }}
+                          InputProps={{
+                            style: { fontSize: '13px', borderRadius: 0 }
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '12px' : '13px'}
+                          fontWeight={400}
+                          width={'35%'}
+                          textAlign={'left'}
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '12px' : '13px'}
-                            fontWeight={400}
-                            width={'35%'}
-                            textAlign={'left'}
-                          >
-                            Email Address
-                          </Typography>
-                          <TextField
-                            // placeholder="abc@xyz.com"
-                            type="email"
-                            InputLabelProps={{ shrink: true, readOnly: true, }}
-                            variant="outlined"
-                            sx={{ width: '74%' }}
-                            size="small" // Make the input box smaller
-                            value={emailid}
-                            onChange={(e) => {
-                              setEmailid(e.target.value);
-                            }}
-                            InputProps={{
-                              style: { fontSize: '13px', borderRadius:0 } // Set the desired font size
-                            }}
-                          />
-                        </Box>
-                        <Box px={1}>
+                          Receiver’s Name
+                        </Typography>
+                        <TextField
+                          type="email"
+                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          variant="outlined"
+                          sx={{ width: '74%' }}
+                          size="small" // Make the input box smaller
+                          value={recName}
+                          onChange={(e) => {
+                            setRecName(e.target.value);
+                          }}
+                          InputProps={{
+                            style: { fontSize: '13px', borderRadius: 0 } // Set the desired font size
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'baseline',
+                          width: '100%',
+                          background: 'var(--body_background)',
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '12px' : '13px'}
+                          fontWeight={400}
+                          width={'35%'}
+                          textAlign={'left'}
+                        >
+                          Email Address
+                        </Typography>
+                        <TextField
+                          // placeholder="abc@xyz.com"
+                          type="email"
+                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          variant="outlined"
+                          sx={{ width: '74%' }}
+                          size="small" // Make the input box smaller
+                          value={emailid}
+                          onChange={(e) => {
+                            setEmailid(e.target.value);
+                          }}
+                          InputProps={{
+                            style: { fontSize: '13px', borderRadius: 0 } // Set the desired font size
+                          }}
+                        />
+                      </Box>
+                      <Box px={1}>
                         <Button
                           type="primary"
+                          disabled={loadings}
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-1"
-                          style={{ width: "100%", height: "37px", color: "#393939", fontSize:"13px" }}
+                          style={{ width: "100%", height: "37px", color: "#393939", fontSize: "13px" }}
+                          onClick={handleSubmit}
                         >
-                          Submit
+                          {loadings ? "Loading..." : "Submit"}
                         </Button>
                       </Box>
 
-                      </Box>
                     </Box>
                   </Box>
+                </Box>
 
-                  <Box>
+                <Box>
                   <Typography component="div" fontSize={'20px'} lineHeight={'30px'} fontWeight={'bold'} mt={5} mb={3}>
-                  Email Template:
+                    Email Template:
                   </Typography>
 
                   <Typography component="div" fontSize={'20px'} lineHeight={'30px'} overflow={"auto"}>
 
-<span className='fw-bold'>
-Subject: 🎄Exclusive Festive Bonus: Join Our Hive as a Captain Bee or Honeybee! 🐝🎁
-</span>
+                    <span className='fw-bold'>
+                      Subject: 🎄Exclusive Festive Bonus: Join Our Hive as a Captain Bee or Honeybee! 🐝🎁
+                    </span>
 
-<br />
-Dear {recName},
-<br />
-<br />
-{greetWords}
-<br />
-<br />
-Wishing you a joyful holiday season! 🎅🎉 As a fellow bee, I'm excited to share an exclusive opportunity with you these Holidays.
-<br />
-<br />
-🌟 Festive Bonus Awaits:
-<br />
-<ul style={{listStyleType:"disc", marginLeft:"35px"}}>
-              <li>
-              Register with my referral code : {staticsData?.userFullData?.referralCode}
-              {inviteType === 'captainbee' ?
-              <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() => copyClick(baseHiveURL +
-                        "/sign-up?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                    />
-              :
-              <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() => copyClick(baseCEXURL +
-                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                    />              
-              }
-              </li>
-            <li>
-            Instant bonus of {amount.replace(/-/g, ' ').toUpperCase()} in your wallet upon registration
+                    <br />
+                    Dear {recName},
+                    <br />
+                    <br />
+                    {greetWords}
+                    <br />
+                    <br />
+                    Wishing you a joyful holiday season! 🎅🎉 As a fellow bee, I'm excited to share an exclusive opportunity with you these Holidays.
+                    <br />
+                    <br />
+                    🌟 Festive Bonus Awaits:
+                    <br />
+                    <ul style={{ listStyleType: "disc", marginLeft: "35px" }}>
+                      <li>
+                        Register with my referral code : {staticsData?.userFullData?.referralCode}
+                        {inviteType === 'captainbee' ?
+                          <ContentCopyIcon
+                            fontSize="13px"
+                            onClick={() => copyClick(baseHiveURL +
+                              "/sign-up?referral=" +
+                              staticsData?.userFullData?.referralCode)}
+                            style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                          />
+                          :
+                          <ContentCopyIcon
+                            fontSize="13px"
+                            onClick={() => copyClick(baseCEXURL +
+                              "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
+                              staticsData?.userFullData?.referralCode)}
+                            style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                          />
+                        }
+                      </li>
+                      <li>
+                        Instant bonus of {amount.replace(/-/g, ' ').toUpperCase()} in your wallet upon registration
 
-            </li>
-            </ul>
+                      </li>
+                    </ul>
                     🎊 How to Claim:
                     <br />
 
-            <ul style={{listStyleType:"disc", marginLeft:"35px"}}>
-              <li>
-              Click {" "}
-              {inviteType === 'captainbee' ?
-              <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
-                here
-              </a>
-              :
-              <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
-                here
-              </a>
-              }{" "}
-              to signup as a {inviteType === "captainbee" ? "Captain Bee" : "Honey Bee"}
+                    <ul style={{ listStyleType: "disc", marginLeft: "35px" }}>
+                      <li>
+                        Click {" "}
+                        {inviteType === 'captainbee' ?
+                          <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                            here
+                          </a>
+                          :
+                          <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                            here
+                          </a>
+                        }{" "}
+                        to signup as a {inviteType === "captainbee" ? "Captain Bee" : "Honey Bee"}
 
-              </li>
-            <li>
-            Enjoy your instant bonus and dive into the hive!
+                      </li>
+                      <li>
+                        Enjoy your instant bonus and dive into the hive!
 
-            </li>
-            </ul>
+                      </li>
+                    </ul>
 
                     Joining our Exchange as a Captain Bee or Honeybee opens doors to growth, connections, and exclusive benefits.
                     <br />
@@ -996,20 +1079,20 @@ Wishing you a joyful holiday season! 🎅🎉 As a fellow bee, I'm excited to sh
                     Best,
                     <br />
 
-                    Captain Bee {staticsData?.affiliateUserProfile?.accname}, 
+                    Captain Bee {staticsData?.affiliateUserProfile?.accname},
                     <br />
                     Indexx Hive
 
                   </Typography>
 
-                  </Box>
                 </Box>
-              </div>
+              </Box>
             </div>
           </div>
         </div>
-        
-        <div>
+      </div>
+
+      <div>
         <GreetLandscape
           isVisible={isModalOpen}
           onClose={() => setIsModalOpen(false)}
