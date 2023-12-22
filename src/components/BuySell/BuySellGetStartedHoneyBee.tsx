@@ -171,11 +171,11 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
               </div>
               <div className="form_element referral">
                 <Form.Item
-                  label="Referral Code (Optional)"
+                  label="Referral Code"
                   name="referral"
-                  // rules={[
-                  //   { required: false, message: 'Referral Id Required' },
-                  // ]}
+                  rules={[
+                    { required: true, message: 'Referral Code Required' },
+                  ]}
                   initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
                 >
                   <div className="control-input">
