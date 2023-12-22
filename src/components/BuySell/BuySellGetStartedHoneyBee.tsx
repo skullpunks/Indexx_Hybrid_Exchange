@@ -247,7 +247,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
               </Link>
             </div>
 
-            <Space direction="vertical" style={{ width: '100%' }}>
+            {/* <Space direction="vertical" style={{ width: '100%' }}>
               <p>
                 {' '}
                 As per our Terms and Use, we’re unable to provide services to
@@ -258,7 +258,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
                 </a>
                 .
               </p>
-            </Space>
+            </Space> */}
           </div>
         </div>
 
