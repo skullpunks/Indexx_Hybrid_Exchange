@@ -239,7 +239,7 @@ console.log(refcode === "null");
               </Link>
             </div>
 
-            <Space direction="vertical" style={{ width: '100%' }}>
+            {/* <Space direction="vertical" style={{ width: '100%' }}>
               <p>
                 {' '}
                 As per our Terms and Use, we’re unable to provide services to
@@ -250,7 +250,7 @@ console.log(refcode === "null");
                 </a>
                 .
               </p>
-            </Space>
+            </Space> */}
           </div>
         </div>
 
