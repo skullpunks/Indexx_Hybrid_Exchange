@@ -42,7 +42,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
       if (res.status === 200) {
         setLoadings(false);
         OpenNotification('success', 'Successfully registered');
-        window.dispatchEvent( new Event('storage') ) 
+        window.dispatchEvent(new Event('storage'))
         navigate('email-auth');
       } else {
         setLoadings(false);
@@ -84,7 +84,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
         <div className="col d-flex flex-direction-column text-center justify-center flex-align-center">
           <div
             className="text-center justify-center"
-            // style={{ paddingLeft: 28 }}
+          // style={{ paddingLeft: 28 }}
           >
             <h3 className='mb-0'>Get Started as</h3>
             <h1 className="top_heading mb-2">HoneyBee</h1>
@@ -174,7 +174,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
                   label="Referral Code"
                   name="referral"
                   rules={[
-                    { required: true, message: 'Referral Code Required' },
+                    { required: false, message: 'Referral Id Required' },
                   ]}
                   initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
                 >
