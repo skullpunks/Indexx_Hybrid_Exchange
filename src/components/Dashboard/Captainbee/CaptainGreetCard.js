@@ -44,7 +44,6 @@ import OpenNotification from '../../OpenNotification/OpenNotification';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Button } from 'antd';
 import { GreetData } from '../GreetData';
-import NeedPermission from '../../BuySell/Notification/NeedPermission';
 import GreetLandscape from '../../BuySell/Notification/GreetLandscape';
 import GreetPortrait from '../../BuySell/Notification/GreetPortrait';
 let appSettingArr = [];
@@ -706,8 +705,8 @@ const CaptainGreetCard = () => {
                       {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
 
                       {images?.map((token, index) => (
-                        <div key={index} style={{ maxWidth: "100%", maxHeight: "500px" }}>
-                          <img src={token.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <div key={index} className='greet-slide-div'>
+                          <img src={token.photo} alt="" className="greet-slide-img"/>
                         </div>
                       ))}
 
