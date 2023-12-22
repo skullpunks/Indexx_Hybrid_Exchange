@@ -36,7 +36,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
-import './sliderstyles.css';
+// import './sliderstyles.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { Box, MenuItem, Select, Typography, Rating, TextField, IconButton } from '@mui/material';
 import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, shareGreetingCard, checkEmail } from '../../../services/api';
 import { useTheme } from '@emotion/react';

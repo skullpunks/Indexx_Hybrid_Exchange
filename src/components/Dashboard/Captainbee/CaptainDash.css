@@ -381,7 +381,7 @@
     color: #ffd000 !important;
     background: transparent;
   }
-  
+
   .greet-slide-div{
     max-width: 100% !important;
     max-height: 500px !important;
@@ -391,4 +391,8 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+  }
+
+  .slick-slide{
+    width: 432px !important;
   }

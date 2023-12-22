@@ -30,17 +30,17 @@
 }
 
 .slick-slider .slick-list,.slick-slider .slick-track {
-    -webkit-transform: translateZ(0);
+    -webkit-transform: translateZ(0) !important;
     transform: translateZ(0)
 }
 
 .slick-track {
-    position: relative;
-    top: 0;
-    left: 0;
-    display: block;
-    margin-left: auto;
-    margin-right: auto
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .slick-track:after,.slick-track:before {
