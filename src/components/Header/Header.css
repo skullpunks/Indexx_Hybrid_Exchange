@@ -20,7 +20,7 @@
 
 .navbar.bg-dark {
   background-color: #000 !important;
-  background-image: url('../../assets/arts/headerBG.png');
+  background-image: url('../../assets/arts/christmas_bg.png');
   height: 90px;
 }
 
@@ -513,10 +513,6 @@ button.navbar-toggler {
     width: 100% !important;
   }
 
-  .black-div{
-    display: none;
-  }
-
   .my-menu .dropdown-menu {
     width: auto;
     margin-left: 0 !important;
@@ -593,7 +589,9 @@ button.navbar-toggler {
 
 .black-div{
   height: 26px;
-  background: black;
+  /* background: black;
+  background-image: url('../../assets/arts/christmas_bg.png');
+  object-fit: contain; */
 }
 
 .back {
@@ -628,11 +626,13 @@ button.navbar-toggler {
   /* justify-content: flex-start; */
   /* align-items: start; */
   /* top: 65px; */
+  background: transparent;
 }
 
 .main-menu{
   padding: 30px;
   padding-left: 150px;
+  background-color: var(--body_background);
 }
 .prod-menu .dropdown-menu{
   margin-left: -360px;
@@ -656,7 +656,7 @@ button.navbar-toggler {
 }
 
 .wallet-menu .dropdown-menu .wallet-back {
-  top: 220px;
+  top: 210px;
 }
 
 .comp-menu .dropdown-menu{

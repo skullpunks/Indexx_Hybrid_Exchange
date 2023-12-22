@@ -256,10 +256,7 @@ const HeaderNew = () => {
                 //  style={{ width: "200vw" }}
                 >
 
-                  <div className="black-div"
-                  // style={{ height: "26px", background: "black" }}
-                  >
-                  </div>
+                  <div className="black-div"></div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -420,7 +417,7 @@ const HeaderNew = () => {
               <NavDropdown title="Products" id="basic-nav-dropdown" className="my-menu prod-menu" renderMenuOnMount={true}>
                 <div style={{ width: "200vw" }}>
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                  <div className="black-div"></div>
                   <div className="d-flex flex-row my-menu main-menu" >
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -615,7 +612,7 @@ const HeaderNew = () => {
               <NavDropdown title="Program" id="basic-nav-dropdown" className="my-menu prog-menu" renderMenuOnMount={true}>
                 <div style={{ width: "200vw" }}>
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                  <div className="black-div"></div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -706,7 +703,7 @@ const HeaderNew = () => {
               <NavDropdown title="Wallet" id="basic-nav-dropdown" className="my-menu wallet-menu" renderMenuOnMount={true}>
                 <div style={{ width: "200vw" }}>
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                  <div className="black-div"></div>
                   <div className="d-flex flex-row my-menu main-menu" >
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -773,7 +770,7 @@ const HeaderNew = () => {
               <NavDropdown title="Company" id="basic-nav-dropdown" className="my-menu comp-menu" renderMenuOnMount={true}>
                 <div style={{ width: "200vw" }}>
 
-                  <div style={{ height: "26px", background: "black" }}></div>
+                <div className="black-div"></div>
                   <div className="d-flex flex-row my-menu main-menu">
                     <div style={{ justifyContent: "center", fontSize: "13px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "18px" }}>
@@ -960,8 +957,7 @@ const HeaderNew = () => {
 
                   } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{ minWidth: "353px" }}>
                     <div style={{ width: "200vw", marginBottom: "-10px" }}>
-
-                      <div style={{ height: "16px", background: "black" }}></div>
+                    <div className="black-div" style={{height:"20px"}}></div>
                       <div className="d-flex flex-row my-menu main-menu">
                         <div style={{ justifyContent: "center", fontSize: "13px" }}>
                           <div className="action-link-div" style={{ paddingBottom: "18px" }}>
