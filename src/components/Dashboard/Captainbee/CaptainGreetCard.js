@@ -99,7 +99,7 @@ const CaptainGreetCard = () => {
   const previousButtonLive = () => liveSlideRef.current.slickPrev();
 
   const CustomArrow = ({ onClick, icon }) => (
-    <IconButton onClick={onClick} style={{ width: "fit-content", height: "fit-content", padding: 0 }}>
+    <IconButton onClick={onClick} style={{ width: "fit-content", height: "fit-content", padding: 0, color:"var(--body_color)" }}>
       {icon}
     </IconButton>
   );
@@ -665,42 +665,43 @@ const CaptainGreetCard = () => {
 
                 <Box>
                   <Typography
-                    variant="text"
-                    component="p"
-                    fontSize={'20px'}
-                    fontWeight={'bold'}
-                    textAlign={'left'}
-                    mb={2}
-                  >
-                    Send Greeting Cards to invite users to the HIVE!
-                  </Typography>
-                  <Typography
-                    variant="text"
-                    component="p"
-                    fontSize={'13px'}
-                    textAlign={'left'}
-                    mb={2}
-                  >
-                    Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: `${isMobile ? "column" : "row"}`,
-                    gap: isMobile ? 4 : 2,
-                    mt: 3
-                  }}
-                >
+                        variant="text"
+                        component="p"
+                        fontSize={'40px'}
+                        fontWeight={'bold'}
+                        textAlign={'left'}
+                        mb={2}
+                      >
+                        Send Greeting Cards to invite
+                        <br /> friends and family to the Hive!
+                      </Typography>
+                      <Typography
+                        variant="text"
+                        component="p"
+                        fontSize={'13px'}
+                        textAlign={'left'}
+                        mb={2}
+                      >
+                      Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
+                      </Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: "center",
-                      width: `${isMobile ? "100%" : "48%"}`,
+                      flexDirection: `${isMobile ? "column" : "row"}`,
+                      gap: isMobile ? 4 : 2,
+                      mt: 3
                     }}
                   >
-                    <Slider
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems:"center",
+                        width: `${isMobile ? "100%" : "45%"}`,
+                      }}
+                    >
+                      <Slider 
                       ref={liveSlideRef}
                       {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
 
@@ -726,7 +727,7 @@ const CaptainGreetCard = () => {
                       display: 'flex',
                       flexDirection: 'column',
                       gap: 2,
-                      width: `${isMobile ? "100%" : "52%"}`,
+                      width: `${isMobile ? "100%" : "55%"}`,
                     }}
                   >
                     <Box
@@ -743,7 +744,7 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
+                          background: 'var(--main-body)',
                           p: 1
                         }}
                       >
@@ -765,7 +766,7 @@ const CaptainGreetCard = () => {
                           sx={{
                             width: '60%',
                             borderRadius: 0,
-                            background: 'var(--body_background)',
+                            background: 'var(--main-body)',
                             color: "var(--body_color)",
                             border: 'none',
                             outline: 'none',
@@ -789,8 +790,9 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
-                          p: 1
+                          background: 'var(--main-body)',
+                          p: 1,
+                          gap:1
                         }}
                       >
                         <Typography
@@ -811,7 +813,7 @@ const CaptainGreetCard = () => {
                           sx={{
                             width: '60%',
                             borderRadius: 0,
-                            background: 'var(--body_background)',
+                            background: 'var(--main-body)',
                             color: "var(--body_color)",
                             border: 'none',
                             outline: 'none',
@@ -839,7 +841,7 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
+                          background: 'var(--main-body)',
                           p: 1,
                         }}
                       >
@@ -847,7 +849,7 @@ const CaptainGreetCard = () => {
                           variant="text"
                           fontSize={'20px'}
                           textAlign={'left'}
-                          width={'50%'}
+                          width={'47%'}
                         >
                           Invite Type
                         </Typography>
@@ -859,14 +861,15 @@ const CaptainGreetCard = () => {
                           variant="standard"
                           InputLabelProps={{ shrink: true }}
                           sx={{
-                            width: '60%',
+                            width: '70%',
                             borderRadius: 0,
-                            background: 'var(--body_background)',
+                            background: 'var(--main-body)',
                             color: "var(--body_color)",
                             border: 'none',
                             outline: 'none',
                             padding: 0,
                             fontSize: '20px',
+                            textAlign:"right"
                           }}
                           size="small"
                           disableUnderline
@@ -885,7 +888,7 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
+                          background: 'var(--main-body)',
                           p: 1,
                         }}
                       >
@@ -919,7 +922,7 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
+                          background: 'var(--main-body)',
                           p: 1,
                         }}
                       >
@@ -953,7 +956,7 @@ const CaptainGreetCard = () => {
                           justifyContent: 'center',
                           alignItems: 'baseline',
                           width: '100%',
-                          background: 'var(--body_background)',
+                          background: 'var(--main-body)',
                           p: 1,
                         }}
                       >
@@ -986,7 +989,7 @@ const CaptainGreetCard = () => {
                         <Button
                           type="primary"
                           disabled={loadings}
-                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-1"
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           style={{ width: "100%", height: "37px", color: "#393939", fontSize: "13px" }}
                           onClick={handleSubmit}
                         >
@@ -998,15 +1001,15 @@ const CaptainGreetCard = () => {
                   </Box>
                 </Box>
 
-                <Box>
+                  <Box>
                   <Typography component="div" fontSize={'20px'} lineHeight={'30px'} fontWeight={'bold'} mt={5} mb={3}>
-                    Email Template:
+                  Email Template:
                   </Typography>
 
                   <Typography component="div" fontSize={'20px'} lineHeight={'30px'} overflow={"auto"}>
 
                     <span className='fw-bold'>
-                      Subject: 🎄Exclusive Festive Bonus: Join Our Hive as a Captain Bee or Honeybee! 🐝🎁
+                      Subject: 🎄Holiday Cheers from Captain Bee! 🐝🎁
                     </span>
 
                     <br />
@@ -1016,68 +1019,56 @@ const CaptainGreetCard = () => {
                     {greetWords}
                     <br />
                     <br />
-                    Wishing you a joyful holiday season! 🎅🎉 As a fellow bee, I'm excited to share an exclusive opportunity with you these Holidays.
+                    Wishing you joy this season! 🎅🎉 Join our hive and enjoy an exclusive festive bonus:
                     <br />
                     <br />
-                    🌟 Festive Bonus Awaits:
-                    <br />
-                    <ul style={{ listStyleType: "disc", marginLeft: "35px" }}>
-                      <li>
-                        Register with my referral code : {staticsData?.userFullData?.referralCode}
-                        {inviteType === 'captainbee' ?
-                          <ContentCopyIcon
-                            fontSize="13px"
-                            onClick={() => copyClick(baseHiveURL +
-                              "/sign-up?referral=" +
-                              staticsData?.userFullData?.referralCode)}
-                            style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                          />
-                          :
-                          <ContentCopyIcon
-                            fontSize="13px"
-                            onClick={() => copyClick(baseCEXURL +
-                              "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                              staticsData?.userFullData?.referralCode)}
-                            style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                          />
-                        }
-                      </li>
-                      <li>
-                        Instant bonus of {codeAmount} INEX in your wallet upon registration
-
-                      </li>
-                    </ul>
-                    🎊 How to Claim:
-                    <br />
-
-                    <ul style={{ listStyleType: "disc", marginLeft: "35px" }}>
-                      <li>
-                        Click {" "}
-                        {inviteType === 'captainbee' ?
+            🌟 Register with {" "}
+            {inviteType === 'captainbee' ?
                           <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
-                            here
+                          referral link
                           </a>
                           :
                           <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
-                            here
+                          referral link
                           </a>
                         }{" "}
-                        to signup as a {inviteType === "captainbee" ? "Captain Bee" : "Honey Bee"}
-
-                      </li>
-                      <li>
-                        Enjoy your instant bonus and dive into the hive!
-
-                      </li>
-                    </ul>
-
-                    Joining our Exchange as a Captain Bee or Honeybee opens doors to growth, connections, and exclusive benefits.
+                        <br />
+                    
+                        💰 Instant bonus in your wallet of {codeAmount} INEX 
+                        <br />
+                        <br />
+                    🎊 How to Claim:
                     <br />
-
-                    Wishing you a festive season filled with success and sweetness!
-                    <br />
-
-                    <br />
+                    1. Click the {" "}
+                        {inviteType === 'captainbee' ?
+                          <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                          link
+                          </a>
+                          :
+                          <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                          link
+                          </a>
+                        }
+                        <br />
+            2. Fill the form
+            <br />
+            3. Verify your email
+            <br />
+            <br />
+                     
+                        Enjoy your instant bonus!
+                        <br />
+            Dive into the hive as a Captain Bee or Honeybee for growth,
+            connections, and perks. Here's to a sweet and successful festive
+            season!
+            <br />
+            <br />
+            Learn more about Indexx Hive here: {" "}
+            <a href="https://hive.indexx.ai" className='hive_link'>
+            https://hive.indexx.ai
+            </a>
+            <br />
+            <br />
                     Best,
                     <br />
 
