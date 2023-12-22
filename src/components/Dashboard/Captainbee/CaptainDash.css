@@ -41,6 +41,14 @@
     margin-left: 30px;
 }
 
+.greet-container{
+  width: 1100px;
+  max-width: 1100px;
+  /* height: 650px; */
+  padding: 20px;
+  margin-left: 30px;
+}
+
 .honeycomb-container{
   width: 700px;
   /* height: 650px; */
@@ -361,4 +369,30 @@
   .atn-btn-hover:hover {
     background-color: #FFD55F; /* Lighter color for hover state */
     border-color: #FFD55F;
+  }
+
+  .link-btn{
+    color: #FFB300 !important;
+    background: transparent;
+    width: fit-content;
+  }
+
+  .link-btn:hover{
+    color: #ffd000 !important;
+    background: transparent;
+  }
+
+  .greet-slide-div{
+    max-width: 100% !important;
+    max-height: 500px !important;
+  }
+
+  .greet-slide-img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .slick-slide{
+    width: 432px !important;
   }

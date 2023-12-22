@@ -102,6 +102,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-body);
   color: var(--body_color) !important;
+  padding-right: 0 !important;
+  overflow: auto !important;
 }
 
 p {

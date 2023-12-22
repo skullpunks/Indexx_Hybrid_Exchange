@@ -35,7 +35,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -72,7 +72,8 @@ export const signupAPI = async (
   email: string,
   password: string,
   username: string,
-  referralCode: string
+  referralCode: string,
+  gcode: string = ""
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/register', {
@@ -80,6 +81,7 @@ export const signupAPI = async (
       password,
       username,
       referralCode,
+      gcode
     });
     return result.data;
   } catch (e: any) {
@@ -106,6 +108,17 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
 
   return formattedPhoneNumber;
 }
+
+export const checkEmail = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/checkemail', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
 
 export const loginAPI = async (email: string, password: string) => {
   try {
@@ -841,6 +854,34 @@ export const updateFavCurrencies = async (email: string, currency: string) => {
   }
 };
 
+export const shareGreetingCard = async (
+  email: string,
+  receiverName: string,
+  receiverEmail: string,
+  greetingWords: string,
+  userType: string,
+  greetingCode: string,
+  greetingCardImageUrl: string
+) => {
+  try {
+    const result = await API.post('/api/v1/affiliate/shareGreetingCard', {
+      receiverName,
+      receiverEmail,
+      email,
+      greetingWords,
+      userType,
+      greetingCode,
+      greetingCardImageUrl,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (shareGreetingCard)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const createBuyOrder = async (
   basecoin: string,
   quotecoin: string,
@@ -849,7 +890,7 @@ export const createBuyOrder = async (
   price?: number,
   email?: string,
   isHoneyBeeOrder: boolean = false,
-  paymentType: string = "paypal"
+  paymentType: string = 'paypal'
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/createOrder', {
@@ -861,7 +902,7 @@ export const createBuyOrder = async (
       outAmount: outAmount,
       email: email ? email : localStorage.getItem('user'),
       isHoneyBeeOrder: isHoneyBeeOrder,
-      paymentType
+      paymentType,
     });
     return result.data;
   } catch (e: any) {
@@ -872,21 +913,29 @@ export const createBuyOrder = async (
   }
 };
 
-
 export const createFiatDepositForOrder = async (
-  email:string, 
+  email: string,
   orderId: string,
-  fromDetails: any, 
-  toDetails:any, 
+  fromDetails: any,
+  toDetails: any,
   paymentReceiptUrl: string
 ) => {
   try {
-    const result = await API.post('/api/v1/inex/transaction/createFiatDepositForOrder', {
-      email, orderId, fromDetails, toDetails, paymentReceiptUrl,      
-    });
+    const result = await API.post(
+      '/api/v1/inex/transaction/createFiatDepositForOrder',
+      {
+        email,
+        orderId,
+        fromDetails,
+        toDetails,
+        paymentReceiptUrl,
+      }
+    );
     return result.data;
   } catch (e: any) {
-    console.log('FAILED: unable to perform API request (createFiatDepositForOrder)');
+    console.log(
+      'FAILED: unable to perform API request (createFiatDepositForOrder)'
+    );
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
@@ -1358,9 +1407,7 @@ export const commissionList = async (email: string) => {
 
 export const validateUserEmail = async (email: string) => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/getUserByEmail/${email}`
-    );
+    const result = await API.get(`/api/v1/inex/user/getUserByEmail/${email}`);
     return result.data;
   } catch (err: any) {
     console.log('FAILED: unable to perform API request (validateUserEmail)');
@@ -1541,18 +1588,17 @@ export const createSendTxByUsername = async (
   coin: string = 'USD'
 ) => {
   try {
-    const result = await API.post(
-      '/api/v1/inex/transaction/sendTxByUsername',
-      {
-        toUsername: toUsername,
-        amount: amount,
-        fromEmail: fromEmail,
-        coin: coin,
-      }
-    );
+    const result = await API.post('/api/v1/inex/transaction/sendTxByUsername', {
+      toUsername: toUsername,
+      amount: amount,
+      fromEmail: fromEmail,
+      coin: coin,
+    });
     return result.data;
   } catch (e: any) {
-    console.log('FAILED: unable to perform API request (createSendTxByUsername)');
+    console.log(
+      'FAILED: unable to perform API request (createSendTxByUsername)'
+    );
     return e.response.data;
   }
 };
@@ -1564,15 +1610,12 @@ export const createSendTxByEmail = async (
   coin: string
 ) => {
   try {
-    const result = await API.post(
-      '/api/v1/inex/transaction/sendTxByEmail',
-      {
-        toEmail: toEmail,
-        amount: amount,
-        fromEmail: fromEmail,
-        coin: coin,
-      }
-    );
+    const result = await API.post('/api/v1/inex/transaction/sendTxByEmail', {
+      toEmail: toEmail,
+      amount: amount,
+      fromEmail: fromEmail,
+      coin: coin,
+    });
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createSendTxByEmail)');
@@ -1639,7 +1682,9 @@ export const getPaypalOrder = async (token: string) => {
 
 export const getPaypalSubscription = async (subscriptionId: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/getPaypalSubscription/${subscriptionId}`);
+    const result = await API.get(
+      `/api/v1/inex/user/getPaypalSubscription/${subscriptionId}`
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (getPaypalOrder)');

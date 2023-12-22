@@ -35,8 +35,9 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
       localStorage.setItem('userlogged', "honeyb");
       let referralCode = refcode === "null" || refcode === "" || refcode === "undefined" || refcode === undefined ? "" : refcode
       console.log(values.email, values.password, values.username, referralCode)
-
-      const res = await signupAPI(values.email, values.password, values.username, referralCode);
+      const url = new URL(window.location.href); // Adjust this if you are not in a browser environment
+      const gcode = String(url.searchParams.get('gcode'));
+      const res = await signupAPI(values.email, values.password, values.username, referralCode, gcode);
 
       if (res.status === 200) {
         setLoadings(false);
