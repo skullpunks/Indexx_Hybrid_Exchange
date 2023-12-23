@@ -28,6 +28,9 @@ const BuySellGetStarted: React.FC = () => {
 console.log(refcode === "null");
 
 
+  const handleClick = () => {
+    window.location.href = `${baseHiveURL}/sign-up`;
+  }
   
   const onFinish = async (values: any) => {
     setLoadings(true);
@@ -230,14 +233,24 @@ console.log(refcode === "null");
             </Form>
             <div
               style={{ marginTop: -30 }}
-              className="d-flex justify-center padding-tb-2x"
+              className="d-flex justify-center padding-t-2x"
             >
               Already have an account? &nbsp;
               <Link to="/indexx-exchange/buy-sell/login" className="text_link">
                 {' '}
                 Log in.
               </Link>
-            </div>
+              </div>
+              <div
+              className="d-flex flex-column justify-center align-items-center padding-t-2x">
+                <Link to="/indexx-exchange/buy-sell/get-started-honeybee" className="hive_link">
+                  Sign up as Honey Bee
+                </Link>
+                <br />
+                <Button onClick={handleClick} className="hive_link" style={{border:"none", width:"fit-content", boxShadow:"none"}}>
+                  Sign up as Captain Bee
+                </Button>
+              </div>
 
             {/* <Space direction="vertical" style={{ width: '100%' }}>
               <p>

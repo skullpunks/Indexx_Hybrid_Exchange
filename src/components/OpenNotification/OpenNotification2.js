@@ -6,6 +6,7 @@ const OpenNotification2 = (type, message) => {
   notification[type]({
     message: message,
     description: '',
+    placement: 'top',
     icon: <CloseCircleFilled />,
     style: {
       border: '1px solid var(--primary-color)',
