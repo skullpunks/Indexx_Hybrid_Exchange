@@ -274,14 +274,16 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
               src={hands}
               style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
             ></Image>
-            <div style={{fontSize:"32px", textAlign:"center"}}>
+            <div style={{fontSize:"40px", textAlign:"center"}}>
             New to crypto?
-            <br />
+            </div>
+            <a href={baseHiveURL} target='blank' className='blk_yl_link'>
+            <div style={{fontSize:"20px", textAlign:"center"}}>
+
             Take help from a 
             <br />
             Captain Bee now!
             </div>
-            <a href={baseHiveURL} target='blank'>
 
             <Image
               className="text-center mt-5 hive-img"
