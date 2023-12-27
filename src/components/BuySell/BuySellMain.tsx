@@ -44,7 +44,7 @@ import LitecoinGraph from '../Graphs/LitecoinGraph';
 import BSBuyInProgress from './BSBuyInProgress';
 import BSConfirmPurchase from './BSConfirmPurchase';
 // import BuySellGetStarted from './BuySellGetStarted';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useSearchParams } from 'react-router-dom';
 import BinanceMarket from '../MarketAbout/BinanceMarket';
 import BitcoinMarket from '../MarketAbout/BitcoinMarket';
 import Indexx500Market from '../MarketAbout/Indexx500Market';
@@ -262,7 +262,30 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     setSelectedTab(newValue);
   };
 
+  const [params] = useSearchParams();
+    console.log(String(params.get("tab")));
+    console.log(String(params.get("toksymbol")));
 
+  useEffect(() => {
+    const tabname = String(params.get("tab"));
+    console.log("main eff trig");
+    
+    if(tabname === 'sttoken') 
+    {
+      setSelectedTab(2);
+      setSelectedSubTab(0);
+    }
+    else if(tabname === 'etf') 
+    {
+      setSelectedTab(2);
+      setSelectedSubTab(1);
+    }
+    else{
+      setSelectedTab(0);
+      setSelectedSubTab(0);
+    }
+  }, [])
+    
 
   return (
     <div className="swap_container">
