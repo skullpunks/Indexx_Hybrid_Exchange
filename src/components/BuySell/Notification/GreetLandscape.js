@@ -8,7 +8,7 @@ const GreetLandscape = ({ isVisible, onClose, name, amount, captainName, refCode
     <>
       <div class="main-pay-box">
         <div class="pay-box" style={{width:"866px"}}>
-          <div className="close-button-pay" onClick={onClose}>
+          <div className="close-button-greetl" onClick={onClose}>
             &times; {/* This is the close button (X) */}
           </div>
           <div class="main-head">🎄Holiday Cheers from Captain Bee! 🐝🎁</div>

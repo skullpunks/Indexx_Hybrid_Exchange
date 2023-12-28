@@ -265,7 +265,6 @@ const MobileHeader = () => {
           url: `${baseShopURL}/collections/greeting-cards`,
         },
         { name: 'NFT', url: `${baseURL}/indexx-exchange/nfts` },
-        { name: 'Elite Club', url: `${baseCEXURL}/indexx-exchange/elite-club` },
         { name: 'Power Pack', url: `${baseCEXURL}/indexx-exchange/power-pack` },
         { name: 'Stock Certificates', url: `${baseWSURL}/certificates` },
         { name: 'Stock Tokens', url: `${baseWSURL}/details` },
@@ -343,6 +342,7 @@ const MobileHeader = () => {
           name: 'Affiliate Program',
           url: 'https://register.affiliate.indexx.ai/',
         },
+        { name: 'Elite Club', url: `${baseCEXURL}/indexx-exchange/elite-club` },
         { name: 'Hive', url: baseHiveURL },
         {
           name: 'Trade to Earn',

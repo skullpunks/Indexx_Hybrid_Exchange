@@ -116,6 +116,16 @@ const CaptainGreetCard = () => {
     beforeChange: (oldIndex, newIndex) => {
       setCurrentSlideIndex(newIndex); // Update the current slide index
     },
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
   };
 
 
@@ -372,13 +382,14 @@ const CaptainGreetCard = () => {
         </div>
       )}
 
-      <div style={{ paddingTop: `${isMobile ? "250px" : '180px'}` }}>
+      <div style={{ paddingTop: `${isMobile ? "200px" : '180px'}` }}>
         <div className="hive-container">
           <div
             className="d-flex justify-content-center"
             // style={{ width: '74%', maxWidth: '1140px' }}
             style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
           >
+          {!isMobile &&
             <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
               <div className="d-flex  flex-direction-column align-items-center">
                 <div
@@ -654,7 +665,9 @@ const CaptainGreetCard = () => {
 
 
             </div>
-            <div className="greet-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
+          }
+
+            <div className="greet-container">
               <Box
                 sx={{
                   display: 'flex',
@@ -665,7 +678,26 @@ const CaptainGreetCard = () => {
               >
 
                 <Box>
+                {isMobile ? 
+
                   <Typography
+                        variant="text"
+                        component="p"
+                        fontSize={'32px'}
+                        fontWeight={'bold'}
+                        textAlign={'center'}
+                        mb={2}
+                      >
+                        Send Greeting Cards
+                        <br /> 
+                        <span className='font_25x'>
+
+                        to invite users to the Hive!
+                        </span>
+                      </Typography>
+                :
+
+                <Typography
                         variant="text"
                         component="p"
                         fontSize={'40px'}
@@ -676,6 +708,9 @@ const CaptainGreetCard = () => {
                         Send Greeting Cards to invite
                         <br /> friends and family to the Hive!
                       </Typography>
+                }
+                  
+                      {!isMobile &&
                       <Typography
                         variant="text"
                         component="p"
@@ -685,6 +720,8 @@ const CaptainGreetCard = () => {
                       >
                       Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
                       </Typography>
+                    }
+
                   </Box>
                   <Box
                     sx={{

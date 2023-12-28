@@ -6,10 +6,12 @@ import Menu from './Menu';
 import { Link, useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
+import InvestElite from '../BuySell/Notification/InvestElite';
 
 const EliteLearnMore = () => {
   const { id } = useParams();
   const [data, setdata] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const filtered = EliteClubData.filter((item) => item.id === id);
@@ -199,7 +201,7 @@ const EliteLearnMore = () => {
             <span style={{ fontSize: '40px' }}> USD </span>
           </Typography>
           <Button
-            // onClick={}
+            onClick={() => setIsModalOpen(true)}
             sx={{
               background: data?.clr,
               color: '#fff',
@@ -321,7 +323,7 @@ const EliteLearnMore = () => {
 
       <Box className="d-flex justify-content-center">
         <Button
-          // onClick={}
+          onClick={() => setIsModalOpen(true)}
           sx={{
             background: '#000',
             color: '#fff',
@@ -342,6 +344,13 @@ const EliteLearnMore = () => {
           Invest
         </Button>
       </Box>
+      <div>
+        <InvestElite
+          isVisible={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          
+        />
+      </div>
     </Box>
   );
 };

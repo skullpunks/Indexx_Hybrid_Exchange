@@ -443,11 +443,6 @@ const HeaderNew = () => {
                           NFT
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-div">
-                        <a href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-style">
-                          Elite Club
-                        </a>
-                      </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/power-pack`} className="link-div">
                         <a href={`${baseCEXURL}/indexx-exchange/power-pack`} className="link-style">
                           Power Pack
@@ -628,6 +623,11 @@ const HeaderNew = () => {
                           Affiliate Program
                         </a>
                       </NavDropdown.Item>
+                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-div">
+                        <a href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-style">
+                          Elite Club
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={baseHiveURL} className="link-div">
                         <a href={baseHiveURL} className="link-style">
                           Hive
@@ -667,16 +667,16 @@ const HeaderNew = () => {
                           Honeycomb Build Up
                         </Link>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-div">
                         <a href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-style">
                           Trade to Earn Sign Up
                         </a>
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-div">
+                      </NavDropdown.Item> */}
+                      {/* <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-div">
                         <a href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-style">
                           Trade to Earn Sign In
                         </a>
-                      </NavDropdown.Item>
+                      </NavDropdown.Item> */}
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "23px" }}>
