@@ -181,7 +181,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
     >
       <div className="font_15x text-left mt-4">
         <h1 className="font_30x text-left mb-5">
-          Order Amount: {orderData?.breakdown?.inAmount} {orderData?.breakdown?.inCurrenyName}
+          Order Amount: {String(orderData?.orderType).includes("Pack") ? (orderData?.breakdown?.finalAmountAfterDiscount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : (orderData?.breakdown?.inAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  {orderData?.breakdown?.inCurrenyName}
         </h1>
         <WarningAmberIcon />
         Kindly transfer the exact amount specified above using the provided recipient details

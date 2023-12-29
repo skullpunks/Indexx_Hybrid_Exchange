@@ -123,7 +123,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
         <WarningAmberIcon />
         Kindly transfer the exact amount specified above using the provided recipient details
         <h1 className="font_30x text-center mt-5">
-          Order Amount: {orderData?.breakdown?.inAmount} {orderData?.breakdown?.inCurrenyName}
+          Order Amount: {String(orderData?.orderType).includes("Pack") ? (orderData?.breakdown?.finalAmountAfterDiscount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : (orderData?.breakdown?.inAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  {orderData?.breakdown?.inCurrenyName}
         </h1>
       </div>
       <Box className="send-box mt-5">
