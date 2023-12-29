@@ -25,7 +25,7 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
       if (orderId) {
         navigate(`/indexx-exchange/payment-${selectedValue}?orderId=${orderId}`);
       }
-    } else if (selectedValue === 'paypal'){
+    } else if (selectedValue === 'paypal') {
       onConfirm();
     }
     setIsLoading(false);
@@ -37,7 +37,7 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  
+
 
   return (
     <>
@@ -64,26 +64,26 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
               sx={{ gap: 4 }}
             >
               <FormControlLabel
-                value="paypal"
+                value="wire"
                 control={<Radio className="radio-button" />}
                 labelPlacement="start"
                 label={
                   <div className="label-content">
                     <img
-                      alt="Female"
-                      src={paypal}
-                      className={`pay-image ${
-                        selectedValue === 'paypal' ? 'selected' : ''
-                      }`}
+                      src={wire}
+                      alt="Other"
+                      className={`pay-image ${selectedValue === 'wire' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
-                      {' '}
-                      Secure online payment platform with instant wallet updates
-                      for seamless transactions. (instant)
+                      Swift and secure direct electronic transfers, renowned for
+                      their speed and security in domestic and international
+                      transactions. (2-3 Business Days)
                     </p>
                   </div>
                 }
               />
+
               <FormControlLabel
                 value="zelle"
                 control={<Radio className="radio-button" />}
@@ -93,9 +93,8 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                     <img
                       src={zelle}
                       alt="Male"
-                      className={`pay-image ${
-                        selectedValue === 'zelle' ? 'selected' : ''
-                      }`}
+                      className={`pay-image ${selectedValue === 'zelle' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
                       Swift and secure money transfers, effortlessly sending and
@@ -105,23 +104,23 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                   </div>
                 }
               />
+
               <FormControlLabel
-                value="wire"
+                value="paypal"
                 control={<Radio className="radio-button" />}
                 labelPlacement="start"
                 label={
                   <div className="label-content">
                     <img
-                      src={wire}
-                      alt="Other"
-                      className={`pay-image ${
-                        selectedValue === 'wire' ? 'selected' : ''
-                      }`}
+                      alt="Female"
+                      src={paypal}
+                      className={`pay-image ${selectedValue === 'paypal' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
-                      Swift and secure direct electronic transfers, renowned for
-                      their speed and security in domestic and international
-                      transactions. (2-3 Business Days)
+                      {' '}
+                      Secure online payment platform with instant wallet updates
+                      for seamless transactions. (instant)
                     </p>
                   </div>
                 }
