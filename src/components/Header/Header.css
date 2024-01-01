@@ -20,7 +20,7 @@
 
 .navbar.bg-dark {
   background-color: #000 !important;
-  background-image: url('../../assets/arts/header\ new\ year.svg');
+  /* background-image: url('../../assets/arts/header\ new\ year.svg'); */
   height: 90px;
 }
 
@@ -930,7 +930,8 @@ a:hover{
 }
 
 .app-head{
-  background-image: url('../../assets/arts/header\ new\ year.svg');
+  background-color: #000 !important;
+  /* background-image: url('../../assets/arts/header\ new\ year.svg'); */
 }
 
 .side-panel {
