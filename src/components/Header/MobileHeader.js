@@ -201,7 +201,8 @@ const MobileHeader = () => {
         { name: 'Academy', url: baseAcademyUrl },
         { name: 'Exchange', url: baseCEXURL },
         { name: 'Fortune Daily', url: 'https://fortune.daily.indexx.ai/' },
-        { name: 'Shop', url: baseShopURL },
+        // { name: 'Shop', url: baseShopURL },
+        { name: 'Shop', url: baseCEXURL },
         { name: 'Swap', url: baseDEXURL },
         { name: 'Wall Street', url: baseWSURL },
         { name: 'Market', url: baseMktplaceURL },
@@ -216,21 +217,37 @@ const MobileHeader = () => {
           name: 'Buy Lottery tickets',
           url: 'https://fortune.daily.indexx.ai/',
         },
+        // {
+        //   name: 'Buy Gift Cards',
+        //   url: `${baseShopURL}/collections/gift-cards-1`,
+        // },
+        // {
+        //   name: 'Buy Greeting Cards',
+        //   url: `${baseShopURL}/collections/greeting-cards`,
+        // },
+        // {
+        //   name: 'Buy Stock Certificates',
+        //   url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+        // },
+        // {
+        //   name: 'Buy Stock Tokens',
+        //   url: `${baseShopURL}/collections/stock-gift-cards`,
+        // },
         {
           name: 'Buy Gift Cards',
-          url: `${baseShopURL}/collections/gift-cards-1`,
+          url: baseCEXURL,
         },
         {
           name: 'Buy Greeting Cards',
-          url: `${baseShopURL}/collections/greeting-cards`,
+          url: baseCEXURL,
         },
         {
           name: 'Buy Stock Certificates',
-          url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+          url: baseCEXURL,
         },
         {
           name: 'Buy Stock Tokens',
-          url: `${baseShopURL}/collections/stock-gift-cards`,
+          url: baseCEXURL,
         },
         { name: 'Trade in swap', url: baseDEXURL },
         { name: 'Walk on Wall Street', url: baseWSURL },
@@ -246,7 +263,8 @@ const MobileHeader = () => {
           url: 'https://fortune.daily.indexx.ai/how-to-play',
         },
         { name: 'Walk through the Hive', url: baseHiveURL },
-        { name: 'Know how to buy in the Shop', url: baseShopURL },
+        // { name: 'Know how to buy in the Shop', url: baseShopURL },
+        { name: 'Know how to buy in the Shop', url: baseCEXURL },
         {
           name: 'How to use Swap',
           url: `${baseURL}/indexx-exchange/how-it-works/decentralized`,
@@ -259,10 +277,15 @@ const MobileHeader = () => {
       name: 'Products',
       subItems: [
         { name: 'Web Wallet', url: `${url}` },
-        { name: 'Gift Cards', url: `${baseShopURL}/collections/gift-cards-1` },
+        // { name: 'Gift Cards', url: `${baseShopURL}/collections/gift-cards-1` },
+        // {
+        //   name: 'Greeting Cards',
+        //   url: `${baseShopURL}/collections/greeting-cards`,
+        // },
+        { name: 'Gift Cards', url: baseCEXURL },
         {
           name: 'Greeting Cards',
-          url: `${baseShopURL}/collections/greeting-cards`,
+          url: baseCEXURL,
         },
         { name: 'NFT', url: `${baseURL}/indexx-exchange/nfts` },
         { name: 'Power Pack', url: `${baseCEXURL}/indexx-exchange/power-pack` },
@@ -274,31 +297,48 @@ const MobileHeader = () => {
         { name: '$1 Bitcoin', url: '/indexx-exchange/coming-soon' },
       ],
       action: [
+        // {
+        //   name: 'Shop Gift Cards',
+        //   url: `${baseShopURL}/collections/gift-cards-1`,
+        // },
+        // {
+        //   name: 'Shop Greeting Cards',
+        //   url: `${baseShopURL}/collections/greeting-cards`,
+        // },
         {
           name: 'Shop Gift Cards',
-          url: `${baseShopURL}/collections/gift-cards-1`,
+          url: baseCEXURL,
         },
         {
           name: 'Shop Greeting Cards',
-          url: `${baseShopURL}/collections/greeting-cards`,
+          url: baseCEXURL,
         },
         {
           name: 'Shop NFTs',
           url: 'https://opensea.io/collection/skullpunksog',
         },
+        // {
+        //   name: 'Shop Stock Certificates',
+        //   url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+        // },
+        // {
+        //   name: 'Shop Stock Tokens',
+        //   url: `${baseShopURL}/collections/stock-gift-cards`,
+        // },
         {
           name: 'Shop Stock Certificates',
-          url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+          url: baseCEXURL,
         },
         {
           name: 'Shop Stock Tokens',
-          url: `${baseShopURL}/collections/stock-gift-cards`,
+          url: baseCEXURL,
         },
         {
           name: 'Shop Tokens',
           url: `${baseURL}/indexx-exchange/token-details`,
         },
-        { name: 'Shop XNFTs', url: `${baseShopURL}/collections/xnft` },
+        // { name: 'Shop XNFTs', url: `${baseShopURL}/collections/xnft` },
+        { name: 'Shop XNFTs', url: baseCEXURL },
         {
           name: 'Shop XUSDs',
           url: `${baseMktplaceURL}/collections/xusd-nft/3`,
@@ -306,18 +346,34 @@ const MobileHeader = () => {
         { name: 'Buy $1 Bitcoin', url: '/indexx-exchange/coming-soon' },
       ],
       support: [
+        // {
+        //   name: 'How to buy Gift Cards',
+        //   url: `${baseShopURL}/collections/gift-cards-1`,
+        // },
+        // {
+        //   name: 'How to buy Greeting Cards',
+        //   url: `${baseShopURL}/collections/greeting-cards`,
+        // },
         {
           name: 'How to buy Gift Cards',
-          url: `${baseShopURL}/collections/gift-cards-1`,
+          url: baseCEXURL
         },
         {
           name: 'How to buy Greeting Cards',
-          url: `${baseShopURL}/collections/greeting-cards`,
+          url: baseCEXURL
         },
         { name: 'How to buy NFTs', url: `${baseURL}/indexx-exchange/nfts` },
+        // {
+        //   name: 'How to buy Stock Certificates',
+        //   url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+        // },
         {
           name: 'How to buy Stock Certificates',
-          url: `${baseShopURL}/collections/indexx-stock-token-tickets`,
+          url: baseCEXURL
+        },
+        {
+          name: 'How to buy Stock Token',
+          url: baseCEXURL
         },
         {
           name: 'Learn about indexx Tokens',
@@ -360,14 +416,14 @@ const MobileHeader = () => {
         },
         { name: 'Captain Bee Sign Up', url: `${baseHiveURL}/sign-up` },
         { name: 'Honeycomb Build Up', url: '/indexx-exchange/coming-soon' },
-        {
-          name: 'Trade to Earn Sign Up',
-          url: `${baseURL}/indexx-exchange/buy-sell/get-started`,
-        },
-        {
-          name: 'Trade to Earn Sign In',
-          url: `${baseURL}/indexx-exchange/buy-sell/login`,
-        },
+        // {
+        //   name: 'Trade to Earn Sign Up',
+        //   url: `${baseURL}/indexx-exchange/buy-sell/get-started`,
+        // },
+        // {
+        //   name: 'Trade to Earn Sign In',
+        //   url: `${baseURL}/indexx-exchange/buy-sell/login`,
+        // },
       ],
       support: [
         {
