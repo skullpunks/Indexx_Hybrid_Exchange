@@ -432,6 +432,7 @@ const Signup = () => {
         setPhotoIdFileurl(url);
       }
     } catch (error) {
+      console.log("Error here", error)
       alert('Error uploading file:', error);
     }
   };

@@ -142,6 +142,7 @@ const CaptainProfile = () => {
 
       setPhoto(url);
     } catch (error) {
+      console.log("Error here", error)
       alert('Error uploading file:', error);
     }
   };

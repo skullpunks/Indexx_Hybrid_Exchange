@@ -665,6 +665,7 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
       setPhotoIdUrl(url);
       onPhotoIdUrlChange(url);
     } catch (error) {
+      console.log("Error here", error)
       alert('Error uploading file:', error);
     }
   };
