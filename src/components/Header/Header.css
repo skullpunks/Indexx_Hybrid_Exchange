@@ -20,7 +20,7 @@
 
 .navbar.bg-dark {
   background-color: #000 !important;
-  background-image: url('../../assets/arts/christmas_bg.png');
+  /* background-image: url('../../assets/arts/header\ new\ year.svg'); */
   height: 90px;
 }
 
@@ -639,7 +639,7 @@ button.navbar-toggler {
 }
 
 .prod-menu .dropdown-menu .prod-back {
-  top: 625px;
+  top: 605px;
   
 }
 
@@ -648,7 +648,7 @@ button.navbar-toggler {
 }
 
 .prog-menu .dropdown-menu .prog-back {
-  top: 312px;
+  top: 362px;
 }
 
 .wallet-menu .dropdown-menu{
@@ -930,7 +930,8 @@ a:hover{
 }
 
 .app-head{
-  background-image: url('../../assets/arts/christmas_bg.png');
+  background-color: #000 !important;
+  /* background-image: url('../../assets/arts/header\ new\ year.svg'); */
 }
 
 .side-panel {

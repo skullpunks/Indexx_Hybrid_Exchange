@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { getHoneyBeeDataByUsername, getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import './BS-Sell.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
@@ -61,6 +61,27 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
     setFilteredtokens(filtered);
     handleChange(filtered[0]?.address);
   }, [tokenType, subtokenType]);
+
+  const [params] = useSearchParams();
+
+  useEffect(() => {
+    const defToken = String(params.get("toksymbol"));
+    console.log("eff trig");
+    const filtered = filteredtokens.find(
+      (x) => x.title === defToken
+    );
+    console.log(filtered, "filtered token", filtered?.address);
+    
+    if (filtered?.address) {
+      console.log("calling change");
+      handleChange(filtered.address);
+    }
+    else{
+      handleChange(filteredtokens[0]?.address);
+
+    }
+
+  }, [filteredtokens, tokenType, subtokenType]);
 
   const navigateUser = () => {
     let getRequiredCoin = filteredtokens.find(

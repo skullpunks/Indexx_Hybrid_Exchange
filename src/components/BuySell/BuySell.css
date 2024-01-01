@@ -841,6 +841,15 @@ a.bs_link:hover {
   border-color: #FFD000!important;
 }
 
+.blk_yl_link {
+  color: var(--body_color);
+}
+
+.blk_yl_link:hover {
+  color: #FFB300;
+  cursor: pointer;
+}
+
 .hive_link {
   color: #FFB300;
 }

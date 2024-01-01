@@ -12,8 +12,10 @@ import {
   Image,
 } from 'antd';
 
-import { signupAPI, baseDEXURL } from '../../services/api';
-import hands from '../../assets/arts/honeybee_signup.svg';
+import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
+// import hands from '../../assets/arts/honeybee_signup.svg';
+import hands from '../../assets/arts/hand 5 edited 3.svg';
+import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';
 
 const BuySellGetStartedHoneyBee: React.FC = () => {
@@ -80,7 +82,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
-      <div className="row">
+      <div className="row" style={{gap:"200px"}}>
         <div className="col d-flex flex-direction-column text-center justify-center flex-align-center">
           <div
             className="text-center justify-center"
@@ -262,15 +264,35 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
           </div>
         </div>
 
-        <div className="col log-img">
-          <div style={{ marginBottom: -100, paddingLeft: 100 }}>
-            <br />  <br />  <br />
+        <div className="col log-img" style={{width:"400px"}}>
+          <div style={{  marginBottom:-100 }}>
+                    <br/>  <br/>  <br/>
+            <div className='d-flex flex-direction-column justify-content-center align-items-center'>
             <Image
-              className="text-center"
+              className="text-center mb-5"
               preview={false}
               src={hands}
-              style={{ paddingLeft: 0, paddingTop: 70 }}
+              style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
             ></Image>
+            <div style={{fontSize:"40px", textAlign:"center"}}>
+            New to crypto?
+            </div>
+            <a href={baseHiveURL} target='blank' className='blk_yl_link'>
+            <div style={{fontSize:"20px", textAlign:"center"}}>
+
+            Take help from a 
+            <br />
+            Captain Bee now!
+            </div>
+
+            <Image
+              className="text-center mt-5 hive-img"
+              preview={false}
+              src={hive}
+              style={{  width:"initial" }}
+              ></Image>
+              </a>
+            </div>
           </div>
         </div>
       </div>

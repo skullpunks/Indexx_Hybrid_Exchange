@@ -277,8 +277,13 @@ const HeaderNew = () => {
                           Fortune Daily
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={baseShopURL} className="link-div">
+                      {/* <NavDropdown.Item href={baseShopURL} className="link-div">
                         <a href={baseShopURL} className="link-style">
+                          Shop
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="link-div">
+                        <a href={baseCEXURL} className="link-style">
                           Shop
                         </a>
                       </NavDropdown.Item>
@@ -320,7 +325,7 @@ const HeaderNew = () => {
 
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
                           Buy Gift Cards
 
@@ -339,6 +344,29 @@ const HeaderNew = () => {
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-style">
+                          Buy Stock Tokens
+
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          Buy Gift Cards
+
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          Buy Greeting Cards
+
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          Buy Stock Certificates
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
                           Buy Stock Tokens
 
                         </a>
@@ -381,11 +409,14 @@ const HeaderNew = () => {
 
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={baseShopURL} className="action-link-div">
+                      {/* <NavDropdown.Item href={baseShopURL} className="action-link-div">
                         <a href={baseShopURL} className="action-link-style">
                           Know how to buy in the Shop
-
-
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          Know how to buy in the Shop
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/decentralized`} className="action-link-div">
@@ -428,7 +459,7 @@ const HeaderNew = () => {
                           Web Wallet
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="link-style">
                           Gift Cards
                         </a>
@@ -437,15 +468,20 @@ const HeaderNew = () => {
                         <a href={`${baseShopURL}/collections/greeting-cards`} className="link-style">
                           Greeting Cards
                         </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="link-div">
+                        <a href={baseCEXURL} className="link-style">
+                          Gift Cards
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL}  className="link-div">
+                        <a href={baseCEXURL} className="link-style">
+                          Greeting Cards
+                        </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/nfts`} className="link-div">
                         <a href={`${baseURL}/indexx-exchange/nfts`} className="link-style">
                           NFT
-                        </a>
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-div">
-                        <a href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-style">
-                          Elite Club
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/power-pack`} className="link-div">
@@ -491,17 +527,24 @@ const HeaderNew = () => {
 
                         Action
                       </div>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
-
                           Shop Gift Cards
-
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/greeting-cards`} className="action-link-style">
                           Shop Greeting Cards
-
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL}  className="action-link-style">
+                          Shop Gift Cards
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL}  className="action-link-div">
+                        <a href={baseCEXURL}  className="action-link-style">
+                          Shop Greeting Cards
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href="https://opensea.io/collection/skullpunksog" className="action-link-div">
@@ -510,16 +553,24 @@ const HeaderNew = () => {
 
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">
                           Shop Stock Certificates
-
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/stock-gift-cards`} className="action-link-style">
                           Shop Stock Tokens
-
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item  href={baseCEXURL}  className="action-link-div">
+                        <a  href={baseCEXURL}  className="action-link-style">
+                          Shop Stock Certificates
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item  href={baseCEXURL}  className="action-link-div">
+                        <a  href={baseCEXURL} className="action-link-style">
+                          Shop Stock Tokens
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/token-details`} className="action-link-div">
@@ -527,8 +578,14 @@ const HeaderNew = () => {
                           Shop Tokens
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/xnft`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/xnft`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/xnft`} className="action-link-style">
+                          Shop XNFTs
+
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item  href={baseCEXURL} className="action-link-div">
+                        <a  href={baseCEXURL} className="action-link-style">
                           Shop XNFTs
 
                         </a>
@@ -550,7 +607,7 @@ const HeaderNew = () => {
 
                         Support
                       </div>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/gift-cards-1`} className="action-link-style">
 
                           How to buy Gift Cards
@@ -561,7 +618,19 @@ const HeaderNew = () => {
                       <NavDropdown.Item href={`${baseShopURL}/collections/greeting-cards`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/greeting-cards`} className="action-link-style">
                           How to buy Greeting Cards
+                        </a>
+                      </NavDropdown.Item> */}
+                       <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
 
+                          How to buy Gift Cards
+
+
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL}  className="action-link-style">
+                          How to buy Greeting Cards
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/nfts`} className="action-link-div">
@@ -571,11 +640,19 @@ const HeaderNew = () => {
 
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-div">
                         <a href={`${baseShopURL}/collections/indexx-stock-token-tickets`} className="action-link-style">
                           How to buy Stock Certificates
-
-
+                        </a>
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          How to buy Stock Certificates
+                        </a>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                        <a href={baseCEXURL} className="action-link-style">
+                          How to buy Stock Token
                         </a>
                       </NavDropdown.Item>
                       <NavDropdown.Item href={`${baseURL}/indexx-exchange/how-it-works/tokens`} className="action-link-div">
@@ -628,6 +705,11 @@ const HeaderNew = () => {
                           Affiliate Program
                         </a>
                       </NavDropdown.Item>
+                      <NavDropdown.Item href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-div">
+                        <a href={`${baseCEXURL}/indexx-exchange/elite-club`} className="link-style">
+                          Elite Club
+                        </a>
+                      </NavDropdown.Item>
                       <NavDropdown.Item href={baseHiveURL} className="link-div">
                         <a href={baseHiveURL} className="link-style">
                           Hive
@@ -667,16 +749,16 @@ const HeaderNew = () => {
                           Honeycomb Build Up
                         </Link>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-div">
+                      {/* <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-div">
                         <a href={`${baseURL}/indexx-exchange/buy-sell/get-started`} className="action-link-style">
                           Trade to Earn Sign Up
                         </a>
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-div">
+                      </NavDropdown.Item> */}
+                      {/* <NavDropdown.Item href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-div">
                         <a href={`${baseURL}/indexx-exchange/buy-sell/login`} className="action-link-style">
                           Trade to Earn Sign In
                         </a>
-                      </NavDropdown.Item>
+                      </NavDropdown.Item> */}
                     </div>
                     <div style={{ justifyContent: "center", fontSize: "13px", paddingInline: "20px" }}>
                       <div className="action-link-div" style={{ paddingBottom: "23px" }}>

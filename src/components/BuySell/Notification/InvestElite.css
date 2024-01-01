@@ -1,0 +1,137 @@
+.main-pay-box{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+}
+
+.elite-box{
+    position: relative;
+    padding-inline: 20px;
+    top: 28px;
+    width: 600px;
+    background-color: var(--body_background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.elite-text-box {
+    color: var(--dark_text);
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    font-size: 25px;
+    font-weight: bold;
+    /* font-family: "Inter"; */
+    width: 100%;
+    text-align: center;
+}
+
+
+.elite-button-box {
+    color: var(--dark_text);
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* font-family: "Inter"; */
+    font-size: 13px;
+}
+
+.elite-button-btn {
+    width: 71%;
+    background-color: #FFB300;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    /* border-radius: 0.125rem;  */
+    border: 0;
+    border-radius: 2px;
+    color: var(--dark_text);
+    height: 40px;
+    font-size: 14px;
+}
+
+.elite-det{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-btn:hover {
+    background-color: #FFD000;
+}
+
+.elite-close-button-pay {
+    position: relative;
+    top: -13%;
+    /* right: 35%; */
+    left: 50%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--dark_text);
+    z-index: 1000;
+}
+
+@media (max-width: 767px) {
+
+.elite-det img{
+    width: 150px;
+    height: auto !important;
+}
+
+.elite-button-box {
+  font-size: 10px;
+}
+
+.elite-button-btn {
+  width: 85%;
+  font-size: 11px;
+}
+  .pay-image {
+    width: 60px;
+    margin-right: 10px;
+  }
+  
+  .pay-box{
+    padding-inline: 10px;
+    width: 100vw;
+  }
+
+  .close-button-pay {
+    top: -13%;
+    left: 96%;
+    font-size: 1.5rem;
+}
+
+.pay-text-box {
+  padding-left: 1rem;
+  padding-bottom: 0;
+  padding-top: 1rem;
+}
+
+.pay-button-btn {
+  font-size: 15px;
+  width: 25%;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  border: 0;
+  border-radius: 2px;
+}
+
+}

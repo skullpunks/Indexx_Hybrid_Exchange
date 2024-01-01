@@ -192,6 +192,22 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
             >
               Get Started
             </Link>
+            <br />
+            <br />
+            <Link
+              to="/indexx-exchange/buy-sell/login-honeybee"
+              className='hive_link'
+            >
+              Login as Honey Bee
+            </Link>
+            <br />
+            <br />
+            <Link
+              to="/indexx-exchange/buy-sell/hive-login"
+              className='hive_link'
+            >
+              Login as Captain Bee
+            </Link>
             <Divider></Divider>
             <br />
             <Link

@@ -28,6 +28,9 @@ const BuySellGetStarted: React.FC = () => {
 console.log(refcode === "null");
 
 
+  const handleClick = () => {
+    window.location.href = `${baseHiveURL}/sign-up`;
+  }
   
   const onFinish = async (values: any) => {
     setLoadings(true);
@@ -230,14 +233,24 @@ console.log(refcode === "null");
             </Form>
             <div
               style={{ marginTop: -30 }}
-              className="d-flex justify-center padding-tb-2x"
+              className="d-flex justify-center padding-t-2x"
             >
               Already have an account? &nbsp;
               <Link to="/indexx-exchange/buy-sell/login" className="text_link">
                 {' '}
                 Log in.
               </Link>
-            </div>
+              </div>
+              <div
+              className="d-flex flex-column justify-center align-items-center padding-t-2x">
+                <Link to="/indexx-exchange/buy-sell/get-started-honeybee" className="hive_link">
+                  Sign up as Honey Bee
+                </Link>
+                <br />
+                <Button onClick={handleClick} className="hive_link" style={{border:"none", width:"fit-content", boxShadow:"none"}}>
+                  Sign up as Captain Bee
+                </Button>
+              </div>
 
             {/* <Space direction="vertical" style={{ width: '100%' }}>
               <p>
@@ -264,14 +277,16 @@ console.log(refcode === "null");
               src={hands}
               style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
             ></Image>
-            <div style={{fontSize:"32px", textAlign:"center"}}>
+                <div style={{fontSize:"40px", textAlign:"center"}}>
             New to crypto?
-            <br />
+            </div>
+            <a href={baseHiveURL} target='blank' className='blk_yl_link'>
+            <div style={{fontSize:"20px", textAlign:"center"}}>
+
             Take help from a 
             <br />
             Captain Bee now!
             </div>
-            <a href={baseHiveURL} target='blank'>
 
             <Image
               className="text-center mt-5 hive-img"

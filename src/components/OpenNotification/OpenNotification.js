@@ -12,6 +12,7 @@ const OpenNotification = (type, message) => {
   notification[type]({
     message: message,
     description: '',
+    placement: 'top',
     icon: Icon,
     style: {
       border: '1px solid var(--primary-color)',
