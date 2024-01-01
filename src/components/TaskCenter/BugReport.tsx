@@ -15,8 +15,8 @@ const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 
 AWS.config.update({
-  accessKeyId: 'AKIA5FBFFKSZLHC4SR7P',
-  secretAccessKey: '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',
+  accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
 });
 
 const myBucket = new AWS.S3({

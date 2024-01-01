@@ -25,8 +25,8 @@ import AWS from 'aws-sdk';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 AWS.config.update({
-  accessKeyId: 'AKIA5FBFFKSZP5B37GOS',
-  secretAccessKey: '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',
+  accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
   region: REGION,
 });
 var s3 = new AWS.S3();
@@ -181,8 +181,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
     >
       <div className="font_15x text-left mt-4">
         <h1 className="font_30x text-left mb-5">
-          Order Amount: {String(orderData?.orderType).includes("Pack") ? (orderData?.breakdown?.finalAmountAfterDiscount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-            : (orderData?.breakdown?.inAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  {orderData?.breakdown?.inCurrenyName}
+          Order Amount: {String(orderData?.orderType)?.includes("Pack") ? (orderData?.breakdown?.finalAmountAfterDiscount)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : (orderData?.breakdown?.inAmount)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  {orderData?.breakdown?.inCurrenyName}
         </h1>
         <WarningAmberIcon />
         Kindly transfer the exact amount specified above using the provided recipient details
