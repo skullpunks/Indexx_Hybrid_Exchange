@@ -52,6 +52,7 @@ const CaptainProfile = () => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
+    console.log("proces.ev", process.env)
     const fetchData = async () => {
       try {
     const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
