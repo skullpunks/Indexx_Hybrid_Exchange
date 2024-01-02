@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/about-icons/inex_4_11zon.png';
-import { marketsData} from '../../services/api';
+import { baseURL, marketsData} from '../../services/api';
 import { useEffect, useState } from 'react';
 import './MarketAbout.css'
 const IndexxExchangeMarket = () => {
@@ -121,6 +121,9 @@ const IndexxExchangeMarket = () => {
                                 participating party to know who is on the other side of the
                                 deal — and without the need for any kind of intermediary.
                             </p>
+                            <div className='font_15x d-flex justify-content-center'>
+                                <a href={`${baseURL}/indexx-exchange/token-details/inex`} className='text_link'>Learn More</a>
+                            </div>
                         </div>
                     </Panel>
                 </Collapse>

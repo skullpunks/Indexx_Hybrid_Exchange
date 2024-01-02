@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 import './BuySellLoginContentHive.css';
 
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -10,13 +10,18 @@ import {
   Input,
   Space,
   Image,
+  Select
 } from 'antd';
-
+import frame from '../../assets/hive-dashboard/frame.svg';
+import avatar from '../../assets/hive-dashboard/Captain+Avatar.png';
 import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
 // import hands from '../../assets/arts/honeybee_signup.svg';
 import hands from '../../assets/arts/hand 5 edited 3.svg';
 import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import { Box, Tooltip, Typography, tooltipClasses } from '@mui/material';
+import { makeStyles, styled } from '@mui/styles';
+const { Option } = Select;
 
 const BuySellGetStartedHoneyBee: React.FC = () => {
   //creating IP state
@@ -28,8 +33,53 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   console.log(refcode === "null");
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const defaultParam1 = searchParams.get('referral') || "";
+  const [defaultValues, setDefaultValues] =  useState<string>(defaultParam1);
 
+  const handleSelectChange = (value:string) => {
+    // Handle the select change here
+    setDefaultValues(value);
+    console.log(`Selected: ${value}`);
+  };
 
+  console.log(defaultValues, "def");
+
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      minWidth: 200, // Adjust the width as needed
+    },
+    select: {
+      fontSize: 16, // Adjust the font size as needed
+      height: 40,   // Adjust the height as needed
+    },
+    customTooltip: {
+  
+      backgroundColor: 'red', // Change this to your desired background color
+      color: 'white', // Change this to the text color you prefer
+    },
+  }));
+
+  const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#FFB300",
+      color: 'rgba(0, 0, 0, 0.87)',
+    },
+  }));
+
+  // Use useEffect to read the query parameters and set the default values
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   const defaultParam1 = searchParams.get('referral') || "";
+  //   console.log(defaultParam1, "param");
+
+  //   setDefaultValues(defaultParam1);
+  // }, [location.search]);
+
+  
   const onFinish = async (values: any) => {
     try {
       setLoadings(true);
@@ -79,6 +129,9 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
 
   };
+
+  // const classes = useStyles();
+
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
@@ -170,6 +223,77 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
                     {/* <span className="input_icon"><img src={PasswordEye} alt="PasswordEye" /></span> */}
                   </div>
                 </Form.Item>
+              </div>
+              <div>
+              <Form.Item label="Referral Code" name="ReferralCode"
+               rules={[
+                { required: true, message: 'Referral Id Required' },
+              ]}
+              >
+        <Select onChange={handleSelectChange} defaultValue={defaultValues} placeholder="Select an item">
+          <Option value="option1">Option 1</Option>
+          <Option value="option2">Option 2</Option>
+          <Option value="option3">Option 3</Option>
+          <Option value="meBbqTbt">meBbqTbt</Option>
+          {/* {captainbees?.map((bee, id) => ( */}
+                <Option key="abcdefgh" value="abcdefgh">
+                  <LightTooltip title={<a href={`${baseHiveURL}/captainbee/abcdefgh`} target='blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }} 
+                  // classes={{ tooltip: classes.customTooltip }}
+                  >Click to view accname</a>} placement='right'>
+                    <Box sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignSelf: "center",
+                      minWidth: "100%"
+                    }}>
+
+                      <Box sx={{
+                        minWidth: "40px",
+                        minHeight: "40px",
+                        backgroundImage: `url(${frame})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                        position: "relative",
+                        cursor: "pointer",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignSelf: "center",
+                      }}>
+                        {(avatar === null || avatar === undefined) ? null
+                          :
+                          <Box className="drop-hexagon">
+
+                            <img
+                              alt=''
+                              // src={abcd}
+                              src={avatar}
+                              // src={(collection?.photoIdFileurl === undefined || collection?.photoIdFileurl === null) ? frame : collection?.photoIdFileurl}
+                              width={"30px"}
+                              height={"31px"}
+                              // ml={"-2px"}
+                              // border={"none"}
+                            />
+                          </Box>
+                        }
+                      </Box>
+                      <Box alignSelf={"center"} ml={2}>
+                        <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"} style={{ verticalAlign: "center" }}>
+                          Accname
+                        </Typography>
+                      </Box>
+                      <Box alignSelf={"center"} ml={"auto"}>
+                        <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"} style={{ verticalAlign: "center" }}>
+                          Referral Code : abcdefgh
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </LightTooltip>
+                </Option>
+              {/* ))} */}
+        </Select>
+      </Form.Item>
               </div>
               <div className="form_element referral">
                 <Form.Item
