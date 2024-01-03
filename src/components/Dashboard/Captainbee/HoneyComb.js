@@ -9,6 +9,12 @@ import clock from '../../../assets/hive-dashboard/sidebar/clock.png';
 import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
+import edit from '../../../assets/hive-dashboard/sidebar/pen_01 2.png';
+import bin from '../../../assets/hive-dashboard/sidebar/trash_bin 3.png';
+
+import edit_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/pen_01 3.png';
+import bin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/trash_bin 3.png';
+
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
 import house_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
@@ -36,6 +42,9 @@ import {
   Rating,
   TextField,
   Button,
+  IconButton,
+  MenuItem,
+  Stack,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -45,6 +54,9 @@ import { RankData } from '../RankData';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
 import loadingGif from '../../../assets/beeloade.gif';
+import { StyledMenu } from './StyledMenu/StyledMenu';
+import EditPost from '../../BuySell/Notification/EditPost';
+import DeletePost from '../../BuySell/Notification/DeletePost';
 
 const HoneyComb = () => {
 
@@ -76,6 +88,10 @@ const HoneyComb = () => {
 
 
   const [staticsData, setStaticsData] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [msgData, setMsgData] = useState();
+  console.log(msgData, "msgData in hc");
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
 
 
   useEffect(() => {
@@ -83,7 +99,11 @@ const HoneyComb = () => {
       const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
       const getMessage = await getPublicMessages(email);
       console.log("getMessage", getMessage?.data, getMessage?.data?.filter(x => x.createdUserEmail === String(email)));
-      setAllTexts(getMessage?.data?.filter(x => x.createdUserEmail === String(email)));
+      const filteredData = getMessage?.data?.filter(x => x.createdUserEmail === String(email));
+      const sortedData = filteredData?.sort((a, b) => {
+        return new Date(b.createdData) - new Date(a.createdData);
+      });
+      setAllTexts(sortedData);
     }
     fetchAllText();
 
@@ -130,6 +150,13 @@ const HoneyComb = () => {
 fetchData();
   }, [])
 
+  const handleMenuItemClick = (clickedMessage, event) => {
+    setMsgData(clickedMessage);
+    setIsModalOpen(true);
+    console.log(clickedMessage, "onclick");
+    handleCloseSortMenu();
+  };
+  
   const handleSubmitPostMessage = async () => {
     const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
     console.log("text", text);
@@ -151,6 +178,18 @@ fetchData();
     year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit',
     minute: '2-digit',
     hour12: true
+  };
+
+  const [sortAnchorEl, setSortAnchorEl] = useState(null);
+
+  const openSortMenu = Boolean(sortAnchorEl);
+
+  const handleOpenSortMenu = (event) => {
+    setSortAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseSortMenu = () => {
+    setSortAnchorEl(null);
   };
 
   return (
@@ -554,7 +593,76 @@ fetchData();
                     pr: 2,
                     pb: 2
                   }}>
-                    <MoreHorizIcon style={{ alignSelf: "flex-end", fontSize: "20px", marginBottom: "-20px" }} />
+                    <IconButton
+              onClick={handleOpenSortMenu}
+              variant='contained'
+              // fullWidth
+              style={{width:"min-content", height:"min-content", alignSelf: "flex-end", padding:0, 
+              color: 'var(--body_color)',
+              }}
+            >
+              <MoreHorizIcon style={{ fontSize: "20px", fill:"var(body_color)"}} />
+            </IconButton>
+            <StyledMenu
+              elevation={1}
+              PaperProps={{
+                style: {
+                  borderRadius: '5px',
+                  // backgroundColor: `${darkMode ? '#040404' : '#fbfbfb'}`,
+                  backgroundColor: 'var(--body_background)',
+                  boxShadow:"none",
+                  border:"1px solid var(--border-color)"
+                },
+              }}
+              anchorEl={sortAnchorEl}
+              open={openSortMenu}
+              onClose={handleCloseSortMenu}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <MenuItem
+
+// onClick={() => handleMenuItemClick(message)}
+onClick={handleMenuItemClick.bind(null, message)}
+                // onClick={() => {
+                //   console.log("message clicked", message);
+                //   setMsgData(message);
+                //   setIsModalOpen(true);
+                //   handleCloseSortMenu();
+                // }}
+                disableTouchRipple
+              >
+                <Stack direction='row' gap={1} alignItems='center'>
+                  <img src={theme === "dark" ? edit_dark : edit} style={{ height: 25, width: 25, fill:"var(--color-text)"}} />
+                  <Typography variant='subtitle1' fontWeight={400}>
+                    {'Edit Post'}
+                  </Typography>
+                </Stack>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setIsModalOpenDelete(true);
+                  handleCloseSortMenu();
+                }}
+                disableTouchRipple
+              >
+                <Stack direction='row' gap={1} alignItems='center'>
+                <img src={theme === "dark" ? bin_dark : bin} alt="bin" style={{ height: 25, width: 25, fill:"var(--color-text)"}}/>
+                  <Typography ml={0.8} variant='subtitle1' fontWeight={400}>
+                    {'Delete'}
+                  </Typography>
+                </Stack>
+              </MenuItem>
+            </StyledMenu>
                     <Box className="d-flex align-items-center">
                       <Box
                         style={{
@@ -596,12 +704,12 @@ fetchData();
                           height: '50px',
                           marginLeft: '-35px',
                           pl: 4,
-                          width: '211px',
+                          width: '50%',
                           transition: "0.3s ease-in-out",
                         }}
                       >
                         <div className="font_15x d-flex align-items-center">
-                          Captin Bee {staticsData?.affiliateUserProfile?.accname}
+                          Captain Bee {staticsData?.affiliateUserProfile?.accname}
                         </div>
                         <div className="font_10x d-flex align-items-center">
                           {new Date(message.createdData).toLocaleString('en-US', options)}
@@ -623,6 +731,22 @@ fetchData();
             </div>
           </div>
         </div>
+      </div>
+      <div>
+            <EditPost
+              isVisible={isModalOpen}
+              onClose={() => {setIsModalOpen(false)
+                setMsgData()
+              }}
+              message={msgData}
+              captainData={staticsData}
+            />
+      </div>
+      <div>
+            <DeletePost
+              isVisible={isModalOpenDelete}
+              onClose={() => setIsModalOpenDelete(false)}
+            />
       </div>
     </>
   );

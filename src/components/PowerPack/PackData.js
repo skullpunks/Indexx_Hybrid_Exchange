@@ -1,11 +1,11 @@
-import orange from "../../assets/powerpack/excel pack.png";
-import royal from "../../assets/powerpack/royal pack.png";
-import blue from "../../assets/powerpack/captain.png";
-import copper from "../../assets/powerpack/copper.png";
-import gold from "../../assets/powerpack/gold.png";
-import green from "../../assets/powerpack/Starter pack.png";
-import platinum from "../../assets/powerpack/platinum.png";
-import purple from "../../assets/powerpack/pro pack.png";
+import orange from "../../assets/powerpack/Orange ribbon.svg";
+import royal from "../../assets/powerpack/unnamed (6).png";
+import blue from "../../assets/powerpack/blue hat.svg";
+import copper from "../../assets/powerpack/copper hat.svg";
+import gold from "../../assets/powerpack/gold hat.svg";
+import green from "../../assets/powerpack/green Ribbon 1.svg";
+import platinum from "../../assets/powerpack/platinum hat.svg";
+import purple from "../../assets/powerpack/purple ribbon.svg";
 
 
 export const PackData = [

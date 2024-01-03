@@ -24,12 +24,12 @@ const InvestElite = ({ isVisible, onClose }) => {
           <div className="elite-close-button-pay" onClick={onClose}>
             &times; {/* This is the close button (X) */}
           </div>
-          <div class="elite-text-box">Contact the team to Invest</div>
+          <div class="elite-text-box">Contact Indexx VIP Management to Invest</div>
           <div className='d-flex w-100 align-items-end'>
             
             <div className='elite-det'>
 
-            <img src={calendar} alt="calendar" style={{ height:"284px"}} />
+            <img src={calendar} alt="calendar" style={{ height:"224px"}} />
             <div class="elite-button-box ">
               <button className="elite-button-btn" 
               onClick={handleClick} 
