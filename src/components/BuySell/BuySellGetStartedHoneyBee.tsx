@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import frame from '../../assets/hive-dashboard/frame.svg';
 import avatar from '../../assets/hive-dashboard/Captain+Avatar.png';
-import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
+import { signupAPI, baseDEXURL, baseHiveURL, getAllUsersLite } from '../../services/api';
 // import hands from '../../assets/arts/honeybee_signup.svg';
 import hands from '../../assets/arts/hand 5 edited 3.svg';
 import hive from '../../assets/arts/hive logo 2.svg';
@@ -26,7 +26,7 @@ const { Option } = Select;
 const BuySellGetStartedHoneyBee: React.FC = () => {
   //creating IP state
   const [loadings, setLoadings] = useState<boolean>(false);
-
+  const [usersLite, setUsersLite] = useState([]);
   const navigate = useNavigate();
   const [referral] = useSearchParams();
   const refcode = String(referral.get("referral"))
@@ -36,9 +36,9 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const defaultParam1 = searchParams.get('referral') || "";
-  const [defaultValues, setDefaultValues] =  useState<string>(defaultParam1);
-
-  const handleSelectChange = (value:string) => {
+  const [defaultValues, setDefaultValues] = useState<string>(defaultParam1);
+  const [selectedReferralCode, setSelectedReferralCode] = useState('');
+  const handleSelectChange = (value: string) => {
     // Handle the select change here
     setDefaultValues(value);
     console.log(`Selected: ${value}`);
@@ -55,7 +55,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
       height: 40,   // Adjust the height as needed
     },
     customTooltip: {
-  
+
       backgroundColor: 'red', // Change this to your desired background color
       color: 'white', // Change this to the text color you prefer
     },
@@ -79,7 +79,29 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
   //   setDefaultValues(defaultParam1);
   // }, [location.search]);
 
-  
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await getAllUsersLite();
+      if (res && res.data) {
+        // Filter out users without a referral code and map to required format
+        const usersWithReferral = res.data.filter((user: any) => user.referralCode).map((user: any) => {
+          return {
+            actualEmail: user.email,
+            email: user.email.split('@')[0], // Assuming email is always valid and contains '@'
+            referralCode: user.referralCode,
+            profilePic: user?.profilePic ? user?.profilePic : avatar
+          };
+        });
+        setUsersLite(usersWithReferral);
+        let result = usersWithReferral?.find((user: any) => user.actualEmail === 'bz@azooca.com')?.referralCode;
+        console.log("result,", result, usersWithReferral)
+        const initialReferralCode = defaultParam1 || usersWithReferral?.find((user: any) => user.actualEmail === 'bz@azooca.com')?.referralCode || '';
+        setSelectedReferralCode(initialReferralCode);
+      }
+    };
+    fetchUsers();
+  }, [defaultParam1]);
+
   const onFinish = async (values: any) => {
     try {
       setLoadings(true);
@@ -135,7 +157,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
-      <div className="row" style={{gap:"200px"}}>
+      <div className="row" style={{ gap: "200px" }}>
         <div className="col d-flex flex-direction-column text-center justify-center flex-align-center">
           <div
             className="text-center justify-center"
@@ -225,97 +247,64 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
                 </Form.Item>
               </div>
               <div>
-              <Form.Item label="Referral Code" name="ReferralCode"
-               rules={[
-                { required: true, message: 'Referral Id Required' },
-              ]}
-              >
-        <Select onChange={handleSelectChange} defaultValue={defaultValues} placeholder="Select an item">
-          <Option value="option1">Option 1</Option>
-          <Option value="option2">Option 2</Option>
-          <Option value="option3">Option 3</Option>
-          <Option value="meBbqTbt">meBbqTbt</Option>
-          {/* {captainbees?.map((bee, id) => ( */}
-                <Option key="abcdefgh" value="abcdefgh">
-                  <LightTooltip title={<a href={`${baseHiveURL}/captainbee/abcdefgh`} target='blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }} 
-                  // classes={{ tooltip: classes.customTooltip }}
-                  >Click to view accname</a>} placement='right'>
-                    <Box sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      minWidth: "100%"
-                    }}>
+                <Form.Item label="Referral Code" name="ReferralCode"
+                  rules={[
+                    { required: true, message: 'Referral Id Required' },
+                  ]}
+                >
 
-                      <Box sx={{
-                        minWidth: "40px",
-                        minHeight: "40px",
-                        backgroundImage: `url(${frame})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "contain",
-                        backgroundPosition: "center",
-                        position: "relative",
-                        cursor: "pointer",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                      }}>
-                        {(avatar === null || avatar === undefined) ? null
-                          :
-                          <Box className="drop-hexagon">
+                  <Select onChange={handleSelectChange} defaultValue={defaultValues} placeholder="Select an item">
+                    {usersLite.map((user: any) => {
+                      const accname = user?.email.split('@')[0];
+                      const avatar = user?.profilePic;
 
-                            <img
-                              alt=''
-                              // src={abcd}
-                              src={avatar}
-                              // src={(collection?.photoIdFileurl === undefined || collection?.photoIdFileurl === null) ? frame : collection?.photoIdFileurl}
-                              width={"30px"}
-                              height={"31px"}
-                              // ml={"-2px"}
-                              // border={"none"}
-                            />
-                          </Box>
-                        }
-                      </Box>
-                      <Box alignSelf={"center"} ml={2}>
-                        <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"} style={{ verticalAlign: "center" }}>
-                          Accname
-                        </Typography>
-                      </Box>
-                      <Box alignSelf={"center"} ml={"auto"}>
-                        <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"} style={{ verticalAlign: "center" }}>
-                          Referral Code : abcdefgh
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </LightTooltip>
-                </Option>
-              {/* ))} */}
-        </Select>
-      </Form.Item>
+                      return (
+                        <Option key={user.referralCode} value={user.referralCode}>
+                          <LightTooltip title={<a href={`${baseHiveURL}/honeybee/${user.referralCode}`} target='_blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }}>Click to view {accname}</a>} placement='right'>
+                            <Box sx={{ display: "flex", flexDirection: "row", alignSelf: "center", minWidth: "100%" }}>
+                              <Box sx={{ minWidth: "40px", minHeight: "40px", backgroundImage: `url(${frame})`, backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center", position: "relative", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", alignSelf: "center", }}>
+                                {avatar ?
+                                  <Box className="drop-hexagon">
+                                    <img alt='' src={avatar} width={"30px"} height={"31px"} />
+                                  </Box>
+                                  : null}
+                              </Box>
+                              <Box alignSelf={"center"} ml={2}>
+                                <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"}>{accname}</Typography>
+                              </Box>
+                              <Box alignSelf={"center"} ml={"auto"}>
+                                <Typography variant="subtitle2" fontSize={"15px"} fontWeight={400} textAlign={"center"}>Referral Code: {user.referralCode}</Typography>
+                              </Box>
+                            </Box>
+                          </LightTooltip>
+                        </Option>
+                      );
+                    })}
+                  </Select>
+
+                </Form.Item>
               </div>
-              <div className="form_element referral">
+              {/* <div className="form_element referral">
                 <Form.Item
                   label="Referral Code"
                   name="referral"
                   rules={[
                     { required: false, message: 'Referral Id Required' },
                   ]}
-                  initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
+                  initialValue={selectedReferralCode}
                 >
                   <div className="control-input">
                     <Input
                       name="referral"
                       className="input_height"
-                      placeholder="Enter Referal Code"
-                      readOnly={refcode !== "null"}
-                      defaultValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode}
+                      placeholder="Enter Referral Code"
+                      readOnly={selectedReferralCode !== ""}
+                      defaultValue={selectedReferralCode}
                     />
                   </div>
                 </Form.Item>
 
-              </div>
+              </div> */}
               <div className="form_element d-flex terms_conditions_container">
                 <Form.Item
                   name="agreement"
@@ -388,33 +377,33 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
           </div>
         </div>
 
-        <div className="col log-img" style={{width:"400px"}}>
-          <div style={{  marginBottom:-100 }}>
-                    <br/>  <br/>  <br/>
+        <div className="col log-img" style={{ width: "400px" }}>
+          <div style={{ marginBottom: -100 }}>
+            <br />  <br />  <br />
             <div className='d-flex flex-direction-column justify-content-center align-items-center'>
-            <Image
-              className="text-center mb-5"
-              preview={false}
-              src={hands}
-              style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
-            ></Image>
-            <div style={{fontSize:"40px", textAlign:"center"}}>
-            New to crypto?
-            </div>
-            <a href={baseHiveURL} target='blank' className='blk_yl_link'>
-            <div style={{fontSize:"20px", textAlign:"center"}}>
-
-            Take help from a 
-            <br />
-            Captain Bee now!
-            </div>
-
-            <Image
-              className="text-center mt-5 hive-img"
-              preview={false}
-              src={hive}
-              style={{  width:"initial" }}
+              <Image
+                className="text-center mb-5"
+                preview={false}
+                src={hands}
+                style={{ paddingLeft: 0, paddingTop: 110, width: "initial" }}
               ></Image>
+              <div style={{ fontSize: "40px", textAlign: "center" }}>
+                New to crypto?
+              </div>
+              <a href={baseHiveURL} target='blank' className='blk_yl_link'>
+                <div style={{ fontSize: "20px", textAlign: "center" }}>
+
+                  Take help from a
+                  <br />
+                  Captain Bee now!
+                </div>
+
+                <Image
+                  className="text-center mt-5 hive-img"
+                  preview={false}
+                  src={hive}
+                  style={{ width: "initial" }}
+                ></Image>
               </a>
             </div>
           </div>
