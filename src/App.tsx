@@ -104,6 +104,7 @@ import SecondaryHeader from "./SecondaryHeader";
 import Payment from "./components/Send/Payment";
 import PaymentWire from "./components/Send/PaymentWire";
 import CaptainGreetCard from "./components/Dashboard/Captainbee/CaptainGreetCard";
+import PaymentVenmo from "./components/Send/PaymentVenmo";
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -227,6 +228,7 @@ function App() {
           <Route path="/indexx-exchange/elite-learn/:id" element={<EliteLearnMore />} />
 
           <Route path="/indexx-exchange/payment-zelle" element={<Payment />} />
+          <Route path="/indexx-exchange/payment-venmo" element={<PaymentVenmo />} />
           <Route path="/indexx-exchange/payment-wire" element={<PaymentWire />} />
 
           <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />

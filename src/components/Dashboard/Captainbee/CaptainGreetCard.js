@@ -9,6 +9,10 @@ import clock from '../../../assets/hive-dashboard/sidebar/clock.png';
 import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
+import info from '../../../assets/hive-dashboard/sidebar/info.png';
+import info_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/info.png';
+import no_holiday from "../../../assets/hive-dashboard/greet-cards/no holiday 2.png";
+
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
 import house_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/home.png';
@@ -39,6 +43,8 @@ import './CaptainDash.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Box, MenuItem, Select, Typography, Rating, TextField, IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, shareGreetingCard, checkEmail } from '../../../services/api';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
@@ -48,6 +54,7 @@ import { Button } from 'antd';
 import { GreetData } from '../GreetData';
 import GreetLandscape from '../../BuySell/Notification/GreetLandscape';
 import GreetPortrait from '../../BuySell/Notification/GreetPortrait';
+import ReadOnlyCalendar from './EventCalendar/ReadOnlyCalendar';
 let appSettingArr = [];
 let priceData = {};
 
@@ -128,6 +135,22 @@ const CaptainGreetCard = () => {
     ],
   };
 
+  const BootstrapTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} placement="top-start" />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: "var(--body_background)",
+      backgroundColor: "var(--body_background)",
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      border: "1px solid var(--border-color)",
+      backgroundColor: "var(--body_background)",
+      color: "var(--body_color)",
+      minWidth:"90%",
+      width: "215px",
+    },
+  }));
+  
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
@@ -146,6 +169,7 @@ const CaptainGreetCard = () => {
   const [checkSubscription, setCheckSubscription] = useState(null);
   const [greetingCards, setGreetingCards] = useState([]);
   const [selectedGreetingCard, setSelectedGreetingCards] = useState();
+  const [greetActive, setGreetActive] = useState();
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -284,6 +308,12 @@ const CaptainGreetCard = () => {
             setSubscription(data?.data?.paypalSubscriptionDetails);
             const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
             setCheckSubscription(hasValidSubscription);
+          }
+
+          if (data?.data?.affiliateUserProfile?.greetingCards) {
+            const areAllActive = data?.data?.affiliateUserProfile?.greetingCards.every(obj => obj.isActive);
+            setGreetActive(areAllActive);
+            // setGreetActive(false);
           }
         }
 
@@ -454,22 +484,40 @@ const CaptainGreetCard = () => {
                     <div className="font_15x">
                       Subscribe to your $300 monthly INEX investment today
                     </div>
-                    <div style={{ width: "100%" }}>
-                      <Button
-                        loading={loadings}
-                        type="primary"
-                        className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                        onClick={handleCreateSubscription}
-                        style={{ width: "100%", height: "auto", color: "#393939" }}
+                    <div className="d-flex align-items-start gap-2" style={{ width: "100%" }}>
+                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
+                      sx={{width:"20%"}}
                       >
-                        Subscribe
-                      </Button>
-                    </div>
+                        <Button
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          style={{ width: "auto", height: "auto", color: "#393939", display:"flex", alignItems:"center", paddingBlock:"9.5px" }}
+
+                        >
+                          <img src={info} alt="info" />
+                        </Button>
+                      </BootstrapTooltip>
+                        <Button
+                          loading={loadings}
+                          type="primary"
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          onClick={handleCreateSubscription}
+                          style={{ width: `${isMobile ? "70%" : "80%"}`, height: "auto", color: "#393939" }}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
                   </div>)
                   :
                   (<div className="d-flex flex-direction-column align-items-start mt-5">
                     <div className="font_20x">
                       $300 INEX Subscription Details
+                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
+                      sx={{width:"20%"}}
+                      >
+                          <img src={theme === "dark" ? info_dark : info} alt="info" style={{marginLeft:"10px"}}/>
+                      </BootstrapTooltip>
                     </div>
                     <div className="font_13x mt-3">
                       Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
@@ -739,17 +787,21 @@ const CaptainGreetCard = () => {
                         width: `${isMobile ? "100%" : "45%"}`,
                       }}
                     >
+                    {greetActive === true ? 
                       <Slider 
                       ref={liveSlideRef}
                       {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
 
                       {images?.map((token, index) => (
                         <div key={index} className='greet-slide-div'>
-                          <img src={token.photo} alt="" className="greet-slide-img"/>
+                          <img src={token.photo} alt="card" className="greet-slide-img"/>
                         </div>
                       ))}
 
                     </Slider>
+                    :
+                    <img src={no_holiday} alt="no_holiday" style={{width:"93%"}}/>
+                    }
                     <Button
                       type="text"
                       className="atn-btn atn-btn-round link-btn"
@@ -1026,7 +1078,7 @@ const CaptainGreetCard = () => {
                       <Box px={1}>
                         <Button
                           type="primary"
-                          disabled={loadings}
+                          disabled={!greetActive || loadings}
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           style={{ width: "100%", height: "37px", color: "#393939", fontSize: "13px" }}
                           onClick={handleSubmit}
@@ -1123,6 +1175,33 @@ const CaptainGreetCard = () => {
         </div>
       </div>
 
+      <div className="my-calendar">
+      {isMobile ? 
+<>
+
+        <div className="font_50x fw-bold align-self-start">
+        Key dates 
+        </div>
+        <div className="font_31x align-self-start">
+        for holidays
+        </div>
+        <div className="font_20x mb-5 align-self-start">
+          Don’t miss out any of these dates
+        </div>
+</>
+        :
+        <div style={{width:"46%"}}>
+
+        <div className="font_70x fw-bold align-self-start">
+        Key dates for holidays
+        </div>
+        <div className="font_20x mb-5 align-self-start">
+          Don’t miss out any of these dates
+        </div>
+        </div>
+        }
+        <ReadOnlyCalendar />
+      </div>
       <div>
         <GreetLandscape
           isVisible={isModalOpen}

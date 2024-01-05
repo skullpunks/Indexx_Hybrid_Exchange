@@ -328,6 +328,16 @@
   width: 432px !important;
 }
 
+.my-calendar{
+  margin-top: 8%;
+  color: var(--dark_text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color: transparent;
+}
+
   @media screen and (min-width: 350px) and (max-width: 1000px) {
 
     .honeycomb-container{
@@ -397,6 +407,18 @@
       padding-inline: 0;
     }
 
+    .my-calendar{
+      margin-top: 38%;
+      color: var(--dark_text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      background-color: transparent;
+      width: 80%;
+      margin-inline: auto;
+  }
+
   }
 
   .atn-btn-hover {
@@ -419,3 +441,20 @@
     color: #ffd000 !important;
     background: transparent;
   }
+
+
+  .font_70x{
+    font-size: 70px;
+}
+
+.font_50x{
+    font-size: 50px;
+}
+
+.font_31x{
+    font-size: 31px;
+}
+
+.font_20x{
+    font-size: 20px;
+}

@@ -2,6 +2,7 @@ import './PaymentOptions.css';
 import paypal from '../../../assets/arts/pay/paypal.svg';
 import wire from '../../../assets/arts/pay/wire.svg';
 import zelle from '../../../assets/arts/pay/zelle.svg';
+import venmo from '../../../assets/arts/pay/venmo.svg';
 
 import { useNavigate } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
@@ -19,7 +20,7 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
   const handleClick = async () => {
     setIsLoading(true);
     let orderId;
-    if (selectedValue === 'zelle' || selectedValue === 'wire') {
+    if (selectedValue === 'zelle' || selectedValue === 'wire' || selectedValue === 'venmo') {
       // Use the special function for Zelle and Wire
       orderId = await onZelleAndWireConfirm(selectedValue);
       if (orderId) {
@@ -83,6 +84,25 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                   </div>
                 }
               />
+
+              {/* <FormControlLabel
+                value="venmo"
+                control={<Radio className="radio-button" />}
+                labelPlacement="start"
+                label={
+                  <div className="label-content">
+                    <img
+                      src={venmo}
+                      alt="venmo"
+                      className={`pay-image ${selectedValue === 'venmo' ? 'selected' : ''
+                        }`}
+                    />
+                    <p className="pay-description">
+                      Widely-used mobile payment platform that simplifies financial transactions among friends, family, and businesses.
+                    </p>
+                  </div>
+                }
+              /> */}
 
               <FormControlLabel
                 value="zelle"

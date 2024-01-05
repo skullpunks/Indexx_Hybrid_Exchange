@@ -101,7 +101,7 @@ const SNP500StockTokenMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>META Token </p>
+                            <p style={{ fontSize: 20 }}>S&P 500 Token </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                                 The S&P 500 stock token (SPX) is an investment in a diverse portfolio of the 500 largest publicly-traded companies in the United States. Holding SPX tokens enables you to track the performance of the U.S. stock market as a whole. The current price per SPX stock token is $4,000, with potential for value changes based on overall market performance.
                             </p>
