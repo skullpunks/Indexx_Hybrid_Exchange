@@ -19,7 +19,7 @@ import { signupAPI, baseDEXURL, baseHiveURL, getHiveUsersLite } from '../../serv
 import hands from '../../assets/arts/hand 5 edited 3.svg';
 import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';
-import { Box, Tooltip, Typography, tooltipClasses } from '@mui/material';
+import { Box, Tooltip, Typography, tooltipClasses, useMediaQuery } from '@mui/material';
 import loadingGif from '../../assets/beeloade.gif';
 
 import { makeStyles, styled } from '@mui/styles';
@@ -102,6 +102,8 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
   //   };
   //   fetchUsers();
   // }, [defaultParam1]);
+
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   useEffect(() => {
     setinitialLoadings(true);
@@ -215,7 +217,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
         </div>
       )}
       <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
-        <div className="row" style={{ gap: "200px" }}>
+        <div className="row" style={{ gap: "150px" }}>
           <div className="col d-flex flex-direction-column text-center justify-center flex-align-center">
             <div
               className="text-center justify-center"
@@ -228,7 +230,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
             </Link> */}
             </div>
 
-            <div className="bs_container bs_form card text-center justify-center">
+            <div className="bs_container bs_form card text-center justify-center" style={{maxWidth: `${isMobile ? "440px" : "650px"}`}}>
               <div className="d-flex justify-center"></div>
               {isDataFetched && (
                 <Form
