@@ -27,7 +27,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
-  baseHiveURL = 'https://hive.indexx.ai';
+  baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
   //baseWalletURL = 'http://localhost:3001';
@@ -42,7 +42,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseAPIURL = 'https://test.api.indexx.ai';
   baseURL = 'https://test.indexx.ai';
-  baseHiveURL = 'https://hive.indexx.ai';
+  baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://test.wallet.indexx.ai';
   baseShopURL = 'https://shop.indexx.ai';
