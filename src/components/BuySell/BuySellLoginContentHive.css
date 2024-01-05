@@ -1,4 +1,5 @@
-.hive-btn {
+.hive-btn,
+.hive-btn:disabled {
   background-color: #FFB300;
   border-color: #FFB300!important;
   font-size: 20px;

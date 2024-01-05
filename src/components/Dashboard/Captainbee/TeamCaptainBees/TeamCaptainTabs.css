@@ -17,6 +17,11 @@
     display: none;
   }
 
+  .MuiButtonBase-root.MuiButton-root.Mui-disabled{
+    background-color: var(--disabled-btn);
+    color: var(--body_color);
+  }
+
   @media screen and (min-width: 350px) and (max-width: 1000px) {
   
     .capt-tabs .ant-tabs-tab {

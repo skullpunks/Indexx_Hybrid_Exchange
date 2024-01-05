@@ -1037,7 +1037,9 @@ const HeaderNew = () => {
                       </div>
                     </div>
 
-                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} style={{ minWidth: "353px" }}>
+                  } id="basic-nav-dropdown" className="my-menu profile-menu" renderMenuOnMount={true} 
+                  // style={{ minWidth: "353px" }}
+                  >
                     <div style={{ width: "200vw", marginBottom: "-10px" }}>
                     <div className="black-div" style={{height:"20px"}}></div>
                       <div className="d-flex flex-row my-menu main-menu">
