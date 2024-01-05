@@ -788,6 +788,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       }}
                     >
                     {greetActive === true ? 
+                      <>
                       <Slider 
                       ref={liveSlideRef}
                       {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
@@ -799,16 +800,18 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       ))}
 
                     </Slider>
-                    :
-                    <img src={no_holiday} alt="no_holiday" style={{width:"93%"}}/>
-                    }
                     <Button
                       type="text"
                       className="atn-btn atn-btn-round link-btn"
                       onClick={() => handleMessage()}
                     >
                       See message
-                    </Button>
+                    </Button>        
+                    </>
+                    :
+                    <img src={no_holiday} alt="no_holiday" style={{width:"93%"}}/>
+                    }
+                    
                   </Box>
 
 
@@ -1091,6 +1094,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   </Box>
                 </Box>
 
+                  {greetActive &&
                   <Box>
                   <Typography component="div" fontSize={'20px'} lineHeight={'30px'} fontWeight={'bold'} mt={5} mb={3}>
                   Email Template:
@@ -1168,14 +1172,10 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
 
                   </Typography>
 
-                </Box>
-              </Box>
-            </div>
-          </div>
-        </div>
-      </div>
+                  </Box>
+                }
 
-      <div className="my-calendar">
+                <div className="my-calendar">
       {isMobile ? 
 <>
 
@@ -1190,7 +1190,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
         </div>
 </>
         :
-        <div style={{width:"46%"}}>
+        <div style={{width:"66%"}}>
 
         <div className="font_70x fw-bold align-self-start">
         Key dates for holidays
@@ -1202,6 +1202,13 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
         }
         <ReadOnlyCalendar />
       </div>
+              </Box>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
       <div>
         <GreetLandscape
           isVisible={isModalOpen}
