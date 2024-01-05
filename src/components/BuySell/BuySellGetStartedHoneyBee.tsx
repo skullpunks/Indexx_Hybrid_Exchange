@@ -319,7 +319,7 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
                           return (
                             <Option key={user.referralCode} value={user.referralCode}>
-                              <LightTooltip title={<a href={`${baseHiveURL}/honeybee/${user.referralCode}`} target='_blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }}>Click to view {accname}</a>} placement='right'>
+                              <LightTooltip title={<a href={`${baseHiveURL}/captainbee/${user.referralCode}`} target='_blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }}>Click to view {accname}</a>} placement='right'>
                                 <Box sx={{ display: "flex", flexDirection: "row", alignSelf: "center", minWidth: "100%" }}>
                                   <Box sx={{ minWidth: "40px", minHeight: "40px", backgroundImage: `url(${frame})`, backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center", position: "relative", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", alignSelf: "center", }}>
                                     {avatar ?
