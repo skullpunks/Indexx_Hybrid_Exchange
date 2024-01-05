@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/about-icons/in500_3_11zon.png';
-import { marketsData } from '../../services/api';
+import { baseURL, marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const Indexx500Market = () => {
@@ -121,6 +121,10 @@ const Indexx500Market = () => {
 
                                 All Indexx 500 stock tokens are pegged at 1-to-1,000 with a matching S&P 500 (e.g., 1 INXS = 1,000 Share of S&P 500 Index) and are backed 100% by Indexx’s reserves.
                             </p>
+                            <div className='font_15x d-flex justify-content-center'>
+                                <a href={`${baseURL}/indexx-exchange/token-details/in500`} className='text_link'>Learn More</a>
+                            </div>
+
                         </div>
                     </Panel>
                 </Collapse>

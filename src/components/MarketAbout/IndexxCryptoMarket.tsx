@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/about-icons/crypto_1_11zon.png';
-import { marketsData } from '../../services/api';
+import { baseURL, marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const IndexxCryptoMarket = () => {
@@ -117,6 +117,10 @@ const IndexxCryptoMarket = () => {
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                                 This indexx crypto token holds the top 10 blue chip cryptoassets, allowing the token price to track movements of the broader crypto market. The token's holdings are re-balanced on a weekly basis (with no asset taking up over 10%). This greatly simplifies the effort required to track the broader market's performance.
                             </p>
+                            <br />
+                            <div className='font_15x d-flex justify-content-center'>
+                                <a href={`${baseURL}/indexx-exchange/token-details/crypto`} className='text_link'>Learn More</a>
+                            </div>
                         </div>
                     </Panel>
                 </Collapse>

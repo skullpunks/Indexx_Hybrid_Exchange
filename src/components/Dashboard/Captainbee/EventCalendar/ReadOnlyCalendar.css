@@ -1,0 +1,46 @@
+.toolbar-btn{
+    background: transparent;
+    color: var(--dark_text);
+    width: fit-content;
+    font-size: 15px;
+}
+
+.toolbar-text{
+    font-size: 20px;
+    align-self: center;
+}
+
+.rbc-event:focus, .rbc-day-slot .rbc-background-event:focus{
+    outline: none;
+}
+
+.rbc-off-range-bg{
+    background: var(--calendar-disabled);
+}
+
+.rbc-today{
+    background-color: var(--cal-bg);
+}
+
+.rbc-month-view,
+.rbc-header + .rbc-header,
+.rbc-header,
+.rbc-day-bg + .rbc-day-bg,
+.rbc-month-row + .rbc-month-row
+{
+    border-color: var(--border-color) !important;
+}
+
+.rbc-calendar button:hover, 
+.rbc-calendar button:focus,
+.rbc-calendar button:active
+{
+    background: transparent !important;
+}
+
+.rbc-calendar button:hover,
+.rbc-calendar button:focus,
+.rbc-calendar button:active{ 
+    background: none !important;
+    background-color: transparent !important;
+}

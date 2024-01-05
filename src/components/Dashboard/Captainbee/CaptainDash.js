@@ -10,6 +10,8 @@ import house from '../../../assets/hive-dashboard/sidebar/home.png';
 import clock from '../../../assets/hive-dashboard/sidebar/clock.png';
 import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
+import info from '../../../assets/hive-dashboard/sidebar/info.png';
+import info_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/info.png';
 
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
@@ -49,6 +51,8 @@ import { RankData } from '../RankData';
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
@@ -112,8 +116,22 @@ const CaptainDash = () => {
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
 
-
-
+  const BootstrapTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} placement="top-start" />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: "var(--body_background)",
+      backgroundColor: "var(--body_background)",
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      border: "1px solid var(--border-color)",
+      backgroundColor: "var(--body_background)",
+      color: "var(--body_color)",
+      minWidth:"90%",
+      width: "215px",
+    },
+  }));
+  
 
 
   useEffect(() => {
@@ -400,13 +418,25 @@ const CaptainDash = () => {
                       <div className="font_15x">
                         Subscribe to your $300 monthly INEX investment today
                       </div>
-                      <div style={{ width: "100%" }}>
+                      <div className="d-flex align-items-start gap-2" style={{ width: "100%" }}>
+                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
+                      sx={{width:"20%"}}
+                      >
+                        <Button
+                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                          style={{ width: "auto", height: "auto", color: "#393939", display:"flex", alignItems:"center", paddingBlock:"9.5px" }}
+
+                        >
+                          <img src={info} alt="info" />
+                        </Button>
+                      </BootstrapTooltip>
                         <Button
                           loading={loadings}
                           type="primary"
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           onClick={handleCreateSubscription}
-                          style={{ width: "100%", height: "auto", color: "#393939" }}
+                          style={{ width: `${isMobile ? "70%" : "80%"}`, height: "auto", color: "#393939" }}
                         >
                           Subscribe
                         </Button>
@@ -416,6 +446,12 @@ const CaptainDash = () => {
                     (<div className="d-flex flex-direction-column align-items-start mt-5">
                       <div className="font_20x">
                         $300 INEX Subscription Details
+                        <BootstrapTooltip title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
+                      sx={{width:"20%"}}
+                      >
+                          <img src={theme === "dark" ? info_dark : info} alt="info" style={{marginLeft:"10px"}}/>
+                      </BootstrapTooltip>
                       </div>
                       <div className="font_13x mt-3">
                         Subscription ID: {subscription?.paypalSubscriptionDetails?.id}

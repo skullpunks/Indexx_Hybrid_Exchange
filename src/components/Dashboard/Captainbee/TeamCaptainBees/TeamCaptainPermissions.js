@@ -73,7 +73,7 @@ const TeamCaptainPermissions = ({ email }) => {
   return (
     <div >
       <div className='pt-2' style={{ background: "#FFB300" }}></div>
-      <div className="pt-4 pb-5" style={{ background: "white", paddingInline: `${isMobile ? '20px' : '45px'}` }}>
+      <div className="pt-4 pb-5" style={{ background: "var(--body_background)", paddingInline: `${isMobile ? '20px' : '45px'}` }}>
 
         <div className="font_15x fw-bold">
           Permissions given by TEAM CaptainBee {permissionData?.username} to  LEADER captainbee {staticsData?.affiliateUserProfile?.Username}

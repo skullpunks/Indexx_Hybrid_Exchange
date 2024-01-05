@@ -1,7 +1,7 @@
 
 import { Collapse, Divider, Image } from 'antd';
 import ca from '../../assets/about-icons/iusd_5_11zon.png';
-import { marketsData } from '../../services/api';
+import { baseURL, marketsData } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 const IndexxUSDPMarket = () => {
@@ -121,6 +121,10 @@ const IndexxUSDPMarket = () => {
                                 3. INSURANCE
                                 Coming soon
                             </p>
+                            <br />
+                            <div className='font_15x d-flex justify-content-center'>
+                                <a href={`${baseURL}/indexx-exchange/token-details/usd`} className='text_link'>Learn More</a>
+                            </div>
                         </div>
                     </Panel>
                 </Collapse>

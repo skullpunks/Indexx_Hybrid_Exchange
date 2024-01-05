@@ -10,7 +10,8 @@
   --conf-purchase:rgba(96, 96, 96,.5);
   --dash-bg:#f6f6f6;
   --hive-honeybee:#e7e7e7;
-
+  --calendar-disabled: #e6e6e6;
+  --cal-bg:#eaf6ff;
   --link_color: #2607f3;
   --table_header:  #939292;
   --table-border:  #E6E8EA;
@@ -45,7 +46,9 @@
   --conf-purchase:rgba(212, 212, 212, 0.685);
   --dash-bg:#151414;
   --hive-honeybee:#aeaeae;
-
+  --timer-color: #2D2D2D;
+  --calendar-disabled: #2c2c2c;
+  --cal-bg:#263e51;
 
   --link_color: #f307b8;
   --table_header:  #aeaeae;
