@@ -1,12 +1,30 @@
 import './InvestElite.css';
 import calendar from '../../../assets/hive-dashboard/greet-cards/cal.png';
-import code from '../../../assets/hive-dashboard/greet-cards/code-2.png';
+import code from '../../../assets/hive-dashboard/greet-cards/qr black.png';
+import code_dark from '../../../assets/hive-dashboard/greet-cards/qr white.png';
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const InvestElite = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || "light"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   if (!isVisible) return null;
   const handleClick = () => {
     // location.href = "https://app.cal.com/brian-z/30min";
@@ -15,6 +33,14 @@ const InvestElite = ({ isVisible, onClose }) => {
       'https://app.cal.com/brian-z/30min',
       '_blank' // <- This is what makes it open in a new window.
     );
+}
+const handleClickChat = () => {
+  // location.href = "https://app.cal.com/brian-z/30min";
+  onClose();
+  window.open(
+    'https://u.wechat.com/kBAwbUcsyTwyhnEnnDQmdV4',
+    '_blank' // <- This is what makes it open in a new window.
+  );
 }
 
   return (
@@ -40,10 +66,10 @@ const InvestElite = ({ isVisible, onClose }) => {
             </div>
 
             <div className='elite-det'>
-            <img src={code} alt="code" />
+            <img src={theme === "dark" ? code_dark : code} alt="code"  style={{ height:"224px"}} />
             <div class="elite-button-box" >
               <button className="elite-button-btn"
-              // onClick={handleClick} disabled={isLoading}
+              onClick={handleClickChat} 
               >
                 Indexx.ai WeChat
               </button>

@@ -7,8 +7,8 @@ import hammer_dark from "../../../../../assets/hive-dashboard/resource-header/Le
 import mkt_dark from "../../../../../assets/hive-dashboard/resource-header/Marketing DM.png";
 // import sales from "../../../../../assets/hive-dashboard/resource-header/sales icon 1.svg";
 // import sales_dark from "../../../../../assets/hive-dashboard/resource-header/sales icon for DM.svg";
-import technical from "../../../../../assets/hive-dashboard/resource-header/gear LM.png";
-import technical_dark from "../../../../../assets/hive-dashboard/resource-header/gear DM.png";
+import technical from "../../../../../assets/hive-dashboard/resource-header/gearlm.svg";
+import technical_dark from "../../../../../assets/hive-dashboard/resource-header/geardm.svg";
 
 
 // import setting from "../../../../../assets/hive-dashboard/resource-header/technicalb 1.svg";
