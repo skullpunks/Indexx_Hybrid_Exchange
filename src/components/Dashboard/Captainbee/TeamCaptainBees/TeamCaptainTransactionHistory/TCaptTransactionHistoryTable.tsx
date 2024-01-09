@@ -429,7 +429,8 @@ const TCaptTransactionHistoryTable: React.FC<TeamCapTxTableProps> = ({ email }) 
             </div>
             <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} 
                 scroll={{x:true}}
-                style={{maxWidth:"94vw"}}                 
+                style={{maxWidth:"94vw"}}    
+                className='custom_table'              
             />
             <MyPagination
                 total={txListFilter && txListFilter.length}

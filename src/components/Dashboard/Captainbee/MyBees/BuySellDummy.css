@@ -111,6 +111,25 @@
   /* padding: 4px 15px 6px 40px !important; */
 }
 
+.small-btn:hover
+{
+  width: auto;
+  height: 25px;
+  padding: 0px 20px 0px 35px !important;
+}
+
+.ant-checkbox-inner,
+.ant-input-affix-wrapper,
+.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper, .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
+.ant-input {
+  background-color: var(--body_background) ;
+  border-color: var(--border-color);
+  color: var(--body_color);
+}
+
+.ant-input-password-icon.anticon{
+  color: var(--body_color);
+}
 .custom_table 
 .ant-table-tbody 
 .ant-table-cell
