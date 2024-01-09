@@ -294,7 +294,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={isMobile ? '25px' : '50px'}
+                  fontSize={isMobile ? '25px' : '70px'}
                   // fontWeight={600}
                   textAlign={'left'}
                 >
@@ -583,7 +583,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 </Typography>
                 <Typography
                   variant="text"
-                  fontSize={isMobile ? '25px' : '50px'}
+                  fontSize={isMobile ? '25px' : '70px'}
                   // fontWeight={600}
                   textAlign={'left'}
                 >

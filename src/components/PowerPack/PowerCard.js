@@ -190,15 +190,7 @@ const PowerCard = ({ card }) => {
                                     ${card.price}
                                 </Typography>
 
-                                {/* Exchange fee
-                                <Typography variant="text" component="p" fontSize={"15px"} fontWeight={400} mb={1}>
-                                    Exchange Fee (3%): ${exchangeFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                </Typography>
 
-                                {/* Final price including exchange fees */}
-                                {/* <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
-                                    Final Price: ${finalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                </Typography> */}
 
                                 <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} >
                                     <b>Investment Highlights</b>
@@ -276,7 +268,7 @@ const PowerCard = ({ card }) => {
                                             textTransform: "none",
                                             backgroundColor: "transparent",
                                             boxShadow: 'none',
-                                            mt: -1,
+                                            mt: 8,
                                             width: "fit-content",
                                             height: "fit-content",
                                             '&:hover': {
@@ -312,6 +304,15 @@ const PowerCard = ({ card }) => {
                                     {card.name}
                                 </Typography>
 
+                                {/* Exchange fee */}
+                                {/* <Typography variant="text" component="p" fontSize={"15px"} fontWeight={400} mb={1}>
+                                    Exchange Fee (3%): ${exchangeFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </Typography>
+
+                                {/* Final price including exchange fees */}
+                                {/* <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
+                                    Final Price: ${finalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </Typography> */}
 
                                 <Typography variant="text" component="p" fontSize={"25px"} fontWeight={400} mb={1}>
                                     ${card.price}

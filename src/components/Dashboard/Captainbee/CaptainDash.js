@@ -11,7 +11,7 @@ import clock from '../../../assets/hive-dashboard/sidebar/clock.png';
 import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 import info from '../../../assets/hive-dashboard/sidebar/info.png';
-import info_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/info.png';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
@@ -450,7 +450,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
 Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
                       sx={{width:"20%"}}
                       >
-                          <img src={theme === "dark" ? info_dark : info} alt="info" style={{marginLeft:"10px"}}/>
+                          <InfoOutlinedIcon sx={{fontSize :"18px", color:"var(--body_color)", mb:0.5, ml:0.8}}/>
                       </BootstrapTooltip>
                       </div>
                       <div className="font_13x mt-3">
@@ -866,7 +866,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '70px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -912,7 +912,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -935,7 +935,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1186,7 +1186,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '70px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1232,7 +1232,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '49px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1255,7 +1255,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >

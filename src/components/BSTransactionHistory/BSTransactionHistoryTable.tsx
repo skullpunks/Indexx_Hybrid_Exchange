@@ -442,6 +442,7 @@ const BSTransactionHistoryTable: React.FC = () => {
             </div>
             <Table pagination={false} columns={columns} dataSource={getData(current, pageSize)} 
             // className="transaction_crypto_history" 
+            className='custom_table'              
             scroll={{x:true}}
             style={{maxWidth:"94vw"}} 
             />

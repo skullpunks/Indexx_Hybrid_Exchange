@@ -365,6 +365,7 @@ const BSSellOrderHistoryTable: React.FC = () => {
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} 
             // className="transaction_crypto_history" 
+            className='custom_table'              
             scroll={{x:true}}
             style={{maxWidth:"94vw"}} 
             loading={tableLoading} />

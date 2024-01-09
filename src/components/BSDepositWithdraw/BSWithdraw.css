@@ -11,7 +11,7 @@
 .bs_main label,
 .placeholder_info {
   font-size: 13px;
-  color: rgba(95, 95, 95, 0.5);
+  color: var(--body_color);
 }
 
 .bs_main label {
