@@ -26,16 +26,16 @@ const PowerCard = ({ card }) => {
     }
     // Convert string price to number and calculate exchange fee
     const originalPrice = parseFloat(card.price.replace(/,/g, ''));
-    const exchangeFee = originalPrice * 0.03;
-    const finalPrice = originalPrice + exchangeFee;
-
+    //const exchangeFee = originalPrice * 0.03;
+    const finalPrice = originalPrice;
+    const currentINEXRate = 2
     useEffect(() => {
         if (!discountCode) {
             setErrorMessage('');
             setDiscountAmount(0);  // Clear the discount amount
             const originalPrice = parseFloat(card.price.replace(/,/g, ''));
-            const exchangeFee = originalPrice * 0.03;
-            const finalPrice = originalPrice + exchangeFee;
+            //const exchangeFee = originalPrice * 0.03;
+            const finalPrice = originalPrice;
             //setFinalAmount(parseFloat((card?.price || '0').replace(/,/g, '')));  // Reset the final amount to the original price
             setFinalAmount(finalPrice);
         }
@@ -102,8 +102,8 @@ const PowerCard = ({ card }) => {
             const originalPrice = parseFloat((card?.price || '0').replace(/,/g, ''));
             const discount = originalPrice * validateDiscountCode.data.discountPercentage;
             const discountedPrice = originalPrice - discount;
-            const exchangeFee = originalPrice * 0.03;
-            const finalPriceWithExchangeFee = discountedPrice + exchangeFee;
+            //const exchangeFee = originalPrice * 0.03;
+            const finalPriceWithExchangeFee = discountedPrice;
 
             setDiscountAmount(discount);
             setFinalAmount(finalPriceWithExchangeFee);
@@ -112,8 +112,8 @@ const PowerCard = ({ card }) => {
         } else {
             setErrorMessage(validateDiscountCode?.data);  // Set the error message when the code is invalid
             const originalPrice = parseFloat((card?.price || '0').replace(/,/g, ''));
-            const exchangeFee = originalPrice * 0.03;
-            const finalPriceWithExchangeFee = originalPrice + exchangeFee;
+            //const exchangeFee = originalPrice * 0.03;
+            const finalPriceWithExchangeFee = originalPrice;
 
             setDiscountAmount(0);
             setFinalAmount(finalPriceWithExchangeFee);
@@ -190,15 +190,15 @@ const PowerCard = ({ card }) => {
                                     ${card.price}
                                 </Typography>
 
-                                {/* Exchange fee */}
+                                {/* Exchange fee
                                 <Typography variant="text" component="p" fontSize={"15px"} fontWeight={400} mb={1}>
                                     Exchange Fee (3%): ${exchangeFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </Typography>
 
                                 {/* Final price including exchange fees */}
-                                <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
+                                {/* <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
                                     Final Price: ${finalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                </Typography>
+                                </Typography> */}
 
                                 <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} >
                                     <b>Investment Highlights</b>
@@ -211,7 +211,7 @@ const PowerCard = ({ card }) => {
                                 <a href="https://indexx.ai/indexx-exchange/token-details/inex" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <Typography variant="text" component="p" fontSize={"20px"} fontWeight={1200} mb={0.5} lineHeight={"22.8px"}>
                                         <img src={inex} alt="inex" style={{ paddingRight: "4px" }} />
-                                        {card.coins} INEX Tokens <br />($2 each)
+                                        {card.coins} INEX Tokens <br />(${currentINEXRate} each)
                                     </Typography>
                                 </a>
                                 <a href="https://www.docdroid.net/wrk4t3t/indexx-exchange-tokenomics-v12-pdf" target="_blank" rel="noopener noreferrer"  >

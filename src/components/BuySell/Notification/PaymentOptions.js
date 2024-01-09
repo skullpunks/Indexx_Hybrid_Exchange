@@ -85,7 +85,7 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                 }
               />
 
-              {/* <FormControlLabel
+              <FormControlLabel
                 value="venmo"
                 control={<Radio className="radio-button" />}
                 labelPlacement="start"
@@ -102,7 +102,7 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
                     </p>
                   </div>
                 }
-              /> */}
+              />
 
               <FormControlLabel
                 value="zelle"
