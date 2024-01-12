@@ -438,12 +438,13 @@ const TCaptTransactionCryptoHistoryTable: React.FC<TeamCapTxTableProps> = ({ ema
                 </div>
                 <div className='d-md-block d-none'>
                     <label>Transaction Hash</label> <br />
-                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "40px", borderRadius: "4px", border: "2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
+                    <Input size="large" placeholder="Search Transaction hash" style={{ height: "53px", borderRadius: "4px", border: "2px solid #d7d7d7" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
             <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)}
                 scroll={{x:true}}
                 style={{maxWidth:"94vw"}}     
+                className='custom_table'              
             />
             <MyPagination
                 total={txListFilter && txListFilter.length}

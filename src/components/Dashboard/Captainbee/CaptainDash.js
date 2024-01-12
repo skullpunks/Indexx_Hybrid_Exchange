@@ -11,7 +11,7 @@ import clock from '../../../assets/hive-dashboard/sidebar/clock.png';
 import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 import info from '../../../assets/hive-dashboard/sidebar/info.png';
-import info_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/info.png';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
 import man_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/man.png';
@@ -53,7 +53,7 @@ import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription } from '../../../services/api';
+import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, createMonthlyINEXOrderNonPaypal } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material'
@@ -61,6 +61,7 @@ import OpenNotification from '../../OpenNotification/OpenNotification';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CommissionTable from './CommissionTable';
 import { Button } from 'antd';
+import SubscriptionPaymentOptions from '../../BuySell/Notification/SubscriptionPaymentOptions';
 let appSettingArr = [];
 let priceData = {};
 
@@ -102,8 +103,9 @@ const CaptainDash = () => {
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
-
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [message, setMessage] = useState();
+  const [message1, setMessage1] = useState();
   const [staticsData, setStaticsData] = useState();
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState({
@@ -115,6 +117,7 @@ const CaptainDash = () => {
   const [loadingsubs, setLoadingsubs] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [checkSubscription, setCheckSubscription] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const BootstrapTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} placement="top-start" />
@@ -127,11 +130,11 @@ const CaptainDash = () => {
       border: "1px solid var(--border-color)",
       backgroundColor: "var(--body_background)",
       color: "var(--body_color)",
-      minWidth:"90%",
+      minWidth: "90%",
       width: "215px",
     },
   }));
-  
+
 
 
   useEffect(() => {
@@ -222,6 +225,7 @@ const CaptainDash = () => {
       console.log("err", err)
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -249,9 +253,19 @@ const CaptainDash = () => {
             setRankPhoto(getRank?.photo);
           }
 
-          if (data?.data?.paypalSubscriptionDetails) {
-            setSubscription(data?.data?.paypalSubscriptionDetails);
-            const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+          if (data?.data) {
+            let hasValidSubscription = false;
+            // Check and set PayPal subscription details
+            if (data?.data?.paypalSubscriptionDetails?.paypalSubscriptionDBData && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0) {
+              setSubscription(data?.data?.paypalSubscriptionDetails);
+              hasValidSubscription = true;
+            }
+            // Check if non-PayPal subscription details exist
+            else if (data?.data?.nonPaypalSubscriptionDetails?.nonPaypalSubscriptionDBData && Object.keys(data?.data?.nonPaypalSubscriptionDetails.nonPaypalSubscriptionDBData).length > 0) {
+              setSubscription(data?.data?.nonPaypalSubscriptionDetails.nonPaypalSubscriptionDBData);
+              hasValidSubscription = true;
+            }
+
             setCheckSubscription(hasValidSubscription);
           }
         }
@@ -310,6 +324,52 @@ const CaptainDash = () => {
     } else {
       setLoadings(false);
       setMessage(res.data);
+    }
+  };
+
+  /*
+   basecoin: string,
+  quotecoin: string,
+  amount: number,
+  outAmount: number,
+  paymentMethodUsed: string,
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false
+  */
+
+  const createSubscriptionOrderForZelleAndWire = async (paymentMethod) => {
+    setLoadings(true);
+    //await getPricesData();
+    const rate = await getCoinPriceByName(String("INEX"));
+    priceData = rate.data.results.data;
+
+    let oneUsdValue = await oneUSDHelper(
+      priceData,
+      "INEX"
+    );
+    const finalPay =
+      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    let basecoin = "INEX";
+    let quotecoin = "USD";
+    let amount = 300;
+    let outAmount = Math.floor(finalPay * 1000000) / 1000000;
+    let res;
+    console.log("paymentMethod", paymentMethod)
+    res = await createMonthlyINEXOrderNonPaypal(basecoin,
+      quotecoin,
+      amount,
+      outAmount,
+      paymentMethod);
+    if (res.status === 200) {
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      // OpenNotification('error', res.data);
+      setIsModalOpen(true);
+      setMessage1(res.data);
+      return null;
     }
   };
 
@@ -413,32 +473,37 @@ const CaptainDash = () => {
                   )
                 }
                 <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
-                  {(!subscription?.paypalSubscriptionDBData) ?
+                  {!checkSubscription ?
+                    // Display Subscribe Button
                     (<div className="d-flex flex-direction-column align-items-start mt-5">
                       <div className="font_15x">
                         Subscribe to your $300 monthly INEX investment today
                       </div>
                       <div className="d-flex align-items-start gap-2" style={{ width: "100%" }}>
-                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
-                      sx={{width:"20%"}}
-                      >
-                        <Button
-                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          style={{ width: "auto", height: "auto", color: "#393939", display:"flex", alignItems:"center", paddingBlock:"9.5px" }}
-
+                        <BootstrapTooltip title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          sx={{ width: "20%" }}
                         >
-                          <img src={info} alt="info" />
-                        </Button>
-                      </BootstrapTooltip>
+                          <Button
+                            className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                            style={{ width: "auto", height: "auto", color: "#393939", display: "flex", alignItems: "center", paddingBlock: "9.5px" }}
+
+                          >
+                            <img src={info} alt="info" />
+                          </Button>
+                        </BootstrapTooltip>
                         <Button
                           loading={loadings}
                           type="primary"
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          onClick={handleCreateSubscription}
+                          // onClick={handleCreateSubscription}
+                          onClick={() => {
+                            setIsModalOpen2(true)
+                            //createNewBuyOrder(card);
+                          }}
                           style={{ width: `${isMobile ? "70%" : "80%"}`, height: "auto", color: "#393939" }}
                         >
-                          Subscribe
+                          {!loadingsubs ? "Subscribe" : "Loading..."}
                         </Button>
                       </div>
                     </div>)
@@ -447,13 +512,13 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       <div className="font_20x">
                         $300 INEX Subscription Details
                         <BootstrapTooltip title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
-                      sx={{width:"20%"}}
-                      >
-                          <img src={theme === "dark" ? info_dark : info} alt="info" style={{marginLeft:"10px"}}/>
-                      </BootstrapTooltip>
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          sx={{ width: "20%" }}
+                        >
+                          <InfoOutlinedIcon sx={{ fontSize: "18px", color: "var(--body_color)", mb: 0.5, ml: 0.8 }} />
+                        </BootstrapTooltip>
                       </div>
-                      <div className="font_13x mt-3">
+                      {/* <div className="font_13x mt-3">
                         Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
                       </div>
                       <div className="font_13x">
@@ -461,6 +526,16 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       </div>
                       <div className="font_13x">
                         Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
+                      </div> */}
+
+                      <div className="font_13x mt-3">
+                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id || subscription?.orderId}
+                      </div>
+                      <div className="font_13x">
+                        Status: {subscription?.paypalSubscriptionDetails?.status || subscription?.paymentStatus}
+                      </div>
+                      <div className="font_13x">
+                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info?.next_billing_time || subscription?.nextPaymentDate)}
                       </div>
                       {/* <div>
                       <Button
@@ -866,7 +941,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '70px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -912,15 +987,15 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
                             ${(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
                               ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
                               : '0.00')
                             }
                           </Typography>
@@ -935,16 +1010,16 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                        
+
                             {(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
                               ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
                               : '0.00')}
                             <span className='font_17x'>
                               INEX
@@ -1186,7 +1261,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '70px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1232,7 +1307,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '49px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1255,7 +1330,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                           <Typography
                             variant="text"
-                            fontSize={isMobile ? '25px' : '50px'}
+                            fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
                             textAlign={'left'}
                           >
@@ -1318,6 +1393,16 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
           {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
         </>
       }
+
+      <div>
+        <SubscriptionPaymentOptions
+          isVisible={isModalOpen2}
+          onClose={() => setIsModalOpen2(false)}
+          onConfirm={handleCreateSubscription}
+          onZelleAndWireConfirm={(paymentMethod) => createSubscriptionOrderForZelleAndWire(paymentMethod)} // For Zelle and Wire
+          message={message1}
+        />
+      </div>
     </>
   );
 };

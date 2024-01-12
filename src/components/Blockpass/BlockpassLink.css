@@ -20,8 +20,9 @@
 .withdraw_btn:hover,
 .withdraw_btn:focus,
 .withdraw_btn:active {
-    background-image: url("../../assets/arts/uploadicon.svg");
-
+    /* background-image: url("../../assets/arts/uploadicon.svg"); */
+    background-image: var(--background-image);
+    background-size: 17px;
 }
 
 .send_btn,

@@ -19,6 +19,8 @@
   --blog-border-orange: rgba(246, 96, 54, 0.2);
   --market-table-color: #fff;
 
+  --background-image: url("./assets/arts/Black_withdraw.svg");
+
   --disabled-btn-text:rgba(0, 0, 0, 0.25);
   --timeline:#e0e0e0;
   
@@ -56,6 +58,7 @@
   --section3-unselected : rgba(255, 255, 255, 0.25);
   --blog-border-orange: rgba(59,130,246,0.3);
   --market-table-color: #575757;
+  --background-image: url("./assets/arts/Grey_withdraw.svg");
 
   --disabled-btn-text:rgba(135, 132, 132, 0.785);
   --timeline:#3231319f;

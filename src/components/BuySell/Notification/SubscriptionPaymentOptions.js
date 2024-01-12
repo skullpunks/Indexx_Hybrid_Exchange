@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState } from 'react';
 
-const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, message }) => {
+const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, message }) => {
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState('wire');
   const [isLoading, setIsLoading] = useState(false);
@@ -158,4 +158,4 @@ const PaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, 
   );
 };
 
-export default PaymentOptions;
+export default SubscriptionPaymentOptions;

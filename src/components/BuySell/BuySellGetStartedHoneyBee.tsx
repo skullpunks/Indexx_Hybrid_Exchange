@@ -124,14 +124,16 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
         setUsersLite(usersWithReferral);
 
         // Determine initial referral code
-        let initialReferralCode = usersWithReferral.find((user: any) => user?.actualEmail === 'bz@azooca.com')?.referralCode || '';
+        // let initialReferralCode = usersWithReferral.find((user: any) => user?.actualEmail === 'bz@azooca.com')?.referralCode || '';
+        let initialReferralCode = '';
         if (urlReferralCode && usersWithReferral.some((user: any) => user.referralCode === urlReferralCode)) {
           initialReferralCode = urlReferralCode;
         }
         setSelectedReferralCode(initialReferralCode);
         setIsDataFetched(true);
         setinitialLoadings(false);
-
+        console.log("in useffect");
+        
       }
     };
     fetchUsers();
@@ -166,6 +168,17 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
   const [form] = Form.useForm();
 
+  const handleClick = () => {
+    form.resetFields();
+    let initialReferralCode = (usersLite?.find((user: any) => user?.actualEmail === 'bz@azooca.com') as any)?.referralCode!;
+    setSelectedReferralCode(initialReferralCode);
+    console.log(selectedReferralCode, "se");
+  }
+
+  useEffect(() => {
+    // Set initial values after the form has been created
+    form.setFieldsValue({ referralCode: selectedReferralCode });
+  }, [selectedReferralCode, form]);
 
 
   // useEffect(() => {
@@ -346,6 +359,17 @@ const BuySellGetStartedHoneyBee: React.FC = () => {
 
                     </Form.Item>
                   </div>
+
+                  <div
+                style={{ marginTop: -30 }}
+                className="d-flex flex-column justify-center padding-tb-2x"
+              >
+                Don’t know any Captain Bee?
+                <div className="hive_link" onClick={handleClick}>
+                  {' '}
+                  Click here and the company will help assign a Captain Bee for you.
+                </div>
+              </div>
 
                   <div className="form_element d-flex terms_conditions_container">
                     <Form.Item
