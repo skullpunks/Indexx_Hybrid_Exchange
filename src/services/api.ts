@@ -1588,7 +1588,8 @@ export const createCryptoWithdraw = async (
   email: string,
   amount: number,
   address: string,
-  coin: string = 'USD'
+  coin: string = 'USD',
+  coinNetwork: string = ''
 ) => {
   try {
     const result = await API.post(
@@ -1598,6 +1599,7 @@ export const createCryptoWithdraw = async (
         amount: amount,
         address: address,
         coin: coin,
+        coinNetwork: coinNetwork
       }
     );
     return result.data;

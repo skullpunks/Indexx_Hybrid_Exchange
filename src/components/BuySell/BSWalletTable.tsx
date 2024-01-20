@@ -24,6 +24,7 @@ interface DataType {
     coinBalanceInBTC: any;
     coinPrice: any;
     coinStakedBalance: any;
+    coinNetwork: any;
     type: 'Crypto' | 'Stock' | 'ETF' | 'Fiat';
 }
 const BSWalletTable = () => {
@@ -61,10 +62,10 @@ const BSWalletTable = () => {
             },
             title: 'Asset',
             render: (_, record) => {
-                const imageSrc = require(`../../assets/token-icons/${record.coinSymbol}.png`).default;
+                const imageSrc = (record.coinSymbol === "INEX" && record.coinNetwork  === "Polygon") ? require(`../../assets/token-icons/INEX-POLYGON.png`).default : require(`../../assets/token-icons/${record.coinSymbol}.png`).default;
                 return (
                     <>
-                        <img src={imageSrc} alt={record.coinSymbol} width={30} height={30} style={{ marginRight: '8px' }} />
+                        <img src={imageSrc} alt={record.coinSymbol} width={["INEX", "IN500", "INXC", "IUSD"].some(str => record.coinSymbol.includes(str)) ? "52" : "40"}  style={{ marginRight: '8px' }} />
                         {record.coinSymbol} {record.coinName}
                     </>
                 );

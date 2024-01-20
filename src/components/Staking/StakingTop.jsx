@@ -528,7 +528,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                           .default
                       }
                       alt={token.title}
-                      width={30}
+                      width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "42" : "30"}
                       height={30}
                       style={{ marginRight: '8px' }}
                     />
@@ -1210,7 +1210,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                           .default
                       }
                       alt={token.title}
-                      width={30}
+                      width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "42" : "30"}
                       height={30}
                       style={{ marginRight: '8px' }}
                     />

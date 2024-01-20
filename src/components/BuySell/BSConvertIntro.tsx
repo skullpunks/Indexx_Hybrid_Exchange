@@ -89,7 +89,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
     }, [filteredtokens, BSvalue.fromToken, BSvalue.toToken]);
 
     // Function to update the user balance
-    const updateUserBalance = async (tokenTitle: string) => {
+    const updateUserBalance = async (tokenTitle: string, coinNetwork: string = "") => {
         let access_token = String(localStorage.getItem("access_token"));
         let decoded: any = decodeJWT(access_token);
         let email = decoded.email;
@@ -104,7 +104,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
     useEffect(() => {
         // Initial user balance update on component mount
         if (filteredtokens.length > 0) {
-            updateUserBalance(filteredtokens[0]?.title || '');
+            updateUserBalance(filteredtokens[0]?.title || '', filteredtokens[0]?.chain);
         }
     }, []);
 
@@ -113,7 +113,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         if (BSvalue?.fromToken) {
             const selectedToken = filteredtokens.find(token => token.address === BSvalue.fromToken);
             if (selectedToken) {
-                updateUserBalance(selectedToken.title);
+                updateUserBalance(selectedToken.title, selectedToken.chain);
             }
         }
     }, [BSvalue?.fromToken]);
@@ -223,11 +223,11 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             "EQSTK", "GOOGL", "INDXXF", "META", "MSFT", "NVDA", "PEP", "SNP500", "TLSA", "TOB"];
         return indexxTokens.includes(tokenTitle);
     };
-    
+
     const checkPurchase = () => {
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
-    
+
         // If either the fromToken or toToken is not in the allowed list of indexxTokens, show an error notification
         if (!isIndexxToken(String(getRequiredCoin?.title)) || !isIndexxToken(String(getRequiredToCoin?.title))) {
             OpenNotification("error", "Feature of conversion from Indexx tokens to Non-Indexx tokens is coming soon.");
@@ -378,7 +378,9 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                         style={{ paddingLeft: "15px", paddingRight: 0 }}
                                     >
                                         <div className='d-flex bs_token_num'>
-                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
+                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title}
+                                                width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
+                                            />
                                             <div className='padding-l-1x d-flex flex-align-center'>
                                                 {token.title}
                                                 <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
@@ -412,7 +414,9 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                         style={{ paddingLeft: "15px", paddingRight: 0 }}
                                     >
                                         <div className='d-flex bs_token_num'>
-                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} width="40" />
+                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} 
+                                            width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
+                                             />
                                             <div className='padding-l-1x d-flex flex-align-center'>
                                                 {token.title}
                                                 <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">
