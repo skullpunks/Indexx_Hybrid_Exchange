@@ -12,6 +12,10 @@
     "graph": "Indexx500Graph"
   },
   {
+    "address": "0x129d9E5a74C2dD427b5C326406039976FE963a90",
+    "graph": "IndexxExchangePolygon"
+  },
+  {
     "address": "0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005B",
     "graph": "IndexxUSDPGraph"
   },

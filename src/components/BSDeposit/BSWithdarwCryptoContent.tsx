@@ -42,6 +42,7 @@ export const BSWithdarwCryptoContent = () => {
   const [value, setValue] = useState('funding');
   const [txList, setTxList] = useState() as any;
   const [usersWallets, setUsersWallets] = useState() as any;
+  const [coinNetwork, setCoinNetwork] = useState() as any;
   const [singleWallet, setSingleWallet] = useState() as any;
   const [selectedCoin, setSelectedCoin] = useState('');
   const [receiveAmountt, setReceiveAmount] = useState('');
@@ -316,11 +317,20 @@ export const BSWithdarwCryptoContent = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
+      console.log(getRequiredCoin)
 
     setSelectedCoinObj(getRequiredCoin || {} as { address: string; title: string }); // Specify the type here
     setSelectedCoin(getRequiredCoin?.title || ''); // Set the title if needed
     setSingleWallet(userWallet[0]);
+    if(getRequiredCoin?.title === "INEX" ) {
+      setCoinNetwork(getRequiredCoin?.chain)
+      const userWallet = usersWallets.filter(
+        (x: any) => x.coinSymbol === getRequiredCoin?.title && x.coinNetwork === getRequiredCoin?.chain
+      );
+      console.log("userWallet", userWallet)
+      setSingleWallet(userWallet[0]);
 
+    }
     let res = await getMinAndMaxOrderValues(
       String(getRequiredCoin?.title),
       'WITHDRAW_CRYPTO'
@@ -365,7 +375,8 @@ export const BSWithdarwCryptoContent = () => {
       email,
       Number(finalAmount),
       walletAddress,
-      selectedCoin
+      selectedCoin,
+      coinNetwork
     );
     if (res.status === 200) {
       let txs = await transactionList(email);
@@ -451,7 +462,7 @@ export const BSWithdarwCryptoContent = () => {
                         <img
                           src={require(`../../assets/token-icons/${token.image}.png`).default}
                           alt="IN500"
-                          width="35"
+                          width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "47" : "35"}
                           height="35"
                         />
                         <div className="font_20x padding-l-1x d-flex flex-align-center">

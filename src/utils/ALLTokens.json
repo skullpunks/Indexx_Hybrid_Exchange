@@ -1,4 +1,5 @@
 [
+  
   {
     "title": "IN500",
     "subTitle": "Indexx500",
@@ -18,6 +19,17 @@
     "commonToken": true,
     "isStock": false,
     "graph": "IndexxExchange",
+    "stakingPercentage6months": 6,
+    "stakingPercentage1year": 15
+  },
+  {
+    "title": "INEX",
+    "subTitle": "IndexxExchange",
+    "image": "INEX-POLYGON",
+    "address": "0x129d9E5a74C2dD427b5C326406039976FE963a90",
+    "commonToken": true,
+    "isStock": false,
+    "graph": "IndexxExchangePolygon",
     "stakingPercentage6months": 6,
     "stakingPercentage1year": 15
   },

@@ -76,7 +76,8 @@ const SelectToken: React.FC<(Props)> = ({ setStatus, tokenType }) => {
                                 onlyCommonTokens.map((token, index) => {
                                     let disableClass = (tokenAddress === token.address) ? true : false
                                     return <Button key={index} type="link" className='common__token d-flex' disabled={disableClass} data-address={token.address} onClick={updateSelectedToken}>
-                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="bit coin" width="25" />
+                                        <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="bit coin" 
+                                        width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "37" : "25"} />
                                         <span className='common__token__title' >{token.title}</span>
                                     </Button>
                                 })
@@ -87,7 +88,7 @@ const SelectToken: React.FC<(Props)> = ({ setStatus, tokenType }) => {
                         tokens.map((token, index) => {
                             let disableClass2 = (tokenAddress === token.address) ? true : false
                             return <Button type="link" className='token' key={index} data-address={token.address} disabled={disableClass2} onClick={updateSelectedToken}>
-                                <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="bit coin" width="40" />
+                                <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt="bit coin" width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"} />
                                 <div className='token__data' >
                                     <span className='token__data__title' >{token.title}</span>
                                     <span className='token__data__subtitle'>{token.subTitle}</span>

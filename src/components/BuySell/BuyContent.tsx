@@ -316,7 +316,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
                         <img
                           src={require(`../../assets/token-icons/${token.image}.png`).default}
                           alt={token.title}
-                          width="40"
+                          width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
                         />
                         <div className="padding-l-1x d-flex flex-align-center">
                           {token.title}

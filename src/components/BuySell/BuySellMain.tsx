@@ -141,6 +141,7 @@ let graphs: any = {
   ShibGraph: ShibGraph,
   LitecoinGraph: LitecoinGraph,
   IndexxExchange: IndexxExchangeGraph,
+  IndexxExchangePolygon: IndexxExchangeGraph,
   IndexxPhoenixGraph: IndexxPhoenixGraph,
   FTTGraph: FTTGraph,
   IndexxAMZNGraph: IndexxAMZNGraph,
@@ -184,6 +185,7 @@ let markets: any = {
   ShibGraph: ShibMarket,
   LitecoinGraph: LitecoinMarket,
   IndexxExchange: IndexxExchangeMarket,
+  IndexxExchangePolygon: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
   FTTGraph: FTTTokenMarket,
   IndexxAMZNGraph: AmazonStockTokenMarket,
@@ -368,7 +370,6 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
 
       <div className="scan-container flex-align-stretch bs_main with-graph" style={{ marginTop: -140 }}>
-
         {toggleChart && <ChartCoin />}
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}

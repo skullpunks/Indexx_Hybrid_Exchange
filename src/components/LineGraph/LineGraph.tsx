@@ -86,7 +86,7 @@ const LineGraph = (props: any) => {
                   .default
               }
               alt="bitcoin"
-              width="40"
+              width={["INEX", "IN500", "INXC", "IUSD"].some(str => props.currencySymbol.includes(str)) ? "52" : "40"}
             />
             &emsp;
             <h1>
