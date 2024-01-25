@@ -84,6 +84,9 @@ import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
 import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
 import TeamCaptainDash from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash";
 import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain";
+
+import LottoHome from "./components/Lottery/LottoHome";
+
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
@@ -224,6 +227,7 @@ function App() {
           <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
         </Route>
 
+          <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
           <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
           <Route path="/indexx-exchange/elite-learn/:id" element={<EliteLearnMore />} />
 

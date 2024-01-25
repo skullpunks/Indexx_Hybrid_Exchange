@@ -1,0 +1,62 @@
+.background {
+    background-image: url("../../assets/lottery/Group120.png");
+    width: 100%;
+    background-repeat: no-repeat;
+    height: 190px;
+    margin: auto;
+    scale:0.7;
+}
+
+.textColor{
+    color:'white' !important;
+}
+
+
+@media (min-width: 480px) {
+.background {
+    background-image: url("../../assets/lottery/Group120.png");
+    width: 100%;
+    background-repeat: no-repeat;
+    height: 190px;
+    margin: auto;
+    scale:0.7;
+}
+}
+@media (min-width: 480px) {
+.background2 {
+    background-image: url("../../assets/lottery/Group 127.png");
+    width: 1395px;
+    background-repeat: no-repeat;
+    height: 1404px;
+}
+}
+bg3 {
+    background-image: url("../../assets/lottery/BG new 2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    max-width: 100%;
+    height: calc(100vw * 0.26);
+    background-position: center 100%;
+    position: relative;
+    align-self: center;
+    text-align: center;
+    scale: 1;
+    margin-top: -20px;
+}
+
+@media (min-width: 2500px) {
+    .parent-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobilebackground{
+        background-image: url("../../assets/lottery/Group120.png");
+        width: 50%;
+        background-repeat: no-repeat;
+        height: 90px;
+        margin: auto;
+        background-size: contain;
+    }
+}
