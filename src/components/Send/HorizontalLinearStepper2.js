@@ -512,8 +512,8 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
                                 .default
                             }
                             alt="IN500"
-                            width="27"
-                            height="27"
+                            width={40}
+                           
                           />
                           <div className="font_20x padding-l-1x d-flex flex-align-center">
                             {seltoken.title}
