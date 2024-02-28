@@ -63,8 +63,16 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
   }, [tokenType, subtokenType]);
 
   const [params] = useSearchParams();
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const coinnameToIndex: Record<string, number> = {
+    'iusd': 3,
+    'inexbrc': 2,
+    'inexplg': 1
+  };
   useEffect(() => {
+    
+    const coinname = urlParams.get('coinname') || '';
+   
     const defToken = String(params.get("toksymbol"));
     console.log("eff trig");
     const filtered = filteredtokens.find(
@@ -77,7 +85,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       handleChange(filtered.address);
     }
     else{
-      handleChange(filteredtokens[0]?.address);
+     handleChange(filteredtokens[coinnameToIndex[coinname] || 0]?.address)
 
     }
 
@@ -295,6 +303,7 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       >
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
+    
             <Select
               className="width-100 border-0"
               onChange={handleChange}

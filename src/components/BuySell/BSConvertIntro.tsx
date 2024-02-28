@@ -77,6 +77,30 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
     }, [tokenType, subtokenType]);
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const coinnameToIndex: Record<string, number> = {
+      'iusd': 3,
+      'inexbrc': 2,
+      'inexplg': 1
+    };
+
+    useEffect(() => {
+        const coinname1 = urlParams.get('coinname1') || '';
+        const coinname2 = urlParams.get('coinname2') || '';
+
+        console.log("coinname1",coinname1)
+        // This effect triggers when filteredtokens changes
+        if (filteredtokens && filteredtokens.length) {
+            // Check if BSvalue.fromToken and BSvalue.toToken are already set
+          
+                handleChange(filteredtokens[coinnameToIndex[coinname1] || 0]?.address || "");
+                console.log("filteredtokens",filteredtokens[coinnameToIndex[coinname1]]);
+                handleChangeToToken(filteredtokens[coinnameToIndex[coinname2] || 0]?.address || "");
+            
+        }
+    }, [filteredtokens]);
+
+
     useEffect(() => {
         // This effect triggers when filteredtokens changes
         if (filteredtokens && filteredtokens.length) {
@@ -87,6 +111,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
             }
         }
     }, [filteredtokens, BSvalue.fromToken, BSvalue.toToken]);
+
 
     // Function to update the user balance
     const updateUserBalance = async (tokenTitle: string, coinNetwork: string = "") => {
@@ -307,6 +332,12 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         }
     };
 
+
+    // const handleChangeFromToken = (value: string) => {
+    //     if (setBSvalue && BSvalue) {
+    //         setBSvalue({ ...BSvalue, fromToken: value });
+    //     }
+    // };
 
     const handleChangeToToken = (value: string) => {
         if (setBSvalue && BSvalue) {
