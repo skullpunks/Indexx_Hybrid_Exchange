@@ -470,7 +470,7 @@ const HeaderNew = () => {
                         </a>
                       </NavDropdown.Item> */}
                       <NavDropdown.Item href={baseCEXURL} className="link-div">
-                        <a href={baseCEXURL} className="link-style">
+                        <a href="https://indexxgifts.com/" className="link-style">
                           Gift Cards
                         </a>
                       </NavDropdown.Item>
