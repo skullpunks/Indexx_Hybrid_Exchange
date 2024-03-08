@@ -198,7 +198,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      Gift Cards
+                       
                       </span>
                     </a>
                     <br />

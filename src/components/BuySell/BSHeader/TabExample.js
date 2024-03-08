@@ -19,6 +19,8 @@ import nectar from '../../../assets/BSheader/nectar black.svg';
 import nectar_white from '../../../assets/BSheader/nectar white 1.svg';
 // import etf from '../../../assets/BSheader/etf logo 3.svg';
 // import etf_white from '../../../assets/BSheader/etf white.svg';
+import Fantasy_Lotto from '../../../assets/BSheader/fantasy.png';
+
 import wallet from '../../../assets/BSheader/funding wallet.png';
 import wallet_white from '../../../assets/BSheader/funding wallet_white.png';
 import wallstreet from '../../../assets/BSheader/wall street_icon.svg';
@@ -45,6 +47,11 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+
+
+  const handleLottoClick = () => {
+    window.open("https://lotto.indexx.ai", '_blank');
+  };
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -352,6 +359,30 @@ const TabExample = ({ selectedTab, handleTabChange, selectedSubTab, handleETFTab
             disableTouchRipple
           />
           : null}
+
+<Tab
+  label="Fantasy Lotto"
+  icon={
+    theme === "dark" ?
+      <img
+        src={Fantasy_Lotto}
+        alt="Home"
+        width={'41px'}
+        style={{ marginBottom: "5px", marginTop:"3px" }}
+      />
+      :
+      <img
+        src={Fantasy_Lotto}
+        alt="Home"
+        width={'41px'}
+        style={{ marginBottom: "5px", marginTop:"3px" }}
+      />
+  }
+  component={Link}
+  onClick={handleLottoClick}
+  className="tab-format"
+  disableTouchRipple
+/>
         <Tab
           label="Funding Wallet"
           icon={
