@@ -1,4 +1,8 @@
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import {
+  CheckCircleFilled,
+  CloseCircleFilled,
+  CopyOutlined,
+} from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -9,11 +13,16 @@ import {
   Typography,
   notification,
 } from 'antd';
+import { getUserDetails } from '../../services/api';
+import down from "../../assets/rewardcenter/whol.png";
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import exgcoin from '../../assets/arts/exgcoin.png';
+import iusd from '../../assets/rewardcenter/iusd.png';
+import { baseCEXURL } from '../../services/api';
+
+
 import {
   decodeJWT,
   getTaskCenterDetails,
@@ -22,13 +31,19 @@ import {
 } from '../../services/api';
 // import Footer from '../Footer/Footer';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import taskTop from '../../assets/rewardcenter/top.png';
+import useCopyToClipboard from '../../utils/useCopyToClipboard';
 
 const { Text } = Typography;
 
 const TaskCenter = () => {
   //const [completedOrders, setCompletedOrders] = useState([]);
+
   const [bugsData, setBugsData] = useState([]);
   const [hasOpenedBug, sethasOpenedBug] = useState<boolean>(false);
+  const [copiedValue, copy] = useCopyToClipboard();
+  const [userData, setUserData] = useState() as any;
+
   const [taskCenterDetails, setTaskCenterDetails] = useState() as any;
   const [isLocked, setIsLocked] = useState(true);
   const [pointsHistory, setPointHistory] = useState() as any;
@@ -60,7 +75,7 @@ const TaskCenter = () => {
       },
     },
     {
-      title: 'Points',
+      title: 'IUSD+',
       dataIndex: 'points',
       key: 'points',
       render: (text: any) => {
@@ -93,7 +108,7 @@ const TaskCenter = () => {
   //   },
   // ];
 
-  const [, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   // const checkUserCompletedOrder = async () => {
   //   const access_token = String(localStorage.getItem("access_token"));
   //   const decoded: any = await decodeJWT(access_token);
@@ -129,25 +144,34 @@ const TaskCenter = () => {
     }
   };
 
+  useEffect(() => {
+    let access_token = String(localStorage.getItem('access_token'));
+    let decoded: any = decodeJWT(access_token);
+
+    setEmail(decoded.email);
+    getUserDetails(decoded.email).then((res) => {
+      if (res.status === 200) {
+        console.log('res.data', res.data);
+        setUserData(res.data);
+      }
+    });
+  }, [email]);
+
   const enableTradetoEarnButton = async () => {
     setLoadings(true);
     const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = await decodeJWT(access_token);
     let res = await enableTradeToEarn(String(decoded.email));
-    
+
     if (res.status === 200) {
       setLoadings(false);
       getTaskCenterDetailsData();
       OpenNotification('success', 'Trade to Earn is enabled');
     } else {
       setLoadings(false);
-      OpenNotification(
-        'error',
-        'Something went wrong. Please contact admin'
-      );
+      OpenNotification('error', 'Something went wrong. Please contact admin');
     }
   };
-
 
   useEffect(() => {
     //checkUserCompletedOrder();
@@ -158,51 +182,39 @@ const TaskCenter = () => {
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
-        <div className="row" style={{  paddingTop: 75 }}>
-          <div className="text-center">
-            <p style={{ fontWeight: 50, fontSize: 70 }}>Task Center</p>
-            <p style={{ fontWeight: 60, fontSize: 32 }}>
-              Earn Upto 100 Points to Unlock Trade To Earn
-            </p>
+        <div className="row">
+        <div className="text-center">
+  <Image src={taskTop} width={250} preview={false}/>
+  <p style={{ fontWeight: 110, fontSize: 50 }}>
+    <b>Reward Center</b>
+  </p>
+  <br/>
+  <br/>
+  <p style={{ fontWeight: 200, fontSize: 32 }}>
+    <div className="padding-lr-1x d-flex align-items-center justify-content-center text-center">
+      <span> Referral Link: {userData?.referralCode}</span>
+      <CopyOutlined
+  className="padding-lr-1x hover_icon"
+  onClick={() => {
+    const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+    copy(referralLink);
+    notification.success({
+      message: 'Referral Link Copied',
+      description: 'Your referral link has been copied to the clipboard.',
+      placement: 'bottom',
+    });
+  }}
+/>
+    </div>
+  </p>
+  <p style={{ fontWeight: 200, fontSize: 17 }}>
+    Invite people using your referral code to earn rewards.
+  </p>
 
-            <br />
+  <br />
 
-            <p style={{ fontSize: 20 }}>
-              Complete your tasks to get{' '}
-              <span style={{ fontSize: 40 }}>10% </span>Trade Reward
-            </p>
 
-            <br />
-            <p style={{ fontSize: 30, textAlign: 'center' }}>
-              <strong>
-                {taskCenterDetails?.totalPoints >= 100
-                  ? 100
-                  : taskCenterDetails?.totalPoints}
-                /100
-              </strong>{' '}
-              <span style={{ fontSize: 10 }}>Points</span>
-              <span
-                style={{ fontSize: 30, textAlign: 'center', paddingLeft: 30 }}
-              >
-                {' '}
-                <strong>{taskCenterDetails?.totalPoints}</strong>
-                <span style={{ fontSize: 10 }}> Total Points</span>
-              </span>
-            </p>
-          </div>
-          <div className="d-flex justify-content-center">
-            <Button
-              disabled={isLocked || taskCenterDetails.tradeToEarnPercentage > 0}
-              danger
-              type="primary"
-              style={{ borderRadius: 5, marginTop: 15, width: 200 }}
-              size={'large'}
-              onClick={enableTradetoEarnButton}
-              loading={loadings}
-            >
-              Locked
-            </Button>
-          </div>
+</div>
           <div className="d-flex justify-content-center">
             <Card
               className="w-55 shadow-sm p-3 mb-5 bg-white rounded "
@@ -210,11 +222,11 @@ const TaskCenter = () => {
             >
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                    Invite 3 users using the indexx Affiliate System.
+                    Invite 5 normal to Sign Up using your refferal code
                   </Text>
                   <Progress
                     style={{ width: 439 }}
@@ -230,12 +242,12 @@ const TaskCenter = () => {
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
                   >
-                    {taskCenterDetails?.inivitedUserPoints}
+                    100
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
-                    Points
+                    IUSD+
                   </Text>
                 </div>
                 <div
@@ -246,16 +258,25 @@ const TaskCenter = () => {
                     paddingLeft: 70,
                   }}
                 >
-                  <a href="https://register.affiliate.indexx.ai/">
+                
                     <Button
                       danger
                       type="primary"
                       style={{ borderRadius: 5, marginTop: 15, width: 150 }}
                       size={'large'}
+                      onClick={() => {
+                        const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                        copy(referralLink);
+                        notification.success({
+                          message: 'Referral Link Copied',
+                          description: 'Your referral link has been copied to the clipboard.',
+                          placement: 'bottom',
+                        });
+                      }}
                     >
-                      Get Affiliates
+                    Copy Invite Link
                     </Button>
-                  </a>
+               
                 </div>
                 <div className="col-2" style={{ paddingLeft: 50 }}>
                   <Button
@@ -271,7 +292,150 @@ const TaskCenter = () => {
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                  Invite 7 normal to Sign Up using your refferal code
+
+                  </Text>
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={
+                      Math.floor(
+                        (taskCenterDetails?.inivitedUsersCount / 7) * 100 * 100
+                      ) / 100
+                    }
+                  />
+                </div>
+                <div className="col-1 d-flex justify-content-center">
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
+                  >
+                  210
+                  </Text>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
+                  >
+                    IUSD+
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
+                    paddingLeft: 70,
+                  }}
+                >
+                
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={'large'}
+                      onClick={() => {
+                        const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                        copy(referralLink);
+                        notification.success({
+                          message: 'Referral Link Copied',
+                          description: 'Your referral link has been copied to the clipboard.',
+                          placement: 'bottom',
+                        });
+                      }}
+                    >
+Copy Invite Link
+                    </Button>
+               
+                </div>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                  >
+                    Complete
+                  </Button>
+                </div>
+              </div>
+              <Divider></Divider>
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={iusd} width={60}></Image>
+                </div>
+                <div className="col-5">
+                  <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                  Invite 10 normal to Sign Up using your refferal code
+
+                  </Text>
+                  <Progress
+                    style={{ width: 439 }}
+                    percent={
+                      Math.floor(
+                        (taskCenterDetails?.inivitedUsersCount / 10) * 100 * 100
+                      ) / 100
+                    }
+                  />
+                </div>
+                <div className="col-1 d-flex justify-content-center">
+                  <Text
+                    className="opacity-75"
+                    style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
+                  >
+                    500
+                  </Text>
+                  <Text
+                    style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
+                  >
+                    IUSD+
+                  </Text>
+                </div>
+                <div
+                  className="col-2"
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
+                    paddingLeft: 70,
+                  }}
+                >
+                  
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={'large'}
+                      onClick={() => {
+                        const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                        copy(referralLink);
+                        notification.success({
+                          message: 'Referral Link Copied',
+                          description: 'Your referral link has been copied to the clipboard.',
+                          placement: 'bottom',
+                        });
+                      }}
+                    >
+Copy Invite Link
+                    </Button>
+                
+                </div>
+                <div className="col-2" style={{ paddingLeft: 50 }}>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                  >
+                    Complete
+                  </Button>
+                </div>
+              </div>
+              <Divider></Divider>
+
+              <div className="row">
+                <div className="col-2 d-flex justify-content-center">
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
@@ -298,7 +462,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
-                    Points
+                    IUSD+
                   </Text>
                 </div>
 
@@ -346,7 +510,7 @@ const TaskCenter = () => {
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
@@ -367,7 +531,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
-                    Points
+                    IUSD+
                   </Text>
                 </div>
                 <div
@@ -405,11 +569,11 @@ const TaskCenter = () => {
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
-                    Take part in Fortune daily.
+                   Buy a ticket in Fantasy Lotto.
                   </Text>
                   <Progress style={{ width: 439 }} />
                 </div>
@@ -423,7 +587,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
-                    Points
+                    IUSD+
                   </Text>
                 </div>
                 <div
@@ -434,7 +598,7 @@ const TaskCenter = () => {
                     paddingLeft: 70,
                   }}
                 >
-                  <a href="/indexx-exchange/fortune-daily">
+                  <a href="https://lotto.indexx.ai">
                     <Button
                       danger
                       type="primary"
@@ -442,7 +606,7 @@ const TaskCenter = () => {
                       size={'large'}
                       disabled={true}
                     >
-                      Fortune daily
+                      Fantasy Lotto
                     </Button>
                   </a>
                 </div>
@@ -459,10 +623,10 @@ const TaskCenter = () => {
                 </div>
               </div>
 
-              <Divider></Divider>
+              {/* <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
@@ -486,7 +650,7 @@ const TaskCenter = () => {
                   >
                     {taskCenterDetails?.KYCPoints}
                   </span>
-                  <span style={{ marginTop: 30 }}>Points</span>
+                  <span style={{ marginTop: 30 }}>IUSD+</span>
                 </div>
                 <div
                   className="col-2"
@@ -511,7 +675,7 @@ const TaskCenter = () => {
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <span style={{ fontSize: 20, fontWeight: 100 }}>
@@ -529,7 +693,7 @@ const TaskCenter = () => {
                   >
                     10
                   </span>
-                  <span style={{ marginTop: 30 }}>Points</span>
+                  <span style={{ marginTop: 30 }}>IUSD+</span>
                 </div>
                 <div
                   className="col-2"
@@ -554,7 +718,7 @@ const TaskCenter = () => {
               <Divider></Divider>
               <div className="row">
                 <div className="col-2 d-flex justify-content-center">
-                  <Image preview={false} src={exgcoin} width={79}></Image>
+                  <Image preview={false} src={iusd} width={60}></Image>
                 </div>
                 <div className="col-5">
                   <Text style={{ fontSize: 20, fontWeight: 100 }}>
@@ -575,7 +739,7 @@ const TaskCenter = () => {
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
                   >
-                    Points
+                    IUSD+
                   </Text>
                 </div>
                 <div
@@ -609,7 +773,7 @@ const TaskCenter = () => {
                     Complete
                   </Button>
                 </div>
-              </div>
+              </div> */}
             </Card>
           </div>
           <div className="row">
@@ -628,8 +792,12 @@ const TaskCenter = () => {
           </div>
         </div>
 
-        <Divider style={{ width: 1430 }}>
-          <b>Points History</b>
+        <div className="d-flex justify-content-center">
+  <Image src={down} preview={false}></Image>
+        </div>
+
+        <Divider style={{ width: 1430 ,marginTop:200}}>
+          <b>IUSD+ History</b>
         </Divider>
 
         <div className="d-flex justify-content-center">

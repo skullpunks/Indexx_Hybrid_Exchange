@@ -235,7 +235,7 @@ const MobileHeader = () => {
         // },
         {
           name: 'Buy Gift Cards',
-          url: baseCEXURL,
+          url: "https://indexxgifts.com/",
         },
         {
           name: 'Buy Greeting Cards',
@@ -282,7 +282,7 @@ const MobileHeader = () => {
         //   name: 'Greeting Cards',
         //   url: `${baseShopURL}/collections/greeting-cards`,
         // },
-        { name: 'Gift Cards', url: baseCEXURL },
+        { name: 'Gift Cards', url: "https://indexxgifts.com/"},
         {
           name: 'Greeting Cards',
           url: baseCEXURL,
@@ -356,7 +356,7 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Gift Cards',
-          url: baseCEXURL
+          url: "https://indexxgifts.com/"
         },
         {
           name: 'How to buy Greeting Cards',

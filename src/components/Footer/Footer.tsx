@@ -194,11 +194,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                   <p className='fw-bold'>Products</p>
                   <p className="footer-text text-left" style={{}}>
                     <a
-                      href={`${baseShopURL}/collections/gift-cards-1`}
+                      href={`https://indexxgifts.com/`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      Gift Cards
+                       
                       </span>
                     </a>
                     <br />
@@ -665,7 +665,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       }}
                     >
                       <a
-                      href={`${baseShopURL}/collections/gift-cards-1`}
+                      href={'https://indexxgifts.com/'}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>

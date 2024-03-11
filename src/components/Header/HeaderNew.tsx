@@ -348,7 +348,7 @@ const HeaderNew = () => {
 
                         </a>
                       </NavDropdown.Item> */}
-                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                      <NavDropdown.Item href="https://indexxgifts.com/" className="action-link-div">
                         <a href={baseCEXURL} className="action-link-style">
                           Buy Gift Cards
 
@@ -469,8 +469,8 @@ const HeaderNew = () => {
                           Greeting Cards
                         </a>
                       </NavDropdown.Item> */}
-                      <NavDropdown.Item href={baseCEXURL} className="link-div">
-                        <a href={baseCEXURL} className="link-style">
+                      <NavDropdown.Item href="https://indexxgifts.com/" className="link-div">
+                        <a href="https://indexxgifts.com/" className="link-style">
                           Gift Cards
                         </a>
                       </NavDropdown.Item>
@@ -537,7 +537,7 @@ const HeaderNew = () => {
                           Shop Greeting Cards
                         </a>
                       </NavDropdown.Item> */}
-                      <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                      <NavDropdown.Item href="https://indexxgifts.com/" className="action-link-div">
                         <a href={baseCEXURL}  className="action-link-style">
                           Shop Gift Cards
                         </a>
@@ -620,7 +620,7 @@ const HeaderNew = () => {
                           How to buy Greeting Cards
                         </a>
                       </NavDropdown.Item> */}
-                       <NavDropdown.Item href={baseCEXURL} className="action-link-div">
+                       <NavDropdown.Item href="https://indexxgifts.com/" className="action-link-div">
                         <a href={baseCEXURL} className="action-link-style">
 
                           How to buy Gift Cards
