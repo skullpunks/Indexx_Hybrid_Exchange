@@ -526,7 +526,7 @@ Copy Invite Link
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    {taskCenterDetails?.reportedBugPoints}
+                   30
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}
@@ -582,7 +582,7 @@ Copy Invite Link
                     className="opacity-75"
                     style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                   >
-                    {taskCenterDetails?.lottoPoints}
+                    10
                   </Text>
                   <Text
                     style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}

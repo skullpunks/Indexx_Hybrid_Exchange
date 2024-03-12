@@ -272,9 +272,9 @@ const HeaderNew = () => {
                           Exchange
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="link-div">
-                        <a href="https://fortune.daily.indexx.ai/" className="link-style">
-                          Fortune Daily
+                      <NavDropdown.Item href="https://lotto.indexx.ai/" className="link-div">
+                        <a href="https://lotto.indexx.ai/" className="link-style">
+                          Fantasy Lotto
                         </a>
                       </NavDropdown.Item>
                       {/* <NavDropdown.Item href={baseShopURL} className="link-div">
@@ -319,8 +319,8 @@ const HeaderNew = () => {
                           Sign In in Exchange
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://fortune.daily.indexx.ai/" className="action-link-div">
-                        <a href="https://fortune.daily.indexx.ai/" className="action-link-style">
+                      <NavDropdown.Item href="https://lotto.indexx.ai/" className="action-link-div">
+                        <a href="https://lotto.indexx.ai/" className="action-link-style">
                           Buy Lottery tickets
 
                         </a>
@@ -397,8 +397,8 @@ const HeaderNew = () => {
                           How to use Exchange
                         </a>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="https://fortune.daily.indexx.ai/how-to-play" className="action-link-div">
-                        <a href="https://fortune.daily.indexx.ai/how-to-play" className="action-link-style">
+                      <NavDropdown.Item href="https://lotto.indexx.ai/how-to-play" className="action-link-div">
+                        <a href="https://lotto.indexx.ai/how-to-play" className="action-link-style">
                           Know how to play the lottery
 
                         </a>
@@ -1083,9 +1083,9 @@ const HeaderNew = () => {
 
                             </Link>
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="/indexx-exchange/task-center" className="link-div">
-                            <Link to="/indexx-exchange/task-center" className="link-style">
-                              Task Center
+                          <NavDropdown.Item href="/indexx-exchange/reward-center" className="link-div">
+                            <Link to="/indexx-exchange/reward-center" className="link-style">
+                              Reward Center
 
                             </Link>
                           </NavDropdown.Item>
@@ -1140,8 +1140,8 @@ const HeaderNew = () => {
 
                             </Link>
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="/indexx-exchange/task-center" className="action-link-div">
-                            <Link to="/indexx-exchange/task-center" className="action-link-style">
+                          <NavDropdown.Item href="/indexx-exchange/reward-center" className="action-link-div">
+                            <Link to="/indexx-exchange/reward-center" className="action-link-style">
                               Complete Tasks
 
 
@@ -1243,11 +1243,11 @@ const HeaderNew = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       as={Link}
-                      to="/indexx-exchange/task-center"
+                      to="/indexx-exchange/reward-center"
                       className="dropdown-item"
                       href="/"
                     >
-                     Task Center
+                     Reward Center
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       as={Link}
