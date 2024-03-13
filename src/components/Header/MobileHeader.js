@@ -235,7 +235,7 @@ const MobileHeader = () => {
         // },
         {
           name: 'Buy Gift Cards',
-          url: "https://indexxgifts.com/",
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'Buy Greeting Cards',
@@ -282,7 +282,7 @@ const MobileHeader = () => {
         //   name: 'Greeting Cards',
         //   url: `${baseShopURL}/collections/greeting-cards`,
         // },
-        { name: 'Gift Cards', url: "https://indexxgifts.com/"},
+        { name: 'Gift Cards', url: 'https://indexxgifts.com/' },
         {
           name: 'Greeting Cards',
           url: baseCEXURL,
@@ -356,11 +356,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Gift Cards',
-          url: "https://indexxgifts.com/"
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'How to buy Greeting Cards',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         { name: 'How to buy NFTs', url: `${baseURL}/indexx-exchange/nfts` },
         // {
@@ -369,11 +369,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Stock Certificates',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'How to buy Stock Token',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'Learn about indexx Tokens',
@@ -508,7 +508,7 @@ const MobileHeader = () => {
           name: 'Order History',
           url: '/indexx-exchange/buy-sell/order-history',
         },
-        { name: 'Task Center', url: '/indexx-exchange/task-center' },
+        { name: 'Reward Center', url: '/indexx-exchange/reward-center' },
         { name: 'Trade to Earn', url: '/indexx-exchange/trade-to-earn' },
         {
           name: 'Staking History',
@@ -525,7 +525,7 @@ const MobileHeader = () => {
       action: [
         { name: 'Sales', url: '/indexx-exchange/dashboard' },
         { name: 'Trade and Earn', url: '/indexx-exchange/trade-to-earn' },
-        { name: 'Complete Tasks', url: '/indexx-exchange/task-center' },
+        { name: 'Reward Center', url: '/indexx-exchange/reward-center' },
         {
           name: 'Recent Transactions',
           url: '/indexx-exchange/buy-sell/transaction-history',
@@ -764,8 +764,7 @@ const MobileHeader = () => {
                           }
                         />
                       </a>
-                    ) :                     
-                    (
+                    ) : (
                       <a
                         href={subItem.url}
                         rel="noopener noreferrer"

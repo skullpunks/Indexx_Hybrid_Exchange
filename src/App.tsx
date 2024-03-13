@@ -424,7 +424,7 @@ function App() {
               element={<TradeToEarn />}
             />
             <Route
-              path="/indexx-exchange/task-center"
+              path="/indexx-exchange/reward-center"
               element={<TaskCenter />}
             />
             <Route path="/indexx-exchange/report-bug" element={<BugReport />} />

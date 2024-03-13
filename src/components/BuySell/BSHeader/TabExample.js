@@ -148,7 +148,7 @@ const TabExample = ({
         {...tabsProps}
         // variant='scrollable'
       >
-        {localStorage.getItem('userlogged') === 'normal' ? (
+        {/* {localStorage.getItem('userlogged') === 'normal' ? (
           <Tab
             label="Exchange"
             icon={
@@ -194,7 +194,7 @@ const TabExample = ({
             className="tab-format"
             disableTouchRipple
           />
-        ) : null}
+        ) : null} */}
 
         <Tab
           label="Tokens"
@@ -271,7 +271,7 @@ const TabExample = ({
             theme={theme}
           />
         )}
-        {location.pathname !== '/indexx-exchange' ? (
+        {/* {location.pathname !== '/indexx-exchange' ? (
           <Tab
             label="Power Packs"
             icon={
@@ -296,9 +296,9 @@ const TabExample = ({
             className="tab-format"
             disableTouchRipple
           />
-        ) : null}
+        ) : null} */}
 
-        {location.pathname !== '/indexx-exchange' ? (
+        {/* {location.pathname !== '/indexx-exchange' ? (
           <Tab
             label="Elite Club"
             icon={
@@ -323,7 +323,7 @@ const TabExample = ({
             className="tab-format"
             disableTouchRipple
           />
-        ) : null}
+        ) : null} */}
 
         {localStorage.getItem('userlogged') === 'normal' ? (
           <Tab

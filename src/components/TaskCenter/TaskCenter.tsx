@@ -264,7 +264,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 50,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <Button
@@ -289,7 +290,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
@@ -340,7 +341,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 70,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <Button
@@ -365,7 +367,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
@@ -416,7 +418,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 70,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <Button
@@ -441,7 +444,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
@@ -495,7 +498,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 70,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <a href="/indexx-exchange/buy-sell">
@@ -518,7 +522,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
@@ -570,7 +574,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 70,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <Link to="/indexx-exchange/report-bug">
@@ -588,7 +593,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
@@ -635,7 +640,8 @@ const TaskCenter = () => {
                 style={{
                   alignContent: 'end',
                   alignItems: 'end',
-                  paddingLeft: 70,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <a href="https://lotto.indexx.ai">
@@ -653,7 +659,7 @@ const TaskCenter = () => {
               <div
                 // className="col-2"
                 className="col-12 col-md-2"
-                style={{ paddingLeft: 50 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <Button
                   danger
