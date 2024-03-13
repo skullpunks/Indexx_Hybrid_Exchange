@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  baseAPIURL = 'http://localhost:5000';
+  // baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -74,7 +74,7 @@ export const signupAPI = async (
   password: string,
   username: string,
   referralCode: string,
-  gcode: string = ""
+  gcode: string = ''
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/register', {
@@ -82,7 +82,7 @@ export const signupAPI = async (
       password,
       username,
       referralCode,
-      gcode
+      gcode,
     });
     return result.data;
   } catch (e: any) {
@@ -172,9 +172,7 @@ export const getHoneyBeeDataByUsername = async (username: string) => {
 
 export const getAllUsersLite = async () => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/getAllUsersLite/`
-    );
+    const result = await API.get(`/api/v1/inex/user/getAllUsersLite/`);
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -183,9 +181,7 @@ export const getAllUsersLite = async () => {
 
 export const getHiveUsersLite = async () => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/getHiveUsersLite/`
-    );
+    const result = await API.get(`/api/v1/inex/user/getHiveUsersLite/`);
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -1004,17 +1000,20 @@ export const createMonthlyINEXOrderNonPaypal = async (
   isHoneyBeeOrder: boolean = false
 ) => {
   try {
-    const result = await API.post('/api/v1/inex/order/createMonthlyINEXsubscriptionnonpaypal', {
-      currencyOut: basecoin,
-      currencyIn: quotecoin,
-      amount: amount,
-      price: price,
-      orderType: 'MonthlyINEXBuy',
-      outAmount: outAmount,
-      email: email ? email : localStorage.getItem('user'),
-      isHoneyBeeOrder: isHoneyBeeOrder,
-      paymentMethodUsed : paymentMethodUsed
-    });
+    const result = await API.post(
+      '/api/v1/inex/order/createMonthlyINEXsubscriptionnonpaypal',
+      {
+        currencyOut: basecoin,
+        currencyIn: quotecoin,
+        amount: amount,
+        price: price,
+        orderType: 'MonthlyINEXBuy',
+        outAmount: outAmount,
+        email: email ? email : localStorage.getItem('user'),
+        isHoneyBeeOrder: isHoneyBeeOrder,
+        paymentMethodUsed: paymentMethodUsed,
+      }
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createOrder)');
@@ -1599,7 +1598,7 @@ export const createCryptoWithdraw = async (
         amount: amount,
         address: address,
         coin: coin,
-        coinNetwork: coinNetwork
+        coinNetwork: coinNetwork,
       }
     );
     return result.data;

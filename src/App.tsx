@@ -1,47 +1,47 @@
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Navigate, Outlet } from 'react-router-dom'
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 // import Header from "./components/Header/Header";
-import Home from "./components/Home/Home";
-import IndexxSwap from "./components/IndexxSwap/IndexxSwap";
-import BuySell from "./components/BuySell/BuySell";
-import Help from "./components/Help/Help";
-import Intro from "./components/Help/Intro";
-import Team from "./components/Help/Team";
-import ContactUs from "./components/Help/ContactUs";
-import TradeToEarn from "./components/TradeToEarn/TradeToEarn";
-import BuySellLogin from "./components/BuySell/BuySellLogin";
-import BSWallet from "./components/BuySell/BSWallet";
+import Home from './components/Home/Home';
+import IndexxSwap from './components/IndexxSwap/IndexxSwap';
+import BuySell from './components/BuySell/BuySell';
+import Help from './components/Help/Help';
+import Intro from './components/Help/Intro';
+import Team from './components/Help/Team';
+import ContactUs from './components/Help/ContactUs';
+import TradeToEarn from './components/TradeToEarn/TradeToEarn';
+import BuySellLogin from './components/BuySell/BuySellLogin';
+import BSWallet from './components/BuySell/BSWallet';
 // import BuySellLoggedVerfication from './components/BuySell/BuySellLoggedVerfication';
-import BuySellLoggedWelcome from "./components/BuySell/BuySellLoggedWelcome";
-import TradeChart from "./components/TradeChart/TradeChart";
-import BugReport from "./components/TaskCenter/BugReport";
-import Markets from "./components/Markets/Markets";
-import IndexBlog from "./components/IndexBlog/IndexBlog";
-import HowItWorks from "./components/HowItWorks/HowItWorks";
-import HowCentralized from "./components/HowItWorks/howCentralized";
-import HowTokens from "./components/HowItWorks/howTokens";
-import HowTradeToEarn from "./components/HowItWorks/howTradeToEarn";
-import TaskCenter from "./components/TaskCenter/TaskCenter";
-import BSWithdrawMain from "./components/BSDepositWithdraw/BSWithdrawMain";
-import BSDepositWithdarwSelect from "./components/BSDepositWithdraw/BSDepositWithdarwSelect";
-import BSWithdrawInfo from "./components/BSDepositWithdraw/BSWithdrawInfo";
-import BSDWAmount from "./components/BSDepositWithdraw/BSDWAmount";
-import BSDWRecorded from "./components/BSDepositWithdraw/BSDWRecorded";
-import BuySellGetStartedLayout from "./components/BuySell/BuySellGetStartedLayout";
-import BSDepositCryproLayout from "./components/BSDeposit/BSDepositCryproLayout";
-import BSTransactionHistoryLayout from "./components/BSTransactionHistory/BSTransactionHistoryLayout";
-import BSDepositFiatLayout from "./components/BSDeposit/BSDepositFiatLayout";
-import BSWithdrawCryptoLayout from "./components/BSDepositWithdraw/BSWithdrawCryptoLayout";
-import IndexxTokens from "./components/IndexxTokens/IndexxTokens";
-import ComingSoon from "./components/ComingSoon/ComingSoon";
-import HeaderNew from "./components/Header/HeaderNew";
-import About from "./components/About/About";
-import Account from "./components/AccountSettings/Account";
+import BuySellLoggedWelcome from './components/BuySell/BuySellLoggedWelcome';
+import TradeChart from './components/TradeChart/TradeChart';
+import BugReport from './components/TaskCenter/BugReport';
+import Markets from './components/Markets/Markets';
+import IndexBlog from './components/IndexBlog/IndexBlog';
+import HowItWorks from './components/HowItWorks/HowItWorks';
+import HowCentralized from './components/HowItWorks/howCentralized';
+import HowTokens from './components/HowItWorks/howTokens';
+import HowTradeToEarn from './components/HowItWorks/howTradeToEarn';
+import TaskCenter from './components/TaskCenter/TaskCenter';
+import BSWithdrawMain from './components/BSDepositWithdraw/BSWithdrawMain';
+import BSDepositWithdarwSelect from './components/BSDepositWithdraw/BSDepositWithdarwSelect';
+import BSWithdrawInfo from './components/BSDepositWithdraw/BSWithdrawInfo';
+import BSDWAmount from './components/BSDepositWithdraw/BSDWAmount';
+import BSDWRecorded from './components/BSDepositWithdraw/BSDWRecorded';
+import BuySellGetStartedLayout from './components/BuySell/BuySellGetStartedLayout';
+import BSDepositCryproLayout from './components/BSDeposit/BSDepositCryproLayout';
+import BSTransactionHistoryLayout from './components/BSTransactionHistory/BSTransactionHistoryLayout';
+import BSDepositFiatLayout from './components/BSDeposit/BSDepositFiatLayout';
+import BSWithdrawCryptoLayout from './components/BSDepositWithdraw/BSWithdrawCryptoLayout';
+import IndexxTokens from './components/IndexxTokens/IndexxTokens';
+import ComingSoon from './components/ComingSoon/ComingSoon';
+import HeaderNew from './components/Header/HeaderNew';
+import About from './components/About/About';
+import Account from './components/AccountSettings/Account';
 // import BSDashhboard from './components/BuySell/BSDashboard';
-import SecurityChange from "./components/AccountSettings/SecurityChange";
+import SecurityChange from './components/AccountSettings/SecurityChange';
 // import Blockpass from './components/Blockpass/Blockpass';
-import BlockpassLink from "./components/Blockpass/BlockpassLink";
+import BlockpassLink from './components/Blockpass/BlockpassLink';
 // import { useEffect, useState } from 'react';
 // import { decodeJWT, getUserDetails } from '../src/services/api';
 
@@ -51,63 +51,63 @@ import BlockpassLink from "./components/Blockpass/BlockpassLink";
 // import BuySellSecureSteps from './components/BuySell/BuySellSecureSteps';
 // import BuySellMobiAuth from './components/BuySell/BuySellMobiAuth';
 // import BuySellmobiVerfication from './components/BuySell/BuySellmobiVerfication';
-import ScrollToTop from "./utils/ScrollToTop";
+import ScrollToTop from './utils/ScrollToTop';
 
 import Notification from './components/Notifications/Notification';
 import AllNotification from './components/Notifications/AllNotification';
 import Activity from './components/Notifications/Activity';
 import SystemMsg from './components/Notifications/SystemMsg';
 import Career from './components/Careers/Career';
-import WelcomePage from "./components/WelcomePage";
-import ImportTokens from "./components/ImportTokens/ImportTokens";
-import BSOrderHistoryLayout from "./components/BSOrderHistory/BSOrderHistoryLayout";
-import BuySellLoginContentHive from "./components/BuySell/BuySellLoginContentHive";
-import RedeemStock from "./components/RedeemStock/RedeemStock";
-import CaptainDash from "./components/Dashboard/Captainbee/CaptainDash";
-import CaptainProfile from "./components/Dashboard/Captainbee/CaptainProfile";
-import MyBees from "./components/Dashboard/Captainbee/MyBees/MyBees";
-import BeeDash from "./components/Dashboard/Captainbee/MyBees/BeeDash";
-import CaptainResource from "./components/Dashboard/Captainbee/CaptainResource/CaptainResource";
-import CaptainResourceManagement from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceManagement";
-import CaptainResourceTechnical from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceTechnical";
-import CaptainResourceLegal from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal";
-import CaptainResourceAccounting from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting";
-import HoneyCombComingSoon from "./components/ComingSoon/HoneyCombComingSoon";
-import BeeProfile from "./components/Dashboard/Honeybee/BeeProfile";
-import MyCaptain from "./components/Dashboard/Honeybee/MyCaptain/MyCaptain";
-import HoneyCombComingSoonBees from "./components/ComingSoon/HoneyCombComingSoonBees";
-import BeeDash2 from "./components/Dashboard/Honeybee/MyBees/BeeDash2";
-import BuySellGetStartedLayoutHoneyBee from "./components/BuySell/BuySellGetStartedLayoutHoneyBee";
-import BuySellLoginHoneyBee from "./components/BuySell/BuySellLoginHoneyBee";
-import PowerPack from "./components/PowerPack/PowerPack";
-import PaymentSuccess from "./components/PowerPack/PaymentSuccess";
-import HoneyComb from "./components/Dashboard/Captainbee/HoneyComb";
-import TeamCaptainDash from "./components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash";
-import LeaderCaptain from "./components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain";
+import WelcomePage from './components/WelcomePage';
+import ImportTokens from './components/ImportTokens/ImportTokens';
+import BSOrderHistoryLayout from './components/BSOrderHistory/BSOrderHistoryLayout';
+import BuySellLoginContentHive from './components/BuySell/BuySellLoginContentHive';
+import RedeemStock from './components/RedeemStock/RedeemStock';
+import CaptainDash from './components/Dashboard/Captainbee/CaptainDash';
+import CaptainProfile from './components/Dashboard/Captainbee/CaptainProfile';
+import MyBees from './components/Dashboard/Captainbee/MyBees/MyBees';
+import BeeDash from './components/Dashboard/Captainbee/MyBees/BeeDash';
+import CaptainResource from './components/Dashboard/Captainbee/CaptainResource/CaptainResource';
+import CaptainResourceManagement from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceManagement';
+import CaptainResourceTechnical from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceTechnical';
+import CaptainResourceLegal from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceLegal';
+import CaptainResourceAccounting from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceAccounting';
+import HoneyCombComingSoon from './components/ComingSoon/HoneyCombComingSoon';
+import BeeProfile from './components/Dashboard/Honeybee/BeeProfile';
+import MyCaptain from './components/Dashboard/Honeybee/MyCaptain/MyCaptain';
+import HoneyCombComingSoonBees from './components/ComingSoon/HoneyCombComingSoonBees';
+import BeeDash2 from './components/Dashboard/Honeybee/MyBees/BeeDash2';
+import BuySellGetStartedLayoutHoneyBee from './components/BuySell/BuySellGetStartedLayoutHoneyBee';
+import BuySellLoginHoneyBee from './components/BuySell/BuySellLoginHoneyBee';
+import PowerPack from './components/PowerPack/PowerPack';
+import PaymentSuccess from './components/PowerPack/PaymentSuccess';
+import HoneyComb from './components/Dashboard/Captainbee/HoneyComb';
+import TeamCaptainDash from './components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash';
+import LeaderCaptain from './components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain';
 
-import LottoHome from "./components/Lottery/LottoHome";
+import LottoHome from './components/Lottery/LottoHome';
 
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { useState, useEffect } from "react";
-import Staking from "./components/Staking/Staking";
-import BSStakingHistoryLayout from "./components/BSStakingHistory/BSStakingHistoryLayout";
-import Bridge from "./components/Bridge/Bridge";
-import CaptainResourceSales from "./components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales";
-import Footer from "./components/Footer/Footer";
-import ComingSoonETF from "./components/ComingSoon/ComingSoonETF";
-import PowerPackHeader from "./components/PowerPack/PowerPackHeader/PowerPackHeader";
-import SubscribeSuccess from "./components/PowerPack/SubscribeSuccess";
-import HorizontalLinearStepper2 from "./components/Send/HorizontalLinearStepper2";
-import BuySellVerifyEmail from "./components/BuySell/BuySellVerifyEmail";
-import EliteClub from "./components/EliteClub/EliteClub";
-import EliteLearnMore from "./components/EliteClub/EliteLearnMore";
-import SecondaryHeader from "./SecondaryHeader";
-import Payment from "./components/Send/Payment";
-import PaymentWire from "./components/Send/PaymentWire";
-import CaptainGreetCard from "./components/Dashboard/Captainbee/CaptainGreetCard";
-import PaymentVenmo from "./components/Send/PaymentVenmo";
+import { useState, useEffect } from 'react';
+import Staking from './components/Staking/Staking';
+import BSStakingHistoryLayout from './components/BSStakingHistory/BSStakingHistoryLayout';
+import Bridge from './components/Bridge/Bridge';
+import CaptainResourceSales from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales';
+import Footer from './components/Footer/Footer';
+import ComingSoonETF from './components/ComingSoon/ComingSoonETF';
+import PowerPackHeader from './components/PowerPack/PowerPackHeader/PowerPackHeader';
+import SubscribeSuccess from './components/PowerPack/SubscribeSuccess';
+import HorizontalLinearStepper2 from './components/Send/HorizontalLinearStepper2';
+import BuySellVerifyEmail from './components/BuySell/BuySellVerifyEmail';
+import EliteClub from './components/EliteClub/EliteClub';
+import EliteLearnMore from './components/EliteClub/EliteLearnMore';
+import SecondaryHeader from './SecondaryHeader';
+import Payment from './components/Send/Payment';
+import PaymentWire from './components/Send/PaymentWire';
+import CaptainGreetCard from './components/Dashboard/Captainbee/CaptainGreetCard';
+import PaymentVenmo from './components/Send/PaymentVenmo';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -142,15 +142,17 @@ function App() {
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
   useEffect(() => {
-    const user = localStorage.getItem("userlogged") !== undefined ? setUserLogged(String(localStorage.getItem("userlogged"))) : setUserLogged('normal');
+    const user =
+      localStorage.getItem('userlogged') !== undefined
+        ? setUserLogged(String(localStorage.getItem('userlogged')))
+        : setUserLogged('normal');
+  }, []);
 
-  }, [])
-  
   useEffect(() => {
-    const handleStorageChange = (event:any) => {
+    const handleStorageChange = (event: any) => {
       // console.log(event);
-      if(setUserLogged !== event.currentTarget.localStorage.userlogged)
-      setUserLogged(event.currentTarget.localStorage.userlogged);
+      if (setUserLogged !== event.currentTarget.localStorage.userlogged)
+        setUserLogged(event.currentTarget.localStorage.userlogged);
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -161,237 +163,332 @@ function App() {
   }, []);
 
   const themeClass = `theme-${userLogged}`;
-  
+
   const PrivateRoutes = () => {
-  const isAuthenticated = localStorage.getItem("access_token") !== undefined && localStorage.getItem("access_token") !== null
-  const isAllowed =  localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false"
+    const isAuthenticated =
+      localStorage.getItem('access_token') !== undefined &&
+      localStorage.getItem('access_token') !== null;
+    const isAllowed =
+      localStorage.getItem('userType') === 'CaptainBee' &&
+      localStorage.getItem('haspp') === 'false';
 
-    if(isAuthenticated && !isAllowed) {
-      return <Outlet/>
+    if (isAuthenticated && !isAllowed) {
+      return <Outlet />;
+    } else if (!isAuthenticated) {
+      return <Navigate to="/indexx-exchange/buy-sell/hive-login" />;
     }
-    else if(!isAuthenticated){
-      return <Navigate to='/indexx-exchange/buy-sell/hive-login'/>
-    }
-    
-    if(isAllowed) {
-      return <Navigate to='/indexx-exchange/power-pack'/>
-    }
-    return <Outlet/>
 
-  }
-  console.log(window.location.pathname, "path");
-  
+    if (isAllowed) {
+      return <Navigate to="/indexx-exchange/power-pack" />;
+    }
+    return <Outlet />;
+  };
+  console.log(window.location.pathname, 'path');
+
   return (
     <ThemeProvider theme={theme}>
-    <div className={themeClass}>
-      <BrowserRouter>
-        {/* <Header /> */}
-        <ScrollToTop />
-        <HeaderNew /> 
-        {/* { (!window.location.pathname.includes("login") && !window.location.pathname.includes("elite-learn") && !window.location.pathname.includes("dashboard") &&
+      <div className={themeClass}>
+        <BrowserRouter>
+          {/* <Header /> */}
+          <ScrollToTop />
+          <HeaderNew />
+          {/* { (!window.location.pathname.includes("login") && !window.location.pathname.includes("elite-learn") && !window.location.pathname.includes("dashboard") &&
           !window.location.pathname.includes("get-started") && !((localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) && window.location.pathname === "/")) ? 
           <PowerPackHeader/>
           :null
         } */}
-        <SecondaryHeader/>
-        <Routes>
-          {(localStorage.getItem("access_token") === undefined || localStorage.getItem("access_token") === null) ?
-            <Route path="/*" element={<BuySellLogin />} />
-            :
-            <Route path="/*" element={<BuySell />} />
-          }
+          <SecondaryHeader />
+          <Routes>
+            {localStorage.getItem('access_token') === undefined ||
+            localStorage.getItem('access_token') === null ? (
+              <Route path="/*" element={<BuySellLogin />} />
+            ) : (
+              <Route path="/*" element={<BuySell />} />
+            )}
 
-        <Route element={<PrivateRoutes/>}>
-          <Route path="/indexx-exchange/send" element={<HorizontalLinearStepper2 />} />
+            <Route element={<PrivateRoutes />}>
+              <Route
+                path="/indexx-exchange/send"
+                element={<HorizontalLinearStepper2 />}
+              />
 
-          <Route path="/indexx-exchange/dashboard" element={<CaptainDash />} />
-          <Route path="/indexx-exchange/dashboard/capt-profile" element={<CaptainProfile />} />
-          <Route path="/indexx-exchange/dashboard/capt-mybees" element={<MyBees />} />
-          <Route path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType" element={<BeeDash />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-mkt" element={<CaptainResource />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-acc" element={<CaptainResourceAccounting />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-leg" element={<CaptainResourceLegal />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-tech" element={<CaptainResourceTechnical />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-mgmt" element={<CaptainResourceManagement />} />
-          <Route path="/indexx-exchange/dashboard/capt-resource-sales" element={<CaptainResourceSales />} />
-          <Route path="/indexx-exchange/dashboard/honeycomb" element={<HoneyComb />} />
-          <Route path="/indexx-exchange/dashboard/capt-mycaptains" element={<TeamCaptainDash />} />
-          <Route path="/indexx-exchange/dashboard/capt-leader" element={<LeaderCaptain />} />
-          <Route path="/indexx-exchange/dashboard/capt-greet" element={<CaptainGreetCard />} />
+              <Route
+                path="/indexx-exchange/dashboard"
+                element={<CaptainDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-profile"
+                element={<CaptainProfile />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mybees"
+                element={<MyBees />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType"
+                element={<BeeDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-mkt"
+                element={<CaptainResource />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-acc"
+                element={<CaptainResourceAccounting />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-leg"
+                element={<CaptainResourceLegal />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-tech"
+                element={<CaptainResourceTechnical />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-mgmt"
+                element={<CaptainResourceManagement />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-sales"
+                element={<CaptainResourceSales />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/honeycomb"
+                element={<HoneyComb />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mycaptains"
+                element={<TeamCaptainDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-leader"
+                element={<LeaderCaptain />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-greet"
+                element={<CaptainGreetCard />}
+              />
 
+              {/* Routes for Honey Bee DashBoard   */}
+              <Route
+                path="/indexx-exchange/bee-dashboard"
+                element={<BeeDash2 />}
+              />
+              <Route
+                path="/indexx-exchange/bee-dashboard/bee-profile"
+                element={<BeeProfile />}
+              />
+              <Route
+                path="/indexx-exchange/bee-dashboard/bee-captain"
+                element={<MyCaptain />}
+              />
+              <Route
+                path="/indexx-exchange/bee-dashboard/honeycomb"
+                element={<HoneyCombComingSoonBees />}
+              />
+            </Route>
 
-          {/* Routes for Honey Bee DashBoard   */}
-          <Route path="/indexx-exchange/bee-dashboard" element={<BeeDash2 />} />
-          <Route path="/indexx-exchange/bee-dashboard/bee-profile" element={<BeeProfile />} />
-          <Route path="/indexx-exchange/bee-dashboard/bee-captain" element={<MyCaptain />} />
-          <Route path="/indexx-exchange/bee-dashboard/honeycomb" element={<HoneyCombComingSoonBees />} />
-        </Route>
+            <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
+            <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
+            <Route
+              path="/indexx-exchange/elite-learn/:id"
+              element={<EliteLearnMore />}
+            />
 
-          <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
-          <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
-          <Route path="/indexx-exchange/elite-learn/:id" element={<EliteLearnMore />} />
+            <Route
+              path="/indexx-exchange/payment-zelle"
+              element={<Payment />}
+            />
+            <Route
+              path="/indexx-exchange/payment-venmo"
+              element={<PaymentVenmo />}
+            />
+            <Route
+              path="/indexx-exchange/payment-wire"
+              element={<PaymentWire />}
+            />
 
-          <Route path="/indexx-exchange/payment-zelle" element={<Payment />} />
-          <Route path="/indexx-exchange/payment-venmo" element={<PaymentVenmo />} />
-          <Route path="/indexx-exchange/payment-wire" element={<PaymentWire />} />
+            <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
+            <Route
+              path="/indexx-exchange/powerpack-payment-success"
+              element={<PaymentSuccess />}
+            />
+            <Route
+              path="/indexx-exchange/subscribe-success"
+              element={<SubscribeSuccess />}
+            />
 
-          <Route path="/indexx-exchange/power-pack" element={<PowerPack />} />
-          <Route path="/indexx-exchange/powerpack-payment-success" element={<PaymentSuccess />} />
-          <Route path="/indexx-exchange/subscribe-success" element={<SubscribeSuccess />} />
+            <Route
+              path="/indexx-exchange/buy-sell/staking"
+              element={<Staking />}
+            />
+            <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
-          <Route path="/indexx-exchange/buy-sell/staking" element={<Staking />} />
-          <Route path="/indexx-exchange/bridge" element={<Bridge />} />
-
-          {/* {
+            {/* {
                         // userData?.role === "Standard"
                             ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
                             : <Route path="/external-link" element={<External />} />
                     } */}
 
-          <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
-          <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
-          <Route path="/indexx-exchange/coming-soon-etf" element={<ComingSoonETF />} />
-          <Route path="/indexx-exchange/coming-soon" element={<ComingSoon />} />
-          <Route path="/indexx-exchange/import-indexx-tokens" element={<ImportTokens />} />
-          <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
-          <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
-          <Route path="/indexx-exchange/buy-sell/for-honeybee/:id/*" element={<BuySell />} />
-          <Route
-            path="/indexx-exchange/buy-sell/login/*"
-            element={<BuySellLogin />}
-          />
-          {/* <Route
+            <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
+            <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
+            <Route
+              path="/indexx-exchange/coming-soon-etf"
+              element={<ComingSoonETF />}
+            />
+            <Route
+              path="/indexx-exchange/coming-soon"
+              element={<ComingSoon />}
+            />
+            <Route
+              path="/indexx-exchange/import-indexx-tokens"
+              element={<ImportTokens />}
+            />
+            <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
+            <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
+            <Route
+              path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
+              element={<BuySell />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/login/*"
+              element={<BuySellLogin />}
+            />
+            {/* <Route
             path="/indexx-exchange/buy-sell/all-login/*"
             element={<BuySellAllLogin />}
           /> */}
-          <Route
-            path="/indexx-exchange/buy-sell/login-honeybee/*"
-            element={<BuySellLoginHoneyBee />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/hive-login"
-            element={<BuySellLoginContentHive />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/wallet"
-            element={<BSWallet />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/withdraw-crypto/*"
-            element={<BSWithdrawCryptoLayout />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/withdraw"
-            element={<BSWithdrawMain />}
-          >
-            <Route index element={<BSDepositWithdarwSelect />} />
-            <Route path="info" element={<BSWithdrawInfo />} />
-            <Route path="amount" element={<BSDWAmount />} />
-            <Route path="recorded" element={<BSDWRecorded />} />
-          </Route>
-          <Route
-            path="/indexx-exchange/buy-sell/deposit-crypto/*"
-            element={<BSDepositCryproLayout />}
-          />
-          <Route
-            path="/indexx-exchange/redeem-stock"
-            element={<RedeemStock />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/deposit-fiat/*"
-            element={<BSDepositFiatLayout />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/transaction-history/*"
-            element={<BSTransactionHistoryLayout />}
-          /> 
-          <Route
-            path="/indexx-exchange/buy-sell/staking-history/*"
-            element={<BSStakingHistoryLayout />}
-          /> 
-          <Route
-            path="/indexx-exchange/buy-sell/order-history/*"
-            element={<BSOrderHistoryLayout />}
-          /> 
-          <Route
-            path="/indexx-exchange/buy-sell/get-started/*"
-            element={<BuySellGetStartedLayout />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/get-started-honeybee/*"
-            element={<BuySellGetStartedLayoutHoneyBee />}
-          />
-          <Route
-            path="/indexx-exchange/buy-sell/welcome"
-            element={<BuySellLoggedWelcome />}
-          />
-          <Route
-            path="/indexx-exchange/trade-to-earn"
-            element={<TradeToEarn />}
-          />
-           <Route
-            path="/indexx-exchange/task-center"
-            element={<TaskCenter />}
-          />
-          <Route
-            path="/indexx-exchange/report-bug"
-            element={<BugReport />}
-          />
-          <Route
-            path="/indexx-exchange/how-it-works"
-            element={<HowItWorks />}
-          />
-          <Route
-            path="/indexx-exchange/how-it-works/centralized"
-            element={<HowCentralized />}
-          />
-          <Route
-            path="/indexx-exchange/how-it-works/tradetoearn"
-            element={<HowTradeToEarn />}
-          />
-          <Route path="/indexx-exchange/how-it-works/tokens" element={<HowTokens />} />
-          <Route path="/indexx-exchange/charts" element={<Home />} />
-          <Route path="/indexx-exchange/charts" element={<Home />} />
-          {localStorage.getItem("user") ? (
-            <Route path="/indexx-exchange/markets" element={<Markets />} />
-          ) : (
-            <Route path="/indexx-exchange/markets" element={<Markets />} />
-          )}
-          <Route path="/indexx-exchange/trade" element={<TradeChart />} />
-          <Route path="/indexx-exchange/about" element={<About />} />
-          <Route path="/indexx-exchange/help" element={<Help />}>
-            <Route index element={<Intro />} />
-            <Route path="team" element={<Team />} />
-            <Route path="contact" element={<ContactUs />} />
-          </Route>
-          <Route
-            path="/indexx-exchange/notification"
-            element={<Notification />}
-          >
-            <Route index element={<AllNotification />} />
+            <Route
+              path="/indexx-exchange/buy-sell/login-honeybee/*"
+              element={<BuySellLoginHoneyBee />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/hive-login"
+              element={<BuySellLoginContentHive />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/wallet"
+              element={<BSWallet />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/withdraw-crypto/*"
+              element={<BSWithdrawCryptoLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/withdraw"
+              element={<BSWithdrawMain />}
+            >
+              <Route index element={<BSDepositWithdarwSelect />} />
+              <Route path="info" element={<BSWithdrawInfo />} />
+              <Route path="amount" element={<BSDWAmount />} />
+              <Route path="recorded" element={<BSDWRecorded />} />
+            </Route>
+            <Route
+              path="/indexx-exchange/buy-sell/deposit-crypto/*"
+              element={<BSDepositCryproLayout />}
+            />
+            <Route
+              path="/indexx-exchange/redeem-stock"
+              element={<RedeemStock />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/deposit-fiat/*"
+              element={<BSDepositFiatLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/transaction-history/*"
+              element={<BSTransactionHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/staking-history/*"
+              element={<BSStakingHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/order-history/*"
+              element={<BSOrderHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/get-started/*"
+              element={<BuySellGetStartedLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/get-started-honeybee/*"
+              element={<BuySellGetStartedLayoutHoneyBee />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/welcome"
+              element={<BuySellLoggedWelcome />}
+            />
+            <Route
+              path="/indexx-exchange/trade-to-earn"
+              element={<TradeToEarn />}
+            />
+            <Route
+              path="/indexx-exchange/task-center"
+              element={<TaskCenter />}
+            />
+            <Route path="/indexx-exchange/report-bug" element={<BugReport />} />
+            <Route
+              path="/indexx-exchange/how-it-works"
+              element={<HowItWorks />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/centralized"
+              element={<HowCentralized />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/tradetoearn"
+              element={<HowTradeToEarn />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/tokens"
+              element={<HowTokens />}
+            />
+            <Route path="/indexx-exchange/charts" element={<Home />} />
+            <Route path="/indexx-exchange/charts" element={<Home />} />
+            {localStorage.getItem('user') ? (
+              <Route path="/indexx-exchange/markets" element={<Markets />} />
+            ) : (
+              <Route path="/indexx-exchange/markets" element={<Markets />} />
+            )}
+            <Route path="/indexx-exchange/trade" element={<TradeChart />} />
+            <Route path="/indexx-exchange/about" element={<About />} />
+            <Route path="/indexx-exchange/help" element={<Help />}>
+              <Route index element={<Intro />} />
+              <Route path="team" element={<Team />} />
+              <Route path="contact" element={<ContactUs />} />
+            </Route>
+            <Route
+              path="/indexx-exchange/notification"
+              element={<Notification />}
+            >
+              <Route index element={<AllNotification />} />
 
-            <Route path="Activities" element={<Activity />} />
-            <Route path="system" element={<SystemMsg />} />
-          </Route>
-          <Route path="/indexx-exchange/careers" element={<Career />} />
-          <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
-          <Route path="/indexx-exchange/welcome" element={<WelcomePage />} />
-          <Route path="/indexx-exchange/account" element={<Account />} />
-          <Route path="/indexx-exchange/account/email-auth" element={<BuySellVerifyEmail />} />
-          <Route
-            path="/indexx-exchange/change-password"
-            element={<SecurityChange />}
-          />
-        </Routes>
-      </BrowserRouter>
-      <Footer/>
-    </div>
+              <Route path="Activities" element={<Activity />} />
+              <Route path="system" element={<SystemMsg />} />
+            </Route>
+            <Route path="/indexx-exchange/careers" element={<Career />} />
+            <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
+            <Route path="/indexx-exchange/welcome" element={<WelcomePage />} />
+            <Route path="/indexx-exchange/account" element={<Account />} />
+            <Route
+              path="/indexx-exchange/account/email-auth"
+              element={<BuySellVerifyEmail />}
+            />
+            <Route
+              path="/indexx-exchange/change-password"
+              element={<SecurityChange />}
+            />
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 }
 
 // function External() {
-//     
+//
 //     window.location.href = 'http://localhost:3002/';
 //     return null;
 // }
