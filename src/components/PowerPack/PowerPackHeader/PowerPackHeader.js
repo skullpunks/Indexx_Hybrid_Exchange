@@ -60,7 +60,8 @@ const PowerPackHeader = () => {
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
-  const isTablet = useMediaQuery(themes.breakpoints.down('lg'));
+  // const isTablet = useMediaQuery(themes.breakpoints.down('lg'));
+  const isTablet = useMediaQuery('(min-width:768px)');
 
   const [staticsData, setStaticsData] = useState();
   const [haspowerpack, setHaspowerpack] = useState(false);
@@ -113,6 +114,9 @@ const PowerPackHeader = () => {
       <div className="container power-page">
         {/* <div className={isMobile ? 'scrollable-head' : "row row-cols-1 row-cols-md-4 g-4 up-logos justify-content-center"}> */}
         <div
+          style={{
+            display: 'flex',
+          }}
           className={
             isMobile
               ? 'scrollable-head'

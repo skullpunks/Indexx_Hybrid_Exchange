@@ -181,6 +181,7 @@ const TaskCenter = () => {
     getTaskCenterDetailsData();
   }, []);
   const isMobile = useMediaQuery('(max-width:320px)');
+  const isTablet = useMediaQuery('(max-width:768px)');
   return (
     <>
       <div className="scan-container trade-to-earn flex-direction-column d-flex justify-content-center">
@@ -221,18 +222,22 @@ const TaskCenter = () => {
           <div
             style={{
               marginTop: 20,
+              marginBottom: 20,
               display: 'flex',
               overflowX: 'auto',
               flexDirection: isMobile ? 'row' : 'column',
             }}
           >
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
-              {/* <div className="col-2 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-2 d-flex justify-content-center">
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row w-55 shadow-sm p-3 bg-white rounded"
+            >
+              <div className="col-12 sm-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
               </div>
-              {/* <div className="col-5"> */}
-              <div className="col-12 col-md-5">
+              <div className="col-12 sm-12 col-md-5">
                 <Text style={{ fontSize: 20, fontWeight: 100 }}>
                   Invite 5 normal to Sign Up using your refferal code
                 </Text>
@@ -247,7 +252,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 sm-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
@@ -259,52 +264,63 @@ const TaskCenter = () => {
                 </Text>
               </div>
               <div
-                // className="col-2"
-                className="col-12 col-md-2"
+                className="button_group col-12 sm-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                  size={'large'}
-                  onClick={() => {
-                    const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
-                    copy(referralLink);
-                    notification.success({
-                      message: 'Referral Link Copied',
-                      description:
-                        'Your referral link has been copied to the clipboard.',
-                      placement: 'bottom',
-                    });
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
                   }}
                 >
-                  Copy Invite Link
-                </Button>
-              </div>
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                >
-                  Complete
-                </Button>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    size={'large'}
+                    onClick={() => {
+                      const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                      copy(referralLink);
+                      notification.success({
+                        message: 'Referral Link Copied',
+                        description:
+                          'Your referral link has been copied to the clipboard.',
+                        placement: 'bottom',
+                      });
+                    }}
+                  >
+                    Copy Invite Link
+                  </Button>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                  >
+                    Complete
+                  </Button>
+                </div>
               </div>
             </div>
-            <Divider style={{ minWidth: '20%' }} />
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
-              {/* <div className="col-2 d-flex justify-content-center"> */}
+            <Divider
+              style={{
+                minWidth: isMobile ? '20%' : 0,
+                margin: 0,
+              }}
+            />
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row  shadow-sm p-3 bg-white rounded"
+            >
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
               </div>
@@ -324,7 +340,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
@@ -336,51 +352,63 @@ const TaskCenter = () => {
                 </Text>
               </div>
               <div
-                //   className="col-2"
-                className="col-12 col-md-2"
+                className="button_group col-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                  size={'large'}
-                  onClick={() => {
-                    const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
-                    copy(referralLink);
-                    notification.success({
-                      message: 'Referral Link Copied',
-                      description:
-                        'Your referral link has been copied to the clipboard.',
-                      placement: 'bottom',
-                    });
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
                   }}
                 >
-                  Copy Invite Link
-                </Button>
-              </div>
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                >
-                  Complete
-                </Button>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    size={'large'}
+                    onClick={() => {
+                      const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                      copy(referralLink);
+                      notification.success({
+                        message: 'Referral Link Copied',
+                        description:
+                          'Your referral link has been copied to the clipboard.',
+                        placement: 'bottom',
+                      });
+                    }}
+                  >
+                    Copy Invite Link
+                  </Button>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                  >
+                    Complete
+                  </Button>
+                </div>
               </div>
             </div>
-            <Divider style={{ minWidth: '20%' }} />
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
+            <Divider
+              style={{
+                minWidth: isMobile ? '20%' : 0,
+                margin: 0,
+              }}
+            />
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row w-55 shadow-sm p-3 bg-white rounded"
+            >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
@@ -401,7 +429,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
@@ -413,51 +441,63 @@ const TaskCenter = () => {
                 </Text>
               </div>
               <div
-                //   className="col-2"
-                className="col-12 col-md-2"
+                className="button_group col-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, marginTop: 15, width: 150 }}
-                  size={'large'}
-                  onClick={() => {
-                    const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
-                    copy(referralLink);
-                    notification.success({
-                      message: 'Referral Link Copied',
-                      description:
-                        'Your referral link has been copied to the clipboard.',
-                      placement: 'bottom',
-                    });
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
                   }}
                 >
-                  Copy Invite Link
-                </Button>
-              </div>
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                >
-                  Complete
-                </Button>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    size={'large'}
+                    onClick={() => {
+                      const referralLink = `${baseCEXURL}/indexx-exchange/buy-sell/get-started?referralCode=${userData?.referralCode}`;
+                      copy(referralLink);
+                      notification.success({
+                        message: 'Referral Link Copied',
+                        description:
+                          'Your referral link has been copied to the clipboard.',
+                        placement: 'bottom',
+                      });
+                    }}
+                  >
+                    Copy Invite Link
+                  </Button>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
+                  <Button
+                    danger
+                    type="primary"
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
+                    size={'large'}
+                  >
+                    Complete
+                  </Button>
+                </div>
               </div>
             </div>
-            <Divider style={{ minWidth: '20%' }} />
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
+            <Divider
+              style={{
+                minWidth: isMobile ? '20%' : 0,
+                margin: 0,
+              }}
+            />
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row w-55 shadow-sm p-3 bg-white rounded"
+            >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
@@ -480,7 +520,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
@@ -493,20 +533,43 @@ const TaskCenter = () => {
               </div>
 
               <div
-                //   className="col-2 "
-                className="col-12 col-md-2"
+                className="button_group col-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
+                  // paddingLeft: isMobile ? 0 : isTablet ? 50 : 30,
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <a href="/indexx-exchange/buy-sell">
+                {' '}
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
+                  }}
+                >
+                  <a href="/indexx-exchange/buy-sell">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={'large'}
+                      disabled={
+                        taskCenterDetails?.isTransactionCompletedInExchange
+                          ? true
+                          : false
+                      }
+                    >
+                      Buy Tokens
+                    </Button>
+                  </a>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={'large'}
                     disabled={
                       taskCenterDetails?.isTransactionCompletedInExchange
@@ -514,33 +577,23 @@ const TaskCenter = () => {
                         : false
                     }
                   >
-                    Buy Tokens
+                    Complete
                   </Button>
-                </a>
-              </div>
-
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                  disabled={
-                    taskCenterDetails?.isTransactionCompletedInExchange
-                      ? true
-                      : false
-                  }
-                >
-                  Complete
-                </Button>
+                </div>
               </div>
             </div>
-            <Divider style={{ minWidth: '20%' }} />
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
+            <Divider
+              style={{
+                minWidth: isMobile ? '20%' : 0,
+                margin: 0,
+              }}
+            />
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row w-55 shadow-sm p-3 bg-white rounded"
+            >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
@@ -557,7 +610,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
@@ -569,45 +622,57 @@ const TaskCenter = () => {
                 </Text>
               </div>
               <div
-                //   className="col-2"
-                className="col-12 col-md-2"
+                className="button_group col-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Link to="/indexx-exchange/report-bug">
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
+                  }}
+                >
+                  <Link to="/indexx-exchange/report-bug">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={'large'}
+                      disabled={hasOpenedBug ? true : false}
+                    >
+                      Report a bug
+                    </Button>
+                  </Link>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={'large'}
                     disabled={hasOpenedBug ? true : false}
                   >
-                    Report a bug
+                    Complete
                   </Button>
-                </Link>
-              </div>
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                  disabled={hasOpenedBug ? true : false}
-                >
-                  Complete
-                </Button>
+                </div>
               </div>
             </div>
-            <Divider style={{ minWidth: '20%' }} />
-            <div className="row w-55 shadow-sm p-3 mb-5 bg-white rounded">
+            <Divider
+              style={{
+                minWidth: isMobile ? '20%' : 0,
+                margin: 0,
+              }}
+            />
+            <div
+              style={{
+                margin: 0,
+              }}
+              className="row w-55 shadow-sm p-3 bg-white rounded"
+            >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
@@ -623,7 +688,7 @@ const TaskCenter = () => {
                 />
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
-              <div className="col-12 col-md-1 d-flex justify-content-center">
+              <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Text
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
@@ -635,41 +700,43 @@ const TaskCenter = () => {
                 </Text>
               </div>
               <div
-                //   className="col-2"
-                className="col-12 col-md-2"
+                className="button_group col-12 col-md-2"
                 style={{
-                  alignContent: 'end',
-                  alignItems: 'end',
                   display: 'flex',
+                  flexDirection: isMobile || isTablet ? 'column' : 'row',
                   justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <a href="https://lotto.indexx.ai">
+                <div
+                  style={{
+                    alignContent: 'end',
+                    alignItems: 'end',
+                  }}
+                >
+                  <a href="https://lotto.indexx.ai">
+                    <Button
+                      danger
+                      type="primary"
+                      style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                      size={'large'}
+                      disabled={true}
+                    >
+                      Fantasy Lotto
+                    </Button>
+                  </a>
+                </div>
+                <div style={{ paddingLeft: isMobile || isTablet ? 0 : 10 }}>
                   <Button
                     danger
                     type="primary"
-                    style={{ borderRadius: 5, marginTop: 15, width: 150 }}
+                    style={{ borderRadius: 5, width: 150, marginTop: 15 }}
                     size={'large'}
                     disabled={true}
                   >
-                    Fantasy Lotto
+                    Coming Soon
                   </Button>
-                </a>
-              </div>
-              <div
-                // className="col-2"
-                className="col-12 col-md-2"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <Button
-                  danger
-                  type="primary"
-                  style={{ borderRadius: 5, width: 150, marginTop: 15 }}
-                  size={'large'}
-                  disabled={true}
-                >
-                  Coming Soon
-                </Button>
+                </div>
               </div>
             </div>
           </div>

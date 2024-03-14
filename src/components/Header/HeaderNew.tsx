@@ -274,9 +274,8 @@ const HeaderNew = () => {
                 className="d-flex logo__holder"
                 style={{
                   marginLeft: `${
-                    localStorage.getItem('userlogged') === 'normal'
-                      ? ''
-                      : '-50px'
+                    localStorage.getItem('userlogged') === 'normal' ? '' : '0px'
+                    // : '-50px'
                   }`,
                 }}
               >
