@@ -7,7 +7,11 @@ import { BSContext, BSContextType } from '../../utils/SwapContext';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import lockedimage from '../../assets/arts/locked.png';
 import { Button, Modal, Image } from 'antd';
-import { baseDEXURL, geolocationData, getHoneyBeeDataByUsername } from '../../services/api';
+import {
+  baseDEXURL,
+  geolocationData,
+  getHoneyBeeDataByUsername,
+} from '../../services/api';
 import { useState, useEffect } from 'react';
 import './BuySellIntro.css';
 
@@ -23,17 +27,19 @@ const filteredArray = (items: any, keyName: any, key: any) => {
   });
 };
 
-
-
-const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType }) => {
+const BuySellIntro: React.FC<Props> = ({
+  setScreenName,
+  tokenType,
+  subtokenType,
+}) => {
   const { id } = useParams();
   const [ip, setIP] = useState('');
   const [country, setCountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
-  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
-  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
   const handleTransferOk = () => {
     localStorage.setItem('userIp', ip);
     setIsTransferModalVisible(false);
@@ -48,14 +54,12 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
   };
 
   useEffect(() => {
-    
-
     if (id) {
-      setHoneyBeeId(String(id))
+      setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
-        
-        setHoneyBeeEmail(data.data.userFullData?.email)
+
+        setHoneyBeeEmail(data.data.userFullData?.email);
       });
     }
     geolocationData().then((res: any) => {
@@ -73,23 +77,41 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
       label: 'Buy',
       key: '1',
       value: 'buy',
-      children: <BuyContent setScreenName={setScreenName} tokenType={tokenType} subtokenType={subtokenType}/>,
+      children: (
+        <BuyContent
+          setScreenName={setScreenName}
+          tokenType={tokenType}
+          subtokenType={subtokenType}
+        />
+      ),
     }, // remember to pass the key prop
     {
       label: 'Sell',
       key: '2',
       value: 'sell',
-      children: <BSSellIntro setScreenName={setScreenName} tokenType={tokenType} subtokenType={subtokenType}/>,
+      children: (
+        <BSSellIntro
+          setScreenName={setScreenName}
+          tokenType={tokenType}
+          subtokenType={subtokenType}
+        />
+      ),
     },
     {
       label: 'Convert',
       key: '3',
       value: 'convert',
-      children: <BSConvertIntro setScreenName={setScreenName} tokenType={tokenType} subtokenType={subtokenType}/>,
+      children: (
+        <BSConvertIntro
+          setScreenName={setScreenName}
+          tokenType={tokenType}
+          subtokenType={subtokenType}
+        />
+      ),
     },
   ];
   const callback = function (key: any) {
-    // 
+    //
     if (key === '2' && (country === 'United States' || countryCode === 'US')) {
       setIsTransferModalVisible(true);
     } else {
@@ -106,11 +128,13 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
         amount: 0,
       });
     }
-    
-    if (honeyBeeId === "undefined" || honeyBeeId === "")
+
+    if (honeyBeeId === 'undefined' || honeyBeeId === '')
       navigate(`/indexx-exchange/buy-sell?type=${filteredFromArray[0].value}`);
     else
-      navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=${filteredFromArray[0].value}`);
+      navigate(
+        `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=${filteredFromArray[0].value}`
+      );
   };
 
   let activeKey = '1';
@@ -122,19 +146,21 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
   }
 
   return (
-    <div className="bs_container card" style={{ borderColor: 'var(--border-color)' }}>
+    <div
+      className="bs_container card"
+      style={{ borderColor: 'var(--border-color)' }}
+    >
       {userId ? (
         <div>
           <Modal
-
-            maskStyle={{ backdropFilter: "blur(2px)" }}
+            maskStyle={{ backdropFilter: 'blur(2px)' }}
             centered={true}
             open={false}
             onOk={handleTransferOk}
             onCancel={handleTransferCancel}
             width={670}
             maskClosable={false}
-            className='custom-modal'
+            className="custom-modal"
             footer={[
               <Button
                 danger
@@ -155,7 +181,10 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
                 Cancel
               </Button>,
             ]}
-            bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
+            bodyStyle={{
+              background: 'var(--body_background)',
+              color: 'var(--body_color)',
+            }}
           >
             <div className="align-center text-center">
               <Image preview={false} src={lockedimage}></Image>
@@ -185,7 +214,11 @@ const BuySellIntro: React.FC<Props> = ({ setScreenName, tokenType, subtokenType 
           <div className="bs_container_header">
             <h1>Buy Crypto</h1>
           </div>
-          <BuyContent setScreenName={setScreenName} tokenType={tokenType} subtokenType={subtokenType}/>
+          <BuyContent
+            setScreenName={setScreenName}
+            tokenType={tokenType}
+            subtokenType={subtokenType}
+          />
         </>
       )}
     </div>

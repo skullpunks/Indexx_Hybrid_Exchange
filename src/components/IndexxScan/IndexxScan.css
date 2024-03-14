@@ -4,13 +4,12 @@
   --bs-btn-active-bg: var(--primary-color);
 }
 
-.btn-danger{
-    border-color:var(--primary-color)
-    ;
+.btn-danger {
+  border-color: var(--primary-color);
 }
 
-.btn-danger:hover{
-    border-color:var(--secondary-color) !important
+.btn-danger:hover {
+  border-color: var(--secondary-color) !important
     ;
 }
 .scan-container {
@@ -162,7 +161,12 @@
 .ant-modal-close {
   width: auto;
 }
-
+@media (max-width: 1400px) {
+  .scan-container {
+    flex-direction: column;
+    align-items: center !important;
+  }
+}
 @media (max-width: 767px) {
   .section-usp {
     padding-top: 20px;

@@ -113,6 +113,17 @@ import { baseWSURL } from '../../services/api';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 // import { BSProvider } from '../../utils/SwapContext';
+import in500Light from '../../assets/exchange_coins_images/in500_white.png';
+import in500Dark from '../../assets/exchange_coins_images/in500_Black.png';
+
+import inexExchangeLight from '../../assets/exchange_coins_images/inex_white.png';
+import inexExchangeDark from '../../assets/exchange_coins_images/INEX_Black.png';
+
+import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
+import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
+
+import inxcLight from '../../assets/exchange_coins_images/inxc_white.png';
+import inxcDark from '../../assets/exchange_coins_images/inxc_black.png';
 
 interface Props {
   setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -210,6 +221,35 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   const [screenName, setScreenName] = useState('');
   const [hasEmail, setHasEmail] = useState(false);
   const { BSvalue } = useContext(BSContext) as BSContextType;
+
+  const [graphImage, setGraphImage] = useState('');
+  const [graphImageSrc, setGraphImageSrc] = useState<any>();
+  const [isGraphImage, setIsGraphImage] = useState(true);
+
+  useEffect(() => {
+    if (BSvalue && BSvalue.fromGraph) {
+      if (BSvalue.fromGraph === 'IndexxCrypto') {
+        setIsGraphImage(true);
+        setGraphImage('inxc');
+      } else if (BSvalue.fromGraph === 'Indexx500Graph') {
+        setIsGraphImage(true);
+        setGraphImage('in500');
+      } else if (
+        BSvalue.fromGraph === 'IndexxExchangePolygon' ||
+        BSvalue.fromGraph === 'IndexxExchange'
+      ) {
+        setIsGraphImage(true);
+        setGraphImage('inexExchange');
+      } else if (BSvalue.fromGraph === 'IndexxUSDPGraph') {
+        setIsGraphImage(true);
+        setGraphImage('iusd');
+      } else {
+        setIsGraphImage(false);
+        setGraphImage('');
+      }
+    }
+  }, [BSvalue]);
+
   let ChartCoin: any = Indexx500Graph;
   let MarketCoin: any = Indexx500Market;
   if (BSvalue && BSvalue.fromGraph && graphs) {
@@ -230,6 +270,36 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
+
+  useEffect(() => {
+    if (graphImage) {
+      if (graphImage === 'inxc') {
+        if (theme === 'dark') {
+          setGraphImageSrc(inxcDark);
+        } else {
+          setGraphImageSrc(inxcLight);
+        }
+      } else if (graphImage === 'in500') {
+        if (theme === 'dark') {
+          setGraphImageSrc(in500Dark);
+        } else {
+          setGraphImageSrc(in500Light);
+        }
+      } else if (graphImage === 'inexExchange') {
+        if (theme === 'dark') {
+          setGraphImageSrc(inexExchangeDark);
+        } else {
+          setGraphImageSrc(inexExchangeLight);
+        }
+      } else if (graphImage === 'iusd') {
+        if (theme === 'dark') {
+          setGraphImageSrc(iusdDark);
+        } else {
+          setGraphImageSrc(iusdLight);
+        }
+      }
+    }
+  }, [graphImage, theme]);
   useEffect(() => {
     const handleStorageChange = (event: any) => {
       console.log(event);
@@ -264,12 +334,9 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   };
 
   const [params] = useSearchParams();
-  console.log(String(params.get('tab')));
-  console.log(String(params.get('toksymbol')));
 
   useEffect(() => {
     const tabname = String(params.get('tab'));
-    console.log('main eff trig');
 
     if (tabname === 'sttoken') {
       setSelectedTab(2);
@@ -492,7 +559,24 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         className="scan-container flex-align-stretch bs_main with-graph"
         style={{ marginTop: -140 }}
       >
-        {toggleChart && <ChartCoin />}
+        <div
+          style={{
+            maxWidth: '900px',
+            flex: 1,
+            minHeight: '450px',
+            background: theme === 'dark' ? 'black' : 'white',
+            border: '1px solid lightgrey',
+          }}
+        >
+          {isGraphImage ? (
+            <img src={graphImageSrc} style={{ width: '100%' }} />
+          ) : (
+            toggleChart && <ChartCoin />
+          )}
+        </div>
+
+        {/* */}
+
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
         {/* {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />} */}
