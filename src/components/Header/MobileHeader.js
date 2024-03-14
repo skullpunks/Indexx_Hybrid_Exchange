@@ -235,7 +235,7 @@ const MobileHeader = () => {
         // },
         {
           name: 'Buy Gift Cards',
-          url: "https://indexxgifts.com/",
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'Buy Greeting Cards',
@@ -282,7 +282,7 @@ const MobileHeader = () => {
         //   name: 'Greeting Cards',
         //   url: `${baseShopURL}/collections/greeting-cards`,
         // },
-        { name: 'Gift Cards', url: "https://indexxgifts.com/"},
+        { name: 'Gift Cards', url: 'https://indexxgifts.com/' },
         {
           name: 'Greeting Cards',
           url: baseCEXURL,
@@ -356,11 +356,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Gift Cards',
-          url: "https://indexxgifts.com/"
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'How to buy Greeting Cards',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         { name: 'How to buy NFTs', url: `${baseURL}/indexx-exchange/nfts` },
         // {
@@ -369,11 +369,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Stock Certificates',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'How to buy Stock Token',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'Learn about indexx Tokens',
@@ -562,7 +562,8 @@ const MobileHeader = () => {
               className="d-flex logo__holder"
               style={{
                 marginLeft: `${
-                  localStorage.getItem('userlogged') === 'normal' ? '' : '-50px'
+                  localStorage.getItem('userlogged') === 'normal' ? '' : '0px'
+                  // localStorage.getItem('userlogged') === 'normal' ? '' : '-50px'
                 }`,
               }}
             >
@@ -764,8 +765,7 @@ const MobileHeader = () => {
                           }
                         />
                       </a>
-                    ) :                     
-                    (
+                    ) : (
                       <a
                         href={subItem.url}
                         rel="noopener noreferrer"
