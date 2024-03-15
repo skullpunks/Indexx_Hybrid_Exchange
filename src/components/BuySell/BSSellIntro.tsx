@@ -495,12 +495,7 @@ const BSSellIntro: React.FC<Props> = ({
         className="bs_token cursor-pointer py-3"
         style={{ alignItems: 'center' }}
       >
-        <span
-          style={{ marginLeft: '20px', fontWeight: 'bold', fontSize: '16px' }}
-        >
-          {' '}
-          Sell With
-        </span>
+        
         <Select
           className="width-100 border-0"
           onChange={handleChange}
@@ -526,6 +521,7 @@ const BSSellIntro: React.FC<Props> = ({
                   }
                 >
                   {tokens.map((token: any) => (
+                    
                     <Option
                       key={token.address}
                       value={token.address}
@@ -533,7 +529,16 @@ const BSSellIntro: React.FC<Props> = ({
                       data-address={token.address}
                       style={{ paddingLeft: '15px', paddingRight: 0 }}
                     >
+
+
+                      
                       <div className="d-flex bs_token_num select-drop">
+                      <span
+          style={{ marginRight: '71px',marginBottom:'-18px', fontWeight: 'bold', fontSize: '16px' }}
+        >
+          {' '}
+          Sell 
+        </span>
                         <img
                           src={
                             require(`../../assets/token-icons/${token.image}.png`)
@@ -544,7 +549,7 @@ const BSSellIntro: React.FC<Props> = ({
                             ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
                               token.image.includes(str)
                             )
-                              ? '52'
+                              ? '55'
                               : '40'
                           }
                         />
@@ -570,17 +575,18 @@ const BSSellIntro: React.FC<Props> = ({
         className="bs_token cursor-pointer py-4"
         style={{ alignItems: 'center' }}
       >
-        <span
-          style={{ marginLeft: '20px', fontWeight: 'bold', fontSize: '16px' }}
-        >
-          {' '}
-          Sell
-        </span>
+        
         <div className="bs_token_left d-flex justify-between">
           <div
             className="bs_token_num d-flex flex-align-center pe-3"
             style={{ paddingLeft: '12px' }}
           >
+            <span
+          style={{ marginRight: '20px', fontWeight: 'bold', fontSize: '16px' }}
+        >
+          {' '}
+          Deposit to
+        </span>
             <img
               src={bsDollar}
               alt="Index icon"
