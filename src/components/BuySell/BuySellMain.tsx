@@ -8,13 +8,13 @@ import './BuySell.css';
 import { useContext, useEffect, useState } from 'react';
 import BuySellCreate from './BuySellCreate';
 import BuySellIntro from './BuySellIntro';
-import logo from "../../assets/arts/exchange logo_green 5.svg";
-import hivelogo from "../../assets/BSheader/hive exchange.png";
-import etf from "../../assets/BSheader/ETF_DM.png";
-import etf_light from "../../assets/BSheader/ETF_LM.png";
-import token from "../../assets/BSheader/token.svg";
-import stock_token from "../../assets/BSheader/stock tiken.png";
-import wallstreet from "../../assets/arts/wall street icon 3 1.svg";
+import logo from '../../assets/arts/exchange logo_green 5.svg';
+import hivelogo from '../../assets/BSheader/hive exchange.png';
+import etf from '../../assets/BSheader/ETF_DM.png';
+import etf_light from '../../assets/BSheader/ETF_LM.png';
+import token from '../../assets/BSheader/token.svg';
+import stock_token from '../../assets/BSheader/stock tiken.png';
+import wallstreet from '../../assets/arts/wall street icon 3 1.svg';
 // import BuySellSelect from './BuySellSelect';
 import BSConfirmConvert from './BSConfirmConvert';
 import BSConvertInProgress from './BSConvertInProgress';
@@ -70,8 +70,8 @@ import CryptoCapETF from '../MarketAbout/CryptoCapETF';
 import AlphaCryptoETF from '../MarketAbout/AlphaCryptoETF';
 import IndexxFocusETF from '../MarketAbout/IndexxFocusETF';
 import TokenBlendETF from '../MarketAbout/TokenBlendETF';
-import SolanaMarket from "../MarketAbout/SolanaMarket";
-import TronMarket from "../MarketAbout/TronMarket";
+import SolanaMarket from '../MarketAbout/SolanaMarket';
+import TronMarket from '../MarketAbout/TronMarket';
 import ChainLinkMarket from '../MarketAbout/ChainLinkMarket';
 import DaiMarket from '../MarketAbout/DaiMarket';
 import PolygonMarket from '../MarketAbout/PolygonMarket';
@@ -111,8 +111,19 @@ import IndexxCRYC10ETFGraph from '../Graphs/IndexxCRYC10ETFGraph';
 import TabExample from './BSHeader/TabExample';
 import { baseWSURL } from '../../services/api';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 // import { BSProvider } from '../../utils/SwapContext';
+import in500Light from '../../assets/exchange_coins_images/in500_white.png';
+import in500Dark from '../../assets/exchange_coins_images/in500_Black.png';
+
+import inexExchangeLight from '../../assets/exchange_coins_images/inex_white.png';
+import inexExchangeDark from '../../assets/exchange_coins_images/INEX_Black.png';
+
+import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
+import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
+
+import inxcLight from '../../assets/exchange_coins_images/inxc_white.png';
+import inxcDark from '../../assets/exchange_coins_images/inxc_black.png';
 
 interface Props {
   setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -210,6 +221,35 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   const [screenName, setScreenName] = useState('');
   const [hasEmail, setHasEmail] = useState(false);
   const { BSvalue } = useContext(BSContext) as BSContextType;
+
+  const [graphImage, setGraphImage] = useState('');
+  const [graphImageSrc, setGraphImageSrc] = useState<any>();
+  const [isGraphImage, setIsGraphImage] = useState(true);
+
+  useEffect(() => {
+    if (BSvalue && BSvalue.fromGraph) {
+      if (BSvalue.fromGraph === 'IndexxCrypto') {
+        setIsGraphImage(true);
+        setGraphImage('inxc');
+      } else if (BSvalue.fromGraph === 'Indexx500Graph') {
+        setIsGraphImage(true);
+        setGraphImage('in500');
+      } else if (
+        BSvalue.fromGraph === 'IndexxExchangePolygon' ||
+        BSvalue.fromGraph === 'IndexxExchange'
+      ) {
+        setIsGraphImage(true);
+        setGraphImage('inexExchange');
+      } else if (BSvalue.fromGraph === 'IndexxUSDPGraph') {
+        setIsGraphImage(true);
+        setGraphImage('iusd');
+      } else {
+        setIsGraphImage(false);
+        setGraphImage('');
+      }
+    }
+  }, [BSvalue]);
+
   let ChartCoin: any = Indexx500Graph;
   let MarketCoin: any = Indexx500Market;
   if (BSvalue && BSvalue.fromGraph && graphs) {
@@ -217,7 +257,6 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     MarketCoin = markets[BSvalue.fromGraph];
   }
 
-  
   const themes = useTheme();
   const isMobile = useMediaQuery('(max-width:768px)');
 
@@ -226,17 +265,47 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
     if (userId !== undefined && userId !== null) {
       setHasEmail(true);
     }
-  }, [hasEmail])
+  }, [hasEmail]);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "light"
+    localStorage.getItem('selectedTheme') || 'light'
   );
+
+  useEffect(() => {
+    if (graphImage) {
+      if (graphImage === 'inxc') {
+        if (theme === 'dark') {
+          setGraphImageSrc(inxcDark);
+        } else {
+          setGraphImageSrc(inxcLight);
+        }
+      } else if (graphImage === 'in500') {
+        if (theme === 'dark') {
+          setGraphImageSrc(in500Dark);
+        } else {
+          setGraphImageSrc(in500Light);
+        }
+      } else if (graphImage === 'inexExchange') {
+        if (theme === 'dark') {
+          setGraphImageSrc(inexExchangeDark);
+        } else {
+          setGraphImageSrc(inexExchangeLight);
+        }
+      } else if (graphImage === 'iusd') {
+        if (theme === 'dark') {
+          setGraphImageSrc(iusdDark);
+        } else {
+          setGraphImageSrc(iusdLight);
+        }
+      }
+    }
+  }, [graphImage, theme]);
   useEffect(() => {
     const handleStorageChange = (event: any) => {
       console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
-      if (window.location.pathname.includes("for-honeybee")) {
-        setTheme("light")
+      if (window.location.pathname.includes('for-honeybee')) {
+        setTheme('light');
       }
     };
 
@@ -265,112 +334,249 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   };
 
   const [params] = useSearchParams();
-    console.log(String(params.get("tab")));
-    console.log(String(params.get("toksymbol")));
 
   useEffect(() => {
-    const tabname = String(params.get("tab"));
-    console.log("main eff trig");
-    
-    if(tabname === 'sttoken') 
-    {
+    const tabname = String(params.get('tab'));
+
+    if (tabname === 'sttoken') {
       setSelectedTab(2);
       setSelectedSubTab(0);
-    }
-    else if(tabname === 'etf') 
-    {
+    } else if (tabname === 'etf') {
       setSelectedTab(2);
       setSelectedSubTab(1);
-    }
-    else{
+    } else {
       setSelectedTab(0);
       setSelectedSubTab(0);
     }
-  }, [])
-    
+  }, []);
 
   return (
     <div className="swap_container">
-      <TabExample selectedTab={selectedTab} handleTabChange={handleTabChange} selectedSubTab={selectedSubTab} handleETFTabChange={handleETFTabChange} />
+      <TabExample
+        selectedTab={selectedTab}
+        handleTabChange={handleTabChange}
+        selectedSubTab={selectedSubTab}
+        handleETFTabChange={handleETFTabChange}
+      />
       <span style={{ textAlign: 'center' }}>
-        {localStorage.getItem("userlogged") === 'normal' ?
-          <p style={{ marginTop: `${ isMobile ? "180px" : "220px"}`, fontSize: `${ isMobile ? "20px" : "40px"}` }}>
-            <img src={logo} alt="logo" style={{ marginRight: `${ isMobile ? "10px" : "20px"}`, width: `${ isMobile ? "40px" : "64px"}` }} />
+        {localStorage.getItem('userlogged') === 'normal' ? (
+          <p
+            style={{
+              marginTop: `${isMobile ? '180px' : '220px'}`,
+              fontSize: `${isMobile ? '20px' : '40px'}`,
+            }}
+          >
+            <img
+              src={logo}
+              alt="logo"
+              style={{
+                marginRight: `${isMobile ? '10px' : '20px'}`,
+                width: `${isMobile ? '40px' : '64px'}`,
+              }}
+            />
             Indexx Exchange
             {selectedTab === 1 && (
               <>
-                {" "} -
-                <img src={token} alt="logo" style={{ marginLeft: "10px", marginTop: "-10px", width: `${ isMobile ? "40px" : "64px"}` }} /> Tokens
+                {' '}
+                -
+                <img
+                  src={token}
+                  alt="logo"
+                  style={{
+                    marginLeft: '10px',
+                    marginTop: '-10px',
+                    width: `${isMobile ? '40px' : '64px'}`,
+                  }}
+                />{' '}
+                Tokens
               </>
             )}
-
             {selectedTab === 2 && (
               <>
                 {selectedSubTab === 0 && (
                   <>
-                    {" "} -
+                    {' '}
+                    -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
+                      <img
+                        src={wallstreet}
+                        alt="logo"
+                        style={{
+                          marginLeft: '10px',
+                          width: `${isMobile ? '80px' : '114px'}`,
+                        }}
+                        className="walls"
+                      />
                     </a>
-                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width:`${ isMobile ? "45px" : "64px"}` }} /> Stock Tokens
+                    <img
+                      src={stock_token}
+                      alt="logo"
+                      style={{
+                        marginLeft: '-1px',
+                        marginRight: '10px',
+                        width: `${isMobile ? '45px' : '64px'}`,
+                      }}
+                    />{' '}
+                    Stock Tokens
                   </>
                 )}
 
                 {selectedSubTab === 1 && (
                   <>
-                    {" "} -
+                    {' '}
+                    -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
+                      <img
+                        src={wallstreet}
+                        alt="logo"
+                        style={{
+                          marginLeft: '10px',
+                          width: `${isMobile ? '80px' : '114px'}`,
+                        }}
+                        className="walls"
+                      />
                     </a>
-                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "0px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} />
+                    <img
+                      src={theme === 'dark' ? etf : etf_light}
+                      alt="logo"
+                      style={{
+                        marginLeft: '0px',
+                        marginRight: '10px',
+                        width: `${isMobile ? '45px' : '64px'}`,
+                      }}
+                    />
                   </>
                 )}
               </>
             )}
-
           </p>
-          :
-          <p style={{ marginTop: `${(window.location.pathname.includes("for-honeybee") || (localStorage.getItem("userType") === "CaptainBee" && localStorage.getItem("haspp") === "false")) === true ? `${ isMobile ? "250px" : "300px"}` :  `${ isMobile ? "180px" : "280px"}`}`, fontSize: `${ isMobile ? "20px" : "40px"}` }}>
-            <img src={hivelogo} alt="logo" style={{ marginRight: `${ isMobile ? "10px" : "20px"}`, width: `${ isMobile ? "40px" : "64px"}` }} />
+        ) : (
+          <p
+            style={{
+              marginTop: `${
+                (window.location.pathname.includes('for-honeybee') ||
+                  (localStorage.getItem('userType') === 'CaptainBee' &&
+                    localStorage.getItem('haspp') === 'false')) === true
+                  ? `${isMobile ? '250px' : '300px'}`
+                  : `${isMobile ? '180px' : '280px'}`
+              }`,
+              fontSize: `${isMobile ? '20px' : '40px'}`,
+            }}
+          >
+            <img
+              src={hivelogo}
+              alt="logo"
+              style={{
+                marginRight: `${isMobile ? '10px' : '20px'}`,
+                width: `${isMobile ? '40px' : '64px'}`,
+              }}
+            />
             Hive Exchange
             {selectedTab === 1 && (
               <>
-                {" "} -
-                <img src={token} alt="logo" style={{ marginLeft: "10px", marginTop: "-10px", width:`${ isMobile ? "40px" : "64px"}` }} /> Tokens
+                {' '}
+                -
+                <img
+                  src={token}
+                  alt="logo"
+                  style={{
+                    marginLeft: '10px',
+                    marginTop: '-10px',
+                    width: `${isMobile ? '40px' : '64px'}`,
+                  }}
+                />{' '}
+                Tokens
               </>
             )}
-
             {selectedTab === 2 && (
               <>
                 {selectedSubTab === 0 && (
                   <>
-                    {" "} -
+                    {' '}
+                    -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}`  }} className='walls' />
+                      <img
+                        src={wallstreet}
+                        alt="logo"
+                        style={{
+                          marginLeft: '10px',
+                          width: `${isMobile ? '80px' : '114px'}`,
+                        }}
+                        className="walls"
+                      />
                     </a>
-                    <img src={stock_token} alt="logo" style={{ marginLeft: "-1px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} /> Stock Tokens
+                    <img
+                      src={stock_token}
+                      alt="logo"
+                      style={{
+                        marginLeft: '-1px',
+                        marginRight: '10px',
+                        width: `${isMobile ? '45px' : '64px'}`,
+                      }}
+                    />{' '}
+                    Stock Tokens
                   </>
                 )}
 
                 {selectedSubTab === 1 && (
                   <>
-                    {" "} -
+                    {' '}
+                    -
                     <a href={baseWSURL}>
-                      <img src={wallstreet} alt="logo" style={{ marginLeft: "10px", width: `${ isMobile ? "80px" : "114px"}` }} className='walls' />
+                      <img
+                        src={wallstreet}
+                        alt="logo"
+                        style={{
+                          marginLeft: '10px',
+                          width: `${isMobile ? '80px' : '114px'}`,
+                        }}
+                        className="walls"
+                      />
                     </a>
-                    <img src={theme === "dark" ? etf : etf_light} alt="logo" style={{ marginLeft: "0px", marginRight: "10px", width: `${ isMobile ? "45px" : "64px"}` }} />
+                    <img
+                      src={theme === 'dark' ? etf : etf_light}
+                      alt="logo"
+                      style={{
+                        marginLeft: '0px',
+                        marginRight: '10px',
+                        width: `${isMobile ? '45px' : '64px'}`,
+                      }}
+                    />
                   </>
                 )}
               </>
             )}
           </p>
-        }
-        <p style={{ fontSize: 15, marginTop: "10px" }}>{hasEmail ? 'Get started to easily trade and earn crypto and stocks' : 'Sign up to easily trade and earn crypto and stocks'}</p>
+        )}
+        <p style={{ fontSize: 15, marginTop: '10px' }}>
+          {hasEmail
+            ? 'Get started to easily trade and earn crypto and stocks'
+            : 'Sign up to easily trade and earn crypto and stocks'}
+        </p>
       </span>
 
+      <div
+        className="scan-container flex-align-stretch bs_main with-graph"
+        style={{ marginTop: -140 }}
+      >
+        <div
+          style={{
+            maxWidth: '900px',
+            flex: 1,
+            minHeight: '450px',
+            background: theme === 'dark' ? 'black' : 'white',
+            border: '1px solid lightgrey',
+          }}
+        >
+          {isGraphImage ? (
+            <img src={graphImageSrc} style={{ width: '100%' }} />
+          ) : (
+            toggleChart && <ChartCoin />
+          )}
+        </div>
 
-      <div className="scan-container flex-align-stretch bs_main with-graph" style={{ marginTop: -140 }}>
-        {toggleChart && <ChartCoin />}
+        {/* */}
+
         {/* {screenName === "" && <BuySellIntro setScreenName={setScreenName} />} */}
         {/* {screenName === "select" && <BuySellSelect setScreenName={setScreenName} />} */}
         {/* {screenName === "confirmPurchase" && <BSConfirmPurchase setScreenName={setScreenName} />} */}
@@ -385,7 +591,13 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         <Routes>
           <Route
             path=""
-            element={<BuySellIntro setScreenName={setScreenName} tokenType={selectedTab} subtokenType={selectedSubTab} />}
+            element={
+              <BuySellIntro
+                setScreenName={setScreenName}
+                tokenType={selectedTab}
+                subtokenType={selectedSubTab}
+              />
+            }
           />
           <Route
             path="confirm-purchase"
@@ -567,8 +779,8 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <MarketCoin />
 
       {screenName === '' ||
-        screenName === 'select' ||
-        screenName === 'create' ? (
+      screenName === 'select' ||
+      screenName === 'create' ? (
         <></>
       ) : (
         <></>
