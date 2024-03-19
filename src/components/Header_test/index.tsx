@@ -3,23 +3,235 @@ import greetingCard from '../../assets/header-icons/sec_header_greeting.svg';
 import logo from '../../assets/header-icons/indexx_logo.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
-import DarkMode from '../DarkMode/DarkMode';
+
 import { Theme } from '../../utils/themeContext';
 import Fantasy_Lotto from '../../assets/BSheader/fantasy.png';
 import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 import { auth_header_data } from './data';
 import header_data from './data';
-const HeaderTest: React.FC = () => {
+// import { Button } from 'react-bootstrap';
+// import { BellOutlined } from "@ant-design/icons";
+
+// import { Dropdown } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import './Header.css';
+import loaderGif from '../../assets/arts/loaderIcon.gif';
+import hive from '../../assets/BSheader/hive logo HD2 1.svg';
+
+
+import frame from '../../assets/hive-dashboard/frame.svg';
+import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
+
+import dummy from '../../assets/hive-dashboard/dummy.jpeg';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material';
+
+import {
+  baseURL,
+  baseCEXURL,
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+  baseDEXURL,
+  baseHiveURL,
+  baseMktplaceURL,
+  baseShopURL,
+  baseWSURL,
+  baseWalletURL,
+  baseXnftURL,
+  baseAcademyUrl,
+  decodeJWT,
+} from '../../services/api';
+import DarkMode from '../DarkMode/DarkMode';
+
+
+const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
+  e.preventDefault();
+  const userType =
+    localStorage.getItem('userType') !== undefined
+      ? String(localStorage.getItem('userType'))
+      : undefined;
+  localStorage.removeItem('user'); //remove one item
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('refresh_token');
+  localStorage.clear(); //clear all localstorage
+  console.log(userType);
+  debugger;
+  if (userType === 'CaptainBee') {
+    window.location.href = '/indexx-exchange/buy-sell/hive-login';
+  } else if (userType === 'HoneyBee') {
+    window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+  } else {
+    if (window.location.pathname.includes('trade-to-earn'))
+      window.location.reload();
+    else window.location.href = '/indexx-exchange/buy-sell/login';
+  }
+};
+
+const Links = [
+  { label: 'Exchange', value: 'buy-sell', url: '/indexx-exchange/buy-sell' },
+  {
+    label: 'Trade To Earn',
+    value: 'trade-to-earn',
+    url: '/indexx-exchange/trade-to-earn',
+  },
+  { label: 'Markets', value: 'markets', url: '/indexx-exchange/markets' },
+  { label: 'Tokens', value: 'tokens', url: '/indexx-exchange/tokens' },
+  { label: 'Blog', value: 'blog', url: '/indexx-exchange/blog' },
+  { label: 'Vlog', value: 'vlog', url: '/indexx-exchange/vlog' },
+  { label: 'About', value: 'about', url: '/indexx-exchange/about' },
+  { label: 'Careers', value: 'careers', url: '/indexx-exchange/careers' },
+  {
+    label: 'Notifications',
+    value: 'notification',
+    url: '/indexx-exchange/notification',
+  },
+  {
+    label: 'How it Works',
+    value: 'how-it-works',
+    url: '/indexx-exchange/how-it-works',
+  },
+  { label: '', value: '/', url: '/' },
+];
+
+const HeaderTest =()=> {
+
+
+  
   const themeData = useContext(Theme);
   const [theme, setTheme] = useState<string>(themeData?.theme ?? 'dark');
-  const isAuthenticated: boolean = true;
+  const isAuthenticated = localStorage.getItem('access_token') !== null;
+
   //   const [activeIndex, setactiveIndex] = useState(0);
   //   const [iconicHeaderData, setIconicHeaderData] = useState(
   //     header_data
   //       .find((el) => el.active === true)
   //       ?.dropDownContent.find((elem) => elem.mainList === true)?.links
-  //   );
+  //   );let title = <>{String(localStorage.getItem('user')).toLowerCase()}</>;
+  const [, setIsInsideApp] = useState(false);
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const [staticsData, setStaticsData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
+  const [isCaptain, setisCaptain] = useState(false);
+  const [userProfile, setUserProfile] = useState();
+  const [url, setUrl] = useState('');
+  const [haspowerpack, setHaspowerpack] = useState(false);
+
+  console.log(haspowerpack, 'has pack');
+
+  let pageName = searchParams.get('page');
+  // alert(pageName)
+  useEffect(() => {
+    if (location) {
+      setIsInsideApp(location.pathname.includes('/indexx-exchange/'));
+    }
+  }, [location]);
+  const showText: any = Links.filter((link) =>
+    window.location.pathname.includes(link.value)
+  ).map((obj) => obj.label);
+  // const showUrl: any = Links.filter((link) =>
+  //   window.location.pathname.includes(link.value)
+  // ).map((obj) => obj.url);
+  useEffect(() => {
+    showText[0] !== ''
+      ? (document.title = `${showText[0]} | indexx.ai`)
+      : pageName
+      ? (document.title = `${pageName} | indexx.ai`)
+      : (document.title = 'indexx.ai');
+  }, [showText, pageName]);
+  useEffect(() => {
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
+
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
+
+    if (userType === 'CaptainBee') {
+      setisCaptain(true);
+      if (username) {
+        getCaptainBeeStatics(String(username)).then((data) => {
+          setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
+          setStaticsData(data.data);
+          if (
+            data?.data?.powerPackData !== undefined &&
+            data?.data?.powerPackData !== null &&
+            data?.data?.powerPackData !== ''
+          ) {
+            setHaspowerpack(true);
+          }
+        });
+      }
+    } else {
+      setisCaptain(false);
+
+      getHoneyUserDetails(String(user)).then((data) => {
+        setHoneybeeCreateDate(data.data.accountCreationDate);
+        setHoneyBeeData(data?.data?._doc);
+        setUserProfile(data?.data?._doc?.profilePic);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    let access_token = String(localStorage.getItem('access_token'));
+    console.log('access', access_token);
+    if (access_token) {
+      try {
+        let decoded = decodeJWT(access_token);
+        const userEmail = decoded.email;
+        const userKey = String(localStorage.getItem('userkey'));
+        const userType = localStorage.getItem('userType');
+        const userpassword = localStorage.getItem('userpass');
+        console.log('userEmail', userEmail);
+        console.log('userKey', userKey);
+        console.log('userpassword', userpassword);
+        const walletUrl = `${baseWalletURL}/login/sign-in/?useremail=${userEmail}&userkey=${userpassword}&usertype=${userType}`;
+        setUrl(walletUrl);
+      } catch (error) {
+        console.error('Error decoding access_token:', error);
+        // Handle the error, e.g., show an error message to the user or perform appropriate actions.
+      }
+    }
+  }, []);
+
+  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+
+  const userEmail = localStorage.getItem('user') || '';
+
+  useEffect(() => {
+    const user =
+      localStorage.getItem('userlogged') !== undefined
+        ? setUserLogged(String(localStorage.getItem('userlogged')))
+        : setUserLogged('normal');
+    const handleStorageChange = (event: any) => {
+      // console.log(event);
+      if (setUserLogged !== event.currentTarget.localStorage.userlogged)
+        setUserLogged(event.currentTarget.localStorage.userlogged);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   useEffect(() => {
     if (themeData?.theme) {
@@ -129,7 +341,7 @@ const HeaderTest: React.FC = () => {
                           element.active ? 'link_active' : ''
                         }`}
                       >
-                        {element.mainTextDesktop}
+                     {isAuthenticated ? userEmail : element.mainTextDesktop}
                       </a>
                       <input type="checkbox" id={element.mainTextDesktop} />
                       <label
