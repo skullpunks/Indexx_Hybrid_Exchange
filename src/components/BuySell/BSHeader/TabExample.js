@@ -129,7 +129,7 @@ const TabExample = ({
   return (
     <div
       style={{
-        top: `${isMobile ? '56px' : '90px'}`,
+        top: `${isMobile ? '56px' : '70px'}`,
       }}
       className={
         window.location.pathname.includes('for-honeybee') ||
@@ -168,7 +168,7 @@ const TabExample = ({
                 />
               )
             }
-            className="tab-format"
+            className="tab-format "
             disableTouchRipple
           />
         ) : location.pathname !== '/indexx-exchange' ? (

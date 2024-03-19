@@ -113,17 +113,17 @@ import { baseWSURL } from '../../services/api';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 // import { BSProvider } from '../../utils/SwapContext';
-import in500Light from '../../assets/exchange_coins_images/in500_white.png';
-import in500Dark from '../../assets/exchange_coins_images/in500_Black.png';
+// import in500Light from '../../assets/exchange_coins_images/in500_white.png';
+// import in500Dark from '../../assets/exchange_coins_images/in500_Black.png';
 
 import inexExchangeLight from '../../assets/exchange_coins_images/inex_white.png';
 import inexExchangeDark from '../../assets/exchange_coins_images/INEX_Black.png';
 
-import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
-import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
+// import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
+// import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
 
-import inxcLight from '../../assets/exchange_coins_images/inxc_white.png';
-import inxcDark from '../../assets/exchange_coins_images/inxc_black.png';
+// import inxcLight from '../../assets/exchange_coins_images/inxc_white.png';
+// import inxcDark from '../../assets/exchange_coins_images/inxc_black.png';
 
 interface Props {
   setStatus: (value: string | ((prevVar: string) => string)) => void;
@@ -228,25 +228,27 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   useEffect(() => {
     if (BSvalue && BSvalue.fromGraph) {
-      if (BSvalue.fromGraph === 'IndexxCrypto') {
-        setIsGraphImage(true);
-        setGraphImage('inxc');
-      } else if (BSvalue.fromGraph === 'Indexx500Graph') {
-        setIsGraphImage(true);
-        setGraphImage('in500');
-      } else if (
+      // if (BSvalue.fromGraph === 'IndexxCrypto') {
+      //   setIsGraphImage(true);
+      //   setGraphImage('inxc');
+      // } else if (BSvalue.fromGraph === 'Indexx500Graph') {
+      //   setIsGraphImage(true);
+      //   setGraphImage('in500');
+      // }
+      if (
         BSvalue.fromGraph === 'IndexxExchangePolygon' ||
         BSvalue.fromGraph === 'IndexxExchange'
       ) {
         setIsGraphImage(true);
         setGraphImage('inexExchange');
-      } else if (BSvalue.fromGraph === 'IndexxUSDPGraph') {
-        setIsGraphImage(true);
-        setGraphImage('iusd');
       } else {
         setIsGraphImage(false);
         setGraphImage('');
       }
+      //  else if (BSvalue.fromGraph === 'IndexxUSDPGraph') {
+      //   setIsGraphImage(true);
+      //   setGraphImage('iusd');
+      // }
     }
   }, [BSvalue]);
 
@@ -273,36 +275,37 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
 
   useEffect(() => {
     if (graphImage) {
-      if (graphImage === 'inxc') {
-        if (theme === 'dark') {
-          setGraphImageSrc(inxcDark);
-        } else {
-          setGraphImageSrc(inxcLight);
-        }
-      } else if (graphImage === 'in500') {
-        if (theme === 'dark') {
-          setGraphImageSrc(in500Dark);
-        } else {
-          setGraphImageSrc(in500Light);
-        }
-      } else if (graphImage === 'inexExchange') {
+      // if (graphImage === 'inxc') {
+      //   if (theme === 'dark') {
+      //     setGraphImageSrc(inxcDark);
+      //   } else {
+      //     setGraphImageSrc(inxcLight);
+      //   }
+      // } else if (graphImage === 'in500') {
+      //   if (theme === 'dark') {
+      //     setGraphImageSrc(in500Dark);
+      //   } else {
+      //     setGraphImageSrc(in500Light);
+      //   }
+      // }
+      if (graphImage === 'inexExchange') {
         if (theme === 'dark') {
           setGraphImageSrc(inexExchangeDark);
         } else {
           setGraphImageSrc(inexExchangeLight);
         }
-      } else if (graphImage === 'iusd') {
-        if (theme === 'dark') {
-          setGraphImageSrc(iusdDark);
-        } else {
-          setGraphImageSrc(iusdLight);
-        }
       }
+      // else if (graphImage === 'iusd') {
+      //   if (theme === 'dark') {
+      //     setGraphImageSrc(iusdDark);
+      //   } else {
+      //     setGraphImageSrc(iusdLight);
+      //   }
+      // }
     }
   }, [graphImage, theme]);
   useEffect(() => {
     const handleStorageChange = (event: any) => {
-      console.log(event);
       setTheme(event.currentTarget.localStorage.selectedTheme);
       if (window.location.pathname.includes('for-honeybee')) {
         setTheme('light');
@@ -375,7 +378,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               }}
             />
             Indexx Exchange
-            {selectedTab === 1 && (
+            {selectedTab === 0 && (
               <>
                 {' '}
                 -
@@ -391,7 +394,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                 Tokens
               </>
             )}
-            {selectedTab === 2 && (
+            {selectedTab === 1 && (
               <>
                 {selectedSubTab === 0 && (
                   <>
@@ -472,7 +475,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
               }}
             />
             Hive Exchange
-            {selectedTab === 1 && (
+            {selectedTab === 0 && (
               <>
                 {' '}
                 -
@@ -488,7 +491,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
                 Tokens
               </>
             )}
-            {selectedTab === 2 && (
+            {selectedTab === 1 && (
               <>
                 {selectedSubTab === 0 && (
                   <>
