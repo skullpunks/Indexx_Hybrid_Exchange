@@ -200,7 +200,7 @@ const MobileHeader = () => {
       subItems: [
         { name: 'Academy', url: baseAcademyUrl },
         { name: 'Exchange', url: baseCEXURL },
-        { name: 'Fortune Daily', url: 'https://fortune.daily.indexx.ai/' },
+        { name: 'Fantasy Lotto', url: 'https://lotto.indexx.ai/' },
         // { name: 'Shop', url: baseShopURL },
         { name: 'Shop', url: baseCEXURL },
         { name: 'Swap', url: baseDEXURL },
@@ -215,7 +215,7 @@ const MobileHeader = () => {
         { name: 'Sign In in Exchange', url: '/indexx-exchange/buy-sell/login' },
         {
           name: 'Buy Lottery tickets',
-          url: 'https://fortune.daily.indexx.ai/',
+          url: 'https://lotto.indexx.ai/',
         },
         // {
         //   name: 'Buy Gift Cards',
@@ -260,7 +260,7 @@ const MobileHeader = () => {
         },
         {
           name: 'Know how to play the lottery',
-          url: 'https://fortune.daily.indexx.ai/how-to-play',
+          url: 'https://lotto.indexx.ai/how-to-play',
         },
         { name: 'Walk through the Hive', url: baseHiveURL },
         // { name: 'Know how to buy in the Shop', url: baseShopURL },

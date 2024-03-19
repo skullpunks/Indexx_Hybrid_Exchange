@@ -33,7 +33,7 @@ const AllNotification = () => {
                     </div>
                 </div>
                 <div>
-                    <p className='font_15x'>Check your task center and complete your tasks to get a reward! Complete task
+                    <p className='font_15x'>Check your Reward Center and complete your tasks to get a reward! Complete task
 
                     </p>
                 </div>

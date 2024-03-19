@@ -294,43 +294,20 @@ const BuyContent: React.FC<Props> = ({
           <></>
         )}
       </div>
+      
       <div
         className="bs_token cursor-pointer py-3"
         style={{ alignItems: 'center' }}
       >
-        <span
-          style={{ marginLeft: '20px', fontWeight: 'bold', fontSize: '16px' }}
-        >
-          {' '}
-          BUY
-        </span>
-        <div
-          className="bs_token_left d-flex justify-between align-items-center"
-          style={{ height: '55px', padding: '0 11px' }}
-        >
-          <div className="bs_token_num d-flex text-start align-items-center">
-            <img
-              src={bsDollar}
-              alt="Index icon"
-              width="40"
-              style={{ marginRight: 11 }}
-            />
-            USD <span className="token_grey">US Dollar</span>
-          </div>
-        </div>
-      </div>
-      <div
-        className="bs_token cursor-pointer py-3"
-        style={{ alignItems: 'center' }}
-      >
-        <span
-          style={{ marginLeft: '20px', fontWeight: 'bold', fontSize: '16px' }}
-        >
-          {' '}
-          Pay with
-        </span>
+       
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
+          <span
+          style={{ marginRight: '71px', fontWeight: 'bold', fontSize: '16px',color:'black' }}
+        >
+          {' '}
+          Buy
+        </span>
             <Select
               className="width-100 border-0"
               onChange={handleChange}
@@ -397,7 +374,32 @@ const BuyContent: React.FC<Props> = ({
           </div>
         </div>
       </div>
-
+      <div
+        className="bs_token cursor-pointer py-3"
+        style={{ alignItems: 'center' }}
+      >
+        
+       
+        <div
+          className="bs_token_left d-flex justify-between align-items-center"
+          style={{ height: '55px', padding: '0 11px' }}
+        >
+          <div className="bs_token_num d-flex text-start align-items-center">
+          <span
+          style={{ marginRight: '52px',marginLeft:'-12px' ,fontWeight: 'bold', fontSize: '16px' }}
+        >
+          Pay with
+        </span>
+            <img
+              src={bsDollar}
+              alt="Index icon"
+              width="40"
+              style={{ marginRight: 11 }}
+            />
+            USD <span className="token_grey">US Dollar</span>
+          </div>
+        </div>
+      </div>
       <div className="bs_footer_action">
         {/* disabled={(!isLimitPassed)} */}
         <button
