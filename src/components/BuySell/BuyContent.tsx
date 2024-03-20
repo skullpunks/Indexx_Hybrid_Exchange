@@ -8,7 +8,11 @@ import initialTokens from '../../utils/Tokens.json';
 import graphTokens from '../../utils/graphs.json';
 // import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getHoneyBeeDataByUsername, getMinAndMaxOrderValues, isLoggedIn } from '../../services/api';
+import {
+  getHoneyBeeDataByUsername,
+  getMinAndMaxOrderValues,
+  isLoggedIn,
+} from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import './BS-Sell.css';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -19,33 +23,60 @@ interface Props {
   subtokenType: number;
 }
 
-const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType }) => {
+const BuyContent: React.FC<Props> = ({
+  setScreenName,
+  tokenType,
+  subtokenType,
+}) => {
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [filteredtokens, setFilteredtokens] = useState(initialTokens);
-
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || 'light'
+  );
   useEffect(() => {
-    const topCryptoTokens = ["IN500", "INEX", "IUSD+", "INXC"];
+    const handleStorageChange = (event: any) => {
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+      if (window.location.pathname.includes('for-honeybee')) {
+        setTheme('light');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+  useEffect(() => {
+    const topCryptoTokens = ['IN500', 'INEX', 'IUSD+', 'INXC'];
 
     let filtered: any[] = [];
-    if (tokenType === 2) {
+    if (tokenType === 1) {
       if (subtokenType === 0) {
         // Stock tokens
-        filtered = initialTokens.filter(item => item.isStock || item.subTitle.includes('SNP500'));
+        filtered = initialTokens.filter(
+          (item) => item.isStock || item.subTitle.includes('SNP500')
+        );
       } else if (subtokenType === 1) {
         // ETF tokens
-        filtered = initialTokens.filter(item => item.isETF);
+        filtered = initialTokens.filter((item) => item.isETF);
       }
       // Sort alphabetically for Stocks and ETFs
       filtered.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (tokenType === 1) {
+    } else if (tokenType === 0) {
       // Crypto tokens
-      filtered = initialTokens.filter(item => !item.isStock && !item.isETF);
+      filtered = initialTokens.filter((item) => !item.isStock && !item.isETF);
 
       // Custom sorting for Crypto: top tokens first, then alphabetically
       filtered.sort((a, b) => {
-        if (topCryptoTokens.includes(a.title) && topCryptoTokens.includes(b.title)) {
-          return topCryptoTokens.indexOf(a.title) - topCryptoTokens.indexOf(b.title);
+        if (
+          topCryptoTokens.includes(a.title) &&
+          topCryptoTokens.includes(b.title)
+        ) {
+          return (
+            topCryptoTokens.indexOf(a.title) - topCryptoTokens.indexOf(b.title)
+          );
         } else if (topCryptoTokens.includes(a.title)) {
           return -1;
         } else if (topCryptoTokens.includes(b.title)) {
@@ -65,30 +96,24 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
   const [params] = useSearchParams();
   const urlParams = new URLSearchParams(window.location.search);
   const coinnameToIndex: Record<string, number> = {
-    'iusd': 3,
-    'inexbrc': 2,
-    'inexplg': 1
+    iusd: 3,
+    inexbrc: 2,
+    inexplg: 1,
   };
   useEffect(() => {
-    
     const coinname = urlParams.get('coinname') || '';
-   
-    const defToken = String(params.get("toksymbol"));
-    console.log("eff trig");
-    const filtered = filteredtokens.find(
-      (x) => x.title === defToken
-    );
-    console.log(filtered, "filtered token", filtered?.address);
-    
+
+    const defToken = String(params.get('toksymbol'));
+    console.log('eff trig');
+    const filtered = filteredtokens.find((x) => x.title === defToken);
+    console.log(filtered, 'filtered token', filtered?.address);
+
     if (filtered?.address) {
-      console.log("calling change");
+      console.log('calling change');
       handleChange(filtered.address);
+    } else {
+      handleChange(filteredtokens[coinnameToIndex[coinname] || 0]?.address);
     }
-    else{
-     handleChange(filteredtokens[coinnameToIndex[coinname] || 0]?.address)
-
-    }
-
   }, [filteredtokens, tokenType, subtokenType]);
 
   const navigateUser = () => {
@@ -105,40 +130,39 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
       }
-      if (honeyBeeId === "undefined" || honeyBeeId === "")
+      if (honeyBeeId === 'undefined' || honeyBeeId === '')
         navigate('/indexx-exchange/buy-sell/confirm-purchase');
       else
-        navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase`);
+        navigate(
+          `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase`
+        );
       // setScreenName("confirmPurchase");
     } else {
       // setScreenName("create");
-      if (honeyBeeId === "undefined" || honeyBeeId === "")
+      if (honeyBeeId === 'undefined' || honeyBeeId === '')
         navigate('/indexx-exchange/buy-sell/create');
       else
         navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/create`);
     }
-
   };
 
   const [buyVal, setBuyVal] = useState('');
   const [isLimitPassed, setLimitPassed] = useState(true);
   const [minMavData, setMinMaxData] = useState() as any;
   const { id } = useParams();
-  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [honeyBeeId, setHoneyBeeId] = useState('');
 
   const categorizeTokens = (tokens: any) => {
     return {
       Crypto: tokens.filter((token: any) => !token.isStock && !token.isETF),
       StockTokens: tokens.filter((token: any) => token.isStock),
-      ETFs: tokens.filter((token: any) => token.isETF)
+      ETFs: tokens.filter((token: any) => token.isETF),
     };
   };
 
   const categorizedTokens = categorizeTokens(filteredtokens);
 
   useEffect(() => {
-
-
     if (id) {
       setHoneyBeeId(String(id));
     }
@@ -150,12 +174,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
         amount.length < 7
           ? '1.1'
           : amount.length < 9
-            ? '0.9'
-            : amount.length < 12
-              ? '0.8'
-              : amount.length < 15
-                ? '0.6'
-                : '0.4';
+          ? '0.9'
+          : amount.length < 12
+          ? '0.8'
+          : amount.length < 15
+          ? '0.6'
+          : '0.4';
       let charWidth = amount.length <= 1 ? 1.2 : 0.9;
       if (document.getElementsByClassName('input_currency')[0]) {
         let element = document.getElementsByClassName(
@@ -166,14 +190,13 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
       }
     }
     getMinMaxValue(String(BSvalue?.fromTitle)).then((x) => {
-      // 
+      //
       setMinMaxData(x);
     });
 
     if (BSvalue?.fromToken) {
       handleChange(BSvalue.fromToken);
     }
-    
   }, [BSvalue.fromTitle, BSvalue.amount, id, BSvalue.fromToken]);
 
   const handleChange = async (value: string) => {
@@ -223,12 +246,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
         testVal.length < 7
           ? '1.1'
           : testVal.length < 9
-            ? '0.9'
-            : testVal.length < 12
-              ? '0.8'
-              : testVal.length < 15
-                ? '0.6'
-                : '0.4';
+          ? '0.9'
+          : testVal.length < 12
+          ? '0.8'
+          : testVal.length < 15
+          ? '0.6'
+          : '0.4';
       let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
       e.currentTarget.style.width = (testVal.length + 1) * charWidth + 'ch';
       e.currentTarget.style.fontSize = charFontSize + 'ch';
@@ -251,7 +274,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
             className="bs_curreny_left padding-2x"
             style={{ transform: 'scale(1)' }}
           >
-            <span className="font_20x pe-1" style={{ color: "var(--body_color)" }}>$</span>
+            <span
+              className="font_20x pe-1"
+              style={{ color: 'var(--body_color)' }}
+            >
+              $
+            </span>
             {/* <input placeholder="0" className=" " type="text" value={val} onChange={() => updateBuyVal} style={{ width: "207px" }} /> */}
 
             <input
@@ -267,7 +295,12 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
                     <img src={SwapArrowIcon} className="hover_icon" alt="ddd" style={{ position: "absolute", right: "4px", top: "60%" }} />
                 </div> */}
         </div>
-        <div className="font_20x opacity-75 justify-content-center d-flex" style={{ color: "var(--body_color)" }}>Enter Amount</div>
+        <div
+          className="font_20x opacity-75 justify-content-center d-flex"
+          style={{ color: 'var(--body_color)' }}
+        >
+          Enter Amount
+        </div>
         {!isLimitPassed ? (
           <div className="error_message font_15x">
             You can only Buy a minimum of {String(minMavData?.min)} USD or
@@ -277,8 +310,96 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
           <></>
         )}
       </div>
+
       <div
-        className="bs_token d-flex cursor-pointer py-3"
+        className="bs_token cursor-pointer py-3"
+        style={{ alignItems: 'center' }}
+      >
+        <div className="bs_token_left d-flex justify-between">
+          <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
+            <span
+              style={{
+                marginRight: '30px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: theme === 'dark' ? 'white' : 'black',
+                marginLeft: '11px',
+              }}
+            >
+              {' '}
+              Buy
+            </span>
+            <Select
+              className="width-100 border-0"
+              onChange={handleChange}
+              style={{
+                width: '100%',
+              }}
+              value={BSvalue?.fromToken}
+              dropdownStyle={{
+                backgroundColor: 'var(--body_background)',
+                color: 'var(--body_color)',
+              }}
+            >
+              {Object.entries(categorizedTokens).map(
+                ([category, tokens]) =>
+                  tokens.length > 0 && (
+                    <Select.OptGroup
+                      key={category}
+                      label={
+                        <span
+                          className={`custom-optgroup-label theme-${localStorage.getItem(
+                            'userlogged'
+                          )}`}
+                        >
+                          {category}
+                        </span>
+                      }
+                    >
+                      {tokens.map((token: any) => (
+                        <Select.Option
+                          key={token.address}
+                          value={token.address}
+                          className="common__token d-flex bs_token_container"
+                          data-address={token.address}
+                          style={{ paddingLeft: '15px', paddingRight: 0 }}
+                        >
+                          <div className="d-flex bs_token_num select-drop">
+                            <img
+                              src={
+                                require(`../../assets/token-icons/${token.image}.png`)
+                                  .default
+                              }
+                              alt={token.title}
+                              width={
+                                ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                                  token.image.includes(str)
+                                )
+                                  ? '57'
+                                  : '40'
+                              }
+                            />
+                            <div className="padding-l-1x d-flex flex-align-center">
+                              {token.title}
+                              <span
+                                style={{ color: 'var(--body_color)' }}
+                                className="margin-l-0_5x"
+                              >
+                                {token.subTitle}
+                              </span>
+                            </div>
+                          </div>
+                        </Select.Option>
+                      ))}
+                    </Select.OptGroup>
+                  )
+              )}
+            </Select>
+          </div>
+        </div>
+      </div>
+      <div
+        className="bs_token cursor-pointer py-3"
         style={{ alignItems: 'center' }}
       >
         <div
@@ -286,64 +407,25 @@ const BuyContent: React.FC<Props> = ({ setScreenName, tokenType, subtokenType })
           style={{ height: '55px', padding: '0 11px' }}
         >
           <div className="bs_token_num d-flex text-start align-items-center">
+            <span
+              style={{
+                marginRight: '12px',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            >
+              Pay with
+            </span>
             <img
               src={bsDollar}
               alt="Index icon"
               width="40"
-
               style={{ marginRight: 11 }}
             />
             USD <span className="token_grey">US Dollar</span>
           </div>
         </div>
       </div>
-      <div
-        className="bs_token d-flex cursor-pointer py-3"
-        style={{ alignItems: 'center' }}
-      >
-        <div className="bs_token_left d-flex justify-between">
-          <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
-    
-            <Select
-              className="width-100 border-0"
-              onChange={handleChange}
-              value={BSvalue?.fromToken}
-              dropdownStyle={{ backgroundColor: "var(--body_background)", color: "var(--body_color)" }}
-            >
-              {Object.entries(categorizedTokens).map(([category, tokens]) => (
-                tokens.length > 0 && (
-                <Select.OptGroup key={category} label={<span className={`custom-optgroup-label theme-${localStorage.getItem('userlogged')}`}>{category}</span>}>
-                  {tokens.map((token: any) => (
-                    <Select.Option
-                      key={token.address}
-                      value={token.address}
-                      className="common__token d-flex bs_token_container"
-                      data-address={token.address}
-                      style={{ paddingLeft: "15px", paddingRight: 0 }}
-                    >
-                      <div className="d-flex bs_token_num select-drop">
-                        <img
-                          src={require(`../../assets/token-icons/${token.image}.png`).default}
-                          alt={token.title}
-                          width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
-                        />
-                        <div className="padding-l-1x d-flex flex-align-center">
-                          {token.title}
-                          <span style={{ color: 'var(--body_color)' }} className="margin-l-0_5x">
-                            {token.subTitle}
-                          </span>
-                        </div>
-                      </div>
-                    </Select.Option>
-                  ))}
-                </Select.OptGroup>
-                )
-              ))}
-            </Select>
-          </div>
-        </div>
-      </div>
-
       <div className="bs_footer_action">
         {/* disabled={(!isLimitPassed)} */}
         <button

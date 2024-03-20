@@ -47,7 +47,7 @@ const HowTradeToEarn = () => {
               Trade to earn reward system allows users to earn 30% off each
               transaction.
               <br />
-              Collect 100 points on the indexx Task Center to unlock trade to
+              Collect 100 points on the indexx Reward Center to unlock trade to
               earn rewards.
               <br />
               You will only be able to withdraw tokens once 100 points are

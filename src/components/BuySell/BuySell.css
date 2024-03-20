@@ -29,12 +29,12 @@
   flex: 1;
 }
 
-.ant-select-item-group{
+.ant-select-item-group {
   padding: 0;
 }
 
 .custom-optgroup-label {
-  font-size: 1.5em;  
+  font-size: 1.5em;
   font-weight: bold;
   color: var(--body_color);
   background-color: var(--primary-color);
@@ -83,9 +83,8 @@ button {
 
 button:hover,
 button:focus,
-button:active{
+button:active {
   background: var(--secondary-color);
-
 }
 
 .bs_container_header {
@@ -366,7 +365,7 @@ input[type='checkbox'] {
   text-align: center;
 }
 
-.ssn_container input{
+.ssn_container input {
   width: 160px;
   height: 28px;
   background: var(--disabled-btn);
@@ -532,19 +531,18 @@ button.ant-btn-primary [disabled] {
 }
 
 .bs_main .ant-btn-primary,
-
 .bs_main .ant-btn-primary:active,
 .bs_main .ant-btn-primary:focus {
   height: 55px;
-  border-color: var(--primary-color) !important; 
+  border-color: var(--primary-color) !important;
   background-color: var(--primary-color) !important;
   color: #fff;
   font-size: 20px;
   border-radius: 0px;
 }
-.bs_main .ant-btn-primary:hover{
+.bs_main .ant-btn-primary:hover {
   height: 55px;
-  border-color: var(--secondary-color) !important; 
+  border-color: var(--secondary-color) !important;
   background-color: var(--secondary-color) !important;
   color: #fff;
   font-size: 20px;
@@ -703,7 +701,7 @@ a.bs_link:hover {
   color: var(--body_color) !important;
 }
 
-.notif{
+.notif {
   display: flex;
   justify-content: center;
   background-color: #000;
@@ -808,25 +806,24 @@ a.bs_link:hover {
     font-size: 60px;
   }
 
-  .with-graph{
+  .with-graph {
     flex-direction: column;
     height: max-content;
     min-height: 500px !important;
   }
-  
-  .notif{
-  font-size: 12px;
-  width: 100vw;
-  top: 146px;
-  padding-inline: 10px;
-  text-align: center;
 
+  .notif {
+    font-size: 12px;
+    width: 100vw;
+    top: 146px;
+    padding-inline: 10px;
+    text-align: center;
   }
 }
 
 .bs_main .hive-btn {
-  background-color: #FFB300 !important;
-  border-color: #FFB300!important;
+  background-color: #ffb300 !important;
+  border-color: #ffb300 !important;
   font-size: 20px;
   height: 55px;
   color: #fff;
@@ -835,10 +832,9 @@ a.bs_link:hover {
 
 .bs_main .hive-btn:hover,
 .bs_main .hive-btn:focus,
-.bs_main .hive-btn:active
-{
-  background-color: #FFD000 !important;
-  border-color: #FFD000!important;
+.bs_main .hive-btn:active {
+  background-color: #ffd000 !important;
+  border-color: #ffd000 !important;
 }
 
 .blk_yl_link {
@@ -846,25 +842,24 @@ a.bs_link:hover {
 }
 
 .blk_yl_link:hover {
-  color: #FFB300;
+  color: #ffb300;
   cursor: pointer;
 }
 
 .hive_link {
-  color: #FFB300;
+  color: #ffb300;
 }
 
 .hive_link:hover {
-  color: #FFD000;
+  color: #ffd000;
   cursor: pointer;
 }
 
-
-.walls{
+.walls {
   transition: transform 330ms ease-in-out;
 }
 
-.walls:hover{
+.walls:hover {
   transform: scale(1.1);
   transition: transform 330ms ease-in-out;
 }

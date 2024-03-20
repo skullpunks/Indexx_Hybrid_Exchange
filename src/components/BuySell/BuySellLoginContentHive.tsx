@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
-import {
-  InfoCircleFilled,
-} from '@ant-design/icons';
+import { InfoCircleFilled } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import hive from "../../assets/Hive exchange.png";
+import hive from '../../assets/Hive exchange.png';
 // import qrCode from '../../assets/arts/qrCode.svg';
 import {
   baseURL,
@@ -14,11 +12,11 @@ import {
   encrypt,
   encryptData,
   getUserDetails,
-  loginHive
+  loginHive,
 } from '../../services/api';
-import "./BuySellLoginContentHive.css";
+import './BuySellLoginContentHive.css';
 import OpenNotification from '../OpenNotification/OpenNotification';
-import hat from "../../assets/arts/hat2.png";
+import hat from '../../assets/arts/hat2.png';
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -26,21 +24,18 @@ const cryptr = new Cryptr('myTotallySecretKey');
 //   setScreenName: (value: string | ((prevVar: string) => string)) => void;
 // }
 const BuySellLoginContentHive: React.FC = () => {
-  // 
+  //
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     setLoadings(true);
 
-
     let res = await loginHive(values.email_or_username, values.password);
 
     if (res.status === 200) {
-
       setLoadings(false);
       OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
-
 
       debugger;
       localStorage.setItem('user', resObj?.email);
@@ -51,7 +46,7 @@ const BuySellLoginContentHive: React.FC = () => {
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
       localStorage.setItem('username', resObj?.username);
-      localStorage.setItem('userlogged', "captain");
+      localStorage.setItem('userlogged', 'captain');
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -74,7 +69,6 @@ const BuySellLoginContentHive: React.FC = () => {
   };
 
   useEffect(() => {
-
     async function loginUser() {
       // Get the URL search parameters
       const urlSearchParams = new URLSearchParams(window.location.search);
@@ -83,13 +77,17 @@ const BuySellLoginContentHive: React.FC = () => {
       const userKey = urlSearchParams.get('userkey');
       const userType = urlSearchParams.get('usertype');
 
-      if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
-        let userPassword = (String(userKey));
+      if (
+        userEmail &&
+        userKey &&
+        userEmail !== undefined &&
+        userType !== undefined
+      ) {
+        let userPassword = String(userKey);
         // You can now use userEmail and userKey as needed in your component
         let res = await loginHive(userEmail, userPassword);
 
         if (res.status === 200) {
-
           setLoadings(false);
           OpenNotification('success', 'Login Successful');
           let resObj = await decodeJWT(res.data.access_token);
@@ -108,38 +106,34 @@ const BuySellLoginContentHive: React.FC = () => {
             ? navigate(redirectUrl)
             : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
         } else {
-
           setLoadings(false);
           OpenNotification('error', res.data);
         }
       }
     }
     loginUser();
-
   }, []);
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
 
-
-  const onFinishFailed = (errorInfo: any) => {
-
-  };
+  const onFinishFailed = (errorInfo: any) => {};
 
   const handleClick = () => {
-    window.location.href = "https://hive.indexx.ai/sign-up"
-  }
-  localStorage.setItem('userlogged', "captain");
+    window.location.href = 'https://hive.indexx.ai/sign-up';
+  };
+  localStorage.setItem('userlogged', 'captain');
 
   return (
     <div className="scan-container flex-align-stretch">
-      <div className='d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center log-img'>
-        <img alt='' src={hive} width={"85%"} />
+      <div className="d-flex flex-direction-column col-md-6 responsive_container align-items-end align-self-center log-img">
+        <img alt="" src={hive} width={'85%'} />
       </div>
       <div className="d-flex flex-direction-column col-md-6 responsive_container flex-align-center">
         <h1 className="text-center margin-lr-auto top_heading">
-          <img src={hat} alt="hat" style={{ marginRight: "10px" }} />
-          CaptainBee Log In</h1>
+          <img src={hat} alt="hat" style={{ marginRight: '10px' }} />
+          CaptainBee Log In
+        </h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
         </div>
@@ -163,9 +157,13 @@ const BuySellLoginContentHive: React.FC = () => {
                 ]}
               >
                 <div className="control-input">
-                  <Input placeholder="Email id or Username" className="input_height" />
+                  <Input
+                    placeholder="Email id or Username"
+                    className="input_height"
+                  />
                   <span className="email-icon">
-                    <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
+                    <img src={Email} alt="emailIcon" />{' '}
+                    {/* You might want to consider using a more generic icon now */}
                   </span>
                 </div>
               </Form.Item>
@@ -184,7 +182,10 @@ const BuySellLoginContentHive: React.FC = () => {
               </Form.Item>
             </div>
             {/* setScreenName("TwoFactorAuth") */}
-            <Link to="forgot-password" className="default-link text-underline-forgot">
+            <Link
+              to="forgot-password"
+              className="default-link text-underline-forgot"
+            >
               Forgot password
             </Link>
             <br />
@@ -192,7 +193,7 @@ const BuySellLoginContentHive: React.FC = () => {
 
             <Form.Item shouldUpdate>
               <Button
-                type="primary"
+                // type="primary"
                 className="atn-btn atn-btn-round margin-b-1x hive-btn"
                 loading={loadings}
                 htmlType="submit"
@@ -252,7 +253,6 @@ const BuySellLoginContentHive: React.FC = () => {
               style={{ color: '#ffb300' }}
               onClick={handleClick}
             >
-
               <p style={{ color: '#ffb300', fontSize: 15 }}>
                 {' '}
                 Sign up for Captain Bee
@@ -263,9 +263,8 @@ const BuySellLoginContentHive: React.FC = () => {
               // to="https://hive.indexx.ai/sign-up"
               to="/indexx-exchange/buy-sell/login-honeybee"
               style={{ color: '#ffb300' }}
-            // onClick={handleClick}
+              // onClick={handleClick}
             >
-
               <p style={{ color: '#ffb300', fontSize: 15 }}>
                 {' '}
                 Not a Captain Bee? Login as Honey Bee instead

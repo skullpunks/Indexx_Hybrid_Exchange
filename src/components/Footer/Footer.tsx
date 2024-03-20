@@ -141,11 +141,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href="https://fortune.daily.indexx.ai/"
+                      href="https://lotto.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className='link_sty'>
-                      Fortune Daily
+                      Fantasy Lotto
                       </span>
                     </a>
                     <br />
@@ -597,11 +597,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href="https://fortune.daily.indexx.ai/"
+                        href="https://lotto.indexx.ai/"
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className='link_sty'>
-                          Fortune Daily
+                          Fantasy Lotto
                         </span>
                       </a>
                       <br />

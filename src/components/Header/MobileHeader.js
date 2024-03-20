@@ -200,7 +200,7 @@ const MobileHeader = () => {
       subItems: [
         { name: 'Academy', url: baseAcademyUrl },
         { name: 'Exchange', url: baseCEXURL },
-        { name: 'Fortune Daily', url: 'https://fortune.daily.indexx.ai/' },
+        { name: 'Fantasy Lotto', url: 'https://lotto.indexx.ai/' },
         // { name: 'Shop', url: baseShopURL },
         { name: 'Shop', url: baseCEXURL },
         { name: 'Swap', url: baseDEXURL },
@@ -215,7 +215,7 @@ const MobileHeader = () => {
         { name: 'Sign In in Exchange', url: '/indexx-exchange/buy-sell/login' },
         {
           name: 'Buy Lottery tickets',
-          url: 'https://fortune.daily.indexx.ai/',
+          url: 'https://lotto.indexx.ai/',
         },
         // {
         //   name: 'Buy Gift Cards',
@@ -235,7 +235,7 @@ const MobileHeader = () => {
         // },
         {
           name: 'Buy Gift Cards',
-          url: "https://indexxgifts.com/",
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'Buy Greeting Cards',
@@ -260,7 +260,7 @@ const MobileHeader = () => {
         },
         {
           name: 'Know how to play the lottery',
-          url: 'https://fortune.daily.indexx.ai/how-to-play',
+          url: 'https://lotto.indexx.ai/how-to-play',
         },
         { name: 'Walk through the Hive', url: baseHiveURL },
         // { name: 'Know how to buy in the Shop', url: baseShopURL },
@@ -282,7 +282,7 @@ const MobileHeader = () => {
         //   name: 'Greeting Cards',
         //   url: `${baseShopURL}/collections/greeting-cards`,
         // },
-        { name: 'Gift Cards', url: "https://indexxgifts.com/"},
+        { name: 'Gift Cards', url: 'https://indexxgifts.com/' },
         {
           name: 'Greeting Cards',
           url: baseCEXURL,
@@ -356,11 +356,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Gift Cards',
-          url: "https://indexxgifts.com/"
+          url: 'https://indexxgifts.com/',
         },
         {
           name: 'How to buy Greeting Cards',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         { name: 'How to buy NFTs', url: `${baseURL}/indexx-exchange/nfts` },
         // {
@@ -369,11 +369,11 @@ const MobileHeader = () => {
         // },
         {
           name: 'How to buy Stock Certificates',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'How to buy Stock Token',
-          url: baseCEXURL
+          url: baseCEXURL,
         },
         {
           name: 'Learn about indexx Tokens',
@@ -508,7 +508,7 @@ const MobileHeader = () => {
           name: 'Order History',
           url: '/indexx-exchange/buy-sell/order-history',
         },
-        { name: 'Task Center', url: '/indexx-exchange/task-center' },
+        { name: 'Reward Center', url: '/indexx-exchange/reward-center' },
         { name: 'Trade to Earn', url: '/indexx-exchange/trade-to-earn' },
         {
           name: 'Staking History',
@@ -525,7 +525,7 @@ const MobileHeader = () => {
       action: [
         { name: 'Sales', url: '/indexx-exchange/dashboard' },
         { name: 'Trade and Earn', url: '/indexx-exchange/trade-to-earn' },
-        { name: 'Complete Tasks', url: '/indexx-exchange/task-center' },
+        { name: 'Reward Center', url: '/indexx-exchange/reward-center' },
         {
           name: 'Recent Transactions',
           url: '/indexx-exchange/buy-sell/transaction-history',
@@ -562,7 +562,8 @@ const MobileHeader = () => {
               className="d-flex logo__holder"
               style={{
                 marginLeft: `${
-                  localStorage.getItem('userlogged') === 'normal' ? '' : '-50px'
+                  localStorage.getItem('userlogged') === 'normal' ? '' : '0px'
+                  // localStorage.getItem('userlogged') === 'normal' ? '' : '-50px'
                 }`,
               }}
             >
@@ -764,8 +765,7 @@ const MobileHeader = () => {
                           }
                         />
                       </a>
-                    ) :                     
-                    (
+                    ) : (
                       <a
                         href={subItem.url}
                         rel="noopener noreferrer"
