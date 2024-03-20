@@ -77,6 +77,7 @@ const HeaderTest = () => {
   const themeData = useContext(Theme);
   const [theme, setTheme] = useState<string>(themeData?.theme ?? 'dark');
   const isAuthenticated = localStorage.getItem('access_token') !== null;
+
   const [backdropVisibility, setBackdropVisibility] = useState(false);
   const elementRef = useRef(null);
 
@@ -271,17 +272,21 @@ const HeaderTest = () => {
     <>
       <nav style={{ position: 'fixed', top: 0, left: 0, zIndex: 10000 }}>
         <div className="wrapper">
-          <div
-            className="backdrop"
-            style={{
-              display: backdropVisibility ? 'block' : 'none',
-              background: theme === 'dark' ? 'rgba(0,0,0,0.5)' : '',
-            }}
-          ></div>
+          {isMobile ? (
+            ''
+          ) : (
+            <div
+              className="backdrop"
+              style={{
+                display: backdropVisibility ? 'block' : 'none',
+                background: theme === 'dark' ? 'rgba(0,0,0,0.5)' : '',
+              }}
+            ></div>
+          )}
 
           <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
             <div className="logo" style={{ marginRight: '30px' }}>
-              <a href="#">
+              <a href="/">
                 <img src={logo} />
               </a>
             </div>
