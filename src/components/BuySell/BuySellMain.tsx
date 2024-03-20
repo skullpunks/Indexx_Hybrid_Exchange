@@ -334,18 +334,20 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   };
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
+    console.log(newValue, 'tab selected value');
   };
 
   const [params] = useSearchParams();
-
+  console.log(String(params.get('tab')));
   useEffect(() => {
     const tabname = String(params.get('tab'));
+    console.log(tabname, 'params');
 
     if (tabname === 'sttoken') {
-      setSelectedTab(2);
+      setSelectedTab(1);
       setSelectedSubTab(0);
     } else if (tabname === 'etf') {
-      setSelectedTab(2);
+      setSelectedTab(1);
       setSelectedSubTab(1);
     } else {
       setSelectedTab(0);
@@ -568,7 +570,12 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
             flex: 1,
             minHeight: '450px',
             background: theme === 'dark' ? 'black' : 'white',
-            border: '1px solid lightgrey',
+            border: isGraphImage
+              ? theme === 'dark'
+                ? '1px solid #2c2c2c'
+                : '1px solid #5f5f5f36'
+              : 'none',
+            borderRight: isGraphImage ? 'none' : '',
           }}
         >
           {isGraphImage ? (

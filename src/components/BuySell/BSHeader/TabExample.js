@@ -264,7 +264,7 @@ const TabExample = ({
           className='tab-format'
           disableTouchRipple
         /> */}
-        {selectedTab === 2 && (
+        {selectedTab === 1 && (
           <SubTabs
             value={selectedSubTab}
             change={handleETFTabChange}
@@ -406,30 +406,6 @@ const TabExample = ({
           />
         ) : null}
 
-        <Tab
-          label="Fantasy Lotto"
-          icon={
-            theme === 'dark' ? (
-              <img
-                src={Fantasy_Lotto}
-                alt="Home"
-                width={'41px'}
-                style={{ marginBottom: '5px', marginTop: '3px' }}
-              />
-            ) : (
-              <img
-                src={Fantasy_Lotto}
-                alt="Home"
-                width={'41px'}
-                style={{ marginBottom: '5px', marginTop: '3px' }}
-              />
-            )
-          }
-          component={Link}
-          onClick={handleLottoClick}
-          className="tab-format"
-          disableTouchRipple
-        />
         <Tab
           label="Funding Wallet"
           icon={

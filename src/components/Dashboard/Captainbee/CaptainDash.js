@@ -53,10 +53,23 @@ import './CaptainDash.css';
 import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, createMonthlyINEXOrderNonPaypal } from '../../../services/api';
+import {
+  baseCEXURL,
+  getCaptainBeeStatics,
+  baseHiveURL,
+  getCoinPriceByName,
+  getAppSettings,
+  oneUSDHelper,
+  createINEXBuyOrder,
+  formatReadableDate,
+  createMonthlyINEXsubscription,
+  decodeJWT,
+  cancelMonthlyINEXsubscription,
+  createMonthlyINEXOrderNonPaypal,
+} from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CommissionTable from './CommissionTable';
@@ -66,7 +79,6 @@ let appSettingArr = [];
 let priceData = {};
 
 const CaptainDash = () => {
-
   const [isLoading, setIsLoading] = useState(true);
   // const [platform, setPlatform] = useState('Exchange');
   // const [Order, setOrder] = useState('buysell');
@@ -76,7 +88,7 @@ const CaptainDash = () => {
   // const [platformCapt, setPlatformCapt] = useState('Exchange');
   // const [OrderCapt, setOrderCapt] = useState('buysell');
   // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
   // const xLabels = [
@@ -109,7 +121,11 @@ const CaptainDash = () => {
   const [staticsData, setStaticsData] = useState();
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState({
-    total: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+    total: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
   const [rateData, setRateData] = useState();
   const [adminFee, setAdminFees] = useState('');
@@ -120,22 +136,25 @@ const CaptainDash = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const BootstrapTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} placement="top-start" />
+    <Tooltip
+      {...props}
+      arrow
+      classes={{ popper: className }}
+      placement="top-start"
+    />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "var(--body_background)",
-      backgroundColor: "var(--body_background)",
+      color: 'var(--body_background)',
+      backgroundColor: 'var(--body_background)',
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      border: "1px solid var(--border-color)",
-      backgroundColor: "var(--body_background)",
-      color: "var(--body_color)",
-      minWidth: "90%",
-      width: "215px",
+      border: '1px solid var(--border-color)',
+      backgroundColor: 'var(--body_background)',
+      color: 'var(--body_color)',
+      minWidth: '90%',
+      width: '215px',
     },
   }));
-
-
 
   useEffect(() => {
     const nextPurchaseDate = staticsData?.nextPurchaseDate;
@@ -159,21 +178,21 @@ const CaptainDash = () => {
     const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     return {
-      total, days, hours, minutes, seconds
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
     };
   }
 
   const getPricesData = async () => {
-    const res = await getCoinPriceByName(String("INEX"));
+    const res = await getCoinPriceByName(String('INEX'));
     priceData = res.data.results.data;
     setRateData(priceData);
 
-    let oneUsdValue = await oneUSDHelper(
-      priceData,
-      "INEX"
-    );
-    const finalPay =
-      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    let oneUsdValue = await oneUSDHelper(priceData, 'INEX');
+    const finalPay = oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
     setTotalAmountToPay(finalPay);
   };
 
@@ -187,28 +206,37 @@ const CaptainDash = () => {
     return;
   };
 
-
   const handleCreateSubscription = async () => {
     try {
       setLoadingsubs(true);
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
-      let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
+      let res = await createMonthlyINEXsubscription(
+        decoded.email,
+        'USD',
+        'INEX',
+        '300',
+        '',
+        ''
+      );
       if (res.status === 200) {
-        console.log("res", res);
+        console.log('res', res);
         for (let i = 0; i < res.data.links.length; i++) {
-          OpenNotification('success', "Subscription success");
-          if (res.data.links[i].rel.includes("approve")) {
+          OpenNotification('success', 'Subscription success');
+          if (res.data.links[i].rel.includes('approve')) {
             window.location.href = res.data.links[i].href;
           }
         }
       } else {
-        console.log("res", res);
+        console.log('res', res);
         OpenNotification('error', res.data);
       }
     } catch (err) {
-      OpenNotification('error', "Something went wrong. Please try again after sometime.");
-      console.log("err", err)
+      OpenNotification(
+        'error',
+        'Something went wrong. Please try again after sometime.'
+      );
+      console.log('err', err);
     } finally {
       setLoadingsubs(false);
     }
@@ -216,53 +244,73 @@ const CaptainDash = () => {
 
   const handleCancelSubscription = async () => {
     try {
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
-      let res = await cancelMonthlyINEXsubscription(decoded.email, subscription?.paypalSubscriptionDetails?.id, "Cancelling the subscription");
-      console.log("Res", res);
-
+      let res = await cancelMonthlyINEXsubscription(
+        decoded.email,
+        subscription?.paypalSubscriptionDetails?.id,
+        'Cancelling the subscription'
+      );
+      console.log('Res', res);
     } catch (err) {
-      console.log("err", err)
+      console.log('err', err);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userType = localStorage.getItem("userType") || undefined;
-        const username = localStorage.getItem("username") || undefined;
+        const userType = localStorage.getItem('userType') || undefined;
+        const username = localStorage.getItem('username') || undefined;
 
         setUserType(userType);
 
-        if (userType === "CaptainBee" && username) {
+        if (userType === 'CaptainBee' && username) {
           const data = await getCaptainBeeStatics(username);
           setStaticsData(data.data);
 
           if (data?.data?.powerPackData) {
-            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            const getPowerPack = PackData.find(
+              (x) => x.name === data?.data?.powerPackData?.type
+            );
             setPowerPackPhoto(getPowerPack?.photo);
           } else {
             setPowerPackPhoto(undefined);
           }
 
           if (data?.data?.affiliateUserProfile?.rank) {
-            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            const getRank = RankData.find(
+              (x) => x.name === data?.data?.affiliateUserProfile?.rank
+            );
             setRankPhoto(getRank?.photo);
           } else {
-            const getRank = RankData.find(x => x.name === "Bronze")
+            const getRank = RankData.find((x) => x.name === 'Bronze');
             setRankPhoto(getRank?.photo);
           }
 
           if (data?.data) {
             let hasValidSubscription = false;
             // Check and set PayPal subscription details
-            if (data?.data?.paypalSubscriptionDetails?.paypalSubscriptionDBData && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0) {
+            if (
+              data?.data?.paypalSubscriptionDetails?.paypalSubscriptionDBData &&
+              Object.keys(data?.data?.paypalSubscriptionDetails).length > 0
+            ) {
               setSubscription(data?.data?.paypalSubscriptionDetails);
               hasValidSubscription = true;
             }
             // Check if non-PayPal subscription details exist
-            else if (data?.data?.nonPaypalSubscriptionDetails?.nonPaypalSubscriptionDBData && Object.keys(data?.data?.nonPaypalSubscriptionDetails.nonPaypalSubscriptionDBData).length > 0) {
-              setSubscription(data?.data?.nonPaypalSubscriptionDetails.nonPaypalSubscriptionDBData);
+            else if (
+              data?.data?.nonPaypalSubscriptionDetails
+                ?.nonPaypalSubscriptionDBData &&
+              Object.keys(
+                data?.data?.nonPaypalSubscriptionDetails
+                  .nonPaypalSubscriptionDBData
+              ).length > 0
+            ) {
+              setSubscription(
+                data?.data?.nonPaypalSubscriptionDetails
+                  .nonPaypalSubscriptionDBData
+              );
               hasValidSubscription = true;
             }
 
@@ -280,9 +328,8 @@ const CaptainDash = () => {
     fetchData();
   }, []);
 
-
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "light"
+    localStorage.getItem('selectedTheme') || 'light'
   );
 
   useEffect(() => {
@@ -298,7 +345,6 @@ const CaptainDash = () => {
     };
   }, []);
 
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
     OpenNotification('success', 'Copied Successfully!');
@@ -306,8 +352,8 @@ const CaptainDash = () => {
 
   const createNewBuyOrder = async () => {
     setLoadings(true);
-    let basecoin = "INEX";
-    let quotecoin = "USD";
+    let basecoin = 'INEX';
+    let quotecoin = 'USD';
     let amount = 300;
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
@@ -316,7 +362,7 @@ const CaptainDash = () => {
       setLoadings(false);
       //--Below code is to enable paypal Order---
       for (let i = 0; i < res.data.links.length; i++) {
-        if (res.data.links[i].rel.includes("approve")) {
+        if (res.data.links[i].rel.includes('approve')) {
           window.location.href = res.data.links[i].href;
         }
       }
@@ -341,26 +387,24 @@ const CaptainDash = () => {
   const createSubscriptionOrderForZelleAndWire = async (paymentMethod) => {
     setLoadings(true);
     //await getPricesData();
-    const rate = await getCoinPriceByName(String("INEX"));
+    const rate = await getCoinPriceByName(String('INEX'));
     priceData = rate.data.results.data;
 
-    let oneUsdValue = await oneUSDHelper(
-      priceData,
-      "INEX"
-    );
-    const finalPay =
-      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
-    let basecoin = "INEX";
-    let quotecoin = "USD";
+    let oneUsdValue = await oneUSDHelper(priceData, 'INEX');
+    const finalPay = oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    let basecoin = 'INEX';
+    let quotecoin = 'USD';
     let amount = 300;
     let outAmount = Math.floor(finalPay * 1000000) / 1000000;
     let res;
-    console.log("paymentMethod", paymentMethod)
-    res = await createMonthlyINEXOrderNonPaypal(basecoin,
+    console.log('paymentMethod', paymentMethod);
+    res = await createMonthlyINEXOrderNonPaypal(
+      basecoin,
       quotecoin,
       amount,
       outAmount,
-      paymentMethod);
+      paymentMethod
+    );
     if (res.status === 200) {
       // Return the order ID for Zelle and Wire
       return res.data.orderId;
@@ -385,7 +429,7 @@ const CaptainDash = () => {
             width: '100%',
             height: '100%',
             // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            backdropFilter: "blur(8px)",
+            backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -395,26 +439,38 @@ const CaptainDash = () => {
           }}
         >
           <img src={loadingGif} alt="Loading" />
-          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+          <p
+            style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
+          >
             Please wait while Waggle Dance is loading
             <span className="dots-animation"></span>
           </p>
         </div>
       )}
 
-      {(!isLoading && userType === "CaptainBee") ?
-        (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-570px"}` }}>
-            <img src={theme === "dark" ? waggle_dark : waggle} alt="" width={"46px"} />&nbsp;&nbsp;&nbsp;
-            Waggle Dance / My Dashboard
+      {!isLoading && userType === 'CaptainBee' ? (
+        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+          <div
+            className="font_20x fw-bold justify-content-center d-flex"
+            style={{ marginLeft: `${isMobile ? '0' : '-535px'}` }}
+          >
+            <img
+              src={theme === 'dark' ? waggle_dark : waggle}
+              alt=""
+              width={'46px'}
+            />
+            &nbsp;&nbsp;&nbsp; Waggle Dance / My Dashboard
           </div>
           <div className="hive-container">
             <div
               className="d-flex justify-content-center"
               // style={{ width: '74%', maxWidth: '1140px' }}
-              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
+              style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
             >
-              <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
+              <div
+                className="d-flex flex-direction-column mt-1"
+                style={{ width: `${isMobile ? '100%' : '258px'}` }}
+              >
                 <div className="d-flex  flex-direction-column align-items-center">
                   <div
                     style={{
@@ -436,7 +492,12 @@ const CaptainDash = () => {
                     <div className="hexagon">
                       <img
                         alt=""
-                        src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                        src={
+                          staticsData?.affiliateUserProfile?.photoIdFileurl !==
+                          undefined
+                            ? staticsData?.affiliateUserProfile?.photoIdFileurl
+                            : dummy
+                        }
                         width={'63px'}
                         height={'66px'}
                         ml={'-6px'}
@@ -457,37 +518,60 @@ const CaptainDash = () => {
                     />
                   </div>
                 </div>
-                <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
+                <div
+                  className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
+                  style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
+                >
                   Captain Bee {staticsData?.affiliateUserProfile?.accname}
                 </div>
-                {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
-                  (<div className="justify-content-center d-flex">
-                    <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
-                  </div>) : (
-                    <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
-                      Please purchase the powerpack from the below URL: <br />
-                      <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                        Power Pack Purchase
-                      </a>
-                    </div>
-                  )
-                }
-                <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
-                  {!checkSubscription ?
+                {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
+                  <div className="justify-content-center d-flex">
+                    <img
+                      src={powerPackPhoto}
+                      alt="pack"
+                      width={isMobile ? '45%' : '80%'}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="justify-content-center d-flex flex-direction-column"
+                    style={{ marginLeft: `${isMobile ? '40px' : 0}` }}
+                  >
+                    Please purchase the powerpack from the below URL: <br />
+                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                      Power Pack Purchase
+                    </a>
+                  </div>
+                )}
+                <div
+                  className="align-items-start"
+                  style={{ marginLeft: `${isMobile ? '40px' : '0px'}` }}
+                >
+                  {!checkSubscription ? (
                     // Display Subscribe Button
-                    (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div className="font_15x">
                         Subscribe to your $300 monthly INEX investment today
                       </div>
-                      <div className="d-flex align-items-start gap-2" style={{ width: "100%" }}>
-                        <BootstrapTooltip title="Captain Bee Subscription Fees: 
+                      <div
+                        className="d-flex align-items-start gap-2"
+                        style={{ width: '100%' }}
+                      >
+                        <BootstrapTooltip
+                          title="Captain Bee Subscription Fees: 
 Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
-                          sx={{ width: "20%" }}
+                          sx={{ width: '20%' }}
                         >
                           <Button
                             className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                            style={{ width: "auto", height: "auto", color: "#393939", display: "flex", alignItems: "center", paddingBlock: "9.5px" }}
-
+                            style={{
+                              width: 'auto',
+                              height: 'auto',
+                              color: '#393939',
+                              display: 'flex',
+                              alignItems: 'center',
+                              paddingBlock: '9.5px',
+                            }}
                           >
                             <img src={info} alt="info" />
                           </Button>
@@ -498,24 +582,36 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           // onClick={handleCreateSubscription}
                           onClick={() => {
-                            setIsModalOpen2(true)
+                            setIsModalOpen2(true);
                             //createNewBuyOrder(card);
                           }}
-                          style={{ width: `${isMobile ? "70%" : "80%"}`, height: "auto", color: "#393939" }}
+                          style={{
+                            width: `${isMobile ? '70%' : '80%'}`,
+                            height: 'auto',
+                            color: '#393939',
+                          }}
                         >
-                          {!loadingsubs ? "Subscribe" : "Loading..."}
+                          {!loadingsubs ? 'Subscribe' : 'Loading...'}
                         </Button>
                       </div>
-                    </div>)
-                    :
-                    (<div className="d-flex flex-direction-column align-items-start mt-5">
+                    </div>
+                  ) : (
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
                       <div className="font_20x">
                         $300 INEX Subscription Details
-                        <BootstrapTooltip title="Captain Bee Subscription Fees: 
+                        <BootstrapTooltip
+                          title="Captain Bee Subscription Fees: 
 Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
-                          sx={{ width: "20%" }}
+                          sx={{ width: '20%' }}
                         >
-                          <InfoOutlinedIcon sx={{ fontSize: "18px", color: "var(--body_color)", mb: 0.5, ml: 0.8 }} />
+                          <InfoOutlinedIcon
+                            sx={{
+                              fontSize: '18px',
+                              color: 'var(--body_color)',
+                              mb: 0.5,
+                              ml: 0.8,
+                            }}
+                          />
                         </BootstrapTooltip>
                       </div>
                       {/* <div className="font_13x mt-3">
@@ -529,13 +625,21 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       </div> */}
 
                       <div className="font_13x mt-3">
-                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id || subscription?.orderId}
+                        Subscription ID:{' '}
+                        {subscription?.paypalSubscriptionDetails?.id ||
+                          subscription?.orderId}
                       </div>
                       <div className="font_13x">
-                        Status: {subscription?.paypalSubscriptionDetails?.status || subscription?.paymentStatus}
+                        Status:{' '}
+                        {subscription?.paypalSubscriptionDetails?.status ||
+                          subscription?.paymentStatus}
                       </div>
                       <div className="font_13x">
-                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info?.next_billing_time || subscription?.nextPaymentDate)}
+                        Next Billing Date:{' '}
+                        {formatReadableDate(
+                          subscription?.paypalSubscriptionDetails?.billing_info
+                            ?.next_billing_time || subscription?.nextPaymentDate
+                        )}
                       </div>
                       {/* <div>
                       <Button
@@ -547,12 +651,14 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         Cancel Subscription
                       </Button>
                     </div> */}
-                    </div>)
-                  }
+                    </div>
+                  )}
                 </div>
 
-                <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-
+                <div
+                  className="align-items-start lh_32x"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
                   {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
@@ -560,48 +666,56 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   in indexx hive`}
                 </div> */}
                   <div className="font_13x d-flex align-items-center mt-4">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={man_dark} className="me-1" />
-                      :
+                    ) : (
                       <img alt="man" src={man} className="me-1" />
-                    }
+                    )}
                     @{staticsData?.affiliateUserProfile?.Username}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={pin_dark} className="me-2" />
-                      :
+                    ) : (
                       <img alt="man" src={pin} className="me-2" />
-                    }
+                    )}
                     {staticsData?.affiliateUserProfile?.country}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={house_dark} className="me-1" />
-                      :
+                    ) : (
                       <img alt="man" src={house} className="me-1" />
-                    }
+                    )}
                     {staticsData?.affiliateUserProfile?.city}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={clock_dark} className="me-1" />
-                      :
+                    ) : (
                       <img alt="man" src={clock} className="me-1" />
-                    }
+                    )}
                     {staticsData?.formatedAccountCreationDate}
                   </div>
-                  {staticsData?.affiliateUserProfile?.isPhonePublic &&
+                  {staticsData?.affiliateUserProfile?.isPhonePublic && (
                     <div className="font_13x d-flex align-items-center">
                       {theme === 'dark' ? (
                         <img alt="man" src={phone_dark} className="me-2" />
                       ) : (
                         <img alt="man" src={phone} className="me-2" />
                       )}
-                      {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
+                      {String(
+                        `(${staticsData?.affiliateUserProfile?.Phone.slice(
+                          0,
+                          3
+                        )}) ${staticsData?.affiliateUserProfile?.Phone.slice(
+                          3,
+                          6
+                        )}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`
+                      )}
                     </div>
-                  }
-                  {staticsData?.affiliateUserProfile?.isEmailPublic &&
+                  )}
+                  {staticsData?.affiliateUserProfile?.isEmailPublic && (
                     <div className="font_13x d-flex align-items-center">
                       {theme === 'dark' ? (
                         <img alt="man" src={email_dark} className="me-2" />
@@ -610,83 +724,159 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       )}
                       {staticsData?.affiliateUserProfile?.Email}
                     </div>
-                  }
+                  )}
                 </div>
 
-                <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
+                <div
+                  className="align-items-start lh_32x mt-4"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.discord
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.discord
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.discord
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
                       <img alt="man" src={discord_dark} className="me-3" />
-                      :
+                    ) : (
                       <img alt="Discord" src={discord} className="me-3" />
-                    }
+                    )}
                   </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.instagram
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.instagram
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.instagram
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
                       <img alt="man" src={insta_dark} className="me-3" />
-                      :
+                    ) : (
                       <img alt="Instagram" src={insta} className="me-3" />
-                    }
+                    )}
                   </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.linkedin
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.linkedin
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.linkedin
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
                       <img alt="man" src={linkedin_dark} className="me-3" />
-                      :
+                    ) : (
                       <img alt="LinkedIn" src={linkedin} className="me-3" />
-                    }
+                    )}
                   </a>
-                  <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                    {theme === "dark" ?
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.twitter
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.twitter
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.twitter
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
                       <img alt="man" src={twitter_dark} />
-                      :
+                    ) : (
                       <img alt="Twitter" src={twitter} />
-                    }
+                    )}
                   </a>
-
                 </div>
 
-                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
+                <div
+                  className="d-flex flex-direction-column align-items-start mt-5"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
                   <div>
-                    <span className='fw-bold'>
-                      Invite Honey Bee :
-                    </span>
+                    <span className="fw-bold">Invite Honey Bee :</span>
                     <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(baseCEXURL +
-                        "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                      onClick={() =>
+                        copyClick(
+                          baseCEXURL +
+                            '/indexx-exchange/buy-sell/get-started-honeybee?referral=' +
+                            staticsData?.userFullData?.referralCode
+                        )
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        marginBottom: '4px',
+                        marginLeft: '5px',
+                      }}
                     />
                   </div>
                   <br />
                   <div>
-                    <span className='fw-bold'>
-                      Invite Captain Bee :
-                    </span>
+                    <span className="fw-bold">Invite Captain Bee :</span>
                     <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
-                      onClick={() => copyClick(baseHiveURL +
-                        "/sign-up?referral=" +
-                        staticsData?.userFullData?.referralCode)}
-                      style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
+                      onClick={() =>
+                        copyClick(
+                          baseHiveURL +
+                            '/sign-up?referral=' +
+                            staticsData?.userFullData?.referralCode
+                        )
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        marginBottom: '4px',
+                        marginLeft: '5px',
+                      }}
                     />
                   </div>
                 </div>
 
-                <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <div className="font_13x ">
-                    Your Rating
+                <div
+                  className="d-flex  flex-direction-column align-items-start mt-5"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  <div className="font_13x ">Your Rating</div>
+                  <div className="mt-4">
+                    <Rating name="read-only" value={4} readOnly size="large" />
                   </div>
-                  <div className='mt-4'>
-                    <Rating name="read-only" value={4} readOnly size='large' />
-                  </div>
-                  <div className="font_40x mt-3">
-                    95%
-                  </div>
+                  <div className="font_40x mt-3">95%</div>
                 </div>
                 {/* 
                 {timeRemaining?.days &&
@@ -719,25 +909,25 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                     </div>
                   )} */}
                 {/* </div> */}
-
-
               </div>
-              <div className="side-container" style={{ marginTop: `${isMobile ? "65px" : "0px"}` }}>
+              <div
+                className="side-container"
+                style={{ marginTop: `${isMobile ? '65px' : '0px'}` }}
+              >
                 <Box
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
-                    mt: 2
+                    mt: 2,
                   }}
                 >
-
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: `${isMobile ? "column" : "row"}`,
+                      flexDirection: `${isMobile ? 'column' : 'row'}`,
                       gap: isMobile ? 4 : 2,
-                      mt: 2
+                      mt: 2,
                     }}
                   >
                     <Box
@@ -745,7 +935,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: `${isMobile ? "100%" : "50%"}`,
+                        width: `${isMobile ? '100%' : '50%'}`,
                       }}
                     >
                       <Typography
@@ -754,12 +944,11 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         fontSize={'15px'}
                         fontWeight={700}
                         textAlign={'left'}
-                        mx={"auto"}
+                        mx={'auto'}
                         mb={2}
                         sx={{
-                          color: "#393939",
+                          color: '#393939',
                         }}
-
                       >
                         My Honey Bee Statistics
                       </Typography>
@@ -927,7 +1116,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             alignItems: 'center',
                             px: isMobile ? 1 : 2,
                             py: 1,
-                            aspectRatio: 1
+                            aspectRatio: 1,
                           }}
                         >
                           <Typography
@@ -960,7 +1149,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                            <img alt="up" src={arrow} />{' '}
+                            {staticsData?.honeyBeesCount ? '30%' : '0%'}
                           </Typography>
                         </Box>
                         <Box
@@ -973,7 +1163,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             alignItems: 'center',
                             px: isMobile ? 1 : 2,
                             py: 1,
-                            aspectRatio: 1
+                            aspectRatio: 1,
                           }}
                         >
                           <Typography
@@ -991,13 +1181,18 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
-                              ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                              : '0.00')
-                            }
+                            $
+                            {staticsData?.affiliateHoneyBeeUserTotalEarnings
+                              ?.amountInUSD
+                              ? parseFloat(
+                                  staticsData
+                                    ?.affiliateHoneyBeeUserTotalEarnings
+                                    ?.amountInUSD
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00'}
                           </Typography>
                           <Typography
                             variant="text"
@@ -1014,16 +1209,18 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-
-                            {(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                              : '0.00')}
-                            <span className='font_17x'>
-                              INEX
-                            </span>
+                            {staticsData?.affiliateHoneyBeeUserTotalEarnings
+                              ?.amountInINEX
+                              ? parseFloat(
+                                  staticsData
+                                    ?.affiliateHoneyBeeUserTotalEarnings
+                                    ?.amountInINEX
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00'}
+                            <span className="font_17x">INEX</span>
                           </Typography>
                           <Typography
                             variant="text"
@@ -1038,7 +1235,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "15%" : "0%"}
+                            <img alt="up" src={arrow} />{' '}
+                            {staticsData?.ordersCount ? '15%' : '0%'}
                           </Typography>
                         </Box>
                       </Box>
@@ -1065,7 +1263,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: `${isMobile ? "100%" : "50%"}`,
+                        width: `${isMobile ? '100%' : '50%'}`,
                       }}
                     >
                       <Typography
@@ -1074,12 +1272,11 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         fontSize={'15px'}
                         fontWeight={700}
                         textAlign={'left'}
-                        mx={"auto"}
+                        mx={'auto'}
                         mb={2}
                         sx={{
-                          color: "#393939",
+                          color: '#393939',
                         }}
-
                       >
                         My Captain Bee Statistics
                       </Typography>
@@ -1247,7 +1444,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             alignItems: 'center',
                             px: isMobile ? 1 : 2,
                             py: 1,
-                            aspectRatio: 1
+                            aspectRatio: 1,
                           }}
                         >
                           <Typography
@@ -1280,7 +1477,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
+                            <img alt="up" src={arrow} />{' '}
+                            {staticsData?.captainsCount ? '30%' : '0%'}
                           </Typography>
                         </Box>
                         <Box
@@ -1293,7 +1491,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             alignItems: 'center',
                             px: isMobile ? 1 : 2,
                             py: 1,
-                            aspectRatio: 1
+                            aspectRatio: 1,
                           }}
                         >
                           <Typography
@@ -1311,13 +1509,17 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                              : '0.00')
-                            }
+                            $
+                            {staticsData?.affiliateUserTotalEarnings
+                              ?.amountInUSD
+                              ? parseFloat(
+                                  staticsData?.affiliateUserTotalEarnings
+                                    ?.amountInUSD
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00'}
                           </Typography>
                           <Typography
                             variant="text"
@@ -1334,16 +1536,17 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             // fontWeight={600}
                             textAlign={'left'}
                           >
-                            {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                              ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                              : '0.00')
-                            } {" "}
-                            <span className='font_17x'>
-                              INEX
-                            </span>
+                            {staticsData?.affiliateUserTotalEarnings
+                              ?.amountInINEX
+                              ? parseFloat(
+                                  staticsData?.affiliateUserTotalEarnings
+                                    ?.amountInINEX
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
+                              : '0.00'}{' '}
+                            <span className="font_17x">INEX</span>
                           </Typography>
                           <Typography
                             variant="text"
@@ -1358,7 +1561,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                               gap: 1,
                             }}
                           >
-                            <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                            <img alt="up" src={arrow} />{' '}
+                            {staticsData?.ordersCount ? '20%' : '0%'}
                           </Typography>
                         </Box>
                       </Box>
@@ -1388,18 +1592,25 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
               </div>
             </div>
           </div>
-        </div>) :
+        </div>
+      ) : (
         <>
-          {(isLoading && userType === "CaptainBee") ? <></> : <BeeDash2></BeeDash2>}
+          {isLoading && userType === 'CaptainBee' ? (
+            <></>
+          ) : (
+            <BeeDash2></BeeDash2>
+          )}
         </>
-      }
+      )}
 
       <div>
         <SubscriptionPaymentOptions
           isVisible={isModalOpen2}
           onClose={() => setIsModalOpen2(false)}
           onConfirm={handleCreateSubscription}
-          onZelleAndWireConfirm={(paymentMethod) => createSubscriptionOrderForZelleAndWire(paymentMethod)} // For Zelle and Wire
+          onZelleAndWireConfirm={(paymentMethod) =>
+            createSubscriptionOrderForZelleAndWire(paymentMethod)
+          } // For Zelle and Wire
           message={message1}
         />
       </div>

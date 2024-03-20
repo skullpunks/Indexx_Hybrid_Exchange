@@ -31,12 +31,28 @@ const BuyContent: React.FC<Props> = ({
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [filteredtokens, setFilteredtokens] = useState(initialTokens);
+  const [theme, setTheme] = useState(
+    localStorage.getItem('selectedTheme') || 'light'
+  );
+  useEffect(() => {
+    const handleStorageChange = (event: any) => {
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+      if (window.location.pathname.includes('for-honeybee')) {
+        setTheme('light');
+      }
+    };
 
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
   useEffect(() => {
     const topCryptoTokens = ['IN500', 'INEX', 'IUSD+', 'INXC'];
 
     let filtered: any[] = [];
-    if (tokenType === 2) {
+    if (tokenType === 1) {
       if (subtokenType === 0) {
         // Stock tokens
         filtered = initialTokens.filter(
@@ -48,7 +64,7 @@ const BuyContent: React.FC<Props> = ({
       }
       // Sort alphabetically for Stocks and ETFs
       filtered.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (tokenType === 1) {
+    } else if (tokenType === 0) {
       // Crypto tokens
       filtered = initialTokens.filter((item) => !item.isStock && !item.isETF);
 
@@ -294,23 +310,31 @@ const BuyContent: React.FC<Props> = ({
           <></>
         )}
       </div>
-      
+
       <div
         className="bs_token cursor-pointer py-3"
         style={{ alignItems: 'center' }}
       >
-       
         <div className="bs_token_left d-flex justify-between">
           <div className=" d-flex flex-justify-between flex-align-center width-100 style-sel">
-          <span
-          style={{ marginRight: '71px', fontWeight: 'bold', fontSize: '16px',color:'black' }}
-        >
-          {' '}
-          Buy
-        </span>
+            <span
+              style={{
+                marginRight: '30px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: theme === 'dark' ? 'white' : 'black',
+                marginLeft: '11px',
+              }}
+            >
+              {' '}
+              Buy
+            </span>
             <Select
               className="width-100 border-0"
               onChange={handleChange}
+              style={{
+                width: '100%',
+              }}
               value={BSvalue?.fromToken}
               dropdownStyle={{
                 backgroundColor: 'var(--body_background)',
@@ -378,18 +402,20 @@ const BuyContent: React.FC<Props> = ({
         className="bs_token cursor-pointer py-3"
         style={{ alignItems: 'center' }}
       >
-        
-       
         <div
           className="bs_token_left d-flex justify-between align-items-center"
           style={{ height: '55px', padding: '0 11px' }}
         >
           <div className="bs_token_num d-flex text-start align-items-center">
-          <span
-          style={{ marginRight: '52px',marginLeft:'-12px' ,fontWeight: 'bold', fontSize: '16px' }}
-        >
-          Pay with
-        </span>
+            <span
+              style={{
+                marginRight: '12px',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            >
+              Pay with
+            </span>
             <img
               src={bsDollar}
               alt="Index icon"

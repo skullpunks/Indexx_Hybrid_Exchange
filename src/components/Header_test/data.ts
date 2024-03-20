@@ -145,7 +145,7 @@ const header_data = [
     mainTextDesktop: 'Shop',
     mainTextMob: 'Shop',
     active: false,
-    href: '/discount-shop',
+    href: 'https://indexx.ai/discount-shop',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -154,7 +154,7 @@ const header_data = [
         links: [
           {
             name: 'Bonus',
-            href: '/discount-shop',
+            href: 'https://indexx.ai/discount-shop',
           },
           {
             name: 'Gifts',
@@ -208,7 +208,7 @@ const header_data = [
     mainTextDesktop: 'Swap',
     mainTextMob: 'Swap',
     active: false,
-    href: 'https://dex.indexx.ai/',
+    href: 'https://swap.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -217,19 +217,49 @@ const header_data = [
         links: [
           {
             name: 'Staking',
-            href: '/indexx-exchange/buy-sell/staking',
+            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/staking',
           },
           {
             name: 'Tokens',
-            href: '/',
+            href: 'https://indexx.ai/indexx-exchange/token-details',
           },
           {
             name: 'Wallstreet',
-            href: '/',
+            href: 'https://wallstreet.indexx.ai/',
           },
           {
             name: 'Web3 Wallet',
-            href: 'https://wallet.indexx.ai/login/sign-in',
+            href: 'https://wallet.indexx.ai/',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        links: [
+          {
+            name: 'Register on Exchange',
+            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/get-started/',
+          },
+          {
+            name: 'Play Crypto Lottery',
+            href: 'https://lotto.indexx.ai/',
+          },
+          {
+            name: 'Buy Indexx Tokens',
+            href: 'https://cex.indexx.ai/',
+          },
+        ],
+      },
+      {
+        heading: 'Support',
+        links: [
+          {
+            name: 'White Paper',
+            href: '/indexx-exchange/token-details',
+          },
+          {
+            name: 'Legal Documents',
+            href: '/indexx-exchange/legal',
           },
         ],
       },
@@ -451,7 +481,7 @@ const header_data = [
     mainTextDesktop: 'Elite Club',
     mainTextMob: 'Elite Club',
     active: false,
-    href: '/indexx-exchange/elite-club',
+    href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -460,15 +490,15 @@ const header_data = [
         links: [
           {
             name: 'Funding Wallet',
-            href: '/indexx-exchange/buy-sell/wallet',
+            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/wallet',
           },
           {
             name: 'Power Packs',
-            href: '/indexx-exchange/power-pack',
+            href: 'https://cex.indexx.ai/indexx-exchange/power-pack',
           },
           {
             name: 'Staking',
-            href: '/indexx-exchange/buy-sell/staking',
+            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/staking',
           },
           {
             name: 'Web3 Wallet',
@@ -481,11 +511,113 @@ const header_data = [
         links: [
           {
             name: 'Log in',
-            href: '/',
+            href: 'https://cex.indexx.ai/',
           },
           {
             name: 'Register',
-            href: '/indexx-exchange/buy-sell/get-started',
+            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/get-started',
+          },
+        ],
+      },
+      {
+        heading: 'Support',
+        links: [
+          {
+            name: 'Benefits of elite club',
+            href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    mainTextDesktop: 'Company',
+    mainTextMob: 'Company',
+    active: false,
+    href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore',
+        mainList: true,
+        links: [
+          {
+            name: 'About',
+            href: 'https://indexx.ai/indexx-exchange/about',
+          },
+          {
+            name: 'Blog',
+            href: 'https://indexx.ai/indexx-exchange/blog',
+          },
+          {
+            name: 'Careers',
+            href: 'https://indexx.ai/indexx-exchange/careers',
+          },
+          {
+            name: 'How it Works',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works',
+          },
+          {
+            name: 'Markets',
+            href: 'https://indexx.ai/indexx-exchange/markets',
+          },
+          {
+            name: 'Vlog',
+            href: 'https://indexx.ai/indexx-exchange/vlog',
+          },
+          {
+            name: 'Document',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        links: [
+          {
+            name: 'Know the company',
+            href: 'https://indexx.ai/indexx-exchange/about',
+          },
+          {
+            name: 'Read updates',
+            href: 'https://indexx.ai/indexx-exchange/blog',
+          },
+          {
+            name: 'Find opportunity',
+            href: 'https://indexx.ai/indexx-exchange/careerst',
+          },
+          {
+            name: 'Features',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works',
+          },
+          {
+            name: 'Crypto trends',
+            href: 'https://indexx.ai/indexx-exchange/markets',
+          },
+          {
+            name: 'Watch videos',
+            href: 'https://indexx.ai/indexx-exchange/vlog',
+          },
+        ],
+      },
+      {
+        heading: 'Support',
+        links: [
+          {
+            name: 'Government Certificates',
+            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
+          },
+          {
+            name: 'Legal docs',
+            href: 'https://indexx.ai/indexx-exchange/legal',
+          },
+          {
+            name: 'Patent documents',
+            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
+          },
+          {
+            name: 'Whitepapers',
+            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
           },
         ],
       },
@@ -527,53 +659,54 @@ export const auth_header_data = [
         links: [
           {
             name: 'Account & Settings',
-            href: '/',
+            href: '/indexx-exchange/account',
           },
           {
             name: 'Bridge',
-            href: '/',
+            href: '/indexx-exchange/bridge',
           },
           {
             name: 'Waggle Dance/ Dashboard',
-            href: '/',
+            href: '/indexx-exchange/dashboard',
           },
           {
             name: 'Deposit',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/deposit-crypto',
           },
           {
             name: 'Notification',
-            href: '/',
+            href: '/indexx-exchange/notification',
           },
           {
             name: 'Order History',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/order-history',
           },
           {
             name: 'Reward Center',
-            href: '/',
+            href: '/indexx-exchange/reward-center',
           },
           {
             name: 'Trade to Earn',
-            href: '/',
+            href: '/indexx-exchange/trade-to-earn',
           },
           {
             name: 'Staking History',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/staking-history',
           },
           {
             name: 'Transaction History',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/transaction-history',
           },
           {
             name: 'Wallet',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/wallet',
           },
           {
             name: 'Withdraw',
-            href: '/',
+            href: '/indexx-exchange/buy-sell/withdraw-crypto',
           },
           {
+            btn: true,
             name: 'Logout',
             href: '/',
           },
@@ -585,19 +718,19 @@ export const auth_header_data = [
         links: [
           {
             name: 'Sales',
-            href: '#',
+            href: '/indexx-exchange/buy-sell',
           },
           {
             name: 'Trade and Earn',
-            href: '/',
+            href: 'https://indexx.ai/indexx-exchange/token-details/in500',
           },
           {
-            name: 'Reward Center',
-            href: '#',
+            name: 'Complete Tasks',
+            href: 'https://shop.indexx.ai/',
           },
           {
             name: 'Recent Transaction',
-            href: '/',
+            href: 'https://shop.indexx.ai/collections/greeting-cards',
           },
         ],
       },
@@ -607,11 +740,11 @@ export const auth_header_data = [
         links: [
           {
             name: 'How to deposit',
-            href: '#',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
           },
           {
             name: 'Know how to withdraw',
-            href: '/',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=Document',
           },
         ],
       },
