@@ -281,7 +281,7 @@ const HeaderTest = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
             <div className="logo" style={{ marginRight: '30px' }}>
-              <a href="#">
+              <a href="/">
                 <img src={logo} />
               </a>
             </div>
