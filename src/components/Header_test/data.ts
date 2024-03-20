@@ -80,7 +80,7 @@ const header_data = [
     mainTextDesktop: 'Lotto',
     mainTextMob: 'Lotto',
     active: false,
-    href: '',
+    href: 'https://lotto.indexx.ai/#',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -269,7 +269,7 @@ const header_data = [
     mainTextDesktop: 'Tokens',
     mainTextMob: 'Tokens',
     active: false,
-    href: '',
+    href: 'https://indexx.ai/indexx-exchange/token-details',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -440,7 +440,7 @@ const header_data = [
     mainTextDesktop: 'Affiliate',
     mainTextMob: 'Affiliate',
     active: false,
-    href: '',
+    href: 'https://register.affiliate.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -534,7 +534,7 @@ const header_data = [
     mainTextDesktop: 'Company',
     mainTextMob: 'Company',
     active: false,
-    href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
+    href: 'https://indexx.ai',
     hasMegaDrop: true,
     dropDownContent: [
       {

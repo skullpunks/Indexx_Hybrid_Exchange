@@ -14,7 +14,7 @@ const AdvancedRealTimeChartComponent = ({ coin }) => {
       } else if (window.matchMedia('(max-width: 990px)').matches) {
         setSize({ width: 450, height: 690 });
       } else {
-        setSize({ width: 900, height: 655 });
+        setSize({ width: 900, height: 691 });
       }
     };
 

@@ -102,7 +102,7 @@ const PowerPackHeader = () => {
       className="power-header"
       style={{
         position: 'fixed',
-        top: `${isMobile ? '56px' : '90px'}`,
+        top: `${isMobile ? '56px' : '70px'}`,
         width: '100%',
         zIndex: 999,
         background: 'var(--main-body)',

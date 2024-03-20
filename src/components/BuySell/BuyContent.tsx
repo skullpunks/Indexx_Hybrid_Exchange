@@ -375,7 +375,7 @@ const BuyContent: React.FC<Props> = ({
                                 ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
                                   token.image.includes(str)
                                 )
-                                  ? '52'
+                                  ? '57'
                                   : '40'
                               }
                             />

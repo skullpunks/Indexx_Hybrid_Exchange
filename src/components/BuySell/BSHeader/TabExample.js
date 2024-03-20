@@ -120,8 +120,6 @@ const TabExample = ({
     }
   }, []);
 
-  console.log(selectedTab, selectedSubTab, 'main, sub');
-
   const tabsProps = isMobile
     ? { variant: 'scrollable', scrollButtons: 'auto' }
     : {};
@@ -266,7 +264,7 @@ const TabExample = ({
         /> */}
         {selectedTab === 1 && (
           <SubTabs
-            value={selectedSubTab}
+            values={selectedSubTab}
             change={handleETFTabChange}
             theme={theme}
           />

@@ -355,6 +355,7 @@ const HeaderTest = () => {
                           ))}
 
                           <div className="row"></div>
+                          <div className="row"></div>
                         </div>
                       </div>
                     ) : (
@@ -386,8 +387,10 @@ const HeaderTest = () => {
                         localStorage.getItem('userlogged') !== 'normal' && (
                           <div
                             style={{
-                              marginBottom: '-43px',
-                              zIndex: '10000',
+                              marginBottom: '-83px',
+                              zIndex: '10000000',
+
+                              transform: 'translateY(20px)',
                             }}
                           >
                             <div
