@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PowerCard from './PowerCard';
 import { Box, Grid, Typography } from '@mui/material';
 import { PackData } from './PackData';
-import powerp from "../../assets/powerpack/Power pack.png";
-import hive from "../../assets/powerpack/Hive Logo.png";
+import powerp from '../../assets/powerpack/Power pack.png';
+import hive from '../../assets/powerpack/Hive Logo.png';
 // import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
@@ -22,60 +22,78 @@ const PowerPack = () => {
       {/* <PowerPackHeader /> */}
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-          alignItems: "center",
-          width: "100%",
-          objectFit: "scale-down",
+          display: 'flex',
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          objectFit: 'scale-down',
           mt: 25,
           mb: 2,
-          flexDirection: `${isMobile ? "column" : "row"}`,
+          flexDirection: `${isMobile ? 'column' : 'row'}`,
           gap: 3,
         }}
       >
-        <Box
-          component={"img"}
-          src={powerp}
-          alt='logo'
-        />
+        <Box component={'img'} src={powerp} alt="logo" />
 
-        <Box sx={{ textAlign: "center" }}>
-          <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
-          Investor's Power Pack
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography
+            variant={'h3'}
+            fontSize={'40px'}
+            textAlign="center"
+            color="var(--primary_color)"
+          >
+            Investor's Power Pack
           </Typography>
         </Box>
         <Box
-          component={"img"}
+          component={'img'}
           src={hive}
-          alt='logo'
+          alt="logo"
           width={90}
           marginRight={-3}
         />
-          <Typography variant={"h3"}  fontSize={"40px"} textAlign="center" color="var(--primary_color)">
+        <Typography
+          variant={'h3'}
+          fontSize={'40px'}
+          textAlign="center"
+          color="var(--primary_color)"
+        >
           Indexx Hive
-          </Typography>
+        </Typography>
       </Box>
-    
-      <Typography variant="body1" fontSize={"20px"} sx={{ mt: 2, color: 'var(--body_color)', textAlign: 'center', maxWidth: "1000px", mx: "auto", lineHeight: "1.5" }}>
-        To unlock the full potential of earning as a "Captain Bee," you must invest in a minimum of the Captain Bee Power Pack or a higher tier. This investment is your ticket to financial growth and success.
+
+      <Typography
+        variant="body1"
+        fontSize={'20px'}
+        sx={{
+          mt: 2,
+          color: 'var(--body_color)',
+          textAlign: 'center',
+          maxWidth: '1000px',
+          mx: 'auto',
+          lineHeight: '1.5',
+        }}
+      >
+        To unlock the full potential of earning as a "Captain Bee," you must
+        invest in a minimum of the Captain Bee Power Pack or a higher tier. This
+        investment is your ticket to financial growth and success.
       </Typography>
-      <Box sx={{ mt: 5, width: "80%", mx: "auto", maxWidth: "1300px" }}>
+      <Box sx={{ mt: 5, width: '80%', mx: 'auto', maxWidth: '1300px' }}>
         <Grid
           container
-          columns={{ xs: 1, sm: 12, md: 12 }}
-          spacing={{ xs: 1, md: 2 }}
+          // columns={{ xs: 1, sm: 12, md: 12 }}
+          // spacing={{ xs: 1, md: 2 }}
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
         >
           {cards.map((cr) => (
-            <PowerCard
-              key={cr.id}
-              card={cr}
-            />
+            <PowerCard key={cr.id} card={cr} />
           ))}
         </Grid>
       </Box>
     </Box>
   );
-}
+};
 
 export default PowerPack;
