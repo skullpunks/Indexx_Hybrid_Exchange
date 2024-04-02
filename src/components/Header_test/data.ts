@@ -41,7 +41,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Buy,Trade & Earn',
         links: [
           {
             name: 'Buy Indexx Tokens',
@@ -58,7 +58,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'How It Works',
         links: [
           {
             name: 'How to buy Tokens',
@@ -84,7 +84,7 @@ const header_data = [
     hasMegaDrop: true,
     dropDownContent: [
       {
-        heading: 'Explore',
+        heading: 'Explore Lotto',
         mainList: true,
         links: [
           {
@@ -110,7 +110,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Rewards',
         links: [
           {
             name: 'Win a Ferrari',
@@ -127,7 +127,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Learn More',
         links: [
           {
             name: 'How does Fantasy Lotto work?',
@@ -171,7 +171,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Redeem',
         mainList: false,
         links: [
           {
@@ -185,7 +185,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'More on shop',
         mainList: false,
         links: [
           {
@@ -251,7 +251,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'More on Indexx',
         links: [
           {
             name: 'White Paper',
@@ -311,7 +311,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Quick Links',
         links: [
           {
             name: 'Get discounts',
@@ -328,7 +328,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Legalities',
         links: [
           {
             name: 'White Paper',
@@ -364,7 +364,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Become a member',
         links: [
           {
             name: 'Register as Caption Bee',
@@ -377,7 +377,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Learn The Hive',
         links: [
           {
             name: 'How does Hive work?',
@@ -426,7 +426,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Opportunity',
         links: [
           {
             name: 'How to become an instructor?',
@@ -485,7 +485,7 @@ const header_data = [
     hasMegaDrop: true,
     dropDownContent: [
       {
-        heading: 'Explore',
+        heading: 'Explore Club',
         mainList: true,
         links: [
           {
@@ -520,7 +520,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Perks',
         links: [
           {
             name: 'Benefits of elite club',
@@ -572,7 +572,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Action',
+        heading: 'More about Indexx',
         links: [
           {
             name: 'Know the company',
@@ -601,7 +601,7 @@ const header_data = [
         ],
       },
       {
-        heading: 'Support',
+        heading: 'Legalities',
         links: [
           {
             name: 'Government Certificates',

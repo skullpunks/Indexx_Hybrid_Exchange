@@ -119,8 +119,8 @@ const HeaderTest = () => {
     showText[0] !== ''
       ? (document.title = `${showText[0]} | indexx.ai`)
       : pageName
-      ? (document.title = `${pageName} | indexx.ai`)
-      : (document.title = 'indexx.ai');
+        ? (document.title = `${pageName} | indexx.ai`)
+        : (document.title = 'indexx.ai');
   }, [showText, pageName]);
   useEffect(() => {
     const userType =
@@ -286,7 +286,7 @@ const HeaderTest = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
             <div className="logo" style={{ marginRight: '30px' }}>
-              <a href="/">
+              <a href="https://indexx.ai">
                 <img src={logo} />
               </a>
             </div>
@@ -305,9 +305,8 @@ const HeaderTest = () => {
                   >
                     <a
                       href={element.href}
-                      className={`desktop-item ${
-                        element.active ? 'link_active' : ''
-                      }`}
+                      className={`desktop-item ${element.active ? 'link_active' : ''
+                        }`}
                       onMouseEnter={() => updateBackDropVisibility('enter')}
                     >
                       {element.mainTextDesktop}
@@ -339,9 +338,8 @@ const HeaderTest = () => {
                             >
                               <header>{elem.heading}</header>
                               <ul
-                                className={`mega-links ${
-                                  elem.mainList ? 'main' : ''
-                                }`}
+                                className={`mega-links ${elem.mainList ? 'main' : ''
+                                  }`}
                               >
                                 {elem.links.map((el) => (
                                   <li>
@@ -402,9 +400,8 @@ const HeaderTest = () => {
                               style={{
                                 width: '80px',
                                 height: '80px',
-                                backgroundImage: `url(${
-                                  isCaptain === true ? frame : beeframe
-                                })`,
+                                backgroundImage: `url(${isCaptain === true ? frame : beeframe
+                                  })`,
                                 // backgroundImage: `url(${frame})`,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'contain',
@@ -421,9 +418,8 @@ const HeaderTest = () => {
                               <div
                                 className="bee-hexagon"
                                 style={{
-                                  marginBottom: `${
-                                    isCaptain === true ? 0 : '7px'
-                                  }`,
+                                  marginBottom: `${isCaptain === true ? 0 : '7px'
+                                    }`,
                                 }}
                               >
                                 <img
@@ -441,9 +437,8 @@ const HeaderTest = () => {
                         )}
                       <a
                         href={element.href}
-                        className={`desktop-item ${
-                          element.active ? 'link_active' : ''
-                        }`}
+                        className={`desktop-item ${element.active ? 'link_active' : ''
+                          }`}
                       >
                         {isAuthenticated ? userEmail : element.mainTextDesktop}
                       </a>
@@ -475,9 +470,8 @@ const HeaderTest = () => {
                               >
                                 <header>{elem?.heading}</header>
                                 <ul
-                                  className={`mega-links ${
-                                    elem?.mainList ? 'main' : ''
-                                  }`}
+                                  className={`mega-links ${elem?.mainList ? 'main' : ''
+                                    }`}
                                 >
                                   {elem?.links.map((el) => (
                                     <li>
