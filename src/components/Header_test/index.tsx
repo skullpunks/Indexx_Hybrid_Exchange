@@ -75,7 +75,7 @@ const Links = [
 
 const HeaderTest = () => {
   const themeData = useContext(Theme);
-  const [theme, setTheme] = useState<string>(themeData?.theme ?? 'dark');
+  const [theme, setTheme] = useState<string>(themeData?.theme ?? 'light');
   const isAuthenticated = localStorage.getItem('access_token') !== null;
   const [backdropVisibility, setBackdropVisibility] = useState(false);
   const elementRef = useRef(null);
