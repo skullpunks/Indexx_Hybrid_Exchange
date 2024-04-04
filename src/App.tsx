@@ -80,6 +80,8 @@ import BeeDash2 from './components/Dashboard/Honeybee/MyBees/BeeDash2';
 import BuySellGetStartedLayoutHoneyBee from './components/BuySell/BuySellGetStartedLayoutHoneyBee';
 import BuySellLoginHoneyBee from './components/BuySell/BuySellLoginHoneyBee';
 import PowerPack from './components/PowerPack/PowerPack';
+import PowerPackCopy from './components/PowerPack - Copy/PowerPack';
+import AffiliateProgram from './components/AffiliateProgram';
 import PaymentSuccess from './components/PowerPack/PaymentSuccess';
 import HoneyComb from './components/Dashboard/Captainbee/HoneyComb';
 import TeamCaptainDash from './components/Dashboard/Captainbee/TeamCaptainBees/TeamCaptainDash';
@@ -110,6 +112,7 @@ import CaptainGreetCard from './components/Dashboard/Captainbee/CaptainGreetCard
 import PaymentVenmo from './components/Send/PaymentVenmo';
 import HeaderTest from './components/Header_test';
 import { ThemeContext } from './utils/themeContext';
+import PowerPackInitial from './components/PowerPackInitial';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -211,7 +214,10 @@ function App() {
                   path="/indexx-exchange/send"
                   element={<HorizontalLinearStepper2 />}
                 />
-
+                <Route
+                  path="/indexx-exchange/power-hive"
+                  element={<PowerPackInitial />}
+                />
                 <Route
                   path="/indexx-exchange/dashboard"
                   element={<CaptainDash />}
@@ -311,9 +317,66 @@ function App() {
                 element={<PaymentWire />}
               />
 
-              <Route
+              {/* <Route
                 path="/indexx-exchange/power-pack"
                 element={<PowerPack />}
+              /> */}
+              <Route
+                path="/indexx-exchange/powerpack-payment-success"
+                element={<PaymentSuccess />}
+              />
+              <Route
+                path="/indexx-exchange/subscribe-success"
+                element={<SubscribeSuccess />}
+              />
+
+              <Route
+                path="/indexx-exchange/buy-sell/staking"
+                element={<Staking />}
+              />
+              <Route path="/indexx-exchange/bridge" element={<Bridge />} />
+
+              <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
+              <Route
+                path="/indexx-exchange/elite-club"
+                element={<EliteClub />}
+              />
+              <Route
+                path="/indexx-exchange/elite-learn/:id"
+                element={<EliteLearnMore />}
+              />
+
+              <Route
+                path="/indexx-exchange/payment-zelle"
+                element={<Payment />}
+              />
+              <Route
+                path="/indexx-exchange/payment-venmo"
+                element={<PaymentVenmo />}
+              />
+              <Route
+                path="/indexx-exchange/payment-wire"
+                element={<PaymentWire />}
+              />
+
+              <Route
+                path="/indexx-exchange/affiliate"
+                element={<AffiliateProgram />}
+              />
+
+              <Route
+                path="/indexx-exchange/power-pack"
+                element={<PowerPack type="captainBee" />}
+              />
+
+              <Route
+                path="/indexx-exchange/captainBee/power-pack"
+                element={<PowerPackCopy type="captainBee" />}
+              />
+
+              <Route
+                path="/indexx-exchange/honeyBee/power-pack"
+                element={<PowerPackCopy type="honeyBee" />}
               />
               <Route
                 path="/indexx-exchange/powerpack-payment-success"

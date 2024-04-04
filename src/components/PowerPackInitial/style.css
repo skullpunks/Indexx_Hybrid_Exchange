@@ -1,0 +1,48 @@
+.indexx_hive_membership_root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+.power-pack-category {
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto 100px auto;
+}
+.power-pack-category div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.power-pack-category div button {
+  margin-top: 50px;
+  border-radius: 0;
+  max-width: 285px;
+  font-size: 16px;
+  color: #000;
+}
+
+.power-pack-table {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0px auto 100px auto;
+}
+
+.power-pack-table img {
+  width: 100%;
+}

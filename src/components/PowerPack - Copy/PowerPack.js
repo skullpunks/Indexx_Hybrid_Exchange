@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PowerCard from './PowerCard';
 import { Box, Grid, Typography } from '@mui/material';
 import { PackData } from './PackData';
+import { HoneyPackData } from './HoneyBeeData';
 import powerp from '../../assets/powerpack/Power pack.png';
 import hive from '../../assets/powerpack/HiveLogo.png';
 // import PowerPackHeader from './PowerPackHeader/PowerPackHeader';
@@ -11,7 +12,7 @@ import { useMediaQuery } from '@mui/material';
 const PowerPack = ({ type }) => {
   const [cards, setCards] = useState([]);
   useEffect(() => {
-    setCards(PackData);
+    setCards(type === 'captainBee' ? PackData : HoneyPackData);
   }, []);
 
   const themes = useTheme();
