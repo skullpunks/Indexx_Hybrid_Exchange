@@ -67,7 +67,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
+    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC' || filteredFromArray[0].title === 'WIBS') {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -154,6 +154,20 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       // OpenNotification('error', res.data);
       setIsModalOpen(true);
       setMessage(res.data);
+    }
+  };
+
+  const formatRate = (rate: any) => {
+    console.log("rate", rate);
+    if (rate >= 0.01) {
+      // For rates like 0.02, or higher, show two decimal places
+      return rate.toFixed(2);
+    } else {
+      // For very small rates, find the first non-zero digit and show up to two more digits
+      const match = rate.toString().match(/^-?0\.0*([1-9]\d{0,2})/);
+      console.log("match", match)
+      return match ? parseFloat(rate).toFixed(match[1].length + 3) : rate.toFixed(2);
+      //return match ?  rate.toFixed(4) : rate.toFixed(2);
     }
   };
 
@@ -315,7 +329,8 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           >
             <span>Rate</span>
             <span>
-              {Number(rateData).toFixed(2)} USD / {filteredFromArray[0].title}
+            {/* {Number(rateData).toFixed(2)} USD / {filteredFromArray[0].title} */}
+              {formatRate(Number(rateData))} USD / {filteredFromArray[0].title}
             </span>
           </div>
           <div

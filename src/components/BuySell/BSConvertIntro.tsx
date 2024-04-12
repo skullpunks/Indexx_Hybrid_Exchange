@@ -249,9 +249,19 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         return indexxTokens.includes(tokenTitle);
     };
 
+    const isWIBSToken = (tokenTitle: string) => {
+        const indexxTokens = ["WIBS"];
+        return indexxTokens.includes(tokenTitle);
+    };
+
     const checkPurchase = () => {
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
+
+        if (!isWIBSToken(String(getRequiredCoin?.title))) {
+            OpenNotification("error", "Feature of conversion from WIBS tokens to Non-Indexx or Indexx tokens is coming soon.");
+            return;
+        }
 
         // If either the fromToken or toToken is not in the allowed list of indexxTokens, show an error notification
         if (!isIndexxToken(String(getRequiredCoin?.title)) || !isIndexxToken(String(getRequiredToCoin?.title))) {

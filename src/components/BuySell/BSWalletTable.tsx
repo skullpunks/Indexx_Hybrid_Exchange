@@ -47,7 +47,7 @@ const BSWalletTable = () => {
     ];
 
     const cryptocurrencies = [
-        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP"
+        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP", "WIBS"
     ];
     const handleStakedCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroStakedBalance(e.target.checked);
@@ -85,7 +85,7 @@ const BSWalletTable = () => {
             dataIndex: 'coinPrice',
             sorter: {
                 compare: (a, b) => a.coinPrice - b.coinPrice,
-                multiple: 3,
+                multiple: 4,
             },
             render: (_, record) => (record.coinPrice)?.toLocaleString()
         },

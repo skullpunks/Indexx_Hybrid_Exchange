@@ -49,7 +49,7 @@ const BuyContent: React.FC<Props> = ({
     };
   }, []);
   useEffect(() => {
-    const topCryptoTokens = ['IN500', 'INEX', 'IUSD+', 'INXC'];
+    const topCryptoTokens = ['WIBS','IN500', 'INEX', 'IUSD+', 'INXC'];
 
     let filtered: any[] = [];
     if (tokenType === 1) {

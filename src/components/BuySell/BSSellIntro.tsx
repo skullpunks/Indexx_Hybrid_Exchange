@@ -370,11 +370,20 @@ const BSSellIntro: React.FC<Props> = ({
       'PEP',
       'SNP500',
       'TLSA',
-      'TOB',
+      'TOB'
     ];
     return indexxTokens.includes(tokenTitle);
   };
 
+    // Utility function to check if a token is WIBS token
+    const isWIBSToken = (tokenTitle: string) => {
+      const indexxTokens = [
+        'WIBS'
+      ];
+      return indexxTokens.includes(tokenTitle);
+    };
+
+    
   const formSubmit = () => {
     let getRequiredCoin = filteredtokens.find(
       (x) => x.address === BSvalue?.fromToken
@@ -386,6 +395,15 @@ const BSSellIntro: React.FC<Props> = ({
       OpenNotification(
         'error',
         'Feature of selling Indexx tokens is coming soon.'
+      );
+      return;
+    }
+
+    if (isWIBSToken(String(getRequiredCoin?.title))) {
+      //alert("Selling of Indexx tokens is not allowed.");
+      OpenNotification(
+        'error',
+        'Feature of selling WIBS tokens is coming soon.'
       );
       return;
     }
