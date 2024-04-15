@@ -197,7 +197,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
+    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC' ||  filteredFromArray[0].title === 'WISB') {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );

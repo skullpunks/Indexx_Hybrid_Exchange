@@ -34,6 +34,17 @@
     "stakingPercentage1year": 15
   },
   {
+    "title": "WIBS",
+    "subTitle": "WhoIsBitcoinSatoshi",
+    "image": "WIBS",
+    "address": "0x0Cd2ec0EcCaB51dC91bD9af3c4561355bc1124d5",
+    "commonToken": true,
+    "isStock": false,
+    "graph": "WIBSGraph",
+    "stakingPercentage6months": 6,
+    "stakingPercentage1year": 15
+  },
+  {
     "title": "INXC",
     "subTitle": "IndexxCrypto",
     "image": "INXC",

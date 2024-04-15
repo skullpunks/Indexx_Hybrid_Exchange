@@ -35,7 +35,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -1229,6 +1229,8 @@ export const oneUSDHelper = async (coinValue: number, coinType: string) => {
   try {
     let oneUSDValue = 0;
     if (coinType === 'IN500') {
+      oneUSDValue = 1 / coinValue;
+    } else if (coinType === 'WIBS') {
       oneUSDValue = 1 / coinValue;
     } else if (coinType === 'INXC') {
       oneUSDValue = 1 / coinValue;

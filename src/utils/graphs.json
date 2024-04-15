@@ -12,6 +12,10 @@
     "graph": "Indexx500Graph"
   },
   {
+    "address": "0x0Cd2ec0EcCaB51dC91bD9af3c4561355bc1124d5",
+    "graph": "WIBSGraph"
+  },
+  {
     "address": "0x129d9E5a74C2dD427b5C326406039976FE963a90",
     "graph": "IndexxExchangePolygon"
   },

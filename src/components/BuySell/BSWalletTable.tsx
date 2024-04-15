@@ -47,7 +47,7 @@ const BSWalletTable = () => {
     ];
 
     const cryptocurrencies = [
-        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP"
+        "IN500", "INEX", "IUSD+", "INXC", "BNB", "BTC", "DAI", "DOGE", "DOT", "ETH", "LINK", "LTC", "MATIC", "TRX", "USDC", "USDT", "XRP", "WIBS", "ETH"
     ];
     const handleStakedCheckboxChange = (e: CheckboxChangeEvent) => {
         setHideZeroStakedBalance(e.target.checked);
@@ -62,10 +62,10 @@ const BSWalletTable = () => {
             },
             title: 'Asset',
             render: (_, record) => {
-                const imageSrc = (record.coinSymbol === "INEX" && record.coinNetwork  === "Polygon") ? require(`../../assets/token-icons/INEX-POLYGON.png`).default : require(`../../assets/token-icons/${record.coinSymbol}.png`).default;
+                const imageSrc = (record.coinSymbol === "INEX" && record.coinNetwork === "Polygon") ? require(`../../assets/token-icons/INEX-POLYGON.png`).default : require(`../../assets/token-icons/${record.coinSymbol}.png`).default;
                 return (
                     <>
-                        <img src={imageSrc} alt={record.coinSymbol} width={["INEX", "IN500", "INXC", "IUSD"].some(str => record.coinSymbol.includes(str)) ? "52" : "40"}  style={{ marginRight: '8px' }} />
+                        <img src={imageSrc} alt={record.coinSymbol} width={["INEX", "IN500", "INXC", "IUSD"].some(str => record.coinSymbol.includes(str)) ? "52" : "40"} style={{ marginRight: '8px' }} />
                         {record.coinSymbol} {record.coinName}
                     </>
                 );
@@ -85,9 +85,16 @@ const BSWalletTable = () => {
             dataIndex: 'coinPrice',
             sorter: {
                 compare: (a, b) => a.coinPrice - b.coinPrice,
-                multiple: 3,
+                multiple: 4,
             },
-            render: (_, record) => (record.coinPrice)?.toLocaleString()
+            render: (_, record) => {
+                // Check if the price is exactly 0.00021
+                if (record.coinPrice === 0.00021) {
+                    return record.coinPrice.toFixed(5); // Fix to 5 decimal places
+                } else {
+                    return record.coinPrice.toFixed(2); // Fix to 2 decimal places for all other values
+                }
+            }
         },
         {
             title: 'Total Value in USD',
