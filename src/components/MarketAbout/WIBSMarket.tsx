@@ -1,15 +1,15 @@
 
 import { Collapse, Divider, Image } from 'antd';
-import ca from '../../assets/about-icons/inex_4_11zon.png';
+import ca from '../../assets/token-icons/WIBS.png';
 import { baseURL, marketsData} from '../../services/api';
 import { useEffect, useState } from 'react';
 import './MarketAbout.css'
-const IndexxExchangeMarket = () => {
+const WIBSMarket = () => {
     const { Panel } = Collapse;
     const [data, setData] = useState() as any;
     useEffect(() => {
         marketsData().then((res) => {
-            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "INEX");
+            let requiredData = res.data.find((x: { Symbol: string; }) => x.Symbol === "WIBS");
             setData(requiredData);
         });
     }, []);
@@ -59,7 +59,7 @@ const IndexxExchangeMarket = () => {
 
                                  <br />
                                     <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>ALL TIME HIGH</p>
-                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>$0.15</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>$0.00021</p><br />
 
                                     
                                 </div>
@@ -67,7 +67,7 @@ const IndexxExchangeMarket = () => {
 
 
                                     <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>CIRCULATING SUPPLY</p>
-                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.CirculatingSupply} INEX</p><br />
+                                    <p style={{ fontSize: 10, color: 'var(--body_color)' }}>{data?.CirculatingSupply} WIBS</p><br />
 
                                     <br />
                                     <p style={{ fontSize: 10, color: 'var(--body_color)', opacity: '60%' }}>PRICE CHANGE (1H)</p>
@@ -96,33 +96,27 @@ const IndexxExchangeMarket = () => {
                             fontSize: 30,
                             color: 'var(--body_color)',
                         }}
-                        header="About Indexx Exchange"
+                        header="About WhoIsBitcoinSatoshi Meme Coin"
                         key="2"
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width:82, height:82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>Indexx Exchange </p>
+                            <p style={{ fontSize: 20 }}>WhoIsBitcoinSatoshi Meme Coin </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx.ai’s Utility and Reward Token. It will be needed to
-                                participate in all derivatives like Daily Fortune, Casino and
-                                Games. The price is low at the moment but has the highest
-                                potential to increase value because of its characteristics,
-                                demand and need. Now is the best time to buy and hold your Indexx INEX tokens. The current price per INEX token is $3.00, while being predicted to increase in value within 3 - 6 months time.  
+                               Who Is Bitcoin Satoshi Coin (WIBS) is more than just a cryptocurrency – it's a digital enigma waiting to be unraveled. 
+                               With a price of $0.0021 and a symbol of WIBS, this meme coin boasts a total issuance of 210 billion tokens. 
+                               Built upon a decentralized framework, the project holds true to Satoshi's vision, with the creator stepping away to 
+                               uphold the ethos of anonymity. Utilizing the robust infrastructures of Ethereum blockchais, Who Is Satoshi Coin ensures reliability and scalability.  
                             </p>
                             <br />
 
                             <p style={{ fontSize: 20 }}>How It Works </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
-                                Indexx Exchange-based apps are built using “smart contracts.”
-                                Smart contracts, like regular paper contracts, establish the
-                                terms of an arrangement between parties. But unlike an
-                                old-fashioned contract, smart contracts automatically execute
-                                when the terms are met without the need for either
-                                participating party to know who is on the other side of the
-                                deal — and without the need for any kind of intermediary.
+                            As the journey unfolds, Who Is Bitcoin Satoshi Coin aims to expand its reach. 
+                            Join us in exploring the depths of the digital realm and uncovering the mystery behind Satoshi's legacy.
                             </p>
                             <div className='font_15x d-flex justify-content-center'>
-                                <a href={`${baseURL}/indexx-exchange/token-details/inex`} className='text_link'>Learn More</a>
+                                <a href={`https://whoisbitcoinsatoshi.wtf/`} className='text_link'>Learn More</a>
                             </div>
                         </div>
                     </Panel>
@@ -132,4 +126,4 @@ const IndexxExchangeMarket = () => {
     )
 };
 
-export default IndexxExchangeMarket;
+export default WIBSMarket;

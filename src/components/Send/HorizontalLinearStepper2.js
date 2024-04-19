@@ -619,11 +619,12 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
 
   const sendAmount = async () => {
     setError('');
+    let network = '';
     if (email) {
-      const res = await createSendTxByEmail(email, receiveAmount, currentUserEmail, selectedCoin);
+      const res = await createSendTxByEmail(email, receiveAmount, currentUserEmail, selectedCoin, network);
       handleResponse(res);
     } else if (username) {
-      const res = await createSendTxByUsername(username, receiveAmount, currentUserEmail, selectedCoin);
+      const res = await createSendTxByUsername(username, receiveAmount, currentUserEmail, selectedCoin, network);
       handleResponse(res);
     }
   };

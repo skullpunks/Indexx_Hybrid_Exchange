@@ -121,6 +121,7 @@ import inexExchangeDark from '../../assets/exchange_coins_images/INEX_Black.png'
 
 import WIBSLight from "../../assets/exchange_coins_images/WIBS_light.png";
 import WIBSDark from "../../assets/exchange_coins_images/WIBS_dark.png";
+import WIBSMarket from '../MarketAbout/WIBSMarket';
 // import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
 // import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
 
@@ -199,7 +200,7 @@ let markets: any = {
   ShibGraph: ShibMarket,
   LitecoinGraph: LitecoinMarket,
   IndexxExchange: IndexxExchangeMarket,
-  WIBSGraph: IndexxExchangeMarket,
+  WIBSGraph: WIBSMarket,
   IndexxExchangePolygon: IndexxExchangeMarket,
   IndexxPhoenixGraph: IndexxPhoenixMarket,
   FTTGraph: FTTTokenMarket,

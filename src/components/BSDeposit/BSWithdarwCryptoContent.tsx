@@ -447,7 +447,8 @@ export const BSWithdarwCryptoContent = () => {
                   token.title === 'INEX' || 
                   token.title === 'INXC' ||
                   token.title === 'IN500' || 
-                  token.title === 'IUSD+'
+                  token.title === 'IUSD+' ||
+                  token.title === 'WIBS' 
                 )
                 .map((token, index) => {
                   return (

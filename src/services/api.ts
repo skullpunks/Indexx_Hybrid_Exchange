@@ -1641,7 +1641,8 @@ export const createSendTxByUsername = async (
   toUsername: string,
   amount: number,
   fromEmail: string,
-  coin: string = 'USD'
+  coin: string = 'USD',
+  network: string = ''
 ) => {
   try {
     const result = await API.post('/api/v1/inex/transaction/sendTxByUsername', {
@@ -1649,6 +1650,7 @@ export const createSendTxByUsername = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
+      network: network
     });
     return result.data;
   } catch (e: any) {
@@ -1663,7 +1665,8 @@ export const createSendTxByEmail = async (
   toEmail: string,
   amount: number,
   fromEmail: string,
-  coin: string
+  coin: string,
+  network: string = ''
 ) => {
   try {
     const result = await API.post('/api/v1/inex/transaction/sendTxByEmail', {
@@ -1671,6 +1674,7 @@ export const createSendTxByEmail = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
+      network: network
     });
     return result.data;
   } catch (e: any) {
