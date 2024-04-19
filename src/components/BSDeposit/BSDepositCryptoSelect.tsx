@@ -212,7 +212,7 @@ export const BSDepositCryptoSelect = () => {
       );
       setSingleWallet(userWallet[0]);
       console.log(userWallet[0])
-      return  
+      return
     }
     if (selectedCoin === 'FTT') {
       if (value === 'ETH') {
@@ -232,6 +232,17 @@ export const BSDepositCryptoSelect = () => {
         (x: any) => x.coinSymbol === value
       );
       setSingleWallet(userWallet[0]);
+    }
+    else if (selectedCoin === "WIBS") {
+      const userWallet = usersWallets.filter(
+        (x: any) => x.coinSymbol === selectedCoin
+      );
+      console.log("userWallet", userWallet)
+      if (value === 'ETH') {
+        setSingleWallet(userWallet[0]);
+      } else {
+        alert(`Please select ETH network for ${selectedCoin} Deposit`);
+      }
     } else {
       const userWallet = usersWallets.filter(
         (x: any) => x.coinSymbol === selectedCoin
