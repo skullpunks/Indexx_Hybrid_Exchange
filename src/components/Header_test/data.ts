@@ -77,6 +77,63 @@ const header_data = [
     ],
   },
   {
+    mainTextDesktop: 'Meme',
+    mainTextMob: 'Meme',
+    active: false,
+    href: 'https://indexx.ai/meme-details',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore',
+        mainList: true,
+        links: [
+          {
+            name: 'Meme Coins',
+            href: 'https://indexx.ai/meme-details/meme-coin',
+          },
+          {
+            name: 'Ordinals',
+            href: 'https://indexx.ai/meme-details/ordinal-coin',
+          },
+          {
+            name: 'NFTs',
+            href: 'https://indexx.ai/meme-details/nft',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        links: [
+          {
+            name: 'Buy WIBS meme coins',
+            href: 'https://whoisbitcoinsatoshi.wtf/coin',
+          },
+          {
+            name: 'Buy Ordinals',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon',
+          },
+          {
+            name: 'Buy NFTs',
+            href: 'https://indexx.ai/meme-details/nft',
+          },
+        ],
+      },
+      {
+        heading: 'Learn More',
+        links: [
+          {
+            name: 'WIBS Whitepaper',
+            href: 'https://smallpdf.com/file#s=b3cde823-96de-4a01-b35f-5fc7b06c72e1',
+          },
+          {
+            name: 'WIBS Audit Report',
+            href: 'https://smallpdf.com/file#s=94f05479-8ca5-4236-a44c-a977bd34230b',
+          },
+        ],
+      },
+    ],
+  },
+  {
     mainTextDesktop: 'Lotto',
     mainTextMob: 'Lotto',
     active: false,

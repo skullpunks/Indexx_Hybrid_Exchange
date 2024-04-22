@@ -20,7 +20,7 @@ const PaymentOptions = ({
   message,
 }) => {
   const navigate = useNavigate();
-  const [selectedValue, setSelectedValue] = useState('wire');
+  const [selectedValue, setSelectedValue] = useState('wires');
   const [isLoading, setIsLoading] = useState(false);
   if (!isVisible) return null;
   const handleClick = async () => {
@@ -45,8 +45,6 @@ const PaymentOptions = ({
     onClose();
   };
 
-  console.log('selected value', selectedValue);
-
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -58,9 +56,14 @@ const PaymentOptions = ({
           <div className="close-button-pay" onClick={onClose}>
             &times; {/* This is the close button (X) */}
           </div>
-          <div class="pay-text-box">Payment</div>
-          <div class="pay-text-box" style={{ fontSize: '15px' }}>
-            Choose a payment method
+          <div class="pay-text-box" style={{ marginBottom: '-10px' }}>
+            Payment
+          </div>
+          <div
+            class="pay-text-box"
+            style={{ fontSize: '15px', marginBottom: '20px' }}
+          >
+            Choose a method
           </div>
           <FormControl className="pay-form">
             <FormLabel

@@ -294,6 +294,7 @@ nav .wrapper {
     transition: all 0.3s ease;
   }
   #Exchange:checked ~ .drop-menu,
+  #Meme:checked ~ .mega-box,
   #Lotto:checked ~ .mega-box,
   #Hive:checked ~ .mega-box,
   #Tokens:checked ~ .mega-box,
