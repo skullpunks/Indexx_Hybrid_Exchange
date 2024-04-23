@@ -405,7 +405,7 @@ const TabExample = ({
         ) : null}
 
         <Tab
-          label="Funding Wallet"
+          label="Asset Wallet"
           icon={
             theme === 'dark' ? (
               <img

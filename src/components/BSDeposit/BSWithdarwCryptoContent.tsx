@@ -578,7 +578,7 @@ export const BSWithdarwCryptoContent = () => {
                       className="orange margin-t-2x font_15x d-flex"
                     >
                       <span className="d-flex flex-align-center">
-                        <span style={{ minWidth: 200 }}>Funding Wallet</span>
+                        <span style={{ minWidth: 200 }}>Asset Wallet</span>
                       </span>
                     </Radio>
                   </Space>
@@ -623,7 +623,7 @@ export const BSWithdarwCryptoContent = () => {
                 </div>
 
                 <div className="w_50">
-                  <div className="brand_opacity_5"> Funding Wallet </div>
+                  <div className="brand_opacity_5"> Asset Wallet </div>
                   <div> {selectedCoin}</div>
                 </div>
               </div>

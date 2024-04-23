@@ -43,7 +43,7 @@ const CanStake = ({ isVisible, onClose}) => {
                         style={{height:"44px", color:"var(--dark_text)"}}
                     >
                     <img src={wallet} class="center" style={{ height:"35px", marginRight:"5px" }}  alt="img" />
-                        Funding Wallet
+                        Asset Wallet
                     </Button>
                     <Button
                         variant="contained"

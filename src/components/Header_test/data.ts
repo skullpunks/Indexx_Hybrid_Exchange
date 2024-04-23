@@ -23,7 +23,7 @@ const header_data = [
             href: '/indexx-exchange/buy-sell?type=convert',
           },
           {
-            name: 'Funding Wallet',
+            name: 'Asset Wallet',
             href: '/indexx-exchange/buy-sell/wallet',
           },
           {
@@ -546,7 +546,7 @@ const header_data = [
         mainList: true,
         links: [
           {
-            name: 'Funding Wallet',
+            name: 'Asset Wallet',
             href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/wallet',
           },
           {
