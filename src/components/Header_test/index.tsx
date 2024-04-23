@@ -236,7 +236,7 @@ const HeaderTest = () => {
         console.log('Element is hidden or not visible');
       } else {
         console.log('Element is visible');
-        setBackdropVisibility(true);
+        setBackdropVisibility(false);
       }
     }
   }, []);
