@@ -552,7 +552,7 @@ export const BSDepositCryptoSelect = () => {
                   <div className="brand_opacity_5">Selected wallet</div>
                   <div>
                     {' '}
-                    Funding Wallet
+                    Asset Wallet
                     {/* <span className="text_link"> <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span> */}
                   </div>
                 </div>

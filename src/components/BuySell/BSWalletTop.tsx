@@ -69,7 +69,7 @@ const BSWalletTop = () => {
             <div className='border-b-1x orange width-100 padding-t-2x padding-b-2x d-flex flex-direction-column align-items-center'>
                 <h1 className='padding-b-1x padding-t-1x fw-bold font_40x'>
                     <img src={wallet} alt="logo" style={{ marginRight: "20px", width:"71px" }} />
-                    Funding Wallet
+                    Asset Wallet
                 </h1>
                 <div className='font_20x padding-b-3x text-center'>
                     Your trusted financial companion for managing, saving, and investing your money.
