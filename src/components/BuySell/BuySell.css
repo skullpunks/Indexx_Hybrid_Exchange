@@ -563,6 +563,7 @@ button.ant-btn-primary [disabled] {
   padding: 20px 10px;
   font-size: 30px;
   color: var(--body_color);
+  height: 80px;
 }
 
 .bs_tab_item
