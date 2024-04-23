@@ -595,6 +595,7 @@ button.ant-btn-primary [disabled] {
   > .ant-tabs-nav-list
   > .ant-tabs-ink-bar {
   background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .bs_main > .card {
