@@ -11,6 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState } from 'react';
+import CrossIcon from '../../../assets/crossIcon.png';
+import { Button } from 'antd';
 
 const PaymentOptions = ({
   isVisible,
@@ -41,8 +43,6 @@ const PaymentOptions = ({
     } else if (selectedValue === 'paypal' || selectedValue === 'wires') {
       onConfirm();
     }
-    setIsLoading(false);
-    onClose();
   };
 
   const handleRadioChange = (event) => {
@@ -54,7 +54,8 @@ const PaymentOptions = ({
       <div class="main-pay-box">
         <div class="pay-box">
           <div className="close-button-pay" onClick={onClose}>
-            &times; {/* This is the close button (X) */}
+            {/* &times; This is the close button (X) */}
+            <img src={CrossIcon} style={{ width: '20px', height: '20px' }} />
           </div>
           <div class="pay-text-box" style={{ marginBottom: '-10px' }}>
             Payment
@@ -188,13 +189,23 @@ const PaymentOptions = ({
             </RadioGroup>
           </FormControl>
           <div class="pay-button-box mt-5">
-            <button
+            <Button
+              type="primary"
+              className="pay-button-btn"
+              onClick={handleClick}
+              // onClick={() => createNewBuyOrder()}
+              loading={isLoading}
+            >
+              {' '}
+              Continue
+            </Button>
+            {/* <button
               className="pay-button-btn"
               onClick={handleClick}
               disabled={isLoading}
             >
               {isLoading ? 'Processing...' : 'Continue'}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

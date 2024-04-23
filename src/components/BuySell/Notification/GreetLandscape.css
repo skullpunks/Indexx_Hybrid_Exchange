@@ -18,7 +18,9 @@
   padding-inline: 50px;
   padding-bottom: 35px;
   top: 28px;
-  width: 788px;
+  max-width: 788px;
+  width: 100%;
+  padding: 10px 25px 10px 10px;
   background-color: var(--body_background);
   border-width: 1px;
   border-style: solid;
@@ -45,16 +47,18 @@
 }
 
 .close-button-pay {
-  position: relative;
-  top: -13%;
+  position: absolute;
+  top: -10px;
   /* right: 35%; */
-  left: 104%;
+  right: -30px;
   cursor: pointer;
   font-size: 1.25rem;
   color: var(--dark_text);
   z-index: 1000;
 }
-
+.close-button-pay:hover {
+  transform: scale(1.1);
+}
 .close-button-greet {
   position: relative;
   top: -13%;
