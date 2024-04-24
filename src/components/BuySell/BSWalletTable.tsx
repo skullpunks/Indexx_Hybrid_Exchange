@@ -262,7 +262,7 @@ const BSWalletTable = () => {
         <div>
 
             <Tabs tabBarExtraContent={operations} defaultActiveKey="1" className='margin-t-2x orange'>
-                <Tabs.TabPane tab="" key="1" className='padding-2x'>
+                <Tabs.TabPane tab="Cryptocurrencies" key="1" className='padding-2x'>
                     <div className='border-b-1x margin-b-2x'>
                         <div className='checkbox-container' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
@@ -275,15 +275,123 @@ const BSWalletTable = () => {
                         {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
                         {/* Render Cryptocurrencies Section */}
                         {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
+                        {/* <br /> */}
+                        {/* Render Stocks Section */}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
+
+                        {/* <br /> */}
+                        {/* Render ETFs Section */}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
+
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
+                        {/* <MyPagination
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
+                        <MyPagination
+                            total={sortedData && sortedData.length}
+                            current={current}
+                            onChange={setCurrent}
+                        /> */}
+                    </div>
+                </Tabs.TabPane>
+
+                <Tabs.TabPane tab="Stocks" key="2" className='padding-2x'>
+                    <div className='border-b-1x margin-b-2x'>
+                        <div className='checkbox-container' style={{ textAlign: "right" }}>
+                            <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
+                                Hide rows with 0 balance
+                            </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
+                        </div>
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
                         <br />
                         {/* Render Stocks Section */}
                         {renderTableSection(sortedStockData, "Stock Tokens")}
 
-                        <br />
+                        {/* <br /> */}
+                        {/* Render ETFs Section */}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
+
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
+                        {/* <MyPagination
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
+                        <MyPagination
+                            total={sortedData && sortedData.length}
+                            current={current}
+                            onChange={setCurrent}
+                        /> */}
+                    </div>
+                </Tabs.TabPane>
+
+                <Tabs.TabPane tab="ETFs" key="3" className='padding-2x'>
+                    <div className='border-b-1x margin-b-2x'>
+                        <div className='checkbox-container' style={{ textAlign: "right" }}>
+                            <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
+                                Hide rows with 0 balance
+                            </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
+                        </div>
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
+                        {/* <br /> */}
+                        {/* Render Stocks Section */}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
+
+                        {/* <br /> */}
                         {/* Render ETFs Section */}
                         {renderTableSection(sortedEtfData, "ETF Tokens")}
 
-                        <br />
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
+                        {/* <MyPagination
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
+                        <MyPagination
+                            total={sortedData && sortedData.length}
+                            current={current}
+                            onChange={setCurrent}
+                        /> */}
+                    </div>
+                </Tabs.TabPane>
+                
+                <Tabs.TabPane tab="Fiat" key="4" className='padding-2x'>
+                    <div className='border-b-1x margin-b-2x'>
+                        <div className='checkbox-container' style={{ textAlign: "right" }}>
+                            <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
+                                Hide rows with 0 balance
+                            </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
+                        </div>
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
+                        {/* <br /> */}
+                        {/* Render Stocks Section */}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
+
+                        {/* <br /> */}
+                        {/* Render ETFs Section */}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
+
+                        {/* <br /> */}
                         {renderTableSection(sortedFiatData, "Fiat Currencies")}
                         {/* <MyPagination
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 

@@ -673,7 +673,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
         <div className='d-flex padding-t-1x'>
           <img src={wallet} alt="people" style={{ marginRight: "10px", width: "36px" }} />
           <div className="font_15x">
-            Funding Wallet
+            Asset Wallet
             <br />
             <span className='font_13x'>Balance: {currentUserBalance} {" "} {selectedCoin}</span>
           </div>

@@ -67,7 +67,7 @@ const BeeWalletTop = () => {
     return (
         <>
             <div className='border-b-1x orange width-100 pt-3 font_15x'>
-                <h1 className='font_15x' style={{ color: "#393939" }}>Funding Wallet</h1>
+                <h1 className='font_15x' style={{color:"#393939"}}>Asset Wallet</h1>
             </div>
             <div className='padding-t-1x width-100 position-relative' >
                 <h2 className='font_15x'>Estimated Balance</h2>

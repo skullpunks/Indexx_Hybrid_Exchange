@@ -117,7 +117,7 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({ email }) => 
     return (
         <>
             <div className='border-b-1x orange width-100 pt-3 font_15x'>
-                <h1 className='font_15x'>Funding Wallet</h1>
+                <h1 className='font_15x'>Asset Wallet</h1>
             </div>
             <div className='padding-t-1x width-100 position-relative' >
                 <h2 className='font_15x'>Estimated Balance</h2>

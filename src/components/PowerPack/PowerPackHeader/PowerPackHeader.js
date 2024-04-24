@@ -431,7 +431,7 @@ const PowerPackHeader = () => {
                   />
                 )}
                 <div className="card-body">
-                  <h5 className="card-title mt-1">Funding Wallet</h5>
+                  <h5 className="card-title mt-1">Asset Wallet</h5>
                   <Typography
                     component="p"
                     style={
