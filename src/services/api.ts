@@ -26,7 +26,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseAPIURL = 'https://test.api.indexx.ai';
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
-  baseURL = 'https://test.indexx.ai';
+  // baseURL = 'https://test.indexx.ai';
   baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
@@ -1650,7 +1650,7 @@ export const createSendTxByUsername = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
-      network: network
+      network: network,
     });
     return result.data;
   } catch (e: any) {
@@ -1674,7 +1674,7 @@ export const createSendTxByEmail = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
-      network: network
+      network: network,
     });
     return result.data;
   } catch (e: any) {

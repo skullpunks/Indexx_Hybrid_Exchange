@@ -18,7 +18,7 @@ const OpenNotification = (type, message) => {
       border: '1px solid var(--primary-color)',
       boxShadow: 'none',
       borderRadius: 5,
-      top: 100,
+      top: 400,
     },
     className: `theme-${localStorage.getItem('userlogged')}`,
   });

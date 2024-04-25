@@ -10,9 +10,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CrossIcon from '../../../assets/crossIcon.png';
+import CrossIconWhite from '../../../assets/cross_white.png';
 import { Button } from 'antd';
+import { Theme } from '../../../utils/themeContext';
 
 const PaymentOptions = ({
   isVisible,
@@ -22,6 +24,12 @@ const PaymentOptions = ({
   message,
 }) => {
   const navigate = useNavigate();
+  const themeData = useContext(Theme);
+  const [theme, setTheme] = useState(themeData?.theme ?? 'light');
+
+  useEffect(() => {
+    setTheme(themeData?.theme);
+  }, [themeData]);
   const [selectedValue, setSelectedValue] = useState('wires');
   const [isLoading, setIsLoading] = useState(false);
   if (!isVisible) return null;
@@ -55,7 +63,11 @@ const PaymentOptions = ({
         <div class="pay-box">
           <div className="close-button-pay" onClick={onClose}>
             {/* &times; This is the close button (X) */}
-            <img src={CrossIcon} style={{ width: '20px', height: '20px' }} />
+            {theme === 'light' ? (
+              <img src={CrossIcon} style={{ width: '36px', height: '36px' }} />
+            ) : (
+              <img src={CrossIconWhite} />
+            )}
           </div>
           <div class="pay-text-box" style={{ marginBottom: '-10px' }}>
             Payment

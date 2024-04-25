@@ -442,7 +442,7 @@ const CaptainDash = () => {
           <p
             style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
           >
-            Please wait while Waggle Dance is loading
+            Please wait while Hive Dashboard is loading
             <span className="dots-animation"></span>
           </p>
         </div>
@@ -459,7 +459,7 @@ const CaptainDash = () => {
               alt=""
               width={'46px'}
             />
-            &nbsp;&nbsp;&nbsp; Waggle Dance / My Dashboard
+            &nbsp;&nbsp;&nbsp; Hive Dashboard
           </div>
           <div className="hive-container">
             <div

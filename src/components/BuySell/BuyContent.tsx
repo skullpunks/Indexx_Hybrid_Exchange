@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 // import IN500 from "../../assets/token-icons/33.png";
 import { Select } from 'antd';
+// import Select from 'react-select';
 // import { Option } from 'antd/lib/mentions';
 import bsDollar from '../../assets/arts/usd icon 1.svg';
+import bitcoinIcon from '../../assets/arts/Setoshi-Mask-0031.png';
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import initialTokens from '../../utils/Tokens.json';
 import graphTokens from '../../utils/graphs.json';
@@ -15,22 +17,44 @@ import {
 } from '../../services/api';
 import { BSContext, BSContextType } from '../../utils/SwapContext';
 import './BS-Sell.css';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
   tokenType: number;
   subtokenType: number;
+  setActiveTab?: any;
 }
 
 const BuyContent: React.FC<Props> = ({
   setScreenName,
   tokenType,
+  setActiveTab,
   subtokenType,
 }) => {
   const navigate = useNavigate();
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
-  const [filteredtokens, setFilteredtokens] = useState(initialTokens);
+  const newarr = initialTokens.map((token: any) => {
+    return {
+      ...token,
+      children: `${token.title} - ${token.subTitle}`,
+    };
+  });
+  console.log(newarr);
+  const [filteredtokens, setFilteredtokens] = useState(newarr);
+
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'light'
   );
@@ -49,24 +73,24 @@ const BuyContent: React.FC<Props> = ({
     };
   }, []);
   useEffect(() => {
-    const topCryptoTokens = ['WIBS','IN500', 'INEX', 'IUSD+', 'INXC'];
+    const topCryptoTokens = ['WIBS', 'IN500', 'INEX', 'IUSD+', 'INXC'];
 
     let filtered: any[] = [];
     if (tokenType === 1) {
       if (subtokenType === 0) {
         // Stock tokens
-        filtered = initialTokens.filter(
+        filtered = newarr.filter(
           (item) => item.isStock || item.subTitle.includes('SNP500')
         );
       } else if (subtokenType === 1) {
         // ETF tokens
-        filtered = initialTokens.filter((item) => item.isETF);
+        filtered = newarr.filter((item) => item.isETF);
       }
       // Sort alphabetically for Stocks and ETFs
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (tokenType === 0) {
       // Crypto tokens
-      filtered = initialTokens.filter((item) => !item.isStock && !item.isETF);
+      filtered = newarr.filter((item) => !item.isStock && !item.isETF);
 
       // Custom sorting for Crypto: top tokens first, then alphabetically
       filtered.sort((a, b) => {
@@ -86,7 +110,7 @@ const BuyContent: React.FC<Props> = ({
       });
     } else {
       // All tokens
-      filtered = [...initialTokens];
+      filtered = [...newarr];
     }
 
     setFilteredtokens(filtered);
@@ -131,10 +155,12 @@ const BuyContent: React.FC<Props> = ({
         setBSvalue({ ...BSvalue, amount: parseFloat(buyVal) });
       }
       if (honeyBeeId === 'undefined' || honeyBeeId === '')
-        navigate('/indexx-exchange/buy-sell/confirm-purchase');
+        navigate(
+          `/indexx-exchange/buy-sell/confirm-purchase?amount=${buyVal}&token=${BSvalue.fromToken}`
+        );
       else
         navigate(
-          `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase`
+          `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}/confirm-purchase?amount=${buyVal}&token=${BSvalue.fromToken}`
         );
       // setScreenName("confirmPurchase");
     } else {
@@ -161,7 +187,7 @@ const BuyContent: React.FC<Props> = ({
   };
 
   const categorizedTokens = categorizeTokens(filteredtokens);
-
+  console.log(categorizedTokens, 'categorized tokenn');
   useEffect(() => {
     if (id) {
       setHoneyBeeId(String(id));
@@ -198,7 +224,7 @@ const BuyContent: React.FC<Props> = ({
       handleChange(BSvalue.fromToken);
     }
   }, [BSvalue.fromTitle, BSvalue.amount, id, BSvalue.fromToken]);
-
+  const [selectedOption, setSelectedOption] = useState<any>(null);
   const handleChange = async (value: string) => {
     let getRequiredCoin = filteredtokens.find((x) => x.address === value);
     let getGraphCoin = graphTokens.find((x) => x.address === value);
@@ -299,7 +325,7 @@ const BuyContent: React.FC<Props> = ({
           className="font_20x opacity-75 justify-content-center d-flex"
           style={{ color: 'var(--body_color)' }}
         >
-          Enter Amount
+          Enter Amount to Buy
         </div>
         {!isLimitPassed ? (
           <div className="error_message font_15x">
@@ -329,6 +355,7 @@ const BuyContent: React.FC<Props> = ({
               {' '}
               Buy
             </span>
+
             <Select
               className="width-100 border-0"
               onChange={handleChange}
@@ -340,6 +367,8 @@ const BuyContent: React.FC<Props> = ({
                 backgroundColor: 'var(--body_background)',
                 color: 'var(--body_color)',
               }}
+              showSearch // Enable search functionality
+              // Define the property to filter options by
             >
               {Object.entries(categorizedTokens).map(
                 ([category, tokens]) =>
@@ -422,7 +451,39 @@ const BuyContent: React.FC<Props> = ({
               width="40"
               style={{ marginRight: 11 }}
             />
-            USD <span className="token_grey">US Dollar</span>
+            USD
+          </div>
+        </div>
+      </div>
+      <div
+        className="bs_token cursor-pointer py-3"
+        style={{ alignItems: 'center' }}
+      >
+        <div
+          className="bs_token_left d-flex justify-between align-items-center"
+          style={{ height: '55px', padding: '0 11px' }}
+        >
+          <div className="bs_token_num d-flex justify-between align-items-center">
+            <span
+              onClick={() => {
+                console.log('handle crypto click');
+                setActiveTab('3');
+              }}
+              style={{
+                marginRight: '12px',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            >
+              Pay with
+            </span>
+            <img
+              src={bitcoinIcon}
+              alt="Index icon"
+              width="40"
+              style={{ marginRight: 11 }}
+            />
+            Crypto
           </div>
         </div>
       </div>

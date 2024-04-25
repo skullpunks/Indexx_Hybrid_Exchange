@@ -53,7 +53,7 @@ const SubHeader = () => {
                   className="card-body"
                   style={{ marginTop: `${isMobile ? '-1px' : '1.5px'}` }}
                 >
-                  <h5 className="card-title">Waggle Dance</h5>
+                  <h5 className="card-title">Hive Dashboard</h5>
                   <Typography
                     component="p"
                     sx={

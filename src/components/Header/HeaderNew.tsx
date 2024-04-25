@@ -11,7 +11,6 @@ import './Header.css';
 import loaderGif from '../../assets/arts/loaderIcon.gif';
 import hive from '../../assets/BSheader/hive logo HD2 1.svg';
 
-
 import frame from '../../assets/hive-dashboard/frame.svg';
 import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
 

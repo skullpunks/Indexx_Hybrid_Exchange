@@ -74,6 +74,7 @@ nav .wrapper {
 .nav-links li:hover .mega-box {
   transition: all 0.3s ease;
   /* top: 70px; */
+  transition-delay: 0.2s;
   opacity: 1;
   visibility: visible;
 }

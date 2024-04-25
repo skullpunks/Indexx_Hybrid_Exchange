@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 // import swapIcon from "../../assets/arts/swapIcon.svg";
 // import SwapArrowIcon from "../../assets/arts/SwapArrowIcon.svg";
 import { CloseCircleFilled } from '@ant-design/icons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   createBuyOrder,
   createStripePaymentIntent,
@@ -43,11 +43,16 @@ const stripePromise = loadStripe(
 
 const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const t_amount = queryParams.get('amount');
+  const token = queryParams.get('token');
+
   const { BSvalue } = React.useContext(BSContext) as BSContextType;
   const [loadings, setLoadings] = useState<boolean>(false);
 
   const filteredFromArray = initialTokens.filter(function (obj) {
-    return obj?.address === BSvalue?.fromToken;
+    return obj?.address === token ?? BSvalue?.fromToken;
   });
 
   const getPricesData = async () => {
@@ -60,14 +65,22 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       filteredFromArray[0].title
     );
     const finalPay: any =
-      oneUsdValue * Number(BSvalue?.amount) * (1 - Number(adminFee) / 100);
+      oneUsdValue *
+      Number(t_amount ?? BSvalue?.amount) *
+      (1 - Number(adminFee) / 100);
     setTotalAmountToPay(finalPay);
   };
 
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC' || filteredFromArray[0].title === 'WIBS') {
+    if (
+      filteredFromArray[0].title === 'INEX' ||
+      filteredFromArray[0].title === 'IUSD+' ||
+      filteredFromArray[0].title === 'IN500' ||
+      filteredFromArray[0].title === 'INXC' ||
+      filteredFromArray[0].title === 'WIBS'
+    ) {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -81,9 +94,10 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     return;
   };
   const { id } = useParams();
-  const [honeyBeeId, setHoneyBeeId] = useState("");
+
+  const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
-  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
   const [adminFee, setAdminFees] = useState('');
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
@@ -122,20 +136,28 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     setLoadings(true);
     let basecoin: string = filteredFromArray[0].title;
     let quotecoin: string = 'USD';
-    let amount: number = Number(BSvalue?.amount);
+    let amount: number = Number(t_amount ?? BSvalue?.amount);
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
     if (id) {
-
-
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
         setIsModalOpen(true);
-        setMessage("As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
         setLoadings(false);
         return;
       }
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, honeyBeeEmail, true);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true
+      );
     } else {
       res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
     }
@@ -144,7 +166,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       //--Below code is to enable paypal Order---
 
       for (let i = 0; i < res.data.links.length; i++) {
-        if (res.data.links[i].rel.includes("approve")) {
+        if (res.data.links[i].rel.includes('approve')) {
           window.location.href = res.data.links[i].href;
         }
       }
@@ -158,15 +180,17 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   };
 
   const formatRate = (rate: any) => {
-    console.log("rate", rate);
+    console.log('rate', rate);
     if (rate >= 0.01) {
       // For rates like 0.02, or higher, show two decimal places
       return rate.toFixed(2);
     } else {
       // For very small rates, find the first non-zero digit and show up to two more digits
       const match = rate.toString().match(/^-?0\.0*([1-9]\d{0,2})/);
-      console.log("match", match)
-      return match ? parseFloat(rate).toFixed(match[1].length + 3) : rate.toFixed(2);
+      console.log('match', match);
+      return match
+        ? parseFloat(rate).toFixed(match[1].length + 3)
+        : rate.toFixed(2);
       //return match ?  rate.toFixed(4) : rate.toFixed(2);
     }
   };
@@ -175,23 +199,41 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     setLoadings(true);
     let basecoin: string = filteredFromArray[0].title;
     let quotecoin: string = 'USD';
-    let amount: number = Number(BSvalue?.amount);
+    let amount: number = Number(t_amount ?? BSvalue?.amount);
     let outAmount = Math.floor(totalAmountToPay * 1000000) / 1000000;
     let res;
-    console.log("paymentMethod", paymentMethod)
+    console.log('paymentMethod', paymentMethod);
     if (id) {
-
-
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
         setIsModalOpen(true);
-        setMessage("As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
         setLoadings(false);
         return;
       }
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, honeyBeeEmail, true, paymentMethod);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true,
+        paymentMethod
+      );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, 0, "", false, paymentMethod);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        '',
+        false,
+        paymentMethod
+      );
     }
     if (res.status === 200) {
       // Return the order ID for Zelle and Wire
@@ -207,7 +249,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
 
   const getStripePaymentIntent = async (orderId: string, email: string) => {
     const res = await createStripePaymentIntent(
-      Number(BSvalue?.amount),
+      Number(t_amount ?? BSvalue?.amount),
       orderId,
       email
     );
@@ -216,21 +258,22 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
   };
 
   useEffect(() => {
-
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
         setUserData(data.data);
 
         setHoneyBeeEmail(data.data.userFullData?.email);
-        let captainbeePermissions = data.data.referredUserData?.data.relationships;
+        let captainbeePermissions =
+          data.data.referredUserData?.data.relationships;
 
+        let c = captainbeePermissions.find(
+          (x: { honeybeeEmail: any }) =>
+            x.honeybeeEmail === data.data.userFullData?.email
+        );
 
-        let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-
-        setPermissionData(c)
+        setPermissionData(c);
       });
-
     }
     getAllSetting();
     getPricesData();
@@ -242,17 +285,17 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
       testVal.length < 6
         ? '1.1'
         : testVal.length < 9
-          ? '0.9'
-          : testVal.length < 12
-            ? '0.8'
-            : testVal.length < 15
-              ? '0.6'
-              : '0.4';
+        ? '0.9'
+        : testVal.length < 12
+        ? '0.8'
+        : testVal.length < 15
+        ? '0.6'
+        : '0.4';
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
     // }
-  }, [getAllSetting, getPricesData, getTaskCenterDetailsData, id])
+  }, [getAllSetting, getPricesData, getTaskCenterDetailsData, id]);
 
   const appearance = {
     theme: String('stripe'),
@@ -282,12 +325,13 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
             <span
               className="cursor-pointer"
               onClick={() => {
-                if (honeyBeeId === "undefined" || honeyBeeId === "")
+                if (honeyBeeId === 'undefined' || honeyBeeId === '')
                   navigate('/indexx-exchange/buy-sell/');
                 else
-                  navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}`);
-              }
-              }
+                  navigate(
+                    `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}`
+                  );
+              }}
             >
               &#60;
             </span>{' '}
@@ -302,7 +346,10 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               className="bs_curreny_left flex-align-center padding-b-2x"
               style={{ alignItems: 'baseline', padding: '50px 20px' }}
             >
-              <span className="font_20x" style={{ lineHeight: 4, color: "var(--body_color)" }}>
+              <span
+                className="font_20x"
+                style={{ lineHeight: 4, color: 'var(--body_color)' }}
+              >
                 $
               </span>
               <span
@@ -315,7 +362,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
                   lineHeight: '100px',
                 }}
               >
-                {BSvalue?.amount}
+                {t_amount ?? BSvalue?.amount}
               </span>
               {/* <span placeholder="0" id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
             </div>
@@ -325,17 +372,17 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           </div>
           <div
             className="bs_token d-flex cursor-pointer justify-between font_20x"
-            style={{ alignItems: 'center', color: "var(--body_color)" }}
+            style={{ alignItems: 'center', color: 'var(--body_color)' }}
           >
             <span>Rate</span>
             <span>
-            {/* {Number(rateData).toFixed(2)} USD / {filteredFromArray[0].title} */}
+              {/* {Number(rateData).toFixed(2)} USD / {filteredFromArray[0].title} */}
               {formatRate(Number(rateData))} USD / {filteredFromArray[0].title}
             </span>
           </div>
           <div
             className="bs_token d-flex cursor-pointer justify-between font_20x"
-            style={{ alignItems: 'center', color: "var(--body_color)" }}
+            style={{ alignItems: 'center', color: 'var(--body_color)' }}
           >
             <span>Total</span>
             <span>
@@ -354,15 +401,15 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           </div>
 
           <div className="footer bs_footer_action">
-            {Number(BSvalue?.amount) > 50 &&
+            {Number(t_amount ?? BSvalue?.amount) > 50 &&
               taskCenterDetails?.tradeToEarnPercentage > 0 && (
                 <h6 className="text-center">
                   Rewards Applied for this order:{' '}
                   {Math.floor(
-                    ((Number(BSvalue?.amount) *
+                    ((Number(t_amount ?? BSvalue?.amount) *
                       taskCenterDetails?.tradeToEarnPercentage) /
                       100) *
-                    100
+                      100
                   ) / 100}{' '}
                   INEX
                 </h6>
@@ -389,8 +436,10 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               width={850}
               maskClosable={false}
               className="buy_purchase_modal custom-modal"
-              bodyStyle={{ background: "var(--body_background)", color: "var(--body_color)" }}
-
+              bodyStyle={{
+                background: 'var(--body_background)',
+                color: 'var(--body_color)',
+              }}
             >
               {clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
@@ -399,25 +448,35 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               )}
             </Modal>
 
-            {<Modal title="indexx.ai" visible={isTransferModalVisible} onOk={handleTransferOk} onCancel={handleTransferCancel} footer={null} width={850} maskClosable={false} className="buy_purchase_modal">
-
-              {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
-              <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-                <PayPalScriptProvider
-                  options={{
-                    "client-id": "AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB",
-                    components: "buttons",
-                    currency: "USD"
-                  }}
-                >
-                  {/* <Button
+            {
+              <Modal
+                title="indexx.ai"
+                visible={isTransferModalVisible}
+                onOk={handleTransferOk}
+                onCancel={handleTransferCancel}
+                footer={null}
+                width={850}
+                maskClosable={false}
+                className="buy_purchase_modal"
+              >
+                {/* <Paypal2 className={undefined} value={BSvalue?.amount} /> */}
+                <div style={{ maxWidth: '750px', minHeight: '200px' }}>
+                  <PayPalScriptProvider
+                    options={{
+                      'client-id':
+                        'AXh_SjiYho65fhZoKGSXRllbnvnsxOfJ0iLV5BLNcIenhYOOZ_5ABJJStkb0T0tgpxd22DTSklrquOaB',
+                      components: 'buttons',
+                      currency: 'USD',
+                    }}
+                  >
+                    {/* <Button
                   currency={"USD"}
                   showSpinner={false}
                 /> */}
-                </PayPalScriptProvider>
-              </div>
-            </Modal>}
-
+                  </PayPalScriptProvider>
+                </div>
+              </Modal>
+            }
           </div>
         </div>
       </div>
@@ -434,7 +493,9 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
           isVisible={isModalOpen2}
           onClose={() => setIsModalOpen2(false)}
           onConfirm={createNewBuyOrder}
-          onZelleAndWireConfirm={(paymentMethod: string) => createBuyOrderForZelleAndWire(paymentMethod)} // For Zelle and Wire
+          onZelleAndWireConfirm={(paymentMethod: string) =>
+            createBuyOrderForZelleAndWire(paymentMethod)
+          } // For Zelle and Wire
           message={message}
         />
       </div>

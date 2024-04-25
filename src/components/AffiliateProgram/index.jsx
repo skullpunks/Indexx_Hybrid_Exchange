@@ -143,8 +143,8 @@ const AffiliateProgram = () => {
           textAlign="center"
           color="var(--primary_color)"
         >
-          Congratulations, you have unlocked the hive dashboard. The
-          Dashboard/Waggle Dance will help you with your commissions
+          Congratulations, you have unlocked the hive dashboard. The Dashboard
+          will help you with your commissions
         </Typography>
 
         <Button
@@ -167,7 +167,7 @@ const AffiliateProgram = () => {
             },
           }}
         >
-          Waggle Dance
+          Hive Dashboard
         </Button>
 
         <Box style={{ marginTop: '75px' }}>

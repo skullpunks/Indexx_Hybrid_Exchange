@@ -723,7 +723,7 @@ export const auth_header_data = [
             href: '/indexx-exchange/bridge',
           },
           {
-            name: 'Waggle Dance/ Dashboard',
+            name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',
           },
           {

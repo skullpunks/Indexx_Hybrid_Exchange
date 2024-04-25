@@ -379,7 +379,7 @@ const TabExample = ({
         ((isCaptain === true && haspowerpack === true) ||
           isCaptain === false) ? (
           <Tab
-            label="Waggle Dance"
+            label="Hive Dashboard"
             icon={
               theme === 'dark' ? (
                 <img

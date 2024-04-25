@@ -26,11 +26,14 @@ import clock_dark from '../../../../assets/hive-dashboard/sidebar/dark-icons/clo
 import SubHeader from '../SubHeader/SubHeader';
 import '../CaptainDash.css';
 import BeeTabs from './BeeTabs';
-import { getCaptainBeeStatics, getHoneyBeeDataByUsername } from '../../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyBeeDataByUsername,
+} from '../../../../services/api';
 import { useParams } from 'react-router-dom';
 import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndividual';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 import loadingGif from '../../../../assets/beeloade.gif';
 
 const BeeDash = () => {
@@ -38,7 +41,7 @@ const BeeDash = () => {
 
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [captainBeeData, setCaptainBeeData] = useState();
-  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,34 +49,32 @@ const BeeDash = () => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const data = await getHoneyBeeDataByUsername(id);
 
-        console.log("Data.", data?.data);
+        console.log('Data.', data?.data);
         setHoneyBeeData(data.data);
         setHoneyBeeEmail(data?.data?.userFullData?.email);
         setCaptainBeeData(data?.data?.referredUserData?.data2);
         if (id) {
           const captdata = await getCaptainBeeStatics(id);
-            setStaticsData(captdata.data);
+          setStaticsData(captdata.data);
         }
-        setIsLoading(false); 
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setIsLoading(false); 
-          }
-          finally {
-            setIsLoading(false);
-          }
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchData();
-  }, [id])
+  }, [id]);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "light"
+    localStorage.getItem('selectedTheme') || 'light'
   );
 
   useEffect(() => {
@@ -92,7 +93,7 @@ const BeeDash = () => {
   return (
     <>
       <SubHeader />
-      {isLoading &&
+      {isLoading && (
         <div
           style={{
             position: 'fixed',
@@ -101,7 +102,7 @@ const BeeDash = () => {
             width: '100%',
             height: '100%',
             // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            backdropFilter:"blur(8px)",
+            backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -111,24 +112,34 @@ const BeeDash = () => {
           }}
         >
           <img src={loadingGif} alt="Loading" />
-          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
-            Please wait while your Honey Bee's Waggle Dance is loading
+          <p
+            style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
+          >
+            Please wait while your Honey Bee's Hive Dashboard is loading
             <span className="dots-animation"></span>
           </p>
         </div>
-      }
-      {userType === "HoneyBee" ?
-        (<div style={{ paddingTop: `${isMobile ? "250px" : '220px'}` }}>
-          <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: `${isMobile ? "0" : "-429px"}` }}>
-            {userType === "CaptainBee" ? "Captain Bee’s  Waggle Dance / Captain Bee’s  Dashboard" : "Honey Bee’s  Waggle Dance / Honey Bee’s  Dashboard"}
+      )}
+      {userType === 'HoneyBee' ? (
+        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+          <div
+            className="font_20x fw-bold justify-content-center d-flex"
+            style={{ marginLeft: `${isMobile ? '0' : '-429px'}` }}
+          >
+            {userType === 'CaptainBee'
+              ? 'Captain Bee’s  Hive Dashboard / Captain Bee’s  Dashboard'
+              : 'Honey Bee’s  Hive Dashboard / Honey Bee’s  Dashboard'}
           </div>
           <div className="hive-container">
             <div
               className="d-flex justify-content-center"
               // style={{ width: '86%', maxWidth: '1140px' }}
-              style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
+              style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
             >
-              <div className="d-flex flex-direction-column align-items-center mt-1" style={{ width: `${isMobile ? "100%" : "280px"}` }}>
+              <div
+                className="d-flex flex-direction-column align-items-center mt-1"
+                style={{ width: `${isMobile ? '100%' : '280px'}` }}
+              >
                 <div className="d-flex  flex-direction-row align-items-center">
                   <div
                     style={{
@@ -145,15 +156,17 @@ const BeeDash = () => {
                       alignItems: 'center',
                       alignSelf: 'center',
                       // border:"none"
-                      marginTop: "-15px"
+                      marginTop: '-15px',
                     }}
                   >
-
-
                     <div className="hexagon">
                       <img
                         alt=""
-                        src={captainBeeData?.photoIdFileurl !== undefined ? captainBeeData?.photoIdFileurl : dummy}
+                        src={
+                          captainBeeData?.photoIdFileurl !== undefined
+                            ? captainBeeData?.photoIdFileurl
+                            : dummy
+                        }
                         width={'63px'}
                         height={'66px'}
                         ml={'-6px'}
@@ -165,7 +178,9 @@ const BeeDash = () => {
                     style={{
                       width: '104px',
                       height: '107px',
-                      backgroundImage: `url(${userType === "CaptainBee" ? framecapt : frame})`,
+                      backgroundImage: `url(${
+                        userType === 'CaptainBee' ? framecapt : frame
+                      })`,
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'contain',
                       backgroundPosition: 'center',
@@ -176,16 +191,23 @@ const BeeDash = () => {
                       alignItems: 'center',
                       alignSelf: 'end',
                       // border:"none",
-                      marginBottom: "-4.5px"
+                      marginBottom: '-4.5px',
                     }}
                   >
-                    <div className="side-hexagon"
+                    <div
+                      className="side-hexagon"
                       style={{ marginBottom: '8px' }}
-
                     >
                       <img
                         alt=""
-                        src={honeyBeeData?.userFullData?.profilePic !== undefined ? honeyBeeData?.userFullData?.profilePic : (staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
+                        src={
+                          honeyBeeData?.userFullData?.profilePic !== undefined
+                            ? honeyBeeData?.userFullData?.profilePic
+                            : staticsData?.affiliateUserProfile
+                                ?.photoIdFileurl !== undefined
+                            ? staticsData?.affiliateUserProfile?.photoIdFileurl
+                            : dummy
+                        }
                         width={'63px'}
                         height={'66px'}
                         ml={'-6px'}
@@ -197,55 +219,65 @@ const BeeDash = () => {
 
                 <div className="align-items-start lh_32x">
                   <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                    {userType === "CaptainBee" ? "Captain Bee" : "Honey Bee"} {id}
+                    {userType === 'CaptainBee' ? 'Captain Bee' : 'Honey Bee'}{' '}
+                    {id}
                   </div>
                   <div className="font_10x mb-3 lh_32x align-items-start">
-                    {userType === "CaptainBee" ? "Captain Bee of Captain" : "Honey Bee of Captain"} {honeyBeeData?.referredUserData?.data2?.Username} Team
+                    {userType === 'CaptainBee'
+                      ? 'Captain Bee of Captain'
+                      : 'Honey Bee of Captain'}{' '}
+                    {honeyBeeData?.referredUserData?.data2?.Username} Team
                   </div>
                   <div className="font_13x d-flex align-items-center ">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={man_dark} className="me-2" />
-                      :
+                    ) : (
                       <img alt="man" src={man} className="me-2" />
-                    }
+                    )}
                     @{id}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={pin_dark} className="me-2" />
-                      :
+                    ) : (
                       <img alt="man" src={pin} className="me-2" />
-                    }
-                    {honeyBeeData?.userFullData?.country === undefined ? "NA" : honeyBeeData?.userFullData?.country}
+                    )}
+                    {honeyBeeData?.userFullData?.country === undefined
+                      ? 'NA'
+                      : honeyBeeData?.userFullData?.country}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={house_dark} className="me-2" />
-                      :
+                    ) : (
                       <img alt="man" src={house} className="me-2" />
-                    }
-                    {honeyBeeData?.userFullData?.city === undefined ? "NA" : honeyBeeData?.userFullData?.city}
+                    )}
+                    {honeyBeeData?.userFullData?.city === undefined
+                      ? 'NA'
+                      : honeyBeeData?.userFullData?.city}
                   </div>
                   <div className="font_13x d-flex align-items-center">
-                    {theme === "dark" ?
+                    {theme === 'dark' ? (
                       <img alt="man" src={clock_dark} className="me-2" />
-                      :
+                    ) : (
                       <img alt="man" src={clock} className="me-2" />
-                    }
+                    )}
                     {honeyBeeData?.formatedAccountCreationDate}
                   </div>
                 </div>
-
               </div>
-              <div className="honeybee-container" style={{marginTop:`${isMobile ? "65px": "0px"}`}}>
+              <div
+                className="honeybee-container"
+                style={{ marginTop: `${isMobile ? '65px' : '0px'}` }}
+              >
                 <BeeTabs honeyBeeEmail={honeyBeeEmail} />
               </div>
             </div>
           </div>
-        </div>)
-        :
+        </div>
+      ) : (
         <TeamCaptainDashIndividual />
-      }
+      )}
     </>
   );
 };

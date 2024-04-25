@@ -586,7 +586,7 @@ button.ant-btn-primary [disabled] {
   > .ant-tabs-nav-list
   > .ant-tabs-tab.ant-tabs-tab-active
   .ant-tabs-tab-btn {
-  color: var(--body_color);
+  color: var(--primary-color);
 }
 
 .bs_tab_item
@@ -850,6 +850,21 @@ a.bs_link:hover {
 
 .hive_link {
   color: #ffb300;
+}
+.login_links {
+  display: block;
+  width: 100%;
+  height: 55px;
+  background: #ffb300;
+  color: #fff;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 16px;
+  transition: all 0.2s linear;
+}
+.login_links:hover {
+  background: #ffd000;
+  color: #fff;
 }
 
 .hive_link:hover {
