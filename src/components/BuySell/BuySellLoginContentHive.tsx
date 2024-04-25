@@ -270,6 +270,15 @@ const BuySellLoginContentHive: React.FC = () => {
                 Not a Captain Bee? Login as Honey Bee instead
               </p>
             </Link>
+
+            <br />
+            <Link
+              to="/indexx-exchange/buy-sell/login"
+              className='hive_link'
+              style={{ color: 'var(--primary-color)' }}
+            >
+              Login as Indexx Exchange User
+            </Link>
           </div>
           <br />
         </div>

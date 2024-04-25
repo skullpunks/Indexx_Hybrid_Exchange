@@ -275,16 +275,16 @@ const BSWalletTable = () => {
                         {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
                         {/* Render Cryptocurrencies Section */}
                         {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
-                        <br />
+                        {/* <br /> */}
                         {/* Render Stocks Section */}
-                        {renderTableSection(sortedStockData, "Stock Tokens")}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
 
-                        <br />
+                        {/* <br /> */}
                         {/* Render ETFs Section */}
-                        {renderTableSection(sortedEtfData, "ETF Tokens")}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
 
-                        <br />
-                        {renderTableSection(sortedFiatData, "Fiat Currencies")}
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
                         {/* <MyPagination
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
                         scroll={{x:true}}
@@ -310,17 +310,17 @@ const BSWalletTable = () => {
                         </div>
                         {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
                         {/* Render Cryptocurrencies Section */}
-                        {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
                         <br />
                         {/* Render Stocks Section */}
                         {renderTableSection(sortedStockData, "Stock Tokens")}
 
-                        <br />
+                        {/* <br /> */}
                         {/* Render ETFs Section */}
-                        {renderTableSection(sortedEtfData, "ETF Tokens")}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
 
-                        <br />
-                        {renderTableSection(sortedFiatData, "Fiat Currencies")}
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
                         {/* <MyPagination
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
                         scroll={{x:true}}
@@ -346,16 +346,52 @@ const BSWalletTable = () => {
                         </div>
                         {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
                         {/* Render Cryptocurrencies Section */}
-                        {renderTableSection(sortedCryptoData, "Cryptocurrencies")}
-                        <br />
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
+                        {/* <br /> */}
                         {/* Render Stocks Section */}
-                        {renderTableSection(sortedStockData, "Stock Tokens")}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
 
-                        <br />
+                        {/* <br /> */}
                         {/* Render ETFs Section */}
                         {renderTableSection(sortedEtfData, "ETF Tokens")}
 
-                        <br />
+                        {/* <br /> */}
+                        {/* {renderTableSection(sortedFiatData, "Fiat Currencies")} */}
+                        {/* <MyPagination
+                        <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
+                        scroll={{x:true}}
+                        style={{maxWidth:"94vw"}}  
+                        />
+                        <MyPagination
+                            total={sortedData && sortedData.length}
+                            current={current}
+                            onChange={setCurrent}
+                        /> */}
+                    </div>
+                </Tabs.TabPane>
+                
+                <Tabs.TabPane tab="Fiat" key="4" className='padding-2x'>
+                    <div className='border-b-1x margin-b-2x'>
+                        <div className='checkbox-container' style={{ textAlign: "right" }}>
+                            <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
+                                Hide rows with 0 balance
+                            </Checkbox>
+                            <Checkbox checked={hideZeroStakedBalance} onChange={handleStakedCheckboxChange}>
+                                Hide rows with 0 Staked balance
+                            </Checkbox>
+                        </div>
+                        {/* <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} /> */}
+                        {/* Render Cryptocurrencies Section */}
+                        {/* {renderTableSection(sortedCryptoData, "Cryptocurrencies")} */}
+                        {/* <br /> */}
+                        {/* Render Stocks Section */}
+                        {/* {renderTableSection(sortedStockData, "Stock Tokens")} */}
+
+                        {/* <br /> */}
+                        {/* Render ETFs Section */}
+                        {/* {renderTableSection(sortedEtfData, "ETF Tokens")} */}
+
+                        {/* <br /> */}
                         {renderTableSection(sortedFiatData, "Fiat Currencies")}
                         {/* <MyPagination
                         <Table className='custom_table' columns={columns} dataSource={getData(current, pageSize)} onChange={onChange} 
