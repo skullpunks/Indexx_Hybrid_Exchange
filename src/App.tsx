@@ -113,6 +113,8 @@ import PaymentVenmo from './components/Send/PaymentVenmo';
 import HeaderTest from './components/Header_test';
 import { ThemeContext } from './utils/themeContext';
 import PowerPackInitial from './components/PowerPackInitial';
+import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
+import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -193,7 +195,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <ThemeContext>
-        <div className={themeClass}>
+        <div className={themeClass + ' globalnav-with-flyout-open'}>
           <BrowserRouter>
             {/* <Headers /> */}
             <ScrollToTop />
@@ -217,6 +219,14 @@ function App() {
                 <Route
                   path="/indexx-exchange/power-hive"
                   element={<PowerPackInitial />}
+                />
+                <Route
+                  path="/indexx-exchange/power-hive/honey-bee-selection"
+                  element={<PowerPackHoneySecond />}
+                />
+                <Route
+                  path="/indexx-exchange/power-hive/captain-bee-selection"
+                  element={<PowerPackCaptainSecond />}
                 />
                 <Route
                   path="/indexx-exchange/dashboard"
@@ -370,13 +380,21 @@ function App() {
               />
 
               <Route
-                path="/indexx-exchange/captainBee/power-pack"
-                element={<PowerPackCopy type="captainBee" />}
+                path="/indexx-exchange/captain-bee/power-pack"
+                element={<PowerPackCopy type="captainBee" subType="power" />}
+              />
+              <Route
+                path="/indexx-exchange/captain-bee/crypto-pack"
+                element={<PowerPackCopy type="captainBee" subType="crypto" />}
               />
 
               <Route
-                path="/indexx-exchange/honeyBee/power-pack"
-                element={<PowerPackCopy type="honeyBee" />}
+                path="/indexx-exchange/honey-bee/action-pack"
+                element={<PowerPackCopy type="honeyBee" subType="action" />}
+              />
+              <Route
+                path="/indexx-exchange/honey-bee/token-pack"
+                element={<PowerPackCopy type="honeyBee" subType="token" />}
               />
               <Route
                 path="/indexx-exchange/powerpack-payment-success"
@@ -560,6 +578,7 @@ function App() {
             </Routes>
           </BrowserRouter>
           <Footer />
+          <div id="globalnav-curtain" className="globalnav-curtain"></div>
         </div>
       </ThemeContext>
     </ThemeProvider>

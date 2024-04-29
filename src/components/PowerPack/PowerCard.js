@@ -16,6 +16,7 @@ import captainBeeHive from '../../assets/powerpack/cardImage.svg';
 import './PowerCard.css';
 import PaymentOptions from '../BuySell/Notification/PaymentOptions';
 import { NavLink } from 'react-router-dom';
+import PopupModal from '../powerPackPopUp/index';
 
 const PowerCard = ({ card, type }) => {
   const [flip, setFlip] = useState(false);
@@ -168,6 +169,7 @@ const PowerCard = ({ card, type }) => {
     }
   };
 
+  const [showPopUp, setShowPopUp] = useState(false);
   return (
     <>
       <Grow
@@ -188,123 +190,108 @@ const PowerCard = ({ card, type }) => {
             onMouseEnter={() => setIsHighlighted(true)}
             onMouseLeave={() => setIsHighlighted(false)}
           >
-            <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
-              <Box
-                style={{
-                  width: '260px',
-                  height: '625px',
-                  borderRadius: 0,
+            <Box
+              style={{
+                width: '260px',
+                height: '500px',
+                borderRadius: 0,
 
-                  textAlign: 'center',
-                  padding: '20px',
-                  position: 'relative', // Add this style
-                  // border:
-                  //   card.level === 'Captain Bee' ? 'none' : '1px solid #A1A1A1',
-                  border:
-                    type === 'captainBee'
-                      ? '1px solid #A1A1A1'
-                      : '1px solid #8EDF78',
-                  //
-                  backgroundColor:
-                    type === 'captainBee' ? '#FFB300' : '#8EDF78',
-                }}
-                // className={
-                //   card.level === 'Captain Bee'
-                //     ? 'highlighted-captain-bee-card'
-                //     : ''
-                // }
-                className={
+                textAlign: 'center',
+                padding: '20px',
+                position: 'relative', // Add this style
+                // border:
+                //   card.level === 'Captain Bee' ? 'none' : '1px solid #A1A1A1',
+                border:
                   type === 'captainBee'
-                    ? 'highlighted-captain-bee-card'
-                    : 'highlighted-honey-bee-card'
-                }
+                    ? '1px solid #A1A1A1'
+                    : '1px solid #8EDF78',
+                //
+                backgroundColor: type === 'captainBee' ? '#FFB300' : '#8EDF78',
+              }}
+              // className={
+              //   card.level === 'Captain Bee'
+              //     ? 'highlighted-captain-bee-card'
+              //     : ''
+              // }
+              className={
+                type === 'captainBee'
+                  ? 'highlighted-captain-bee-card'
+                  : 'highlighted-honey-bee-card'
+              }
+            >
+              <Typography
+                variant="text"
+                component="p"
+                fontSize={'15px'}
+                fontWeight={600}
+                //   mb={5}
+                //   mt={1}
               >
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'27px'}
-                  fontWeight={600}
-                  lineHeight={2.1}
-                  mb={2}
-                  style={{
-                    // color: `${
-                    //   card.level === 'Captain Bee' ? '#FFB300' : 'inherit'
-                    // }`,
-                    color: 'inherit',
-                  }}
-                >
-                  {card.name}
-                </Typography>
+                Deposit
+              </Typography>
 
-                <img
-                  alt=""
-                  src={card.photo}
-                  width={'180px'}
-                  style={{ marginBottom: '15px' }}
-                />
+              <Typography
+                variant="text"
+                component="p"
+                fontSize={'30px'}
+                fontWeight={600}
+                //   mb={2}
+                //   mt={1}
+              >
+                ${card.price}
+              </Typography>
 
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'20px'}
-                  fontWeight={600}
-                  //   mb={5}
-                  //   mt={1}
-                >
-                  Deposit
-                </Typography>
+              <Typography
+                variant="text"
+                component="p"
+                fontSize={'27px'}
+                fontWeight={600}
+                lineHeight={2.1}
+                mb={2}
+                style={{
+                  // color: `${
+                  //   card.level === 'Captain Bee' ? '#FFB300' : 'inherit'
+                  // }`,
+                  color: 'inherit',
+                }}
+              >
+                {card.name}
+              </Typography>
 
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'50px'}
-                  fontWeight={600}
-                  //   mb={2}
-                  //   mt={1}
-                >
-                  ${card.price}
-                </Typography>
+              <img
+                alt=""
+                src={card.photo}
+                width={'180px'}
+                style={{ marginBottom: '15px' }}
+              />
 
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'20px'}
-                  fontWeight={400}
-                  mb={2}
-                >
-                  <b>Investment Highlights</b>
-                </Typography>
+              {/*  */}
+              <p
+                style={{
+                  color: '#343434',
+                  marginTop: '20px',
+                  fontSize: '20px',
+                }}
+              >
+                <b>
+                  Total Return :
+                  <br />
+                  {card.mcp}
+                </b>
+              </p>
 
-                <img
-                  alt=""
-                  src={type === 'captainBee' ? captainBeeHive : honeBeeHive}
-                  width={'180px'}
-                  style={{ marginBottom: '15px' }}
-                />
+              <Typography
+                variant="text"
+                component="p"
+                fontSize={'17px'}
+                fontWeight={400}
+                style={{ color: '#343434' }}
+              >
+                <b>{card.benefits}</b>
+              </Typography>
+              {/*  */}
 
-                {/*  */}
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'25px'}
-                  fontWeight={400}
-                  style={{ color: '#343434' }}
-                >
-                  <b>MCP: {card.mcp}</b>
-                </Typography>
-
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'17px'}
-                  fontWeight={400}
-                  style={{ color: '#343434' }}
-                >
-                  <b>Total Benefits: {card.benefits}</b>
-                </Typography>
-                {/*  */}
-
-                {/* <Typography
+              {/* <Typography
                   variant="text"
                   component="p"
                   fontSize={'13px'}
@@ -315,11 +302,11 @@ const PowerCard = ({ card, type }) => {
                   my={1}
                 >
                   {card.level === 'Captain Bee'
-                    ? `Indexx Hive ${card.level} Level`
+                    ? Indexx Hive ${card.level} Level
                     : '\u00A0'}
                 </Typography> */}
 
-                {/* <a
+              {/* <a
                   href="https://indexx.ai/indexx-exchange/token-details/inex"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -371,7 +358,7 @@ const PowerCard = ({ card, type }) => {
                   </Typography>
                 </a> */}
 
-                {/* {card.features.slice(1, 3).map((item) => (
+              {/* {card.features.slice(1, 3).map((item) => (
                   <Typography
                     variant="text"
                     component="p"
@@ -382,7 +369,7 @@ const PowerCard = ({ card, type }) => {
                   </Typography>
                 ))} */}
 
-                {/* {card.level === "Captain Bee" ?
+              {/* {card.level === "Captain Bee" ?
                                 <>
                                     <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
                                         {card.level} Level
@@ -407,237 +394,31 @@ const PowerCard = ({ card, type }) => {
 
                             } */}
 
-                {card.flip && (
-                  <Button
-                    onClick={() => setFlip(!flip)}
-                    disableTouchRipple
-                    sx={{
-                      fontSize: '13px',
-                      //   color: '#FFB300',
-                      color: '#343434',
-                      textTransform: 'none',
+              {card.flip && (
+                <Button
+                  onClick={() => setShowPopUp(true)}
+                  disableTouchRipple
+                  sx={{
+                    fontSize: '13px',
+                    //   color: '#FFB300',
+                    color: '#343434',
+                    textTransform: 'none',
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    mt: 4,
+                    width: 'fit-content',
+                    height: 'fit-content',
+                    '&:hover': {
                       backgroundColor: 'transparent',
                       boxShadow: 'none',
-                      mt: 2,
-                      width: 'fit-content',
-                      height: 'fit-content',
-                      '&:hover': {
-                        backgroundColor: 'transparent',
-                        boxShadow: 'none',
-                        color: '#343434',
-                      },
-                    }}
-                  >
-                    <b>See more...</b>
-                  </Button>
-                )}
-              </Box>
-
-              <Box
-                style={{
-                  width: '260px',
-                  height: '625px',
-                  // margin: '20px',
-                  borderRadius: 0,
-                  textAlign: 'center',
-                  padding: '20px',
-                  // border: '1px solid #A1A1A1',
-                  // border:
-                  //   card.level === 'Captain Bee' ? 'none' : '1px solid #A1A1A1',
-                  //
-                  border:
-                    type === 'captainBee'
-                      ? '1px solid #A1A1A1'
-                      : '1px solid #8EDF78',
-                }}
-                // className={
-                //   card.level === 'Captain Bee'
-                //     ? 'highlighted-captain-bee-card'
-                //     : ''
-                // }
-                className={
-                  type === 'captainBee'
-                    ? 'highlighted-captain-bee-card'
-                    : 'highlighted-honey-bee-card'
-                }
-              >
-                <img
-                  alt=""
-                  src={card.photo}
-                  width={'130px'}
-                  style={{ marginBottom: '15px' }}
-                />
-                {/* {card.level === 'Captain Bee' ? (
-                  <img
-                    alt=""
-                    src={hive}
-                    width={'42px'}
-                    style={{ marginBottom: '15px' }}
-                  />
-                ) : (
-                  <></>
-                )} */}
-
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'20px'}
-                  fontWeight={600}
-                  lineHeight={2.1}
-                  color="#343434"
-                  // mb={2}
-                  // style={{
-                  //   color: `${
-                  //     card.level === 'Captain Bee' ? '#FFB300' : 'inherit'
-                  //   }`,
-                  // }}
-                >
-                  {card.name} Pack
-                </Typography>
-
-                <Typography
-                  variant="text"
-                  component="p"
-                  // fontSize={'20px'}
-                  fontSize={'16px'}
-                  fontWeight={600}
-                  // lineHeight={2.1}
-                  // mb={2}
-                  color="#343434"
-                >
-                  {card.level === 'Captain Bee'
-                    ? `Indexx Hive ${card.level} Level`
-                    : '\u00A0'}
-                </Typography>
-
-                {/* Exchange fee */}
-                {/* <Typography variant="text" component="p" fontSize={"15px"} fontWeight={400} mb={1}>
-                                    Exchange Fee (3%): ${exchangeFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                </Typography>
-
-                                {/* Final price including exchange fees */}
-                {/* <Typography variant="text" component="p" fontSize={"20px"} fontWeight={400} mb={1}>
-                                    Final Price: ${finalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                </Typography> */}
-
-                <div style={{ margin: '20px 0' }}>
-                  <Typography
-                    variant="text"
-                    component="p"
-                    fontSize={'20px'}
-                    fontWeight={400}
-                  >
-                    Deposit
-                  </Typography>
-
-                  <Typography
-                    variant="text"
-                    component="p"
-                    fontSize={'25px'}
-                    fontWeight={400}
-                    mb={1}
-                  >
-                    ${card.price}
-                  </Typography>
-                </div>
-
-                <Typography
-                  variant="text"
-                  component="p"
-                  fontSize={'20px'}
-                  fontWeight={400}
-                >
-                  Earning
-                </Typography>
-
-                {/* {card.level === "Captain Bee" ? */}
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    margin: '10px 0',
+                      color: '#343434',
+                    },
                   }}
                 >
-                  {/* <Typography
-                    variant="text"
-                    component="p"
-                    fontSize={'13px'}
-                    fontWeight={200}
-                    style={{ color: '#FFB300' }}
-                  >
-                    {card.level === 'Captain Bee'
-                      ? `Indexx Hive ${card.level} Level`
-                      : '\u00A0'}
-                  </Typography> */}
-
-                  {card.features.map((item) => (
-                    <Typography
-                      variant="text"
-                      component="p"
-                      fontSize={'13px'}
-                      fontWeight={200}
-                      mb={'4px'}
-                    >
-                      {item}
-                    </Typography>
-                  ))}
-                </div>
-
-                {/* :
-                                <div style={{
-                                    minHeight: "306px", display: "flex",
-                                    justifyContent: "flex-start", flexDirection: "column"
-                                }}>
-                                    {card.features.map((item) =>
-                                        <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200}>
-                                            {item}
-                                        </Typography>
-                                    )}
-                                </div>
-                            } */}
-
-                {card.flip && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <img alt="" src={hive} width={'50px'} />{' '}
-                    <Button
-                      onClick={() => setFlip(!flip)}
-                      disableTouchRipple
-                      sx={{
-                        fontSize: '13px',
-                        // color: '#FFB300',
-                        color: '#343434',
-                        // color: type === 'captainBee' ? '#FFD000' : '#8EDF78',
-                        textTransform: 'none',
-                        backgroundColor: 'transparent',
-                        boxShadow: 'none',
-                        // mt:5,
-                        width: 'fit-content',
-                        height: 'fit-content',
-                        position: 'relative',
-                        // bottom: '-17px',
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                          boxShadow: 'none',
-                          // color: '#FFD000',
-                          color: type === 'captainBee' ? '#FFD000' : '#8EDF78',
-                        },
-                      }}
-                    >
-                      See less...
-                    </Button>
-                  </div>
-                )}
-              </Box>
-            </ReactCardFlip>
+                  <b>See more...</b>
+                </Button>
+              )}
+            </Box>
 
             {/* <Button
               onClick={() => setIsApplyClicked(!isApplyClicked)}

@@ -9,10 +9,24 @@
   text-align: center;
 }
 
+.indexx_hive_membership_root h2 {
+  font-weight: bold;
+  font-size: 45px;
+}
+
+.indexx_hive_membership_root h4 {
+  font-size: 18px;
+}
+
+.indexx_hive_membership_root p {
+  font-size: 12px;
+}
+
 .power-pack-category {
   display: flex;
   padding: 20px;
   width: 100%;
+  max-width: 950px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -22,18 +36,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 500px;
-  padding: 20px;
+  max-width: 450px;
+  width: 100%;
+  padding: 10px;
 }
-
+.orange-btn {
+  background: #f8c229;
+}
+.orange-btn:hover {
+  background-color: #ffd000;
+}
+.yellow-btn {
+  background: #8edf78;
+}
+.yellow-btn:hover {
+  background-color: #45c921;
+}
+.power-pack-category div h3 {
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+}
+.power-pack-category div p {
+  margin: 20px 0 0 0;
+  text-align: center;
+  font-size: 12px;
+}
+.power-pack-category div img {
+  width: 100%;
+}
 .power-pack-category div button {
   margin-top: 50px;
   border-radius: 0;
-  max-width: 285px;
   font-size: 16px;
   color: #000;
+  width: 100%;
 }
-
+.power-pack-category div button:first-child:hover {
+  background-color: blue;
+}
 .power-pack-table {
   width: 100%;
   display: flex;

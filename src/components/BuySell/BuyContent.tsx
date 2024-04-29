@@ -368,60 +368,47 @@ const BuyContent: React.FC<Props> = ({
                 color: 'var(--body_color)',
               }}
               showSearch // Enable search functionality
+              optionFilterProp="title"
               // Define the property to filter options by
             >
               {Object.entries(categorizedTokens).map(
                 ([category, tokens]) =>
-                  tokens.length > 0 && (
-                    <Select.OptGroup
-                      key={category}
-                      label={
-                        <span
-                          className={`custom-optgroup-label theme-${localStorage.getItem(
-                            'userlogged'
-                          )}`}
-                        >
-                          {category}
-                        </span>
-                      }
+                  tokens.length > 0 &&
+                  tokens.map((token: any) => (
+                    <Select.Option
+                      key={token.address}
+                      value={token.address}
+                      className="common__token d-flex bs_token_container"
+                      data-address={token.address}
+                      style={{ paddingLeft: '15px', paddingRight: 0 }}
                     >
-                      {tokens.map((token: any) => (
-                        <Select.Option
-                          key={token.address}
-                          value={token.address}
-                          className="common__token d-flex bs_token_container"
-                          data-address={token.address}
-                          style={{ paddingLeft: '15px', paddingRight: 0 }}
-                        >
-                          <div className="d-flex bs_token_num select-drop">
-                            <img
-                              src={
-                                require(`../../assets/token-icons/${token.image}.png`)
-                                  .default
-                              }
-                              alt={token.title}
-                              width={
-                                ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
-                                  token.image.includes(str)
-                                )
-                                  ? '57'
-                                  : '40'
-                              }
-                            />
-                            <div className="padding-l-1x d-flex flex-align-center">
-                              {token.title}
-                              <span
-                                style={{ color: 'var(--body_color)' }}
-                                className="margin-l-0_5x"
-                              >
-                                {token.subTitle}
-                              </span>
-                            </div>
-                          </div>
-                        </Select.Option>
-                      ))}
-                    </Select.OptGroup>
-                  )
+                      <div className="d-flex bs_token_num select-drop">
+                        <img
+                          src={
+                            require(`../../assets/token-icons/${token.image}.png`)
+                              .default
+                          }
+                          alt={token.title}
+                          width={
+                            ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                              token.image.includes(str)
+                            )
+                              ? '57'
+                              : '40'
+                          }
+                        />
+                        <div className="padding-l-1x d-flex flex-align-center">
+                          {token.title}
+                          <span
+                            style={{ color: 'var(--body_color)' }}
+                            className="margin-l-0_5x"
+                          >
+                            {token.subTitle}
+                          </span>
+                        </div>
+                      </div>
+                    </Select.Option>
+                  ))
               )}
             </Select>
           </div>
@@ -463,12 +450,14 @@ const BuyContent: React.FC<Props> = ({
           className="bs_token_left d-flex justify-between align-items-center"
           style={{ height: '55px', padding: '0 11px' }}
         >
-          <div className="bs_token_num d-flex justify-between align-items-center">
+          <div
+            className="bs_token_num d-flex justify-between align-items-center"
+            onClick={() => {
+              console.log('handle crypto click');
+              setActiveTab('3');
+            }}
+          >
             <span
-              onClick={() => {
-                console.log('handle crypto click');
-                setActiveTab('3');
-              }}
               style={{
                 marginRight: '12px',
                 fontWeight: 'bold',
