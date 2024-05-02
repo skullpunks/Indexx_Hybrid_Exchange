@@ -17,7 +17,7 @@ nav .wrapper {
 
   padding: 0px 100px;
   height: 70px;
-  line-height: 70px;
+  line-height: 60px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -72,11 +72,16 @@ nav .wrapper {
 }
 .nav-links li:hover .drop-menu,
 .nav-links li:hover .mega-box {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   /* top: 70px; */
   transition-delay: 0.2s;
   opacity: 1;
   visibility: visible;
+}
+.nav-links li:hover .backdrop {
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 .drop-menu li a {
   width: 100%;
@@ -96,7 +101,10 @@ nav .wrapper {
   z-index: -1; /* Set z-index below .mega-box */
   display: none; /* Initially hidden */
   backdrop-filter: blur(10px);
+  transition: opacity 0.3s ease;
+  transition-delay: 0.2s; /* Add a delay of 0.2 seconds */
 }
+
 .mega-box {
   position: absolute;
   left: 0;
@@ -104,16 +112,19 @@ nav .wrapper {
   background: #161617;
   height: auto;
   z-index: 1111111;
-  padding: 0 30px;
+  padding: 0 30px 50px 0;
   top: 70px;
   opacity: 0;
   visibility: hidden;
+  transition: all 0.1s ease;
+  /* top: 70px; */
+  transition-delay: 0.3s;
 }
 
 .mega-box .content {
   /* background: white; */
   /* max-width: 1200px;
-    margin: auto; */
+  margin: auto; */
   height: auto;
 
   padding: 25px 20px;
@@ -164,7 +175,6 @@ nav .wrapper {
   color: #d9d9d9;
   font-size: 20px;
   font-weight: 600;
-
   display: block;
 }
 .row .mega-links li a:hover {
@@ -233,7 +243,7 @@ nav .wrapper {
 .link_active {
   color: white !important;
 }
-@media screen and (max-width: 970px) {
+@media screen and (max-width: 1150px) {
   nav .wrapper {
     padding: 0 30px;
   }
@@ -295,13 +305,13 @@ nav .wrapper {
     transition: all 0.3s ease;
   }
   #Exchange:checked ~ .drop-menu,
-  #Meme:checked ~ .mega-box,
   #Lotto:checked ~ .mega-box,
+  #Meme:checked ~ .mega-box,
   #Hive:checked ~ .mega-box,
   #Tokens:checked ~ .mega-box,
   #Academy:checked ~ .mega-box,
-  #Shop:checked ~ .mega-box,
   #Swap:checked ~ .mega-box,
+  #Shop:checked ~ .mega-box,
   #Affiliate:checked ~ .mega-box,
   #Elite\ Club:checked ~ .mega-box,
   #Company:checked ~ .mega-box,

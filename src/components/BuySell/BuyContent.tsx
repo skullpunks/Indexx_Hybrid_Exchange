@@ -367,8 +367,7 @@ const BuyContent: React.FC<Props> = ({
                 backgroundColor: 'var(--body_background)',
                 color: 'var(--body_color)',
               }}
-              showSearch // Enable search functionality
-              optionFilterProp="title"
+
               // Define the property to filter options by
             >
               {Object.entries(categorizedTokens).map(
@@ -464,7 +463,7 @@ const BuyContent: React.FC<Props> = ({
                 fontSize: '14px',
               }}
             >
-              Pay with
+              Use Convert to Pay with
             </span>
             <img
               src={bitcoinIcon}

@@ -152,7 +152,7 @@ const BSWalletTable = () => {
       dataIndex: 'coinBalanceInUSD',
       sorter: (a, b) => a.coinBalanceInUSD - b.coinBalanceInUSD,
       render: (_, record) =>
-        `$${(record.coinStakedBalance * record.coinPrice).toFixed(2)}`,
+        `$${((record.coinStakedBalance ?? 0) * record.coinPrice).toFixed(2)}`,
     },
     {
       title: 'Staked Balance',

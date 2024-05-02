@@ -89,6 +89,7 @@ const HeaderTest = () => {
   //       ?.dropDownContent.find((elem) => elem.mainList === true)?.links
   //   );let title = <>{String(localStorage.getItem('user')).toLowerCase()}</>;
   const [, setIsInsideApp] = useState(false);
+  const timeoutRef = useRef<any>(null);
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [staticsData, setStaticsData] = useState();
@@ -218,9 +219,24 @@ const HeaderTest = () => {
   //     setactiveIndex(i);
   //     console.log(path, 'path');
   //   };
+  const handleMouseEnter = () => {
+    // Set a timeout to open the dropdown after 0.2s
+    timeoutRef.current = setTimeout(() => {
+      setBackdropVisibility(true);
+    }, 200);
+  };
+
+  const handleMouseLeave = () => {
+    // Clear the timeout if user leaves before 0.2s
+    clearTimeout(timeoutRef.current);
+    // Hide the dropdown after a delay
+    setTimeout(() => {
+      setBackdropVisibility(false);
+    }, 200);
+  };
   const updateBackDropVisibility = (type: string) => {
-    if (type === 'enter') setBackdropVisibility(true);
-    if (type === 'leave') setBackdropVisibility(false);
+    if (type === 'enter') handleMouseEnter();
+    if (type === 'leave') handleMouseLeave();
   };
 
   useEffect(() => {
@@ -274,8 +290,11 @@ const HeaderTest = () => {
           <div
             className="backdrop"
             style={{
-              display: backdropVisibility ? 'block' : 'none',
+              display: 'block',
+              opacity: backdropVisibility ? 1 : 0,
               background: theme === 'dark' ? 'rgba(0,0,0,0.5)' : '',
+              transitionDelay: '.1s',
+              height: backdropVisibility ? '100vh' : 0,
             }}
           ></div>
 
