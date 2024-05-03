@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
@@ -6,11 +6,8 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Check from '@mui/icons-material/Check';
-import activeIcon from '../../assets/stepper/active.png';
-import notactiveIcon from '../../assets/stepper/not-active.png';
-import SettingsIcon from '@mui/icons-material/Settings';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
+import activeIcon from '../../assets/stepper/active.png'; // Make sure the path is correct
+import notactiveIcon from '../../assets/stepper/not-active.png'; // Make sure the path is correct
 import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
@@ -75,16 +72,8 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
 };
 
@@ -94,14 +83,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      // backgroundImage:
-      //   'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+      // backgroundImage: 'linear-gradient(95deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      // backgroundImage:
-      //   'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+      backgroundColor: '#FFB300',
+      // backgroundImage: 'linear-gradient(95deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -122,12 +110,12 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   borderRadius: '50%',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundImage: `url("${notactiveIcon}")`,
+  backgroundImage: `url(${notactiveIcon})`, // Fix backgroundImage value
   ...(ownerState.active && {
-    backgroundImage: `url("${notactiveIcon}")`,
+    backgroundImage: `url(${notactiveIcon})`, // Fix backgroundImage value
   }),
   ...(ownerState.completed && {
-    backgroundImage: `url("${activeIcon}")`,
+    backgroundImage: `url(${activeIcon})`, // Fix backgroundImage value
   }),
 }));
 
@@ -145,35 +133,23 @@ function ColorlibStepIcon(props) {
 }
 
 ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
   icon: PropTypes.node,
 };
 
-const steps = [
-  'Select Membership',
-  'Select  Power Pack/ Action Pack',
-  'Hive Colony Program',
-];
+const steps = ['Select Membership', 'Select a Pack', 'Hive Colony Program'];
 
-export default function CustomizedSteppers() {
+export default function CustomizedSteppers({ step }) {
   return (
-    <Stack sx={{ width: '100%' }} spacing={4}>
+    <Stack
+      sx={{ width: '100%', maxWidth: '600px', margin: 'auto' }}
+      spacing={4}
+    >
       <Stepper
         alternativeLabel
-        activeStep={1}
+        activeStep={step}
         connector={<ColorlibConnector />}
       >
         {steps.map((label) => (

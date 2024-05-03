@@ -1650,7 +1650,7 @@ export const createSendTxByUsername = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
-      network: network
+      network: network,
     });
     return result.data;
   } catch (e: any) {
@@ -1674,7 +1674,7 @@ export const createSendTxByEmail = async (
       amount: amount,
       fromEmail: fromEmail,
       coin: coin,
-      network: network
+      network: network,
     });
     return result.data;
   } catch (e: any) {

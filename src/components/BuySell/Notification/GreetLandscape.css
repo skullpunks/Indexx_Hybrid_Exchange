@@ -112,9 +112,22 @@
   text-align: left;
 }
 
+@media (max-width: 900px) {
+  .close-button-pay {
+    top: -50px;
+    right: 50px;
+    transform: translateX(-61px);
+  }
+}
 @media (max-width: 767px) {
   .close-button-greetl {
     left: 100%;
+  }
+
+  .close-button-pay {
+    top: -50px;
+    right: 50px;
+    transform: translateX(-21px);
   }
 
   .pay-box {

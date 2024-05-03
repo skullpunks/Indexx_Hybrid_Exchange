@@ -9,14 +9,17 @@ import './style.css';
 const PowerPackInitial = () => {
   const navigate = useNavigate();
   const handleHoneyBee = () => {
-    navigate('/indexx-exchange/honeyBee/power-pack');
+    navigate('/indexx-exchange/power-hive/honey-bee-selection');
   };
   const handleCaptionBee = () => {
-    navigate('/indexx-exchange/captainBee/power-pack');
+    navigate('/indexx-exchange/power-hive/captain-bee-selection');
   };
   return (
-    <div style={{ marginTop: '190px' }}>
-      <CustomizedSteppers />
+    <div style={{ marginTop: '100px' }}>
+      <h4 style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>
+        Indexx Hive 3 Steps to Thrive
+      </h4>
+      <CustomizedSteppers step={1} />
 
       <section className="indexx_hive_membership_root">
         <h2>Indexx Hive Membership</h2>
@@ -30,13 +33,17 @@ const PowerPackInitial = () => {
       </section>
 
       <section className="power-pack-category">
-        <div onClick={handleHoneyBee} style={{ cursor: 'pointer' }}>
-          <img src={hive_honey_bee} />
-          <button style={{ background: '#8EDF78' }}>Join as Honey Bee</button>
-        </div>
         <div onClick={handleCaptionBee} style={{ cursor: 'pointer' }}>
           <img src={hive_caption_bee} />
-          <button style={{ background: '#F8C229' }}>Join as Caption Bee</button>
+          <button className="orange-btn" style={{ marginTop: '20px' }}>
+            Join as Captain Bee
+          </button>
+        </div>
+        <div onClick={handleHoneyBee} style={{ cursor: 'pointer' }}>
+          <img src={hive_honey_bee} />
+          <button className="yellow-btn" style={{ marginTop: '20px' }}>
+            Join as Honey Bee
+          </button>
         </div>
       </section>
 

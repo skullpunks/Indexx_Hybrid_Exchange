@@ -79,24 +79,24 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
     const urlParams = new URLSearchParams(window.location.search);
     const coinnameToIndex: Record<string, number> = {
-      'iusd': 3,
-      'inexbrc': 2,
-      'inexplg': 1
+        'iusd': 3,
+        'inexbrc': 2,
+        'inexplg': 1
     };
 
     useEffect(() => {
         const coinname1 = urlParams.get('coinname1') || '';
         const coinname2 = urlParams.get('coinname2') || '';
 
-        console.log("coinname1",coinname1)
+        console.log("coinname1", coinname1)
         // This effect triggers when filteredtokens changes
         if (filteredtokens && filteredtokens.length) {
             // Check if BSvalue.fromToken and BSvalue.toToken are already set
-          
-                handleChange(filteredtokens[coinnameToIndex[coinname1] || 0]?.address || "");
-                console.log("filteredtokens",filteredtokens[coinnameToIndex[coinname1]]);
-                handleChangeToToken(filteredtokens[coinnameToIndex[coinname2] || 0]?.address || "");
-            
+
+            handleChange(filteredtokens[coinnameToIndex[coinname1] || 0]?.address || "");
+            console.log("filteredtokens", filteredtokens[coinnameToIndex[coinname1]]);
+            handleChangeToToken(filteredtokens[coinnameToIndex[coinname2] || 0]?.address || "");
+
         }
     }, [filteredtokens]);
 
@@ -258,13 +258,17 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
         let getRequiredCoin = filteredtokens.find(x => x.address === BSvalue?.fromToken);
         let getRequiredToCoin = filteredtokens.find(x => x.address === BSvalue?.toToken);
 
-        if (!isWIBSToken(String(getRequiredCoin?.title))) {
+        if (isWIBSToken(String(getRequiredCoin?.title))) {
             OpenNotification("error", "Feature of conversion from WIBS tokens to Non-Indexx or Indexx tokens is coming soon.");
             return;
         }
 
-        // If either the fromToken or toToken is not in the allowed list of indexxTokens, show an error notification
-        if (!isIndexxToken(String(getRequiredCoin?.title)) || !isIndexxToken(String(getRequiredToCoin?.title))) {
+        // Determine the token types
+        const isFromTokenIndexx = isIndexxToken(String(getRequiredCoin?.title));
+        const isToTokenIndexx = isIndexxToken(String(getRequiredToCoin?.title));
+
+        // Check transaction conditions based on the token types
+        if (isFromTokenIndexx && !isToTokenIndexx) {
             OpenNotification("error", "Feature of conversion from Indexx tokens to Non-Indexx tokens is coming soon.");
             return;
         }
@@ -455,9 +459,9 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
                                         style={{ paddingLeft: "15px", paddingRight: 0 }}
                                     >
                                         <div className='d-flex bs_token_num'>
-                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title} 
-                                            width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
-                                             />
+                                            <img src={require(`../../assets/token-icons/${token.image}.png`).default} alt={token.title}
+                                                width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
+                                            />
                                             <div className='padding-l-1x d-flex flex-align-center'>
                                                 {token.title}
                                                 <span style={{ color: "var(--body_color)" }} className="margin-l-0_5x">

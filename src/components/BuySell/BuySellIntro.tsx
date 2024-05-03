@@ -19,6 +19,7 @@ interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
   tokenType: number;
   subtokenType: number;
+  setActiveTab?: any;
 }
 
 const filteredArray = (items: any, keyName: any, key: any) => {
@@ -33,6 +34,7 @@ const BuySellIntro: React.FC<Props> = ({
   subtokenType,
 }) => {
   const { id } = useParams();
+  const [activeTab, setActiveTab] = useState('1');
   const [ip, setIP] = useState('');
   const [country, setCountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
@@ -72,6 +74,7 @@ const BuySellIntro: React.FC<Props> = ({
   const userId = localStorage.getItem('user');
   const navigate = useNavigate();
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
+  console.log(activeTab, 'active tab value');
   const items = [
     {
       label: 'Buy',
@@ -82,6 +85,7 @@ const BuySellIntro: React.FC<Props> = ({
           setScreenName={setScreenName}
           tokenType={tokenType}
           subtokenType={subtokenType}
+          setActiveTab={setActiveTab}
         />
       ),
     }, // remember to pass the key prop
@@ -111,6 +115,7 @@ const BuySellIntro: React.FC<Props> = ({
     },
   ];
   const callback = function (key: any) {
+    setActiveTab(key);
     //
     if (key === '2' && (country === 'United States' || countryCode === 'US')) {
       setIsTransferModalVisible(true);
@@ -137,13 +142,15 @@ const BuySellIntro: React.FC<Props> = ({
       );
   };
 
-  let activeKey = '1';
   const [searchParams, setSearchParams] = useSearchParams();
   let orderType = searchParams.get('type');
-  if (orderType) {
-    let fileteredArrayWithItem = filteredArray(items, 'value', orderType);
-    activeKey = fileteredArrayWithItem[0].key;
-  }
+
+  useEffect(() => {
+    if (orderType) {
+      let fileteredArrayWithItem = filteredArray(items, 'value', orderType);
+      setActiveTab(fileteredArrayWithItem[0].key);
+    }
+  }, [orderType]);
 
   return (
     <div
@@ -203,7 +210,8 @@ const BuySellIntro: React.FC<Props> = ({
             </div>
           </Modal>
           <Tabs
-            defaultActiveKey={activeKey}
+            defaultActiveKey={'1'}
+            activeKey={activeTab}
             items={items}
             className="bs_tab_item"
             onChange={callback}

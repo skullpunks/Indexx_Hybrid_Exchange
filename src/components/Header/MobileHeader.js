@@ -501,7 +501,7 @@ const MobileHeader = () => {
       subItems: [
         { name: 'Account & Settings', url: '/indexx-exchange/account' },
         { name: 'Bridge', url: '/indexx-exchange/bridge' },
-        { name: 'Waggle Dance / Dashboard', url: '/indexx-exchange/dashboard' },
+        { name: 'Hive Dashboard', url: '/indexx-exchange/dashboard' },
         { name: 'Deposit', url: '/indexx-exchange/buy-sell/deposit-crypto' },
         { name: 'Notification', url: '/indexx-exchange/notification' },
         {

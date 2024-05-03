@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Space,
-  Image,
-} from 'antd';
+import { Button, Checkbox, Form, Input, Space, Image } from 'antd';
 
 import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
 // import normal_login from '../../assets/arts/normal_login.svg';
@@ -23,25 +16,29 @@ const BuySellGetStarted: React.FC = () => {
 
   const navigate = useNavigate();
   const [referral] = useSearchParams();
-  const refcode = String(referral.get("referral")) 
-  
-console.log(refcode === "null");
+  const refcode = String(referral.get('referral'));
 
+  console.log(refcode === 'null');
 
   const handleClick = () => {
     window.location.href = `${baseHiveURL}/sign-up`;
-  }
-  
+  };
+
   const onFinish = async (values: any) => {
     setLoadings(true);
     localStorage.setItem('tempAuthEmail', values.email);
-    localStorage.setItem('userlogged', "normal");
-    const res = await signupAPI(values.email, values.password, values.username, values.referral);
-    
+    localStorage.setItem('userlogged', 'normal');
+    const res = await signupAPI(
+      values.email,
+      values.password,
+      values.username,
+      values.referral
+    );
+
     if (res.status === 200) {
       setLoadings(false);
       OpenNotification('success', 'Successfully registered');
-      window.dispatchEvent( new Event('storage') ) 
+      window.dispatchEvent(new Event('storage'));
       navigate('email-auth');
     } else {
       setLoadings(false);
@@ -51,13 +48,11 @@ console.log(refcode === "null");
 
   const [form] = Form.useForm();
 
-
-
   // useEffect(() => {
   //   const params = new URLSearchParams(window.location.search);
   //   const referral = params.get('referral');
-  //   
-    
+  //
+
   //   localStorage.removeItem('tempAuthReferral');
 
   //   if (referral) {
@@ -68,20 +63,17 @@ console.log(refcode === "null");
   //   }
   // }, [form]);
 
-  const onFinishFailed = (errorInfo: any) => {
-    
-  };
-
+  const onFinishFailed = (errorInfo: any) => {};
 
   return (
     <div className="d-inline-flex flex-direction-column  flex-align-center responsive_container">
-      <div className="row" style={{gap:"200px"}}>
+      <div className="row" style={{ gap: '200px' }}>
         <div className="col">
           <div
             className="text-center justify-center"
             // style={{ paddingLeft: 26 }}
           >
-            <h3 className='mb-0'>Get Started for</h3>
+            <h3 className="mb-0">Get Started for</h3>
             <h1 className="top_heading mb-2">Indexx Exchange</h1>
             {/* <Link to="/indexx-exchange/buy-sell/login" className="text_link">
               LOG IN
@@ -91,17 +83,15 @@ console.log(refcode === "null");
           <div className="bs_container bs_form card">
             <div className="d-flex justify-center"></div>
             <Form
-         form={form}
-         onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-         layout="vertical"
-         autoComplete="off"
-         initialValues={{
-           referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
-         }}
-       >
-
-            
+              form={form}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              layout="vertical"
+              autoComplete="off"
+              initialValues={{
+                referral: localStorage.getItem('tempAuthReferral') || '', // Set initial value for referral
+              }}
+            >
               <div className="form_element email position-relative">
                 {/* <label>Email</label> */}
                 <Form.Item
@@ -165,25 +155,30 @@ console.log(refcode === "null");
                 </Form.Item>
               </div>
               <div className="form_element referral">
-                          <Form.Item
-              label="Referral Code (Optional)"
-              name="referral"
-              // rules={[
-              //   { required: false, message: 'Referral Id Required' },
-              // ]}
-              initialValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
-            >
-              <div className="control-input">
-                <Input
+                <Form.Item
+                  label="Referral Code (Optional)"
                   name="referral"
-                  className="input_height"
-                  placeholder="Enter Referal Code"
-                  readOnly={refcode !== "null"}
-                  defaultValue={(refcode === "null" || refcode === "undefiend") ? "" : refcode }
-                />
-              </div>
-            </Form.Item>
-
+                  // rules={[
+                  //   { required: false, message: 'Referral Id Required' },
+                  // ]}
+                  initialValue={
+                    refcode === 'null' || refcode === 'undefiend' ? '' : refcode
+                  }
+                >
+                  <div className="control-input">
+                    <Input
+                      name="referral"
+                      className="input_height"
+                      placeholder="Enter Referal Code"
+                      readOnly={refcode !== 'null'}
+                      defaultValue={
+                        refcode === 'null' || refcode === 'undefiend'
+                          ? ''
+                          : refcode
+                      }
+                    />
+                  </div>
+                </Form.Item>
               </div>
               <div className="form_element d-flex terms_conditions_container">
                 <Form.Item
@@ -195,8 +190,8 @@ console.log(refcode === "null");
                         value
                           ? Promise.resolve()
                           : Promise.reject(
-                            new Error('Should accept terms and policy')
-                          ),
+                              new Error('Should accept terms and policy')
+                            ),
                     },
                   ]}
                 >
@@ -231,26 +226,84 @@ console.log(refcode === "null");
                 </Button>
               </Form.Item>
             </Form>
-            <div
-              style={{ marginTop: -30 }}
-              className="d-flex justify-center padding-t-2x"
+            <p
+              style={{
+                color: 'black',
+                borderBottom: '0.5px solid #4C4C4C',
+                marginBottom: '35px',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
             >
+              {' '}
+              <span
+                style={{
+                  background: '#fff',
+                  width: 'fit-content',
+                  height: '15px',
+                  lineHeight: 0,
+                  padding: '0px 20px',
+                  margin: 0,
+
+                  display: 'inline-block',
+                  transform: 'translateY(14px)',
+                }}
+              >
+                OR
+              </span>
+            </p>
+            <div
+              className=" flex-column align-items-center padding-t-2x"
+              style={{ marginTop: '-15px' }}
+            >
+              <Link
+                to="/indexx-exchange/buy-sell/get-started-honeybee"
+                className="login_links"
+              >
+                Sign up as Honey Bee
+              </Link>
+              <br />
+              <p
+                style={{
+                  color: 'black',
+                  borderBottom: '0.5px solid #4C4C4C',
+                  marginBottom: '35px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                {' '}
+                <span
+                  style={{
+                    background: '#fff',
+                    width: 'fit-content',
+                    height: '15px',
+                    lineHeight: 0,
+                    padding: '0px 20px',
+                    margin: 0,
+
+                    display: 'inline-block',
+                    transform: 'translateY(14px)',
+                  }}
+                >
+                  OR
+                </span>
+              </p>
+              <a
+                href={`${baseHiveURL}/sign-up`}
+                onClick={handleClick}
+                className="login_links"
+              >
+                Sign up as Captain Bee
+              </a>
+            </div>
+            <div className="d-flex justify-center padding-t-2x">
               Already have an account? &nbsp;
               <Link to="/indexx-exchange/buy-sell/login" className="text_link">
                 {' '}
                 Log in.
               </Link>
-              </div>
-              <div
-              className="d-flex flex-column justify-center align-items-center padding-t-2x">
-                <Link to="/indexx-exchange/buy-sell/get-started-honeybee" className="hive_link">
-                  Sign up as Honey Bee
-                </Link>
-                <br />
-                <Button onClick={handleClick} className="hive_link" style={{border:"none", width:"fit-content", boxShadow:"none"}}>
-                  Sign up as Captain Bee
-                </Button>
-              </div>
+            </div>
 
             {/* <Space direction="vertical" style={{ width: '100%' }}>
               <p>
@@ -267,33 +320,32 @@ console.log(refcode === "null");
           </div>
         </div>
 
-        <div className="col log-img" style={{width:"400px"}}>
-          <div style={{  marginBottom:-100 }}>
-                    <br/>  <br/>  <br/>
-            <div className='d-flex flex-direction-column justify-content-center align-items-center'>
-            <Image
-              className="text-center mb-5"
-              preview={false}
-              src={hands}
-              style={{ paddingLeft: 0, paddingTop: 110, width:"initial" }}
-            ></Image>
-                <div style={{fontSize:"40px", textAlign:"center"}}>
-            New to crypto?
-            </div>
-            <a href={baseHiveURL} target='blank' className='blk_yl_link'>
-            <div style={{fontSize:"20px", textAlign:"center"}}>
-
-            Take help from a 
-            <br />
-            Captain Bee now!
-            </div>
-
-            <Image
-              className="text-center mt-5 hive-img"
-              preview={false}
-              src={hive}
-              style={{  width:"initial" }}
+        <div className="col log-img" style={{ width: '400px' }}>
+          <div style={{ marginBottom: -100 }}>
+            <br /> <br /> <br />
+            <div className="d-flex flex-direction-column justify-content-center align-items-center">
+              <Image
+                className="text-center mb-5"
+                preview={false}
+                src={hands}
+                style={{ paddingLeft: 0, paddingTop: 110, width: 'initial' }}
               ></Image>
+              <div style={{ fontSize: '40px', textAlign: 'center' }}>
+                New to crypto?
+              </div>
+              <a href={baseHiveURL} target="blank" className="blk_yl_link">
+                <div style={{ fontSize: '20px', textAlign: 'center' }}>
+                  Take help from a
+                  <br />
+                  Captain Bee now!
+                </div>
+
+                <Image
+                  className="text-center mt-5 hive-img"
+                  preview={false}
+                  src={hive}
+                  style={{ width: 'initial' }}
+                ></Image>
               </a>
             </div>
           </div>
