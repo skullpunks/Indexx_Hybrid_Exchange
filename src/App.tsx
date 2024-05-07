@@ -115,7 +115,7 @@ import { ThemeContext } from './utils/themeContext';
 import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
-import HiveForgotPassword from './components/BuySell/HiveForgotPassword';
+import HiveForgotPassword from './components/BuySell/BuySellForgotPassword';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
