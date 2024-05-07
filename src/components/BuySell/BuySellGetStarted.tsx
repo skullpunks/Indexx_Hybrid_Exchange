@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { signupAPI, baseDEXURL, baseHiveURL } from '../../services/api';
 import hands from '../../assets/arts/hand 5 edited 3.svg';
 import hive from '../../assets/arts/hive logo 2.svg';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import { Theme } from '../../utils/themeContext';
 
 const BuySellGetStarted: React.FC = () => {
   //creating IP state
@@ -47,7 +48,7 @@ const BuySellGetStarted: React.FC = () => {
   };
 
   const [form] = Form.useForm();
-
+  const theme = useContext(Theme);
   // useEffect(() => {
   //   const params = new URLSearchParams(window.location.search);
   //   const referral = params.get('referral');
@@ -228,7 +229,7 @@ const BuySellGetStarted: React.FC = () => {
             </Form>
             <p
               style={{
-                color: 'black',
+                color: theme?.theme === 'light' ? '#000' : '#fff',
                 borderBottom: '0.5px solid #4C4C4C',
                 marginBottom: '35px',
                 display: 'flex',
@@ -238,7 +239,7 @@ const BuySellGetStarted: React.FC = () => {
               {' '}
               <span
                 style={{
-                  background: '#fff',
+                  background: theme?.theme === 'light' ? '#fff' : '#171717',
                   width: 'fit-content',
                   height: '15px',
                   lineHeight: 0,
@@ -265,7 +266,7 @@ const BuySellGetStarted: React.FC = () => {
               <br />
               <p
                 style={{
-                  color: 'black',
+                  color: theme?.theme === 'light' ? '#000' : '#fff',
                   borderBottom: '0.5px solid #4C4C4C',
                   marginBottom: '35px',
                   display: 'flex',
@@ -275,7 +276,7 @@ const BuySellGetStarted: React.FC = () => {
                 {' '}
                 <span
                   style={{
-                    background: '#fff',
+                    background: theme?.theme === 'light' ? '#fff' : '#171717',
                     width: 'fit-content',
                     height: '15px',
                     lineHeight: 0,
