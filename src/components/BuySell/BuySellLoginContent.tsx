@@ -104,7 +104,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   const [loadings, setLoadings] = useState<boolean>(false);
   localStorage.setItem('userlogged', 'normal');
 
-  const onFinishFailed = (errorInfo: any) => {};
+  const onFinishFailed = (errorInfo: any) => { };
   return (
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
@@ -280,10 +280,15 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           </Link>{' '}
           <br />
           <br />
-          <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
-            {' '}
-            Sign up to be an indexxer
-          </p>
+          <Link
+            to="/indexx-exchange/buy-sell/get-started"
+            className="text_link"
+          >
+            <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
+              {' '}
+              Sign up to be an indexxer
+            </p>
+          </Link>
         </div>
         <br />
       </div>
