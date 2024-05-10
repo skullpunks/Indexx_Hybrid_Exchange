@@ -36,7 +36,7 @@ const BSWalletTable = () => {
     filters,
     sorter,
     extra
-  ) => {};
+  ) => { };
 
   const handleCheckboxChange = (e: CheckboxChangeEvent) => {
     setHideZeroBalance(e.target.checked);
@@ -93,7 +93,7 @@ const BSWalletTable = () => {
           record.coinSymbol === 'INEX' && record.coinNetwork === 'Polygon'
             ? require(`../../assets/token-icons/INEX-POLYGON.png`).default
             : require(`../../assets/token-icons/${record.coinSymbol}.png`)
-                .default;
+              .default;
         return (
           <>
             <img
@@ -191,12 +191,12 @@ const BSWalletTable = () => {
           item.coinType === 'Fiat'
             ? 'Fiat'
             : cryptocurrencies.includes(item.coinSymbol)
-            ? 'Crypto'
-            : stocks.includes(item.coinSymbol)
-            ? 'Stock'
-            : etfs.includes(item.coinSymbol)
-            ? 'ETF'
-            : 'Unknown',
+              ? 'Crypto'
+              : stocks.includes(item.coinSymbol)
+                ? 'Stock'
+                : etfs.includes(item.coinSymbol)
+                  ? 'ETF'
+                  : 'Unknown',
       }));
       setWalletData(formattedData);
     };
@@ -207,14 +207,15 @@ const BSWalletTable = () => {
     setSortedData(
       filteredWalletData
         ? filteredWalletData.filter(
-            (item: DataType) =>
-              (hideZeroBalance || item.coinBalance !== 0) &&
-              (hideZeroStakedBalance ||
-                (item.coinStakedBalance !== undefined &&
-                  item.coinStakedBalance !== 0))
-          )
+          (item: DataType) =>
+            (hideZeroBalance || item.coinBalance !== 0) ||
+            (hideZeroStakedBalance ||
+              (item.coinStakedBalance !== undefined &&
+                item.coinStakedBalance !== 0))
+        )
         : []
     );
+    console.log(filteredWalletData)
   }, [filteredWalletData, hideZeroBalance, hideZeroStakedBalance]);
 
   useEffect(() => {
@@ -232,7 +233,7 @@ const BSWalletTable = () => {
     if (!hideZeroStakedBalance) {
       filteredData = filteredData.filter(
         (item) =>
-          item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0
+          item.coinStakedBalance !== undefined || item.coinStakedBalance !== 0
       );
     }
     const finalData = !hideZeroBalance
@@ -242,11 +243,12 @@ const BSWalletTable = () => {
 
     const finalFilteredData = !hideZeroStakedBalance
       ? finalData.filter(
-          (item) =>
-            item.coinStakedBalance !== undefined && item.coinStakedBalance !== 0
-        )
+        (item) =>
+          item.coinStakedBalance !== undefined || item.coinStakedBalance !== 0
+      )
       : finalData;
 
+    console.log(finalFilteredData, hideZeroBalance)
     setSortedData(finalFilteredData);
 
     const cryptoData = filteredData.filter((item) =>
