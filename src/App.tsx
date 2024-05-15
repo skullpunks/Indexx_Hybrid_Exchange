@@ -115,6 +115,7 @@ import { ThemeContext } from './utils/themeContext';
 import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
+import HiveForgotPassword from './components/BuySell/BuySellForgotPassword';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -455,6 +456,10 @@ function App() {
               <Route
                 path="/indexx-exchange/buy-sell/hive-login"
                 element={<BuySellLoginContentHive />}
+              />
+              <Route
+                path="/indexx-exchange/buy-sell/hive-login/forgot-password"
+                element={<HiveForgotPassword />}
               />
               <Route
                 path="/indexx-exchange/buy-sell/wallet"

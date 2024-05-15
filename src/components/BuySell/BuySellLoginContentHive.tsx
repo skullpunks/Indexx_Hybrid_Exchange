@@ -183,7 +183,7 @@ const BuySellLoginContentHive: React.FC = () => {
             </div>
             {/* setScreenName("TwoFactorAuth") */}
             <Link
-              to="forgot-password"
+              to="/indexx-exchange/buy-sell/login/forgot-password"
               className="default-link text-underline-forgot"
             >
               Forgot password

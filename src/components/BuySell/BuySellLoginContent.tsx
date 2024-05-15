@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Email from '../../assets/arts/Email.svg';
 // import PasswordEye from "../../assets/arts/PasswordEye.svg";
 import qrCode from '../../assets/arts/qrCode.svg';
@@ -13,6 +13,7 @@ import {
 } from '../../services/api';
 import { InfoCircleFilled } from '@ant-design/icons';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import { Theme } from '../../utils/themeContext';
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -21,7 +22,7 @@ interface Props {
 }
 const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   const navigate = useNavigate();
-
+  const theme = useContext(Theme);
   const onFinish = async (values: any) => {
     setLoadings(true);
 
@@ -104,7 +105,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   const [loadings, setLoadings] = useState<boolean>(false);
   localStorage.setItem('userlogged', 'normal');
 
-  const onFinishFailed = (errorInfo: any) => {};
+  const onFinishFailed = (errorInfo: any) => { };
   return (
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
@@ -182,7 +183,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         </Form>
         <p
           style={{
-            color: 'black',
+            color: theme?.theme === 'light' ? '#000' : '#fff',
             borderBottom: '0.5px solid #4C4C4C',
             marginBottom: '35px',
             display: 'flex',
@@ -192,7 +193,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           {' '}
           <span
             style={{
-              background: '#fff',
+              background: theme?.theme === 'light' ? '#fff' : '#171717',
               width: 'fit-content',
               height: '15px',
               lineHeight: 0,
@@ -215,7 +216,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
         <br />
         <p
           style={{
-            color: 'black',
+            color: theme?.theme === 'light' ? '#000' : '#fff',
             borderBottom: '0.5px solid #4C4C4C',
             marginBottom: '35px',
             display: 'flex',
@@ -225,12 +226,13 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           {' '}
           <span
             style={{
-              background: '#fff',
+              background: theme?.theme === 'light' ? '#fff' : '#171717',
               width: 'fit-content',
               height: '15px',
               lineHeight: 0,
               padding: '0px 20px',
               margin: 0,
+
               display: 'inline-block',
               transform: 'translateY(14px)',
             }}
@@ -280,10 +282,15 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           </Link>{' '}
           <br />
           <br />
-          <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
-            {' '}
-            Sign up to be an indexxer
-          </p>
+          <Link
+            to="/indexx-exchange/buy-sell/get-started"
+            className="text_link"
+          >
+            <p style={{ color: 'var(--primary-color)', fontSize: 15 }}>
+              {' '}
+              Sign up to be an indexxer
+            </p>
+          </Link>
         </div>
         <br />
       </div>
