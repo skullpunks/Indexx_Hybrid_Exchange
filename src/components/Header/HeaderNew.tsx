@@ -33,7 +33,7 @@ import {
   baseAcademyUrl,
   decodeJWT,
 } from '../../services/api';
-import DarkMode from '../DarkMode/DarkMode';
+// import DarkMode from '../DarkMode/DarkMode';
 import MobileHeader from './MobileHeader';
 
 const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
@@ -224,7 +224,7 @@ const HeaderNew = () => {
               index.ai
             </Navbar.Brand>
           </div>
-          <DarkMode />
+          {/* <DarkMode /> */}
         </Container>
         <div className="loader" id="loaderLayer">
           {' '}

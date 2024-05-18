@@ -1,0 +1,11 @@
+.btn-hover-class {
+  height: 55px;
+  background: #ffb300;
+  color: #000;
+  font-size: 20px;
+  border-radius: 0px;
+}
+
+.btn-hover-class:hover {
+  background: #ffd000;
+}

@@ -35,7 +35,7 @@ import {
   baseAcademyUrl,
 } from '../../services/api';
 import { Typography } from '@mui/material';
-import DarkMode from '../DarkMode/DarkMode';
+// import DarkMode from '../DarkMode/DarkMode';
 
 const MobileHeader = () => {
   const [level1Open, setLevel1Open] = useState(false);
@@ -591,9 +591,7 @@ const MobileHeader = () => {
               )}
             </div>
             <div className="d-flex justify-content-end">
-              <div style={{ marginTop: '39px' }}>
-                <DarkMode />
-              </div>
+              <div style={{ marginTop: '39px' }}>{/* <DarkMode /> */}</div>
               <IconButton
                 edge="end" // Set edge to "end" to align the icon to the right
                 color="inherit"

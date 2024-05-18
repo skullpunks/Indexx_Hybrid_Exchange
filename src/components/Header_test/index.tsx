@@ -45,6 +45,7 @@ import {
   baseAcademyUrl,
   decodeJWT,
 } from '../../services/api';
+import ThemeToggler from '../ThemeToggler';
 import DarkMode from '../DarkMode/DarkMode';
 
 const Links = [
