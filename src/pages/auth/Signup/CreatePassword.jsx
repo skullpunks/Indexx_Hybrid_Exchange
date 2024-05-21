@@ -1,9 +1,8 @@
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import LoginComponent from '../../../components/updated/authentication/loginPassword';
-import Popup from '../../../components/updated/shared/Popup';
 
-const Login = () => {
+import CreatePassword from '../../../components/updated/authentication/signup/CreatePassword';
+const CreatePasswordPage = () => {
   const theme = useTheme();
   return (
     <div
@@ -17,10 +16,9 @@ const Login = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <LoginComponent />
-      {/* <Popup /> */}
+      <CreatePassword />
     </div>
   );
 };
 
-export default Login;
+export default CreatePasswordPage;

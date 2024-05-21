@@ -6,6 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import { makeStyles } from '@mui/styles';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -30,6 +31,22 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
     '&:hover': {
       borderColor: theme.palette.primary.main,
+    },
+    '&.Mui-error': {
+      borderColor: 'red !important',
+    },
+    '&:-webkit-autofill': {
+      boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
+      WebkitTextFillColor: `${theme.palette.text.primary} !important`,
+      transition: 'background-color 5000s ease-in-out 0s',
+    },
+    '&:-webkit-autofill:focus': {
+      boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
+      WebkitTextFillColor: `${theme.palette.text.primary} !important`,
+    },
+    '&:-webkit-autofill:hover': {
+      boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
+      WebkitTextFillColor: `${theme.palette.text.primary} !important`,
     },
   },
 }));
@@ -60,9 +77,12 @@ const InputField = ({
   endAdornment,
   className,
   style,
+  helperText,
+  error,
   ...otherProps
 }) => {
   const classes = useStyles();
+
   return (
     <FormControl variant="standard" className={`${classes.formContainer}`}>
       <InputLabel shrink htmlFor={id}>
@@ -76,8 +96,10 @@ const InputField = ({
         endAdornment={endAdornment}
         className={className}
         style={style}
+        error={error}
         {...otherProps}
       />
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 };

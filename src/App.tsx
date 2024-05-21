@@ -121,6 +121,11 @@ import ThemeToggler from './components/ThemeToggler/index.js';
 import Login from './pages/auth/LoginEmail/index';
 import LoginPassword from './pages/auth/LoginPassword';
 import ResetPass from './pages/auth/ResetPassword';
+import SignUpEmailPage from './pages/auth/Signup/EmailOrPhone';
+import SignUpEmailVerificationPage from './pages/auth/Signup/EmailVerification';
+import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
+import RefferalPage from './pages/auth/Signup/Refferal';
+import SelectRolePage from './pages/auth/Signup/SelectRole';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -287,6 +292,18 @@ function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/login-password" element={<LoginPassword />} />
             <Route path="/auth/reset-password" element={<ResetPass />} />
+            <Route path="/auth/signup-email" element={<SignUpEmailPage />} />
+            <Route
+              path="/auth/signup-email-verification"
+              element={<SignUpEmailVerificationPage />}
+            />
+            <Route
+              path="/auth/signup-create-password"
+              element={<CreatePasswordPage />}
+            />
+            <Route path="/auth/signup-referral" element={<RefferalPage />} />
+            <Route path="/auth/signup-role" element={<SelectRolePage />} />
+
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
             <Route

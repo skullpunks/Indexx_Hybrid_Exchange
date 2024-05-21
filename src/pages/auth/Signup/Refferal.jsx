@@ -1,9 +1,9 @@
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import LoginComponent from '../../../components/updated/authentication/loginPassword';
-import Popup from '../../../components/updated/shared/Popup';
 
-const Login = () => {
+import Refferal from '../../../components/updated/authentication/signup/Refferal';
+
+const RefferalPage = () => {
   const theme = useTheme();
   return (
     <div
@@ -17,10 +17,9 @@ const Login = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <LoginComponent />
-      {/* <Popup /> */}
+      <Refferal />
     </div>
   );
 };
 
-export default Login;
+export default RefferalPage;

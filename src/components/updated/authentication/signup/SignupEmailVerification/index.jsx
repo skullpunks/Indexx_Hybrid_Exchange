@@ -1,20 +1,18 @@
 import React from 'react';
 
 import { makeStyles } from '@mui/styles';
-import InputField from '../../shared/TextField';
-import GenericButton from '../../shared/Button';
+import InputField from '../../../shared/TextField';
+import GenericButton from '../../../shared/Button';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
-import darkModeLogo from '../../../../assets/authentication/darkMode_logo.svg';
-import lightModeLogo from '../../../../assets/authentication/lightMode_logo.svg';
+import darkModeLogo from '../../../../../assets/authentication/darkMode_logo.svg';
+import lightModeLogo from '../../../../../assets/authentication/lightMode_logo.svg';
 
-import googleLogo from '../../../../assets/authentication/logogoogle.svg';
-import appleLogo from '../../../../assets/authentication/ios.svg';
-import iosDark from '../../../../assets/authentication/ios-dark.svg';
-
+import googleLogo from '../../../../../assets/authentication/logogoogle.svg';
+import appleLogo from '../../../../../assets/authentication/ios.svg';
+import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -22,10 +20,16 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '580px',
     padding: '40px',
     maxWidth: '425px',
-    width: '100%',
     [theme.breakpoints.down('md')]: {
       border: 'none',
       width: '100%',
+    },
+    '& h4': {
+      color: `${theme.palette.text.secondary} !important`,
+      fontSize: '16px',
+      fontWeight: 400,
+      lineHeight: '24px',
+      marginBottom: '50px',
     },
   },
   socialButton: {
@@ -58,25 +62,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginComponent = () => {
+const SignUpEmailVerification = () => {
   const classes = useStyles();
   const theme = useTheme();
 
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('Enter a valid email')
-      .required('Email is required'),
+    verificationCode: Yup.number()
+      .test(
+        'len',
+        'Must be exactly 6 digits',
+        (val) => val && val.toString().length === 6
+      )
+      .required('Verification code is required'),
   });
   const formik = useFormik({
     initialValues: {
-      email: '',
+      verificationCode: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log('values: ', values);
     },
   });
-
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -87,40 +94,32 @@ const LoginComponent = () => {
         <h2 className={classes.logoText}>Indexx Exchange</h2>
       </div>
 
-      <h3 className={classes.loginText}>Log in</h3>
-      <div style={{ margin: '15px auto' }}>
+      <h3 className={classes.loginText}>Verify your email</h3>
+      <h4>
+        Please enter the 6-digit verification code that was sent to
+        ysabel3@gmail.com. The code is valid for 30 minutes.
+      </h4>
+      <div style={{ margin: '15px auto 25px auto' }}>
         <InputField
-          label={'Email/Phone Number'}
+          label={'Verification Code'}
           type="text"
-          {...formik.getFieldProps('email')}
-          error={formik.touched.email && formik.errors.email}
-          helperText={formik.errors.email}
+          {...formik.getFieldProps('verificationCode')}
+          error={
+            formik.touched.verificationCode && formik.errors.verificationCode
+          }
+          helperText={formik.errors.verificationCode}
         />
       </div>
 
       <GenericButton text={'Next'} onClick={formik.handleSubmit} />
-      <div style={{ margin: '10px auto' }}></div>
-      <Divider>or</Divider>
-      <GenericButton
-        text={'Continue with Google'}
-        className={classes.socialButton}
-        IconComponent={
-          <img
-            src={googleLogo}
-            style={{ width: '100%', height: '100%', marginTop: '-8px' }}
-          />
-        }
-      />
-
       <div style={{ margin: '20px auto' }}></div>
 
       <GenericButton
-        text={'Create an Indexx Account'}
+        text={'Didn’t receive the code?'}
         className={classes.createLink}
-        onClick={formik.handleSubmit}
       />
     </div>
   );
 };
 
-export default LoginComponent;
+export default SignUpEmailVerification;
