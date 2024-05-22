@@ -1,13 +1,10 @@
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import LoginPasswordComponent from '../../../components/updated/authentication/loginPassword';
-import Popup from '../../../components/updated/shared/Popup';
-import { useLocation } from 'react-router-dom';
 
-const Login = () => {
+import Refferal from '../../../components/updated/authentication/signup/Refferal';
+
+const RefferalPage = () => {
   const theme = useTheme();
-  const location = useLocation();
-  const { email } = location.state || '';
   return (
     <div
       style={{
@@ -20,10 +17,9 @@ const Login = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <LoginPasswordComponent email={email} />
-      {/* <Popup /> */}
+      <Refferal />
     </div>
   );
 };
 
-export default Login;
+export default RefferalPage;

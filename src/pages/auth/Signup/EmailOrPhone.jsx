@@ -1,13 +1,10 @@
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import LoginPasswordComponent from '../../../components/updated/authentication/loginPassword';
-import Popup from '../../../components/updated/shared/Popup';
-import { useLocation } from 'react-router-dom';
+import LoginComponent from '../../../components/updated/authentication/loginEmail';
+import SignUpEmail from '../../../components/updated/authentication/signup/SignupEmail';
 
-const Login = () => {
+const SignUpEmailPage = () => {
   const theme = useTheme();
-  const location = useLocation();
-  const { email } = location.state || '';
   return (
     <div
       style={{
@@ -20,10 +17,9 @@ const Login = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <LoginPasswordComponent email={email} />
-      {/* <Popup /> */}
+      <SignUpEmail />
     </div>
   );
 };
 
-export default Login;
+export default SignUpEmailPage;

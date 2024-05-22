@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 import InputField from '../../shared/TextField';
 import GenericButton from '../../shared/Button';
 import { Link } from 'react-router-dom';
 import Check from '../../../../assets/authentication/Check';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -93,6 +95,41 @@ const useStyles = makeStyles((theme) => ({
 const ResetPassword = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    minLength: false,
+    hasNumber: false,
+    hasUpperCase: false,
+  });
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 characters long')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/\d/, 'Password must contain at least one number')
+      .required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      console.log('values: ', values);
+    },
+  });
+  useEffect(() => {
+    const password = formik.values.password;
+    setPasswordCriteria({
+      minLength: password.length >= 8,
+      hasNumber: /\d/.test(password),
+      hasUpperCase: /[A-Z]/.test(password),
+    });
+  }, [formik.values.password]);
 
   return (
     <div className={classes.Container}>
@@ -108,20 +145,26 @@ const ResetPassword = () => {
               In order to protect your account,withdrawals,payment services will
               be disabled for 24 hours after you change your password
             </div>
-            <InputField label={'New Password'} type="password" />
+            <InputField
+              label={'New Password'}
+              type="password"
+              {...formik.getFieldProps('password')}
+              error={formik.touched.password && formik.errors.password}
+              helperText={formik.errors.password}
+            />
 
             <div className={classes.conditionRoot}>
               <div className={classes.conditionContainer}>
                 <Check
                   fill={
-                    false
+                    passwordCriteria.minLength
                       ? theme.palette.primary.main
                       : theme.palette.text.secondary
                   }
                 />
                 <p
                   style={{
-                    color: false
+                    color: passwordCriteria.minLength
                       ? theme.palette.primary.main
                       : theme.palette.text.secondary,
                   }}
@@ -132,14 +175,14 @@ const ResetPassword = () => {
               <div className={classes.conditionContainer}>
                 <Check
                   fill={
-                    true
+                    passwordCriteria.hasNumber
                       ? theme.palette.primary.main
                       : theme.palette.text.secondary
                   }
                 />
                 <p
                   style={{
-                    color: true
+                    color: passwordCriteria.hasNumber
                       ? `${theme.palette.primary.main}`
                       : theme.palette.text.secondary,
                   }}
@@ -150,14 +193,14 @@ const ResetPassword = () => {
               <div className={classes.conditionContainer}>
                 <Check
                   fill={
-                    false
+                    passwordCriteria.hasUpperCase
                       ? theme.palette.primary.main
                       : theme.palette.text.secondary
                   }
                 />
                 <p
                   style={{
-                    color: false
+                    color: passwordCriteria.hasUpperCase
                       ? theme.palette.primary.main
                       : theme.palette.text.secondary,
                   }}
@@ -167,7 +210,15 @@ const ResetPassword = () => {
               </div>
             </div>
             <div style={{ margin: '15px' }}></div>
-            <InputField label={'Confirm Password'} type="password" />
+            <InputField
+              label={'Confirm Password'}
+              type="password"
+              {...formik.getFieldProps('confirmPassword')}
+              error={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+              helperText={formik.errors.confirmPassword}
+            />
             <div style={{ margin: '25px 0px' }}></div>
             <GenericButton text="Submit" />
           </div>

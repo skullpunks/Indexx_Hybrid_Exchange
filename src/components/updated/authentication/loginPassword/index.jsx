@@ -18,9 +18,11 @@ import {
 } from '../../../../services/api';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
-
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -151,6 +153,22 @@ const LoginPassword = ({ email }) => {
       }
     }
   };
+  
+  const validationSchema = Yup.object({
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 characters long')
+      .required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      console.log('values: ', values);
+    },
+  });
 
   return (
     <div className={classes.Container}>
@@ -166,9 +184,63 @@ const LoginPassword = ({ email }) => {
       <div style={{ margin: '15px auto' }}>
         <InputField
           label={'Password'}
-          type="password"
           value={password}
           onChange={handlePasswordChange}
+          type={showPassword ? 'text' : 'password'}
+          {...formik.getFieldProps('password')}
+          error={formik.touched.password && formik.errors.password}
+          helperText={formik.errors.password}
+          // style={{
+          //   borderRadius: 10,
+          //   position: 'relative',
+          //   backgroundColor: 'none',
+          //   border: '1px solid red',
+          //   borderColor: theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843',
+          //   fontSize: 16,
+          //   minHeight: '26px',
+          //   width: '100%',
+          //   padding: '10px 12px',
+          //   transition: theme.transitions.create([
+          //     'border-color',
+          //     'background-color',
+          //   ]),
+          //   // Use the system font instead of the default Roboto font.
+
+          //   '&:focus': {
+          //     borderColor: theme.palette.primary.main,
+          //   },
+          //   '&:hover': {
+          //     borderColor: theme.palette.primary.main,
+          //   },
+
+          //   '& .MuiInputBase-input': {
+          //     borderRadius: 0,
+          //     position: 'relative',
+          //     backgroundColor: 'none',
+          //     border: 'none !important',
+          //     fontSize: 16,
+          //     minHeight: '26px',
+          //     width: '100%',
+          //     padding: '10px 12px',
+          //     transition: theme.transitions.create([
+          //       'border-color',
+          //       'background-color',
+          //     ]),
+          //     // Use the system font instead of the default Roboto font.
+          //   },
+          // }}
+          // endAdornment={
+          //   <InputAdornment position="end">
+          //     <IconButton
+          //       aria-label="toggle password visibility"
+          //       onClick={handleClickShowPassword}
+          //       onMouseDown={handleMouseDownPassword}
+          //       edge="end"
+          //     >
+          //       {showPassword ? <VisibilityOff /> : <Visibility />}
+          //     </IconButton>
+          //   </InputAdornment>
+          // }
         />
       </div>
 
