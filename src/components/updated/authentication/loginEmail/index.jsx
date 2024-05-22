@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import InputField from '../../shared/TextField';
@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import darkModeLogo from '../../../../assets/authentication/darkMode_logo.svg';
 import lightModeLogo from '../../../../assets/authentication/lightMode_logo.svg';
-
+import { useNavigate } from 'react-router-dom';
 import googleLogo from '../../../../assets/authentication/logogoogle.svg';
 import appleLogo from '../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../assets/authentication/ios-dark.svg';
@@ -56,7 +56,28 @@ const useStyles = makeStyles((theme) => ({
 const LoginComponent = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const navigate = useNavigate();
 
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setIsEmailValid(validateEmail(value));
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleNextClick = () => {
+    if (isEmailValid) {
+      navigate('/auth/login-password', { state: { email } });
+    }
+  };
+
+  
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -69,10 +90,19 @@ const LoginComponent = () => {
 
       <h3 className={classes.loginText}>Log in</h3>
       <div style={{ margin: '15px auto' }}>
-        <InputField label={'Email/Phone number'} type="text" />
+        <InputField
+          label={'Email/Phone number'}
+          type="text"
+          value={email}
+          onChange={handleEmailChange}
+        />
       </div>
 
-      <GenericButton text={'Next'} />
+      <GenericButton
+        text={'Next'}
+        onClick={handleNextClick}
+        disabled={!isEmailValid}
+      />
       <div style={{ margin: '10px auto' }}></div>
       <Divider>or</Divider>
       <GenericButton

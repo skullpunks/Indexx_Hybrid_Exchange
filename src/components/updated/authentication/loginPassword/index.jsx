@@ -9,6 +9,17 @@ import lightModeLogo from '../../../../assets/authentication/lightMode_logo.svg'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment } from '@mui/material';
+import {
+  checkByemail,
+  decodeJWT,
+  getUserDetails,
+  loginAPI,
+  loginHive,
+} from '../../../../services/api';
+import OpenNotification from '../../../OpenNotification/OpenNotification';
+import { useNavigate } from 'react-router-dom';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -48,15 +59,99 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPassword = () => {
+const LoginPassword = ({ email }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
+  const [password, setPassword] = React.useState('');
+  const [loadings, setLoadings] = React.useState(false);
 
+  console.log('email', email);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
+
+  const handleEmailCheck = async () => {
+    setLoadings(true);
+    const res = await checkByemail(email);
+    console.log('res', res);
+    if (res.userType === 'HoneyBee' || res.userType === 'Indexx Exchange') {
+      let res1 = await loginAPI(email, password);
+      console.log('res', res1);
+
+      if (res1.status === 200) {
+        setLoadings(false);
+        //OpenNotification('success', 'Login Successful');
+        alert('Login Successful');
+        let resObj = await decodeJWT(res.data.access_token);
+
+        debugger;
+        localStorage.setItem('user', resObj?.email);
+        const userKey = cryptr.encrypt(password);
+        localStorage.setItem('userkey', userKey);
+        localStorage.setItem('userpass', password);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('username', resObj?.username);
+        localStorage.setItem('userlogged', 'captain');
+        let redirectUrl = window.localStorage.getItem('redirect');
+        window.localStorage.removeItem('redirect');
+        let userDetails = await getUserDetails(resObj?.email);
+
+        // Check if there's a saved route in localStorage
+        const redirectRoute = localStorage.getItem('redirectRoute');
+
+        if (redirectRoute) {
+          // Redirect to the saved route after successful login
+          window.location.href = redirectRoute;
+        } else {
+          redirectUrl
+            ? navigate(redirectUrl)
+            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+        }
+      } else {
+        console.log('I am here');
+        setLoadings(false);
+        // OpenNotification('error', res.data.message);
+        alert(res.data.message);
+      }
+    } else if (res.userType === 'CaptainBee') {
+      let res2 = await loginHive(email, password);
+      console.log('res', res2);
+
+      if (res2.status === 200) {
+        setLoadings(false);
+        //OpenNotification('success', 'Login Successful');
+        let resObj = await decodeJWT(res2.data.access_token);
+        localStorage.setItem('userpass', password);
+        localStorage.setItem('user', resObj?.email);
+        const userKey = cryptr.encrypt(password);
+        localStorage.setItem('userkey', userKey);
+        localStorage.setItem('access_token', res2.data.access_token);
+        localStorage.setItem('refresh_token', res2.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        let redirectUrl = window.localStorage.getItem('redirect');
+        window.localStorage.removeItem('redirect');
+        let userDetails = await getUserDetails(resObj?.email);
+
+        redirectUrl
+          ? navigate(redirectUrl)
+          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+      } else {
+        setLoadings(false);
+        OpenNotification('error', res.data);
+      }
+    }
+  };
+
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -69,10 +164,19 @@ const LoginPassword = () => {
 
       <h3 className={classes.loginText}>Enter your password</h3>
       <div style={{ margin: '15px auto' }}>
-        <InputField label={'Password'} type="password" />
+        <InputField
+          label={'Password'}
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
       </div>
 
-      <GenericButton text={'Next'} />
+      <GenericButton
+        text={loadings ? 'Loading...' : 'Next'}
+        onClick={handleEmailCheck}
+        loading={loadings}
+      />
 
       <div style={{ margin: '10px auto' }}></div>
 

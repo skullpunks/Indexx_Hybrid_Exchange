@@ -121,6 +121,17 @@ export const checkEmail = async (email: string) => {
   }
 };
 
+export const checkByemail = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/checkByemail', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
 export const loginAPI = async (email: string, password: string) => {
   try {
     let isEmailProvided = isEmail(email);
