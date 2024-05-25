@@ -15,6 +15,7 @@ import {
   getUserDetails,
   loginAPI,
   loginHive,
+  resetPassword,
 } from '../../../../services/api';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
@@ -77,33 +78,35 @@ const LoginPassword = ({ email }) => {
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
+    console.log("value",value)
     setPassword(value);
   };
 
-  const handleEmailCheck = async () => {
+  const handleEmailCheck = async (values) => {
     setLoadings(true);
     const res = await checkByemail(email);
     console.log('res', res);
     if (res.userType === 'HoneyBee' || res.userType === 'Indexx Exchange') {
-      let res1 = await loginAPI(email, password);
+      let res1 = await loginAPI(email, values.password);
       console.log('res', res1);
 
       if (res1.status === 200) {
         setLoadings(false);
         //OpenNotification('success', 'Login Successful');
         alert('Login Successful');
-        let resObj = await decodeJWT(res.data.access_token);
+        let resObj = await decodeJWT(res1.data.access_token);
 
         debugger;
         localStorage.setItem('user', resObj?.email);
         const userKey = cryptr.encrypt(password);
         localStorage.setItem('userkey', userKey);
         localStorage.setItem('userpass', password);
-        localStorage.setItem('access_token', res.data.access_token);
-        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('access_token', res1.data.access_token);
+        localStorage.setItem('refresh_token', res1.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('username', resObj?.username);
-        localStorage.setItem('userlogged', 'captain');
+        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
+
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
         let userDetails = await getUserDetails(resObj?.email);
@@ -123,10 +126,10 @@ const LoginPassword = ({ email }) => {
         console.log('I am here');
         setLoadings(false);
         // OpenNotification('error', res.data.message);
-        alert(res.data.message);
+        alert(res1.data.message);
       }
     } else if (res.userType === 'CaptainBee') {
-      let res2 = await loginHive(email, password);
+      let res2 = await loginHive(email, values.password);
       console.log('res', res2);
 
       if (res2.status === 200) {
@@ -140,6 +143,7 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('access_token', res2.data.access_token);
         localStorage.setItem('refresh_token', res2.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
         let userDetails = await getUserDetails(resObj?.email);
@@ -149,7 +153,7 @@ const LoginPassword = ({ email }) => {
           : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
       } else {
         setLoadings(false);
-        OpenNotification('error', res.data);
+        alert(res2.data.message);
       }
     }
   };
@@ -167,8 +171,15 @@ const LoginPassword = ({ email }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log('values: ', values);
+      await handleEmailCheck(values);
     },
   });
+
+  const resetPasswordPage = () => {
+    navigate('/auth/reset-password', {
+      state: { email: email }
+    });
+  }
 
   return (
     <div className={classes.Container}>
@@ -246,13 +257,13 @@ const LoginPassword = ({ email }) => {
 
       <GenericButton
         text={loadings ? 'Loading...' : 'Next'}
-        onClick={handleEmailCheck}
+        onClick={formik.handleSubmit}
         loading={loadings}
       />
 
       <div style={{ margin: '10px auto' }}></div>
 
-      <GenericButton text={'Forgot password?'} className={classes.createLink} />
+      <GenericButton text={'Forgot password?'} className={classes.createLink} onClick={resetPasswordPage}/>
     </div>
   );
 };

@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -114,6 +114,29 @@ export const checkEmail = async (email: string) => {
   try {
     const result = await API.post('/api/v1/inex/user/checkemail', {
       email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const sendOtp = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendOtp', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const validateOtp = async (email: string, code: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateOtp', {
+      email,
+      code,
     });
     return result.data;
   } catch (e: any) {
@@ -701,6 +724,34 @@ export const getUserDetails = async (email: string) => {
     return e.response.data;
   }
 };
+
+export const signupWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/register/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }  
+};
+
+export const loginWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/login/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
 
 export const getHoneyUserDetails = async (email: string) => {
   try {

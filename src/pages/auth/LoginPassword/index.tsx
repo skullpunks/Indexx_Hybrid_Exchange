@@ -7,7 +7,10 @@ import { useLocation } from 'react-router-dom';
 const Login = () => {
   const theme = useTheme();
   const location = useLocation();
-  const { email } = location.state || '';
+  const email = location.state?.email || localStorage.getItem('email') || ''
+
+  console.log("I am in login password location.state", location.state);
+  console.log("I am here", email);
   return (
     <div
       style={{

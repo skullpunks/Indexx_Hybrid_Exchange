@@ -14,6 +14,8 @@ import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { FormControlLabel, Switch, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { signupAPI } from '../../../../../services/api';
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -66,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
 const Refferal = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = React.useState(false);
+  const { email, password } = location.state || '';
   const validationSchema = Yup.object().shape({
     referralId: Yup.string().optional(),
     marketingUpdates: Yup.boolean().required(
@@ -82,6 +88,34 @@ const Refferal = () => {
     onSubmit: async (values) => {
       console.log('Form values:', values);
       // Handle form submission
+      console.log('email, password', email, password);
+      console.log(
+        'Form values:',
+        values,
+        email,
+        password,
+        '',
+        values.referralId
+      );
+      setLoadings(true);
+      // Handle form submission
+      const res = await signupAPI(email, password, '', values.referralId);
+      console.log('res', res);
+      if (res.status === 200) {
+        setLoadings(false);
+        alert('Successfully registered');
+        window.dispatchEvent(new Event('storage'));
+        navigate('/auth/login', {
+          state: { email: email, password: values.password },
+        });
+      } else {
+        setLoadings(false);
+        alert(res.data);
+      }
+      //},
+      // navigate('/auth/signup-role', {
+      //   state: { email: email, password, referralId: values.referralId },
+      // });
     },
   });
   return (
@@ -129,7 +163,11 @@ const Refferal = () => {
         </Typography>
       )}
 
-      <GenericButton text={'Next'} onClick={formik.handleSubmit} />
+      <GenericButton
+        text={loadings ? 'Loading...' : 'Next'}
+        onClick={formik.handleSubmit}
+        loading={loadings}
+      />
       <div style={{ margin: '10px auto' }}></div>
     </div>
   );

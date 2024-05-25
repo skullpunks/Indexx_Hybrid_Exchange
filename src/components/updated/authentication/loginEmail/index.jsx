@@ -11,9 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import googleLogo from '../../../../assets/authentication/logogoogle.svg';
 import appleLogo from '../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../assets/authentication/ios-dark.svg';
-
+import { useGoogleLogin } from '@react-oauth/google';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { decodeJWT, loginWithGoogle } from '../../../../services/api';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -66,8 +69,11 @@ const LoginComponent = () => {
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
+    console.log('e', e.target.value);
     const value = e.target.value;
     setEmail(value);
+    formik.setFieldValue('email', value);
+    console.log('validateEmail(value)', validateEmail(value));
     setIsEmailValid(validateEmail(value));
   };
 
@@ -78,6 +84,7 @@ const LoginComponent = () => {
 
   const handleNextClick = () => {
     if (isEmailValid) {
+      localStorage.setItem('email', email);
       navigate('/auth/login-password', { state: { email } });
     }
   };
@@ -97,6 +104,57 @@ const LoginComponent = () => {
     },
   });
 
+  const handleCreateAccountClick = () => {
+    navigate('/auth/signup-email');
+  };
+
+  const handleGoogleSuccess = async (tokenResponse) => {
+    console.log('tokenResponse', tokenResponse);
+    const res = await loginWithGoogle(tokenResponse?.access_token);
+
+    if (res.status === 200) {
+      alert('User registered successfully with Google');
+      let resObj = await decodeJWT(res.data.access_token);
+
+      debugger;
+      localStorage.setItem('user', resObj?.email);
+      localStorage.setItem('access_token', res.data.access_token);
+      localStorage.setItem('refresh_token', res.data.refresh_token);
+      localStorage.setItem('userType', resObj?.userType);
+      localStorage.setItem('username', resObj?.username);
+      localStorage.setItem(
+        'userlogged',
+        resObj?.userType === 'Indexx Exchange'
+          ? 'normal'
+          : resObj?.userType === 'CaptainBee'
+          ? 'captain'
+          : 'honeyb'
+      );
+
+      let redirectUrl = window.localStorage.getItem('redirect');
+      window.localStorage.removeItem('redirect');
+
+      // Check if there's a saved route in localStorage
+      const redirectRoute = localStorage.getItem('redirectRoute');
+
+      if (redirectRoute) {
+        // Redirect to the saved route after successful login
+        window.location.href = redirectRoute;
+      } else {
+        redirectUrl
+          ? navigate(redirectUrl)
+          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+      }
+    } else {
+      alert(res.data.message);
+    }
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: (error) => console.log('Login Failed:', error),
+  });
+
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -112,9 +170,9 @@ const LoginComponent = () => {
         <InputField
           label={'Email/Phone number'}
           type="text"
-          value={email}
+          value={formik.values.email}
           onChange={handleEmailChange}
-          {...formik.getFieldProps('email')}
+          onBlur={formik.handleBlur}
           error={formik.touched.email && formik.errors.email}
           helperText={formik.errors.email}
         />
@@ -139,6 +197,7 @@ const LoginComponent = () => {
             style={{ width: '100%', height: '100%', marginTop: '-8px' }}
           />
         }
+        onClick={() => login()}
       />
 
       <div style={{ margin: '20px auto' }}></div>
@@ -146,7 +205,7 @@ const LoginComponent = () => {
       <GenericButton
         text={'Create an Indexx Account'}
         className={classes.createLink}
-        onClick={formik.handleSubmit}
+        onClick={handleCreateAccountClick}
       />
     </div>
   );
