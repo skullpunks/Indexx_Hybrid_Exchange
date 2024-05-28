@@ -11,7 +11,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { useTheme } from '@mui/material/styles';
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -52,8 +52,11 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '100%',
     color: `${theme.palette.text.primary} !important`,
+
     '& .MuiOutlinedInput-root': {
       color: `${theme.palette.text.primary} !important`,
+      fontSize: '24px !important',
+      fontWeight: '600 !important',
       '& fieldset': {
         border: 'none',
         color: `${theme.palette.text.primary} !important`,
@@ -67,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
   },
   searchField: {
-    margin: '20px',
     width: '100%',
 
     '& .MuiOutlinedInput-root': {
@@ -99,6 +101,22 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  dropDownIconContainer: {
+    display: 'flex',
+    gap: '5px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& img': {
+      width: '20px',
+      height: '20px',
+      borderRadius: '50%',
+    },
+    '& p': {
+      fontSize: '16px',
+      marginLeft: '5px',
+      color: `${theme.palette.text.primary} !important`,
+    },
+  },
   dropDownContainer: {
     zIndex: '111',
     height: '228px',
@@ -108,8 +126,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '-10px',
     position: 'absolute',
     width: '100%',
-    overflow: 'scroll',
-    padding: '10px 0px',
+    paddingBottom: '10px',
+    overflow: 'hidden',
     borderRadius: '16px',
   },
   listContainer: {
@@ -177,15 +195,21 @@ const CustomTextField = ({ placeholder, label }) => {
             variant="outlined"
             className={classes.textField}
             placeholder={placeholder}
+            type="number"
             onFocus={handleFocus}
             onBlur={handleBlur}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <span style={{ cursor: 'pointer' }} onClick={handleOpenModal}>
-                    {' '}
-                    <SearchIcon />
-                  </span>
+                  <div
+                    className={classes.dropDownIconContainer}
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleOpenModal}
+                  >
+                    <img src={Inex} />
+                    <p>INEX</p>
+                    <ArrowDropDownIcon />
+                  </div>
                 </InputAdornment>
               ),
             }}
@@ -196,19 +220,38 @@ const CustomTextField = ({ placeholder, label }) => {
         {isOpen && (
           <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.dropDownContainer}>
-              <div style={{ padding: '10px' }}>
-                <TextField
-                  variant="outlined"
-                  className={classes.searchField}
-                  placeholder="Search..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
+              <div
+                style={{
+                  height: '100%',
+                  overflowY: 'auto',
+                }}
+              >
+                <div
+                  style={{
+                    position: '-webkit-sticky',
+                    position: 'sticky',
+                    top: 0,
+                    background:
+                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    zIndex: '11111',
+                    padding: '10px',
+                    border: '1',
                   }}
-                />
+                >
+                  <TextField
+                    variant="outlined"
+                    className={classes.searchField}
+                    placeholder="Search..."
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </div>
+
                 <List>
                   <ListItem disablePadding>
                     <ListItemButton className={classes.listContainer}>

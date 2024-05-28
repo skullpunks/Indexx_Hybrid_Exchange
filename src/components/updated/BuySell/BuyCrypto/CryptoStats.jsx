@@ -113,16 +113,6 @@ const CryptoStats = () => {
               <div className={classes.loss}>+2.22%</div>
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton className={classes.listContainer}>
-              <div className={classes.logoContainer}>
-                <img src={Inex} />
-                <p>INEX</p>
-              </div>
-              <div>$567.40</div>
-              <div className={classes.loss}>+2.22%</div>
-            </ListItemButton>
-          </ListItem>
         </List>
       </Box>
     </Box>

@@ -40,6 +40,7 @@
     "ethers": "5.7.0",
     "formik": "^2.4.6",
     "jwt-decode": "^3.1.2",
+    "lightweight-charts": "^4.1.4",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
