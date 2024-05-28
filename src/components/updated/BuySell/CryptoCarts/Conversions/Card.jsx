@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { getCoinPriceByName } from '../../../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,29 +31,57 @@ const useStyles = makeStyles((theme) => ({
 
 const ConversionCards = ({ heading, type }) => {
   const classes = useStyles();
+  const [price, setPrice] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      const response = await getCoinPriceByName('INEX');
+      if (response.status === 200) {
+        setPrice(response.data.results.data);
+      } else {
+        console.error('Error fetching price:', response);
+      }
+      setLoading(false);
+    };
+
+    fetchPrice();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box className={classes.container}>
+        <h3 className={classes.heading}>{heading}</h3>
+        <Typography>Loading...</Typography>
+      </Box>
+    );
+  }
+
   const inexTousdt = [
-    ['0.5 INEX', '30,558.07 USD'],
-    ['0.5 INEX', '30,558.07 USD'],
-    ['0.5 INEX', '30,558.07 USD'],
-    ['0.5 INEX', '30,558.07 USD'],
-    ['0.5 INEX', '30,558.07 USD'],
-    ['0.5 INEX', '30,558.07 USD'],
+    ['0.5 INEX', `${(0.5 * price).toFixed(2)} USD`],
+    ['1 INEX', `${price.toFixed(2)} USD`],
+    ['2 INEX', `${(2 * price).toFixed(2)} USD`],
+    ['5 INEX', `${(5 * price).toFixed(2)} USD`],
+    ['10 INEX', `${(10 * price).toFixed(2)} USD`],
+    ['20 INEX', `${(20 * price).toFixed(2)} USD`],
   ];
 
   const usdtToinex = [
-    ['30,558.07 USD', '0.5 INEX'],
-    ['30,558.07 USD', '0.5 INEX'],
-    ['30,558.07 USD', '0.5 INEX'],
-    ['30,558.07 USD', '0.5 INEX'],
-    ['30,558.07 USD', '0.5 INEX'],
-    ['30,558.07 USD', '0.5 INEX'],
+    [`${price.toFixed(2)} USD`, '1 INEX'],
+    [`${(2 * price).toFixed(2)} USD`, '2 INEX'],
+    [`${(5 * price).toFixed(2)} USD`, '5 INEX'],
+    [`${(10 * price).toFixed(2)} USD`, '10 INEX'],
+    [`${(20 * price).toFixed(2)} USD`, '20 INEX'],
+    [`${(50 * price).toFixed(2)} USD`, '50 INEX'],
   ];
+
   const typeConversion = type === 'inextousdt' ? inexTousdt : usdtToinex;
+
   return (
     <Box className={classes.container}>
       <h3 className={classes.heading}>{heading}</h3>
-      {typeConversion.map((el) => (
-        <Box className={classes.content}>
+      {typeConversion.map((el, index) => (
+        <Box className={classes.content} key={index}>
           <Typography>{el[0]}</Typography>
           <Typography>{el[1]}</Typography>
         </Box>
