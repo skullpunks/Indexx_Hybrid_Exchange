@@ -9,8 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { List, ListItem, ListItemButton } from '@mui/material';
-import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { useTheme } from '@mui/material/styles';
+import tokens from '../../../../utils/Tokens.json';
+import Inex from '../../../../assets/updated/buySell/INEX.svg';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,22 +19,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     gap: '8px',
     padding: '22px 6px 6px 6px',
-
     margin: '20px 0px',
     borderRadius: '8px',
-
     position: 'relative',
-
-    border: `1px solid ${
-      theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
-    }`,
+    border: `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'}`,
     fontSize: 16,
-
     width: '100%',
-
     transition: theme.transitions.create(['border-color', 'background-color']),
-    // Use the system font instead of the default Roboto font.
-
     '&:focus': {
       borderColor: `${theme.palette.primary.main} !important`,
     },
@@ -63,30 +55,19 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     width: 'calc(100% - 32px)',
     margin: '5px 16px 0',
-    // backgroundColor: "grey",
     boxShadow: 'none',
   },
   searchField: {
     margin: '20px',
     width: '100%',
-
     '& .MuiOutlinedInput-root': {
       height: '42px',
-      border: `1px solid ${
-        theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
-      } !important`,
+      border: `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'} !important`,
       fontSize: 16,
       borderRadius: '12px',
       color: `${theme.palette.text.primary} !important`,
-
       width: '100%',
-
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-      ]),
-      // Use the system font instead of the default Roboto font.
-
+      transition: theme.transitions.create(['border-color', 'background-color']),
       '&:focus': {
         borderColor: `${theme.palette.primary.main} !important`,
       },
@@ -94,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
         borderColor: `${theme.palette.primary.main} !important`,
       },
       '& fieldset': {
-        // borderColor: 'black',
         border: 'none',
       },
     },
@@ -103,8 +83,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '111',
     height: '228px',
     background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
-    boxShadow:
-      'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
+    boxShadow: 'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
     marginTop: '-10px',
     position: 'absolute',
     width: '100%',
@@ -135,11 +114,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getImage = (image) => {
+  try {
+    return require(`../../../../assets/token-icons/${image}.png`).default;
+  } catch (error) {
+    return Inex; // Fallback image if specific token icon is not found
+  }
+};
+
 const CustomTextField = ({ placeholder, label }) => {
   const classes = useStyles();
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const theme = useTheme();
+
   const handleFocus = () => {
     setFocused(true);
   };
@@ -156,6 +145,14 @@ const CustomTextField = ({ placeholder, label }) => {
     setIsOpen(false);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredTokens = tokens.filter((token) =>
+    token.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Box
@@ -163,9 +160,7 @@ const CustomTextField = ({ placeholder, label }) => {
         style={{
           border: focused
             ? `1px solid ${theme.palette.primary.main} !important`
-            : `1px solid ${
-                theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
-              } !important`,
+            : `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'} !important`,
         }}
       >
         <FormControl className={classes.formControl}>
@@ -183,7 +178,6 @@ const CustomTextField = ({ placeholder, label }) => {
               endAdornment: (
                 <InputAdornment position="end">
                   <span style={{ cursor: 'pointer' }} onClick={handleOpenModal}>
-                    {' '}
                     <SearchIcon />
                   </span>
                 </InputAdornment>
@@ -201,6 +195,8 @@ const CustomTextField = ({ placeholder, label }) => {
                   variant="outlined"
                   className={classes.searchField}
                   placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -210,54 +206,16 @@ const CustomTextField = ({ placeholder, label }) => {
                   }}
                 />
                 <List>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton className={classes.listContainer}>
-                      <div className={classes.logoContainer}>
-                        <img src={Inex} />
-                        <p>INEX</p>
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
+                  {filteredTokens.map((token) => (
+                    <ListItem key={token.title} disablePadding>
+                      <ListItemButton className={classes.listContainer}>
+                        <div className={classes.logoContainer}>
+                          <img src={getImage(token.image)} alt={token.title} />
+                          <p>{token.title}</p>
+                        </div>
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
                 </List>
               </div>
             </div>
