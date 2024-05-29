@@ -6,6 +6,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import transactionIcon from '../../../../assets/updated/buySell/transactionMethod.svg';
 import { Box } from '@mui/material';
 
+import creditCard from '../../../../assets/updated/popup/credit-card.svg';
+import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
+import venmo from '../../../../assets/updated/popup/venmo.svg';
+import paypal from '../../../../assets/updated/popup/paypal.svg';
+import zelle from '../../../../assets/updated/popup/zelle.svg';
+
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -111,6 +117,10 @@ const useStyles = makeStyles((theme) => ({
       background: 'transparent',
       border: `1px solid ${theme.palette.primary.main}`,
     },
+    '&:active': {
+      background: 'transparent',
+      border: `1px solid ${theme.palette.primary.main}`,
+    },
   },
   iconTextContainer: {
     display: 'flex',
@@ -124,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
   btnText: {
     color: theme.palette.text.primary,
     fontSize: '18px',
+  },
+  paymentSelectionImg: {
+    width: '50px',
   },
 }));
 
@@ -140,29 +153,49 @@ const Popup = () => {
           <Box className={classes.container} style={{ width: '100%' }}>
             <button className={classes.button}>
               <Box className={classes.iconTextContainer}>
-                <img src={transactionIcon} />
+                <img
+                  className={classes.paymentSelectionImg}
+                  src={transactionIcon}
+                />
                 <p className={classes.btnText}>Asset Wallet</p>
               </Box>
               <p>$3.0</p>
             </button>
             <button className={classes.button}>
               <Box className={classes.iconTextContainer}>
-                <img src={transactionIcon} />
+                <img className={classes.paymentSelectionImg} src={creditCard} />
                 <p className={classes.btnText}>Credit Card</p>
               </Box>
               <p>$3.0</p>
             </button>
             <button className={classes.button}>
               <Box className={classes.iconTextContainer}>
-                <img src={transactionIcon} />
+                <img className={classes.paymentSelectionImg} src={paypal} />
                 <p className={classes.btnText}>Paypal</p>
               </Box>
               <p>$3.0</p>
             </button>
             <button className={classes.button}>
               <Box className={classes.iconTextContainer}>
-                <img src={transactionIcon} />
+                <img className={classes.paymentSelectionImg} src={zelle} />
                 <p className={classes.btnText}>Zelle</p>
+              </Box>
+              <p>$3.0</p>
+            </button>
+            <button className={classes.button}>
+              <Box className={classes.iconTextContainer}>
+                <img className={classes.paymentSelectionImg} src={venmo} />
+                <p className={classes.btnText}>Venmo</p>
+              </Box>
+              <p>$3.0</p>
+            </button>
+            <button className={classes.button}>
+              <Box className={classes.iconTextContainer}>
+                <img
+                  className={classes.paymentSelectionImg}
+                  src={wireTransfer}
+                />
+                <p className={classes.btnText}>Wire Transfer</p>
               </Box>
               <p>$3.0</p>
             </button>
