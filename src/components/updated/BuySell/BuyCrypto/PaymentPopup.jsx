@@ -6,6 +6,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import transactionIcon from '../../../../assets/updated/buySell/transactionMethod.svg';
 import { Box } from '@mui/material';
 
+import creditCard from '../../../../assets/updated/popup/credit-card.svg';
+import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
+import venmo from '../../../../assets/updated/popup/venmo.svg';
+import paypal from '../../../../assets/updated/popup/paypal.svg';
+import zelle from '../../../../assets/updated/popup/zelle.svg';
+
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -111,6 +117,10 @@ const useStyles = makeStyles((theme) => ({
       background: 'transparent',
       border: `1px solid ${theme.palette.primary.main}`,
     },
+    '&:active': {
+      background: 'transparent',
+      border: `1px solid ${theme.palette.primary.main}`,
+    },
   },
   iconTextContainer: {
     display: 'flex',
@@ -124,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
   btnText: {
     color: theme.palette.text.primary,
     fontSize: '18px',
+  },
+  paymentSelectionImg: {
+    width: '50px',
   },
 }));
 

@@ -62,6 +62,10 @@ export default function ThemeContextUpdated({ children }: any) {
         components: {
           MuiCssBaseline: {
             styleOverrides: {
+              body: {
+                background: mode === 'light' ? '#FCFCFC' : '#181A21',
+              },
+
               '::-webkit-scrollbar': {
                 width: '8px',
               },
@@ -85,9 +89,16 @@ export default function ThemeContextUpdated({ children }: any) {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <CssBaseline />
+      <div
+        style={{
+          background: theme.palette.mode === 'light' ? '#FCFCFC' : '#181A21',
+          color: theme.palette.text.primary,
+        }}
+      >
+        <CssBaseline />
 
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </div>
     </ColorModeContext.Provider>
   );
 }

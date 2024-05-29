@@ -30,13 +30,37 @@ import {
   baseXnftURL,
   baseMktplaceURL,
 } from '../../services/api';
+import { useTheme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 interface FooterProps {
   helpIcon?: boolean;
   footerArt?: string;
 }
 
+const useStyles = makeStyles((theme: any) => ({
+  linkHover: {
+    '&:hover': {
+      color: `${theme.palette.text.primary} !important`,
+    },
+  },
+  copyrightHover: {
+    '& a:hover': {
+      color: `${theme.palette.text.secondary} !important`,
+    },
+  },
+  siteFooterInnerBorder: {
+    padding: '10px 0px',
+    borderTop: `1px solid ${theme.palette.divider} !important`,
+    borderBottom: `1px solid ${theme.palette.divider} !important`,
+    [theme.breakpoints.down('md')]: {
+      borderTop: `0px solid ${theme.palette.divider} !important`,
+      borderBottom: `0px solid ${theme.palette.divider} !important`,
+    },
+  },
+}));
 const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
+  const classes = useStyles();
   const icons = [
     {
       src: Instagram,
@@ -70,10 +94,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     },
   ];
 
-  const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
-  );
-
+  const theme = useTheme();
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
   useEffect(() => {
@@ -83,7 +104,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         : setUserLogged('normal');
     const handleStorageChange = (event: any) => {
       console.log(event);
-      setTheme(event.currentTarget.localStorage.selectedTheme);
+      // setTheme(event.currentTarget.localStorage.selectedTheme);
       if (setUserLogged !== event.currentTarget.localStorage.userlogged) {
         setUserLogged(event.currentTarget.localStorage.userlogged);
       }
@@ -100,7 +121,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     <>
       <footer
         className="site_footer position-relative container-fluid desktop-display"
-        style={{ marginTop: '250px' }}
+        style={{ marginTop: '150px' }}
       >
         {/* {helpIcon && (
           <a
@@ -115,11 +136,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </a>
         )} */}
 
-        <div className="flex-align-center d-flex flex-justify-between site_footer_inner row mx-auto">
+        <div
+          className={`${classes.siteFooterInnerBorder} flex-align-center d-flex flex-justify-between site_footer_inner row mx-auto`}
+        >
           <span style={{ marginBottom: '18px', marginTop: '18px' }}>
             <h1 className="align-middle">
               <a href={baseURL}>
-                {theme === 'dark' ? (
+                {theme.palette.mode === 'dark' ? (
                   <img
                     src={userLogged === 'normal' ? indexText : indexTextyellow}
                     alt="index logo"
@@ -158,42 +181,54 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseCEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Exchange</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Exchange
+                      </span>
                     </a>
                     <br />
                     <a
                       href="https://lotto.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Fantasy Lotto</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Fantasy Lotto
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseShopURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Shop</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Shop
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseDEXURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Swap</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Swap
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseWSURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Wall Street</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Wall Street
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseMktplaceURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Market</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Market
+                      </span>
                     </a>
                     <br />
                     <br />
@@ -208,63 +243,79 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`https://indexxgifts.com/`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty"></span>
+                      <span className={`${classes.linkHover} link_sty`}></span>
                     </a>
-                    <br />
+
                     <a
                       href={`${baseShopURL}/collections/greeting-cards`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Greeting Cards</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Greeting Cards
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/nfts`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">NFT</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        NFT
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseWSURL}/certificates`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Stock Certificates</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Stock Certificates
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseWSURL}/details`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Stock Tokens</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Stock Tokens
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/token-details`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Tokens</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Tokens
+                      </span>
                     </a>
                     <br />
                     <a
                       href={baseXnftURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">XNFT</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        XNFT
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseXnftURL}/#fiat-cur`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">XUSD</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        XUSD
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">$1 Bitcoin</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        $1 Bitcoin
+                      </span>
                     </a>
                     <br />
                     <br />
@@ -286,7 +337,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href="https://register.affiliate.indexx.ai/"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Affiliate Program</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Affiliate Program
+                      </span>
                     </a>
                     <br />
 
@@ -294,7 +347,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseHiveURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Hive</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Hive
+                      </span>
                     </a>
 
                     <br />
@@ -302,7 +357,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/trade-to-earn`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Trade to Earn</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Trade to Earn
+                      </span>
                     </a>
 
                     <br />
@@ -324,7 +381,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en"
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Wallet Extension</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Wallet Extension
+                      </span>
                     </a>
                     <br />
 
@@ -332,7 +391,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={baseWalletURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Wallet Web</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Wallet Web
+                      </span>
                     </a>
 
                     <br />
@@ -354,21 +415,27 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/about`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">About</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        About
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/blog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Blog</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Blog
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/careers`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Careers</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Careers
+                      </span>
                     </a>
                     <br />
 
@@ -376,7 +443,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/how-it-works`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">How it Works</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        How it Works
+                      </span>
                     </a>
                     <br />
                     {/* <a
@@ -392,7 +461,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/markets`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Markets</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Markets
+                      </span>
                     </a>
                     <br />
 
@@ -400,14 +471,18 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       href={`${baseURL}/indexx-exchange/vlog`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Vlog</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Vlog
+                      </span>
                     </a>
                     <br />
                     <a
                       href={`${baseURL}/indexx-exchange/coming-soon?page=Document`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
-                      <span className="link_sty">Document</span>
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Document
+                      </span>
                     </a>
 
                     <br />
@@ -462,20 +537,32 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           <span className="copyright_text">
             Copyright © 2023 All Rights Reserved.
           </span>
-          <span className="fit-content border-right">
+          <span
+            className={`${classes.copyrightHover} fit-content border-right`}
+            style={{ color: theme.palette.text.primary }}
+          >
             <a href={`${baseURL}/indexx-exchange/legal/privacypolicy`}>
               Privacy Policy
             </a>
           </span>
-          <span className="fit-content border-right">
+          <span
+            className={`${classes.copyrightHover} fit-content border-right`}
+            style={{ color: theme.palette.text.primary }}
+          >
             <a href={`${baseURL}/indexx-exchange/legal/termsandconditions`}>
               Terms Of Use
             </a>
           </span>
-          <span className="fit-content border-right">
+          <span
+            className={`${classes.copyrightHover} fit-content border-right`}
+            style={{ color: theme.palette.text.primary }}
+          >
             <a href={`${baseURL}/indexx-exchange/legal`}>Legal</a>
           </span>
-          <span className="fit-content">
+          <span
+            className={`${classes.copyrightHover} fit-content`}
+            style={{ color: theme.palette.text.primary }}
+          >
             <a href={`${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`}>
               Site Map
             </a>
@@ -507,7 +594,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         </div>
 
         <div
-          className="flex-align-center d-flex flex-justify-between site_footer_inner row"
+          className={`${classes.siteFooterInnerBorder} flex-align-center d-flex flex-justify-between site_footer_inner row`}
           style={{ marginLeft: '15px' }}
         >
           <div className=" footercentre col-sm-12 col-md-12">
@@ -570,42 +657,54 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={baseCEXURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Exchange</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Exchange
+                        </span>
                       </a>
                       <br />
                       <a
                         href="https://lotto.indexx.ai/"
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Fantasy Lotto</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Fantasy Lotto
+                        </span>
                       </a>
                       <br />
                       <a
                         href={baseShopURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Shop</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Shop
+                        </span>
                       </a>
                       <br />
                       <a
                         href={baseDEXURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Swap</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Swap
+                        </span>
                       </a>
                       <br />
                       <a
                         href={baseWSURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Wall street</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Wall street
+                        </span>
                       </a>
                       <br />
                       <a
                         href={baseMktplaceURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Market</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Market
+                        </span>
                       </a>
                       <br />
                       <br />
@@ -645,63 +744,81 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={'https://indexxgifts.com/'}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Gift Cards</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Gift Cards
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseShopURL}/collections/greeting-cards`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Greeting Cards</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Greeting Cards
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseURL}/indexx-exchange/nfts`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">NFT</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          NFT
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseWSURL}/certificates`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Stock Certificates</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Stock Certificates
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseWSURL}/details`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Stock Tokens</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Stock Tokens
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseURL}/indexx-exchange/token-details`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Tokens</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Tokens
+                        </span>
                       </a>
                       <br />
                       <a
                         href={baseXnftURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">XNFT</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          XNFT
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseXnftURL}/#fiat-cur`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">XUSD</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          XUSD
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">$1 Bitcoin</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          $1 Bitcoin
+                        </span>
                       </a>
                       <br />
                       <br />
@@ -741,7 +858,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href="https://register.affiliate.indexx.ai/"
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Affiliate Program</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Affiliate Program
+                        </span>
                       </a>
                       <br />
 
@@ -749,7 +868,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={baseHiveURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Hive</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Hive
+                        </span>
                       </a>
 
                       <br />
@@ -757,7 +878,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/trade-to-earn`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Trade to Earn</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Trade to Earn
+                        </span>
                       </a>
 
                       <br />
@@ -798,7 +921,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href="https://chrome.google.com/webstore/detail/indexx-wallet/fpibioaihcagphbidhodidjbnclocgll?hl=en"
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Wallet Extension</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Wallet Extension
+                        </span>
                       </a>
                       <br />
 
@@ -806,7 +931,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={baseWalletURL}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Wallet Web</span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Wallet Web
+                        </span>
                       </a>
                       <br />
                       <br />
@@ -846,7 +973,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/about`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">About </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          About{' '}
+                        </span>
                       </a>
 
                       <br />
@@ -854,7 +983,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/blog`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Blog </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Blog{' '}
+                        </span>
                       </a>
 
                       <br />
@@ -862,14 +993,19 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/careers`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Careers </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Careers{' '}
+                        </span>
                       </a>
                       <br />
                       <a
                         href={`${baseURL}/indexx-exchange/how-it-works`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty"> How it Works </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          {' '}
+                          How it Works{' '}
+                        </span>
                       </a>
                       <br />
                       {/* <a
@@ -894,7 +1030,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/markets`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Markets Performance </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Markets Performance{' '}
+                        </span>
                       </a>
                       <br />
 
@@ -902,7 +1040,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                         href={`${baseURL}/indexx-exchange/vlog`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
-                        <span className="link_sty">Vlog </span>
+                        <span className={`${classes.linkHover} link_sty`}>
+                          Vlog{' '}
+                        </span>
                       </a>
 
                       <br />
@@ -928,7 +1068,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
             href={baseURL}
             className="w-100 mx-auto d-flex justify-content-center"
           >
-            {theme === 'dark' ? (
+            {theme.palette.mode === 'dark' ? (
               <img
                 src={userLogged === 'normal' ? indexText : indexTextyellow}
                 alt="index logo"

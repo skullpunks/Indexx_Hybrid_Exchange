@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import IconicHeader from '../shared/IconicHeader';
 import BuyCrypto from './BuyCrypto';
 import CryptoCarts from './CryptoCarts';
 import Conversion from './CryptoCarts/Conversions';
@@ -20,6 +21,7 @@ const BuySell = () => {
 
   return (
     <div className={classes.Container}>
+      <IconicHeader />
       <BuyCrypto />
       <HowToBuyCrypto />
       <CryptoCarts />

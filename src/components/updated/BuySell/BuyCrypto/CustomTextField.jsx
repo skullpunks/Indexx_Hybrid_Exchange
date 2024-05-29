@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dropDownContainer: {
     zIndex: '111',
-    height: '228px',
+    height: '224px',
     background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
     boxShadow:
       'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',

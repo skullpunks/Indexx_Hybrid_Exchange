@@ -88,6 +88,7 @@ import TeamCaptainDash from './components/Dashboard/Captainbee/TeamCaptainBees/T
 import LeaderCaptain from './components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain';
 
 import LottoHome from './components/Lottery/LottoHome';
+import { useTheme } from '@mui/material/styles';
 
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
@@ -130,9 +131,7 @@ import BuySellPage from './pages/BuySell';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
-  let theme = createTheme();
-  theme = responsiveFontSizes(theme);
-
+  const theme = useTheme();
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
   useEffect(() => {
@@ -155,8 +154,6 @@ function App() {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-
-  const themeClass = `theme-${userLogged}`;
 
   const PrivateRoutes = () => {
     const isAuthenticated =
@@ -181,7 +178,7 @@ function App() {
 
   return (
     <ThemeContextUpdated>
-      <div className={themeClass + ' globalnav-with-flyout-open'}>
+      <div>
         {/* <ThemeToggler /> */}
         <BrowserRouter>
           {/* <Headers /> */}
