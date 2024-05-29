@@ -5,6 +5,7 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { amber, deepOrange, grey } from '@mui/material/colors';
+import { CssBaseline } from '@mui/material';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -58,12 +59,34 @@ export default function ThemeContextUpdated({ children }: any) {
                 },
               }),
         },
+        components: {
+          MuiCssBaseline: {
+            styleOverrides: {
+              '::-webkit-scrollbar': {
+                width: '8px',
+              },
+              '::-webkit-scrollbar-thumb': {
+                backgroundColor: '#B7BDC6',
+                borderRadius: '4px',
+              },
+              '::-webkit-scrollbar-track': {
+                display: 'none', // Hide the scrollbar track
+              },
+
+              '::-webkit-scrollbar-thumb:hover': {
+                backgroundColor: '#B7BDC6 !important', // Keep the same color on hover
+              },
+            },
+          },
+        },
       }),
     [mode]
   );
 
   return (
     <ColorModeContext.Provider value={colorMode}>
+      <CssBaseline />
+
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ColorModeContext.Provider>
   );

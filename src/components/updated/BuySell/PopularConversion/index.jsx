@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
-
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 
 import inex from '../../../../assets/updated/buySell/INEX-sm.svg';
-import usd from '../../../../assets/updated/buySell/usd.svg';
+import { getCoinPriceByName } from '../../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     fontSize: '40px',
-
     color: `${theme.palette.text.primary} !important`,
     fontWeight: 600,
     textAlign: 'left',
@@ -40,13 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
   gridItem: {
     padding: '24px',
-    // backgroundColor: theme.palette.background.paper,
     borderRadius: '8px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     border: `1px solid ${theme.palette.divider}`,
-    // boxShadow: theme.shadows[1],
   },
   coinInfo: {
     '& h4': {
@@ -61,8 +58,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const currencies = [
+  { code: 'USD', name: 'US Dollar' },
+  { code: 'INR', name: 'Indian Rupee' },
+  { code: 'CNY', name: 'Chinese Yuan' },
+  { code: 'PKR', name: 'Pakistani Rupee' },
+  { code: 'PHP', name: 'Philippine Peso' },
+  { code: 'CAD', name: 'Canadian Dollar' },
+  { code: 'AUD', name: 'Australian Dollar' },
+  { code: 'EUR', name: 'Euro' },
+  { code: 'BRL', name: 'Brazilian Real' },
+];
+
 const PopularConversion = () => {
   const classes = useStyles();
+  const [prices, setPrices] = useState([]);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const inexPriceInUSD = await getInexPriceInUSD();
+      const exchangeRates = await getExchangeRates();
+      
+      const fetchedPrices = currencies.map(currency => ({
+        ...currency,
+        price: (inexPriceInUSD * exchangeRates[currency.code]).toFixed(2),
+        logo: getCurrencyLogo(currency.code),
+      }));
+      
+      setPrices(fetchedPrices);
+    };
+
+    fetchPrices();
+  }, []);
 
   return (
     <Box className={classes.container}>
@@ -72,117 +99,40 @@ const PopularConversion = () => {
         fiat currencies.
       </h3>
       <Box className={classes.gridContainer}>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
-        <Box className={classes.gridItem}>
-          <div className={classes.coinInfo}>
-            <h4>INEX to USD</h4>
-            <p>1 INEX = 3.0 USD</p>
-          </div>
-          <div>
-            <AvatarGroup max={2}>
-              <Avatar alt="Remy Sharp" src={inex} />
-              <Avatar alt="Travis Howard" src={usd} />
-            </AvatarGroup>
-          </div>
-        </Box>
+        {prices.map(currency => (
+          <Box key={currency.code} className={classes.gridItem}>
+            <div className={classes.coinInfo}>
+              <h4>{`INEX to ${currency.code}`}</h4>
+              <p>{`1 INEX = ${currency.price} ${currency.code}`}</p>
+            </div>
+            <div>
+              <AvatarGroup max={2}>
+                <Avatar alt="INEX" src={inex} />
+                <Avatar alt={currency.name} src={currency.logo} />
+              </AvatarGroup>
+            </div>
+          </Box>
+        ))}
       </Box>
     </Box>
   );
 };
 
 export default PopularConversion;
+
+const getInexPriceInUSD = async () => {
+  const res = await getCoinPriceByName(String("INEX"));
+  let priceData = res.data.results.data;
+  console.log('priceData', priceData);
+  return priceData; // Example price
+};
+
+const getExchangeRates = async () => {
+  const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+  const data = await response.json();
+  return data.rates;
+};
+
+const getCurrencyLogo = (currencyCode) => {
+  return `https://wise.com/public-resources/assets/flags/rectangle/${currencyCode.toLowerCase()}.png`;
+};

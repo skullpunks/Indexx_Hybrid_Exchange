@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -13,6 +13,12 @@ import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import {
+  getAppSettings,
+  getCoinPriceByName,
+  oneUSDHelper,
+} from '../../../../services/api';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -22,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '20px 0px',
     borderRadius: '8px',
     position: 'relative',
-    border: `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'}`,
+    border: `1px solid ${
+      theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
+    }`,
     fontSize: 16,
     width: '100%',
     transition: theme.transitions.create(['border-color', 'background-color']),
@@ -44,8 +52,11 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '100%',
     color: `${theme.palette.text.primary} !important`,
+
     '& .MuiOutlinedInput-root': {
       color: `${theme.palette.text.primary} !important`,
+      fontSize: '24px !important',
+      fontWeight: '600 !important',
       '& fieldset': {
         border: 'none',
         color: `${theme.palette.text.primary} !important`,
@@ -58,16 +69,20 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
   },
   searchField: {
-    margin: '20px',
     width: '100%',
     '& .MuiOutlinedInput-root': {
       height: '42px',
-      border: `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'} !important`,
+      border: `1px solid ${
+        theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
+      } !important`,
       fontSize: 16,
       borderRadius: '12px',
       color: `${theme.palette.text.primary} !important`,
       width: '100%',
-      transition: theme.transitions.create(['border-color', 'background-color']),
+      transition: theme.transitions.create([
+        'border-color',
+        'background-color',
+      ]),
       '&:focus': {
         borderColor: `${theme.palette.primary.main} !important`,
       },
@@ -79,16 +94,33 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  dropDownIconContainer: {
+    display: 'flex',
+    gap: '5px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& img': {
+      width: '20px',
+      height: '20px',
+      borderRadius: '50%',
+    },
+    '& p': {
+      fontSize: '16px',
+      marginLeft: '5px',
+      color: `${theme.palette.text.primary} !important`,
+    },
+  },
   dropDownContainer: {
     zIndex: '111',
     height: '228px',
     background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
-    boxShadow: 'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
+    boxShadow:
+      'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
     marginTop: '-10px',
     position: 'absolute',
     width: '100%',
-    overflow: 'scroll',
-    padding: '10px 0px',
+    paddingBottom: '10px',
+    overflow: 'hidden',
     borderRadius: '16px',
   },
   listContainer: {
@@ -122,12 +154,52 @@ const getImage = (image) => {
   }
 };
 
-const CustomTextField = ({ placeholder, label }) => {
+let appSettingArr = [];
+
+const CustomTextField = ({
+  placeholder,
+  label,
+  type = 'buy',
+  onSelectToken,
+  onAmountChange,
+  onReceiveAmountChange,
+  onPriceChange,
+}) => {
   const classes = useStyles();
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [fromToken, setFromToken] = useState(null);
+  const [toToken, setToToken] = useState(null);
+  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+  const [userAmount, setUserAmount] = useState(0);
+  const [rateData, setRateData] = useState(0);
+  const [adminFee, setAdminFees] = useState('');
+
   const theme = useTheme();
+
+  useEffect(() => {
+    // Set default tokens on initial render
+    if (type === 'buy') {
+      setFromToken({ title: 'USD', image: 'USD' });
+      setToToken({ title: 'INEX', image: 'INEX' });
+    } else if (type === 'sell') {
+      setFromToken({ title: 'INEX', image: 'INEX' });
+      setToToken({ title: 'USD', image: 'USD' });
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (onSelectToken) {
+      onSelectToken(type === 'buy' ? fromToken : toToken);
+    }
+  }, [fromToken, toToken, onSelectToken, type]);
+  
+  useEffect(() => {
+    if (fromToken || toToken) {
+      getPricesData(type === 'buy' ? toToken?.title : fromToken?.title);
+    }
+  }, [fromToken, toToken, type]);
 
   const handleFocus = () => {
     setFocused(true);
@@ -149,9 +221,46 @@ const CustomTextField = ({ placeholder, label }) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredTokens = tokens.filter((token) =>
-    token.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleTokenSelect = (token) => {
+    if (label === 'Spend') {
+      setFromToken({ title: token.title, image: token.image });
+    } else {
+      setToToken({ title: token.title, image: token.image });
+    }
+    setIsOpen(false);
+  };
+
+  const handleAmountChange = async (e) => {
+    const amount = e.target.value;
+    console.log('e', amount, type);
+    console.log('toToken', toToken);
+    console.log('fromToken', fromToken);
+    await getPricesData(type === 'buy' ? toToken?.title : fromToken?.title);
+    if (onAmountChange) {
+      onAmountChange(amount);
+    }
+    setUserAmount(amount);
+
+    const receiveAmount = calculateReceiveAmount(amount, rateData);
+    console.log('receiveAmount', receiveAmount);
+    if (onReceiveAmountChange) {
+      onReceiveAmountChange(receiveAmount);
+    }
+  };
+
+  const calculateReceiveAmount = (amount, rate) => {
+    console.log('amount, rate', amount, rate);
+    const receiveAmount = type === 'buy' ? amount / rate : amount * rate;
+    return receiveAmount.toFixed(2);
+  };
+
+  const getPricesData = async (currency) => {
+    const res = await getCoinPriceByName(String(currency));
+    let priceData = res.data.results.data;
+    console.log('priceData', priceData);
+    onPriceChange(priceData);
+    setRateData(priceData);
+  };
 
   return (
     <>
@@ -160,7 +269,9 @@ const CustomTextField = ({ placeholder, label }) => {
         style={{
           border: focused
             ? `1px solid ${theme.palette.primary.main} !important`
-            : `1px solid ${theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'} !important`,
+            : `1px solid ${
+                theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
+              } !important`,
         }}
       >
         <FormControl className={classes.formControl}>
@@ -172,14 +283,31 @@ const CustomTextField = ({ placeholder, label }) => {
             variant="outlined"
             className={classes.textField}
             placeholder={placeholder}
+            type="number"
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onChange={handleAmountChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <span style={{ cursor: 'pointer' }} onClick={handleOpenModal}>
-                    <SearchIcon />
-                  </span>
+                  <div
+                    className={classes.dropDownIconContainer}
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleOpenModal}
+                  >
+                    <img
+                      src={getImage(
+                        label === 'Spend' ? fromToken?.image : toToken?.image
+                      )}
+                      alt={
+                        label === 'Spend' ? fromToken?.title : toToken?.title
+                      }
+                    />
+                    <p>
+                      {label === 'Spend' ? fromToken?.title : toToken?.title}
+                    </p>
+                    <ArrowDropDownIcon />
+                  </div>
                 </InputAdornment>
               ),
             }}
@@ -190,32 +318,63 @@ const CustomTextField = ({ placeholder, label }) => {
         {isOpen && (
           <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.dropDownContainer}>
-              <div style={{ padding: '10px' }}>
-                <TextField
-                  variant="outlined"
-                  className={classes.searchField}
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
+              <div
+                style={{
+                  height: '100%',
+                  overflowY: 'auto',
+                }}
+              >
+                <div
+                  style={{
+                    position: '-webkit-sticky',
+                    position: 'sticky',
+                    top: 0,
+                    background:
+                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    zIndex: '11111',
+                    padding: '10px',
+                    border: '1',
                   }}
-                />
+                >
+                  <TextField
+                    variant="outlined"
+                    className={classes.searchField}
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </div>
+
                 <List>
-                  {filteredTokens.map((token) => (
-                    <ListItem key={token.title} disablePadding>
-                      <ListItemButton className={classes.listContainer}>
-                        <div className={classes.logoContainer}>
-                          <img src={getImage(token.image)} alt={token.title} />
-                          <p>{token.title}</p>
-                        </div>
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
+                  {tokens
+                    .filter((token) =>
+                      token.title
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                    )
+                    .map((token) => (
+                      <ListItem key={token.title} disablePadding>
+                        <ListItemButton
+                          className={classes.listContainer}
+                          onClick={() => handleTokenSelect(token)}
+                        >
+                          <div className={classes.logoContainer}>
+                            <img
+                              src={getImage(token.image)}
+                              alt={token.title}
+                            />
+                            <p>{token.title}</p>
+                          </div>
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
                 </List>
               </div>
             </div>
