@@ -3,10 +3,11 @@ import { makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 import InputField from '../../shared/TextField';
 import GenericButton from '../../shared/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Check from '../../../../assets/authentication/Check';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { resetPassword } from '../../../../services/api';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -92,15 +93,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResetPassword = () => {
+const ResetPassword = ({ email }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = React.useState(false);
   const [passwordCriteria, setPasswordCriteria] = useState({
     minLength: false,
     hasNumber: false,
     hasUpperCase: false,
   });
-
+  console.log('Email in resetPassword full', email);
   const validationSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
@@ -119,7 +122,9 @@ const ResetPassword = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setLoadings(true);
       console.log('values: ', values);
+      await onFinish(values);
     },
   });
   useEffect(() => {
@@ -131,10 +136,32 @@ const ResetPassword = () => {
     });
   }, [formik.values.password]);
 
+
+  const onFinish = async (values) => {
+    await resetPassword(String(email), values.password).then((res) => {
+      if (res.status === 200) {
+         setLoadings(false);
+        alert('Reset password successfull');
+        navigate('/auth/login');
+      } else {
+        setLoadings(false);
+        alert('Failed to reset the password');
+      }
+    });
+  };
+
   return (
     <div className={classes.Container}>
       <div className={classes.header}>
-        <Link className={classes.link}>&lt; Back </Link>
+        <Link
+          className={classes.link}
+          to={{
+            pathname: '/auth/login-password',
+            state: { email: email },
+          }}
+        >
+          &lt; Back
+        </Link>
       </div>
       <div className={classes.contentContent}>
         <div className={classes.leftEmpty}></div>
@@ -220,7 +247,9 @@ const ResetPassword = () => {
               helperText={formik.errors.confirmPassword}
             />
             <div style={{ margin: '25px 0px' }}></div>
-            <GenericButton text="Submit" />
+            <GenericButton 
+            text={loadings ? "Loading...": "Submit"} 
+            onClick={formik.handleSubmit} />
           </div>
         </div>
       </div>

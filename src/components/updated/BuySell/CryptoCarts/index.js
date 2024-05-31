@@ -51,29 +51,195 @@ const useStyles = makeStyles((theme) => ({
     color: 'red !important',
   },
 }));
+const allTokens = [
+  {
+    "title": "IN500",
+    "subTitle": "gatechain-token",
+    "info": ""
+  },
+  {
+    "title": "INEX",
+    "subTitle": "satoshi-nakamoto-rune"
+  },
+  {
+    "title": "INEX",
+    "subTitle": "satoshi-nakamoto-rune"
+  },
+  {
+    "title": "INEX",
+    "subTitle": "satoshi-nakamoto-rune"
+  },
+  {
+    "title": "WIBS",
+    "subTitle": "toshi"
+  },
+  {
+    "title": "IUSD+",
+    "subTitle": "tether"
+  },
+  {
+    "title": "INXC",
+    "subTitle": "uma"
+  },
+  {
+    "title": "ALCRYP",
+    "subTitle": "AlphaCrypto ETF"
+  },
+  {
+    "title": "AMZN",
+    "subTitle": "ethereum"
+  },
+  {
+    "title": "APPL",
+    "subTitle": "ethereum"
+  },
+  {
+    "title": "BCM",
+    "subTitle": "ethereum"
+  },
+  {
+    "title": "BNB",
+    "subTitle": "binancecoin"
+  },
+  {
+    "title": "BTC",
+    "subTitle": "bitcoin"
+  },
+  {
+    "title": "CRYC10",
+    "subTitle": "CryptoCap 10 ETF"
+  },
+  {
+    "title": "DAI",
+    "subTitle": "Dai"
+  },
+  {
+    "title": "DOGE",
+    "subTitle": "Dogecoin"
+  },
+  {
+    "title": "DOT",
+    "subTitle": "Polkadot"
+  },
+  {
+    "title": "EQSTK",
+    "subTitle": "EqStocks ETF"
+  },
+  {
+    "title": "ETH",
+    "subTitle": "Ethereum"
+  },
+  {
+    "title": "GOOGL",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "INDXXF",
+    "subTitle": "Indexx Focus ETF"
+  },
+  {
+    "title": "LINK",
+    "subTitle": "ChainLink"
+  },
+  {
+    "title": "LTC",
+    "subTitle": "Litecoin"
+  },
+  {
+    "title": "MATIC",
+    "subTitle": "Polygon"
+  },
+  {
+    "title": "META",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "MSFT",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "NVDA",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "PEP",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "SHIB",
+    "subTitle": "Shiba Inu"
+  },
+  {
+    "title": "SNP500",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "SOL",
+    "subTitle": "Solana"
+  },
+  {
+    "title": "TLSA",
+    "subTitle": "Indexx Stock Token"
+  },
+  {
+    "title": "TOB",
+    "subTitle": "Token Blend ETF"
+  },
+  {
+    "title": "TRX",
+    "subTitle": "Tron"
+  },
+  {
+    "title": "TUSD",
+    "subTitle": "True USD"
+  },
+  {
+    "title": "USDC",
+    "subTitle": "USDC"
+  },
+  {
+    "title": "USDT",
+    "subTitle": "Tether"
+  },
+  {
+    "title": "XRP",
+    "subTitle": "Ripple"
+  }
+]
 
-const CryptoCarts = () => {
+
+const CryptoCarts = ({ receiveToken = "INEX" }) => {
   const classes = useStyles();
   const [chartData, setChartData] = useState([]);
-
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getCryptoHistoricalData('bitcoin');
-      setChartData(data);
+    const fetchData = async (subTitle) => {
+      try {
+        const data = await getCryptoHistoricalData(subTitle.toLowerCase());
+        setChartData(data);
+      } catch (error) {
+        console.error('Error fetching data for', subTitle, 'defaulting to Bitcoin.');
+        const data = await getCryptoHistoricalData('bitcoin');
+        setChartData(data);
+      }
     };
 
-    fetchData();
-  }, []);
+    const selectedToken = allTokens.find(token => token.title === receiveToken);
+    if (selectedToken) {
+      fetchData(selectedToken.subTitle);
+    }
+  }, [receiveToken]);
+
 
   return (
     <div>
-      <h3 className={classes.Mainheading}>INEX Markets</h3>
+      <h3 className={classes.Mainheading}>{receiveToken} Markets</h3>
       <div className={classes.container}>
         <div
           className={classes.cardContainer}
           style={{ border: 'none', padding: 0 }}
         >
-          <ChartHeader />
+          <ChartHeader receiveToken={receiveToken}/>
           <DurationTabs />
           <TradingViewChart data={chartData} />
         </div>
@@ -169,7 +335,7 @@ const CryptoCarts = () => {
           </div>
         </div>
       </div>
-      <Conversion />
+      <Conversion receiveToken={receiveToken} />
     </div>
   );
 };

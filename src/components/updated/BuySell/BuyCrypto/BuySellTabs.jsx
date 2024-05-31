@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Box, Tabs, Tab, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CustomTextField from './CustomTextField';
@@ -6,6 +6,7 @@ import GenericButton from '../../shared/Button/index';
 import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
+
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
@@ -115,7 +116,6 @@ const useStyles = makeStyles((theme) => ({
   tabItemBuyNotActive: {
     background: theme.palette.mode === 'dark' ? '#2b3139' : '#f5f5f5',
     color: theme.palette.mode === 'dark' ? '#5e6673' : '#B7BDC6',
-
     '&::after': {
       background: theme.palette.mode === 'dark' ? '#2b3139' : '#f5f5f5',
       borderRadius: '16px',
@@ -138,66 +138,18 @@ const useStyles = makeStyles((theme) => ({
   estimatedPrice: {
     fontSize: '15px',
   },
-
-  // tabs: {
-  //   borderRadius: "0px",
-  //   "& .MuiTabs-flexContainer": {
-  //     borderRadius: "0px",
-  //   },
-  // },
-  // Buytab: {
-  //   flex: 1,
-  //   borderTopLeftRadius: "16px",
-  //   background: "grey",
-  //   position: "relative",
-  //   "&.Mui-selected": {
-  //     border: "1px solid red !important",
-  //     color: "white !important",
-  //     position: "relative",
-  //     zIndex: 1,
-  //     "&::after": {
-  //       content: '""',
-  //       position: "absolute",
-  //       top: "0",
-  //       right: "-20px",
-  //       width: "40px",
-  //       height: "100%",
-  //       background: "black",
-  //       borderRadius: "0px 16px 16px 0px",
-  //       transform: "skewX(15deg)",
-  //     },
-  //   },
-  // },
-  // Selltab: {
-  //   flex: 1,
-  //   borderRadius: "16px 16px 0 0",
-  //   background: "grey",
-  //   "&.Mui-selected": {
-  //     border: "1px solid red !important",
-  //     color: "black !important",
-  //     position: "relative",
-  //     zIndex: 1,
-  //     "&::after": {
-  //       content: '""',
-  //       position: "absolute",
-  //       top: "0",
-  //       right: "-20px",
-  //       width: "40px",
-  //       height: "100%",
-  //       background: "black",
-  //       borderRadius: "16px 0px 0px 16px",
-  //       transform: "skewX(15deg)",
-  //     },
-  //   },
-  // },
 }));
 
-const BuySellTabs = () => {
+const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
   const classes = useStyles();
   const [value, setValue] = useState('buy');
   const theme = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [selectedToken, setSelectedToken] = useState({});
+  const [spendToken, setSpendToken] = useState({ title: 'USD', image: 'USD' });
+  const [receiveToken, setReceiveToken] = useState({
+    title: 'INEX',
+    image: 'INEX',
+  });
   const [spendAmount, setSpendAmount] = useState('');
   const [receiveAmount, setReceiveAmount] = useState('');
   const [price, setPrice] = useState('');
@@ -211,22 +163,58 @@ const BuySellTabs = () => {
 
   const handleChange = (value) => {
     setValue(value);
+    if (value === 'buy') {
+      setSpendToken({ title: 'USD', image: 'USD' });
+      setReceiveToken({ title: 'INEX', image: 'INEX' });
+    } else {
+      setSpendToken({ title: 'INEX', image: 'INEX' });
+      setReceiveToken({ title: 'USD', image: 'USD' });
+    }
+    setSpendAmount('');
+    setReceiveAmount('');
   };
 
-  const handleTokenSelect = (token) => {
-    setSelectedToken(token);
-  };
+
+  useEffect(() => {
+    console.log('tokenType', tokenType);
+  }, [tokenType]);
+
+  const handleTokenSelect = useCallback((token, type) => {
+    if (type === 'Spend') {
+      setSpendToken({ title: token?.title, image: token?.image });
+    } else {
+      setReceiveToken({ title: token?.title, image: token?.image });
+      onReceiveTokenChange(token?.title);
+    }
+  }, [onReceiveTokenChange]);
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
+    console.log("amount, price", amount, price)
+    updateReceiveAmount(amount, price);
   };
 
   const handleReceiveAmountChange = (amount) => {
     setReceiveAmount(amount);
   };
 
-  const handlePriceChange = (amount) => {
-    setPrice(amount);
+  const handlePriceChange = (priceData) => {
+    console.log('am here', priceData);
+    setPrice(priceData.priceData);
+    setReceiveToken(priceData.currency)
+    updateReceiveAmount(spendAmount, priceData.priceData);
+  };
+
+  const updateReceiveAmount = (amount, rate) => {
+    console.log('rate', rate);
+    console.log('amount', amount);
+
+    if (amount && rate) {
+      const calculatedReceiveAmount =
+        value === 'buy' ? amount / rate : amount * rate;
+        console.log("calculatedReceiveAmount", calculatedReceiveAmount)
+      setReceiveAmount(calculatedReceiveAmount.toFixed(2));
+    }
   };
 
   const handlePaymentMethodClick = () => {
@@ -301,18 +289,24 @@ const BuySellTabs = () => {
               label="Spend"
               placeholder="Enter Amount"
               type={value === 'buy' ? 'buy' : 'sell'}
-              onSelectToken={handleTokenSelect}
+              onSelectToken={(token) => handleTokenSelect(token, 'Spend')}
               onAmountChange={handleSpendAmountChange}
               onReceiveAmountChange={handleReceiveAmountChange}
               onPriceChange={handlePriceChange}
+              amount={spendAmount}
+              receiveAmount={receiveAmount}
+              tokenType={tokenType}
             />
             <CustomTextField
               label="Receive"
               placeholder="0.00"
               type={value === 'buy' ? 'buy' : 'sell'}
-              onSelectToken={handleTokenSelect}
+              onSelectToken={(token) => handleTokenSelect(token, 'Receive')}
               onAmountChange={handleReceiveAmountChange}
               onPriceChange={handlePriceChange}
+              amount={receiveAmount}
+              receiveAmount={receiveAmount}
+              tokenType={tokenType}
             />
           </div>
 
@@ -325,11 +319,12 @@ const BuySellTabs = () => {
                 }
                 type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
               />
-             <div className={classes.estimatedPriceContainer}>
+              <div className={classes.estimatedPriceContainer}>
                 <Typography
                   className={classes.estimatedPrice}
                   style={{
-                    color: theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
+                    color:
+                      theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
                   }}
                 >
                   Estimated Price
@@ -337,16 +332,17 @@ const BuySellTabs = () => {
                 <Typography
                   className={classes.estimatedPrice}
                   style={{
-                    color: theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
+                    color:
+                      theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
                   }}
                 >
-                  ~ {price} {"USD"}
+                  ~ {price} {'USD'}
                 </Typography>
               </div>
-              <br></br>
+              <br />
               <GenericButton
                 text={`${value === 'buy' ? 'Buy' : 'Sell'} ${
-                  selectedToken?.title || ''
+                  receiveToken?.title || ''
                 }`}
                 styles={{
                   fontSize: '20px',
@@ -374,6 +370,7 @@ const BuySellTabs = () => {
         amount={spendAmount}
         onSelectPaymentMethod={handlePaymentMethodSelect}
         type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
+        token={receiveToken}
       />
     </Box>
   );

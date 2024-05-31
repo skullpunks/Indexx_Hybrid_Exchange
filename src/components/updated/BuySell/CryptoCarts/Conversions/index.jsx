@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ConversionCards from './Card';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,12 +13,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Conversion = () => {
+const Conversion = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log('Selected receiveToken:', receiveToken);
+    // Perform necessary operations with receiveToken
+  }, [receiveToken]);
+
   return (
     <div className={classes.container}>
-      <ConversionCards heading={'INEX to USD'} type="inextousdt" />
-      <ConversionCards heading={'USD to INEX'} type="usdtoinex" />
+      <ConversionCards heading={`${receiveToken} to USD`} type="inextousdt" receiveToken={receiveToken}/>
+      <ConversionCards heading={`USD to ${receiveToken}`} type="usdtoinex" receiveToken={receiveToken}/>
     </div>
   );
 };

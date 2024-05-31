@@ -56,11 +56,10 @@ const CustomTab = styled(Tab)(({ theme }) => ({
   },
 }));
 
-export default function IconicHeader() {
-  const [value, setValue] = React.useState(0);
-
+export default function IconicHeader({ value, onChange }) {
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    const label = event.currentTarget.innerText;
+    onChange(event, label);
   };
 
   return (
@@ -68,7 +67,6 @@ export default function IconicHeader() {
       sx={{
         width: '100%',
         maxWidth: '640px',
-
         margin: '20px auto 50px auto',
       }}
     >
@@ -95,7 +93,13 @@ export default function IconicHeader() {
         <CustomTab
           icon={<DarkMode />}
           iconPosition="top"
-          label="Wallstreet"
+          label="Stock Tokens"
+          disableRipple
+        />
+         <CustomTab
+          icon={<DarkMode />}
+          iconPosition="top"
+          label="ETF Tokens"
           disableRipple
         />
         <CustomTab

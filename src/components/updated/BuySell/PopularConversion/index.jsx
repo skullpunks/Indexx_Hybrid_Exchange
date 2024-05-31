@@ -3,8 +3,7 @@ import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-
-import inex from '../../../../assets/updated/buySell/INEX-sm.svg';
+import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { getCoinPriceByName } from '../../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,44 +69,59 @@ const currencies = [
   { code: 'BRL', name: 'Brazilian Real' },
 ];
 
-const PopularConversion = () => {
+const PopularConversion = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
   const [prices, setPrices] = useState([]);
 
   useEffect(() => {
     const fetchPrices = async () => {
-      const inexPriceInUSD = await getInexPriceInUSD();
+      const inexPriceInUSD = await getInexPriceInUSD(receiveToken);
       const exchangeRates = await getExchangeRates();
-      
-      const fetchedPrices = currencies.map(currency => ({
-        ...currency,
-        price: (inexPriceInUSD * exchangeRates[currency.code]).toFixed(2),
-        logo: getCurrencyLogo(currency.code),
-      }));
-      
+
+      const fetchedPrices = currencies.map((currency) => {
+        const price = inexPriceInUSD * exchangeRates[currency.code];
+        return {
+          ...currency,
+          price: price < 1 ? price.toFixed(6) : price.toFixed(2),
+          logo: getCurrencyLogo(currency.code),
+        };
+      });
+
       setPrices(fetchedPrices);
     };
 
     fetchPrices();
-  }, []);
+  }, [receiveToken]);
+
+  const getImage = (image) => {
+    try {
+      if (receiveToken === 'INEX') {
+        return Inex; // Fallback image if specific token icon is not found
+      } else {
+        return require(`../../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
 
   return (
     <Box className={classes.container}>
-      <h2 className={classes.heading}>Popular INEX Conversions</h2>
+      <h2 className={classes.heading}>Popular {receiveToken} Conversions</h2>
       <h3 className={classes.subHeading}>
-        A selection of other popular currency conversions of INEX to various
-        fiat currencies.
+        A selection of other popular currency conversions of {receiveToken} to
+        various fiat currencies.
       </h3>
       <Box className={classes.gridContainer}>
-        {prices.map(currency => (
+        {prices.map((currency) => (
           <Box key={currency.code} className={classes.gridItem}>
             <div className={classes.coinInfo}>
-              <h4>{`INEX to ${currency.code}`}</h4>
-              <p>{`1 INEX = ${currency.price} ${currency.code}`}</p>
+              <h4>{`${receiveToken} to ${currency.code}`}</h4>
+              <p>{`1 ${receiveToken} = ${currency.price} ${currency.code}`}</p>
             </div>
             <div>
               <AvatarGroup max={2}>
-                <Avatar alt="INEX" src={inex} />
+                <Avatar alt={`${receiveToken}`} src={getImage(receiveToken)} />
                 <Avatar alt={currency.name} src={currency.logo} />
               </AvatarGroup>
             </div>
@@ -120,15 +134,25 @@ const PopularConversion = () => {
 
 export default PopularConversion;
 
-const getInexPriceInUSD = async () => {
-  const res = await getCoinPriceByName(String("INEX"));
-  let priceData = res.data.results.data;
-  console.log('priceData', priceData);
-  return priceData; // Example price
+const getInexPriceInUSD = async (receiveToken) => {
+  console.log('getcoinprice', receiveToken);
+  if (
+    receiveToken === null ||
+    receiveToken === undefined ||
+    receiveToken === ''
+  ) {
+    const res = await getCoinPriceByName(String('INEX'));
+    return res.data.results.data; // Example price
+  } else {
+    const res = await getCoinPriceByName(String(receiveToken));
+    return res.data.results.data; // Example price
+  }
 };
 
 const getExchangeRates = async () => {
-  const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+  const response = await fetch(
+    'https://api.exchangerate-api.com/v4/latest/USD'
+  );
   const data = await response.json();
   return data.rates;
 };

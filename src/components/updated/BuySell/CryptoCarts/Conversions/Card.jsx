@@ -29,24 +29,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConversionCards = ({ heading, type }) => {
+const ConversionCards = ({ heading, type, receiveToken }) => {
   const classes = useStyles();
   const [price, setPrice] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPrice = async () => {
-      const response = await getCoinPriceByName('INEX');
-      if (response.status === 200) {
-        setPrice(response.data.results.data);
-      } else {
-        console.error('Error fetching price:', response);
+      let response;
+      try {
+        response = await getCoinPriceByName(receiveToken || 'INEX');
+        if (response.status === 200) {
+          setPrice(response.data.results.data);
+        } else {
+          console.error('Error fetching price:', response);
+        }
+      } catch (error) {
+        console.error('Error fetching price:', error);
       }
       setLoading(false);
     };
 
     fetchPrice();
-  }, []);
+  }, [receiveToken]);
 
   if (loading) {
     return (
@@ -57,22 +62,24 @@ const ConversionCards = ({ heading, type }) => {
     );
   }
 
-  const inexTousdt = [
-    ['0.5 INEX', `${(0.5 * price).toFixed(2)} USD`],
-    ['1 INEX', `${price.toFixed(2)} USD`],
-    ['2 INEX', `${(2 * price).toFixed(2)} USD`],
-    ['5 INEX', `${(5 * price).toFixed(2)} USD`],
-    ['10 INEX', `${(10 * price).toFixed(2)} USD`],
-    ['20 INEX', `${(20 * price).toFixed(2)} USD`],
+  const formatPrice = (value) => (value < 1 ? value.toFixed(6) : value.toFixed(2));
+
+ const inexTousdt = [
+    [`0.5 ${receiveToken}`, `${formatPrice(0.5 * price)} USD`],
+    [`1 ${receiveToken}`, `${formatPrice(price)} USD`],
+    [`2 ${receiveToken}`, `${formatPrice(2 * price)} USD`],
+    [`5 ${receiveToken}`, `${formatPrice(5 * price)} USD`],
+    [`10 ${receiveToken}`, `${formatPrice(10 * price)} USD`],
+    [`20 ${receiveToken}`, `${formatPrice(20 * price)} USD`],
   ];
 
   const usdtToinex = [
-    [`${price.toFixed(2)} USD`, '1 INEX'],
-    [`${(2 * price).toFixed(2)} USD`, '2 INEX'],
-    [`${(5 * price).toFixed(2)} USD`, '5 INEX'],
-    [`${(10 * price).toFixed(2)} USD`, '10 INEX'],
-    [`${(20 * price).toFixed(2)} USD`, '20 INEX'],
-    [`${(50 * price).toFixed(2)} USD`, '50 INEX'],
+    [`${formatPrice(price)} USD`, `1 ${receiveToken}`],
+    [`${formatPrice(2 * price)} USD`, `2 ${receiveToken}`],
+    [`${formatPrice(5 * price)} USD`, `5 ${receiveToken}`],
+    [`${formatPrice(10 * price)} USD`, `10 ${receiveToken}`],
+    [`${formatPrice(20 * price)} USD`, `20 ${receiveToken}`],
+    [`${formatPrice(50 * price)} USD`, `50 ${receiveToken}`],
   ];
 
   const typeConversion = type === 'inextousdt' ? inexTousdt : usdtToinex;

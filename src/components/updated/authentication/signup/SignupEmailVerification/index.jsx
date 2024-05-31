@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
@@ -13,6 +13,8 @@ import appleLogo from '../../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { resendEmailCode, sendOtp, validateOtp } from '../../../../../services/api';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -62,9 +64,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpEmailVerification = () => {
+const SignUpEmailVerification = ({ email }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = React.useState(false);
+  const [otpSent, setOtpSent] = React.useState(false);
+  const isEffectRun = useRef(false);
 
   const validationSchema = Yup.object({
     verificationCode: Yup.number()
@@ -82,8 +88,59 @@ const SignUpEmailVerification = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log('values: ', values);
+      await validateOtpCode(values.verificationCode, email);
     },
   });
+
+  useEffect(() => {
+    if (isEffectRun.current) return;
+    console.log('email', email);
+    async function sendOtpCode() {
+      setLoadings(true);
+      const res = await sendOtp(email);
+      console.log('res: ', res);
+      setOtpSent(true);
+      setLoadings(false);
+    }
+    sendOtpCode();
+    isEffectRun.current = true;
+  }, [email]);
+
+  async function validateOtpCode(code, email) {
+    try {
+      setLoadings(true);
+      let res = await validateOtp(email, code);
+      console.log('res: ', res);
+      if (res.status === 200) {
+        alert('Email verified');
+        setLoadings(false);
+        navigate('/auth/signup-create-password', { state: { email } });
+        return;
+      }
+      {
+        alert('Failed to verify email');
+        setLoadings(false);
+        console.log('res', res.status);
+      }
+    } catch (err) {
+      alert('Failed to verify email');
+      setLoadings(false);
+    }
+  }
+
+  const otpResend = async () => {
+    try {
+      setLoadings(true);
+      const res = await sendOtp(email);
+      console.log('res: ', res);
+      setOtpSent(true);
+      setLoadings(false);
+    } catch(err) {
+      alert('Failed to verify email');
+      setLoadings(false);
+    }
+  }
+
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -97,7 +154,7 @@ const SignUpEmailVerification = () => {
       <h3 className={classes.loginText}>Verify your email</h3>
       <h4>
         Please enter the 6-digit verification code that was sent to
-        ysabel3@gmail.com. The code is valid for 30 minutes.
+        {" "}{email}. The code is valid for 30 minutes.
       </h4>
       <div style={{ margin: '15px auto 25px auto' }}>
         <InputField
@@ -111,12 +168,17 @@ const SignUpEmailVerification = () => {
         />
       </div>
 
-      <GenericButton text={'Next'} onClick={formik.handleSubmit} />
+      <GenericButton
+        onClick={formik.handleSubmit}
+        text={loadings ? 'Loading...' : 'Next'}
+        loading={loadings}
+      />
       <div style={{ margin: '20px auto' }}></div>
 
       <GenericButton
         text={'Didn’t receive the code?'}
         className={classes.createLink}
+        onClick={otpResend}
       />
     </div>
   );

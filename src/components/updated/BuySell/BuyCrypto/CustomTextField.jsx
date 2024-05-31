@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
-
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import {
-  getAppSettings,
-  getCoinPriceByName,
-  oneUSDHelper,
-} from '../../../../services/api';
+import { getCoinPriceByName } from '../../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -52,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '100%',
     color: `${theme.palette.text.primary} !important`,
-
     '& .MuiOutlinedInput-root': {
       color: `${theme.palette.text.primary} !important`,
       fontSize: '24px !important',
@@ -62,11 +57,6 @@ const useStyles = makeStyles((theme) => ({
         color: `${theme.palette.text.primary} !important`,
       },
     },
-  },
-  menu: {
-    width: 'calc(100% - 32px)',
-    margin: '5px 16px 0',
-    boxShadow: 'none',
   },
   searchField: {
     width: '100%',
@@ -135,7 +125,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '10px',
     '& img': {
-      width: '25px',
+      width: ({ cryptoSymbol }) =>
+        ['INEX', 'IN500', 'INXC', 'IUSD'].includes(cryptoSymbol)
+          ? '40px'
+          : '30px',
       height: '25px',
     },
     '& p': {
@@ -154,8 +147,6 @@ const getImage = (image) => {
   }
 };
 
-let appSettingArr = [];
-
 const CustomTextField = ({
   placeholder,
   label,
@@ -164,42 +155,57 @@ const CustomTextField = ({
   onAmountChange,
   onReceiveAmountChange,
   onPriceChange,
+  amount,
+  receiveAmount,
+  tokenType,
 }) => {
-  const classes = useStyles();
+  const initialToken =
+    type === 'buy'
+      ? { title: 'USD', image: 'USD' }
+      : { title: 'INEX', image: 'INEX' };
+  const initialReceiveToken =
+    type === 'buy'
+      ? { title: 'INEX', image: 'INEX' }
+      : { title: 'USD', image: 'USD' };
+
+  const [fromToken, setFromToken] = useState(initialToken);
+  const [toToken, setToToken] = useState(initialReceiveToken);
+  const classes = useStyles({
+    cryptoSymbol: label === 'Spend' ? fromToken.title : toToken.title,
+  });
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [fromToken, setFromToken] = useState(null);
-  const [toToken, setToToken] = useState(null);
-  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-  const [userAmount, setUserAmount] = useState(0);
+  const [userAmount, setUserAmount] = useState(amount);
   const [rateData, setRateData] = useState(0);
-  const [adminFee, setAdminFees] = useState('');
 
   const theme = useTheme();
 
+  console.log("receiveAmount", receiveAmount)
   useEffect(() => {
-    // Set default tokens on initial render
-    if (type === 'buy') {
-      setFromToken({ title: 'USD', image: 'USD' });
-      setToToken({ title: 'INEX', image: 'INEX' });
-    } else if (type === 'sell') {
-      setFromToken({ title: 'INEX', image: 'INEX' });
-      setToToken({ title: 'USD', image: 'USD' });
+    console.log("I am here");
+    const token = type === 'buy' ? toToken?.title : fromToken?.title;
+    if (token) {
+      getPricesData(token);
+      onSelectToken(type === 'buy' ? toToken : fromToken);
     }
-  }, [type]);
+  }, [type, fromToken, toToken]);
+
 
   useEffect(() => {
-    if (onSelectToken) {
-      onSelectToken(type === 'buy' ? fromToken : toToken);
-    }
-  }, [fromToken, toToken, onSelectToken, type]);
-  
+    console.log("tokenType", tokenType)
+    
+  }, [tokenType])
+
   useEffect(() => {
-    if (fromToken || toToken) {
-      getPricesData(type === 'buy' ? toToken?.title : fromToken?.title);
+    console.log("change happening", userAmount, rateData);
+    if (userAmount && rateData) {
+      const receiveAmount = calculateReceiveAmount(userAmount, rateData);
+      if (onReceiveAmountChange) {
+        onReceiveAmountChange(receiveAmount);
+      }
     }
-  }, [fromToken, toToken, type]);
+  }, [userAmount, rateData, onReceiveAmountChange]);
 
   const handleFocus = () => {
     setFocused(true);
@@ -222,45 +228,72 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
+    console.log('token', token, label);
     if (label === 'Spend') {
-      setFromToken({ title: token.title, image: token.image });
+      if (token.title !== fromToken.title) {
+        console.log('spend');
+        setFromToken({ title: token.title, image: token.image });
+      }
     } else {
-      setToToken({ title: token.title, image: token.image });
+      if (token.title !== toToken.title) {
+        console.log('receive');
+        setToToken({ title: token.title, image: token.image });
+      }
     }
     setIsOpen(false);
   };
 
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
-    console.log('e', amount, type);
-    console.log('toToken', toToken);
+    setUserAmount(amount);
+    console.log('toToke', toToken);
     console.log('fromToken', fromToken);
-    await getPricesData(type === 'buy' ? toToken?.title : fromToken?.title);
+    //const token = type === 'buy' ? toToken?.title : fromToken?.title;
+    // if (token) {
+    //   await getPricesData(token);
+    // }
     if (onAmountChange) {
       onAmountChange(amount);
-    }
-    setUserAmount(amount);
-
-    const receiveAmount = calculateReceiveAmount(amount, rateData);
-    console.log('receiveAmount', receiveAmount);
-    if (onReceiveAmountChange) {
-      onReceiveAmountChange(receiveAmount);
     }
   };
 
   const calculateReceiveAmount = (amount, rate) => {
-    console.log('amount, rate', amount, rate);
     const receiveAmount = type === 'buy' ? amount / rate : amount * rate;
     return receiveAmount.toFixed(2);
   };
 
   const getPricesData = async (currency) => {
+    console.log('currency', currency);
     const res = await getCoinPriceByName(String(currency));
-    let priceData = res.data.results.data;
-    console.log('priceData', priceData);
-    onPriceChange(priceData);
+    const priceData = res.data.results.data;
+    let results = {
+      priceData,
+      currency
+    }
     setRateData(priceData);
+    if (onPriceChange) {
+      onPriceChange(results);
+    }
   };
+
+  const filterTokens = () => {
+    return tokens.filter((token) => {
+      if (type === 'buy' && label === 'Spend') {
+        return token.title === 'USD';
+      } else if (type === 'sell' && label === 'Receive') {
+        return token.title === 'USD';
+      }
+      if (tokenType === 'Tokens') {
+        return token.commonToken && !token.isStock && !token.isETF;
+      } else if (tokenType === 'Stock Tokens') {
+        return token.isStock;
+      } else if (tokenType === 'ETF Tokens') {
+        return token.isETF;
+      }
+      return false;
+    });
+  };
+
 
   return (
     <>
@@ -284,6 +317,7 @@ const CustomTextField = ({
             className={classes.textField}
             placeholder={placeholder}
             type="number"
+            value={label === 'Spend' ? userAmount : receiveAmount}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleAmountChange}
@@ -351,9 +385,8 @@ const CustomTextField = ({
                     }}
                   />
                 </div>
-
                 <List>
-                  {tokens
+                {filterTokens()
                     .filter((token) =>
                       token.title
                         .toLowerCase()

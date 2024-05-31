@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -59,12 +59,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HowToBuyCrypto = () => {
+const HowToBuyCrypto = ({ tokenType, receiveToken  }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log('Selected receiveToken:', receiveToken);
+    // Perform necessary operations with receiveToken
+  }, [receiveToken]);
 
   return (
     <Box className={classes.container}>
-      <Typography className={classes.heading}>How to Buy Crypto</Typography>
+      <Typography className={classes.heading}>
+        How to Buy{' '}
+        {tokenType === 'Tokens'
+          ? 'Crypto'
+          : tokenType === 'Stock Tokens'
+          ? 'Stock Tokens'
+          : 'ETF Tokens'}
+      </Typography>
 
       <div className={classes.gridContainer}>
         <Box className={classes.card}>
@@ -96,7 +108,12 @@ const HowToBuyCrypto = () => {
             <img src={logo3} />
           </div>
           <Typography className={classes.cardHeading}>
-            3.Receive Crypto
+            3.Receive{' '}
+            {tokenType === 'Tokens'
+              ? 'Crypto'
+              : tokenType === 'Stock Tokens'
+              ? 'Stock Tokens'
+              : 'ETF Tokens'}
           </Typography>
           <Typography className={classes.cardText}>
             After successful payment, the purchased crypto to will reach Spot

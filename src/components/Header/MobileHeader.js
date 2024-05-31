@@ -180,6 +180,7 @@ const MobileHeader = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;

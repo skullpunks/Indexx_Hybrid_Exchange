@@ -8,7 +8,11 @@ import {
   Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { hotTokenData } from '../../../../services/api';
+import {
+  hotETFTokenData,
+  hotStockTokenData,
+  hotTokenData,
+} from '../../../../services/api';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { sampleSize } from 'lodash';
 
@@ -83,25 +87,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CryptoStats = () => {
+const CryptoStats = ({ tokenType }) => {
   const classes = useStyles();
   const [cryptoData, setCryptoData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const randomSelect = (array, num) => {
+    const result = new Array(num);
+    let len = array.length;
+    const taken = new Array(len);
+    if (num > len)
+      throw new RangeError("getRandom: more elements taken than available");
+    while (num--) {
+      const x = Math.floor(Math.random() * len);
+      result[num] = array[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+  };
+
   useEffect(() => {
     const fetchCryptoData = async () => {
-      const data = await hotTokenData();
+      setLoading(true);
+      const cachedData = localStorage.getItem(`cryptoData_${tokenType}`);
+      const cacheTimestamp = localStorage.getItem(`cryptoDataTimestamp_${tokenType}`);
+      const oneHour = 3600000;
+
+      if (cachedData && cacheTimestamp && (Date.now() - cacheTimestamp < oneHour)) {
+        setCryptoData(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
+      let data;
+      if (tokenType === 'Tokens') data = await hotTokenData();
+      else if (tokenType === 'Stock Tokens') data = await hotStockTokenData();
+      else if (tokenType === 'ETF Tokens') data = await hotETFTokenData();
+
       if (data.status === 200) {
-        const randomData = sampleSize(data.data, 10);
+        const randomData = randomSelect(data.data, 5);
         setCryptoData(randomData);
+        localStorage.setItem(`cryptoData_${tokenType}`, JSON.stringify(randomData));
+        localStorage.setItem(`cryptoDataTimestamp_${tokenType}`, Date.now().toString());
       } else {
         console.error('Error fetching crypto data:', data);
       }
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     };
 
     fetchCryptoData();
-  }, []);
+  }, [tokenType]);
 
   const formatPrice = (price) => {
     if (price >= 1) {
@@ -117,15 +152,29 @@ const CryptoStats = () => {
     try {
       return require(`../../../../assets/token-icons/${symbol}.png`).default;
     } catch (error) {
-      return Inex; // Fallback image if specific token icon is not found
+      return Inex;
     }
   };
 
   return (
     <Box>
-      <h3 className={classes.heading}>Buy Crypto</h3>
+      <h3 className={classes.heading}>
+        Buy{' '}
+        {tokenType === 'Tokens'
+          ? 'Crypto'
+          : tokenType === 'Stock Tokens'
+          ? 'Stock Tokens'
+          : 'ETF Tokens'}
+      </h3>
       <Box className={classes.card}>
-        <h4 className={classes.cardHeading}>Hot Cryptos</h4>
+        <h4 className={classes.cardHeading}>
+          Hot{' '}
+          {tokenType === 'Tokens'
+            ? 'Crypto'
+            : tokenType === 'Stock Tokens'
+            ? 'Stock Tokens'
+            : 'ETF Tokens'}
+        </h4>
         {loading ? (
           <div className={classes.loader}>
             <CircularProgress />

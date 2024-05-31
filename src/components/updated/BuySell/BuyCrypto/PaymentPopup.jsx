@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../../shared/Button/index';
@@ -11,7 +11,8 @@ import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
-
+import { createBuyOrder, getHoneyBeeDataByUsername } from '../../../../services/api';
+import { useParams } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -140,8 +141,85 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type }) => {
+const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type, token}) => {
   const classes = useStyles();
+  const { id } = useParams();
+  const [honeyBeeId, setHoneyBeeId] = useState('');
+  const [userData, setUserData] = useState();
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
+  const [adminFee, setAdminFees] = useState('');
+  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+  const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
+  const [rateData, setRateData] = useState();
+  const [taskCenterDetails, setTaskCenterDetails] = useState();
+  const [permissionData, setPermissionData] = useState();
+  const [loadings, setLoadings] = useState(false);
+  const [message, setMessage] = useState();
+
+  useEffect(() => {
+    if (id) {
+      setHoneyBeeId(String(id));
+      getHoneyBeeDataByUsername(String(id)).then((data) => {
+        setUserData(data.data);
+
+        setHoneyBeeEmail(data.data.userFullData?.email);
+        let captainbeePermissions =
+          data.data.referredUserData?.data.relationships;
+
+        let c = captainbeePermissions.find(
+          (x) =>
+            x.honeybeeEmail === data.data.userFullData?.email
+        );
+
+        setPermissionData(c);
+      });
+    }
+  }, [])
+
+   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+   const createNewBuyOrder = async () => {
+    setLoadings(true);
+    let basecoin = token;
+    let quotecoin = 'USD';
+    let outAmount = Math.floor(amount * 1000000) / 1000000;
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true
+      );
+    } else {
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
+    }
+    if (res.status === 200) {
+      setLoadings(false);
+      //--Below code is to enable paypal Order---
+
+      for (let i = 0; i < res.data.links.length; i++) {
+        if (res.data.links[i].rel.includes('approve')) {
+          window.location.href = res.data.links[i].href;
+        }
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+    }
+  };
 
   if (!open) {
     return null;

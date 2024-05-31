@@ -2,8 +2,11 @@ import { useTheme } from '@mui/material/styles';
 import React from 'react';
 
 import CreatePassword from '../../../components/updated/authentication/signup/CreatePassword';
+import { useLocation } from 'react-router-dom';
 const CreatePasswordPage = () => {
   const theme = useTheme();
+  const location = useLocation();
+  const { email } = location.state || '';
   return (
     <div
       style={{
@@ -16,7 +19,7 @@ const CreatePasswordPage = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <CreatePassword />
+      <CreatePassword email={email}/>
     </div>
   );
 };

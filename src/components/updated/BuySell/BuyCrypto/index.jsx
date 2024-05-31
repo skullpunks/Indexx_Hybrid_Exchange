@@ -32,16 +32,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuyCrypto = () => {
+const BuyCrypto = ({ tokenType, onReceiveTokenChange  }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={`${classes.container} ${classes.container1}`}>
-        <CryptoStats />
+        <CryptoStats tokenType={tokenType} />
       </div>
       <div className={`${classes.container} ${classes.container2}`}>
-        <BuySellTabs />
+        <BuySellTabs tokenType={tokenType} onReceiveTokenChange={onReceiveTokenChange} />
       </div>
       {/* <Popup /> */}
     </div>

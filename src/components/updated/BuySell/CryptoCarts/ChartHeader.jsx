@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Avatar, AvatarGroup, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import Usd from '../../../../assets/updated/buySell/usd.svg';
+import { getCoinPriceByName } from '../../../../services/api';
 const useStyles = makeStyles((theme) => ({
   chartHeader: {},
   section: {
@@ -26,23 +27,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChartHeader = () => {
+const ChartHeader = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
+  const [prices, setPrices] = useState([]);
+
+  useEffect(() => {
+    console.log('Selected receiveToken:', receiveToken);
+    // Perform necessary operations with receiveToken
+  }, [receiveToken]);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const inexPriceInUSD = await getInexPriceInUSD(receiveToken);
+      setPrices(inexPriceInUSD);
+    };
+
+    fetchPrices();
+  }, [receiveToken]);
+
+  const getImage = (image) => {
+    try {
+      if (receiveToken === 'INEX') {
+        return Inex; // Fallback image if specific token icon is not found
+      } else {
+        return require(`../../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
+
 
   return (
     <Box className={classes.chartHeader}>
       <Box className={classes.section}>
         <Box className={`${classes.item} pair-info`}>
-          <p className={classes.text}>INEX/USD</p>
+          <p className={classes.text}>{receiveToken}/USD</p>
         </Box>
         <Box className={`${classes.item} price-info`}>
-          <p className={classes.text}>$ 0.9994105</p>
+          <p className={classes.text}>$ {prices}</p>
         </Box>
       </Box>
       <Box className={classes.section}>
         <Box className={`${classes.item} avatar-group`}>
           <AvatarGroup max={2}>
-            <Avatar alt="Avatar 1" src={Inex} />
+            <Avatar alt={`${receiveToken}`} src={getImage(receiveToken)} />
             <Avatar alt="Avatar 2" src={Usd} />
           </AvatarGroup>
         </Box>
@@ -55,3 +84,20 @@ const ChartHeader = () => {
 };
 
 export default ChartHeader;
+
+const getInexPriceInUSD = async (receiveToken) => {
+  console.log('getcoinprice', receiveToken);
+  if (
+    receiveToken === null ||
+    receiveToken === undefined ||
+    receiveToken === ''
+  ) {
+    const res = await getCoinPriceByName(String('INEX'));
+    console.log('res', res.data.results.data);
+    return res.data.results.data; // Example price
+  } else {
+    const res = await getCoinPriceByName(String(receiveToken));
+    console.log('res', res.data.results.data);
+    return res.data.results.data; // Example price
+  }
+};

@@ -9,6 +9,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Web3ReactProvider } from "@web3-react/core";
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from "@ethersproject/providers";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -19,11 +20,13 @@ function getLibrary(provider: ExternalProvider | JsonRpcFetchFunc) {
 }
 
 root.render(
-    <React.StrictMode>
-        <Web3ReactProvider getLibrary={getLibrary}>
-            <App />
-        </Web3ReactProvider>
-    </React.StrictMode>
+    <GoogleOAuthProvider clientId="232957845996-ctig89g3o6uigoq4gu1pkil3fauv88gi.apps.googleusercontent.com">
+        <React.StrictMode>
+            <Web3ReactProvider getLibrary={getLibrary}>
+                <App />
+            </Web3ReactProvider>
+        </React.StrictMode>
+    </GoogleOAuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

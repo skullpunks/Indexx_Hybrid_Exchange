@@ -22,6 +22,8 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { signupAPI } from '../../../../../services/api';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -71,17 +73,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectRole = () => {
+const SelectRole = ({ email, password, referralId }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = React.useState(false);
   const validationSchema = Yup.object().shape({});
 
   const formik = useFormik({
     initialValues: {},
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log('Form values:', values);
+      console.log('Form values:', values, email, password, '', referralId);
       // Handle form submission
+      const res = await signupAPI(email, password, '', referralId);
+
+      if (res.status === 200) {
+        setLoadings(false);
+        alert('Successfully registered');
+        window.dispatchEvent(new Event('storage'));
+        //navigate('email-auth');
+      } else {
+        setLoadings(false);
+        alert(res.data);
+      }
     },
   });
   return (
