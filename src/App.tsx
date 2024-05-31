@@ -128,6 +128,7 @@ import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
 import RefferalPage from './pages/auth/Signup/Refferal';
 import SelectRolePage from './pages/auth/Signup/SelectRole';
 import BuySellPage from './pages/BuySell';
+import AssetsPage from './pages/Assets';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -303,7 +304,7 @@ function App() {
             <Route path="/auth/signup-role" element={<SelectRolePage />} />
 
             <Route path="/update/home" element={<BuySellPage />} />
-
+            <Route path="/wallet/overview" element={<AssetsPage />} />
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
             <Route

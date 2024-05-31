@@ -11,8 +11,11 @@ import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
-import { createBuyOrder, getHoneyBeeDataByUsername } from '../../../../services/api';
-import { useParams } from 'react-router-dom';
+import {
+  createBuyOrder,
+  getHoneyBeeDataByUsername,
+} from '../../../../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -141,8 +144,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type, token}) => {
+const Popup = ({
+  open,
+  onClose,
+  amount,
+  onSelectPaymentMethod,
+  type,
+  token,
+}) => {
   const classes = useStyles();
+  const [paymentMethod, setPaymentMethod] = useState("");
   const { id } = useParams();
   const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
@@ -156,6 +167,7 @@ const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type, token}) => 
   const [permissionData, setPermissionData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [message, setMessage] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -168,19 +180,18 @@ const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type, token}) => 
           data.data.referredUserData?.data.relationships;
 
         let c = captainbeePermissions.find(
-          (x) =>
-            x.honeybeeEmail === data.data.userFullData?.email
+          (x) => x.honeybeeEmail === data.data.userFullData?.email
         );
 
         setPermissionData(c);
       });
     }
-  }, [])
+  }, []);
 
-   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
-   const createNewBuyOrder = async () => {
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrder = async () => {
     setLoadings(true);
-    let basecoin = token;
+    let basecoin = token.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(amount * 1000000) / 1000000;
     let res;
@@ -225,8 +236,85 @@ const Popup = ({ open, onClose, amount, onSelectPaymentMethod, type, token}) => 
     return null;
   }
 
-  const handlePaymentMethodSelect = (method) => {
+  const createBuyOrderForZelleAndWire = async (paymentMethod) => {
+    setLoadings(true);
+    setLoadings(true);
+    let basecoin = token.title;
+    let quotecoin = 'USD';
+    let outAmount = Math.floor(amount * 1000000) / 1000000;
+    let res;
+    console.log('paymentMethod', paymentMethod);
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true,
+        paymentMethod
+      );
+    } else {
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        0,
+        '',
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+      return null;
+    }
+  };
+
+  const confirmPayment = async() => {
+    try {
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        await createNewBuyOrder();
+      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire') {
+        const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
+        if (orderId) {
+          let selectedMethod = String(paymentMethod).toLowerCase();
+          navigate(
+            `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
+          );
+        }
+      }
+    }catch(err) {
+      console.log("Err", err)
+    }
+  }
+
+  const handlePaymentMethodSelect = async (method) => {
+    console.log('method', method);
+    console.log(
+      'amount, onSelectPaymentMethod, type, token',
+      amount,
+      onSelectPaymentMethod,
+      type,
+      token
+    );
+    setPaymentMethod(method);
     onSelectPaymentMethod(method);
+   
     onClose();
   };
 

@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
+import in500 from '../../../../assets/token-icons/IN500_logo.png';
+import inxc from '../../../../assets/token-icons/INXC_logo.png';
+import iusdp from '../../../../assets/token-icons/IUSDP_logo.png';
 import { getCoinPriceByName } from '../../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,8 +98,14 @@ const PopularConversion = ({ receiveToken = 'INEX' }) => {
 
   const getImage = (image) => {
     try {
-      if (receiveToken === 'INEX') {
+      if (receiveToken === 'INEX2') {
         return Inex; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'IN500') {
+        return in500; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'INXC') {
+        return inxc; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'IUSD+') {
+        return iusdp; // Fallback image if specific token icon is not found
       } else {
         return require(`../../../../assets/token-icons/${image}.png`).default;
       }

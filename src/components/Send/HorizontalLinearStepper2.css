@@ -1,53 +1,51 @@
-.send-box{
-    width: 382px;
-    border: 1px solid var(--border-color);
-    padding: 20px;
-    margin-top: 80px;
+.send-box {
+  width: 382px;
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  margin-top: 80px;
+  border-radius: 16px;
 }
 
 .continue-btn {
-    background-color: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
-    font-size: 15px;
-    color: #fff;
-    border-radius: 2px !important;
-    box-shadow: none !important;
-    text-transform: none !important;
-    height: 40px;
-  }
-  
-  .continue-btn:hover,
-  .continue-btn:focus,
-  .continue-btn:active
-  {
-    background-color: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
-    box-shadow: none;
-  }
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  font-size: 15px;
+  color: #fff;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  height: 40px;
+}
 
-  .continue-outlined-btn {
-    border-color: var(--primary-color) !important;
-    font-size: 15px;
-    color: #282828 !important;
-    border-radius: 2px !important;
-    box-shadow: none !important;
-    text-transform: none !important;
-  }
-  
-  .continue-outlined-btn:hover,
-  .continue-outlined-btn:focus,
-  .continue-outlined-btn:active
-  {
-    border-color: var(--secondary-color) !important;
-    box-shadow: none;
-  }
+.continue-btn:hover,
+.continue-btn:focus,
+.continue-btn:active {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  box-shadow: none;
+}
 
-  .MuiSvgIcon-root.MuiStepIcon-root.Mui-completed,
-  .MuiSvgIcon-root.MuiStepIcon-root.Mui-active{
-    color: var(--primary-color);
-  }
+.continue-outlined-btn {
+  border-color: var(--primary-color) !important;
+  font-size: 15px;
+  color: #282828 !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+}
 
+.continue-outlined-btn:hover,
+.continue-outlined-btn:focus,
+.continue-outlined-btn:active {
+  border-color: var(--secondary-color) !important;
+  box-shadow: none;
+}
 
-  .Mui-error .MuiOutlinedInput-notchedOutline {
-    border-color: red !important;
-  }
+.MuiSvgIcon-root.MuiStepIcon-root.Mui-completed,
+.MuiSvgIcon-root.MuiStepIcon-root.Mui-active {
+  color: var(--primary-color);
+}
+
+.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: red !important;
+}

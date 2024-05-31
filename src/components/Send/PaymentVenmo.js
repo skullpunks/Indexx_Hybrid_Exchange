@@ -10,7 +10,8 @@ import '../BSDepositWithdraw/BSWithdraw.css';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import venmo from '../../assets/arts/pay/venmo.svg';
-import venmo_qr from '../../assets/arts/pay/venmo_qr.svg';
+import venmo_qr_light from '../../assets/arts/pay/venmo_qr.svg';
+import venmo_qr_dark from '../../assets/arts/pay/venmo_qr_dark.svg';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,6 +25,8 @@ import {
   getOrderDetails,
 } from '../../services/api';
 import AWS from 'aws-sdk';
+import { useTheme } from '@mui/material';
+import GenericButton from '../updated/shared/Button';
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -41,13 +44,13 @@ const Final = ({
   photoIdUrl,
 }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const handleWallet = () => {
-    navigate('/indexx-exchange/buy-sell/wallet');
+    navigate('/wallet/overview');
   };
   const handleExchange = () => {
-    navigate('/');
+    navigate('/update/home');
   };
-
   // Add this inside your component to log the data when it's rendered
   useEffect(() => {
     async function finalDetails() {
@@ -80,11 +83,23 @@ const Final = ({
     >
       <Box
         className="d-flex flex-direction-column align-items-center"
-        width={'55%'}
+        style={{
+          width: '100%',
+          maxWidth: '460px',
+          margin: '50px auto',
+          padding: '24px',
+        }}
       >
         <img src={fortune} alt="check" style={{ width: '60%' }} />
         <div className="font_60x">Thank you</div>
-        <div className="font_17x" style={{ width: '350px' }}>
+        <div
+          className="font_17x"
+          style={{
+            // width: '350px',
+            color: theme.palette.text.primary,
+            textAlign: 'center',
+          }}
+        >
           for choosing Indexx for your crypto purchase!
         </div>
         <div className="font_10x mt-4">
@@ -94,22 +109,21 @@ const Final = ({
         </div>
         <br />
         <div className="d-flex mb-2" style={{ gap: 10, minWidth: '100%' }}>
-          <Button
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handleWallet}
             disableTouchRipple
-          >
-            Go to Wallet
-          </Button>
-          <Button
+            text={'Go to Wallet'}
+          />
+
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handleExchange}
             disableTouchRipple
-          >
-            Go to Exchange
-          </Button>
+            text={'Go to Exchange'}
+          />
         </div>
       </Box>
     </Box>
@@ -124,6 +138,7 @@ const FileComponent1 = ({
   onToDetailsChange,
 }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const handlePrev = () => {
     navigate('/');
   };
@@ -139,12 +154,13 @@ const FileComponent1 = ({
         flexDirection: 'column',
       }}
     >
-      <div className="font_15x mt-4">
-        <WarningAmberIcon />
-        Kindly transfer the exact amount specified above using the provided
-        recipient details
+      <div className="font_15x mt-4" style={{ padding: '24px' }}>
+        <WarningAmberIcon /> Kindly transfer the exact amount specified above
+        using the provided recipient details
         <h1 className="font_30x text-center mt-5">
-          Order Amount:{' '}
+          <span style={{ color: theme.palette.text.primary }}>
+            Order Amount:{' '}
+          </span>
           {String(orderData?.orderType)?.includes('Pack')
             ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
                 'en-US',
@@ -158,24 +174,28 @@ const FileComponent1 = ({
         </h1>
       </div>
       <Box className="send-box mt-5">
-        <Box component={'img'} src={venmo_qr} alt="logo" width={'100%'} />
+        <Box
+          component={'img'}
+          src={theme.palette.mode === 'light' ? venmo_qr_light : venmo_qr_dark}
+          alt="logo"
+          width={'100%'}
+        />
         <div className="d-flex mt-4 mb-2" style={{ gap: 10 }}>
-          <Button
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handlePrev}
             disableTouchRipple
-          >
-            Cancel
-          </Button>
-          <Button
+            text={'Cancel'}
+          />
+
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={onNext}
             disableTouchRipple
-          >
-            Confirm payment
-          </Button>
+            text={'Confirm payment'}
+          />
         </div>
       </Box>
     </Box>
@@ -194,7 +214,7 @@ const FileComponent2 = ({
   const [photoIdFile, setPhotoIdFile] = useState(null);
   const [photoIdFileerror, setPhotoIdFileerror] = useState(null);
   const [photoIdUrl, setPhotoIdUrl] = useState(null);
-
+  const theme = useTheme();
   const preventDefault = (e) => {
     e.preventDefault();
   };
@@ -290,7 +310,12 @@ const FileComponent2 = ({
       }}
     >
       <Box className="send-box staking-toggle">
-        <h1 className="font_28x">Upload proof of payment</h1>
+        <h1 className="font_28x">
+          <span style={{ color: theme.palette.text.primary }}>
+            {' '}
+            Upload proof of payment
+          </span>
+        </h1>
         <br />
         <Box
           sx={{
@@ -314,7 +339,7 @@ const FileComponent2 = ({
             {photoIdFileerror && (
               <span
                 style={{
-                  color: '#d32f2f',
+                  color: theme.palette.text.primary,
                   fontSize: '12px',
                   paddingLeft: '20px',
                 }}
@@ -344,17 +369,16 @@ const FileComponent2 = ({
                     style={{ marginRight: '10px', width: '40px' }}
                   />
                   {photoIdFile.name}
-                  <Button
+                  <span
                     onClick={() => setPhotoIdFile(null)}
                     disableTouchRipple
-                    sx={{
-                      width: 'auto',
-                      color: 'var(--body_color)',
-                      boxShadow: 'none',
-                    }}
+                    style={{ marginLeft: '10px', cursor: 'pointer' }}
                   >
-                    <CloseIcon fontSize={'1rem'} color="#171c26" />
-                  </Button>
+                    <CloseIcon
+                      fontSize={'1rem'}
+                      color={theme.palette.text.primary}
+                    />
+                  </span>
                 </p>
               </div>
             ) : (
@@ -378,7 +402,7 @@ const FileComponent2 = ({
                 sx={{
                   borderColor: 'var(--border-color)',
                   borderRadius: '4px',
-                  color: 'var(--body_color)',
+                  color: theme.palette.text.primary,
                   px: 10,
                   py: 1,
                   my: 3,
@@ -406,23 +430,22 @@ const FileComponent2 = ({
           </div>
         </Box>
         <div className="d-flex mt-4 mb-2" style={{ gap: 10 }}>
-          <Button
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={onPrev}
             disableTouchRipple
-          >
-            Cancel
-          </Button>
-          <Button
+            text={'Cancel'}
+          />
+
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handleNext}
             disabled={photoIdFile === null}
             disableTouchRipple
-          >
-            Confirm payment
-          </Button>
+            text={'Confirm payment'}
+          />
         </div>
       </Box>
     </Box>
@@ -527,21 +550,21 @@ export default function PaymentVenmo() {
     setPhotoIdFile(file);
   };
 
-  useEffect(() => {
-    const orderIdFromParam = searchParams.get('orderId');
-    if (orderIdFromParam !== undefined) {
-      let access_token = String(localStorage.getItem('access_token'));
-      let decoded = decodeJWT(access_token);
-      getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
-        if (res.status === 200) {
-          let orderData = res.data;
-          setOrderData(orderData);
-        } else {
-          alert('Something went wrong. Please try again.');
-        }
-      });
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const orderIdFromParam = searchParams.get('orderId');
+  //   if (orderIdFromParam !== undefined) {
+  //     let access_token = String(localStorage.getItem('access_token'));
+  //     let decoded = decodeJWT(access_token);
+  //     getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
+  //       if (res.status === 200) {
+  //         let orderData = res.data;
+  //         setOrderData(orderData);
+  //       } else {
+  //         alert('Something went wrong. Please try again.');
+  //       }
+  //     });
+  //   }
+  // }, [searchParams]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -617,7 +640,7 @@ export default function PaymentVenmo() {
         <Typography variant="h3"></Typography>
         <Box component={'img'} src={venmo} alt="logo" width={'110px'} />
       </Box>
-      <Box sx={{ width: '40%' }}>
+      <Box sx={{ width: '100%', maxWidth: '650px' }}>
         <Stepper
           activeStep={activeStep}
           alternativeLabel

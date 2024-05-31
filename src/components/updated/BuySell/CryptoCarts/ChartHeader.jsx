@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Box, Avatar, AvatarGroup, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
+import in500 from '../../../../assets/token-icons/IN500_logo.png';
+import inxc from '../../../../assets/token-icons/INXC_logo.png';
+import iusdp from '../../../../assets/token-icons/IUSDP_logo.png';
 import Usd from '../../../../assets/updated/buySell/usd.svg';
 import { getCoinPriceByName } from '../../../../services/api';
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +52,12 @@ const ChartHeader = ({ receiveToken = 'INEX' }) => {
     try {
       if (receiveToken === 'INEX') {
         return Inex; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'IN500') {
+        return in500; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'INXC') {
+        return inxc; // Fallback image if specific token icon is not found
+      } else if (receiveToken === 'IUSD+') {
+        return iusdp; // Fallback image if specific token icon is not found
       } else {
         return require(`../../../../assets/token-icons/${image}.png`).default;
       }
@@ -56,7 +65,6 @@ const ChartHeader = ({ receiveToken = 'INEX' }) => {
       return Inex; // Fallback image if specific token icon is not found
     }
   };
-
 
   return (
     <Box className={classes.chartHeader}>

@@ -31,7 +31,7 @@ const BuySell = () => {
 
   return (
     <div className={classes.Container}>
-      <IconicHeader value={selectedTab} onChange={handleTabChange} />
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <BuyCrypto
         tokenType={selectedTab}
         onReceiveTokenChange={handleReceiveTokenChange}

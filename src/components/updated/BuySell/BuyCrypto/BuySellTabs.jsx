@@ -6,6 +6,13 @@ import GenericButton from '../../shared/Button/index';
 import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
+import {
+  confirmSellOrder,
+  createBuyOrder,
+  createSellOrder,
+  getHoneyBeeDataByUsername,
+} from '../../../../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -140,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
+const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
   const classes = useStyles();
   const [value, setValue] = useState('buy');
   const theme = useTheme();
@@ -155,6 +162,21 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
   const [price, setPrice] = useState('');
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const { id } = useParams();
+  const [honeyBeeId, setHoneyBeeId] = useState('');
+  const [userData, setUserData] = useState();
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
+  const [adminFee, setAdminFees] = useState('');
+  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
+  const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
+  const [rateData, setRateData] = useState();
+  const [taskCenterDetails, setTaskCenterDetails] = useState();
+  const [permissionData, setPermissionData] = useState();
+  const [loadings, setLoadings] = useState(false);
+  const [message, setMessage] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const email = localStorage.getItem('email');
@@ -174,23 +196,25 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
     setReceiveAmount('');
   };
 
-
   useEffect(() => {
     console.log('tokenType', tokenType);
   }, [tokenType]);
 
-  const handleTokenSelect = useCallback((token, type) => {
-    if (type === 'Spend') {
-      setSpendToken({ title: token?.title, image: token?.image });
-    } else {
-      setReceiveToken({ title: token?.title, image: token?.image });
-      onReceiveTokenChange(token?.title);
-    }
-  }, [onReceiveTokenChange]);
+  const handleTokenSelect = useCallback(
+    (token, type) => {
+      if (type === 'Spend') {
+        setSpendToken({ title: token?.title, image: token?.image });
+      } else {
+        setReceiveToken({ title: token?.title, image: token?.image });
+        onReceiveTokenChange(token?.title);
+      }
+    },
+    [onReceiveTokenChange]
+  );
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
-    console.log("amount, price", amount, price)
+    console.log('amount, price', amount, price);
     updateReceiveAmount(amount, price);
   };
 
@@ -201,7 +225,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
   const handlePriceChange = (priceData) => {
     console.log('am here', priceData);
     setPrice(priceData.priceData);
-    setReceiveToken(priceData.currency)
+    setReceiveToken({ title: priceData.currency, image: priceData.currency });
     updateReceiveAmount(spendAmount, priceData.priceData);
   };
 
@@ -212,13 +236,190 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
     if (amount && rate) {
       const calculatedReceiveAmount =
         value === 'buy' ? amount / rate : amount * rate;
-        console.log("calculatedReceiveAmount", calculatedReceiveAmount)
+      console.log('calculatedReceiveAmount', calculatedReceiveAmount);
       setReceiveAmount(calculatedReceiveAmount.toFixed(2));
     }
   };
 
-  const handlePaymentMethodClick = () => {
-    setPopupOpen(true);
+  const handlePaymentMethodClick = async () => {
+    if (selectedPaymentMethod && value === 'buy') {
+      await confirmPayment();
+    } else if (selectedPaymentMethod && value === 'sell') {
+    } else {
+      setPopupOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      setHoneyBeeId(String(id));
+      getHoneyBeeDataByUsername(String(id)).then((data) => {
+        setUserData(data.data);
+
+        setHoneyBeeEmail(data.data.userFullData?.email);
+        let captainbeePermissions =
+          data.data.referredUserData?.data.relationships;
+
+        let c = captainbeePermissions.find(
+          (x) => x.honeybeeEmail === data.data.userFullData?.email
+        );
+
+        setPermissionData(c);
+      });
+    }
+  }, []);
+
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrder = async () => {
+    setLoadings(true);
+    let basecoin = receiveToken.title;
+    let quotecoin = 'USD';
+    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true
+      );
+    } else {
+      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount);
+    }
+    if (res.status === 200) {
+      setLoadings(false);
+      //--Below code is to enable paypal Order---
+
+      for (let i = 0; i < res.data.links.length; i++) {
+        if (res.data.links[i].rel.includes('approve')) {
+          window.location.href = res.data.links[i].href;
+        }
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+    }
+  };
+
+  const createBuyOrderForZelleAndWire = async (paymentMethod) => {
+    setLoadings(true);
+    setLoadings(true);
+    let basecoin = receiveToken.title;
+    let quotecoin = 'USD';
+    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let res;
+    console.log('paymentMethod', paymentMethod);
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true,
+        paymentMethod
+      );
+    } else {
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        '',
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      setMessage(res.data);
+      return null;
+    }
+  };
+
+  const confirmPayment = async () => {
+    try {
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        await createNewBuyOrder();
+      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire') {
+        const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
+        if (orderId) {
+          let selectedMethod = String(paymentMethod).toLowerCase();
+          navigate(
+            `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
+          );
+        }
+      }
+    } catch (err) {
+      console.log('Err', err);
+    }
+  };
+
+  const createNewSellOrder = async () => {
+    setLoadings(true);
+    let basecoin = receiveToken.title;
+    let quotecoin = 'USD';
+    let amount = Number(spendAmount);
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.sell) {
+        setLoadings(false);
+        return;
+      }
+      res = await createSellOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        totalAmountToPay,
+        0,
+        honeyBeeEmail,
+        true
+      );
+    } else {
+      res = await createSellOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        totalAmountToPay
+      );
+    }
+
+    if (res.status === 200) {
+      await confirmSellOrder(
+        res.data.user.email,
+        res.data.orderId,
+        'Completed',
+        basecoin
+      );
+    } else {
+      setLoadings(false);
+    }
+    //getStripePaymentIntent(res.data.orderId, res.data.user.email);
   };
 
   const handlePopupClose = () => {
@@ -350,6 +551,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange  }) => {
                   marginTop: 'auto',
                 }}
                 onClick={handlePaymentMethodClick}
+                disabled={spendAmount === '' ? true : false}
               />
             </>
           ) : (
