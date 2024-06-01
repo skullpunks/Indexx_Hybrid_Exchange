@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
+    width: '20%',
     gap: '10px',
     '& img': {
       width: '30px',
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh', // Full screen height for the loader
+    height: '100%', // Full screen height for the loader
   },
 }));
 
@@ -97,7 +98,7 @@ const CryptoStats = ({ tokenType }) => {
     let len = array.length;
     const taken = new Array(len);
     if (num > len)
-      throw new RangeError("getRandom: more elements taken than available");
+      throw new RangeError('getRandom: more elements taken than available');
     while (num--) {
       const x = Math.floor(Math.random() * len);
       result[num] = array[x in taken ? taken[x] : x];
@@ -110,10 +111,16 @@ const CryptoStats = ({ tokenType }) => {
     const fetchCryptoData = async () => {
       setLoading(true);
       const cachedData = localStorage.getItem(`cryptoData_${tokenType}`);
-      const cacheTimestamp = localStorage.getItem(`cryptoDataTimestamp_${tokenType}`);
+      const cacheTimestamp = localStorage.getItem(
+        `cryptoDataTimestamp_${tokenType}`
+      );
       const oneHour = 3600000;
 
-      if (cachedData && cacheTimestamp && (Date.now() - cacheTimestamp < oneHour)) {
+      if (
+        cachedData &&
+        cacheTimestamp &&
+        Date.now() - cacheTimestamp < oneHour
+      ) {
         setCryptoData(JSON.parse(cachedData));
         setLoading(false);
         return;
@@ -127,8 +134,14 @@ const CryptoStats = ({ tokenType }) => {
       if (data.status === 200) {
         const randomData = randomSelect(data.data, 5);
         setCryptoData(randomData);
-        localStorage.setItem(`cryptoData_${tokenType}`, JSON.stringify(randomData));
-        localStorage.setItem(`cryptoDataTimestamp_${tokenType}`, Date.now().toString());
+        localStorage.setItem(
+          `cryptoData_${tokenType}`,
+          JSON.stringify(randomData)
+        );
+        localStorage.setItem(
+          `cryptoDataTimestamp_${tokenType}`,
+          Date.now().toString()
+        );
       } else {
         console.error('Error fetching crypto data:', data);
       }
@@ -188,7 +201,7 @@ const CryptoStats = ({ tokenType }) => {
                     <img src={getImage(crypto.Symbol)} alt={crypto.Name} />
                     <Typography>{crypto.Symbol}</Typography>
                   </div>
-                  <div>
+                  <div style={{ alignSelf: 'flex-end' }}>
                     <Typography className={classes.price}>
                       ${formatPrice(Number(crypto.Price))}
                     </Typography>

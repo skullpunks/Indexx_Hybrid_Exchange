@@ -43,7 +43,7 @@ const BuyCrypto = ({ tokenType, onReceiveTokenChange  }) => {
       <div className={`${classes.container} ${classes.container2}`}>
         <BuySellTabs tokenType={tokenType} onReceiveTokenChange={onReceiveTokenChange} />
       </div>
-      {/* <Popup /> */}
+      <Popup />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Pagination, Table, Tabs } from 'antd';
+import { Pagination, Table, Tabs, theme } from 'antd';
 import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { decodeJWT, getUserWallets } from '../../services/api';
 import { Button } from 'antd';
 import BSStakingHistoryTable from '../BSStakingHistory/BSStakingHistoryTable';
+import { useTheme } from '@mui/material';
 
 interface DataType {
   key: React.Key;
@@ -27,11 +28,12 @@ interface DataType {
 }
 
 interface HistoryProps {
-  refresh: boolean,
+  refresh: boolean;
 }
 
-const StakingTable:React.FC<HistoryProps> = ({refresh}) => {
+const StakingTable: React.FC<HistoryProps> = ({ refresh }) => {
   const [hideZeroBalance, setHideZeroBalance] = useState(false);
+  const theme = useTheme();
   const [valueInput, setValueInput] = useState('');
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
@@ -44,21 +46,21 @@ const StakingTable:React.FC<HistoryProps> = ({refresh}) => {
 
   const handleButtonWithdraw = (id: any) => {};
 
-//   const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  //   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-// const getCurrentDate = (): string => {
-//   return new Date().toLocaleString('en-US', options);
-// };
+  // const getCurrentDate = (): string => {
+  //   return new Date().toLocaleString('en-US', options);
+  // };
 
-const dateOptions: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-};
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  };
 
-const getCurrentDate = (): string => {
-  return new Date().toLocaleDateString('en-US', dateOptions);
-};
+  const getCurrentDate = (): string => {
+    return new Date().toLocaleDateString('en-US', dateOptions);
+  };
   const columns: ColumnsType<DataType> = [
     {
       dataIndex: 'coinSymbol',
@@ -182,8 +184,14 @@ const getCurrentDate = (): string => {
     // }
   };
   useEffect(() => {
-      setSortedData(filteredWalletData ? filteredWalletData.filter((item: DataType) => !hideZeroBalance || item.coinBalance !== 0) : [])
-  }, [filteredWalletData, hideZeroBalance])
+    setSortedData(
+      filteredWalletData
+        ? filteredWalletData.filter(
+            (item: DataType) => !hideZeroBalance || item.coinBalance !== 0
+          )
+        : []
+    );
+  }, [filteredWalletData, hideZeroBalance]);
 
   useEffect(() => {
     if (valueInput === '') {
@@ -230,14 +238,15 @@ const getCurrentDate = (): string => {
           tab="Rewards and Transactions"
           key="1"
           className="padding-2x font_30x"
+          style={{ color: theme.palette.text.primary }}
         >
           {/* <div className="border-b-1x margin-b-2x"> */}
-            {/* <div className='checkbox-container' style={{ textAlign: "right" }}>
+          {/* <div className='checkbox-container' style={{ textAlign: "right" }}>
                             <Checkbox checked={hideZeroBalance} onChange={handleCheckboxChange}>
                                 Hide rows with 0 balance
                             </Checkbox>
                         </div> */}
-            {/* <Table
+          {/* <Table
               className="custom_table"
               columns={columns}
               dataSource={getData(current, pageSize)}
@@ -249,7 +258,7 @@ const getCurrentDate = (): string => {
               onChange={setCurrent}
             />
           </div> */}
-          <BSStakingHistoryTable refresh={refresh}/>
+          <BSStakingHistoryTable refresh={refresh} />
         </Tabs.TabPane>
       </Tabs>
     </div>

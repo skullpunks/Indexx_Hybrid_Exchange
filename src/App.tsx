@@ -301,9 +301,9 @@ function App() {
               element={<CreatePasswordPage />}
             />
             <Route path="/auth/signup-referral" element={<RefferalPage />} />
-            <Route path="/auth/signup-role" element={<SelectRolePage />} />
+            {/* <Route path="/auth/signup-role" element={<SelectRolePage />} /> */}
 
-            <Route path="/update/home" element={<BuySellPage />} />
+            <Route path="/update/home/*" element={<BuySellPage />} />
             <Route path="/wallet/overview" element={<AssetsPage />} />
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
