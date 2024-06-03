@@ -50,186 +50,214 @@ const useStyles = makeStyles((theme) => ({
   redText: {
     color: 'red !important',
   },
+  contentContainer: {
+    height: '100%',
+    overflowY: 'auto',
+
+    '&::-webkit-scrollbar': {
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important',
+      borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+      display: 'none !important', // Hide the scrollbar track
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important', // Keep the same color on hover
+    },
+  },
 }));
 const allTokens = [
   {
-    "title": "IN500",
-    "subTitle": "gatechain-token",
-    "info": ""
+    title: 'IN500',
+    subTitle: 'gatechain-token',
+    info: '',
   },
   {
-    "title": "INEX",
-    "subTitle": "satoshi-nakamoto-rune"
+    title: 'INEX',
+    subTitle: 'satoshi-nakamoto-rune',
   },
   {
-    "title": "INEX",
-    "subTitle": "satoshi-nakamoto-rune"
+    title: 'INEX',
+    subTitle: 'satoshi-nakamoto-rune',
   },
   {
-    "title": "INEX",
-    "subTitle": "satoshi-nakamoto-rune"
+    title: 'INEX',
+    subTitle: 'satoshi-nakamoto-rune',
   },
   {
-    "title": "WIBS",
-    "subTitle": "toshi"
+    title: 'WIBS',
+    subTitle: 'toshi',
   },
   {
-    "title": "IUSD+",
-    "subTitle": "tether"
+    title: 'IUSD+',
+    subTitle: 'tether',
   },
   {
-    "title": "INXC",
-    "subTitle": "uma"
+    title: 'INXC',
+    subTitle: 'uma',
   },
   {
-    "title": "ALCRYP",
-    "subTitle": "AlphaCrypto ETF"
+    title: 'ALCRYP',
+    subTitle: 'AlphaCrypto ETF',
   },
   {
-    "title": "AMZN",
-    "subTitle": "ethereum"
+    title: 'AMZN',
+    subTitle: 'ethereum',
   },
   {
-    "title": "APPL",
-    "subTitle": "ethereum"
+    title: 'APPL',
+    subTitle: 'ethereum',
   },
   {
-    "title": "BCM",
-    "subTitle": "ethereum"
+    title: 'BCM',
+    subTitle: 'ethereum',
   },
   {
-    "title": "BNB",
-    "subTitle": "binancecoin"
+    title: 'BNB',
+    subTitle: 'binancecoin',
   },
   {
-    "title": "BTC",
-    "subTitle": "bitcoin"
+    title: 'BTC',
+    subTitle: 'bitcoin',
   },
   {
-    "title": "CRYC10",
-    "subTitle": "CryptoCap 10 ETF"
+    title: 'CRYC10',
+    subTitle: 'CryptoCap 10 ETF',
   },
   {
-    "title": "DAI",
-    "subTitle": "Dai"
+    title: 'DAI',
+    subTitle: 'Dai',
   },
   {
-    "title": "DOGE",
-    "subTitle": "Dogecoin"
+    title: 'DOGE',
+    subTitle: 'Dogecoin',
   },
   {
-    "title": "DOT",
-    "subTitle": "Polkadot"
+    title: 'DOT',
+    subTitle: 'Polkadot',
   },
   {
-    "title": "EQSTK",
-    "subTitle": "EqStocks ETF"
+    title: 'EQSTK',
+    subTitle: 'EqStocks ETF',
   },
   {
-    "title": "ETH",
-    "subTitle": "Ethereum"
+    title: 'ETH',
+    subTitle: 'Ethereum',
   },
   {
-    "title": "GOOGL",
-    "subTitle": "Indexx Stock Token"
+    title: 'GOOGL',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "INDXXF",
-    "subTitle": "Indexx Focus ETF"
+    title: 'INDXXF',
+    subTitle: 'Indexx Focus ETF',
   },
   {
-    "title": "LINK",
-    "subTitle": "ChainLink"
+    title: 'LINK',
+    subTitle: 'ChainLink',
   },
   {
-    "title": "LTC",
-    "subTitle": "Litecoin"
+    title: 'LTC',
+    subTitle: 'Litecoin',
   },
   {
-    "title": "MATIC",
-    "subTitle": "Polygon"
+    title: 'MATIC',
+    subTitle: 'Polygon',
   },
   {
-    "title": "META",
-    "subTitle": "Indexx Stock Token"
+    title: 'META',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "MSFT",
-    "subTitle": "Indexx Stock Token"
+    title: 'MSFT',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "NVDA",
-    "subTitle": "Indexx Stock Token"
+    title: 'NVDA',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "PEP",
-    "subTitle": "Indexx Stock Token"
+    title: 'PEP',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "SHIB",
-    "subTitle": "Shiba Inu"
+    title: 'SHIB',
+    subTitle: 'Shiba Inu',
   },
   {
-    "title": "SNP500",
-    "subTitle": "Indexx Stock Token"
+    title: 'SNP500',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "SOL",
-    "subTitle": "Solana"
+    title: 'SOL',
+    subTitle: 'Solana',
   },
   {
-    "title": "TLSA",
-    "subTitle": "Indexx Stock Token"
+    title: 'TLSA',
+    subTitle: 'Indexx Stock Token',
   },
   {
-    "title": "TOB",
-    "subTitle": "Token Blend ETF"
+    title: 'TOB',
+    subTitle: 'Token Blend ETF',
   },
   {
-    "title": "TRX",
-    "subTitle": "Tron"
+    title: 'TRX',
+    subTitle: 'Tron',
   },
   {
-    "title": "TUSD",
-    "subTitle": "True USD"
+    title: 'TUSD',
+    subTitle: 'True USD',
   },
   {
-    "title": "USDC",
-    "subTitle": "USDC"
+    title: 'USDC',
+    subTitle: 'USDC',
   },
   {
-    "title": "USDT",
-    "subTitle": "Tether"
+    title: 'USDT',
+    subTitle: 'Tether',
   },
   {
-    "title": "XRP",
-    "subTitle": "Ripple"
-  }
-]
+    title: 'XRP',
+    subTitle: 'Ripple',
+  },
+];
 
-
-const CryptoCarts = ({ receiveToken = "INEX" }) => {
+const CryptoCarts = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
   const [chartData, setChartData] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async (subTitle) => {
       try {
         const data = await getCryptoHistoricalData(subTitle.toLowerCase());
         setChartData(data);
       } catch (error) {
-        console.error('Error fetching data for', subTitle, 'defaulting to Bitcoin.');
+        console.error(
+          'Error fetching data for',
+          subTitle,
+          'defaulting to Bitcoin.'
+        );
         const data = await getCryptoHistoricalData('bitcoin');
         setChartData(data);
       }
     };
 
-    const selectedToken = allTokens.find(token => token.title === receiveToken);
+    const selectedToken = allTokens.find(
+      (token) => token.title === receiveToken
+    );
     if (selectedToken) {
       fetchData(selectedToken.subTitle);
     }
   }, [receiveToken]);
-
 
   return (
     <div>
@@ -239,12 +267,12 @@ const CryptoCarts = ({ receiveToken = "INEX" }) => {
           className={classes.cardContainer}
           style={{ border: 'none', padding: 0 }}
         >
-          <ChartHeader receiveToken={receiveToken}/>
+          <ChartHeader receiveToken={receiveToken} />
           <DurationTabs />
           <TradingViewChart data={chartData} />
         </div>
         <div className={classes.cardContainer}>
-          <div style={{ height: '100%', overflowY: 'auto' }}>
+          <div className={classes.contentContainer}>
             <h1 className={classes.heading}>Markets</h1>
             <div
               style={{

@@ -4,7 +4,6 @@ import logo from '../../assets/header-icons/indexx_logo.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
 
-import { Theme } from '../../utils/themeContext';
 import Fantasy_Lotto from '../../assets/BSheader/fantasy.png';
 import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
@@ -27,7 +26,7 @@ import frame from '../../assets/hive-dashboard/frame.svg';
 import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
-import { useTheme } from '@emotion/react';
+import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 
 import {
@@ -45,7 +44,7 @@ import {
   baseAcademyUrl,
   decodeJWT,
 } from '../../services/api';
-import ThemeToggler from '../ThemeToggler';
+
 import DarkMode from '../DarkMode/DarkMode';
 
 const Links = [
@@ -75,8 +74,7 @@ const Links = [
 ];
 
 const HeaderTest = () => {
-  const themeData = useContext(Theme);
-  const [theme, setTheme] = useState<string>(themeData?.theme ?? 'light');
+  const theme = useTheme() as any;
   const isAuthenticated = localStorage.getItem('access_token') !== null;
   const [backdropVisibility, setBackdropVisibility] = useState(false);
   const elementRef = useRef(null);
@@ -210,12 +208,6 @@ const HeaderTest = () => {
 
   const isMobile = useMediaQuery('(max-width:768px)');
 
-  useEffect(() => {
-    if (themeData?.theme) {
-      setTheme(themeData?.theme);
-    }
-  }, [themeData?.theme]);
-
   //   const handleItemClick = (path: string, i: number) => {
   //     setactiveIndex(i);
   //     console.log(path, 'path');
@@ -294,7 +286,8 @@ const HeaderTest = () => {
             style={{
               display: 'block',
               opacity: backdropVisibility ? 1 : 0,
-              background: theme === 'dark' ? 'rgba(0,0,0,0.5)' : '',
+              background:
+                theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.5)' : '',
               transitionDelay: '.1s',
               height: backdropVisibility ? '100vh' : 0,
             }}
@@ -339,8 +332,12 @@ const HeaderTest = () => {
                       <div
                         className="mega-box"
                         style={{
-                          background: theme === 'light' ? '#FAFAFC' : '',
-                          color: theme === 'light' ? '#333336 !important' : '',
+                          background:
+                            theme.palette.mode === 'light' ? '#FAFAFC' : '',
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#333336 !important'
+                              : '',
                         }}
                         ref={elementRef}
                       >
@@ -364,7 +361,9 @@ const HeaderTest = () => {
                                     <a
                                       href={el.href}
                                       className={
-                                        theme === 'light' ? 'dark_color' : ''
+                                        theme.palette.mode === 'light'
+                                          ? 'dark_color'
+                                          : ''
                                       }
                                     >
                                       {el.name}
@@ -474,9 +473,12 @@ const HeaderTest = () => {
                         <div
                           className="mega-box"
                           style={{
-                            background: theme === 'light' ? '#FAFAFC' : '',
+                            background:
+                              theme.palette.mode === 'light' ? '#FAFAFC' : '',
                             color:
-                              theme === 'light' ? '#333336 !important' : '',
+                              theme.palette.mode === 'light'
+                                ? '#333336 !important'
+                                : '',
                           }}
                           ref={elementRef}
                         >
@@ -506,7 +508,9 @@ const HeaderTest = () => {
                                         }
                                         href={el.href}
                                         className={
-                                          theme === 'light' ? 'dark_color' : ''
+                                          theme.palette.mode === 'light'
+                                            ? 'dark_color'
+                                            : ''
                                         }
                                       >
                                         {el.name}
@@ -534,7 +538,6 @@ const HeaderTest = () => {
               alignItems: 'center',
             }}
           >
-            
             <DarkMode />
             <label htmlFor="menu-btn" className="btn menu-btn">
               <CrossIcon />

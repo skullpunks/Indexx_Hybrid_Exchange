@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dropDownContainer: {
     zIndex: '111',
-    height: '224px',
+
     background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
     boxShadow:
       'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
@@ -110,8 +110,32 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     paddingBottom: '10px',
+    paddingTop: '10px',
     overflow: 'hidden',
     borderRadius: '16px',
+  },
+  dropDownContent: {
+    height: '100%',
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important',
+      borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+      display: 'none !important', // Hide the scrollbar track
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important', // Keep the same color on hover
+    },
   },
   listContainer: {
     '&.MuiListItemButton-root': {
@@ -155,6 +179,7 @@ const CustomTextField = ({
   amount,
   receiveAmount,
   tokenType,
+  loggedIn,
   disableDropdown,
   fixedToken,
 }) => {
@@ -169,6 +194,30 @@ const CustomTextField = ({
   const [rateData, setRateData] = useState(0);
 
   const theme = useTheme();
+
+  console.log('receiveAmount', receiveAmount);
+  useEffect(() => {
+    console.log('I am here');
+    const token = type === 'buy' ? toToken?.title : fromToken?.title;
+    if (token) {
+      getPricesData(token);
+      onSelectToken(type === 'buy' ? toToken : fromToken);
+    }
+  }, [type, fromToken, toToken]);
+
+  useEffect(() => {
+    console.log('tokenType', tokenType);
+  }, [tokenType]);
+
+  useEffect(() => {
+    console.log('change happening', userAmount, rateData);
+    if (userAmount && rateData) {
+      const receiveAmount = calculateReceiveAmount(userAmount, rateData);
+      if (onReceiveAmountChange) {
+        onReceiveAmountChange(receiveAmount);
+      }
+    }
+  }, [userAmount, rateData, onReceiveAmountChange]);
 
   const handleFocus = () => {
     setFocused(true);
@@ -191,7 +240,7 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
-    console.log("I am here", token, disableDropdown)
+    console.log('I am here', token, disableDropdown);
     if (!disableDropdown) {
       onSelectToken(token);
     }
@@ -212,15 +261,18 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log("usd", currency)
+    console.log('usd', currency);
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
+    let results = {
+      priceData,
+      currency,
+    };
     setRateData(priceData);
     if (onPriceChange) {
       onPriceChange({ priceData, currency });
     }
   };
-
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -273,7 +325,10 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img src={getImage(initialToken?.image)} alt={initialToken?.title} />
+                  <img
+                    src={getImage(initialToken?.image)}
+                    alt={initialToken?.title}
+                  />
                   <p>{initialToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
@@ -285,21 +340,21 @@ const CustomTextField = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div className={classes.dropDownContainer}>
-              <div
-                style={{
-                  height: '100%',
-                  overflowY: 'auto',
-                }}
-              >
+            <div
+              className={classes.dropDownContainer}
+              style={{ height: loggedIn ? '342px' : '248px' }}
+            >
+              <div className={classes.dropDownContent}>
                 <div
                   style={{
                     position: '-webkit-sticky',
                     position: 'sticky',
                     top: 0,
-                    background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    background:
+                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
                     zIndex: '11111',
-                    padding: '10px',
+                    padding: '0px 10px 10px 10px',
+                    border: '1',
                   }}
                 >
                   <TextField

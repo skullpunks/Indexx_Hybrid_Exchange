@@ -6,19 +6,19 @@ import { styled } from '@mui/system';
 import { useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import assetLight from '../../../../assets/updated/iconicHeader/Asset wallet.png';
+import assetLight from '../../../../assets/updated/iconicHeader/lightMode/Vector.svg';
 import assetDark from '../../../../assets/updated/iconicHeader/Asset wallet.svg';
 
-import tokenLight from '../../../../assets/updated/iconicHeader/Token.png';
+import tokenLight from '../../../../assets/updated/iconicHeader/lightMode/Token.svg';
 import tokenDark from '../../../../assets/updated/iconicHeader/Token.svg';
 
-import wallStreetLight from '../../../../assets/updated/iconicHeader/Wall Street.png';
+import wallStreetLight from '../../../../assets/updated/iconicHeader/lightMode/Wall Street.svg';
 import wallStreetDark from '../../../../assets/updated/iconicHeader/Wall Street.svg';
 
-import stakingLight from '../../../../assets/updated/iconicHeader/Staking.png';
+import stakingLight from '../../../../assets/updated/iconicHeader/lightMode/Staking.svg';
 import stakingDark from '../../../../assets/updated/iconicHeader/Staking.svg';
 
-import etfLight from '../../../../assets/updated/iconicHeader/ETF_light.png';
+import etfLight from '../../../../assets/updated/iconicHeader/lightMode/etf-logo.svg';
 import etfDark from '../../../../assets/updated/iconicHeader/ETF_dark.svg';
 
 // Custom styled Tab component

@@ -249,6 +249,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
   const handleSubmit = async () => {
     console.log('value', value);
     console.log('selectedPaymentMethod', selectedPaymentMethod);
+    console.log('selectedPaymentMethod', value);
     if (selectedPaymentMethod && value === 'buy') {
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
@@ -533,6 +534,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
                   fixedToken={
                     value === 'sell' ? { title: 'USD', image: 'USD' } : null
                   }
+                  loggedIn={isLoggedIn}
                 />
               </>
             )}

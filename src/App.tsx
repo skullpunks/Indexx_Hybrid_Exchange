@@ -195,6 +195,11 @@ function App() {
                 path="/indexx-exchange/send"
                 element={<HorizontalLinearStepper2 />}
               />
+              <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route
+                path="/indexx-exchange/buy-sell/staking"
+                element={<Staking />}
+              />
               <Route
                 path="/indexx-exchange/power-hive"
                 element={<PowerPackInitial />}
@@ -298,7 +303,7 @@ function App() {
             {/* <Route path="/auth/signup-role" element={<SelectRolePage />} /> */}
 
             <Route path="/update/home/*" element={<BuySellPage />} />
-            <Route path="/wallet/overview" element={<AssetsPage />} />
+
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
             <Route
@@ -332,10 +337,6 @@ function App() {
               element={<SubscribeSuccess />}
             />
 
-            <Route
-              path="/indexx-exchange/buy-sell/staking"
-              element={<Staking />}
-            />
             <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
