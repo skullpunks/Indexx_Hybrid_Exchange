@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const BuySell = () => {
   const classes = useStyles();
   const location = useLocation();
-  const [receiveToken, setReceiveToken] = useState('');
+  const [receiveToken, setReceiveToken] = useState('INEX');
   const [selectedTab, setSelectedTab] = useState('Tokens');
 
   useEffect(() => {
@@ -50,8 +50,8 @@ const BuySell = () => {
         onReceiveTokenChange={handleReceiveTokenChange}
       />
       <HowToBuyCrypto tokenType={selectedTab} receiveToken={receiveToken} />
-      <CryptoCarts receiveToken={receiveToken} />  //todo take the default token
-      <PopularConversion receiveToken={receiveToken} /> // //todo take the default token
+      <CryptoCarts receiveToken={receiveToken} /> 
+      <PopularConversion receiveToken={receiveToken} />
     </div> 
   );
 };

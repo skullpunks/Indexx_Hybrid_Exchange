@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConversionCards = ({ heading, type, receiveToken }) => {
+const ConversionCards = ({ heading, type, receiveToken = "INEX" }) => {
   const classes = useStyles();
   const [price, setPrice] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -81,6 +81,7 @@ const ConversionCards = ({ heading, type, receiveToken }) => {
     [`${formatPrice(20 * price)} USD`, `20 ${receiveToken}`],
     [`${formatPrice(50 * price)} USD`, `50 ${receiveToken}`],
   ];
+  console.log("receiveToken", receiveToken)
 
   const typeConversion = type === 'inextousdt' ? inexTousdt : usdtToinex;
 

@@ -5,9 +5,6 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
@@ -162,8 +159,9 @@ const CustomTextField = ({
   fixedToken,
 }) => {
   const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
+  const [fromToken, setFromToken] = useState(initialToken);
   const classes = useStyles({
-    cryptoSymbol: initialToken.title,
+    cryptoSymbol: fromToken.title,
   });
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -194,8 +192,9 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
-    console.log("I am here", token, disableDropdown)
     if (!disableDropdown) {
+      setFromToken(token);
+      getPricesData(token.title)
       onSelectToken(token);
     }
     setIsOpen(false);
@@ -215,7 +214,6 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log("usd", currency)
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     setRateData(priceData);
@@ -223,15 +221,6 @@ const CustomTextField = ({
       onPriceChange({ priceData, currency });
     }
   };
-
-  // useEffect(() => {
-  //   if (fixedToken) {
-  //     const token = fixedToken?.title;
-  //     if (token) {
-  //       getPricesData(token);
-  //     }
-  //   }
-  // }, [fixedToken]);
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -241,6 +230,11 @@ const CustomTextField = ({
       }
     }
   }, [userAmount, rateData, onReceiveAmountChange]);
+
+  useEffect(() => {
+    console.log("fromToken.title", fromToken.title)
+    getPricesData(fromToken.title);
+  }, [fromToken.title]);
 
   const filterTokens = () => {
     return tokens.filter((token) => {
@@ -284,8 +278,8 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img src={getImage(initialToken?.image)} alt={initialToken?.title} />
-                  <p>{initialToken?.title}</p>
+                  <img src={getImage(fromToken?.image)} alt={fromToken?.title} />
+                  <p>{fromToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
               </InputAdornment>

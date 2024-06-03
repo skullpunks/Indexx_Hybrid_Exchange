@@ -810,6 +810,9 @@ export const getCoinPriceByName = async (
   coin: string,
   type: string = 'Buy'
 ) => {
+  if(coin ==="INEX-ETHEREUM" || coin === "INEX-POLYGON"){
+    coin = "INEX";
+  }
   try {
     const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
       type: type,

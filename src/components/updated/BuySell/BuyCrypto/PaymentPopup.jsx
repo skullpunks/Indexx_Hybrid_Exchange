@@ -371,6 +371,16 @@ const Popup = ({
                   </Box>
                   <p>${amount}</p>
                 </button>
+                <button
+                  className={classes.button}
+                  onClick={() => handlePaymentMethodSelect('Venmo')}
+                >
+                  <Box className={classes.iconTextContainer}>
+                    <img src={transactionIcon} alt="Venmo" />
+                    <p className={classes.btnText}>Venmo</p>
+                  </Box>
+                  <p>${amount}</p>
+                </button>
               </>
             )}
           </Box>

@@ -1,10 +1,11 @@
 import { useTheme } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../BuySell/BS-Sell.css';
 import '../BuySell/BuySellDummy.css';
 // import Footer from '../Footer/Footer';
 import StakingTable from './StakingTable';
 import StakingTop from './StakingTop';
+import { useNavigate } from 'react-router-dom';
 // import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
 // import { Link } from 'react-router-dom';
 // import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
@@ -14,9 +15,18 @@ import StakingTop from './StakingTop';
 const Staking = () => {
   const [refresh, setRefresh] = useState<boolean>(true);
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const handleRefereshChange = (event: any) => {
     setRefresh(!refresh);
   };
+
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    if (!email) {
+      navigate('/auth/login');
+    }
+  }, [navigate]);
 
   // console.log(refresh, "referesh");
 

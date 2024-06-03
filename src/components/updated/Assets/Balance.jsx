@@ -141,12 +141,12 @@ const BalanceOverview = () => {
         <GenericButton
           text={'Deposit'}
           className={classes.button}
-          onClick={() => navigate('/buy-sell/deposit-crypto')}
+          onClick={() => navigate('/indexx-exchange/buy-sell/deposit-crypto')}
         />
         <GenericButton
           text={'Withdraw'}
           className={classes.button}
-          onClick={() => navigate('/buy-sell/withdraw-crypto')}
+          onClick={() => navigate('/indexx-exchange/buy-sell/withdraw-crypto')}
         />
         <GenericButton
           text={'Transfer'}

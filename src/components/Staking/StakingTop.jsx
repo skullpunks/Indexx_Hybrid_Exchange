@@ -76,6 +76,13 @@ const StakingTop = ({ refresh, handleRefresh }) => {
   //   }
   // }, []);
 
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    if (!email) {
+      navigate('/auth/login');
+    }
+  }, [navigate]);
+  
   const getAllUserWallet = async () => {
     try {
       const userWallets = await getUserWallets(decoded.email);
@@ -106,6 +113,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
   };
 
   const getCoinBalance = async (value) => {
+    value = value.includes('INEX') ? 'INEX' : value;
     if (honeyBeeId && honeyBeeEmail) {
       const res = await getWalletBalance(honeyBeeEmail, value);
       if (res.status === 200) {
@@ -1755,7 +1763,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
-                      sx={{ pt: 0.85 }}
+                      // sx={{ pt: 0.85 }}
                       sx={{ color: theme.palette.text.primary }}
                     >
                       {sixMonthReward.toFixed(2)}
@@ -1775,7 +1783,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
-                      sx={{ pt: 0.85 }}
+                      // sx={{ pt: 0.85 }}
                       sx={{ color: theme.palette.text.primary }}
                     >
                       {oneYearReward.toFixed(2)}

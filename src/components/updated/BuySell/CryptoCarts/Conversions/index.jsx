@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const Conversion = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
 
+  console.log("USD to", )
   useEffect(() => {
     console.log('Selected receiveToken:', receiveToken);
     // Perform necessary operations with receiveToken

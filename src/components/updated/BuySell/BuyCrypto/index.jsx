@@ -3,6 +3,7 @@ import React from 'react';
 import BuySellTabs from './BuySellTabs';
 import CryptoStats from './CryptoStats';
 import Popup from './PaymentPopup';
+import { TokenProvider } from './TokenContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,19 +33,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuyCrypto = ({ tokenType, onReceiveTokenChange  }) => {
+const BuyCrypto = ({ tokenType, onReceiveTokenChange }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={`${classes.container} ${classes.container1}`}>
-        <CryptoStats tokenType={tokenType} />
+    <TokenProvider>
+      <div className={classes.root}>
+        <div className={`${classes.container} ${classes.container1}`}>
+          <CryptoStats tokenType={tokenType} />
+        </div>
+        <div className={`${classes.container} ${classes.container2}`}>
+          <BuySellTabs
+            tokenType={tokenType}
+            onReceiveTokenChange={onReceiveTokenChange}
+          />
+        </div>
+        <Popup />
       </div>
-      <div className={`${classes.container} ${classes.container2}`}>
-        <BuySellTabs tokenType={tokenType} onReceiveTokenChange={onReceiveTokenChange} />
-      </div>
-      <Popup />
-    </div>
+    </TokenProvider>
   );
 };
 

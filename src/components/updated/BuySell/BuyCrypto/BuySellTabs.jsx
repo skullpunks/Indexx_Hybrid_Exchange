@@ -209,7 +209,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
       } else if (type === 'Receive') {
         setReceiveToken({ title: token?.title, image: token?.image });
         onReceiveTokenChange(token?.title);
-        console.log("receiveToken", token)
+        console.log('receiveToken', token);
       }
     },
     [onReceiveTokenChange, value]
@@ -247,7 +247,8 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
   };
 
   const handleSubmit = async () => {
-    console.log("selectedPaymentMethod", value)
+    console.log('value', value);
+    console.log('selectedPaymentMethod', selectedPaymentMethod);
     if (selectedPaymentMethod && value === 'buy') {
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
@@ -277,45 +278,50 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
   const createNewBuyOrder = async () => {
-    setLoadings(true);
-    let basecoin = receiveToken.title;
-    let quotecoin = 'USD';
-    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
-    let res;
-    if (id) {
-      if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
-        setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
-        );
-        setLoadings(false);
-        return;
-      }
-      res = await createBuyOrder(
-        basecoin,
-        quotecoin,
-        spendAmount,
-        outAmount,
-        0,
-        honeyBeeEmail,
-        true
-      );
-    } else {
-      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount);
-    }
-    if (res.status === 200) {
-      setLoadings(false);
-      //--Below code is to enable paypal Order---
-
-      for (let i = 0; i < res.data.links.length; i++) {
-        if (res.data.links[i].rel.includes('approve')) {
-          window.location.href = res.data.links[i].href;
+    try {
+      console.log("Here in buy order")
+      setLoadings(true);
+      let basecoin = receiveToken.title;
+      let quotecoin = 'USD';
+      let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+      let res;
+      if (id) {
+        if (!permissionData?.permissions?.buy) {
+          // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+          setMessage(
+            'As Captain bee, Please apply for buy approval from honey bee'
+          );
+          setLoadings(false);
+          return;
         }
+        res = await createBuyOrder(
+          basecoin,
+          quotecoin,
+          spendAmount,
+          outAmount,
+          0,
+          honeyBeeEmail,
+          true
+        );
+      } else {
+        res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount);
       }
-      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
-    } else {
-      setLoadings(false);
-      setMessage(res.data);
+      if (res.status === 200) {
+        setLoadings(false);
+        //--Below code is to enable paypal Order---
+
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes('approve')) {
+            window.location.href = res.data.links[i].href;
+          }
+        }
+        //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+      } else {
+        setLoadings(false);
+        setMessage(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
     }
   };
 
@@ -370,9 +376,11 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
 
   const confirmPayment = async () => {
     try {
+      console.log('paymentMethod', paymentMethod);
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        console.log("paymentMethod", paymentMethod)
         await createNewBuyOrder();
-      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire') {
+      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire' || paymentMethod === 'Venmo' ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod = String(paymentMethod).toLowerCase();
@@ -433,6 +441,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
   };
 
   const handlePaymentMethodSelect = (method) => {
+    setPaymentMethod(method);
     setSelectedPaymentMethod(method);
     handlePopupClose();
   };
