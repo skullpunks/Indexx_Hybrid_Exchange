@@ -508,6 +508,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
               amount={receiveAmount}
               receiveAmount={receiveAmount}
               tokenType={tokenType}
+              loggedIn={isLoggedIn}
             />
           </div>
 

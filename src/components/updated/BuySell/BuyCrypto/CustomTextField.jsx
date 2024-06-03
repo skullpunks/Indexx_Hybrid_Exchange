@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dropDownContainer: {
     zIndex: '111',
-    height: '224px',
+
     background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
     boxShadow:
       'rgba(0, 0, 0, 0.08) 0px 1px 10px 0px, rgba(0, 0, 0, 0.05) 0px 0px 3px 0px',
@@ -110,8 +110,32 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     paddingBottom: '10px',
+    paddingTop: '10px',
     overflow: 'hidden',
     borderRadius: '16px',
+  },
+  dropDownContent: {
+    height: '100%',
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important',
+      borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+      display: 'none !important', // Hide the scrollbar track
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important', // Keep the same color on hover
+    },
   },
   listContainer: {
     '&.MuiListItemButton-root': {
@@ -125,11 +149,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '10px',
     '& img': {
-      width: ({ cryptoSymbol }) =>
-        ['INEX', 'IN500', 'INXC', 'IUSD'].includes(cryptoSymbol)
-          ? '40px'
-          : '30px',
-      height: '25px',
+      width: '20px',
+      height: '20px',
     },
     '& p': {
       fontSize: '14px',
@@ -158,6 +179,7 @@ const CustomTextField = ({
   amount,
   receiveAmount,
   tokenType,
+  loggedIn,
 }) => {
   const initialToken =
     type === 'buy'
@@ -181,9 +203,9 @@ const CustomTextField = ({
 
   const theme = useTheme();
 
-  console.log("receiveAmount", receiveAmount)
+  console.log('receiveAmount', receiveAmount);
   useEffect(() => {
-    console.log("I am here");
+    console.log('I am here');
     const token = type === 'buy' ? toToken?.title : fromToken?.title;
     if (token) {
       getPricesData(token);
@@ -191,14 +213,12 @@ const CustomTextField = ({
     }
   }, [type, fromToken, toToken]);
 
+  useEffect(() => {
+    console.log('tokenType', tokenType);
+  }, [tokenType]);
 
   useEffect(() => {
-    console.log("tokenType", tokenType)
-    
-  }, [tokenType])
-
-  useEffect(() => {
-    console.log("change happening", userAmount, rateData);
+    console.log('change happening', userAmount, rateData);
     if (userAmount && rateData) {
       const receiveAmount = calculateReceiveAmount(userAmount, rateData);
       if (onReceiveAmountChange) {
@@ -268,8 +288,8 @@ const CustomTextField = ({
     const priceData = res.data.results.data;
     let results = {
       priceData,
-      currency
-    }
+      currency,
+    };
     setRateData(priceData);
     if (onPriceChange) {
       onPriceChange(results);
@@ -293,7 +313,6 @@ const CustomTextField = ({
       return false;
     });
   };
-
 
   return (
     <>
@@ -351,13 +370,11 @@ const CustomTextField = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && (
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div className={classes.dropDownContainer}>
-              <div
-                style={{
-                  height: '100%',
-                  overflowY: 'auto',
-                }}
-              >
+            <div
+              className={classes.dropDownContainer}
+              style={{ height: loggedIn ? '342px' : '248px' }}
+            >
+              <div className={classes.dropDownContent}>
                 <div
                   style={{
                     position: '-webkit-sticky',
@@ -366,7 +383,7 @@ const CustomTextField = ({
                     background:
                       theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
                     zIndex: '11111',
-                    padding: '10px',
+                    padding: '0px 10px 10px 10px',
                     border: '1',
                   }}
                 >
@@ -386,7 +403,7 @@ const CustomTextField = ({
                   />
                 </div>
                 <List>
-                {filterTokens()
+                  {filterTokens()
                     .filter((token) =>
                       token.title
                         .toLowerCase()

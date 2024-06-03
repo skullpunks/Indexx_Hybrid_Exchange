@@ -16,7 +16,7 @@ const header_data = [
         links: [
           {
             name: 'Buy and Sell',
-            href: '/indexx-exchange/buy-sell?type=buy',
+            href: '/update/home',
           },
           {
             name: 'Convert',
@@ -24,7 +24,7 @@ const header_data = [
           },
           {
             name: 'Asset Wallet',
-            href: '/indexx-exchange/buy-sell/wallet',
+            href: '/wallet/overview',
           },
           {
             name: 'Staking',
@@ -688,7 +688,7 @@ export const auth_header_data = [
     mainTextMob: 'Login',
     isAuth: false,
     active: false,
-    href: '/indexx-exchange/buy-sell/login',
+    href: '/auth/login/',
     hasMegaDrop: false,
     dropDownContent: [],
   },
@@ -697,7 +697,7 @@ export const auth_header_data = [
     mainTextMob: 'Register',
     isAuth: false,
     active: false,
-    href: '/indexx-exchange/buy-sell/get-started/',
+    href: '/auth/signup-email/',
     hasMegaDrop: false,
     dropDownContent: [],
   },
