@@ -202,14 +202,16 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
 
   const handleTokenSelect = useCallback(
     (token, type) => {
+      console.log('type', type);
+      console.log('value', value);
       if (type === 'Spend') {
         setSpendToken({ title: token?.title, image: token?.image });
-      } else {
+      } else if (type === 'Receive') {
         setReceiveToken({ title: token?.title, image: token?.image });
         onReceiveTokenChange(token?.title);
       }
     },
-    [onReceiveTokenChange]
+    [onReceiveTokenChange, value]
   );
 
   const handleSpendAmountChange = (amount) => {
@@ -222,31 +224,32 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
     setReceiveAmount(amount);
   };
 
-  const handlePriceChange = (priceData) => {
-    console.log('am here', priceData);
-    setPrice(priceData.priceData);
-    setReceiveToken({ title: priceData.currency, image: priceData.currency });
-    updateReceiveAmount(spendAmount, priceData.priceData);
-  };
+  const handlePriceChange = useCallback(
+    (priceData) => {
+      setPrice(priceData.priceData);
+      setReceiveToken({ title: priceData.currency, image: priceData.currency });
+      updateReceiveAmount(spendAmount, priceData.priceData);
+    },
+    [spendAmount]
+  );
 
-  const updateReceiveAmount = (amount, rate) => {
-    console.log('rate', rate);
-    console.log('amount', amount);
-
+  const updateReceiveAmount = useCallback((amount, rate) => {
     if (amount && rate) {
       const calculatedReceiveAmount =
         value === 'buy' ? amount / rate : amount * rate;
-      console.log('calculatedReceiveAmount', calculatedReceiveAmount);
       setReceiveAmount(calculatedReceiveAmount.toFixed(2));
     }
-  };
+  });
 
   const handlePaymentMethodClick = async () => {
+    setPopupOpen(true);
+  };
+
+  const handleSubmit = async () => {
     if (selectedPaymentMethod && value === 'buy') {
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
     } else {
-      setPopupOpen(true);
     }
   };
 
@@ -486,29 +489,73 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
           }}
         >
           <div>
-            <CustomTextField
-              label="Spend"
-              placeholder="Enter Amount"
-              type={value === 'buy' ? 'buy' : 'sell'}
-              onSelectToken={(token) => handleTokenSelect(token, 'Spend')}
-              onAmountChange={handleSpendAmountChange}
-              onReceiveAmountChange={handleReceiveAmountChange}
-              onPriceChange={handlePriceChange}
-              amount={spendAmount}
-              receiveAmount={receiveAmount}
-              tokenType={tokenType}
-            />
-            <CustomTextField
-              label="Receive"
-              placeholder="0.00"
-              type={value === 'buy' ? 'buy' : 'sell'}
-              onSelectToken={(token) => handleTokenSelect(token, 'Receive')}
-              onAmountChange={handleReceiveAmountChange}
-              onPriceChange={handlePriceChange}
-              amount={receiveAmount}
-              receiveAmount={receiveAmount}
-              tokenType={tokenType}
-            />
+            {value === 'buy' && (
+              <>
+                <CustomTextField
+                  label="Spend"
+                  placeholder="Enter Amount"
+                  type="buy"
+                  onSelectToken={(token) => handleTokenSelect(token, 'Spend')}
+                  onAmountChange={handleSpendAmountChange}
+                  onReceiveAmountChange={handleReceiveAmountChange}
+                  onPriceChange={handlePriceChange}
+                  amount={spendAmount}
+                  receiveAmount={receiveAmount}
+                  tokenType={tokenType}
+                  disableDropdown={value === 'buy'}
+                  fixedToken={
+                    value === 'buy' ? { title: 'USD', image: 'USD' } : null
+                  }
+                />
+                <CustomTextField
+                  label="Receive"
+                  placeholder="0.00"
+                  type="buy"
+                  onSelectToken={(token) => handleTokenSelect(token, 'Receive')}
+                  onAmountChange={handleReceiveAmountChange}
+                  onPriceChange={handlePriceChange}
+                  amount={receiveAmount}
+                  receiveAmount={receiveAmount}
+                  tokenType={tokenType}
+                  disableDropdown={value === 'sell'}
+                  fixedToken={
+                    value === 'sell' ? { title: 'USD', image: 'USD' } : null
+                  }
+                />
+              </>
+            )}
+            {value === 'sell' && (
+              <>
+                <CustomTextField
+                  label="Spend"
+                  placeholder="Enter Amount"
+                  type="sell"
+                  onSelectToken={(token) =>
+                    setSpendToken({ title: token?.title, image: token?.image })
+                  }
+                  onAmountChange={handleSpendAmountChange}
+                  onReceiveAmountChange={handleReceiveAmountChange}
+                  onPriceChange={handlePriceChange}
+                  amount={spendAmount}
+                  receiveAmount={receiveAmount}
+                  tokenType={tokenType}
+                  disableDropdown={false}
+                />
+                <CustomTextField
+                  label="Receive"
+                  placeholder="0.00"
+                  type="sell"
+                  onSelectToken={(token) => {}}
+                  onAmountChange={handleReceiveAmountChange}
+                  onPriceChange={handlePriceChange}
+                  amount={receiveAmount}
+                  receiveAmount={receiveAmount}
+                  tokenType={tokenType}
+                  disableDropdown={true}
+                  fixedToken={{ title: 'USD', image: 'USD' }}
+                />
+              </>
+            )}
           </div>
 
           {isLoggedIn ? (
@@ -550,8 +597,8 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
                   fontWeight: '500',
                   marginTop: 'auto',
                 }}
-                onClick={handlePaymentMethodClick}
-                disabled={spendAmount === '' ? true : false}
+                onClick={handleSubmit}
+                disabled={spendAmount === ''}
               />
             </>
           ) : (

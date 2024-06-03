@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import IconicHeader from '../shared/IconicHeader';
 import BuyCrypto from './BuyCrypto';
 import CryptoCarts from './CryptoCarts';
@@ -18,8 +19,20 @@ const useStyles = makeStyles((theme) => ({
 
 const BuySell = () => {
   const classes = useStyles();
+  const location = useLocation();
   const [receiveToken, setReceiveToken] = useState('');
   const [selectedTab, setSelectedTab] = useState('Tokens');
+
+  useEffect(() => {
+    const path = location.pathname.toLowerCase();
+    if (path.includes('etf-tokens')) {
+      setSelectedTab('ETF Tokens');
+    } else if (path.includes('stock-token')) {
+      setSelectedTab('Stock Tokens');
+    } else {
+      setSelectedTab('Tokens');
+    }
+  }, [location.pathname]);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -37,9 +50,9 @@ const BuySell = () => {
         onReceiveTokenChange={handleReceiveTokenChange}
       />
       <HowToBuyCrypto tokenType={selectedTab} receiveToken={receiveToken} />
-      <CryptoCarts receiveToken={receiveToken}/>
-      <PopularConversion receiveToken={receiveToken}/>
-    </div>
+      <CryptoCarts receiveToken={receiveToken} />  //todo take the default token
+      <PopularConversion receiveToken={receiveToken} /> // //todo take the default token
+    </div> 
   );
 };
 

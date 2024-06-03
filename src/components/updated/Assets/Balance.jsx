@@ -5,6 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
 import { decodeJWT, getUserWallets } from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -72,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BalanceOverview = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
 
   const handleToggleVisibility = () => {
@@ -81,7 +83,7 @@ const BalanceOverview = () => {
 
   useEffect(() => {
     getAllUserWallet();
-  }, [])
+  }, []);
 
   const getAllUserWallet = async () => {
     try {
@@ -108,6 +110,8 @@ const BalanceOverview = () => {
     }
   };
 
+  const pnl = totalBalanceInUSD > 0 ? '- $8.99(0.83%)' : '$0.00(0.00%)';
+
   return (
     <Box className={classes.container}>
       <Box className={classes.balanceSection}>
@@ -126,13 +130,25 @@ const BalanceOverview = () => {
           {visible ? '*******' : `${totalBalanceInUSD}`}
         </Typography>
         <Typography className={classes.pnlText}>
-          Today's PNL: <span className={classes.redText}>- $8.99(0.83%)</span>
+          Today's PNL: <span className={classes.redText}>{pnl}</span>
         </Typography>
       </Box>
       <Box className={classes.buttonContainer}>
-        <GenericButton text={'Deposit'} className={classes.button} />
-        <GenericButton text={'Withdraw'} className={classes.button} />
-        <GenericButton text={'Transfer'} className={classes.button} />
+        <GenericButton
+          text={'Deposit'}
+          className={classes.button}
+          onClick={() => navigate('/buy-sell/deposit-crypto')}
+        />
+        <GenericButton
+          text={'Withdraw'}
+          className={classes.button}
+          onClick={() => navigate('/buy-sell/withdraw-crypto')}
+        />
+        <GenericButton
+          text={'Transfer'}
+          className={classes.button}
+          onClick={() => navigate('/indexx-exchange/send')}
+        />
       </Box>
     </Box>
   );

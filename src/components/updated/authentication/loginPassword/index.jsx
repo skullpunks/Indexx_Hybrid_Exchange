@@ -16,6 +16,7 @@ import {
   loginAPI,
   loginHive,
   resetPassword,
+  sendForgotPasswordOtp,
 } from '../../../../services/api';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
@@ -78,7 +79,7 @@ const LoginPassword = ({ email }) => {
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
-    console.log("value",value)
+    console.log('value', value);
     setPassword(value);
   };
 
@@ -105,7 +106,14 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('refresh_token', res1.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('username', resObj?.username);
-        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
+        localStorage.setItem(
+          'userlogged',
+          resObj?.userType === 'Indexx Exchange'
+            ? 'normal'
+            : resObj?.userType === 'CaptainBee'
+            ? 'captain'
+            : 'honeyb'
+        );
 
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
@@ -120,7 +128,7 @@ const LoginPassword = ({ email }) => {
         } else {
           redirectUrl
             ? navigate(redirectUrl)
-            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+            : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
         }
       } else {
         console.log('I am here');
@@ -143,21 +151,28 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('access_token', res2.data.access_token);
         localStorage.setItem('refresh_token', res2.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
-        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
+        localStorage.setItem(
+          'userlogged',
+          resObj?.userType === 'Indexx Exchange'
+            ? 'normal'
+            : resObj?.userType === 'CaptainBee'
+            ? 'captain'
+            : 'honeyb'
+        );
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
         let userDetails = await getUserDetails(resObj?.email);
 
         redirectUrl
           ? navigate(redirectUrl)
-          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+          : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       } else {
         setLoadings(false);
         alert(res2.data.message);
       }
     }
   };
-  
+
   const validationSchema = Yup.object({
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
@@ -175,11 +190,15 @@ const LoginPassword = ({ email }) => {
     },
   });
 
-  const resetPasswordPage = () => {
-    navigate('/auth/reset-password', {
-      state: { email: email }
-    });
-  }
+  const resetPasswordPage = async () => {
+    const res = await sendForgotPasswordOtp(email);
+    console.log("res", res)
+    if (res.status === 200) {
+      navigate('/auth/reset-password', {
+        state: { email: email },
+      });
+    }
+  };
 
   return (
     <div className={classes.Container}>
@@ -263,7 +282,11 @@ const LoginPassword = ({ email }) => {
 
       <div style={{ margin: '10px auto' }}></div>
 
-      <GenericButton text={'Forgot password?'} className={classes.createLink} onClick={resetPasswordPage}/>
+      <GenericButton
+        text={'Forgot password?'}
+        className={classes.createLink}
+        onClick={resetPasswordPage}
+      />
     </div>
   );
 };
