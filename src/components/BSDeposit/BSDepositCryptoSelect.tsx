@@ -27,6 +27,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { QRCodeCanvas } from 'qrcode.react';
 import { CheckCircleFilled } from '@ant-design/icons';
 import ShortenText from '../../utils/ShortenText';
+import { useTheme } from '@mui/material';
 
 interface DataType {
   to: string;
@@ -67,9 +68,7 @@ export const BSDepositCryptoSelect = () => {
   const [depositHash, setDepositHash] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('INEX');
 
-
   const [copiedValue, copy] = useCopyToClipboard();
-
 
   const columns: ColumnsType<DataType> = [
     {
@@ -174,8 +173,6 @@ export const BSDepositCryptoSelect = () => {
     },
   ];
 
-
-
   useEffect(() => {
     setNetwork(currencyToNetwork[selectedCoin]); // Update the network based on selectedCoin
   }, [selectedCoin]);
@@ -192,7 +189,6 @@ export const BSDepositCryptoSelect = () => {
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-
       setUsersWallets(res.data);
       const userWallet = res.data.filter(
         (x: any) => x.coinSymbol === selectedCoin
@@ -203,16 +199,16 @@ export const BSDepositCryptoSelect = () => {
 
   const handleChange = async (value: string) => {
     setNetwork(value);
-    console.log(value)
-    console.log(selectedCoin)
-    console.log("usersWallets", usersWallets)
-    if (value === 'Polygon' && selectedCoin == "INEX") {
+    console.log(value);
+    console.log(selectedCoin);
+    console.log('usersWallets', usersWallets);
+    if (value === 'Polygon' && selectedCoin == 'INEX') {
       const userWallet = usersWallets.filter(
         (x: any) => x.coinSymbol === selectedCoin && x.coinNetwork === value
       );
       setSingleWallet(userWallet[0]);
-      console.log(userWallet[0])
-      return
+      console.log(userWallet[0]);
+      return;
     }
     if (selectedCoin === 'FTT') {
       if (value === 'ETH') {
@@ -232,12 +228,11 @@ export const BSDepositCryptoSelect = () => {
         (x: any) => x.coinSymbol === value
       );
       setSingleWallet(userWallet[0]);
-    }
-    else if (selectedCoin === "WIBS") {
+    } else if (selectedCoin === 'WIBS') {
       const userWallet = usersWallets.filter(
         (x: any) => x.coinSymbol === selectedCoin
       );
-      console.log("userWallet", userWallet)
+      console.log('userWallet', userWallet);
       if (value === 'ETH') {
         setSingleWallet(userWallet[0]);
       } else {
@@ -255,25 +250,18 @@ export const BSDepositCryptoSelect = () => {
     }
   };
 
-
-
-
   const handleChangeCurrency = (value: string) => {
     let getRequiredCoin = initialTokens.find((x: any) => x.address === value);
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
 
-
-
     setSelectedCoin(String(getRequiredCoin?.title));
-
 
     setNetwork(currencyToNetwork[selectedCoin]);
 
-
-    console.log("network", network);
-    console.log("coin", selectedCoin);
+    console.log('network', network);
+    console.log('coin', selectedCoin);
     setSingleWallet(userWallet[0]);
     //qrcode(userWallet[0].coinWalletAddress);
     if (setBSvalue && BSvalue) {
@@ -294,7 +282,6 @@ export const BSDepositCryptoSelect = () => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
 
-
     const res = await checkAndUpdateDeposit(
       decodedToken.email,
       depositHash,
@@ -310,7 +297,6 @@ export const BSDepositCryptoSelect = () => {
       OpenNotification('error', res.data.message);
     }
   };
-
 
   const content = (value: string, network: string, address: string) => (
     <div className="popover_container " style={{}}>
@@ -331,13 +317,14 @@ export const BSDepositCryptoSelect = () => {
       </ul>
     </div>
   );
-
+  const theme = useTheme();
   return (
     <div className="scan-container bs_main wd_container">
       <div className="d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container">
         <div className="d-flex flex-align-center top_heading">
           <span
             onClick={() => navigate('/indexx-exchange/buy-sell/deposit-crypto')}
+            style={{ color: theme.palette.text.primary }}
           >
             Deposit Crypto
           </span>
@@ -347,6 +334,10 @@ export const BSDepositCryptoSelect = () => {
             danger
             className="danger_disabled"
             onClick={() => navigate('/indexx-exchange/buy-sell/deposit-fiat')}
+            style={{
+              color: theme.palette.text.primary,
+              background: theme.palette.divider,
+            }}
           >
             Deposit Fiat
             <ArrowRightOutlined />
@@ -354,14 +345,25 @@ export const BSDepositCryptoSelect = () => {
         </div>
       </div>
 
-      <div className="card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select">
+      <div
+        className="card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select"
+        style={{
+          background: theme.palette.divider,
+          borderRadius: '16px',
+          paddingBottom: '24px',
+        }}
+      >
         <h1 className="font_20x padding-t-2x padding-b-1x">Select Coin</h1>
         <div className="">
-          <label>Currency</label>
+          <label style={{ color: theme.palette.text.primary }}>Currency</label>
           <Select
             className="width-100"
             onChange={handleChangeCurrency}
             value={BSvalue?.fromToken}
+            style={{
+              background: theme.palette.background.default,
+              color: theme.palette.text.primary,
+            }}
           >
             {initialTokens
               //.filter(
@@ -392,7 +394,13 @@ export const BSDepositCryptoSelect = () => {
                             .default
                         }
                         alt="IN500"
-                        width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "52" : "40"}
+                        width={
+                          ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                            token.image.includes(str)
+                          )
+                            ? '42'
+                            : '42'
+                        }
                       />
                       <div className=" padding-l-1x d-flex flex-align-center">
                         {token.title}{' '}
@@ -415,11 +423,21 @@ export const BSDepositCryptoSelect = () => {
 
           </div> */}
           <br />
-          <h1 className="font_20x padding-t-2x">Deposit to</h1>
+          <h1 className="font_20x padding-t-2x">
+            <span style={{ color: theme.palette.text.primary }}>
+              {' '}
+              Deposit to
+            </span>
+          </h1>
           <div className="padding-t-1x">
-            <label>Network</label>
+            <label style={{ color: theme.palette.text.primary }}>Network</label>
 
-            <Select className="width-100" onChange={handleChange} defaultValue={network} value={network}>
+            <Select
+              className="width-100"
+              onChange={handleChange}
+              defaultValue={network}
+              value={network}
+            >
               <Select.Option value="BNB">
                 <div className="font_20x">
                   BSC{' '}
@@ -448,9 +466,7 @@ export const BSDepositCryptoSelect = () => {
               <Select.Option value="XRP">
                 <div className="font_20x">
                   XRP{' '}
-                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>
-                    Ripple
-                  </span>{' '}
+                  <span style={{ color: 'rgba(95, 95, 95, 0.5)' }}>Ripple</span>{' '}
                 </div>
               </Select.Option>
               <Select.Option value="DOGE">
@@ -479,13 +495,11 @@ export const BSDepositCryptoSelect = () => {
               </Select.Option>
               {/* <Option value="LTC"><div className='font_20x'>LTC <span style={{ color: "rgba(95, 95, 95, 0.5)" }}>Litecoin</span> </div></Option> */}
             </Select>
-
           </div>
           {network && (
             <div className="sensitive_data margin-t-2x">
-              <div>Address</div>
+              <div style={{ color: theme.palette.text.primary }}>Address</div>
               <div>
-
                 {selectedCoin !== 'FTT'
                   ? singleWallet?.coinWalletAddress
                   : singleWallet?.coinAddress}
@@ -495,12 +509,12 @@ export const BSDepositCryptoSelect = () => {
                   width="21"
                   height="11"
                   className="padding-l-1x cursor-pointer"
-                  style={{ marginBottom: "5px" }}
+                  style={{ marginBottom: '5px' }}
                   onClick={() => copy(singleWallet?.coinWalletAddress)}
                 />
               </div>
               <div className="margin-t-2x d-flex flex-align-center ">
-                <div>
+                <div style={{ color: theme.palette.text.primary }}>
                   Click to scan QR Code
                 </div>
                 {selectedCoin === 'FTT' ? (
@@ -532,25 +546,56 @@ export const BSDepositCryptoSelect = () => {
 
               <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
                 <div className="w_50">
-                  <div className="brand_opacity_5">Expected arrival </div>
-                  <div>3 network confirmations </div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Expected arrival{' '}
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
+                    3 network confirmations{' '}
+                  </div>
                 </div>
                 <div className="w_50">
-                  <div className="brand_opacity_5">Expected unlock</div>
-                  <div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Expected unlock
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
                     {' '}
-                    <span className="text_link">2</span> network confirmations
+                    <span
+                      className="text_link"
+                      style={{ color: theme.palette.text.primary }}
+                    >
+                      2
+                    </span>{' '}
+                    network confirmations
                   </div>
                 </div>
               </div>
               <div className="d-flex flex-justify-between padding-t-1x">
                 <div className="w_50">
-                  <div className="brand_opacity_5"> Minimum deposit </div>
-                  <div>0.0001 {singleWallet?.coinSymbol} </div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    {' '}
+                    Minimum deposit{' '}
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
+                    0.0001 {singleWallet?.coinSymbol}{' '}
+                  </div>
                 </div>
                 <div className="w_50">
-                  <div className="brand_opacity_5">Selected wallet</div>
-                  <div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Selected wallet
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
                     {' '}
                     Asset Wallet
                     {/* <span className="text_link"> <Link className='text_link' to="/indexx-exchange/buy-sell/deposit-crypto/deposit-wallet">Change</Link></span> */}
@@ -559,16 +604,21 @@ export const BSDepositCryptoSelect = () => {
               </div>
 
               <ul className="margin-t-2x disc_ul">
-                <li>
+                <li style={{ color: theme.palette.text.primary }}>
                   Send only {singleWallet?.coinSymbol} to this deposit address.
                 </li>
                 <li>
                   Ensure the network is{' '}
-                  <span className="text_link">
+                  <span
+                    className="text_link"
+                    style={{ color: theme.palette.text.primary }}
+                  >
                     {singleWallet?.coinNetwork}.
                   </span>
                 </li>
-                <li>Do not send NFTs to this address.</li>
+                <li style={{ color: theme.palette.text.primary }}>
+                  Do not send NFTs to this address.
+                </li>
               </ul>
             </div>
           )}
@@ -602,7 +652,11 @@ export const BSDepositCryptoSelect = () => {
         </div>
       </div>
       <div className="w_fiat pt-5">
-        <h1 className="font_48x font_40x padding-b-1x">Recent Deposit</h1>
+        <h1 className="font_48x font_40x padding-b-1x">
+          <span style={{ color: theme.palette.text.primary }}>
+            Recent Deposit
+          </span>
+        </h1>
         <div className="recent_deposit_container border-1x padding-2x ">
           <Table
             columns={columns}

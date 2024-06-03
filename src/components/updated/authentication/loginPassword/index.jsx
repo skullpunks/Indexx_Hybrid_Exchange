@@ -78,7 +78,7 @@ const LoginPassword = ({ email }) => {
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
-    console.log("value",value)
+    console.log('value', value);
     setPassword(value);
   };
 
@@ -105,7 +105,14 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('refresh_token', res1.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('username', resObj?.username);
-        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
+        localStorage.setItem(
+          'userlogged',
+          resObj?.userType === 'Indexx Exchange'
+            ? 'normal'
+            : resObj?.userType === 'CaptainBee'
+            ? 'captain'
+            : 'honeyb'
+        );
 
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
@@ -143,7 +150,14 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('access_token', res2.data.access_token);
         localStorage.setItem('refresh_token', res2.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
-        localStorage.setItem('userlogged', resObj?.userType === "Indexx Exchange" ? 'normal': (resObj?.userType) === "CaptainBee" ? "captain" : "honeyb");
+        localStorage.setItem(
+          'userlogged',
+          resObj?.userType === 'Indexx Exchange'
+            ? 'normal'
+            : resObj?.userType === 'CaptainBee'
+            ? 'captain'
+            : 'honeyb'
+        );
         let redirectUrl = window.localStorage.getItem('redirect');
         window.localStorage.removeItem('redirect');
         let userDetails = await getUserDetails(resObj?.email);
@@ -157,7 +171,7 @@ const LoginPassword = ({ email }) => {
       }
     }
   };
-  
+
   const validationSchema = Yup.object({
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
@@ -177,9 +191,9 @@ const LoginPassword = ({ email }) => {
 
   const resetPasswordPage = () => {
     navigate('/auth/reset-password', {
-      state: { email: email }
+      state: { email: email },
     });
-  }
+  };
 
   return (
     <div className={classes.Container}>
@@ -263,7 +277,11 @@ const LoginPassword = ({ email }) => {
 
       <div style={{ margin: '10px auto' }}></div>
 
-      <GenericButton text={'Forgot password?'} className={classes.createLink} onClick={resetPasswordPage}/>
+      <GenericButton
+        text={'Forgot password?'}
+        className={classes.createLink}
+        onClick={resetPasswordPage}
+      />
     </div>
   );
 };
