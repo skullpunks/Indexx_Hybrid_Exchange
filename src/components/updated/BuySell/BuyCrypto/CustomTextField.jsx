@@ -125,11 +125,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '10px',
     '& img': {
-      width: ({ cryptoSymbol }) =>
-        ['INEX', 'IN500', 'INXC', 'IUSD'].includes(cryptoSymbol)
-          ? '40px'
-          : '30px',
-      height: '25px',
+      width: '20px',
+      height: '20px',
     },
     '& p': {
       fontSize: '14px',
@@ -224,14 +221,6 @@ const CustomTextField = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (fixedToken) {
-  //     const token = fixedToken?.title;
-  //     if (token) {
-  //       getPricesData(token);
-  //     }
-  //   }
-  // }, [fixedToken]);
 
   useEffect(() => {
     if (userAmount && rateData) {
