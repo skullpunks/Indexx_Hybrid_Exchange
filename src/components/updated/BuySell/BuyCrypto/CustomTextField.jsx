@@ -5,6 +5,9 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
@@ -122,11 +125,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '10px',
     '& img': {
-      width: ({ cryptoSymbol }) =>
-        ['INEX', 'IN500', 'INXC', 'IUSD'].includes(cryptoSymbol)
-          ? '40px'
-          : '30px',
-      height: '25px',
+      width: '20px',
+      height: '20px',
     },
     '& p': {
       fontSize: '14px',
@@ -159,9 +159,8 @@ const CustomTextField = ({
   fixedToken,
 }) => {
   const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
-  const [fromToken, setFromToken] = useState(initialToken);
   const classes = useStyles({
-    cryptoSymbol: fromToken.title,
+    cryptoSymbol: initialToken.title,
   });
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -192,9 +191,8 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
+    console.log("I am here", token, disableDropdown)
     if (!disableDropdown) {
-      setFromToken(token);
-      getPricesData(token.title)
       onSelectToken(token);
     }
     setIsOpen(false);
@@ -214,6 +212,7 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
+    console.log("usd", currency)
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     setRateData(priceData);
@@ -221,6 +220,7 @@ const CustomTextField = ({
       onPriceChange({ priceData, currency });
     }
   };
+
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -230,11 +230,6 @@ const CustomTextField = ({
       }
     }
   }, [userAmount, rateData, onReceiveAmountChange]);
-
-  useEffect(() => {
-    console.log("fromToken.title", fromToken.title)
-    getPricesData(fromToken.title);
-  }, [fromToken.title]);
 
   const filterTokens = () => {
     return tokens.filter((token) => {
@@ -278,8 +273,8 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img src={getImage(fromToken?.image)} alt={fromToken?.title} />
-                  <p>{fromToken?.title}</p>
+                  <img src={getImage(initialToken?.image)} alt={initialToken?.title} />
+                  <p>{initialToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
               </InputAdornment>
