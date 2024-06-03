@@ -185,9 +185,9 @@ const MobileHeader = () => {
     console.log(userType);
     debugger;
     if (userType === 'CaptainBee') {
-      window.location.href = '/indexx-exchange/buy-sell/hive-login';
+      window.location.href = '/auth/login';
     } else if (userType === 'HoneyBee') {
-      window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+      window.location.href = '/auth/login';
     } else {
       if (window.location.pathname.includes('trade-to-earn'))
         window.location.reload();

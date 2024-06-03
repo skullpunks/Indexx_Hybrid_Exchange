@@ -5,11 +5,13 @@ import InputField from '../../shared/TextField';
 import GenericButton from '../../shared/Button';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { validateForgotOtp } from '../../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
     margin: '50px auto',
-
     padding: '10px 20px',
   },
   header: {
@@ -55,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
   },
   rightContentContainer: {
     [theme.breakpoints.down('md')]: {},
-
     maxWidth: '384px',
     '& h3': {
       fontSize: '32px',
@@ -76,7 +77,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResetPassword = () => {
+const obfuscateEmail = (email) => {
+  const [localPart, domain] = email.split('@');
+  const visibleChars = 3;
+  const obfuscatedLocalPart =
+    localPart.slice(0, visibleChars) +
+    '*'.repeat(localPart.length - visibleChars);
+  const [domainName, domainExtension] = domain.split('.');
+  const obfuscatedDomain =
+    domainName.slice(0, visibleChars) +
+    '*'.repeat(domainName.length - visibleChars) +
+    '.' +
+    domainExtension;
+  return `${obfuscatedLocalPart}@${obfuscatedDomain}`;
+};
+
+const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
   const classes = useStyles();
   const theme = useTheme();
   const validationSchema = Yup.object({
@@ -88,6 +104,9 @@ const ResetPassword = () => {
       )
       .required('Verification code is required'),
   });
+
+  const obfuscatedEmail = obfuscateEmail(email);
+
   const formik = useFormik({
     initialValues: {
       verificationCode: '',
@@ -95,8 +114,15 @@ const ResetPassword = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log('values: ', values);
+      const res = await validateForgotOtp(email, values.verificationCode);
+      if (res.status === 200) {
+        onOtpVerified();
+      } else {
+        alert('Invalid code');
+      }
     },
   });
+
   return (
     <div className={classes.Container}>
       <div className={classes.header}>
@@ -107,8 +133,7 @@ const ResetPassword = () => {
         <div className={classes.rightContainer}>
           <div className={classes.rightContentContainer}>
             <h3>Email Verification</h3>
-            <h4>Enter the 6-digit code sent to sam***@gmail.com</h4>
-
+            <h4>Enter the 6-digit code sent to {obfuscatedEmail}</h4>
             <InputField
               label={'Email Verification Code'}
               {...formik.getFieldProps('verificationCode')}
@@ -127,4 +152,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordEmailConfirm;

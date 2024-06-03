@@ -57,7 +57,6 @@ const GenericButton = ({
   ...rest
 }) => {
   const classes = useStyles();
-  console.log("import LoadingButton from '@mui/lab/LoadingButton';", loading);
   return (
     <LoadingButton
       variant="contained"

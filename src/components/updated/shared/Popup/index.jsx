@@ -1,11 +1,8 @@
 import React from 'react';
-
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../Button';
-
-import info from '../../../../assets/updated/popup/info.svg';
-
 import passwordChanged from '../../../../assets/updated/popup/passchanged.svg';
+
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -14,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(1) !important',
     },
   },
-
   bidsFullModal: {},
   bnMask: {
     alignItems: 'center',
@@ -95,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = () => {
+const Popup = ({ onClose }) => {
   const classes = useStyles();
   return (
     <div
@@ -104,21 +100,13 @@ const Popup = () => {
       <div className="bnModalWrap">
         <div className={classes.contentContainer}>
           <img src={passwordChanged} height="100px" />
-          {/* <h3>Reset Password</h3> */}
           <h3>Password Changed</h3>
-          {/* <h4>sam***@gmail.com</h4> */}
-          {/* <p>
-            In order to protect your account,withdrawals,payment services will
-            be disabled for 24 hours after you change your password
-          </p> */}
           <p>
             Your password has been successfully changed. Please log in with the
-            new password
+            new password.
           </p>
           <div className={classes.btnContainer}>
-            {/* <GenericButton text="Cancel" className={classes.cancelButton} />
-            <GenericButton text="Continue" /> */}
-            <GenericButton text="Login" />
+            <GenericButton text="Login" onClick={onClose} />
           </div>
         </div>
       </div>

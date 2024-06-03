@@ -171,7 +171,7 @@ const getImage = (image) => {
 const CustomTextField = ({
   placeholder,
   label,
-  type = 'buy',
+  type,
   onSelectToken,
   onAmountChange,
   onReceiveAmountChange,
@@ -180,20 +180,12 @@ const CustomTextField = ({
   receiveAmount,
   tokenType,
   loggedIn,
+  disableDropdown,
+  fixedToken,
 }) => {
-  const initialToken =
-    type === 'buy'
-      ? { title: 'USD', image: 'USD' }
-      : { title: 'INEX', image: 'INEX' };
-  const initialReceiveToken =
-    type === 'buy'
-      ? { title: 'INEX', image: 'INEX' }
-      : { title: 'USD', image: 'USD' };
-
-  const [fromToken, setFromToken] = useState(initialToken);
-  const [toToken, setToToken] = useState(initialReceiveToken);
+  const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
   const classes = useStyles({
-    cryptoSymbol: label === 'Spend' ? fromToken.title : toToken.title,
+    cryptoSymbol: initialToken.title,
   });
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -248,17 +240,9 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
-    console.log('token', token, label);
-    if (label === 'Spend') {
-      if (token.title !== fromToken.title) {
-        console.log('spend');
-        setFromToken({ title: token.title, image: token.image });
-      }
-    } else {
-      if (token.title !== toToken.title) {
-        console.log('receive');
-        setToToken({ title: token.title, image: token.image });
-      }
+    console.log('I am here', token, disableDropdown);
+    if (!disableDropdown) {
+      onSelectToken(token);
     }
     setIsOpen(false);
   };
@@ -266,12 +250,6 @@ const CustomTextField = ({
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
     setUserAmount(amount);
-    console.log('toToke', toToken);
-    console.log('fromToken', fromToken);
-    //const token = type === 'buy' ? toToken?.title : fromToken?.title;
-    // if (token) {
-    //   await getPricesData(token);
-    // }
     if (onAmountChange) {
       onAmountChange(amount);
     }
@@ -283,7 +261,7 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log('currency', currency);
+    console.log('usd', currency);
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     let results = {
@@ -292,17 +270,21 @@ const CustomTextField = ({
     };
     setRateData(priceData);
     if (onPriceChange) {
-      onPriceChange(results);
+      onPriceChange({ priceData, currency });
     }
   };
 
+  useEffect(() => {
+    if (userAmount && rateData) {
+      const receiveAmount = calculateReceiveAmount(userAmount, rateData);
+      if (onReceiveAmountChange) {
+        onReceiveAmountChange(receiveAmount);
+      }
+    }
+  }, [userAmount, rateData, onReceiveAmountChange]);
+
   const filterTokens = () => {
     return tokens.filter((token) => {
-      if (type === 'buy' && label === 'Spend') {
-        return token.title === 'USD';
-      } else if (type === 'sell' && label === 'Receive') {
-        return token.title === 'USD';
-      }
       if (tokenType === 'Tokens') {
         return token.commonToken && !token.isStock && !token.isETF;
       } else if (tokenType === 'Stock Tokens') {
@@ -326,49 +308,37 @@ const CustomTextField = ({
               } !important`,
         }}
       >
-        <FormControl className={classes.formControl}>
-          <InputLabel className={classes.label} shrink htmlFor="input-field">
-            {label}
-          </InputLabel>
-          <TextField
-            id="input-field"
-            variant="outlined"
-            className={classes.textField}
-            placeholder={placeholder}
-            type="number"
-            value={label === 'Spend' ? userAmount : receiveAmount}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onChange={handleAmountChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <div
-                    className={classes.dropDownIconContainer}
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleOpenModal}
-                  >
-                    <img
-                      src={getImage(
-                        label === 'Spend' ? fromToken?.image : toToken?.image
-                      )}
-                      alt={
-                        label === 'Spend' ? fromToken?.title : toToken?.title
-                      }
-                    />
-                    <p>
-                      {label === 'Spend' ? fromToken?.title : toToken?.title}
-                    </p>
-                    <ArrowDropDownIcon />
-                  </div>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </FormControl>
+        <TextField
+          variant="outlined"
+          className={classes.textField}
+          placeholder={placeholder}
+          type="number"
+          value={label === 'Spend' ? userAmount : receiveAmount}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleAmountChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <div
+                  className={classes.dropDownIconContainer}
+                  style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
+                  onClick={disableDropdown ? null : handleOpenModal}
+                >
+                  <img
+                    src={getImage(initialToken?.image)}
+                    alt={initialToken?.title}
+                  />
+                  <p>{initialToken?.title}</p>
+                  {!disableDropdown && <ArrowDropDownIcon />}
+                </div>
+              </InputAdornment>
+            ),
+          }}
+        />
       </Box>
       <div style={{ position: 'relative', width: '100%' }}>
-        {isOpen && (
+        {isOpen && !disableDropdown && (
           <ClickAwayListener onClickAway={handleClickAway}>
             <div
               className={classes.dropDownContainer}

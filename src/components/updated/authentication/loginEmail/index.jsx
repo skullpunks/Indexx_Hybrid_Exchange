@@ -141,7 +141,7 @@ const LoginComponent = () => {
       } else {
         redirectUrl
           ? navigate(redirectUrl)
-          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+          : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       }
     } else {
       alert(res.data.message);

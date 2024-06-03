@@ -16,6 +16,7 @@ import {
   loginAPI,
   loginHive,
   resetPassword,
+  sendForgotPasswordOtp,
 } from '../../../../services/api';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
@@ -127,7 +128,7 @@ const LoginPassword = ({ email }) => {
         } else {
           redirectUrl
             ? navigate(redirectUrl)
-            : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+            : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
         }
       } else {
         console.log('I am here');
@@ -164,7 +165,7 @@ const LoginPassword = ({ email }) => {
 
         redirectUrl
           ? navigate(redirectUrl)
-          : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
+          : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       } else {
         setLoadings(false);
         alert(res2.data.message);
@@ -189,10 +190,14 @@ const LoginPassword = ({ email }) => {
     },
   });
 
-  const resetPasswordPage = () => {
-    navigate('/auth/reset-password', {
-      state: { email: email },
-    });
+  const resetPasswordPage = async () => {
+    const res = await sendForgotPasswordOtp(email);
+    console.log("res", res)
+    if (res.status === 200) {
+      navigate('/auth/reset-password', {
+        state: { email: email },
+      });
+    }
   };
 
   return (
