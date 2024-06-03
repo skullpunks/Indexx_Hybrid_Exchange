@@ -45,6 +45,7 @@ import {
   baseAcademyUrl,
   decodeJWT,
 } from '../../services/api';
+import ThemeToggler from '../ThemeToggler';
 import DarkMode from '../DarkMode/DarkMode';
 
 const Links = [
@@ -266,17 +267,18 @@ const HeaderTest = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;
     if (userType === 'CaptainBee') {
-      window.location.href = '/indexx-exchange/buy-sell/hive-login';
+      window.location.href = '/auth/login';
     } else if (userType === 'HoneyBee') {
-      window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+      window.location.href = '/auth/login';
     } else {
       if (window.location.pathname.includes('trade-to-earn'))
         window.location.reload();
-      else window.location.href = '/indexx-exchange/buy-sell/login';
+      else window.location.href = '/auth/login';
     }
   };
   const handleLogout = (e: any, nm: string) => {
@@ -532,6 +534,7 @@ const HeaderTest = () => {
               alignItems: 'center',
             }}
           >
+            
             <DarkMode />
             <label htmlFor="menu-btn" className="btn menu-btn">
               <CrossIcon />

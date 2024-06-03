@@ -19,6 +19,8 @@ import {
   TextField,
   ToggleButtonGroup,
   ToggleButton,
+  useThemeProps,
+  useTheme,
 } from '@mui/material';
 // import iUSD from '../../assets/token-icons/iUSD+ new2 3.svg';
 // import eth from '../../assets/token-icons/eth new PP lpgo 1.png';
@@ -33,8 +35,9 @@ import lock from '../../assets/arts/lock4 2.png';
 // import FormLabel from '@mui/material/FormLabel';
 import tokensList from '../../utils/Tokens.json';
 import OpenNotification from '../../components/OpenNotification/OpenNotification';
-import { useTheme } from '@emotion/react';
+
 import { useMediaQuery } from '@mui/material';
+import GenericButton from '../updated/shared/Button';
 
 const StakingTop = ({ refresh, handleRefresh }) => {
   const navigate = useNavigate();
@@ -60,18 +63,18 @@ const StakingTop = ({ refresh, handleRefresh }) => {
   const [error, setError] = useState('');
   const [loadings, setLoadings] = useState(false);
 
-  const themes = useTheme();
-  const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  useEffect(() => {
-    getAllUserWallet();
-    if (id) {
-      setHoneyBeeId(String(id));
-      getHoneyBeeDataByUsername(String(id)).then((data) => {
-        setHoneyBeeEmail(data.data.userFullData?.email);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   getAllUserWallet();
+  //   if (id) {
+  //     setHoneyBeeId(String(id));
+  //     getHoneyBeeDataByUsername(String(id)).then((data) => {
+  //       setHoneyBeeEmail(data.data.userFullData?.email);
+  //     });
+  //   }
+  // }, []);
 
   const getAllUserWallet = async () => {
     try {
@@ -268,59 +271,59 @@ const StakingTop = ({ refresh, handleRefresh }) => {
     }
   };
 
-  useEffect(() => {
-    let filteredTokens = [];
-    if (stakingtype === 'token') {
-      filteredTokens = tokensList?.filter((token) => !token.isStock);
-    } else if (stakingtype === 'stock-token') {
-      filteredTokens = tokensList?.filter((token) => token.isStock);
-    }
+  // useEffect(() => {
+  //   let filteredTokens = [];
+  //   if (stakingtype === 'token') {
+  //     filteredTokens = tokensList?.filter((token) => !token.isStock);
+  //   } else if (stakingtype === 'stock-token') {
+  //     filteredTokens = tokensList?.filter((token) => token.isStock);
+  //   }
 
-    setInitialTokens(filteredTokens);
+  //   setInitialTokens(filteredTokens);
 
-    // Set the default token (the first token from the filtered list)
-    if (filteredTokens.length > 0) {
-      setToken(filteredTokens[0].title);
-      setSelectedToken(filteredTokens[0]);
-      getCoinBalance(filteredTokens[0].title);
-      let inputAmt = amt;
-      let minimumRequired = 50;
-      // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-      if (
-        ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(filteredTokens[0].title)
-      ) {
-        minimumRequired = 0.01;
-      }
+  //   // Set the default token (the first token from the filtered list)
+  //   if (filteredTokens.length > 0) {
+  //     setToken(filteredTokens[0].title);
+  //     setSelectedToken(filteredTokens[0]);
+  //     getCoinBalance(filteredTokens[0].title);
+  //     let inputAmt = amt;
+  //     let minimumRequired = 50;
+  //     // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+  //     if (
+  //       ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(filteredTokens[0].title)
+  //     ) {
+  //       minimumRequired = 0.01;
+  //     }
 
-      if (inputAmt < minimumRequired) {
-        setError(`Minimum staking amount must be at least ${minimumRequired}.`);
-      } else if (inputAmt > userBalance) {
-        setError(
-          `Insufficient balance available to stake. Please buy ${filteredTokens[0].title} or deposit ${filteredTokens[0].title}.`
-        );
-      } else {
-        setError('');
+  //     if (inputAmt < minimumRequired) {
+  //       setError(`Minimum staking amount must be at least ${minimumRequired}.`);
+  //     } else if (inputAmt > userBalance) {
+  //       setError(
+  //         `Insufficient balance available to stake. Please buy ${filteredTokens[0].title} or deposit ${filteredTokens[0].title}.`
+  //       );
+  //     } else {
+  //       setError('');
 
-        if (type === 'Long') {
-          setRewards(
-            inputAmt * (filteredTokens[0].stakingPercentage1year / 100)
-          );
-          setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage1year / 100)
-          );
-        } else if (type === 'Short') {
-          setRewards(
-            inputAmt * (filteredTokens[0].stakingPercentage6months / 100)
-          );
-          setFinalAmount(
-            inputAmt * (1 + filteredTokens[0].stakingPercentage6months / 100)
-          );
-        }
-      }
-    } else {
-      setToken(''); // No tokens available for the selected type, so set an empty value.
-    }
-  }, [stakingtype, refresh]); // The useEffect depends on stakingtype. Whenever it changes, this effect will run.
+  //       if (type === 'Long') {
+  //         setRewards(
+  //           inputAmt * (filteredTokens[0].stakingPercentage1year / 100)
+  //         );
+  //         setFinalAmount(
+  //           inputAmt * (1 + filteredTokens[0].stakingPercentage1year / 100)
+  //         );
+  //       } else if (type === 'Short') {
+  //         setRewards(
+  //           inputAmt * (filteredTokens[0].stakingPercentage6months / 100)
+  //         );
+  //         setFinalAmount(
+  //           inputAmt * (1 + filteredTokens[0].stakingPercentage6months / 100)
+  //         );
+  //       }
+  //     }
+  //   } else {
+  //     setToken(''); // No tokens available for the selected type, so set an empty value.
+  //   }
+  // }, [stakingtype, refresh]); // The useEffect depends on stakingtype. Whenever it changes, this effect will run.
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -528,7 +531,13 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                           .default
                       }
                       alt={token.title}
-                      width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "42" : "30"}
+                      width={
+                        ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                          token.image.includes(str)
+                        )
+                          ? '42'
+                          : '30'
+                      }
                       height={30}
                       style={{ marginRight: '8px' }}
                     />
@@ -1011,28 +1020,30 @@ const StakingTop = ({ refresh, handleRefresh }) => {
         <>
           <div className="orange width-100 padding-t-2x align-items-center d-flex flex-direction-column justify-content-center mb-4">
             <h1 className="padding-b-1x font_40x">
-              {localStorage.getItem('userlogged') === 'normal' ? (
-                <>
-                  <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
-                  Staking
-                </>
-              ) : (
-                <>
-                  <img
-                    src={nectar}
-                    alt="nectar"
-                    style={{ marginRight: '30px' }}
-                  />
-                  Nectar / Staking
-                </>
-              )}
+              <span style={{ color: theme.palette.text.primary }}>
+                {localStorage.getItem('userlogged') === 'normal' ? (
+                  <>
+                    <img src={pig} alt="pig" style={{ marginRight: '30px' }} />
+                    Staking
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={nectar}
+                      alt="nectar"
+                      style={{ marginRight: '30px' }}
+                    />
+                    Nectar / Staking
+                  </>
+                )}
+              </span>
             </h1>
             <Typography
               variant="body1"
               fontSize={'18px'}
               sx={{
                 my: 2,
-                color: 'var(--body_color)',
+                color: theme.palette.text.primary,
                 textAlign: 'center',
                 maxWidth: '1000px',
                 mx: 'auto',
@@ -1054,14 +1065,18 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
                 width: '100%',
-                background: 'var(--main-body)',
+
                 gap: 5,
                 //   pl: 1,
                 pt: 0.4,
               }}
             >
               <Box className="d-flex " width={'48%'} sx={{ gap: 4 }}>
-                <Typography fontSize={'25px'} textAlign={'left'}>
+                <Typography
+                  fontSize={'25px'}
+                  textAlign={'left'}
+                  sx={{ color: theme.palette.text.primary }}
+                >
                   Staking type
                 </Typography>
                 <Select
@@ -1074,8 +1089,8 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                   sx={{
                     width: '72.5%',
                     borderRadius: 0,
-                    background: 'var(--main-body)',
-                    color: 'var(--body_color)',
+
+                    color: theme.palette.text.primary,
                     border: 'none',
                     outline: 'none',
                     padding: 0,
@@ -1093,12 +1108,16 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 </Select>
               </Box>
               <Box className="d-flex " width={'45%'}>
-                <Typography fontSize={'25px'} textAlign={'left'}>
+                <Typography
+                  fontSize={'25px'}
+                  textAlign={'left'}
+                  sx={{ color: theme.palette.text.primary }}
+                >
                   Blockchain
                 </Typography>
                 <Box
                   sx={{
-                    backgroundColor: 'var(--staking-color)',
+                    color: theme.palette.text.primary,
                     borderRadius: '2px',
                     fontSize: '16px',
                     height: '40px',
@@ -1126,7 +1145,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 justifyContent: 'start',
                 alignItems: 'baseline',
                 width: '100%',
-                background: 'var(--main-body)',
+
                 gap: 3,
                 //   pl: 1,
                 pt: 0.4,
@@ -1138,6 +1157,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 fontSize={'25px'}
                 //   fontWeight={600}
                 textAlign={'left'}
+                sx={{ color: theme.palette.text.primary }}
               >
                 Select Token
               </Typography>
@@ -1192,8 +1212,8 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 sx={{
                   width: '35%',
                   borderRadius: 0,
-                  background: 'var(--main-body)',
-                  color: 'var(--body_color)',
+
+                  color: theme.palette.text.primary,
                   border: 'none',
                   outline: 'none',
                   padding: 0,
@@ -1210,7 +1230,13 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                           .default
                       }
                       alt={token.title}
-                      width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "42" : "30"}
+                      width={
+                        ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                          token.image.includes(str)
+                        )
+                          ? '42'
+                          : '30'
+                      }
                       height={30}
                       style={{ marginRight: '8px' }}
                     />
@@ -1226,7 +1252,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
                 width: '100%',
-                background: 'var(--main-body)',
+
                 gap: 5,
                 //   pl: 1,
                 pt: 0.4,
@@ -1235,61 +1261,33 @@ const StakingTop = ({ refresh, handleRefresh }) => {
             >
               <Box className="d-flex flex-direction-column" width={'48%'}>
                 <Box className="d-flex" sx={{ gap: 1, mb: 8.7 }}>
-                  <Button
+                  <GenericButton
                     variant="contained"
                     disableTouchRipple
                     onClick={() =>
                       navigate('/indexx-exchange/buy-sell/deposit-crypto')
                     }
-                    className="ant-btn ant-btn-primary stake-btn"
-                    style={{ height: '44px' }}
-                  >
-                    Deposit
-                  </Button>
-                  <Button
+                    // className="ant-btn ant-btn-primary stake-btn"
+
+                    text="Deposit"
+                  />
+
+                  <GenericButton
                     variant="outlined"
                     disableTouchRipple
-                    className="ant-btn stake-outlined-btn"
+                    // className="ant-btn stake-outlined-btn"
                     onClick={() =>
                       navigate('/indexx-exchange/buy-sell/withdraw-crypto')
                     }
-                    // sx={{
-                    //   borderColor: 'var(--primary-color)',
-                    //   borderRadius: '2px',
-                    //   color: 'var(--primary-color)',
-                    //   height: '44px',
-                    //   px: 1,
-                    //   textTransform: 'none',
-                    //   fontSize: '16px',
-                    //   boxShadow: 'none',
-                    //   '&:hover': {
-                    //     borderColor: 'var(--secondary-color)',
-                    //     color: 'var(--secondary-color)',
-                    //     boxShadow: 'none',
-                    //   },
-                    //   '&:active': {
-                    //     borderColor: 'var(--secondary-color)',
-                    //     color: 'var(--secondary-color)',
-                    //     boxShadow: 'none',
-                    //     background: 'transparent',
-                    //   },
-                    //   '&:focus': {
-                    //     borderColor: 'var(--secondary-color)',
-                    //     color: 'var(--secondary-color)',
-                    //     boxShadow: 'none',
-                    //     background: 'transparent',
-                    //   },
-                    // }}
-                  >
-                    Withdraw
-                  </Button>
+                    text=" Withdraw"
+                  />
                 </Box>
 
                 <Box
                   className="d-flex flex-direction-column"
                   sx={{
                     mt: 1,
-                    backgroundColor: 'var(--staking-color)',
+
                     pl: 2,
                     pt: 1,
                     borderRadius: '2px',
@@ -1299,6 +1297,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                     variant="text"
                     fontSize={'25px'}
                     textAlign={'left'}
+                    sx={{ color: theme.palette.text.primary }}
                   >
                     Balance: {userBalance}
                   </Typography>
@@ -1307,7 +1306,11 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="outlined"
                       placeholder="Enter Amount"
                       InputLabelProps={{ shrink: true }}
-                      sx={{ mb: 2, width: '60%' }}
+                      sx={{
+                        mb: 2,
+                        width: '60%',
+                        color: theme.palette.text.primary,
+                      }}
                       size="small" // Make the input box smaller
                       value={amt}
                       onChange={(e) => {
@@ -1362,7 +1365,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       error={!!error}
                       helperText={error}
                     />
-                    <Box>
+                    <Box sx={{ color: theme.palette.text.primary }}>
                       <img
                         src={
                           require(`../../assets/token-icons/${token}.png`)
@@ -1387,6 +1390,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                     fontSize={'18px'}
                     textAlign={'left'}
                     pb={0.4}
+                    sx={{ color: theme.palette.text.primary }}
                   >
                     <img
                       src={lock}
@@ -1527,6 +1531,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       Rewards you will receive in INEX
                     </Typography>
@@ -1534,6 +1539,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       {rewards} INEX
                     </Typography>
@@ -1543,6 +1549,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       Final Amount you will receive
                     </Typography>
@@ -1550,6 +1557,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       {amt} {token} + {rewards} INEX
                     </Typography>
@@ -1559,6 +1567,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       Transaction Cost
                     </Typography>
@@ -1566,6 +1575,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       N/A
                     </Typography>
@@ -1578,6 +1588,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                     disabled={!!error || !amt || !type}
                     loading={loadings}
                     style={{ marginTop: 12 }}
+                    sx={{ color: theme.palette.text.primary }}
                   >
                     {' '}
                     Stake
@@ -1620,7 +1631,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                     width: '91%',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#343434',
+                    color: theme.palette.text.primary,
                     py: 1,
                   }}
                 >
@@ -1652,6 +1663,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                     fontSize={'25px'}
                     //   fontWeight={600}
                     textAlign={'left'}
+                    sx={{ color: theme.palette.text.primary }}
                   >
                     Calculate your approximate rewards
                   </Typography>
@@ -1675,7 +1687,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                         );
                       }}
                     />
-                    <Box>
+                    <Box sx={{ color: theme.palette.text.primary }}>
                       <img
                         src={
                           require(`../../assets/token-icons/${token}.png`)
@@ -1697,10 +1709,14 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       Rewards
                     </Typography>
-                    <Box className="d-flex align-items-center" sx={{ mt: 0.1 }}>
+                    <Box
+                      className="d-flex align-items-center"
+                      sx={{ mt: 0.1, color: theme.palette.text.primary }}
+                    >
                       <img
                         src={
                           require(`../../assets/token-icons/INEX.png`).default
@@ -1714,8 +1730,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       <Box
                         className="d-flex align-items-center"
                         sx={{
-                          backgroundColor: 'var(--primary-color)',
-                          color: '#282828',
+                          color: theme.palette.text.primary,
                           px: 1,
                           ml: 1,
                           height: '44px',
@@ -1732,6 +1747,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       6 months ({selectedToken?.stakingPercentage6months}%)
                     </Typography>
@@ -1740,6 +1756,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       fontSize={'18px'}
                       textAlign={'left'}
                       sx={{ pt: 0.85 }}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       {sixMonthReward.toFixed(2)}
                     </Typography>
@@ -1750,6 +1767,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       variant="text"
                       fontSize={'18px'}
                       textAlign={'left'}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       1 year ({selectedToken?.stakingPercentage1year}%)
                     </Typography>
@@ -1758,6 +1776,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
                       fontSize={'18px'}
                       textAlign={'left'}
                       sx={{ pt: 0.85 }}
+                      sx={{ color: theme.palette.text.primary }}
                     >
                       {oneYearReward.toFixed(2)}
                     </Typography>

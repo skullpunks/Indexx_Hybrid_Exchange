@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import '../BuySell/BS-Sell.css';
 import '../BuySell/BuySellDummy.css';
@@ -11,20 +12,18 @@ import StakingTop from './StakingTop';
 // import PlainCircle from "../../assets/arts/PlainCircle.svg";
 
 const Staking = () => {
-
   const [refresh, setRefresh] = useState<boolean>(true);
-
+  const theme = useTheme();
   const handleRefereshChange = (event: any) => {
     setRefresh(!refresh);
   };
 
   // console.log(refresh, "referesh");
-  
+
   return (
     <div>
-
       {/* <PowerPackHeader /> */}
-      <div className="bs_wallet" style={{ paddingTop: "200px" }}>
+      <div className="bs_wallet" style={{ paddingTop: '100px' }}>
         {/* <div className='d-flex bs_wallet_top'>
                 <div>
                     <Link to="" className='font_15x text-white' ><CheckCircleOutlined className='padding-r-2x margin-r-0_5x' />Create account</Link>
@@ -35,16 +34,18 @@ const Staking = () => {
             </div> */}
 
         <div className="scan-container d-flex flex-direction-column card large_card orange pb-0">
-          <StakingTop refresh={refresh} handleRefresh={handleRefereshChange}/>
+          <StakingTop refresh={refresh} handleRefresh={handleRefereshChange} />
 
-          <div className="width-100 bs_wallet_table">
-            <StakingTable refresh={refresh}/>
+          <div
+            className="width-100 bs_wallet_table"
+            style={{ color: theme.palette.text.primary }}
+          >
+            <StakingTable refresh={refresh} />
           </div>
         </div>
         {/* <Footer footerArt="flipWoman" /> */}
       </div>
     </div>
-
   );
 };
 
