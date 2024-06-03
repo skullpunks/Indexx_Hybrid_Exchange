@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '24px',
     width: '100%',
     overflow: 'visible',
-    height: '655px',
+    minHeight: '585px',
   },
   bnFlex: {
     display: 'flex',
@@ -140,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: '16px',
+    marginTop: '4px',
   },
   estimatedPrice: {
     fontSize: '15px',
@@ -602,14 +602,23 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
               />
             </>
           ) : (
-            <GenericButton
-              text="Login/Signup"
-              styles={{
-                fontSize: '20px',
-                fontWeight: '500',
-                marginTop: 'auto',
+            <div
+              style={{
+                height: '100%',
+                flex: 1,
+                alignItems: 'flex-end',
+                marginTop: '130px', // Align the button at the end of the container
               }}
-            />
+            >
+              <GenericButton
+                text="Login/Signup"
+                onClick={() => navigate(`/auth/login`)}
+                styles={{
+                  fontSize: '20px',
+                  fontWeight: '500',
+                }}
+              />
+            </div>
           )}
         </div>
       </Box>

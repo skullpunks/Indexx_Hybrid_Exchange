@@ -191,7 +191,7 @@ const MobileHeader = () => {
     } else {
       if (window.location.pathname.includes('trade-to-earn'))
         window.location.reload();
-      else window.location.href = '/auth/login';
+      else window.location.href = '/update/home/';
     }
   };
 

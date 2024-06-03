@@ -115,8 +115,6 @@ const LoginComponent = () => {
     if (res.status === 200) {
       alert('User registered successfully with Google');
       let resObj = await decodeJWT(res.data.access_token);
-
-      debugger;
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
@@ -168,7 +166,7 @@ const LoginComponent = () => {
       <h3 className={classes.loginText}>Log in</h3>
       <div style={{ margin: '15px auto' }}>
         <InputField
-          label={'Email/Phone number'}
+          label={'Email'}
           type="text"
           value={formik.values.email}
           onChange={handleEmailChange}

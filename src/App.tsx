@@ -167,7 +167,7 @@ function App() {
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
-      return <Navigate to="/indexx-exchange/buy-sell/hive-login" />;
+      return <Navigate to="/update/home/" />;
     }
 
     if (isAllowed) {
@@ -189,13 +189,7 @@ function App() {
 
           {/* <SecondaryHeader /> */}
           <Routes>
-            {localStorage.getItem('access_token') === undefined ||
-            localStorage.getItem('access_token') === null ? (
-              <Route path="/*" element={<BuySellLogin />} />
-            ) : (
-              <Route path="/*" element={<BuySell />} />
-            )}
-
+            <Route path="/" element={<Navigate to="/update/home/" />} />
             <Route element={<PrivateRoutes />}>
               <Route
                 path="/indexx-exchange/send"
@@ -352,19 +346,6 @@ function App() {
             />
 
             <Route
-              path="/indexx-exchange/payment-zelle"
-              element={<Payment />}
-            />
-            <Route
-              path="/indexx-exchange/payment-venmo"
-              element={<PaymentVenmo />}
-            />
-            <Route
-              path="/indexx-exchange/payment-wire"
-              element={<PaymentWire />}
-            />
-
-            <Route
               path="/indexx-exchange/affiliate"
               element={<AffiliateProgram />}
             />
@@ -406,12 +387,6 @@ function App() {
             />
             <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
-            {/* {
-                        // userData?.role === "Standard"
-                            ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
-                            : <Route path="/external-link" element={<External />} />
-                    } */}
-
             <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
             <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
             <Route
@@ -427,35 +402,32 @@ function App() {
               element={<ImportTokens />}
             />
             <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
-            <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
+            {/* <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} /> */}
             <Route
               path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
               element={<BuySell />}
             />
             <Route
               path="/indexx-exchange/buy-sell/login/*"
-              element={<BuySellLogin />}
+              element={<Navigate to="/update/home/" />}
             />
+
             {/* <Route
-            path="/indexx-exchange/buy-sell/all-login/*"
-            element={<BuySellAllLogin />}
-          /> */}
-            <Route
               path="/indexx-exchange/buy-sell/login-honeybee/*"
               element={<BuySellLoginHoneyBee />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/wallet"
               element={<BSWallet />}
-            />
+            /> */}
             <Route
               path="/indexx-exchange/buy-sell/withdraw-crypto/*"
               element={<BSWithdrawCryptoLayout />}
