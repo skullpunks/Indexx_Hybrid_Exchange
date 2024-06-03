@@ -21,6 +21,7 @@ import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -124,7 +125,9 @@ EnhancedTableHead.propTypes = {
   isMobile: PropTypes.bool.isRequired,
 };
 
+
 export default function EnhancedTable({ searchQuery, hideAssets }) {
+  const navigate = useNavigate();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [rows, setRows] = React.useState([]);
@@ -157,16 +160,21 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
-        let userWallets = await getUserWallets(email);
-        const formattedData = userWallets.data.map((item) => ({
-          id: item._id,
-          coin: item.coinSymbol,
-          amount: item.coinBalance,
-          coin_price: item?.coinPrice,
-          todayPNL: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
-          coinNetwork: item.coinNetwork,
-        }));
-        setRows(formattedData);
+        if (email === null || email === undefined || email === '') {
+          navigate('/auth/login');
+        } else {
+          let userWallets = await getUserWallets(email);
+          const formattedData = userWallets.data.map((item) => ({
+            id: item._id,
+            coin: item.coinSymbol,
+            amount: item.coinBalance,
+            coin_price: item?.coinPrice,
+            todayPNL:
+              item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
+            coinNetwork: item.coinNetwork,
+          }));
+          setRows(formattedData);
+        }
       } catch (error) {
         setError(error);
       } finally {
@@ -194,8 +202,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   }, [rows, searchQuery, hideAssets]);
 
   const visibleRows = React.useMemo(
-    () =>
-      stableSort(filteredRows, getComparator(order, orderBy)),
+    () => stableSort(filteredRows, getComparator(order, orderBy)),
     [order, orderBy, filteredRows]
   );
 

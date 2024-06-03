@@ -209,6 +209,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
       } else if (type === 'Receive') {
         setReceiveToken({ title: token?.title, image: token?.image });
         onReceiveTokenChange(token?.title);
+        console.log("receiveToken", token)
       }
     },
     [onReceiveTokenChange, value]
@@ -246,9 +247,11 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
   };
 
   const handleSubmit = async () => {
+    console.log("selectedPaymentMethod", value)
     if (selectedPaymentMethod && value === 'buy') {
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
+      await createNewSellOrder();
     } else {
     }
   };

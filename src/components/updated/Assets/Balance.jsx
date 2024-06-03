@@ -88,23 +88,27 @@ const BalanceOverview = () => {
   const getAllUserWallet = async () => {
     try {
       let email = String(localStorage.getItem('email'));
-      const userWallets = await getUserWallets(email);
-      const usersWallet = userWallets.data;
-      let totalBalInUSD = 0;
+      if (email === null || email === undefined || email === '') {
+        navigate('/auth/login');
+      } else {
+        const userWallets = await getUserWallets(email);
+        const usersWallet = userWallets.data;
+        let totalBalInUSD = 0;
 
-      usersWallet.forEach((wallet) => {
-        const balance = Number(wallet.coinBalance);
-        if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
-          const price = Number(wallet.coinPrice);
-          if (!isNaN(price)) {
-            totalBalInUSD += balance * price;
+        usersWallet.forEach((wallet) => {
+          const balance = Number(wallet.coinBalance);
+          if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
+            const price = Number(wallet.coinPrice);
+            if (!isNaN(price)) {
+              totalBalInUSD += balance * price;
+            }
+          } else {
+            totalBalInUSD += balance;
           }
-        } else {
-          totalBalInUSD += balance;
-        }
-      });
+        });
 
-      setTotalBalanceInUSD(totalBalInUSD);
+        setTotalBalanceInUSD(totalBalInUSD);
+      }
     } catch (err) {
       console.error('Error in getAllUserWallet', err);
     }

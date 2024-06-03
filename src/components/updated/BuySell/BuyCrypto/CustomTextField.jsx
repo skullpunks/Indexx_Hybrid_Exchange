@@ -194,6 +194,7 @@ const CustomTextField = ({
   };
 
   const handleTokenSelect = (token) => {
+    console.log("I am here", token, disableDropdown)
     if (!disableDropdown) {
       onSelectToken(token);
     }
@@ -214,6 +215,7 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
+    console.log("usd", currency)
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     setRateData(priceData);
@@ -222,14 +224,14 @@ const CustomTextField = ({
     }
   };
 
-  useEffect(() => {
-    if (fixedToken) {
-      const token = fixedToken?.title;
-      if (token) {
-        getPricesData(token);
-      }
-    }
-  }, [fixedToken]);
+  // useEffect(() => {
+  //   if (fixedToken) {
+  //     const token = fixedToken?.title;
+  //     if (token) {
+  //       getPricesData(token);
+  //     }
+  //   }
+  // }, [fixedToken]);
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -265,7 +267,7 @@ const CustomTextField = ({
               } !important`,
         }}
       >
-       <TextField
+        <TextField
           variant="outlined"
           className={classes.textField}
           placeholder={placeholder}
