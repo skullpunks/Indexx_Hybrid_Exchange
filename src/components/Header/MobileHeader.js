@@ -35,7 +35,7 @@ import {
   baseAcademyUrl,
 } from '../../services/api';
 import { Typography } from '@mui/material';
-import DarkMode from '../DarkMode/DarkMode';
+// import DarkMode from '../DarkMode/DarkMode';
 
 const MobileHeader = () => {
   const [level1Open, setLevel1Open] = useState(false);
@@ -180,17 +180,18 @@ const MobileHeader = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;
     if (userType === 'CaptainBee') {
-      window.location.href = '/indexx-exchange/buy-sell/hive-login';
+      window.location.href = '/auth/login';
     } else if (userType === 'HoneyBee') {
-      window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+      window.location.href = '/auth/login';
     } else {
       if (window.location.pathname.includes('trade-to-earn'))
         window.location.reload();
-      else window.location.href = '/indexx-exchange/buy-sell/login';
+      else window.location.href = '/update/home/';
     }
   };
 
@@ -591,9 +592,7 @@ const MobileHeader = () => {
               )}
             </div>
             <div className="d-flex justify-content-end">
-              <div style={{ marginTop: '39px' }}>
-                <DarkMode />
-              </div>
+              <div style={{ marginTop: '39px' }}>{/* <DarkMode /> */}</div>
               <IconButton
                 edge="end" // Set edge to "end" to align the icon to the right
                 color="inherit"

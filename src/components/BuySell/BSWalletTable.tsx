@@ -29,7 +29,7 @@ interface DataType {
 }
 const BSWalletTable = () => {
   const [hideZeroBalance, setHideZeroBalance] = useState(false);
-  const [hideZeroStakedBalance, setHideZeroStakedBalance] = useState(false);
+  const [hideZeroStakedBalance, setHideZeroStakedBalance] = useState(true);
   const [valueInput, setValueInput] = useState('');
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
@@ -207,17 +207,22 @@ const BSWalletTable = () => {
     setSortedData(
       filteredWalletData
         ? filteredWalletData.filter(
-          (item: DataType) =>
-            (hideZeroBalance || item.coinBalance !== 0) ||
-            (hideZeroStakedBalance ||
-              (item.coinStakedBalance !== undefined &&
-                item.coinStakedBalance !== 0))
-        )
+            (item: DataType) =>
+              // Check if hideZeroRows is true and either balance is not zero or staked balance is not zero
+              (hideZeroBalance ||
+                item.coinBalance == 0 ||
+                (item.coinStakedBalance === undefined &&
+                  item.coinStakedBalance === 0)) &&
+              // Check if hideZeroStakedBalance is true and staked balance is not zero
+              (!hideZeroStakedBalance ||
+                (item.coinStakedBalance !== undefined &&
+                  item.coinStakedBalance !== 0))
+          )
         : []
     );
     console.log(filteredWalletData)
   }, [filteredWalletData, hideZeroBalance, hideZeroStakedBalance]);
-
+  console.log(filteredWalletData, 'filteredWalletData');
   useEffect(() => {
     let filteredData = walletData;
     if (valueInput) {

@@ -35,7 +35,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  //baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -112,6 +112,63 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
 export const checkEmail = async (email: string) => {
   try {
     const result = await API.post('/api/v1/inex/user/checkemail', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const sendOtp = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendOtp', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const sendForgotPasswordOtp = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendForgotOtp', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const validateOtp = async (email: string, code: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateOtp', {
+      email,
+      code,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const validateForgotOtp = async (email: string, code: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateForgotOtp', {
+      email,
+      code,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const checkByemail = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/checkByemail', {
       email,
     });
     return result.data;
@@ -691,6 +748,34 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const signupWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/register/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }  
+};
+
+export const loginWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/login/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+}
+
 export const getHoneyUserDetails = async (email: string) => {
   try {
     const result = await API.get(
@@ -725,6 +810,9 @@ export const getCoinPriceByName = async (
   coin: string,
   type: string = 'Buy'
 ) => {
+  if(coin ==="INEX-ETHEREUM" || coin === "INEX-POLYGON"){
+    coin = "INEX";
+  }
   try {
     const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
       type: type,
@@ -842,6 +930,44 @@ export const marketsData = async () => {
     return e.response.data;
   }
 };
+
+export const hotTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const hotStockTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotStockTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotStockTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+
+export const hotETFTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotETFTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotETFTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 
 export const stockMarketsData = async (symbol: string) => {
   try {

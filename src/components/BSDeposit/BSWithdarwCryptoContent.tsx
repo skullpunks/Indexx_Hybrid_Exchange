@@ -7,6 +7,7 @@ import {
   RadioChangeEvent,
   Radio,
   Space,
+  theme,
 } from 'antd';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import { Typography } from 'antd';
@@ -27,12 +28,13 @@ import Web3 from 'web3';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import ShortenText from '../../utils/ShortenText';
 import * as bitcoin from 'bitcoinjs-lib';
+import { useTheme } from '@mui/material';
 
 const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
 const { Text } = Typography;
 
 const networks = {
-  'BTC': bitcoin.networks.testnet, // mainnet
+  BTC: bitcoin.networks.testnet, // mainnet
   //'BTC': bitcoin.networks.mainnet // testnet
 };
 
@@ -59,12 +61,12 @@ export const BSWithdarwCryptoContent = () => {
   const [walletAddress, setWalletAddre] = useState('');
   //const [max, setMax] = useState();
   const [email, setEmail] = useState('');
-
+  const theme = useTheme();
   const categorizeTokens = (tokens: any) => {
     return {
       Stocks: tokens.filter((token: any) => token.isStock),
       ETFs: tokens.filter((token: any) => token.isETF),
-      Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF)
+      Cryptos: tokens.filter((token: any) => !token.isStock && !token.isETF),
     };
   };
 
@@ -82,11 +84,9 @@ export const BSWithdarwCryptoContent = () => {
       setTxList(finalArr);
     });
     getUserWallets(decodedToken?.email).then((res) => {
-
       setUsersWallets(res.data);
     });
     getMinAndMaxOrderValues(String('IN500'), 'WITHDRAW_CRYPTO').then((res) => {
-
       setValues(res);
     });
   }, []);
@@ -240,7 +240,7 @@ export const BSWithdarwCryptoContent = () => {
 
   // const handleChange = (value: string) => {
   //   setNetwork(value)
-  //   
+  //
   // };
 
   // const checkWalletAddress = async (address: string) => {
@@ -301,7 +301,6 @@ export const BSWithdarwCryptoContent = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-
     setValue(e.target.value);
   };
 
@@ -317,19 +316,22 @@ export const BSWithdarwCryptoContent = () => {
     const userWallet = usersWallets.filter(
       (x: any) => x.coinSymbol === getRequiredCoin?.title
     );
-      console.log(getRequiredCoin)
+    console.log(getRequiredCoin);
 
-    setSelectedCoinObj(getRequiredCoin || {} as { address: string; title: string }); // Specify the type here
+    setSelectedCoinObj(
+      getRequiredCoin || ({} as { address: string; title: string })
+    ); // Specify the type here
     setSelectedCoin(getRequiredCoin?.title || ''); // Set the title if needed
     setSingleWallet(userWallet[0]);
-    if(getRequiredCoin?.title === "INEX" ) {
-      setCoinNetwork(getRequiredCoin?.chain)
+    if (getRequiredCoin?.title === 'INEX') {
+      setCoinNetwork(getRequiredCoin?.chain);
       const userWallet = usersWallets.filter(
-        (x: any) => x.coinSymbol === getRequiredCoin?.title && x.coinNetwork === getRequiredCoin?.chain
+        (x: any) =>
+          x.coinSymbol === getRequiredCoin?.title &&
+          x.coinNetwork === getRequiredCoin?.chain
       );
-      console.log("userWallet", userWallet)
+      console.log('userWallet', userWallet);
       setSingleWallet(userWallet[0]);
-
     }
     let res = await getMinAndMaxOrderValues(
       String(getRequiredCoin?.title),
@@ -339,10 +341,7 @@ export const BSWithdarwCryptoContent = () => {
     setValues(res);
   };
 
-
-
   const withdrawFiat = async () => {
-
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
     let reqObj = {
@@ -402,24 +401,29 @@ export const BSWithdarwCryptoContent = () => {
   //     let testVal: string = "";
   //     if (e.currentTarget != null) {
   //         testVal = e?.currentTarget?.value;
-  //         
+  //
   //         setFinalAmount(testVal);
 
   //     }
   // }
 
-
   return (
     <div className="scan-container bs_main wd_container">
       <div className="d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container">
         <div className="d-flex flex-align-center top_heading">
-          <span>Withdraw Crypto</span>
+          <span style={{ color: theme.palette.text.primary }}>
+            Withdraw Crypto
+          </span>
         </div>
         <div className="crypto_con_button">
           <Button
             danger
             className="danger_disabled"
             onClick={() => navigate('/indexx-exchange/buy-sell/withdraw')}
+            style={{
+              color: theme.palette.text.primary,
+              background: theme.palette.divider,
+            }}
           >
             Withdraw Fiat
             <ArrowRightOutlined />
@@ -427,13 +431,22 @@ export const BSWithdarwCryptoContent = () => {
         </div>
       </div>
 
-      <div className="card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select">
-        <h1 className="font_20x padding-t-2x padding-b-1x">Select Coin</h1>
+      <div
+        className="card bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x responsive_container deposit-select"
+        style={{ background: theme.palette.divider }}
+      >
+        <h1 className="font_20x padding-t-2x padding-b-1x">
+          <span style={{ color: theme.palette.text.primary }}>Select Coin</span>
+        </h1>
         <div className="">
-          <label>Currency</label>
+          <label style={{ color: theme.palette.text.primary }}>Currency</label>
           <div className=" d-flex flex-justify-between flex-align-center">
             <Select
-              dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
+              dropdownStyle={{
+                width: '300px',
+                maxHeight: '400px',
+                overflow: 'auto',
+              }}
               className="width-100"
               onChange={handleChangeCurrency}
               defaultValue="Select a Coin to Withdraw"
@@ -443,12 +456,12 @@ export const BSWithdarwCryptoContent = () => {
                 .filter(
                   // (token) => token.title !== 'SOL' && token.title !== 'MATIC' && token.title !== 'DOT' &&
                   //   token.title !== 'SOL' && token.title !== 'LTC' && token.title !== 'DOGE' && token.title !== 'XRP'
-                  (token) => 
-                  token.title === 'INEX' || 
-                  token.title === 'INXC' ||
-                  token.title === 'IN500' || 
-                  token.title === 'IUSD+' ||
-                  token.title === 'WIBS' 
+                  (token) =>
+                    token.title === 'INEX' ||
+                    token.title === 'INXC' ||
+                    token.title === 'IN500' ||
+                    token.title === 'IUSD+' ||
+                    token.title === 'WIBS'
                 )
                 .map((token, index) => {
                   return (
@@ -461,9 +474,18 @@ export const BSWithdarwCryptoContent = () => {
                     >
                       <div className="d-flex">
                         <img
-                          src={require(`../../assets/token-icons/${token.image}.png`).default}
+                          src={
+                            require(`../../assets/token-icons/${token.image}.png`)
+                              .default
+                          }
                           alt="IN500"
-                          width={["INEX", "IN500", "INXC", "IUSD"].some(str => token.image.includes(str)) ? "47" : "35"}
+                          width={
+                            ['INEX', 'IN500', 'INXC', 'IUSD'].some((str) =>
+                              token.image.includes(str)
+                            )
+                              ? '42'
+                              : '42'
+                          }
                           height="35"
                         />
                         <div className="font_20x padding-l-1x d-flex flex-align-center">
@@ -487,9 +509,11 @@ export const BSWithdarwCryptoContent = () => {
             {/* <RightOutlined /> */}
           </div>
           <br />
-          <h1 className="font_20x padding-t-2x">Send to</h1>
+          <h1 className="font_20x padding-t-2x">
+            <span style={{ color: theme.palette.text.primary }}>Send to</span>
+          </h1>
           <div className="padding-t-1x">
-            <label>Address</label>
+            <label style={{ color: theme.palette.text.primary }}>Address</label>
             <br />
             <div
               className="select_container d-flex flex-justify-between flex-align-center"
@@ -506,11 +530,17 @@ export const BSWithdarwCryptoContent = () => {
               <img src={AddressIcon} alt="AddressIcon" />
             </div>
             <span>
-              {isWalletAddrValid ? '' : <Text>Invalid Wallet Address</Text>}
+              {isWalletAddrValid ? (
+                ''
+              ) : (
+                <Text style={{ color: theme.palette.text.primary }}>
+                  Invalid Wallet Address
+                </Text>
+              )}
             </span>
           </div>
           <div className="padding-t-1x">
-            <label>Amount</label>
+            <label style={{ color: theme.palette.text.primary }}>Amount</label>
             <br />
             <div
               className="select_container d-flex flex-justify-between flex-align-center"
@@ -544,7 +574,9 @@ export const BSWithdarwCryptoContent = () => {
           {network && (
             <>
               <div className="padding-t-1x">
-                <label>Amount</label>
+                <label style={{ color: theme.palette.text.primary }}>
+                  Amount
+                </label>
                 <br />
                 <div
                   className="select_container d-flex flex-justify-between flex-align-center"
@@ -559,10 +591,18 @@ export const BSWithdarwCryptoContent = () => {
                     onChange={onChangeReceiveAmt}
                   />
                   <div className="d-flex">
-                    <span className="border-r-1x padding-r-1x text_link">
+                    <span
+                      className="border-r-1x padding-r-1x text_link"
+                      style={{ color: theme.palette.text.primary }}
+                    >
                       MAX
                     </span>
-                    <span className="padding-l-1x">{selectedCoin}</span>
+                    <span
+                      className="padding-l-1x"
+                      style={{ color: theme.palette.text.primary }}
+                    >
+                      {selectedCoin}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -578,18 +618,35 @@ export const BSWithdarwCryptoContent = () => {
                       className="orange margin-t-2x font_15x d-flex"
                     >
                       <span className="d-flex flex-align-center">
-                        <span style={{ minWidth: 200 }}>Asset Wallet</span>
+                        <span
+                          style={{
+                            minWidth: 200,
+                            color: theme.palette.text.primary,
+                          }}
+                        >
+                          Asset Wallet
+                        </span>
                       </span>
                     </Radio>
                   </Space>
                 </Radio.Group>
-                <label className="margin-t-2x d-flex">Receive amount</label>
+                <label
+                  className="margin-t-2x d-flex"
+                  style={{ color: theme.palette.text.primary }}
+                >
+                  Receive amount
+                </label>
                 <div className="d-flex flex-justify-between ">
                   <div className="w_50 ">
-                    <div className="font_weight_800">
+                    <div
+                      className="font_weight_800"
+                      style={{ color: theme.palette.text.primary }}
+                    >
                       ({finalAmount}){selectedCoin}
                     </div>
-                    <div>{values?.fees} Fee</div>
+                    <div style={{ color: theme.palette.text.primary }}>
+                      {values?.fees} Fee
+                    </div>
                   </div>
                   <Button
                     danger
@@ -616,21 +673,40 @@ export const BSWithdarwCryptoContent = () => {
             <div className="sensitive_data margin-t-2x">
               <div className='d-flex flex-justify-between flex_buttons margin-t-2x "'>
                 <div className="w_50">
-                  <div className="brand_opacity_5">{selectedCoin} Balance </div>
-                  <div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    {selectedCoin} Balance{' '}
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
                     {singleWallet?.coinBalance} {selectedCoin}{' '}
                   </div>
                 </div>
 
                 <div className="w_50">
-                  <div className="brand_opacity_5"> Asset Wallet </div>
-                  <div> {selectedCoin}</div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    {' '}
+                    Asset Wallet{' '}
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
+                    {' '}
+                    {selectedCoin}
+                  </div>
                 </div>
               </div>
 
               <div className="d-flex flex-justify-between padding-t-1x">
                 <div className="w_50">
-                  <div className="brand_opacity_5">Minimum withrawal </div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Minimum withrawal{' '}
+                  </div>
                   <div>
                     {' '}
                     {values?.min} {selectedCoin}{' '}
@@ -638,8 +714,13 @@ export const BSWithdarwCryptoContent = () => {
                 </div>
 
                 <div className="w_50">
-                  <div className="brand_opacity_5">Maximum withrawal </div>
-                  <div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Maximum withrawal{' '}
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
                     {' '}
                     {values?.max} {selectedCoin}{' '}
                   </div>
@@ -648,12 +729,28 @@ export const BSWithdarwCryptoContent = () => {
 
               <div className="d-flex flex-justify-between padding-t-1x">
                 <div className="w_50">
-                  <div className="brand_opacity_5">Network Fee</div>
-                  <div> 0.0005 {selectedCoin}</div>
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Network Fee
+                  </div>
+                  <div style={{ color: theme.palette.text.primary }}>
+                    {' '}
+                    0.0005 {selectedCoin}
+                  </div>
                 </div>
                 <div className="w_50 ">
-                  <div className="brand_opacity_5">Final Recieve Amount</div>
-                  <div className="font_weight_800">
+                  <div
+                    className="brand_opacity_5"
+                    style={{ color: theme.palette.text.primary }}
+                  >
+                    Final Recieve Amount
+                  </div>
+                  <div
+                    className="font_weight_800"
+                    style={{ color: theme.palette.text.primary }}
+                  >
                     {finalAmount} {selectedCoin}
                   </div>
                 </div>
@@ -699,7 +796,11 @@ export const BSWithdarwCryptoContent = () => {
       </div> */}
 
       <div className="w_fiat pt-5">
-        <h1 className="font_48x font_40x padding-b-1x">Recent Withdrawal</h1>
+        <h1 className="font_48x font_40x padding-b-1x">
+          <span style={{ color: theme.palette.text.primary }}>
+            Recent Withdrawal
+          </span>
+        </h1>
         <div className="recent_deposit_container border-1x padding-2x ">
           <Table
             columns={columns}

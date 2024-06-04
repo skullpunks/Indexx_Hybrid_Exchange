@@ -88,11 +88,12 @@ import TeamCaptainDash from './components/Dashboard/Captainbee/TeamCaptainBees/T
 import LeaderCaptain from './components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain';
 
 import LottoHome from './components/Lottery/LottoHome';
+import { useTheme } from '@mui/material/styles';
 
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Staking from './components/Staking/Staking';
 import BSStakingHistoryLayout from './components/BSStakingHistory/BSStakingHistoryLayout';
 import Bridge from './components/Bridge/Bridge';
@@ -115,38 +116,23 @@ import { ThemeContext } from './utils/themeContext';
 import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
-import HiveForgotPassword from './components/BuySell/BuySellForgotPassword';
+import HiveForgotPassword from './components/BuySell/HiveForgotPassword';
+import ThemeContextUpdated from './utils/ThemeContextUpdated';
+import ThemeToggler from './components/ThemeToggler/index.js';
+import Login from './pages/auth/LoginEmail/index';
+import LoginPassword from './pages/auth/LoginPassword';
+import ResetPass from './pages/auth/ResetPassword';
+import SignUpEmailPage from './pages/auth/Signup/EmailOrPhone';
+import SignUpEmailVerificationPage from './pages/auth/Signup/EmailVerification';
+import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
+import RefferalPage from './pages/auth/Signup/Refferal';
+import SelectRolePage from './pages/auth/Signup/SelectRole';
+import BuySellPage from './pages/BuySell';
+import AssetsPage from './pages/Assets';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
-  /*
-    const [email, setEmail] = useState('');
-    const [userData, setUserData] = useState() as any;
-
-    useEffect(() => {
-        return () => {
-            const access_token = localStorage.getItem("access_token") !== undefined ? String(localStorage.getItem("access_token")) : undefined;
-            
-            if (access_token !== undefined || access_token !== null) {
-                let access_token = String(localStorage.getItem("access_token"));
-                let decoded: any = decodeJWT(access_token);
-                setEmail(decoded.email)
-                getUserDetails(decoded.email).then((res: any) => {
-                    
-                    if (res.status === 200) {
-                        
-                        setUserData(res.data);
-                    }
-                });
-            } else {
-                
-            }
-        }
-    }, [email]);
-*/
-  let theme = createTheme();
-  theme = responsiveFontSizes(theme);
-
+  const theme = useTheme();
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
   useEffect(() => {
@@ -170,8 +156,6 @@ function App() {
     };
   }, []);
 
-  const themeClass = `theme-${userLogged}`;
-
   const PrivateRoutes = () => {
     const isAuthenticated =
       localStorage.getItem('access_token') !== undefined &&
@@ -183,7 +167,7 @@ function App() {
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
-      return <Navigate to="/indexx-exchange/buy-sell/hive-login" />;
+      return <Navigate to="/update/home/" />;
     }
 
     if (isAllowed) {
@@ -194,399 +178,372 @@ function App() {
   console.log(window.location.pathname, 'path');
 
   return (
-    <ThemeProvider theme={theme}>
-      <ThemeContext>
-        <div className={themeClass + ' globalnav-with-flyout-open'}>
-          <BrowserRouter>
-            {/* <Headers /> */}
-            <ScrollToTop />
-            {/* <HeaderNew /> */}
-            <HeaderTest />
+    <ThemeContextUpdated>
+      <div>
+        {/* <ThemeToggler /> */}
+        <BrowserRouter>
+          {/* <Headers /> */}
+          <ScrollToTop />
+          {/* <HeaderNew /> */}
+          <HeaderTest />
 
-            <SecondaryHeader />
-            <Routes>
-              {localStorage.getItem('access_token') === undefined ||
-              localStorage.getItem('access_token') === null ? (
-                <Route path="/*" element={<BuySellLogin />} />
-              ) : (
-                <Route path="/*" element={<BuySell />} />
-              )}
-
-              <Route element={<PrivateRoutes />}>
-                <Route
-                  path="/indexx-exchange/send"
-                  element={<HorizontalLinearStepper2 />}
-                />
-                <Route
-                  path="/indexx-exchange/power-hive"
-                  element={<PowerPackInitial />}
-                />
-                <Route
-                  path="/indexx-exchange/power-hive/honey-bee-selection"
-                  element={<PowerPackHoneySecond />}
-                />
-                <Route
-                  path="/indexx-exchange/power-hive/captain-bee-selection"
-                  element={<PowerPackCaptainSecond />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard"
-                  element={<CaptainDash />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-profile"
-                  element={<CaptainProfile />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-mybees"
-                  element={<MyBees />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType"
-                  element={<BeeDash />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-mkt"
-                  element={<CaptainResource />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-acc"
-                  element={<CaptainResourceAccounting />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-leg"
-                  element={<CaptainResourceLegal />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-tech"
-                  element={<CaptainResourceTechnical />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-mgmt"
-                  element={<CaptainResourceManagement />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-resource-sales"
-                  element={<CaptainResourceSales />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/honeycomb"
-                  element={<HoneyComb />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-mycaptains"
-                  element={<TeamCaptainDash />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-leader"
-                  element={<LeaderCaptain />}
-                />
-                <Route
-                  path="/indexx-exchange/dashboard/capt-greet"
-                  element={<CaptainGreetCard />}
-                />
-
-                {/* Routes for Honey Bee DashBoard   */}
-                <Route
-                  path="/indexx-exchange/bee-dashboard"
-                  element={<BeeDash2 />}
-                />
-                <Route
-                  path="/indexx-exchange/bee-dashboard/bee-profile"
-                  element={<BeeProfile />}
-                />
-                <Route
-                  path="/indexx-exchange/bee-dashboard/bee-captain"
-                  element={<MyCaptain />}
-                />
-                <Route
-                  path="/indexx-exchange/bee-dashboard/honeycomb"
-                  element={<HoneyCombComingSoonBees />}
-                />
-              </Route>
-
-              <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
+          {/* <SecondaryHeader /> */}
+          <Routes>
+            <Route path="/" element={<Navigate to="/update/home/" />} />
+            <Route element={<PrivateRoutes />}>
               <Route
-                path="/indexx-exchange/elite-club"
-                element={<EliteClub />}
+                path="/indexx-exchange/send"
+                element={<HorizontalLinearStepper2 />}
+              />
+              <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route
+                path="/indexx-exchange/buy-sell/staking"
+                element={<Staking />}
               />
               <Route
-                path="/indexx-exchange/elite-learn/:id"
-                element={<EliteLearnMore />}
+                path="/indexx-exchange/power-hive"
+                element={<PowerPackInitial />}
+              />
+              <Route
+                path="/indexx-exchange/power-hive/honey-bee-selection"
+                element={<PowerPackHoneySecond />}
+              />
+              <Route
+                path="/indexx-exchange/power-hive/captain-bee-selection"
+                element={<PowerPackCaptainSecond />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard"
+                element={<CaptainDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-profile"
+                element={<CaptainProfile />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mybees"
+                element={<MyBees />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mybees/:id/:tab/:userType"
+                element={<BeeDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-mkt"
+                element={<CaptainResource />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-acc"
+                element={<CaptainResourceAccounting />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-leg"
+                element={<CaptainResourceLegal />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-tech"
+                element={<CaptainResourceTechnical />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-mgmt"
+                element={<CaptainResourceManagement />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-resource-sales"
+                element={<CaptainResourceSales />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/honeycomb"
+                element={<HoneyComb />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-mycaptains"
+                element={<TeamCaptainDash />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-leader"
+                element={<LeaderCaptain />}
+              />
+              <Route
+                path="/indexx-exchange/dashboard/capt-greet"
+                element={<CaptainGreetCard />}
               />
 
+              {/* Routes for Honey Bee DashBoard   */}
               <Route
-                path="/indexx-exchange/payment-zelle"
-                element={<Payment />}
+                path="/indexx-exchange/bee-dashboard"
+                element={<BeeDash2 />}
               />
               <Route
-                path="/indexx-exchange/payment-venmo"
-                element={<PaymentVenmo />}
+                path="/indexx-exchange/bee-dashboard/bee-profile"
+                element={<BeeProfile />}
               />
               <Route
-                path="/indexx-exchange/payment-wire"
-                element={<PaymentWire />}
+                path="/indexx-exchange/bee-dashboard/bee-captain"
+                element={<MyCaptain />}
               />
+              <Route
+                path="/indexx-exchange/bee-dashboard/honeycomb"
+                element={<HoneyCombComingSoonBees />}
+              />
+            </Route>
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/login-password" element={<LoginPassword />} />
+            <Route path="/auth/reset-password" element={<ResetPass />} />
+            <Route path="/auth/signup-email" element={<SignUpEmailPage />} />
+            <Route
+              path="/auth/signup-email-verification"
+              element={<SignUpEmailVerificationPage />}
+            />
+            <Route
+              path="/auth/signup-create-password"
+              element={<CreatePasswordPage />}
+            />
+            <Route path="/auth/signup-referral" element={<RefferalPage />} />
+            {/* <Route path="/auth/signup-role" element={<SelectRolePage />} /> */}
 
-              {/* <Route
+            <Route path="/update/home/*" element={<BuySellPage />} />
+
+            <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
+            <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
+            <Route
+              path="/indexx-exchange/elite-learn/:id"
+              element={<EliteLearnMore />}
+            />
+
+            <Route
+              path="/indexx-exchange/payment-zelle"
+              element={<Payment />}
+            />
+            <Route
+              path="/indexx-exchange/payment-venmo"
+              element={<PaymentVenmo />}
+            />
+            <Route
+              path="/indexx-exchange/payment-wire"
+              element={<PaymentWire />}
+            />
+
+            {/* <Route
                 path="/indexx-exchange/power-pack"
                 element={<PowerPack />}
               /> */}
-              <Route
-                path="/indexx-exchange/powerpack-payment-success"
-                element={<PaymentSuccess />}
-              />
-              <Route
-                path="/indexx-exchange/subscribe-success"
-                element={<SubscribeSuccess />}
-              />
+            <Route
+              path="/indexx-exchange/powerpack-payment-success"
+              element={<PaymentSuccess />}
+            />
+            <Route
+              path="/indexx-exchange/subscribe-success"
+              element={<SubscribeSuccess />}
+            />
 
-              <Route
-                path="/indexx-exchange/buy-sell/staking"
-                element={<Staking />}
-              />
-              <Route path="/indexx-exchange/bridge" element={<Bridge />} />
+            <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
-              <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
-              <Route
-                path="/indexx-exchange/elite-club"
-                element={<EliteClub />}
-              />
-              <Route
-                path="/indexx-exchange/elite-learn/:id"
-                element={<EliteLearnMore />}
-              />
+            <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
+            <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
+            <Route
+              path="/indexx-exchange/elite-learn/:id"
+              element={<EliteLearnMore />}
+            />
 
-              <Route
-                path="/indexx-exchange/payment-zelle"
-                element={<Payment />}
-              />
-              <Route
-                path="/indexx-exchange/payment-venmo"
-                element={<PaymentVenmo />}
-              />
-              <Route
-                path="/indexx-exchange/payment-wire"
-                element={<PaymentWire />}
-              />
+            <Route
+              path="/indexx-exchange/affiliate"
+              element={<AffiliateProgram />}
+            />
 
-              <Route
-                path="/indexx-exchange/affiliate"
-                element={<AffiliateProgram />}
-              />
+            <Route
+              path="/indexx-exchange/power-pack"
+              element={<PowerPack type="captainBee" />}
+            />
 
-              <Route
-                path="/indexx-exchange/power-pack"
-                element={<PowerPack type="captainBee" />}
-              />
+            <Route
+              path="/indexx-exchange/captain-bee/power-pack"
+              element={<PowerPackCopy type="captainBee" subType="power" />}
+            />
+            <Route
+              path="/indexx-exchange/captain-bee/crypto-pack"
+              element={<PowerPackCopy type="captainBee" subType="crypto" />}
+            />
 
-              <Route
-                path="/indexx-exchange/captain-bee/power-pack"
-                element={<PowerPackCopy type="captainBee" subType="power" />}
-              />
-              <Route
-                path="/indexx-exchange/captain-bee/crypto-pack"
-                element={<PowerPackCopy type="captainBee" subType="crypto" />}
-              />
+            <Route
+              path="/indexx-exchange/honey-bee/action-pack"
+              element={<PowerPackCopy type="honeyBee" subType="action" />}
+            />
+            <Route
+              path="/indexx-exchange/honey-bee/token-pack"
+              element={<PowerPackCopy type="honeyBee" subType="token" />}
+            />
+            <Route
+              path="/indexx-exchange/powerpack-payment-success"
+              element={<PaymentSuccess />}
+            />
+            <Route
+              path="/indexx-exchange/subscribe-success"
+              element={<SubscribeSuccess />}
+            />
 
-              <Route
-                path="/indexx-exchange/honey-bee/action-pack"
-                element={<PowerPackCopy type="honeyBee" subType="action" />}
-              />
-              <Route
-                path="/indexx-exchange/honey-bee/token-pack"
-                element={<PowerPackCopy type="honeyBee" subType="token" />}
-              />
-              <Route
-                path="/indexx-exchange/powerpack-payment-success"
-                element={<PaymentSuccess />}
-              />
-              <Route
-                path="/indexx-exchange/subscribe-success"
-                element={<SubscribeSuccess />}
-              />
+            <Route
+              path="/indexx-exchange/buy-sell/staking"
+              element={<Staking />}
+            />
+            <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
-              <Route
-                path="/indexx-exchange/buy-sell/staking"
-                element={<Staking />}
-              />
-              <Route path="/indexx-exchange/bridge" element={<Bridge />} />
+            <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
+            <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
+            <Route
+              path="/indexx-exchange/coming-soon-etf"
+              element={<ComingSoonETF />}
+            />
+            <Route
+              path="/indexx-exchange/coming-soon"
+              element={<ComingSoon />}
+            />
+            <Route
+              path="/indexx-exchange/import-indexx-tokens"
+              element={<ImportTokens />}
+            />
+            <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
+            {/* <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} /> */}
+            <Route
+              path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
+              element={<BuySell />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/login/*"
+              element={<Navigate to="/update/home/" />}
+            />
 
-              {/* {
-                        // userData?.role === "Standard"
-                            ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
-                            : <Route path="/external-link" element={<External />} />
-                    } */}
+            {/* <Route
+              path="/indexx-exchange/buy-sell/login-honeybee/*"
+              element={<BuySellLoginHoneyBee />}
+            /> */}
+            {/* <Route
+              path="/indexx-exchange/buy-sell/hive-login"
+              element={<BuySellLoginContentHive />}
+            /> */}
+            {/* <Route
+              path="/indexx-exchange/buy-sell/hive-login/forgot-password"
+              element={<HiveForgotPassword />}
+            /> */}
+            {/* <Route
+              path="/indexx-exchange/buy-sell/wallet"
+              element={<BSWallet />}
+            /> */}
+            <Route
+              path="/indexx-exchange/buy-sell/withdraw-crypto/*"
+              element={<BSWithdrawCryptoLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/withdraw"
+              element={<BSWithdrawMain />}
+            >
+              <Route index element={<BSDepositWithdarwSelect />} />
+              <Route path="info" element={<BSWithdrawInfo />} />
+              <Route path="amount" element={<BSDWAmount />} />
+              <Route path="recorded" element={<BSDWRecorded />} />
+            </Route>
+            <Route
+              path="/indexx-exchange/buy-sell/deposit-crypto/*"
+              element={<BSDepositCryproLayout />}
+            />
+            <Route
+              path="/indexx-exchange/redeem-stock"
+              element={<RedeemStock />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/deposit-fiat/*"
+              element={<BSDepositFiatLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/transaction-history/*"
+              element={<BSTransactionHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/staking-history/*"
+              element={<BSStakingHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/order-history/*"
+              element={<BSOrderHistoryLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/get-started/*"
+              element={<BuySellGetStartedLayout />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/get-started-honeybee/*"
+              element={<BuySellGetStartedLayoutHoneyBee />}
+            />
+            <Route
+              path="/indexx-exchange/buy-sell/welcome"
+              element={<BuySellLoggedWelcome />}
+            />
+            <Route
+              path="/indexx-exchange/trade-to-earn"
+              element={<TradeToEarn />}
+            />
+            <Route
+              path="/indexx-exchange/reward-center"
+              element={<TaskCenter />}
+            />
+            <Route path="/indexx-exchange/report-bug" element={<BugReport />} />
+            <Route
+              path="/indexx-exchange/how-it-works"
+              element={<HowItWorks />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/centralized"
+              element={<HowCentralized />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/tradetoearn"
+              element={<HowTradeToEarn />}
+            />
+            <Route
+              path="/indexx-exchange/how-it-works/tokens"
+              element={<HowTokens />}
+            />
+            <Route path="/indexx-exchange/charts" element={<Home />} />
+            <Route path="/indexx-exchange/charts" element={<Home />} />
+            {localStorage.getItem('user') ? (
+              <Route path="/indexx-exchange/markets" element={<Markets />} />
+            ) : (
+              <Route path="/indexx-exchange/markets" element={<Markets />} />
+            )}
+            <Route path="/indexx-exchange/trade" element={<TradeChart />} />
+            <Route path="/indexx-exchange/about" element={<About />} />
+            <Route path="/indexx-exchange/help" element={<Help />}>
+              <Route index element={<Intro />} />
+              <Route path="team" element={<Team />} />
+              <Route path="contact" element={<ContactUs />} />
+            </Route>
+            <Route
+              path="/indexx-exchange/notification"
+              element={<Notification />}
+            >
+              <Route index element={<AllNotification />} />
 
-              <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
-              <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
-              <Route
-                path="/indexx-exchange/coming-soon-etf"
-                element={<ComingSoonETF />}
-              />
-              <Route
-                path="/indexx-exchange/coming-soon"
-                element={<ComingSoon />}
-              />
-              <Route
-                path="/indexx-exchange/import-indexx-tokens"
-                element={<ImportTokens />}
-              />
-              <Route
-                path="/indexx-exchange/tokens"
-                element={<IndexxTokens />}
-              />
-              <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
-              <Route
-                path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
-                element={<BuySell />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/login/*"
-                element={<BuySellLogin />}
-              />
-              {/* <Route
-            path="/indexx-exchange/buy-sell/all-login/*"
-            element={<BuySellAllLogin />}
-          /> */}
-              <Route
-                path="/indexx-exchange/buy-sell/login-honeybee/*"
-                element={<BuySellLoginHoneyBee />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/hive-login"
-                element={<BuySellLoginContentHive />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/hive-login/forgot-password"
-                element={<HiveForgotPassword />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/wallet"
-                element={<BSWallet />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/withdraw-crypto/*"
-                element={<BSWithdrawCryptoLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/withdraw"
-                element={<BSWithdrawMain />}
-              >
-                <Route index element={<BSDepositWithdarwSelect />} />
-                <Route path="info" element={<BSWithdrawInfo />} />
-                <Route path="amount" element={<BSDWAmount />} />
-                <Route path="recorded" element={<BSDWRecorded />} />
-              </Route>
-              <Route
-                path="/indexx-exchange/buy-sell/deposit-crypto/*"
-                element={<BSDepositCryproLayout />}
-              />
-              <Route
-                path="/indexx-exchange/redeem-stock"
-                element={<RedeemStock />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/deposit-fiat/*"
-                element={<BSDepositFiatLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/transaction-history/*"
-                element={<BSTransactionHistoryLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/staking-history/*"
-                element={<BSStakingHistoryLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/order-history/*"
-                element={<BSOrderHistoryLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/get-started/*"
-                element={<BuySellGetStartedLayout />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/get-started-honeybee/*"
-                element={<BuySellGetStartedLayoutHoneyBee />}
-              />
-              <Route
-                path="/indexx-exchange/buy-sell/welcome"
-                element={<BuySellLoggedWelcome />}
-              />
-              <Route
-                path="/indexx-exchange/trade-to-earn"
-                element={<TradeToEarn />}
-              />
-              <Route
-                path="/indexx-exchange/reward-center"
-                element={<TaskCenter />}
-              />
-              <Route
-                path="/indexx-exchange/report-bug"
-                element={<BugReport />}
-              />
-              <Route
-                path="/indexx-exchange/how-it-works"
-                element={<HowItWorks />}
-              />
-              <Route
-                path="/indexx-exchange/how-it-works/centralized"
-                element={<HowCentralized />}
-              />
-              <Route
-                path="/indexx-exchange/how-it-works/tradetoearn"
-                element={<HowTradeToEarn />}
-              />
-              <Route
-                path="/indexx-exchange/how-it-works/tokens"
-                element={<HowTokens />}
-              />
-              <Route path="/indexx-exchange/charts" element={<Home />} />
-              <Route path="/indexx-exchange/charts" element={<Home />} />
-              {localStorage.getItem('user') ? (
-                <Route path="/indexx-exchange/markets" element={<Markets />} />
-              ) : (
-                <Route path="/indexx-exchange/markets" element={<Markets />} />
-              )}
-              <Route path="/indexx-exchange/trade" element={<TradeChart />} />
-              <Route path="/indexx-exchange/about" element={<About />} />
-              <Route path="/indexx-exchange/help" element={<Help />}>
-                <Route index element={<Intro />} />
-                <Route path="team" element={<Team />} />
-                <Route path="contact" element={<ContactUs />} />
-              </Route>
-              <Route
-                path="/indexx-exchange/notification"
-                element={<Notification />}
-              >
-                <Route index element={<AllNotification />} />
-
-                <Route path="Activities" element={<Activity />} />
-                <Route path="system" element={<SystemMsg />} />
-              </Route>
-              <Route path="/indexx-exchange/careers" element={<Career />} />
-              <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
-              <Route
-                path="/indexx-exchange/welcome"
-                element={<WelcomePage />}
-              />
-              <Route path="/indexx-exchange/account" element={<Account />} />
-              <Route
-                path="/indexx-exchange/account/email-auth"
-                element={<BuySellVerifyEmail />}
-              />
-              <Route
-                path="/indexx-exchange/change-password"
-                element={<SecurityChange />}
-              />
-            </Routes>
-          </BrowserRouter>
-          <Footer />
-          <div id="globalnav-curtain" className="globalnav-curtain"></div>
-        </div>
-      </ThemeContext>
-    </ThemeProvider>
+              <Route path="Activities" element={<Activity />} />
+              <Route path="system" element={<SystemMsg />} />
+            </Route>
+            <Route path="/indexx-exchange/careers" element={<Career />} />
+            <Route path="/indexx-exchange/blog" element={<IndexBlog />} />
+            <Route path="/indexx-exchange/welcome" element={<WelcomePage />} />
+            <Route path="/indexx-exchange/account" element={<Account />} />
+            <Route
+              path="/indexx-exchange/account/email-auth"
+              element={<BuySellVerifyEmail />}
+            />
+            <Route
+              path="/indexx-exchange/change-password"
+              element={<SecurityChange />}
+            />
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+        <div id="globalnav-curtain" className="globalnav-curtain"></div>
+      </div>
+    </ThemeContextUpdated>
   );
 }
 
