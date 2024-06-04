@@ -289,7 +289,7 @@ const Popup = ({
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder();
-      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire') {
+      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire' || paymentMethod === "Venmo") {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod = String(paymentMethod).toLowerCase();

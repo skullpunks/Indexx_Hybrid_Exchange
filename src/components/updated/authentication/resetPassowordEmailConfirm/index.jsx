@@ -130,7 +130,9 @@ const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
   return (
     <div className={classes.Container}>
       <div className={classes.header}>
-        <Link className={classes.link}>&lt; Back </Link>
+        <Link className={classes.link} to="/auth/login-password">
+          &lt; Back
+        </Link>
       </div>
       <div className={classes.contentContent}>
         <div className={classes.leftEmpty}></div>
@@ -147,7 +149,9 @@ const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
               }
               helperText={formik.errors.verificationCode}
             />
-            {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
+            {errorMessage && (
+              <p className={classes.errorText}>{errorMessage}</p>
+            )}
             <div style={{ margin: '25px 0px' }}></div>
             <GenericButton text="Submit" onClick={formik.handleSubmit} />
           </div>

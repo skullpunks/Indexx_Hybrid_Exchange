@@ -206,13 +206,14 @@ const CustomTextField = ({
     setSearchTerm(e.target.value);
   };
 
-  useEffect(()=> {  
-    getPricesData(selectedToken.title)
-  }, [selectedToken])
+  useEffect(() => {
+    getPricesData(selectedToken.title);
+  }, [selectedToken]);
+
   const handleTokenSelect = (token) => {
-    console.log("I am here", token, disableDropdown)
+    console.log('I am here', token, disableDropdown);
     if (!disableDropdown) {
-      getPricesData(token.title)
+      getPricesData(token.title);
       setSelectedToken(token);
       onSelectToken(token);
     }
@@ -232,7 +233,7 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log("usd", currency)
+    console.log('usd', currency);
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     setRateData(priceData);
@@ -240,7 +241,6 @@ const CustomTextField = ({
       onPriceChange({ priceData, currency });
     }
   };
-
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -263,6 +263,33 @@ const CustomTextField = ({
       return false;
     });
   };
+
+   useEffect(() => {
+    async function updatedDefaultToken() {
+      if (tokenType === 'Tokens') {
+        const allFilteredTokens = await tokens.filter(
+          (x) => x.commonToken && !x.isStock && !x.isETF
+        );
+        setSelectedToken(fixedToken || allFilteredTokens[0]);
+        onSelectToken(allFilteredTokens[0]);
+      } else if (tokenType === 'Stock Tokens') {
+        const allFilteredTokens = await tokens.filter(
+          (x) => x.isStock
+        );
+        setSelectedToken(fixedToken || allFilteredTokens[0]);
+        onSelectToken(allFilteredTokens[0]);
+      } else if (tokenType === 'ETF Tokens') {
+        const allFilteredTokens = await tokens.filter(
+          (x) => x.isETF
+        );
+        setSelectedToken(fixedToken || allFilteredTokens[0]);
+        onSelectToken(allFilteredTokens[0]);
+      }
+    }
+    updatedDefaultToken();
+  }, [tokenType]);
+
+  
   return (
     <>
       <Box
@@ -292,7 +319,10 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img src={getImage(selectedToken?.image)} alt={selectedToken?.title} />
+                  <img
+                    src={getImage(selectedToken?.image)}
+                    alt={selectedToken?.title}
+                  />
                   <p>{selectedToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
@@ -316,7 +346,8 @@ const CustomTextField = ({
                     position: '-webkit-sticky',
                     position: 'sticky',
                     top: 0,
-                    background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    background:
+                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
                     zIndex: '11111',
                     padding: '10px',
                   }}
