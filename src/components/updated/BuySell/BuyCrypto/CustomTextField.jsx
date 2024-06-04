@@ -14,7 +14,6 @@ import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
-
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -110,7 +109,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     paddingBottom: '10px',
-    paddingTop: '10px',
     overflow: 'hidden',
     borderRadius: '16px',
   },
@@ -159,7 +157,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
 const getImage = (image) => {
   try {
     return require(`../../../../assets/token-icons/${image}.png`).default;
@@ -167,7 +164,6 @@ const getImage = (image) => {
     return Inex; // Fallback image if specific token icon is not found
   }
 };
-
 const CustomTextField = ({
   placeholder,
   label,
@@ -179,7 +175,6 @@ const CustomTextField = ({
   amount,
   receiveAmount,
   tokenType,
-  loggedIn,
   disableDropdown,
   fixedToken,
 }) => {
@@ -187,61 +182,37 @@ const CustomTextField = ({
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
+  const [selectedToken, setSelectedToken] = useState(initialToken);
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [userAmount, setUserAmount] = useState(amount);
   const [rateData, setRateData] = useState(0);
-
   const theme = useTheme();
-
-  console.log('receiveAmount', receiveAmount);
-  useEffect(() => {
-    console.log('I am here');
-    const token = type === 'buy' ? toToken?.title : fromToken?.title;
-    if (token) {
-      getPricesData(token);
-      onSelectToken(type === 'buy' ? toToken : fromToken);
-    }
-  }, [type, fromToken, toToken]);
-
-  useEffect(() => {
-    console.log('tokenType', tokenType);
-  }, [tokenType]);
-
-  useEffect(() => {
-    console.log('change happening', userAmount, rateData);
-    if (userAmount && rateData) {
-      const receiveAmount = calculateReceiveAmount(userAmount, rateData);
-      if (onReceiveAmountChange) {
-        onReceiveAmountChange(receiveAmount);
-      }
-    }
-  }, [userAmount, rateData, onReceiveAmountChange]);
-
   const handleFocus = () => {
     setFocused(true);
   };
-
   const handleBlur = () => {
     setFocused(false);
   };
-
   const handleOpenModal = () => {
     setIsOpen(true);
   };
-
   const handleClickAway = () => {
     setIsOpen(false);
   };
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  useEffect(()=> {  
+    getPricesData(selectedToken.title)
+  }, [selectedToken])
   const handleTokenSelect = (token) => {
-    console.log('I am here', token, disableDropdown);
+    console.log("I am here", token, disableDropdown)
     if (!disableDropdown) {
+      getPricesData(token.title)
+      setSelectedToken(token);
       onSelectToken(token);
     }
     setIsOpen(false);
@@ -254,25 +225,21 @@ const CustomTextField = ({
       onAmountChange(amount);
     }
   };
-
   const calculateReceiveAmount = (amount, rate) => {
     const receiveAmount = type === 'buy' ? amount / rate : amount * rate;
     return receiveAmount.toFixed(2);
   };
 
   const getPricesData = async (currency) => {
-    console.log('usd', currency);
+    console.log("usd", currency)
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
-    let results = {
-      priceData,
-      currency,
-    };
     setRateData(priceData);
     if (onPriceChange) {
       onPriceChange({ priceData, currency });
     }
   };
+
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -295,7 +262,6 @@ const CustomTextField = ({
       return false;
     });
   };
-
   return (
     <>
       <Box
@@ -325,11 +291,8 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img
-                    src={getImage(initialToken?.image)}
-                    alt={initialToken?.title}
-                  />
-                  <p>{initialToken?.title}</p>
+                  <img src={getImage(selectedToken?.image)} alt={selectedToken?.title} />
+                  <p>{selectedToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
               </InputAdornment>
@@ -340,21 +303,21 @@ const CustomTextField = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div
-              className={classes.dropDownContainer}
-              style={{ height: loggedIn ? '342px' : '248px' }}
-            >
-              <div className={classes.dropDownContent}>
+            <div className={classes.dropDownContainer}>
+              <div
+                style={{
+                  height: '100%',
+                  overflowY: 'auto',
+                }}
+              >
                 <div
                   style={{
                     position: '-webkit-sticky',
                     position: 'sticky',
                     top: 0,
-                    background:
-                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
                     zIndex: '11111',
-                    padding: '0px 10px 10px 10px',
-                    border: '1',
+                    padding: '10px',
                   }}
                 >
                   <TextField

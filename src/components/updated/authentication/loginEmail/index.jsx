@@ -14,7 +14,7 @@ import iosDark from '../../../../assets/authentication/ios-dark.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { decodeJWT, loginWithGoogle } from '../../../../services/api';
+import { checkEmail, decodeJWT, loginWithGoogle } from '../../../../services/api';
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -66,6 +66,8 @@ const LoginComponent = () => {
   const theme = useTheme();
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -82,10 +84,20 @@ const LoginComponent = () => {
     return emailRegex.test(email);
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (isEmailValid) {
       localStorage.setItem('email', email);
-      navigate('/auth/login-password', { state: { email } });
+      const res = await checkEmail(String(email).toLowerCase());
+      console.log(res);
+      if (res.status === 200 && !res.success) {
+        alert('Email already regsitered');
+        setLoadings(false);
+        navigate('/auth/login-password', { state: { email } });
+      } else {
+        setLoadings(false);
+        alert("Email not registered");
+        console.log('res', res.status);
+      }
     }
   };
 
