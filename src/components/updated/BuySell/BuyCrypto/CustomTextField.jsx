@@ -178,6 +178,7 @@ const CustomTextField = ({
   tokenType,
   disableDropdown,
   fixedToken,
+  loggedIn,
 }) => {
   const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
   const classes = useStyles({
@@ -206,13 +207,13 @@ const CustomTextField = ({
     setSearchTerm(e.target.value);
   };
 
-  useEffect(()=> {  
-    getPricesData(selectedToken.title)
-  }, [selectedToken])
+  useEffect(() => {
+    getPricesData(selectedToken.title);
+  }, [selectedToken]);
   const handleTokenSelect = (token) => {
-    console.log("I am here", token, disableDropdown)
+    console.log('I am here', token, disableDropdown);
     if (!disableDropdown) {
-      getPricesData(token.title)
+      getPricesData(token.title);
       setSelectedToken(token);
       onSelectToken(token);
     }
@@ -232,7 +233,7 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log("usd", currency)
+    console.log('usd', currency);
     const res = await getCoinPriceByName(String(currency));
     const priceData = res.data.results.data;
     setRateData(priceData);
@@ -240,7 +241,6 @@ const CustomTextField = ({
       onPriceChange({ priceData, currency });
     }
   };
-
 
   useEffect(() => {
     if (userAmount && rateData) {
@@ -292,7 +292,10 @@ const CustomTextField = ({
                   style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
                   onClick={disableDropdown ? null : handleOpenModal}
                 >
-                  <img src={getImage(selectedToken?.image)} alt={selectedToken?.title} />
+                  <img
+                    src={getImage(selectedToken?.image)}
+                    alt={selectedToken?.title}
+                  />
                   <p>{selectedToken?.title}</p>
                   {!disableDropdown && <ArrowDropDownIcon />}
                 </div>
@@ -304,19 +307,18 @@ const CustomTextField = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div className={classes.dropDownContainer}>
-              <div
-                style={{
-                  height: '100%',
-                  overflowY: 'auto',
-                }}
-              >
+            <div
+              className={classes.dropDownContainer}
+              style={{ height: loggedIn ? '342px' : '248px' }}
+            >
+              <div className={classes.dropDownContent}>
                 <div
                   style={{
                     position: '-webkit-sticky',
                     position: 'sticky',
                     top: 0,
-                    background: theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
+                    background:
+                      theme.palette.mode === 'dark' ? '#1E2329' : '#ffff',
                     zIndex: '11111',
                     padding: '10px',
                   }}

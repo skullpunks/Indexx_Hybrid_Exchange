@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '12px',
     borderRadius: '16px',
     width: '100%',
+    height: '320px',
   },
   cardHeading: {
     color: `${theme.palette.text.primary} !important`,

@@ -546,6 +546,7 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
                   receiveAmount={receiveAmount}
                   tokenType={tokenType}
                   disableDropdown={false}
+                  loggedIn
                 />
                 <CustomTextField
                   label="Receive"
