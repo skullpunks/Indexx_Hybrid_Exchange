@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container1: {
     order: 1,
+
     [theme.breakpoints.down('md')]: {
       order: 3,
     },

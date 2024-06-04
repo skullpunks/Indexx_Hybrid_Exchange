@@ -5,6 +5,7 @@ import TradingViewChart from './TradingViewCart';
 import { getCryptoHistoricalData } from './ChartData/getChartData';
 import DurationTabs from './RangeSwitcher';
 import ChartHeader from './ChartHeader';
+import ChartDetail from './ChartDetail';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -258,7 +259,26 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
       fetchData(selectedToken.subTitle);
     }
   }, [receiveToken]);
-
+  const data = {
+    popularity: '#3',
+    marketCap: '$111.94B',
+    volume: '$52.26B',
+    circulationSupply: '111.94B',
+    text1:
+      'Tether USDt is experiencing a decline in value this week. Currently,Tether USDt is priced at $0.9999988 per USDT, with a circulating supply of 111.94B USDT, resulting in a total market capitalisation of $111.94B.',
+    text2: `  Over the past 24 hours, the trading volume for Tether USDt has increased
+        by $-2,425,573,942,181.26, representing a -46.417% rise. Moreover, USDT
+        worth $52.26B has been traded in the last day.`,
+    SevenDaysexchangeRate: '-0.04%',
+    tewentyFourhourExchangeRate: '+0.08%',
+    onemonthExchangeRate: '+0.05%',
+    threemonthExchangeRate: '+0.01%',
+    text3: `Tether USDt's exchange rate is experiencing a decline.`,
+    text4: `   Currently, the value of 1 USDT is 1.0000252 USD, indicating that
+        purchasing 5 USDT would cost 5.0001259 USD. Conversely, 1.00 USD can be
+        exchanged for 0.9999748 USDT, and 50.00 USD can be exchanged for 50.00
+        USDT, exclusive of platform or gas fees.`,
+  };
   return (
     <div>
       <h3 className={classes.Mainheading}>{receiveToken} Markets</h3>
@@ -272,7 +292,8 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
           <TradingViewChart data={chartData} />
         </div>
         <div className={classes.cardContainer}>
-          <div className={classes.contentContainer}>
+          <ChartDetail chartData={data} />
+          {/* <div className={classes.contentContainer}>
             <h1 className={classes.heading}>Markets</h1>
             <div
               style={{
@@ -360,7 +381,7 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
               can be exchanged for 0.9999748 USDT, and 50.00 USD can be
               exchanged for 50.00 USDT, exclusive of platform or gas fees.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       <Conversion receiveToken={receiveToken} />

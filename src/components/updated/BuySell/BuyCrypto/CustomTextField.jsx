@@ -178,6 +178,7 @@ const CustomTextField = ({
   tokenType,
   disableDropdown,
   fixedToken,
+  loggedIn,
 }) => {
   const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
   const classes = useStyles({
@@ -334,13 +335,11 @@ const CustomTextField = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div className={classes.dropDownContainer}>
-              <div
-                style={{
-                  height: '100%',
-                  overflowY: 'auto',
-                }}
-              >
+            <div
+              className={classes.dropDownContainer}
+              style={{ height: loggedIn ? '342px' : '248px' }}
+            >
+              <div className={classes.dropDownContent}>
                 <div
                   style={{
                     position: '-webkit-sticky',
