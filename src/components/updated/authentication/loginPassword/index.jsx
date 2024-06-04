@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import InputField from '../../shared/TextField';
@@ -61,6 +61,10 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.primary.main} !important`,
     background: `${theme.palette.background.default} !important`,
   },
+  errorText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
+  },
 }));
 
 const LoginPassword = ({ email }) => {
@@ -70,6 +74,7 @@ const LoginPassword = ({ email }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const [loadings, setLoadings] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   console.log('email', email);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -93,11 +98,8 @@ const LoginPassword = ({ email }) => {
 
       if (res1.status === 200) {
         setLoadings(false);
-        //OpenNotification('success', 'Login Successful');
-        alert('Login Successful');
         let resObj = await decodeJWT(res1.data.access_token);
 
-        debugger;
         localStorage.setItem('user', resObj?.email);
         const userKey = cryptr.encrypt(password);
         localStorage.setItem('userkey', userKey);
@@ -131,10 +133,8 @@ const LoginPassword = ({ email }) => {
             : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
         }
       } else {
-        console.log('I am here');
         setLoadings(false);
-        // OpenNotification('error', res.data.message);
-        alert(res1.data.message);
+        setErrorMessage("Incorrect password. Please retry or click 'Forgot Password?' to reset.");
       }
     } else if (res.userType === 'CaptainBee') {
       let res2 = await loginHive(email, values.password);
@@ -142,7 +142,6 @@ const LoginPassword = ({ email }) => {
 
       if (res2.status === 200) {
         setLoadings(false);
-        //OpenNotification('success', 'Login Successful');
         let resObj = await decodeJWT(res2.data.access_token);
         localStorage.setItem('userpass', password);
         localStorage.setItem('user', resObj?.email);
@@ -168,7 +167,7 @@ const LoginPassword = ({ email }) => {
           : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       } else {
         setLoadings(false);
-        alert(res2.data.message);
+        setErrorMessage("Incorrect password. Please retry or click 'Forgot Password?' to reset.");
       }
     }
   };
@@ -220,58 +219,20 @@ const LoginPassword = ({ email }) => {
           {...formik.getFieldProps('password')}
           error={formik.touched.password && formik.errors.password}
           helperText={formik.errors.password}
-          // style={{
-          //   borderRadius: 10,
-          //   position: 'relative',
-          //   backgroundColor: 'none',
-          //   border: '1px solid red',
-          //   borderColor: theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843',
-          //   fontSize: 16,
-          //   minHeight: '26px',
-          //   width: '100%',
-          //   padding: '10px 12px',
-          //   transition: theme.transitions.create([
-          //     'border-color',
-          //     'background-color',
-          //   ]),
-          //   // Use the system font instead of the default Roboto font.
-
-          //   '&:focus': {
-          //     borderColor: theme.palette.primary.main,
-          //   },
-          //   '&:hover': {
-          //     borderColor: theme.palette.primary.main,
-          //   },
-
-          //   '& .MuiInputBase-input': {
-          //     borderRadius: 0,
-          //     position: 'relative',
-          //     backgroundColor: 'none',
-          //     border: 'none !important',
-          //     fontSize: 16,
-          //     minHeight: '26px',
-          //     width: '100%',
-          //     padding: '10px 12px',
-          //     transition: theme.transitions.create([
-          //       'border-color',
-          //       'background-color',
-          //     ]),
-          //     // Use the system font instead of the default Roboto font.
-          //   },
-          // }}
-          // endAdornment={
-          //   <InputAdornment position="end">
-          //     <IconButton
-          //       aria-label="toggle password visibility"
-          //       onClick={handleClickShowPassword}
-          //       onMouseDown={handleMouseDownPassword}
-          //       edge="end"
-          //     >
-          //       {showPassword ? <VisibilityOff /> : <Visibility />}
-          //     </IconButton>
-          //   </InputAdornment>
-          // }
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
         />
+        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
       </div>
 
       <GenericButton

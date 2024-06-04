@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
 import GenericButton from '../../../shared/Button';
@@ -7,7 +6,6 @@ import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import darkModeLogo from '../../../../../assets/authentication/darkMode_logo.svg';
 import lightModeLogo from '../../../../../assets/authentication/lightMode_logo.svg';
-
 import googleLogo from '../../../../../assets/authentication/logogoogle.svg';
 import appleLogo from '../../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../../assets/authentication/ios-dark.svg';
@@ -15,6 +13,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { resendEmailCode, sendOtp, validateOtp } from '../../../../../services/api';
 import { useNavigate } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -62,14 +61,23 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.primary.main} !important`,
     background: `${theme.palette.background.default} !important`,
   },
+  messageText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
+  },
+  successText: {
+    color: theme.palette.success.main,
+    marginTop: '8px',
+  },
 }));
 
 const SignUpEmailVerification = ({ email }) => {
   const classes = useStyles();
   const theme = useTheme();
   const navigate = useNavigate();
-  const [loadings, setLoadings] = React.useState(false);
-  const [otpSent, setOtpSent] = React.useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [message, setMessage] = useState('');
   const isEffectRun = useRef(false);
 
   const validationSchema = Yup.object({
@@ -81,25 +89,28 @@ const SignUpEmailVerification = ({ email }) => {
       )
       .required('Verification code is required'),
   });
+
   const formik = useFormik({
     initialValues: {
       verificationCode: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log('values: ', values);
       await validateOtpCode(values.verificationCode, email);
     },
   });
 
   useEffect(() => {
     if (isEffectRun.current) return;
-    console.log('email', email);
     async function sendOtpCode() {
       setLoadings(true);
       const res = await sendOtp(email);
-      console.log('res: ', res);
-      setOtpSent(true);
+      if (res.status === 200) {
+        setOtpSent(true);
+        setMessage('Verification code sent.');
+      } else {
+        setMessage('Failed to send verification code.');
+      }
       setLoadings(false);
     }
     sendOtpCode();
@@ -110,20 +121,16 @@ const SignUpEmailVerification = ({ email }) => {
     try {
       setLoadings(true);
       let res = await validateOtp(email, code);
-      console.log('res: ', res);
       if (res.status === 200) {
-        alert('Email verified');
+        setMessage('Email verified successfully.');
         setLoadings(false);
         navigate('/auth/signup-create-password', { state: { email } });
-        return;
-      }
-      {
-        alert('Failed to verify email');
+      } else {
+        setMessage('Failed to verify email.');
         setLoadings(false);
-        console.log('res', res.status);
       }
     } catch (err) {
-      alert('Failed to verify email');
+      setMessage('Failed to verify email.');
       setLoadings(false);
     }
   }
@@ -132,11 +139,15 @@ const SignUpEmailVerification = ({ email }) => {
     try {
       setLoadings(true);
       const res = await sendOtp(email);
-      console.log('res: ', res);
-      setOtpSent(true);
+      if (res.status === 200) {
+        setOtpSent(true);
+        setMessage('Verification code resent.');
+      } else {
+        setMessage('Failed to resend verification code.');
+      }
       setLoadings(false);
-    } catch(err) {
-      alert('Failed to verify email');
+    } catch (err) {
+      setMessage('Failed to resend verification code.');
       setLoadings(false);
     }
   }
@@ -166,8 +177,13 @@ const SignUpEmailVerification = ({ email }) => {
           }
           helperText={formik.errors.verificationCode}
         />
+        {message && (
+        <p className={message.includes('Failed') ? classes.messageText : classes.successText}>
+          {message}
+        </p>
+      )}
       </div>
-
+      
       <GenericButton
         onClick={formik.handleSubmit}
         text={loadings ? 'Loading...' : 'Next'}

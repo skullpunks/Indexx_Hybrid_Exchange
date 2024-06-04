@@ -5,23 +5,17 @@ import Tab from '@mui/material/Tab';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import assetLight from '../../../../assets/updated/iconicHeader/lightMode/Vector.svg';
 import assetDark from '../../../../assets/updated/iconicHeader/Asset wallet.svg';
-
 import tokenLight from '../../../../assets/updated/iconicHeader/lightMode/Token.svg';
 import tokenDark from '../../../../assets/updated/iconicHeader/Token.svg';
-
 import wallStreetLight from '../../../../assets/updated/iconicHeader/lightMode/Wall Street.svg';
 import wallStreetDark from '../../../../assets/updated/iconicHeader/Wall Street.svg';
-
 import stakingLight from '../../../../assets/updated/iconicHeader/lightMode/Staking.svg';
 import stakingDark from '../../../../assets/updated/iconicHeader/Staking.svg';
-
 import etfLight from '../../../../assets/updated/iconicHeader/lightMode/etf-logo.svg';
 import etfDark from '../../../../assets/updated/iconicHeader/ETF_dark.svg';
 
-// Custom styled Tab component
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
@@ -75,6 +69,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    const email = localStorage.getItem('email');
+    setIsLoggedIn(!!email);
+  }, []);
+
   const tabsData = [
     {
       label: 'Tokens',
@@ -94,19 +95,24 @@ export default function IconicHeader({ selectedTab, onChange }) {
       dark: etfDark,
       path: '/update/home/etf-tokens',
     },
-    {
-      label: 'Staking',
-      light: stakingLight,
-      dark: stakingDark,
-      path: '/staking',
-    },
-    {
-      label: 'Asset Wallet',
-      light: assetLight,
-      dark: assetDark,
-      path: '/wallet/overview',
-    },
   ];
+
+  if (isLoggedIn) {
+    tabsData.push(
+      {
+        label: 'Staking',
+        light: stakingLight,
+        dark: stakingDark,
+        path: '/staking',
+      },
+      {
+        label: 'Asset Wallet',
+        light: assetLight,
+        dark: assetDark,
+        path: '/wallet/overview',
+      }
+    );
+  }
 
   const handleChange = (event, newValue) => {
     const label = event.currentTarget.innerText;
@@ -130,6 +136,8 @@ export default function IconicHeader({ selectedTab, onChange }) {
     <Box
       sx={{
         width: '100%',
+        display: 'flex',
+        justifyContent: isLoggedIn ? 'flex-start' : 'center',
         maxWidth: '740px',
         margin: '20px auto 50px auto',
       }}
@@ -137,14 +145,14 @@ export default function IconicHeader({ selectedTab, onChange }) {
       <Tabs
         value={selectedTab}
         onChange={handleChange}
-        centered
+        centered={!isLoggedIn}
         variant="scrollable"
         scrollButtons={false}
         sx={{
           width: '100%',
           background: 'none',
           '& .MuiTabs-indicator': {
-            display: 'none', // Remove the underline
+            display: 'none',
           },
         }}
       >

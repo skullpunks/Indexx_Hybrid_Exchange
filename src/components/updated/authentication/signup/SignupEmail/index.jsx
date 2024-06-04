@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
 import GenericButton from '../../../shared/Button';
@@ -16,6 +15,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useGoogleLogin } from '@react-oauth/google';
 import { checkEmail, signupWithGoogle } from '../../../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -76,6 +76,10 @@ const useStyles = makeStyles((theme) => ({
       // textDecoration: 'underline',
     },
   },
+  errorText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
+  },
 }));
 
 const SignUpEmail = () => {
@@ -83,13 +87,14 @@ const SignUpEmail = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [loadings, setLoadings] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email('Enter a valid email')
       .required('Email is required'),
   });
-  // Initialize Formik for form handling
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -98,44 +103,38 @@ const SignUpEmail = () => {
     onSubmit: async (values) => {
       setLoadings(true);
       await checkEmailIfRegister(values.email);
-      //handleNextClick();
     },
   });
 
-  // Define the checkEmailIfRegister function
   const checkEmailIfRegister = async (emailid) => {
     const res = await checkEmail(String(emailid).toLowerCase());
     console.log(res);
     if (res.status === 200 && !res.success) {
-      alert('Email already regsitered');
+      setErrorMessage('This account already exists. please log in.');
       setLoadings(false);
       return;
     }
-    {
-      setLoadings(false);
-      console.log('res', res.status);
-      navigate('/auth/signup-email-verification', {
-        state: { email: emailid },
-      });
-    }
+    setLoadings(false);
+    console.log('res', res.status);
+    navigate('/auth/signup-email-verification', {
+      state: { email: emailid },
+    });
   };
 
-
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log("tokenResponse", tokenResponse)
+    console.log("tokenResponse", tokenResponse);
     const res = await signupWithGoogle(tokenResponse?.access_token);
 
     if (res.status === 200) {
-      alert("User registered successfully with Google")
       navigate('/auth/login');
     } else {
-      alert(res.data);
+      setErrorMessage(res.data);
     }
   };
 
   const login = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
-    onError: (error) => console.log('Login Failed:', error),
+    onError: (error) => setErrorMessage('Login Failed'),
   });
 
   return (
@@ -151,12 +150,13 @@ const SignUpEmail = () => {
       <h3 className={classes.loginText}>Welcome to Indexx Exchange</h3>
       <div style={{ margin: '15px auto' }}>
         <InputField
-          label={'Email/Phone number'}
+          label={'Email'}
           type="text"
           {...formik.getFieldProps('email')}
           error={formik.touched.email && formik.errors.email}
           helperText={formik.errors.email}
         />
+        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
       </div>
       <p className={classes.termsAndCondition}>
         By creating an account, I agree to Indexx's{' '}
@@ -184,7 +184,7 @@ const SignUpEmail = () => {
       <div style={{ margin: '20px auto' }}></div>
 
       <p className={classes.alreadyAccount}>
-        Already have an account?  <Link to="/auth/login">Login</Link>
+        Already have an account? <Link to="/auth/login">Login</Link>
       </p>
     </div>
   );

@@ -109,6 +109,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     paddingBottom: '10px',
+    paddingTop: '10px',
     overflow: 'hidden',
     borderRadius: '16px',
   },

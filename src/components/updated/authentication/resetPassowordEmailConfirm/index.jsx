@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 import InputField from '../../shared/TextField';
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   rightContentContainer: {
-    [theme.breakpoints.down('md')]: {},
     maxWidth: '384px',
     '& h3': {
       fontSize: '32px',
@@ -74,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: '24px',
       marginBottom: '50px',
     },
+  },
+  errorText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
   },
 }));
 
@@ -95,6 +98,8 @@ const obfuscateEmail = (email) => {
 const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const validationSchema = Yup.object({
     verificationCode: Yup.number()
       .test(
@@ -113,12 +118,11 @@ const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log('values: ', values);
       const res = await validateForgotOtp(email, values.verificationCode);
       if (res.status === 200) {
         onOtpVerified();
       } else {
-        alert('Invalid code');
+        setErrorMessage('Your email verification code is wrong');
       }
     },
   });
@@ -143,6 +147,7 @@ const ResetPasswordEmailConfirm = ({ email, onOtpVerified }) => {
               }
               helperText={formik.errors.verificationCode}
             />
+            {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
             <div style={{ margin: '25px 0px' }}></div>
             <GenericButton text="Submit" onClick={formik.handleSubmit} />
           </div>

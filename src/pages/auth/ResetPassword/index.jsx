@@ -10,8 +10,6 @@ const ResetPass = () => {
   const { email } = location.state || '';
   const [isOtpVerified, setIsOtpVerified] = useState(false);
 
-  console.log('I am in reset location.state', location.state);
-  console.log('I am in reset pass', email);
 
   return (
     <div

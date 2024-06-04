@@ -14,7 +14,11 @@ import iosDark from '../../../../assets/authentication/ios-dark.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { checkEmail, decodeJWT, loginWithGoogle } from '../../../../services/api';
+import {
+  checkEmail,
+  decodeJWT,
+  loginWithGoogle,
+} from '../../../../services/api';
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -59,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.primary.main} !important`,
     background: `${theme.palette.background.default} !important`,
   },
+  errorText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
+  },
 }));
 
 const LoginComponent = () => {
@@ -67,10 +75,12 @@ const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [loadings, setLoadings] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
+    setErrorMessage('');
     console.log('e', e.target.value);
     const value = e.target.value;
     setEmail(value);
@@ -86,16 +96,16 @@ const LoginComponent = () => {
 
   const handleNextClick = async () => {
     if (isEmailValid) {
+      setLoadings(true);
       localStorage.setItem('email', email);
       const res = await checkEmail(String(email).toLowerCase());
       console.log(res);
       if (res.status === 200 && !res.success) {
-        alert('Email already regsitered');
         setLoadings(false);
         navigate('/auth/login-password', { state: { email } });
       } else {
         setLoadings(false);
-        alert("Email not registered");
+        setErrorMessage('Account not found');
         console.log('res', res.status);
       }
     }
@@ -125,7 +135,6 @@ const LoginComponent = () => {
     const res = await loginWithGoogle(tokenResponse?.access_token);
 
     if (res.status === 200) {
-      alert('User registered successfully with Google');
       let resObj = await decodeJWT(res.data.access_token);
       localStorage.setItem('user', resObj?.email);
       localStorage.setItem('access_token', res.data.access_token);
@@ -156,13 +165,13 @@ const LoginComponent = () => {
           : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       }
     } else {
-      alert(res.data.message);
+      setErrorMessage(res.data.message);
     }
   };
 
   const login = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
-    onError: (error) => console.log('Login Failed:', error),
+    onError: (error) => setErrorMessage('Login Failed'),
   });
 
   return (
@@ -186,9 +195,10 @@ const LoginComponent = () => {
           error={formik.touched.email && formik.errors.email}
           helperText={formik.errors.email}
         />
+        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
       </div>
       <GenericButton
-        text="Next"
+        text={loadings ? 'Loading...' : 'Next'}
         disabled={!isEmailValid}
         onClick={() => {
           formik.handleSubmit();
