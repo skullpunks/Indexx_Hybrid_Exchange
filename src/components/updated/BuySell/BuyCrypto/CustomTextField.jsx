@@ -265,7 +265,7 @@ const CustomTextField = ({
     });
   };
 
-   useEffect(() => {
+  useEffect(() => {
     async function updatedDefaultToken() {
       if (tokenType === 'Tokens') {
         const allFilteredTokens = await tokens.filter(

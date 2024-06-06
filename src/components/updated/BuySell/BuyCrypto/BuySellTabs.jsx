@@ -148,7 +148,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
+const BuySellTabs = ({
+  tokenType,
+  onReceiveTokenChange,
+}) => {
   const classes = useStyles();
   const [value, setValue] = useState('buy');
   const theme = useTheme();
@@ -374,7 +377,11 @@ const BuySellTabs = ({ tokenType, onReceiveTokenChange }) => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder();
-      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire' || paymentMethod === "Venmo") {
+      } else if (
+        paymentMethod === 'Zelle' ||
+        paymentMethod === 'Wire' ||
+        paymentMethod === 'Venmo'
+      ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod = String(paymentMethod).toLowerCase();

@@ -34,7 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuyCrypto = ({ tokenType, onReceiveTokenChange }) => {
+const BuyCrypto = ({
+  tokenType,
+  onReceiveTokenChange,
+  defaultReceiveToken,
+}) => {
   const classes = useStyles();
 
   return (

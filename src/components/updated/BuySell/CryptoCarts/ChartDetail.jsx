@@ -46,7 +46,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const formatPrice = (value) => {
+  if (value === undefined || value === null || isNaN(value)) {
+    return 'N/A';
+  }
+  const numberValue = Number(value);
+  return numberValue < 1 ? numberValue.toFixed(6) : numberValue.toFixed(2);
+};
+
 const ChartDetail = ({ chartData }) => {
+  console.log('chartData', chartData);
   const classes = useStyles();
   return (
     <div className={classes.contentContainer}>
@@ -60,23 +69,25 @@ const ChartDetail = ({ chartData }) => {
       >
         <div>
           <h2 className={classes.secondaryHeading}>Popularity</h2>
-          <p className={classes.heading}>{chartData.popularity}</p>
+          <p className={classes.heading}>
+            {chartData?.popularity ? chartData.popularity : 'NA'}
+          </p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>Market Cap</h2>
-          <p className={classes.heading}>{chartData.marketCap}</p>
+          <p className={classes.heading}>{chartData?.marketCap ?? 'NA'}</p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>Volume</h2>
-          <p className={classes.heading}>{chartData.volume}</p>
+          <p className={classes.heading}>{chartData?.volume ?? 'NA'}</p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>Circulation Supply</h2>
-          <p className={classes.heading}>{chartData.circulationSupply}</p>
+          <p className={classes.heading}>{chartData?.circulationSupply ?? 'NA'}</p>
         </div>
       </div>
-      <p className={classes.secondaryHeading}>{chartData.text1}</p>
-      <p className={classes.secondaryHeading}>{chartData.text2}</p>
+      <p className={classes.secondaryHeading}>{chartData?.text1 ?? ''}</p>
+      <p className={classes.secondaryHeading}>{chartData?.text2 ?? ''}</p>
       <div style={{ margin: '30px' }}></div>
       <h1 className={classes.heading}>Conversion Tables</h1>
       <div
@@ -88,31 +99,31 @@ const ChartDetail = ({ chartData }) => {
       >
         <div>
           <h2 className={classes.secondaryHeading}>7 days exchange rate</h2>
-          <p className={`${classes.heading} ${classes.redText}`}>
-            {chartData.SevenDaysexchangeRate}
+          <p className={`${classes.heading} ${classes.greenText}`}>
+            ${formatPrice(chartData?.sevenDaysexchangeRate)}
           </p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>24-hour exchange rate</h2>
           <p className={`${classes.heading} ${classes.greenText}`}>
-            {chartData.tewentyFourhourExchangeRate}
+            ${formatPrice(chartData?.twentyFourhourExchangeRate)}
           </p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>1 month exchange rate</h2>
           <p className={`${classes.heading} ${classes.greenText}`}>
-            {chartData.onemonthExchangeRate}
+            ${formatPrice(chartData?.onemonthExchangeRate)}
           </p>
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>3 month exchange rate</h2>
           <p className={`${classes.heading} ${classes.greenText}`}>
-            {chartData.threemonthExchangeRate}
+            ${formatPrice(chartData?.threemonthExchangeRate)}
           </p>
         </div>
       </div>
-      <p className={classes.secondaryHeading}>{chartData.text3}</p>
-      <p className={classes.secondaryHeading}>{chartData.text4}</p>
+      <p className={classes.secondaryHeading}>{chartData?.text3 ?? ''}</p>
+      <p className={classes.secondaryHeading}>{chartData?.text4 ?? ''}</p>
     </div>
   );
 };
