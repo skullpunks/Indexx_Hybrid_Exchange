@@ -18,7 +18,7 @@ import { sampleSize } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   heading: {
-    fontSize: '56px',
+    fontSize: '54px',
     color: `${theme.palette.text.primary} !important`,
     fontWeight: 600,
     [theme.breakpoints.down('md')]: {
