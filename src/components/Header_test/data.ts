@@ -684,6 +684,16 @@ const header_data = [
 
 export const auth_header_data = [
   {
+    mainTextDesktop: 'Logout',
+    mainTextMob: 'Logout',
+    img: false,
+    isAuth: true,
+    active: false,
+    href: '#',
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
     mainTextDesktop: 'Login',
     mainTextMob: 'Login',
     isAuth: false,

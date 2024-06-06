@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     '& img': {
       width: '20px',
       height: '20px',
-      borderRadius: '50%',
+      // borderRadius: '50%',
     },
     '& p': {
       fontSize: '16px',
@@ -274,15 +274,11 @@ const CustomTextField = ({
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       } else if (tokenType === 'Stock Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.isStock
-        );
+        const allFilteredTokens = await tokens.filter((x) => x.isStock);
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       } else if (tokenType === 'ETF Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.isETF
-        );
+        const allFilteredTokens = await tokens.filter((x) => x.isETF);
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       }
@@ -290,7 +286,6 @@ const CustomTextField = ({
     updatedDefaultToken();
   }, [tokenType]);
 
-  
   return (
     <>
       <Box
