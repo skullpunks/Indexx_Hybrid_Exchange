@@ -179,8 +179,14 @@ const CustomTextField = ({
   disableDropdown,
   fixedToken,
   loggedIn,
+  defaultReceiveToken,
 }) => {
-  const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
+  console.log('defaultReceiveToken in customField', defaultReceiveToken);
+  const initialToken = fixedToken || {
+    title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
+    image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
+  };
+  console.log("initialToken" , initialToken)
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });

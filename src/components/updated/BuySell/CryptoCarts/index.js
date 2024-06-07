@@ -683,9 +683,30 @@ const allTokens = [
   },
 ];
 
+const getDurationParam = (tabIndex) => {
+  console.log("tabIndex", tabIndex)
+  switch (tabIndex) {
+    case 0:
+      return 1;
+    case 1:
+      return 7;
+    case 2:
+      return 31;
+    case 3:
+      return 90;
+    case 4:
+      return 365;
+    default:
+      return 30;
+  }
+};
+
+
 const CryptoCarts = ({ receiveToken = 'INEX' }) => {
   const classes = useStyles();
   const [chartData, setChartData] = useState([]);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedDays, setSelectedDays] = useState(1);
   const [marketData, setMarketData] = useState({
     popularity: '',
     marketCap: '',
@@ -702,7 +723,9 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
   useEffect(() => {
     const fetchData = async (subTitle) => {
       try {
-        const data = await getCryptoHistoricalData(subTitle.toLowerCase());
+        const duration = getDurationParam(selectedTab);
+        setSelectedDays(duration);
+        const data = await getCryptoHistoricalData(subTitle.toLowerCase(), duration);
         setChartData(data);
       } catch (error) {
         console.error(
@@ -766,7 +789,11 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
       fetchData(selectedToken.subTitle);
       fetchMarketData(selectedToken);
     }
-  }, [receiveToken]);
+  }, [receiveToken, selectedTab]);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <div>
@@ -777,8 +804,8 @@ const CryptoCarts = ({ receiveToken = 'INEX' }) => {
           style={{ border: 'none', padding: 0 }}
         >
           <ChartHeader receiveToken={receiveToken} />
-          <DurationTabs />
-          <TradingViewChart data={chartData} />
+          <DurationTabs value={selectedTab} onChange={handleTabChange} />
+          <TradingViewChart data={chartData} days={selectedDays} />
         </div>
         <div className={classes.cardContainer}>
           <ChartDetail chartData={marketData} />
