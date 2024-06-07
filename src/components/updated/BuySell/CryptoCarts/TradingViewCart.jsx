@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { createChart, ColorType } from 'lightweight-charts';
 import { useTheme } from '@mui/material/styles';
 
-const TradingViewChart = ({ data }) => {
+const TradingViewChart = ({ data, days }) => {
   const chartContainerRef = useRef();
   const theme = useTheme();
 
@@ -25,6 +25,15 @@ const TradingViewChart = ({ data }) => {
           color: theme.palette.divider,
         },
       },
+      timeScale: {
+        rightOffset: 0,
+        barSpacing: days === 1 ? 15 : 3,
+        lockVisibleTimeRangeOnResize: true,
+        rightBarStaysOnScroll: true,
+        borderVisible: false,
+        timeVisible: true,
+        secondsVisible: days === 1,
+      },
     });
 
     const areaSeries = chart.addAreaSeries({
@@ -35,6 +44,19 @@ const TradingViewChart = ({ data }) => {
 
     areaSeries.setData(data);
 
+    if (days === 1) {
+      chart.applyOptions({
+        timeScale: {
+          tickMarkFormatter: (time) => {
+            const date = new Date(time * 1000);
+            return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+          },
+        },
+      });
+    } else {
+      chart.timeScale().fitContent();
+    }
+
     const resizeObserver = new ResizeObserver(() => {
       chart.applyOptions({ width: chartContainerRef.current.clientWidth });
     });
@@ -44,7 +66,7 @@ const TradingViewChart = ({ data }) => {
       chart.remove();
       resizeObserver.disconnect();
     };
-  }, [data, theme]);
+  }, [data, days, theme]);
 
   return <div ref={chartContainerRef} style={{ width: '100%' }} />;
 };

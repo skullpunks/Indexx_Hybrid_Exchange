@@ -134,7 +134,9 @@ const LoginPassword = ({ email }) => {
         }
       } else {
         setLoadings(false);
-        setErrorMessage("Incorrect password. Please retry or click 'Forgot Password?' to reset.");
+        setErrorMessage(
+          "Incorrect password. Please retry or click 'Forgot Password?' to reset."
+        );
       }
     } else if (res.userType === 'CaptainBee') {
       let res2 = await loginHive(email, values.password);
@@ -167,7 +169,9 @@ const LoginPassword = ({ email }) => {
           : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
       } else {
         setLoadings(false);
-        setErrorMessage("Incorrect password. Please retry or click 'Forgot Password?' to reset.");
+        setErrorMessage(
+          "Incorrect password. Please retry or click 'Forgot Password?' to reset."
+        );
       }
     }
   };
@@ -191,7 +195,7 @@ const LoginPassword = ({ email }) => {
 
   const resetPasswordPage = async () => {
     const res = await sendForgotPasswordOtp(email);
-    console.log("res", res)
+    console.log('res', res);
     if (res.status === 200) {
       navigate('/auth/reset-password', {
         state: { email: email },
@@ -221,14 +225,14 @@ const LoginPassword = ({ email }) => {
           helperText={formik.errors.password}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton
+              <span
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
-                edge="end"
+                style={{ cursor: 'pointer' }}
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </span>
             </InputAdornment>
           }
         />

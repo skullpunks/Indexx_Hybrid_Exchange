@@ -388,141 +388,170 @@ const HeaderTest = () => {
                 .filter((el) => el.isAuth === isAuthenticated)
                 .map((element, i) => (
                   <>
-                    <li
-                      className="main"
-                      style={{
-                        marginLeft: i === 0 ? 'auto' : '',
-                        display: 'flex',
-                      }}
-                      onMouseEnter={
-                        isAuthenticated
-                          ? () => updateBackDropVisibility('enter')
-                          : () => updateBackDropVisibility('leave')
-                      }
-                      onMouseLeave={() => updateBackDropVisibility('leave')}
-                    >
-                      {!isMobile &&
-                        isAuthenticated &&
-                        localStorage.getItem('userlogged') !== 'normal' && (
-                          <div
-                            style={{
-                              marginBottom: '-83px',
-                              zIndex: '10000000',
-
-                              transform: 'translateY(20px)',
-                            }}
-                          >
+                    {element.mainTextDesktop === 'Logout' ? (
+                      <li
+                        className="main"
+                        style={{
+                          marginLeft: i === 0 ? 'auto' : '',
+                          display: 'flex',
+                          cursor: 'pointer',
+                        }}
+                      // onClick={(e) =>
+                      //   handleLogout(
+                      //     e,
+                      //     element.mainTextDesktop.toLocaleLowerCase()
+                      //   )
+                      // }
+                      >
+                        <a
+                          className={`desktop-item ${element.active ? 'link_active' : ''
+                            }`}
+                          onClick={(e) => handleLogout(e, 'logout')}
+                        >
+                          Logout
+                        </a>
+                      </li>
+                    ) : (
+                      <li
+                        className="main"
+                        style={{
+                          marginLeft: i === 0 ? 'auto' : '',
+                          display: 'flex',
+                        }}
+                        onMouseEnter={
+                          isAuthenticated
+                            ? () => updateBackDropVisibility('enter')
+                            : () => updateBackDropVisibility('leave')
+                        }
+                        onMouseLeave={() => updateBackDropVisibility('leave')}
+                      >
+                        {!isMobile &&
+                          isAuthenticated &&
+                          localStorage.getItem('userlogged') !== 'normal' && (
                             <div
                               style={{
-                                width: '80px',
-                                height: '80px',
-                                backgroundImage: `url(${isCaptain === true ? frame : beeframe
-                                  })`,
-                                // backgroundImage: `url(${frame})`,
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                backgroundPosition: 'center',
-                                position: 'relative',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                alignSelf: 'center',
-                                // border:"none"
+                                marginBottom: '-83px',
+                                zIndex: '10000000',
+
+                                transform: 'translateY(20px)',
                               }}
                             >
                               <div
-                                className="bee-hexagon"
                                 style={{
-                                  marginBottom: `${isCaptain === true ? 0 : '7px'
-                                    }`,
+                                  width: '80px',
+                                  height: '80px',
+                                  backgroundImage: `url(${isCaptain === true ? frame : beeframe
+                                    })`,
+                                  // backgroundImage: `url(${frame})`,
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: 'contain',
+                                  backgroundPosition: 'center',
+                                  position: 'relative',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  alignSelf: 'center',
+                                  // border:"none"
                                 }}
                               >
-                                <img
-                                  alt=""
-                                  src={userProfile ? userProfile : dummy}
-                                  width={'63px'}
-                                  height={'66px'}
+                                <div
+                                  className="bee-hexagon"
                                   style={{
-                                    border: 'none',
+                                    marginBottom: `${isCaptain === true ? 0 : '7px'
+                                      }`,
                                   }}
-                                />
+                                >
+                                  <img
+                                    alt=""
+                                    src={userProfile ? userProfile : dummy}
+                                    width={'63px'}
+                                    height={'66px'}
+                                    style={{
+                                      border: 'none',
+                                    }}
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      <a
-                        href={element.href}
-                        className={`desktop-item ${element.active ? 'link_active' : ''
-                          }`}
-                      >
-                        {isAuthenticated ? userEmail : element.mainTextDesktop}
-                      </a>
-                      <input type="checkbox" id={element.mainTextDesktop} />
-                      <label
-                        htmlFor={element.mainTextDesktop}
-                        className="mobile-item"
-                      >
-                        {isAuthenticated ? userEmail : element.mainTextDesktop}
-                      </label>
-                      {element.hasMegaDrop ? (
-                        <div
-                          className="mega-box"
-                          style={{
-                            background:
-                              theme.palette.mode === 'light' ? '#FAFAFC' : '',
-                            color:
-                              theme.palette.mode === 'light'
-                                ? '#333336 !important'
-                                : '',
-                          }}
-                          ref={elementRef}
+                          )}
+                        <a
+                          href={element.href}
+                          className={`desktop-item ${element.active ? 'link_active' : ''
+                            }`}
                         >
-                          <div className="content">
-                            {element.dropDownContent.map((elem) => (
-                              <div
-                                className="row"
-                                style={{
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                                }}
-                              >
-                                <header>{elem?.heading}</header>
-                                <ul
-                                  className={`mega-links ${elem?.mainList ? 'main' : ''
-                                    }`}
+                          {isAuthenticated
+                            ? userEmail
+                            : element.mainTextDesktop}
+                        </a>
+                        <input type="checkbox" id={element.mainTextDesktop} />
+                        <label
+                          htmlFor={element.mainTextDesktop}
+                          className="mobile-item"
+                        >
+                          {isAuthenticated
+                            ? userEmail
+                            : element.mainTextDesktop}
+                        </label>
+                        {element.hasMegaDrop ? (
+                          <div
+                            className="mega-box"
+                            style={{
+                              background:
+                                theme.palette.mode === 'light' ? '#FAFAFC' : '',
+                              color:
+                                theme.palette.mode === 'light'
+                                  ? '#333336 !important'
+                                  : '',
+                            }}
+                            ref={elementRef}
+                          >
+                            <div className="content">
+                              {element.dropDownContent.map((elem) => (
+                                <div
+                                  className="row"
+                                  style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                  }}
                                 >
-                                  {elem?.links.map((el) => (
-                                    <li>
-                                      <a
-                                        onClick={(e) =>
-                                          handleLogout(
-                                            e,
-                                            el.name.toLocaleLowerCase()
-                                          )
-                                        }
-                                        href={el.href}
-                                        className={
-                                          theme.palette.mode === 'light'
-                                            ? 'dark_color'
-                                            : ''
-                                        }
-                                      >
-                                        {el.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
+                                  <header>{elem?.heading}</header>
+                                  <ul
+                                    className={`mega-links ${elem?.mainList ? 'main' : ''
+                                      }`}
+                                  >
+                                    {elem?.links.map((el) => (
+                                      <li>
+                                        <a
+                                          onClick={(e) =>
+                                            handleLogout(
+                                              e,
+                                              el.name.toLocaleLowerCase()
+                                            )
+                                          }
+                                          href={el.href}
+                                          className={
+                                            theme.palette.mode === 'light'
+                                              ? 'dark_color'
+                                              : ''
+                                          }
+                                        >
+                                          {el.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
 
-                            <div className="row"></div>
+                              <div className="row"></div>
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        ''
-                      )}
-                    </li>
+                        ) : (
+                          ''
+                        )}
+                      </li>
+                    )}
                   </>
                 ))}
             </ul>

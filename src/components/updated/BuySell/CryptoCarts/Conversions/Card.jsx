@@ -74,12 +74,12 @@ const ConversionCards = ({ heading, type, receiveToken = "INEX" }) => {
   ];
 
   const usdtToinex = [
-    [`${formatPrice(price)} USD`, `1 ${receiveToken}`],
-    [`${formatPrice(2 * price)} USD`, `2 ${receiveToken}`],
-    [`${formatPrice(5 * price)} USD`, `5 ${receiveToken}`],
-    [`${formatPrice(10 * price)} USD`, `10 ${receiveToken}`],
-    [`${formatPrice(20 * price)} USD`, `20 ${receiveToken}`],
-    [`${formatPrice(50 * price)} USD`, `50 ${receiveToken}`],
+    [`1 USD`, `${formatPrice(1 / price)} ${receiveToken}`],
+    [`2 USD`, `${formatPrice(2 / price)} ${receiveToken}`],
+    [`5 USD`, `${formatPrice(5 / price)} ${receiveToken}`],
+    [`10 USD`, `${formatPrice(10 / price)} ${receiveToken}`],
+    [`20 USD`, `${formatPrice(20 / price)} ${receiveToken}`],
+    [`50 USD`, `${formatPrice(50 / price)} ${receiveToken}`],
   ];
   console.log("receiveToken", receiveToken)
 

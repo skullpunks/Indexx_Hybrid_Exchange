@@ -103,7 +103,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
         label: 'Staking',
         light: stakingLight,
         dark: stakingDark,
-        path: '/staking',
+        path: '/indexx-exchange/buy-sell/staking',
       },
       {
         label: 'Asset Wallet',
@@ -137,8 +137,8 @@ export default function IconicHeader({ selectedTab, onChange }) {
       sx={{
         width: '100%',
         display: 'flex',
-        justifyContent: isLoggedIn ? 'flex-start' : 'center',
-        maxWidth: '740px',
+        justifyContent: 'center',
+        maxWidth: isLoggedIn ? '740px' : '500px',
         margin: '20px auto 50px auto',
       }}
     >

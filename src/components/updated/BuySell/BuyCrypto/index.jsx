@@ -34,7 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BuyCrypto = ({ tokenType, onReceiveTokenChange }) => {
+const BuyCrypto = ({
+  tokenType,
+  onReceiveTokenChange,
+  defaultReceiveToken,
+}) => {
   const classes = useStyles();
 
   return (
@@ -47,6 +51,7 @@ const BuyCrypto = ({ tokenType, onReceiveTokenChange }) => {
           <BuySellTabs
             tokenType={tokenType}
             onReceiveTokenChange={onReceiveTokenChange}
+            defaultReceiveToken={defaultReceiveToken}
           />
         </div>
         <Popup />

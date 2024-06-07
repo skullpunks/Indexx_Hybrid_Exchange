@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     '& img': {
       width: '20px',
       height: '20px',
-      borderRadius: '50%',
+      // borderRadius: '50%',
     },
     '& p': {
       fontSize: '16px',
@@ -179,8 +179,14 @@ const CustomTextField = ({
   disableDropdown,
   fixedToken,
   loggedIn,
+  defaultReceiveToken,
 }) => {
-  const initialToken = fixedToken || { title: 'INEX', image: 'INEX' };
+  console.log('defaultReceiveToken in customField', defaultReceiveToken);
+  const initialToken = fixedToken || {
+    title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
+    image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
+  };
+  console.log("initialToken" , initialToken)
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
@@ -265,7 +271,7 @@ const CustomTextField = ({
     });
   };
 
-   useEffect(() => {
+  useEffect(() => {
     async function updatedDefaultToken() {
       if (tokenType === 'Tokens') {
         const allFilteredTokens = await tokens.filter(
@@ -274,15 +280,11 @@ const CustomTextField = ({
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       } else if (tokenType === 'Stock Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.isStock
-        );
+        const allFilteredTokens = await tokens.filter((x) => x.isStock);
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       } else if (tokenType === 'ETF Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.isETF
-        );
+        const allFilteredTokens = await tokens.filter((x) => x.isETF);
         setSelectedToken(fixedToken || allFilteredTokens[0]);
         onSelectToken(allFilteredTokens[0]);
       }
@@ -290,7 +292,6 @@ const CustomTextField = ({
     updatedDefaultToken();
   }, [tokenType]);
 
-  
   return (
     <>
       <Box

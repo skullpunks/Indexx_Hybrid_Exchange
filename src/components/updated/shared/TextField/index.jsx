@@ -12,29 +12,33 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
-
-  '& .MuiInputBase-input': {
+  '&.MuiInputBase-root': {
     borderRadius: 10,
-    position: 'relative',
     backgroundColor: 'none',
-    border: '1px solid red',
+    border: '1px solid',
     borderColor: theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843',
     fontSize: 16,
-    minHeight: '26px',
-    width: '100%',
-    padding: '10px 12px',
+    paddingRight: '15px',
     transition: theme.transitions.create(['border-color', 'background-color']),
-    // Use the system font instead of the default Roboto font.
-
-    '&:focus': {
-      borderColor: theme.palette.primary.main,
-    },
     '&:hover': {
       borderColor: theme.palette.primary.main,
     },
     '&.Mui-error': {
       borderColor: 'red !important',
     },
+    '&.Mui-focused': {
+      borderColor: theme.palette.primary.main,
+    },
+  },
+  '& .MuiInputBase-input': {
+    borderRadius: 10,
+    position: 'relative',
+    backgroundColor: 'none',
+    fontSize: 16,
+    minHeight: '26px',
+    width: '100%',
+    padding: '10px 12px',
+    transition: theme.transitions.create(['border-color', 'background-color']),
     '&:-webkit-autofill': {
       boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
       WebkitTextFillColor: `${theme.palette.text.primary} !important`,
@@ -55,15 +59,16 @@ const useStyles = makeStyles((theme) => ({
   formContainer: {
     width: '100%',
     backgroundColor: 'none',
-
     '& label': {
       fontSize: '14px',
       fontFamily: 'poppins !important',
       color: `${theme.palette.text.primary} !important`,
     },
     '& label.Mui-focused': {
-      color: '#A0AAB4',
       color: `${theme.palette.text.primary} !important`,
+    },
+    '& .Mui-focused .MuiInputBase-root': {
+      borderColor: `${theme.palette.primary.main} !important`,
     },
   },
 }));

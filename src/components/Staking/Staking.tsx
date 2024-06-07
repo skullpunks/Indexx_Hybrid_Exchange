@@ -6,6 +6,7 @@ import '../BuySell/BuySellDummy.css';
 import StakingTable from './StakingTable';
 import StakingTop from './StakingTop';
 import { useNavigate } from 'react-router-dom';
+import IconicHeader from '../updated/shared/IconicHeader';
 // import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
 // import { Link } from 'react-router-dom';
 // import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
@@ -14,6 +15,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Staking = () => {
   const [refresh, setRefresh] = useState<boolean>(true);
+  const [selectedTab, setSelectedTab] = useState('Staking');
+
+  const handleTabChange = (newValue: any) => {
+    setSelectedTab(newValue);
+  };
+
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -33,7 +40,9 @@ const Staking = () => {
   return (
     <div>
       {/* <PowerPackHeader /> */}
-      <div className="bs_wallet" style={{ paddingTop: '100px' }}>
+      <div style={{ marginTop: '50px', paddingTop: '50px' }}></div>
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
+      <div className="bs_wallet" style={{ paddingTop: '10px' }}>
         {/* <div className='d-flex bs_wallet_top'>
                 <div>
                     <Link to="" className='font_15x text-white' ><CheckCircleOutlined className='padding-r-2x margin-r-0_5x' />Create account</Link>

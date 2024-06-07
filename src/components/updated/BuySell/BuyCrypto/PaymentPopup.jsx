@@ -130,6 +130,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
+    '& img': {
+      width: '50px',
+    },
   },
   label: {
     color: `${theme.palette.text.primary} !important`,
@@ -153,7 +156,7 @@ const Popup = ({
   token,
 }) => {
   const classes = useStyles();
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState('');
   const { id } = useParams();
   const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
@@ -285,7 +288,7 @@ const Popup = ({
     }
   };
 
-  const confirmPayment = async() => {
+  const confirmPayment = async () => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder();
@@ -298,10 +301,10 @@ const Popup = ({
           );
         }
       }
-    }catch(err) {
-      console.log("Err", err)
+    } catch (err) {
+      console.log('Err', err);
     }
-  }
+  };
 
   const handlePaymentMethodSelect = async (method) => {
     console.log('method', method);
@@ -314,7 +317,7 @@ const Popup = ({
     );
     setPaymentMethod(method);
     onSelectPaymentMethod(method);
-   
+
     onClose();
   };
 
@@ -346,7 +349,7 @@ const Popup = ({
                   onClick={() => handlePaymentMethodSelect('Credit Card')}
                 >
                   <Box className={classes.iconTextContainer}>
-                    <img src={transactionIcon} alt="Credit Card" />
+                    <img src={creditCard} alt="Credit Card" />
                     <p className={classes.btnText}>Credit Card</p>
                   </Box>
                   <p>${amount}</p>
@@ -356,7 +359,7 @@ const Popup = ({
                   onClick={() => handlePaymentMethodSelect('Paypal')}
                 >
                   <Box className={classes.iconTextContainer}>
-                    <img src={transactionIcon} alt="Paypal" />
+                    <img src={paypal} alt="Paypal" />
                     <p className={classes.btnText}>Paypal</p>
                   </Box>
                   <p>${amount}</p>
@@ -366,7 +369,7 @@ const Popup = ({
                   onClick={() => handlePaymentMethodSelect('Zelle')}
                 >
                   <Box className={classes.iconTextContainer}>
-                    <img src={transactionIcon} alt="Zelle" />
+                    <img src={zelle} alt="Zelle" />
                     <p className={classes.btnText}>Zelle</p>
                   </Box>
                   <p>${amount}</p>
@@ -376,7 +379,7 @@ const Popup = ({
                   onClick={() => handlePaymentMethodSelect('Venmo')}
                 >
                   <Box className={classes.iconTextContainer}>
-                    <img src={transactionIcon} alt="Venmo" />
+                    <img src={venmo} alt="Venmo" />
                     <p className={classes.btnText}>Venmo</p>
                   </Box>
                   <p>${amount}</p>

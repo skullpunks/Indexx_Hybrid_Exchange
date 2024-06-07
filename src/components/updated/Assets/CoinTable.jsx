@@ -125,7 +125,6 @@ EnhancedTableHead.propTypes = {
   isMobile: PropTypes.bool.isRequired,
 };
 
-
 export default function EnhancedTable({ searchQuery, hideAssets }) {
   const navigate = useNavigate();
   const [order, setOrder] = React.useState('asc');
@@ -165,7 +164,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
         } else {
           let userWallets = await getUserWallets(email);
           const formattedData = userWallets.data.map((item) => ({
-            id: item._id,
+            id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
             coin_price: item?.coinPrice,
@@ -262,7 +261,10 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                   align="right"
                   sx={{ borderBottom: 'none !important' }}
                 >
-                  {row.amount}
+                  {new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(row.amount)}
                 </TableCell>
                 {!isMobile && (
                   <>
