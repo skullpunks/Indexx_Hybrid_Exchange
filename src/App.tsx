@@ -129,6 +129,7 @@ import RefferalPage from './pages/auth/Signup/Refferal';
 import SelectRolePage from './pages/auth/Signup/SelectRole';
 import BuySellPage from './pages/BuySell';
 import AssetsPage from './pages/Assets';
+import StakingPage from './pages/Staking';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -198,7 +199,7 @@ function App() {
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route
                 path="/indexx-exchange/buy-sell/staking"
-                element={<Staking />}
+                element={<StakingPage />}
               />
               <Route
                 path="/indexx-exchange/power-hive"
@@ -384,7 +385,7 @@ function App() {
 
             <Route
               path="/indexx-exchange/buy-sell/staking"
-              element={<Staking />}
+              element={<StakingPage />}
             />
             <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
