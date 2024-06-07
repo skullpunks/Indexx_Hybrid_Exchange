@@ -199,7 +199,8 @@ function App() {
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route
                 path="/indexx-exchange/buy-sell/staking"
-                element={<StakingPage />}
+                // element={<StakingPage />}
+                element={<Staking />}
               />
               <Route
                 path="/indexx-exchange/power-hive"
