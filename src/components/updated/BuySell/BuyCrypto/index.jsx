@@ -51,6 +51,7 @@ const BuyCrypto = ({
           <BuySellTabs
             tokenType={tokenType}
             onReceiveTokenChange={onReceiveTokenChange}
+            defaultReceiveToken={defaultReceiveToken}
           />
         </div>
         <Popup />

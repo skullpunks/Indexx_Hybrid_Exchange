@@ -6,6 +6,8 @@ import GenericButton from '../../shared/Button/index';
 import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
+import GeneralPopup from '../Popup';
+
 import {
   confirmSellOrder,
   createBuyOrder,
@@ -14,6 +16,7 @@ import {
 } from '../../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
+import tokens from '../../../../utils/Tokens.json';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -151,11 +154,13 @@ const useStyles = makeStyles((theme) => ({
 const BuySellTabs = ({
   tokenType,
   onReceiveTokenChange,
+  defaultReceiveToken,
 }) => {
   const classes = useStyles();
   const [value, setValue] = useState('buy');
   const theme = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [spendToken, setSpendToken] = useState({ title: 'USD', image: 'USD' });
   const [receiveToken, setReceiveToken] = useState({
     title: 'INEX',
@@ -165,6 +170,7 @@ const BuySellTabs = ({
   const [receiveAmount, setReceiveAmount] = useState('');
   const [price, setPrice] = useState('');
   const [popupOpen, setPopupOpen] = useState(false);
+  const [popupOpen2, setPopupOpen2] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const { id } = useParams();
@@ -180,6 +186,9 @@ const BuySellTabs = ({
   const [permissionData, setPermissionData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [message, setMessage] = useState();
+  const [defaultSelectedToken, setDefaultSelectedToken] = useState();
+  const [generalMessage, setGeneralMessage] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -187,6 +196,7 @@ const BuySellTabs = ({
     setIsLoggedIn(!!email);
   }, []);
 
+  console.log('defaultReceiveToken', defaultReceiveToken);
   const handleChange = (value) => {
     setValue(value);
     if (value === 'buy') {
@@ -218,6 +228,14 @@ const BuySellTabs = ({
     },
     [onReceiveTokenChange, value]
   );
+
+  useEffect(() => {
+    const findToken = tokens.find((x) => x.title === defaultReceiveToken);
+    console.log(findToken);
+    if (findToken) {
+      setDefaultSelectedToken(findToken);
+    }
+  }, [defaultSelectedToken]);
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
@@ -256,7 +274,8 @@ const BuySellTabs = ({
     if (selectedPaymentMethod && value === 'buy') {
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
-      await createNewSellOrder();
+      const res = await createNewSellOrder();
+      console.log('res', res);
     } else {
     }
   };
@@ -364,6 +383,7 @@ const BuySellTabs = ({
       );
     }
     if (res.status === 200) {
+      setLoadings(false);
       // Return the order ID for Zelle and Wire
       return res.data.orderId;
     } else {
@@ -395,8 +415,45 @@ const BuySellTabs = ({
     }
   };
 
+  // Utility function to check if a token is an Indexx token
+  const isIndexxToken = (tokenTitle) => {
+    const indexxTokens = [
+      'IN500',
+      'INEX',
+      'INEX-ETHEREUM',
+      'INEX-POLYGON',
+      "WIBS",
+      'INXC',
+      'IUSD+',
+      'ALCRYP',
+      'AMZN',
+      'APPL',
+      'BCM',
+      'CRYC10',
+      'EQSTK',
+      'GOOGL',
+      'INDXXF',
+      'META',
+      'MSFT',
+      'NVDA',
+      'PEP',
+      'SNP500',
+      'TLSA',
+      'TOB',
+    ];
+    return indexxTokens.includes(tokenTitle);
+  };
+
   const createNewSellOrder = async () => {
     setLoadings(true);
+    // Check for disallowed selling of Indexx Tokens
+    if (isIndexxToken(String(receiveToken?.title))) {
+      //alert("Selling of Indexx tokens is not allowed.");
+      setGeneralMessage('Feature of selling Indexx tokens is coming soon.');
+      setIsModalOpen(true);
+      setLoadings(false);
+      return;
+    }
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let amount = Number(spendAmount);
@@ -425,13 +482,19 @@ const BuySellTabs = ({
     }
 
     if (res.status === 200) {
-      await confirmSellOrder(
+      const result = await confirmSellOrder(
         res.data.user.email,
         res.data.orderId,
         'Completed',
         basecoin
       );
+      console.log(result.data);
+      setGeneralMessage(result.data.data);
+      setIsModalOpen(true);
+      setLoadings(false);
     } else {
+      setIsModalOpen(true);
+      setGeneralMessage(res.data);
       setLoadings(false);
     }
     //getStripePaymentIntent(res.data.orderId, res.data.user.email);
@@ -439,6 +502,11 @@ const BuySellTabs = ({
 
   const handlePopupClose = () => {
     setPopupOpen(false);
+  };
+
+  const handlePopupCloseGenereral = () => {
+    setPopupOpen2(false);
+    setIsModalOpen(false);
   };
 
   const handlePaymentMethodSelect = (method) => {
@@ -519,6 +587,7 @@ const BuySellTabs = ({
                   fixedToken={
                     value === 'buy' ? { title: 'USD', image: 'USD' } : null
                   }
+                  defaultReceiveToken={defaultSelectedToken}
                 />
                 <CustomTextField
                   label="Receive"
@@ -535,6 +604,7 @@ const BuySellTabs = ({
                     value === 'sell' ? { title: 'USD', image: 'USD' } : null
                   }
                   loggedIn={isLoggedIn}
+                  defaultReceiveToken={defaultSelectedToken}
                 />
               </>
             )}
@@ -555,6 +625,7 @@ const BuySellTabs = ({
                   tokenType={tokenType}
                   disableDropdown={false}
                   loggedIn
+                  defaultReceiveToken={defaultSelectedToken}
                 />
                 <CustomTextField
                   label="Receive"
@@ -568,6 +639,7 @@ const BuySellTabs = ({
                   tokenType={tokenType}
                   disableDropdown={true}
                   fixedToken={{ title: 'USD', image: 'USD' }}
+                  defaultReceiveToken={defaultSelectedToken}
                 />
               </>
             )}
@@ -613,7 +685,8 @@ const BuySellTabs = ({
                   marginTop: 'auto',
                 }}
                 onClick={handleSubmit}
-                disabled={spendAmount === ''}
+                disabled={spendAmount === '' || loadings}
+                loading={loadings}
               />
             </>
           ) : (
@@ -637,6 +710,12 @@ const BuySellTabs = ({
           )}
         </div>
       </Box>
+      {isModalOpen && (
+        <GeneralPopup
+          message={generalMessage}
+          onClose={handlePopupCloseGenereral}
+        />
+      )}
       <Popup
         open={popupOpen}
         onClose={handlePopupClose}

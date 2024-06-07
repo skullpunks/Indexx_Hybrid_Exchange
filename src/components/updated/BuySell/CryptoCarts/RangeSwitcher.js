@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Box, useTheme } from '@mui/material';
 
-function DurationTabs() {
-  const [value, setValue] = useState(0);
+function DurationTabs({ value, onChange }) {
   const theme = useTheme();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Box
@@ -19,7 +15,7 @@ function DurationTabs() {
     >
       <Tabs
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         aria-label="Duration Tabs"
         sx={{
           '& .MuiTabs-indicator': {
