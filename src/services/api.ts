@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  baseAPIURL = 'http://localhost:5000';
+  // baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -84,7 +84,7 @@ function setToLocalStorage(key: any, data: any, ttl: any) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-export async function fetchCryptoData(subTitle :string) {
+export async function fetchCryptoData(subTitle: string) {
   const cacheKey = `cryptoData:${subTitle}`;
   const cachedData = getFromLocalStorage(cacheKey);
 
@@ -93,14 +93,20 @@ export async function fetchCryptoData(subTitle :string) {
   }
 
   try {
-    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${subTitle}`);
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${subTitle}`
+    );
     const data = response.data;
 
     const currentPrice = data.market_data.current_price.usd;
-    const twentyFourHourAgoPrice = currentPrice / (1 + data.market_data.price_change_percentage_24h / 100);
-    const sevenDaysAgoPrice = currentPrice / (1 + data.market_data.price_change_percentage_7d / 100);
-    const oneMonthAgoPrice = currentPrice / (1 + data.market_data.price_change_percentage_30d / 100);
-    const threeMonthsAgoPrice = currentPrice / (1 + data.market_data.price_change_percentage_200d / 100);
+    const twentyFourHourAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_24h / 100);
+    const sevenDaysAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_7d / 100);
+    const oneMonthAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_30d / 100);
+    const threeMonthsAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_200d / 100);
 
     const result = {
       marketCapRank: data.market_cap_rank,

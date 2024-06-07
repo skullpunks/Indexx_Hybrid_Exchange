@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '25px 20px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
+      background: 'none',
+      alignItems: 'flex-start',
+      padding: '25px 0px',
     },
     marginTop: '50px',
   },
@@ -19,10 +22,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '40px',
     color: theme.palette.text.primary,
     fontWeight: '500',
+    flex: 1,
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+    },
   },
   selectContainer: {
+    flex: 1,
     display: 'flex',
     gap: '10px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
   },
   tableContainer: {
     background: theme.palette.mode === 'dark' ? 'black' : theme.palette.divider,
@@ -31,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const StakingTable = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <div className={classes.headerContainer}>
         <div className={classes.headerText}>Rewards and Transactions</div>
         <div className={classes.selectContainer}>

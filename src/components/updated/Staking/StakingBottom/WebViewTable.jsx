@@ -5,12 +5,13 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useTheme } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-
+import Pagination from '@mui/material/Pagination';
+import previousIcon from '../../../../assets/updated/Icon-prev.svg';
+import nextIcon from '../../../../assets/updated/Icon-next.svg';
 const columns = [
   { id: 'startDate', label: 'Start Date', minWidth: 170 },
   { id: 'endDate', label: 'End Date', minWidth: 170 },
@@ -103,6 +104,171 @@ const rows = [
     '15%',
     'In Progress'
   ),
+  createData(
+    '2023-01-01',
+    '2023-06-01',
+    1000,
+    60,
+    1060,
+    'Fixed',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-02-01',
+    '2023-08-01',
+    2000,
+    180,
+    2180,
+    'Flexible',
+    '6 Months',
+    '9%',
+    'Completed'
+  ),
+  createData(
+    '2023-03-01',
+    '2023-12-01',
+    1500,
+    225,
+    1725,
+    'Fixed',
+    '9 Months',
+    '15%',
+    'In Progress'
+  ),
+  createData(
+    '2023-04-01',
+    '2023-10-01',
+    3000,
+    180,
+    3180,
+    'Flexible',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-05-01',
+    '2024-05-01',
+    2500,
+    375,
+    2875,
+    'Fixed',
+    '12 Months',
+    '15%',
+    'In Progress'
+  ),
+  createData(
+    '2023-01-01',
+    '2023-06-01',
+    1000,
+    60,
+    1060,
+    'Fixed',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-02-01',
+    '2023-08-01',
+    2000,
+    180,
+    2180,
+    'Flexible',
+    '6 Months',
+    '9%',
+    'Completed'
+  ),
+  createData(
+    '2023-03-01',
+    '2023-12-01',
+    1500,
+    225,
+    1725,
+    'Fixed',
+    '9 Months',
+    '15%',
+    'In Progress'
+  ),
+  createData(
+    '2023-04-01',
+    '2023-10-01',
+    3000,
+    180,
+    3180,
+    'Flexible',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-05-01',
+    '2024-05-01',
+    2500,
+    375,
+    2875,
+    'Fixed',
+    '12 Months',
+    '15%',
+    'In Progress'
+  ),
+  createData(
+    '2023-01-01',
+    '2023-06-01',
+    1000,
+    60,
+    1060,
+    'Fixed',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-02-01',
+    '2023-08-01',
+    2000,
+    180,
+    2180,
+    'Flexible',
+    '6 Months',
+    '9%',
+    'Completed'
+  ),
+  createData(
+    '2023-03-01',
+    '2023-12-01',
+    1500,
+    225,
+    1725,
+    'Fixed',
+    '9 Months',
+    '15%',
+    'In Progress'
+  ),
+  createData(
+    '2023-04-01',
+    '2023-10-01',
+    3000,
+    180,
+    3180,
+    'Flexible',
+    '6 Months',
+    '6%',
+    'Completed'
+  ),
+  createData(
+    '2023-05-01',
+    '2024-05-01',
+    2500,
+    375,
+    2875,
+    'Fixed',
+    '12 Months',
+    '15%',
+    'In Progress'
+  ),
 ];
 
 export default function StickyHeadTable() {
@@ -111,7 +277,7 @@ export default function StickyHeadTable() {
   const theme = useTheme();
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(newPage - 1); // Adjust page to zero-based index
   };
 
   const renderPagination = () => {
@@ -124,19 +290,66 @@ export default function StickyHeadTable() {
         padding="10px"
       >
         <Button
-          onClick={() => handleChangePage(null, page - 1)}
+          onClick={() => handleChangePage(null, page)}
           disabled={page === 0}
+          sx={{
+            width: '120px',
+            color: theme.palette.text.primary,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            '&.Mui-disabled': {
+              background: 'none !important',
+              color: `${theme.palette.text.primary} !important`,
+            },
+          }}
         >
-          Previous
+          <img src={previousIcon} alt="previous icon" /> Previous
         </Button>
-        <span>
-          {page + 1} of {pageCount}
-        </span>
+        <Pagination
+          count={pageCount}
+          page={page + 1}
+          onChange={handleChangePage}
+          variant="outlined"
+          shape="rounded"
+          sx={{
+            '& .MuiButtonBase-root': {
+              border: 'none',
+            },
+            '& .Mui-selected': {
+              backgroundColor: `${theme.palette.primary.main} !important`,
+            },
+            '&.MuiPagination-root': {
+              position: 'relative',
+              background: 'none',
+            },
+            '& .MuiPagination-ul': {
+              justifyContent: 'center',
+            },
+            '& .MuiPaginationItem-root': {
+              display: 'none',
+            },
+            '& .MuiPaginationItem-page': {
+              display: 'inline-flex',
+            },
+          }}
+        />
         <Button
-          onClick={() => handleChangePage(null, page + 1)}
+          onClick={() => handleChangePage(null, page + 2)}
           disabled={page >= pageCount - 1}
+          sx={{
+            width: '120px',
+            color: theme.palette.text.primary,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            '&.Mui-disabled': {
+              background: 'none !important',
+              color: `${theme.palette.text.primary} !important`,
+            },
+          }}
         >
-          Next
+          Next <img src={nextIcon} alt="next icon" />
         </Button>
       </Box>
     );
@@ -152,13 +365,37 @@ export default function StickyHeadTable() {
         },
       }}
     >
-      <TableContainer sx={{ maxHeight: 450 }}>
+      <TableContainer
+        sx={{
+          maxHeight: 450,
+          '&::-webkit-scrollbar': {
+            width: '7px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor:
+              theme.palette.mode === 'dark'
+                ? '#5f6673 !important'
+                : '#b7bdc6 !important',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            display: 'none !important', // Hide the scrollbar track
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor:
+              theme.palette.mode === 'dark'
+                ? '#5f6673 !important'
+                : '#b7bdc6 !important', // Keep the same color on hover
+          },
+        }}
+      >
         <Table stickyHeader aria-label="sticky table">
           <TableHead
             sx={{
               '& .MuiTableCell-head': {
                 background: '#174b35',
                 borderRadius: '0',
+                color: theme.palette.mode === 'light' ? 'white' : '',
               },
             }}
           >
