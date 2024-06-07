@@ -1,6 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import IconicHeader from '../shared/IconicHeader';
+import StakingBottom from './StakingBottom';
 import StakingTop from './StakingTop';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,7 @@ const Staking = () => {
     <div className={classes.container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <StakingTop />
+      <StakingBottom />
     </div>
   );
 };
