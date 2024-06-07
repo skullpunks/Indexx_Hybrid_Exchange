@@ -164,7 +164,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
         } else {
           let userWallets = await getUserWallets(email);
           const formattedData = userWallets.data.map((item) => ({
-            id: item._id,
+            id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
             coin_price: item?.coinPrice,

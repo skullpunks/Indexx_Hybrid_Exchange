@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useTheme, InputAdornment } from '@mui/material';
 import InputField from '../../shared/TextField';
 import iusd from '../../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../../shared/Button';
 import SingleSelectPlaceholder from '../CustomSelect';
+import { decodeJWT, getUserWallets } from '../../../../services/api';
+import { useNavigate } from 'react-router-dom';
+import tokensList from '../../../../utils/Tokens.json';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -113,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSelect = ({ label }) => {
+const CustomSelect = ({ label, items, type }) => {
   const theme = useTheme();
   return (
     <div
@@ -144,7 +147,7 @@ const CustomSelect = ({ label }) => {
         </div>
       </div>
       <div>
-        <SingleSelectPlaceholder />
+        <SingleSelectPlaceholder items={items} type={type}/>
       </div>
     </div>
   );
@@ -152,6 +155,28 @@ const CustomSelect = ({ label }) => {
 
 const StakingTop = () => {
   const classes = useStyles();
+  let access_token = String(localStorage.getItem('access_token'));
+  let decoded = decodeJWT(access_token);
+  const navigate = useNavigate();
+  const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
+  const [stakingtype, setStakingtype] = useState('token');
+  const [token, setToken] = useState('INEX');
+  const [selectedToken, setSelectedToken] = useState();
+  const [calcAmt, setcalcAmt] = useState('');
+  const [amt, setAmt] = useState('');
+  const [type, setType] = useState('Long');
+  const [isVisible, setIsVisible] = useState(true);
+  const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
+  const [honeyBeeId, setHoneyBeeId] = useState('');
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
+  const [userBalance, setUserBalance] = useState(0);
+  const [sixMonthReward, setSixMonthReward] = useState(0);
+  const [oneYearReward, setOneYearReward] = useState(0);
+  const [rewards, setRewards] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
+  const [error, setError] = useState('');
+  const [loadings, setLoadings] = useState(false);
+
   const theme = useTheme();
   const [activeButton, setActiveButton] = useState('6 Months');
 
@@ -159,12 +184,44 @@ const StakingTop = () => {
     setActiveButton(button);
   };
 
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    if (!email) {
+      navigate('/auth/login');
+    }
+  }, [navigate]);
+
+  const getAllUserWallet = async () => {
+    try {
+      const userWallets = await getUserWallets(decoded.email);
+      const usersWallet = userWallets.data;
+      let totalBalInUSD = 0;
+
+      usersWallet.forEach((wallet) => {
+        const balance = Number(wallet.coinBalance);
+        if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
+          const price = Number(wallet.coinPrice);
+          if (!isNaN(price)) {
+            totalBalInUSD += balance * price;
+          }
+        } else {
+          totalBalInUSD += balance;
+        }
+      });
+
+      console.log('final total balance in USD', totalBalInUSD);
+      setTotalBalanceInUSD(totalBalInUSD);
+    } catch (err) {
+      console.error('Error in getAllUserWallet', err);
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.item}>
         <div className={classes.selectContainer}>
-          <CustomSelect label="Staking type" />
-          <CustomSelect label="Select Token" />
+          <CustomSelect label="Staking type" items={['Tokens', 'Stock Tokens']} type={"Type"}/>
+          <CustomSelect label="Select Token" items={tokensList} type={"Tokens"}/>
         </div>
         <div className={classes.balanceContainer}>
           <label className={classes.label}>Balance: 0</label>

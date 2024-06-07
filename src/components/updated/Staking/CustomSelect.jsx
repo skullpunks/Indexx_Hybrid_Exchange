@@ -5,20 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-export default function SingleSelectPlaceholder() {
+export default function SingleSelectPlaceholder({ items, type }) {
+  console.log("items", items)
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -88,13 +76,19 @@ export default function SingleSelectPlaceholder() {
           inputProps={{ 'aria-label': 'Without label' }}
         >
           <MenuItem disabled value="">
-            <em>Token</em>
+            <em>{type}</em>
           </MenuItem>
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
+          {type === 'Type'
+            ? items?.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))
+            : items?.map((name) => (
+                <MenuItem key={name?.title} value={name?.title}>
+                  {name?.title}
+                </MenuItem>
+              ))}
         </Select>
       </FormControl>
     </div>
