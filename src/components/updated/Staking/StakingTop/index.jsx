@@ -283,7 +283,7 @@ const StakingTop = () => {
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: '50px',
-            color: theme.palette.text.primary,
+            color: '#EAECEF',
             borderRadius: '5px',
             marginBottom: '15px',
           }}

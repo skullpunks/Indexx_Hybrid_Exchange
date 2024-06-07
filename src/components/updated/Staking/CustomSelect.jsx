@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function SingleSelectPlaceholder({ items, type }) {
-  console.log("items", items)
+  console.log('items', items);
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -21,6 +21,25 @@ export default function SingleSelectPlaceholder({ items, type }) {
           backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
           color: `${theme.palette.text.primary}`, // Custom dropdown text color
         },
+        '&::-webkit-scrollbar': {
+          width: '7px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor:
+            theme.palette.mode === 'dark'
+              ? '#5f6673 !important'
+              : '#b7bdc6 !important',
+          borderRadius: '4px',
+        },
+        '&::-webkit-scrollbar-track': {
+          display: 'none !important', // Hide the scrollbar track
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          backgroundColor:
+            theme.palette.mode === 'dark'
+              ? '#5f6673 !important'
+              : '#b7bdc6 !important', // Keep the same color on hover
+        },
       },
     },
   };
@@ -34,63 +53,59 @@ export default function SingleSelectPlaceholder({ items, type }) {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: '100%' }}>
-        <Select
-          displayEmpty
-          value={personName}
-          onChange={handleChange}
-          sx={{
-            width: '100%',
+    <FormControl sx={{ width: '100%' }}>
+      <Select
+        displayEmpty
+        value={personName}
+        onChange={handleChange}
+        sx={{
+          width: '100%',
 
+          color: `${theme.palette.text.primary} !important`,
+          '& .MuiSvgIcon-root': {
             color: `${theme.palette.text.primary} !important`,
-            '& .MuiSvgIcon-root': {
-              color: `${theme.palette.text.primary} !important`,
-            },
-            '& > * ': {
-              border: 'none !important',
-              color: `${theme.palette.text.primary} !important`,
-              borderRadius: '0',
-            },
-            '& .MuiSelect-outlined': {
-              border: 'none',
-              borderRadius: '0',
+          },
+          '& > * ': {
+            border: 'none !important',
+            color: `${theme.palette.text.primary} !important`,
+            borderRadius: '0',
+          },
+          '& .MuiSelect-outlined': {
+            border: 'none',
+            borderRadius: '0',
+            backgroundColor: theme.palette.divider,
+            color: `${theme.palette.text.primary} !important`,
+            '&:focus': {
               backgroundColor: theme.palette.divider,
               color: `${theme.palette.text.primary} !important`,
-              '&:focus': {
-                backgroundColor: theme.palette.divider,
-                color: `${theme.palette.text.primary} !important`,
-              },
             },
-          }}
-          renderValue={(selected) => {
-            if (!selected) {
-              return (
-                <em style={{ color: theme.palette.text.primary }}>Token</em>
-              );
-            }
-            return selected;
-          }}
-          MenuProps={MenuProps}
-          input={<OutlinedInput />}
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem disabled value="">
-            <em>{type}</em>
-          </MenuItem>
-          {type === 'Type'
-            ? items?.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
-                </MenuItem>
-              ))
-            : items?.map((name) => (
-                <MenuItem key={name?.title} value={name?.title}>
-                  {name?.title}
-                </MenuItem>
-              ))}
-        </Select>
-      </FormControl>
-    </div>
+          },
+        }}
+        renderValue={(selected) => {
+          if (!selected) {
+            return <em style={{ color: theme.palette.text.primary }}>Token</em>;
+          }
+          return selected;
+        }}
+        MenuProps={MenuProps}
+        input={<OutlinedInput />}
+        inputProps={{ 'aria-label': 'Without label' }}
+      >
+        <MenuItem disabled value="">
+          <em>{type}</em>
+        </MenuItem>
+        {type === 'Type'
+          ? items?.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))
+          : items?.map((name) => (
+              <MenuItem key={name?.title} value={name?.title}>
+                {name?.title}
+              </MenuItem>
+            ))}
+      </Select>
+    </FormControl>
   );
 }
