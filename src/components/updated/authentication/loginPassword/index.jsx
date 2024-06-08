@@ -153,6 +153,7 @@ const LoginPassword = ({ email }) => {
         localStorage.setItem('refresh_token', res2.data.refresh_token);
         localStorage.setItem('username', resObj?.username);
         localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('username', resObj?.username);
         localStorage.setItem(
           'userlogged',
           resObj?.userType === 'Indexx Exchange'
