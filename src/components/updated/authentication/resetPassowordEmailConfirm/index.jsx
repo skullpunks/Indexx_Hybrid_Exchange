@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 const obfuscateEmail = (email) => {
   const [localPart, domain] = email.split('@');
-  const visibleChars = 3;
+  const visibleChars = Math.min(3, localPart.length);
   const obfuscatedLocalPart =
     localPart.slice(0, visibleChars) +
     '*'.repeat(localPart.length - visibleChars);

@@ -111,9 +111,9 @@ const CryptoStats = ({ tokenType }) => {
   useEffect(() => {
     const fetchCryptoData = async () => {
       setLoading(true);
-      const cachedData = localStorage.getItem(`cryptoData_${tokenType}`);
+      const cachedData = localStorage.getItem(`cryptosData_${tokenType}`);
       const cacheTimestamp = localStorage.getItem(
-        `cryptoDataTimestamp_${tokenType}`
+        `cryptosDataTimestamp_${tokenType}`
       );
       const oneHour = 3600000;
 
@@ -133,14 +133,28 @@ const CryptoStats = ({ tokenType }) => {
       else if (tokenType === 'ETF Tokens') data = await hotETFTokenData();
 
       if (data.status === 200) {
-        const randomData = randomSelect(data.data, 5);
-        setCryptoData(randomData);
+        let combinedData;
+        if (tokenType === 'Tokens') {
+          const importantTokens = ['INEX', 'WIBS', 'BTC', 'ETH'];
+          const filteredTokens = importantTokens.map(symbol =>
+            data.data.find(crypto => crypto.Symbol === symbol)
+          ).filter(Boolean); // Remove any undefined values if the token is not found
+          const otherTokens = data.data.filter(
+            (crypto) => !importantTokens.includes(crypto.Symbol)
+          );
+          const randomOtherToken = sampleSize(otherTokens, 1);
+          combinedData = [...filteredTokens, ...randomOtherToken];
+        } else {
+          combinedData = sampleSize(data.data, 5);
+        }
+
+        setCryptoData(combinedData);
         localStorage.setItem(
-          `cryptoData_${tokenType}`,
-          JSON.stringify(randomData)
+          `cryptosData_${tokenType}`,
+          JSON.stringify(combinedData)
         );
         localStorage.setItem(
-          `cryptoDataTimestamp_${tokenType}`,
+          `cryptosDataTimestamp_${tokenType}`,
           Date.now().toString()
         );
       } else {
