@@ -192,6 +192,7 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
 
 export const checkEmail = async (email: string) => {
   try {
+    email = email.toLocaleLowerCase();
     const result = await API.post('/api/v1/inex/user/checkemail', {
       email,
     });
@@ -249,8 +250,9 @@ export const validateForgotOtp = async (email: string, code: string) => {
 
 export const checkByemail = async (email: string) => {
   try {
+    email = email.toLocaleLowerCase();
     const result = await API.post('/api/v1/inex/user/checkByemail', {
-      email,
+        email,
     });
     return result.data;
   } catch (e: any) {
