@@ -130,6 +130,9 @@ import SelectRolePage from './pages/auth/Signup/SelectRole';
 import BuySellPage from './pages/BuySell';
 import AssetsPage from './pages/Assets';
 import StakingPage from './pages/Staking';
+import DepositSelectCurrency from './pages/deposit/DepositSelectCurrency';
+import DepositEnterAmount from './pages/deposit/DepositEnterAmount';
+import DepositAddAccountInfo from './pages/deposit/AddAcountInfo';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -200,6 +203,18 @@ function App() {
               <Route
                 path="/indexx-exchange/buy-sell/staking"
                 element={<StakingPage />}
+              />
+              <Route
+                path="/deposit-select-currency"
+                element={<DepositSelectCurrency />}
+              />
+              <Route
+                path="/deposit-enter-amount"
+                element={<DepositEnterAmount />}
+              />
+              <Route
+                path="/deposit-add-account-information"
+                element={<DepositAddAccountInfo />}
               />
               <Route
                 path="/indexx-exchange/power-hive"
