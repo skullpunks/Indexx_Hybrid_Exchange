@@ -242,6 +242,7 @@ nav .wrapper {
 
 .link_active {
   color: white !important;
+  font-size: 13px !important;
 }
 @media screen and (max-width: 1150px) {
   nav .wrapper {

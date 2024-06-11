@@ -186,7 +186,7 @@ const CustomTextField = ({
     title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
     image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
   };
-  console.log("initialToken" , initialToken)
+  console.log('initialToken', initialToken);
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });

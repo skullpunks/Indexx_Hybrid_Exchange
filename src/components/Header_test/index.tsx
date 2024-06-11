@@ -22,8 +22,8 @@ import './Header.css';
 import loaderGif from '../../assets/arts/loaderIcon.gif';
 import hive from '../../assets/BSheader/hive logo HD2 1.svg';
 
-import frame from '../../assets/hive-dashboard/frame.svg';
-import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
+import frame from '../../assets/updated/header/captain.png';
+import beeframe from '../../assets/updated/header/normal.png';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
 import { useTheme } from '@mui/material';
@@ -427,37 +427,36 @@ const HeaderTest = () => {
                         }
                         onMouseLeave={() => updateBackDropVisibility('leave')}
                       >
-                        {!isMobile &&
-                          isAuthenticated &&
-                          localStorage.getItem('userlogged') !== 'normal' && (
+                        {!isMobile && isAuthenticated && (
+                          <div
+                            style={{
+                              marginBottom: '-83px',
+                              zIndex: '10000000',
+
+                              transform: 'translateY(20px)',
+                            }}
+                          >
                             <div
                               style={{
-                                marginBottom: '-83px',
-                                zIndex: '10000000',
-
-                                transform: 'translateY(20px)',
+                                width: isCaptain ? '80px' : '70px',
+                                height: isCaptain ? '80px' : '70px',
+                                backgroundImage: `url(${
+                                  isCaptain === true ? frame : beeframe
+                                })`,
+                                // backgroundImage: `url(${frame})`,
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                backgroundPosition: 'center',
+                                position: 'relative',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                alignSelf: 'center',
+                                // border:"none"
                               }}
                             >
-                              <div
-                                style={{
-                                  width: '80px',
-                                  height: '80px',
-                                  backgroundImage: `url(${
-                                    isCaptain === true ? frame : beeframe
-                                  })`,
-                                  // backgroundImage: `url(${frame})`,
-                                  backgroundRepeat: 'no-repeat',
-                                  backgroundSize: 'contain',
-                                  backgroundPosition: 'center',
-                                  position: 'relative',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  alignSelf: 'center',
-                                  // border:"none"
-                                }}
-                              >
+                              {isCaptain && (
                                 <div
                                   className="bee-hexagon"
                                   style={{
@@ -476,9 +475,10 @@ const HeaderTest = () => {
                                     }}
                                   />
                                 </div>
-                              </div>
+                              )}
                             </div>
-                          )}
+                          </div>
+                        )}
                         <a
                           href={element.href}
                           className={`desktop-item ${

@@ -133,6 +133,10 @@ import StakingPage from './pages/Staking';
 import DepositSelectCurrency from './pages/deposit/DepositSelectCurrency';
 import DepositEnterAmount from './pages/deposit/DepositEnterAmount';
 import DepositAddAccountInfo from './pages/deposit/AddAcountInfo';
+import WithdrawAddAccountInfo from './pages/withdraw/WithdrawInfo';
+import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
+import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
+import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -216,6 +220,23 @@ function App() {
                 path="/deposit-add-account-information"
                 element={<DepositAddAccountInfo />}
               />
+              <Route
+                path="/withdraw-add-information"
+                element={<WithdrawAddAccountInfo />}
+              />
+              <Route
+                path="/withdraw-enter-amount"
+                element={<WithdrawEnterAmount />}
+              />
+              <Route
+                path="/withdraw-transfer-money"
+                element={<WithdrawTransferMoney />}
+              />
+              <Route
+                path="/withdraw-success"
+                element={<WithdrawSuccessPage />}
+              />
+
               <Route
                 path="/indexx-exchange/power-hive"
                 element={<PowerPackInitial />}

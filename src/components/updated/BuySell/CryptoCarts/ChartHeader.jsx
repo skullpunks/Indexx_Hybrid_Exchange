@@ -79,8 +79,12 @@ const ChartHeader = ({ receiveToken = 'INEX' }) => {
       <Box className={classes.section}>
         <Box className={`${classes.item} avatar-group`}>
           <AvatarGroup max={2}>
-            <Avatar alt={`${receiveToken}`} src={getImage(receiveToken)} />
-            <Avatar alt="Avatar 2" src={Usd} />
+            <Avatar
+              alt={`${receiveToken}`}
+              src={getImage(receiveToken)}
+              style={{ border: 'none' }}
+            />
+            <Avatar alt="Avatar 2" src={Usd} style={{ border: 'none' }} />
           </AvatarGroup>
         </Box>
         <Box className={`${classes.item} percentage-change`}>
