@@ -2,8 +2,9 @@ import { makeStyles } from '@mui/styles';
 import React from 'react';
 import DepositLayout from '../../components/updated/Deposit';
 import GenericButton from '../../components/updated/shared/Button';
-import InputField from '../../components/updated/shared/TextField';
 
+import transfer from '../../assets/updated/transfer.svg';
+import CustomSelectBox from '../../components/updated/Deposit/CustomSelect';
 const useStyle = makeStyles((theme) => ({
   enterAmountRoot: {
     display: 'flex',
@@ -18,6 +19,28 @@ const useStyle = makeStyles((theme) => ({
     color: `${theme.palette.text.primary} !important`,
     textAlign: 'left',
   },
+  label: {
+    color: `${theme.palette.text.primary} !important`,
+    fontSize: '14px',
+  },
+  depositContainer: {
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: '12px',
+    display: 'flex',
+    gap: '10px',
+    padding: '20px 15px',
+    alignItems: 'center',
+
+    width: '100%',
+    '& h6': {
+      fontSize: '16px',
+      color: `${theme.palette.text.primary} !important`,
+    },
+    '& p': {
+      fontSize: '12px',
+      color: `${theme.palette.text.secondary} !important`,
+    },
+  },
 }));
 const DepositSelectCurrency = () => {
   const classes = useStyle();
@@ -25,13 +48,20 @@ const DepositSelectCurrency = () => {
     <DepositLayout>
       <div className={classes.enterAmountRoot}>
         <h3 className={classes.heading}>1. Select Currency</h3>
-        <InputField
-          label={'Bank Account Holder Name'}
-          placeholder="Enter account holder name"
-          type={'text'}
-        />
-        <div style={{ margin: '30px' }}></div>
 
+        <h4 className={classes.label}>Currency</h4>
+        <CustomSelectBox />
+        <div style={{ margin: '10px' }}></div>
+        <h4 className={classes.label}>Deposit with</h4>
+        <div className={classes.depositContainer}>
+          <div>
+            <img src={transfer} alt="transfer" />
+          </div>
+          <div>
+            <h6>Bank Transfer(SWIFT)</h6>
+            <p>0 Fee, 1-4 Business days</p>
+          </div>
+        </div>
         <div style={{ margin: '30px' }}></div>
         <GenericButton text={'Continue'} styles={{ marginTop: 'auto' }} />
       </div>

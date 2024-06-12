@@ -130,8 +130,16 @@ const PopularConversion = ({ receiveToken = 'INEX' }) => {
             </div>
             <div>
               <AvatarGroup max={2}>
-                <Avatar alt={`${receiveToken}`} src={getImage(receiveToken)} />
-                <Avatar alt={currency.name} src={currency.logo} />
+                <Avatar
+                  alt={`${receiveToken}`}
+                  src={getImage(receiveToken)}
+                  style={{ border: 'none' }}
+                />
+                <Avatar
+                  alt={currency.name}
+                  src={currency.logo}
+                  style={{ border: 'none' }}
+                />
               </AvatarGroup>
             </div>
           </Box>
