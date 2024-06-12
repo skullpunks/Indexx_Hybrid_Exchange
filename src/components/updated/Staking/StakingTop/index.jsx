@@ -305,7 +305,6 @@ const StakingTop = ({ onStakeSuccess }) => {
   const formatPrice = (value) =>
     value < 1 ? value.toFixed(6) : value.toFixed(2);
 
-
   const submitStake = async () => {
     try {
       setLoadings(true);
@@ -314,7 +313,13 @@ const StakingTop = ({ onStakeSuccess }) => {
         type === 'Short'
           ? selectedToken.stakingPercentage6months
           : selectedToken.stakingPercentage1year;
-      let res = await stakeCoin(email, amt, selectedToken.title, type, percentage);
+      let res = await stakeCoin(
+        email,
+        amt,
+        selectedToken.title,
+        type,
+        percentage
+      );
       if (res.status === 200) {
         setLoadings(false);
         onStakeSuccess();
@@ -324,7 +329,6 @@ const StakingTop = ({ onStakeSuccess }) => {
       setLoadings(false);
     }
   };
-
 
   return (
     <div className={classes.container}>
@@ -424,7 +428,11 @@ const StakingTop = ({ onStakeSuccess }) => {
             {['6 Months', '1 Year'].map((period) => (
               <GenericButton
                 key={period}
-                text={`${period} (${period === '6 Months' ? '6%' : '15%'})`}
+                text={`${period} (${
+                  period === '6 Months'
+                    ? `${selectedToken?.stakingPercentage6months} %`
+                    : `${selectedToken?.stakingPercentage1year} %`
+                })`}
                 onClick={() => handleButtonClick(period)}
                 className={
                   activeButton === period
@@ -439,7 +447,12 @@ const StakingTop = ({ onStakeSuccess }) => {
             <div>{formatPrice(rewards)} INEX</div>
           </div>
           <div className={classes.fullWidthButton}>
-            <GenericButton text="Stake" disabled={loadings} loading={loadings} onClick={submitStake}/>
+            <GenericButton
+              text="Stake"
+              disabled={loadings}
+              loading={loadings}
+              onClick={submitStake}
+            />
           </div>
           <div className={classes.buttonContainer}>
             <GenericButton text="Deposit Amount" />
