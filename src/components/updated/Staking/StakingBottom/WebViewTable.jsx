@@ -1,4 +1,5 @@
 import * as React from 'react';
+import moment from 'moment';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,8 +14,8 @@ import Pagination from '@mui/material/Pagination';
 import previousIcon from '../../../../assets/updated/Icon-prev.svg';
 import nextIcon from '../../../../assets/updated/Icon-next.svg';
 const columns = [
-  { id: 'startDate', label: 'Start Date', minWidth: 170 },
-  { id: 'endDate', label: 'End Date', minWidth: 170 },
+  { id: 'startDate', label: 'Start Date', minWidth: 190 },
+  { id: 'endDate', label: 'End Date', minWidth: 190 },
   { id: 'stakedAmount', label: 'Staked Amount', minWidth: 100 },
   { id: 'rewardAmount', label: 'Reward Amount', minWidth: 100 },
   { id: 'finalAmount', label: 'Final Amount', minWidth: 100 },
@@ -24,264 +25,20 @@ const columns = [
   { id: 'status', label: 'Status', minWidth: 100 },
 ];
 
-function createData(
-  startDate,
-  endDate,
-  stakedAmount,
-  rewardAmount,
-  finalAmount,
-  type,
-  duration,
-  percentage,
-  status
-) {
-  return {
-    startDate,
-    endDate,
-    stakedAmount,
-    rewardAmount,
-    finalAmount,
-    type,
-    duration,
-    percentage,
-    status,
-  };
-}
-
-const rows = [
-  createData(
-    '2023-01-01',
-    '2023-06-01',
-    1000,
-    60,
-    1060,
-    'Fixed',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-02-01',
-    '2023-08-01',
-    2000,
-    180,
-    2180,
-    'Flexible',
-    '6 Months',
-    '9%',
-    'Completed'
-  ),
-  createData(
-    '2023-03-01',
-    '2023-12-01',
-    1500,
-    225,
-    1725,
-    'Fixed',
-    '9 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-04-01',
-    '2023-10-01',
-    3000,
-    180,
-    3180,
-    'Flexible',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-05-01',
-    '2024-05-01',
-    2500,
-    375,
-    2875,
-    'Fixed',
-    '12 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-01-01',
-    '2023-06-01',
-    1000,
-    60,
-    1060,
-    'Fixed',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-02-01',
-    '2023-08-01',
-    2000,
-    180,
-    2180,
-    'Flexible',
-    '6 Months',
-    '9%',
-    'Completed'
-  ),
-  createData(
-    '2023-03-01',
-    '2023-12-01',
-    1500,
-    225,
-    1725,
-    'Fixed',
-    '9 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-04-01',
-    '2023-10-01',
-    3000,
-    180,
-    3180,
-    'Flexible',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-05-01',
-    '2024-05-01',
-    2500,
-    375,
-    2875,
-    'Fixed',
-    '12 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-01-01',
-    '2023-06-01',
-    1000,
-    60,
-    1060,
-    'Fixed',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-02-01',
-    '2023-08-01',
-    2000,
-    180,
-    2180,
-    'Flexible',
-    '6 Months',
-    '9%',
-    'Completed'
-  ),
-  createData(
-    '2023-03-01',
-    '2023-12-01',
-    1500,
-    225,
-    1725,
-    'Fixed',
-    '9 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-04-01',
-    '2023-10-01',
-    3000,
-    180,
-    3180,
-    'Flexible',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-05-01',
-    '2024-05-01',
-    2500,
-    375,
-    2875,
-    'Fixed',
-    '12 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-01-01',
-    '2023-06-01',
-    1000,
-    60,
-    1060,
-    'Fixed',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-02-01',
-    '2023-08-01',
-    2000,
-    180,
-    2180,
-    'Flexible',
-    '6 Months',
-    '9%',
-    'Completed'
-  ),
-  createData(
-    '2023-03-01',
-    '2023-12-01',
-    1500,
-    225,
-    1725,
-    'Fixed',
-    '9 Months',
-    '15%',
-    'In Progress'
-  ),
-  createData(
-    '2023-04-01',
-    '2023-10-01',
-    3000,
-    180,
-    3180,
-    'Flexible',
-    '6 Months',
-    '6%',
-    'Completed'
-  ),
-  createData(
-    '2023-05-01',
-    '2024-05-01',
-    2500,
-    375,
-    2875,
-    'Fixed',
-    '12 Months',
-    '15%',
-    'In Progress'
-  ),
-];
-
-export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const rowsPerPage = 10; // Set a fixed number of rows per page
+export default function StickyHeadTable({
+  data,
+  pageSize,
+  current,
+  setCurrent,
+}) {
   const theme = useTheme();
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage - 1); // Adjust page to zero-based index
+    setCurrent(newPage);
   };
 
   const renderPagination = () => {
-    const pageCount = Math.ceil(rows.length / rowsPerPage);
+    const pageCount = Math.ceil(data.length / pageSize);
     return (
       <Box
         display="flex"
@@ -290,8 +47,8 @@ export default function StickyHeadTable() {
         padding="10px"
       >
         <Button
-          onClick={() => handleChangePage(null, page)}
-          disabled={page === 0}
+          onClick={() => handleChangePage(null, current - 1)}
+          disabled={current === 1}
           sx={{
             width: '120px',
             color: theme.palette.text.primary,
@@ -308,7 +65,7 @@ export default function StickyHeadTable() {
         </Button>
         <Pagination
           count={pageCount}
-          page={page + 1}
+          page={current}
           onChange={handleChangePage}
           variant="outlined"
           shape="rounded"
@@ -335,8 +92,8 @@ export default function StickyHeadTable() {
           }}
         />
         <Button
-          onClick={() => handleChangePage(null, page + 2)}
-          disabled={page >= pageCount - 1}
+          onClick={() => handleChangePage(null, current + 1)}
+          disabled={current >= pageCount}
           sx={{
             width: '120px',
             color: theme.palette.text.primary,
@@ -403,7 +160,6 @@ export default function StickyHeadTable() {
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  align={column.align}
                   style={{ minWidth: column.minWidth, border: 'none' }}
                 >
                   {column.label}
@@ -412,30 +168,47 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, rowIndex) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          sx={{
-                            borderBottom: `1px solid ${theme.palette.divider}`,
-                          }}
-                        >
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {data
+              .slice((current - 1) * pageSize, current * pageSize)
+              .map((row, rowIndex) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell
+                        key={column.id}
+                        sx={{
+                          borderBottom: `1px solid ${theme.palette.divider}`,
+                        }}
+                      >
+                        {column.id === 'startDate' || column.id === 'endDate'
+                          ? moment(value).format('MM/DD/YYYY hh:mm:ss a')
+                          : column.id === 'status'
+                          ? row.isActive
+                            ? 'Active'
+                            : 'Inactive'
+                          : column.id === 'stakedAmount'
+                          ? `${parseFloat(value).toFixed(2)} ${row.coin}`
+                          : column.id === 'rewardAmount'
+                          ? `${parseFloat(value).toFixed(2)} ${row.rewardCoin}`
+                          : column.id === 'finalAmount'
+                          ? row.coin === row.rewardCoin
+                            ? `${(row.stakedAmount + row.rewardAmount).toFixed(
+                                2
+                              )} ${row.coin}`
+                            : `${row.stakedAmount.toFixed(2)} ${
+                                row.coin
+                              } + ${row.rewardAmount.toFixed(2)} ${
+                                row.rewardCoin
+                              }`
+                          : column.id === 'percentage'
+                          ? `${value * 100}%`
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -50,18 +50,28 @@ const BuySell = () => {
         if (res.status === 200) {
           setPopupMessage('Subscription successful');
           setIsModalOpen(true);
-          navigate(`/indexx-exchange/subscribe-success?subscription_id=${subscriptionId}`);
+          navigate(
+            `/indexx-exchange/subscribe-success?subscription_id=${subscriptionId}`
+          );
         }
       });
     } else if (token) {
       getPaypalOrder(token).then((res) => {
         if (res.status === 200) {
           let orderData = res.data.data;
-          if (orderData?.orderType === 'Buy' || orderData?.orderType === 'Sell' || orderData?.orderType === 'Convert') {
-            setPopupMessage(`${orderData?.orderType} Order processed successfully`);
+          if (
+            orderData?.orderType === 'Buy' ||
+            orderData?.orderType === 'Sell' ||
+            orderData?.orderType === 'Convert'
+          ) {
+            setPopupMessage(
+              `${orderData?.orderType} Order processed successfully`
+            );
             setIsModalOpen(true);
           } else {
-            navigate(`/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`);
+            navigate(
+              `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`
+            );
           }
         }
       });
@@ -80,6 +90,11 @@ const BuySell = () => {
     setIsModalOpen(false);
   };
 
+  const handleTokenSelect = (token) => {
+    console.log('Selected token from cryto in  BuySell :', token);
+    setReceiveToken(token.Symbol); // You can pass the selected token to another component or update the state as needed
+  };
+
   return (
     <div className={classes.Container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
@@ -87,12 +102,15 @@ const BuySell = () => {
         tokenType={selectedTab}
         onReceiveTokenChange={handleReceiveTokenChange}
         defaultReceiveToken={defaultToken}
+        handleTokenSelect={handleTokenSelect}
       />
       <HowToBuyCrypto tokenType={selectedTab} receiveToken={receiveToken} />
-      <CryptoCarts receiveToken={receiveToken} /> 
+      <CryptoCarts receiveToken={receiveToken} />
       <PopularConversion receiveToken={receiveToken} />
-      {isModalOpen && <Popup message={popupMessage} onClose={handlePopupClose} />}
-    </div> 
+      {isModalOpen && (
+        <Popup message={popupMessage} onClose={handlePopupClose} />
+      )}
+    </div>
   );
 };
 

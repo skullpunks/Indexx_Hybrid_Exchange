@@ -1,10 +1,10 @@
 import React from 'react';
 import StakingTable from './StakingTable';
 
-const StakingBottom = () => {
+const StakingBottom = ({refresh}) => {
   return (
     <div>
-      <StakingTable />
+      <StakingTable refresh={refresh}/>
     </div>
   );
 };

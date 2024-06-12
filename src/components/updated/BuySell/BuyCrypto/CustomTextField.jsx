@@ -186,7 +186,7 @@ const CustomTextField = ({
     title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
     image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
   };
-  console.log("initialToken" , initialToken)
+  console.log('initialToken', initialToken);
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
@@ -273,7 +273,10 @@ const CustomTextField = ({
 
   useEffect(() => {
     async function updatedDefaultToken() {
-      if (tokenType === 'Tokens') {
+      if (defaultReceiveToken) {
+        setSelectedToken(fixedToken || defaultReceiveToken);
+        onSelectToken(defaultReceiveToken); // Call the callback with selected token
+      } else if (tokenType === 'Tokens') {
         const allFilteredTokens = await tokens.filter(
           (x) => x.commonToken && !x.isStock && !x.isETF
         );
@@ -290,7 +293,7 @@ const CustomTextField = ({
       }
     }
     updatedDefaultToken();
-  }, [tokenType]);
+  }, [tokenType, defaultReceiveToken]);
 
   return (
     <>

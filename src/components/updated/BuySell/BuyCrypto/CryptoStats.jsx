@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CryptoStats = ({ tokenType }) => {
+const CryptoStats = ({ tokenType, onTokenSelect  }) => {
   const classes = useStyles();
   const [cryptoData, setCryptoData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -211,7 +211,7 @@ const CryptoStats = ({ tokenType }) => {
           <List>
             {cryptoData.map((crypto) => (
               <ListItem key={crypto.Symbol} disablePadding>
-                <ListItemButton className={classes.listContainer}>
+                <ListItemButton className={classes.listContainer}  onClick={() => onTokenSelect(crypto)}>
                   <div className={classes.logoContainer}>
                     <img src={getImage(crypto.Symbol)} alt={crypto.Name} />
                     <Typography>{crypto.Symbol}</Typography>

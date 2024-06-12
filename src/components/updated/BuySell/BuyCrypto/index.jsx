@@ -38,6 +38,7 @@ const BuyCrypto = ({
   tokenType,
   onReceiveTokenChange,
   defaultReceiveToken,
+  handleTokenSelect
 }) => {
   const classes = useStyles();
 
@@ -45,7 +46,7 @@ const BuyCrypto = ({
     <TokenProvider>
       <div className={classes.root}>
         <div className={`${classes.container} ${classes.container1}`}>
-          <CryptoStats tokenType={tokenType} />
+          <CryptoStats tokenType={tokenType} onTokenSelect={handleTokenSelect}/>
         </div>
         <div className={`${classes.container} ${classes.container2}`}>
           <BuySellTabs
