@@ -82,11 +82,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
       href: 'https://www.facebook.com/profile.php?id=100086225564460',
       alt: 'facebook',
     },
-    {
-      src: Reddit,
-      href: 'https://www.reddit.com/user/Indexx_ai/',
-      alt: 'reddit',
-    },
+    // {
+    //   src: Reddit,
+    //   href: 'https://www.reddit.com/user/Indexx_ai/',
+    //   alt: 'reddit',
+    // },
     {
       src: Telegram,
       href: 'https://t.me/indexxai',

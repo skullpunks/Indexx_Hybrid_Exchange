@@ -304,34 +304,39 @@ const CustomTextField = ({
               } !important`,
         }}
       >
-        <TextField
-          variant="outlined"
-          className={classes.textField}
-          placeholder={placeholder}
-          type="number"
-          value={label === 'Spend' ? userAmount : receiveAmount}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleAmountChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <div
-                  className={classes.dropDownIconContainer}
-                  style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
-                  onClick={disableDropdown ? null : handleOpenModal}
-                >
-                  <img
-                    src={getImage(selectedToken?.image)}
-                    alt={selectedToken?.title}
-                  />
-                  <p>{selectedToken?.title}</p>
-                  {!disableDropdown && <ArrowDropDownIcon />}
-                </div>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} shrink htmlFor="input-field">
+            {label}
+          </InputLabel>
+          <TextField
+            variant="outlined"
+            className={classes.textField}
+            placeholder={placeholder}
+            type="number"
+            value={label === 'Spend' ? userAmount : receiveAmount}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleAmountChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <div
+                    className={classes.dropDownIconContainer}
+                    style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
+                    onClick={disableDropdown ? null : handleOpenModal}
+                  >
+                    <img
+                      src={getImage(selectedToken?.image)}
+                      alt={selectedToken?.title}
+                    />
+                    <p>{selectedToken?.title}</p>
+                    {!disableDropdown && <ArrowDropDownIcon />}
+                  </div>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </FormControl>
       </Box>
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (

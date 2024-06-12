@@ -4,13 +4,14 @@ import { makeStyles } from '@mui/styles';
 import GenericButton from '../../shared/Button/index';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import transactionIcon from '../../../../assets/updated/buySell/transactionMethod.svg';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 import creditCard from '../../../../assets/updated/popup/credit-card.svg';
 import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   createBuyOrder,
   getHoneyBeeDataByUsername,
@@ -156,6 +157,7 @@ const Popup = ({
   token,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('');
   const { id } = useParams();
   const [honeyBeeId, setHoneyBeeId] = useState('');
@@ -292,7 +294,11 @@ const Popup = ({
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder();
-      } else if (paymentMethod === 'Zelle' || paymentMethod === 'Wire' || paymentMethod === "Venmo") {
+      } else if (
+        paymentMethod === 'Zelle' ||
+        paymentMethod === 'Wire' ||
+        paymentMethod === 'Venmo'
+      ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod = String(paymentMethod).toLowerCase();
@@ -329,7 +335,26 @@ const Popup = ({
     >
       <div className="bnModalWrap">
         <div className={classes.contentContainer}>
-          <h3>Pay With</h3>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            <div></div>
+            <h3>Pay With</h3>{' '}
+            <div onClick={onClose} style={{ cursor: 'pointer' }}>
+              <CloseIcon
+                color={theme.palette.text.secondary}
+                sx={{
+                  '&:hover': {
+                    color: theme.palette.text.primary,
+                  },
+                }}
+              />
+            </div>
+          </div>
           <Box className={classes.container} style={{ width: '100%' }}>
             {type === 'Sell' ? (
               <button

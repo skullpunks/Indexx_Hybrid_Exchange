@@ -244,7 +244,7 @@ nav .wrapper {
   color: white !important;
   font-size: 13px !important;
 }
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1550px) {
   nav .wrapper {
     padding: 0 30px;
   }
