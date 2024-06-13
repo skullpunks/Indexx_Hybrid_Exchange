@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
 import GenericButton from '../../../shared/Button';
@@ -7,13 +6,15 @@ import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import darkModeLogo from '../../../../../assets/authentication/darkMode_logo.svg';
 import lightModeLogo from '../../../../../assets/authentication/lightMode_logo.svg';
-
 import googleLogo from '../../../../../assets/authentication/logogoogle.svg';
 import appleLogo from '../../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { FormControlLabel, Switch, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { signupAPI } from '../../../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
@@ -61,11 +62,25 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.primary.main} !important`,
     background: `${theme.palette.background.default} !important`,
   },
+  messageText: {
+    color: theme.palette.error.main,
+    marginTop: '8px',
+  },
+  successText: {
+    color: theme.palette.success.main,
+    marginTop: '8px',
+  },
 }));
 
 const Refferal = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [loadings, setLoadings] = React.useState(false);
+  const [message, setMessage] = useState('');
+  const { email, password } = location.state || '';
+  
   const validationSchema = Yup.object().shape({
     referralId: Yup.string().optional(),
     marketingUpdates: Yup.boolean().required(
@@ -80,10 +95,22 @@ const Refferal = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log('Form values:', values);
-      // Handle form submission
+      setLoadings(true);
+      const res = await signupAPI(email, password, '', values.referralId);
+      if (res.status === 200) {
+        setLoadings(false);
+        setMessage('Successfully registered');
+        window.dispatchEvent(new Event('storage'));
+        navigate('/auth/login', {
+          state: { email: email, password: values.password },
+        });
+      } else {
+        setLoadings(false);
+        setMessage(res.data);
+      }
     },
   });
+
   return (
     <div className={classes.Container}>
       <div className={classes.logoContainer}>
@@ -129,7 +156,22 @@ const Refferal = () => {
         </Typography>
       )}
 
-      <GenericButton text={'Next'} onClick={formik.handleSubmit} />
+      {message && (
+        <Typography
+          className={
+            message.includes('Successfully') ? classes.successText : classes.messageText
+          }
+          variant="caption"
+        >
+          {message}
+        </Typography>
+      )}
+
+      <GenericButton
+        text={loadings ? 'Loading...' : 'Next'}
+        onClick={formik.handleSubmit}
+        loading={loadings}
+      />
       <div style={{ margin: '10px auto' }}></div>
     </div>
   );

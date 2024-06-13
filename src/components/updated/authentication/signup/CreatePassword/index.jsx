@@ -15,6 +15,7 @@ import appleLogo from '../../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -72,11 +73,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreatePassword = () => {
+const CreatePassword = ({email}) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -102,8 +103,13 @@ const CreatePassword = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log('values: ', values);
+      navigate('/auth/signup-referral', {
+        state: { email: email, password: values.password },
+      });
     },
   });
+
+
   useEffect(() => {
     const password = formik.values.password;
     setPasswordCriteria({
