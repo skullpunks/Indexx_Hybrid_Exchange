@@ -4,7 +4,6 @@ import logo from '../../assets/header-icons/indexx_logo.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
 
-import { Theme } from '../../utils/themeContext';
 import Fantasy_Lotto from '../../assets/BSheader/fantasy.png';
 import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
@@ -23,11 +22,11 @@ import './Header.css';
 import loaderGif from '../../assets/arts/loaderIcon.gif';
 import hive from '../../assets/BSheader/hive logo HD2 1.svg';
 
-import frame from '../../assets/hive-dashboard/frame.svg';
-import beeframe from '../../assets/hive-dashboard/beeframe-2.svg';
+import frame from '../../assets/updated/header/captain.png';
+import beeframe from '../../assets/updated/header/normal.png';
 
 import dummy from '../../assets/hive-dashboard/dummy.jpeg';
-import { useTheme } from '@emotion/react';
+import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 
 import {
@@ -45,7 +44,7 @@ import {
   baseAcademyUrl,
   decodeJWT,
 } from '../../services/api';
-import ThemeToggler from '../ThemeToggler';
+
 import DarkMode from '../DarkMode/DarkMode';
 
 const Links = [
@@ -75,8 +74,7 @@ const Links = [
 ];
 
 const HeaderTest = () => {
-  const themeData = useContext(Theme);
-  const [theme, setTheme] = useState<string>(themeData?.theme ?? 'light');
+  const theme = useTheme() as any;
   const isAuthenticated = localStorage.getItem('access_token') !== null;
   const [backdropVisibility, setBackdropVisibility] = useState(false);
   const elementRef = useRef(null);
@@ -210,12 +208,6 @@ const HeaderTest = () => {
 
   const isMobile = useMediaQuery('(max-width:768px)');
 
-  useEffect(() => {
-    if (themeData?.theme) {
-      setTheme(themeData?.theme);
-    }
-  }, [themeData?.theme]);
-
   //   const handleItemClick = (path: string, i: number) => {
   //     setactiveIndex(i);
   //     console.log(path, 'path');
@@ -267,17 +259,18 @@ const HeaderTest = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;
     if (userType === 'CaptainBee') {
-      window.location.href = '/indexx-exchange/buy-sell/hive-login';
+      window.location.href = '/auth/login';
     } else if (userType === 'HoneyBee') {
-      window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+      window.location.href = '/auth/login';
     } else {
       if (window.location.pathname.includes('trade-to-earn'))
         window.location.reload();
-      else window.location.href = '/indexx-exchange/buy-sell/login';
+      else window.location.href = '/auth/login';
     }
   };
   const handleLogout = (e: any, nm: string) => {
@@ -293,7 +286,8 @@ const HeaderTest = () => {
             style={{
               display: 'block',
               opacity: backdropVisibility ? 1 : 0,
-              background: theme === 'dark' ? 'rgba(0,0,0,0.5)' : '',
+              background:
+                theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.5)' : '',
               transitionDelay: '.1s',
               height: backdropVisibility ? '100vh' : 0,
             }}
@@ -338,8 +332,12 @@ const HeaderTest = () => {
                       <div
                         className="mega-box"
                         style={{
-                          background: theme === 'light' ? '#FAFAFC' : '',
-                          color: theme === 'light' ? '#333336 !important' : '',
+                          background:
+                            theme.palette.mode === 'light' ? '#FAFAFC' : '',
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#333336 !important'
+                              : '',
                         }}
                         ref={elementRef}
                       >
@@ -363,7 +361,9 @@ const HeaderTest = () => {
                                     <a
                                       href={el.href}
                                       className={
-                                        theme === 'light' ? 'dark_color' : ''
+                                        theme.palette.mode === 'light'
+                                          ? 'dark_color'
+                                          : ''
                                       }
                                     >
                                       {el.name}
@@ -389,22 +389,45 @@ const HeaderTest = () => {
                 .filter((el) => el.isAuth === isAuthenticated)
                 .map((element, i) => (
                   <>
-                    <li
-                      className="main"
-                      style={{
-                        marginLeft: i === 0 ? 'auto' : '',
-                        display: 'flex',
-                      }}
-                      onMouseEnter={
-                        isAuthenticated
-                          ? () => updateBackDropVisibility('enter')
-                          : () => updateBackDropVisibility('leave')
-                      }
-                      onMouseLeave={() => updateBackDropVisibility('leave')}
-                    >
-                      {!isMobile &&
-                        isAuthenticated &&
-                        localStorage.getItem('userlogged') !== 'normal' && (
+                    {element.mainTextDesktop === 'Logout' ? (
+                      <li
+                        className="main"
+                        style={{
+                          marginLeft: i === 0 ? 'auto' : '',
+                          display: 'flex',
+                          cursor: 'pointer',
+                        }}
+                        // onClick={(e) =>
+                        //   handleLogout(
+                        //     e,
+                        //     element.mainTextDesktop.toLocaleLowerCase()
+                        //   )
+                        // }
+                      >
+                        <a
+                          className={`desktop-item ${
+                            element.active ? 'link_active' : ''
+                          }`}
+                          onClick={(e) => handleLogout(e, 'logout')}
+                        >
+                          Logout
+                        </a>
+                      </li>
+                    ) : (
+                      <li
+                        className="main"
+                        style={{
+                          marginLeft: i === 0 ? 'auto' : '',
+                          display: 'flex',
+                        }}
+                        onMouseEnter={
+                          isAuthenticated
+                            ? () => updateBackDropVisibility('enter')
+                            : () => updateBackDropVisibility('leave')
+                        }
+                        onMouseLeave={() => updateBackDropVisibility('leave')}
+                      >
+                        {!isMobile && isAuthenticated && (
                           <div
                             style={{
                               marginBottom: '-83px',
@@ -415,8 +438,8 @@ const HeaderTest = () => {
                           >
                             <div
                               style={{
-                                width: '80px',
-                                height: '80px',
+                                width: isCaptain ? '80px' : '70px',
+                                height: isCaptain ? '80px' : '70px',
                                 backgroundImage: `url(${
                                   isCaptain === true ? frame : beeframe
                                 })`,
@@ -433,96 +456,108 @@ const HeaderTest = () => {
                                 // border:"none"
                               }}
                             >
-                              <div
-                                className="bee-hexagon"
-                                style={{
-                                  marginBottom: `${
-                                    isCaptain === true ? 0 : '7px'
-                                  }`,
-                                }}
-                              >
-                                <img
-                                  alt=""
-                                  src={userProfile ? userProfile : dummy}
-                                  width={'63px'}
-                                  height={'66px'}
+                              {isCaptain && (
+                                <div
+                                  className="bee-hexagon"
                                   style={{
-                                    border: 'none',
+                                    marginBottom: `${
+                                      isCaptain === true ? 0 : '7px'
+                                    }`,
                                   }}
-                                />
-                              </div>
+                                >
+                                  <img
+                                    alt=""
+                                    src={userProfile ? userProfile : dummy}
+                                    width={'63px'}
+                                    height={'66px'}
+                                    style={{
+                                      border: 'none',
+                                    }}
+                                  />
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
-                      <a
-                        href={element.href}
-                        className={`desktop-item ${
-                          element.active ? 'link_active' : ''
-                        }`}
-                      >
-                        {isAuthenticated ? userEmail : element.mainTextDesktop}
-                      </a>
-                      <input type="checkbox" id={element.mainTextDesktop} />
-                      <label
-                        htmlFor={element.mainTextDesktop}
-                        className="mobile-item"
-                      >
-                        {isAuthenticated ? userEmail : element.mainTextDesktop}
-                      </label>
-                      {element.hasMegaDrop ? (
-                        <div
-                          className="mega-box"
-                          style={{
-                            background: theme === 'light' ? '#FAFAFC' : '',
-                            color:
-                              theme === 'light' ? '#333336 !important' : '',
-                          }}
-                          ref={elementRef}
+                        <a
+                          href={element.href}
+                          className={`desktop-item ${
+                            element.active ? 'link_active' : ''
+                          }`}
                         >
-                          <div className="content">
-                            {element.dropDownContent.map((elem) => (
-                              <div
-                                className="row"
-                                style={{
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                                }}
-                              >
-                                <header>{elem?.heading}</header>
-                                <ul
-                                  className={`mega-links ${
-                                    elem?.mainList ? 'main' : ''
-                                  }`}
+                          {isAuthenticated
+                            ? userEmail
+                            : element.mainTextDesktop}
+                        </a>
+                        <input type="checkbox" id={element.mainTextDesktop} />
+                        <label
+                          htmlFor={element.mainTextDesktop}
+                          className="mobile-item"
+                        >
+                          {isAuthenticated
+                            ? userEmail
+                            : element.mainTextDesktop}
+                        </label>
+                        {element.hasMegaDrop ? (
+                          <div
+                            className="mega-box"
+                            style={{
+                              background:
+                                theme.palette.mode === 'light' ? '#FAFAFC' : '',
+                              color:
+                                theme.palette.mode === 'light'
+                                  ? '#333336 !important'
+                                  : '',
+                            }}
+                            ref={elementRef}
+                          >
+                            <div className="content">
+                              {element.dropDownContent.map((elem) => (
+                                <div
+                                  className="row"
+                                  style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                  }}
                                 >
-                                  {elem?.links.map((el) => (
-                                    <li>
-                                      <a
-                                        onClick={(e) =>
-                                          handleLogout(
-                                            e,
-                                            el.name.toLocaleLowerCase()
-                                          )
-                                        }
-                                        href={el.href}
-                                        className={
-                                          theme === 'light' ? 'dark_color' : ''
-                                        }
-                                      >
-                                        {el.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
+                                  <header>{elem?.heading}</header>
+                                  <ul
+                                    className={`mega-links ${
+                                      elem?.mainList ? 'main' : ''
+                                    }`}
+                                  >
+                                    {elem?.links.map((el) => (
+                                      <li>
+                                        <a
+                                          onClick={(e) =>
+                                            handleLogout(
+                                              e,
+                                              el.name.toLocaleLowerCase()
+                                            )
+                                          }
+                                          href={el.href}
+                                          className={
+                                            theme.palette.mode === 'light'
+                                              ? 'dark_color'
+                                              : ''
+                                          }
+                                        >
+                                          {el.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
 
-                            <div className="row"></div>
+                              <div className="row"></div>
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        ''
-                      )}
-                    </li>
+                        ) : (
+                          ''
+                        )}
+                      </li>
+                    )}
                   </>
                 ))}
             </ul>
@@ -533,7 +568,6 @@ const HeaderTest = () => {
               alignItems: 'center',
             }}
           >
-            
             <DarkMode />
             <label htmlFor="menu-btn" className="btn menu-btn">
               <CrossIcon />
