@@ -18,7 +18,7 @@ const PowerPack = ({ type }) => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
-    <Box mt={18} pb={5}>
+    <Box mt={18} pb={5} style={{ background: 'white' }}>
       {/* <PowerPackHeader /> */}
       <Box
         sx={{
@@ -37,12 +37,7 @@ const PowerPack = ({ type }) => {
         <Box component={'img'} src={powerp} alt="logo" />
 
         <Box sx={{ textAlign: 'center' }}>
-          <Typography
-            variant={'h3'}
-            fontSize={'40px'}
-            textAlign="center"
-            color="var(--primary_color)"
-          >
+          <Typography variant={'h3'} fontSize={'40px'} textAlign="center">
             Investor's Power Pack
           </Typography>
         </Box>
@@ -53,12 +48,7 @@ const PowerPack = ({ type }) => {
           width={90}
           marginRight={-3}
         />
-        <Typography
-          variant={'h3'}
-          fontSize={'40px'}
-          textAlign="center"
-          color="var(--primary_color)"
-        >
+        <Typography variant={'h3'} fontSize={'40px'} textAlign="center">
           Indexx Hive
         </Typography>
       </Box>

@@ -448,9 +448,55 @@ const header_data = [
       },
     ],
   },
+  // {
+  //   mainTextDesktop: 'Academy',
+  //   mainTextMob: 'Academy',
+  //   active: false,
+  //   href: 'https://academy.indexx.ai/',
+  //   hasMegaDrop: true,
+  //   dropDownContent: [
+  //     {
+  //       heading: 'Explore',
+  //       mainList: true,
+  //       links: [
+  //         {
+  //           name: 'Become an Instructor',
+  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+  //         },
+  //         {
+  //           name: 'Courses',
+  //           href: 'https://academy.indexx.ai/courses/?short=',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       heading: 'Action',
+  //       links: [
+  //         {
+  //           name: 'Log in',
+  //           href: 'https://academy.indexx.ai/authentication/',
+  //         },
+  //         {
+  //           name: 'Register',
+  //           href: 'https://academy.indexx.ai/authentication/',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       heading: 'Opportunity',
+  //       links: [
+  //         {
+  //           name: 'How to become an instructor?',
+  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+
   {
-    mainTextDesktop: 'Academy',
-    mainTextMob: 'Academy',
+    mainTextDesktop: 'WallStreet',
+    mainTextMob: 'WallStreet',
     active: false,
     href: 'https://academy.indexx.ai/',
     hasMegaDrop: true,
@@ -460,12 +506,16 @@ const header_data = [
         mainList: true,
         links: [
           {
-            name: 'Become an Instructor',
-            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+            name: 'Stock Tokens',
+            href: 'https://wallstreet.indexx.ai/details?type=all',
           },
           {
-            name: 'Courses',
-            href: 'https://academy.indexx.ai/courses/?short=',
+            name: 'Stock Certificates',
+            href: 'https://wallstreet.indexx.ai/certificates?type=all',
+          },
+          {
+            name: 'ETFs',
+            href: 'https://wallstreet.indexx.ai/etf',
           },
         ],
       },
@@ -473,21 +523,33 @@ const header_data = [
         heading: 'Action',
         links: [
           {
-            name: 'Log in',
-            href: 'https://academy.indexx.ai/authentication/',
+            name: 'Buy Stock Tokens',
+            href: '/update/home/stock-token',
           },
           {
-            name: 'Register',
-            href: 'https://academy.indexx.ai/authentication/',
+            name: 'Buy Stock Certificates',
+            href: ' ',
+          },
+          {
+            name: 'Buy ETFs',
+            href: '/update/home/etf-tokens',
           },
         ],
       },
       {
-        heading: 'Opportunity',
+        heading: 'Learn more',
         links: [
           {
-            name: 'How to become an instructor?',
-            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+            name: 'Learn about Stock Tokens',
+            href: 'https://wallstreet.indexx.ai/learn-tokens',
+          },
+          {
+            name: 'Learn about Stock Certificates',
+            href: 'https://wallstreet.indexx.ai/learn-certificates',
+          },
+          {
+            name: 'Learn about ETFs',
+            href: 'https://wallstreet.indexx.ai/learn-etfs',
           },
         ],
       },

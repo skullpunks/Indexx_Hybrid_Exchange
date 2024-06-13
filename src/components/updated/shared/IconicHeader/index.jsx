@@ -9,8 +9,8 @@ import assetLight from '../../../../assets/updated/iconicHeader/lightMode/Vector
 import assetDark from '../../../../assets/updated/iconicHeader/Asset wallet.svg';
 import tokenLight from '../../../../assets/updated/iconicHeader/lightMode/Token.svg';
 import tokenDark from '../../../../assets/updated/iconicHeader/Token.svg';
-import wallStreetLight from '../../../../assets/updated/iconicHeader/lightMode/Wall Street.svg';
-import wallStreetDark from '../../../../assets/updated/iconicHeader/Wall Street.svg';
+import wallStreetLight from '../../../../assets/updated/iconicHeader/Stock token for Light Mode.svg';
+import wallStreetDark from '../../../../assets/updated/iconicHeader/Stock token for dark mode.svg';
 import stakingLight from '../../../../assets/updated/iconicHeader/lightMode/Staking.svg';
 import stakingDark from '../../../../assets/updated/iconicHeader/Staking.svg';
 import etfLight from '../../../../assets/updated/iconicHeader/lightMode/etf-logo.svg';

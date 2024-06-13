@@ -90,10 +90,12 @@ export default function ThemeContextUpdated({ children }: any) {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <div
-        style={{
-          background: theme.palette.mode === 'light' ? '#FCFCFC' : '#181A21',
-          color: theme.palette.text.primary,
-        }}
+        style={
+          {
+            // background: theme.palette.mode === 'light' ? '#FCFCFC' : '#181A21',
+            // color: theme.palette.text.primary,
+          }
+        }
       >
         <CssBaseline />
 
