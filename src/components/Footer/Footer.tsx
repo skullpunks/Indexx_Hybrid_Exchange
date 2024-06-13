@@ -97,6 +97,18 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'dark'
   );
+  useEffect(() => {
+    const handleStorageChange = (event: any) => {
+      console.log(event);
+      setTheme(event.currentTarget.localStorage.selectedTheme);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
@@ -145,7 +157,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           <span style={{ marginBottom: '18px', marginTop: '18px' }}>
             <h1 className="align-middle">
               <a href={baseURL}>
-                {theme.palette.mode === 'dark' ? (
+                {theme === 'dark' ? (
                   <img
                     src={userLogged === 'normal' ? indexText : indexTextyellow}
                     alt="index logo"
@@ -542,7 +554,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
-            style={{ color: theme.palette.text.primary }}
           >
             <a href={`${baseURL}/indexx-exchange/legal/privacypolicy`}>
               Privacy Policy
@@ -550,7 +561,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
-            style={{ color: theme.palette.text.primary }}
           >
             <a href={`${baseURL}/indexx-exchange/legal/termsandconditions`}>
               Terms Of Use
@@ -558,14 +568,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
-            style={{ color: theme.palette.text.primary }}
           >
             <a href={`${baseURL}/indexx-exchange/legal`}>Legal</a>
           </span>
-          <span
-            className={`${classes.copyrightHover} fit-content`}
-            style={{ color: theme.palette.text.primary }}
-          >
+          <span className={`${classes.copyrightHover} fit-content`}>
             <a href={`${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`}>
               Site Map
             </a>
@@ -1071,7 +1077,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
             href={baseURL}
             className="w-100 mx-auto d-flex justify-content-center"
           >
-            {theme.palette.mode === 'dark' ? (
+            {theme === 'dark' ? (
               <img
                 src={userLogged === 'normal' ? indexText : indexTextyellow}
                 alt="index logo"

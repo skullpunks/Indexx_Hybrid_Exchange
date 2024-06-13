@@ -104,7 +104,7 @@ body {
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--main-body);
+  background-color: var(--main-body) !important;
   color: var(--body_color) !important;
   padding-right: 0 !important;
   overflow: auto !important;
