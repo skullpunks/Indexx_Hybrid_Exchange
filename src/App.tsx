@@ -450,14 +450,14 @@ function App() {
               element={<Navigate to="/update/home/" />}
             />
 
-            {/* <Route
+            <Route
               path="/indexx-exchange/buy-sell/login-honeybee/*"
               element={<BuySellLoginHoneyBee />}
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
-            /> */}
+            />
             {/* <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
