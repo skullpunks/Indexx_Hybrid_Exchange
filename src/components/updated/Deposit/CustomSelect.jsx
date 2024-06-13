@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function CustomSelectBox({ items, type }) {
+export default function CustomSelectBox({ items, type, onCurrencyChange  }) {
   console.log('items', items);
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
@@ -43,20 +43,21 @@ export default function CustomSelectBox({ items, type }) {
       },
     },
   };
-  const [personName, setPersonName] = React.useState('');
+
+  const [selectedCurrency, setSelectedCurrency] = React.useState('');
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(value);
+    setSelectedCurrency(value);
+    onCurrencyChange(value);
   };
-
   return (
     <FormControl sx={{ width: '100%' }}>
       <Select
         displayEmpty
-        value={personName}
+        value={selectedCurrency}
         onChange={handleChange}
         sx={{
           width: '100%',
@@ -83,7 +84,7 @@ export default function CustomSelectBox({ items, type }) {
         }}
         renderValue={(selected) => {
           if (!selected) {
-            return <em style={{ color: theme.palette.text.primary }}>Token</em>;
+            return <em style={{ color: theme.palette.text.primary }}>{type}</em>;
           }
           return selected;
         }}
@@ -94,17 +95,11 @@ export default function CustomSelectBox({ items, type }) {
         <MenuItem disabled value="">
           <em>{type}</em>
         </MenuItem>
-        {type === 'Type'
-          ? items?.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))
-          : items?.map((name) => (
-              <MenuItem key={name?.title} value={name?.title}>
-                {name?.title}
-              </MenuItem>
-            ))}
+        {items?.map((name) => (
+          <MenuItem key={name} value={name}>
+            {name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

@@ -4,7 +4,7 @@ import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets';
 const AdvancedRealTimeChartComponent = ({ coin }) => {
   const [size, setSize] = useState({ width: 870, height: 500 });
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   ); // default theme from localStorage
 
   useEffect(() => {

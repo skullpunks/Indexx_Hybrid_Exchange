@@ -117,7 +117,7 @@ import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
 import HiveForgotPassword from './components/BuySell/HiveForgotPassword';
-import ThemeContextUpdated from './utils/ThemeContextUpdated';
+import ThemeContextUpdated from './utils/ThemeContextUpdated.jsx';
 import ThemeToggler from './components/ThemeToggler/index.js';
 import Login from './pages/auth/LoginEmail/index';
 import LoginPassword from './pages/auth/LoginPassword';

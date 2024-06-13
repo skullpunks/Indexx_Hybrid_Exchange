@@ -419,7 +419,7 @@ export const BSWithdarwCryptoContent = () => {
           <Button
             danger
             className="danger_disabled"
-            onClick={() => navigate('/indexx-exchange/buy-sell/withdraw')}
+            onClick={() => navigate('/withdraw-add-information')}
             style={{
               color: theme.palette.text.primary,
               background: theme.palette.divider,

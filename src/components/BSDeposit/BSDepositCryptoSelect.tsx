@@ -333,7 +333,7 @@ export const BSDepositCryptoSelect = () => {
           <Button
             danger
             className="danger_disabled"
-            onClick={() => navigate('/indexx-exchange/buy-sell/deposit-fiat')}
+            onClick={() => navigate('/deposit-select-currency')}
             style={{
               color: theme.palette.text.primary,
               background: theme.palette.divider,

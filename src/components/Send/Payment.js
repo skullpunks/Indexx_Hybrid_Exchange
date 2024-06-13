@@ -166,13 +166,13 @@ const FileComponent1 = ({
           </div>
           {String(orderData?.orderType)?.includes('Pack')
             ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
-                'en-US',
-                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-              )
+              'en-US',
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )
             : orderData?.breakdown?.inAmount?.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{' '}
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}{' '}
           {orderData?.breakdown?.inCurrenyName}
         </h1>
       </div>
@@ -552,21 +552,21 @@ export default function Payment() {
     setPhotoIdFile(file);
   };
 
-  // useEffect(() => {
-  //   const orderIdFromParam = searchParams.get('orderId');
-  //   if (orderIdFromParam !== undefined) {
-  //     let access_token = String(localStorage.getItem('access_token'));
-  //     let decoded = decodeJWT(access_token);
-  //     getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
-  //       if (res.status === 200) {
-  //         let orderData = res.data;
-  //         setOrderData(orderData);
-  //       } else {
-  //         alert('Something went wrong. Please try again.');
-  //       }
-  //     });
-  //   }
-  // }, [searchParams]);
+  useEffect(() => {
+    const orderIdFromParam = searchParams.get('orderId');
+    if (orderIdFromParam !== undefined) {
+      let access_token = String(localStorage.getItem('access_token'));
+      let decoded = decodeJWT(access_token);
+      getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
+        if (res.status === 200) {
+          let orderData = res.data;
+          setOrderData(orderData);
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -655,35 +655,35 @@ export default function Payment() {
         >
           {localStorage.getItem('userlogged') === 'normal'
             ? steps.map((step, index) => (
-                <Step key={step.label}>
-                  <StepLabel>{step.label}</StepLabel>
-                </Step>
-              ))
+              <Step key={step.label}>
+                <StepLabel>{step.label}</StepLabel>
+              </Step>
+            ))
             : steps.map((step, index) => (
-                <Step key={step.label}>
-                  <StepLabel
-                    StepIconComponent={({ completed, active }) => (
-                      <div className={classes.customIconContainer}>
-                        {/* <div
+              <Step key={step.label}>
+                <StepLabel
+                  StepIconComponent={({ completed, active }) => (
+                    <div className={classes.customIconContainer}>
+                      {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                        <div
-                          className={
-                            completed
-                              ? classes.completedIcon
-                              : activeStep === index
+                      <div
+                        className={
+                          completed
+                            ? classes.completedIcon
+                            : activeStep === index
                               ? classes.activeIcon
                               : classes.inactiveIcon
-                          }
-                        />
-                        <div className={classes.stepNumber}>{index + 1}</div>
-                      </div>
-                    )}
-                  >
-                    {step.label}
-                  </StepLabel>
-                </Step>
-              ))}
+                        }
+                      />
+                      <div className={classes.stepNumber}>{index + 1}</div>
+                    </div>
+                  )}
+                >
+                  {step.label}
+                </StepLabel>
+              </Step>
+            ))}
         </Stepper>
         <Box>
           {activeStep === steps.length ? (

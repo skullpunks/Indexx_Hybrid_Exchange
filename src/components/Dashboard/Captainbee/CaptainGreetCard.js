@@ -10,7 +10,7 @@ import email from '../../../assets/hive-dashboard/sidebar/email icon 1.svg';
 import phone from '../../../assets/hive-dashboard/sidebar/phone icon 1.svg';
 
 import info from '../../../assets/hive-dashboard/sidebar/info.png';
-import no_holiday from "../../../assets/hive-dashboard/greet-cards/no holiday 2.png";
+import no_holiday from '../../../assets/hive-dashboard/greet-cards/no holiday 2.png';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import pin_dark from '../../../assets/hive-dashboard/sidebar/dark-icons/location.png';
@@ -42,12 +42,34 @@ import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Box, MenuItem, Select, Typography, Rating, TextField, IconButton } from '@mui/material';
+import {
+  Box,
+  MenuItem,
+  Select,
+  Typography,
+  Rating,
+  TextField,
+  IconButton,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { baseCEXURL, getCaptainBeeStatics, baseHiveURL, getCoinPriceByName, getAppSettings, oneUSDHelper, createINEXBuyOrder, formatReadableDate, createMonthlyINEXsubscription, decodeJWT, cancelMonthlyINEXsubscription, shareGreetingCard, checkEmail } from '../../../services/api';
+import {
+  baseCEXURL,
+  getCaptainBeeStatics,
+  baseHiveURL,
+  getCoinPriceByName,
+  getAppSettings,
+  oneUSDHelper,
+  createINEXBuyOrder,
+  formatReadableDate,
+  createMonthlyINEXsubscription,
+  decodeJWT,
+  cancelMonthlyINEXsubscription,
+  shareGreetingCard,
+  checkEmail,
+} from '../../../services/api';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Button } from 'antd';
@@ -59,11 +81,10 @@ let appSettingArr = [];
 let priceData = {};
 
 const CaptainGreetCard = () => {
-
   const [isLoading, setIsLoading] = useState(true);
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
 
   const [amount, setAmount] = useState('30-inex');
   const [codeAmount, setCodeAmount] = useState(0);
@@ -87,19 +108,13 @@ const CaptainGreetCard = () => {
   //   }
   // }, [amount])
 
-
-
-
-
   const handleMessage = () => {
-    if (images[currentSlideIndex]?.orient === "portrait") {
+    if (images[currentSlideIndex]?.orient === 'portrait') {
       setIsModalOpenPort(true);
-    }
-    else {
+    } else {
       setIsModalOpen(true);
     }
-
-  }
+  };
 
   const liveSlideRef = useRef();
 
@@ -107,7 +122,15 @@ const CaptainGreetCard = () => {
   const previousButtonLive = () => liveSlideRef.current.slickPrev();
 
   const CustomArrow = ({ onClick, icon }) => (
-    <IconButton onClick={onClick} style={{ width: "fit-content", height: "fit-content", padding: 0, color:"var(--body_color)" }}>
+    <IconButton
+      onClick={onClick}
+      style={{
+        width: 'fit-content',
+        height: 'fit-content',
+        padding: 0,
+        color: 'var(--body_color)',
+      }}
+    >
       {icon}
     </IconButton>
   );
@@ -118,8 +141,12 @@ const CaptainGreetCard = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <CustomArrow onClick={previousButtonLive} icon={<NavigateBeforeIcon />} />,
-    nextArrow: <CustomArrow onClick={nextButtonLive} icon={<NavigateNextIcon />} />,
+    prevArrow: (
+      <CustomArrow onClick={previousButtonLive} icon={<NavigateBeforeIcon />} />
+    ),
+    nextArrow: (
+      <CustomArrow onClick={nextButtonLive} icon={<NavigateNextIcon />} />
+    ),
     beforeChange: (oldIndex, newIndex) => {
       setCurrentSlideIndex(newIndex); // Update the current slide index
     },
@@ -136,21 +163,25 @@ const CaptainGreetCard = () => {
   };
 
   const BootstrapTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} placement="top-start" />
+    <Tooltip
+      {...props}
+      arrow
+      classes={{ popper: className }}
+      placement="top-start"
+    />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "var(--body_background)",
-      backgroundColor: "var(--body_background)",
+      color: 'var(--body_background)',
+      backgroundColor: 'var(--body_background)',
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      border: "1px solid var(--border-color)",
-      backgroundColor: "var(--body_background)",
-      color: "var(--body_color)",
-      minWidth:"90%",
-      width: "215px",
+      border: '1px solid var(--border-color)',
+      backgroundColor: 'var(--body_background)',
+      color: 'var(--body_color)',
+      minWidth: '90%',
+      width: '215px',
     },
   }));
-  
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
@@ -159,7 +190,11 @@ const CaptainGreetCard = () => {
   const [staticsData, setStaticsData] = useState();
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState({
-    total: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+    total: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
   const [rateData, setRateData] = useState();
   const [adminFee, setAdminFees] = useState('');
@@ -188,17 +223,18 @@ const CaptainGreetCard = () => {
 
   useEffect(() => {
     // Find the selected greeting card based on its code
-    const selectedCard = greetingCards.find(card => card.code === amount);
+    const selectedCard = greetingCards.find((card) => card.code === amount);
     setSelectedGreetingCards(selectedCard);
-    setCodeAmount(selectedCard?.numberOfTokens || 0)
+    setCodeAmount(selectedCard?.numberOfTokens || 0);
     if (selectedCard) {
       // Determine the card type ('30-inex' or '50-inex') based on numberOfTokens
-      const cardType = selectedCard.numberOfTokens === 30 ? '30-inex' : '50-inex';
+      const cardType =
+        selectedCard.numberOfTokens === 30 ? '30-inex' : '50-inex';
 
       // Filter the GreetData based on the determined card type
-      const filtered = GreetData.filter(item => item.type === cardType);
+      const filtered = GreetData.filter((item) => item.type === cardType);
       setImages(filtered);
-      console.log(currentSlideIndex)
+      console.log(currentSlideIndex);
     }
   }, [amount, greetingCards]);
 
@@ -209,21 +245,21 @@ const CaptainGreetCard = () => {
     const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     return {
-      total, days, hours, minutes, seconds
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
     };
   }
 
   const getPricesData = async () => {
-    const res = await getCoinPriceByName(String("INEX"));
+    const res = await getCoinPriceByName(String('INEX'));
     priceData = res.data.results.data;
     setRateData(priceData);
 
-    let oneUsdValue = await oneUSDHelper(
-      priceData,
-      "INEX"
-    );
-    const finalPay =
-      oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
+    let oneUsdValue = await oneUSDHelper(priceData, 'INEX');
+    const finalPay = oneUsdValue * Number(300) * (1 - Number(adminFee) / 100);
     setTotalAmountToPay(finalPay);
   };
 
@@ -237,28 +273,37 @@ const CaptainGreetCard = () => {
     return;
   };
 
-
   const handleCreateSubscription = async () => {
     try {
       setLoadingsubs(true);
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
-      let res = await createMonthlyINEXsubscription(decoded.email, "USD", "INEX", "300", "", "");
+      let res = await createMonthlyINEXsubscription(
+        decoded.email,
+        'USD',
+        'INEX',
+        '300',
+        '',
+        ''
+      );
       if (res.status === 200) {
-        console.log("res", res);
+        console.log('res', res);
         for (let i = 0; i < res.data.links.length; i++) {
-          OpenNotification('success', "Subscription success");
-          if (res.data.links[i].rel.includes("approve")) {
+          OpenNotification('success', 'Subscription success');
+          if (res.data.links[i].rel.includes('approve')) {
             window.location.href = res.data.links[i].href;
           }
         }
       } else {
-        console.log("res", res);
+        console.log('res', res);
         OpenNotification('error', res.data);
       }
     } catch (err) {
-      OpenNotification('error', "Something went wrong. Please try again after sometime.");
-      console.log("err", err)
+      OpenNotification(
+        'error',
+        'Something went wrong. Please try again after sometime.'
+      );
+      console.log('err', err);
     } finally {
       setLoadingsubs(false);
     }
@@ -266,52 +311,64 @@ const CaptainGreetCard = () => {
 
   const handleCancelSubscription = async () => {
     try {
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
-      let res = await cancelMonthlyINEXsubscription(decoded.email, subscription?.paypalSubscriptionDetails?.id, "Cancelling the subscription");
-      console.log("Res", res);
-
+      let res = await cancelMonthlyINEXsubscription(
+        decoded.email,
+        subscription?.paypalSubscriptionDetails?.id,
+        'Cancelling the subscription'
+      );
+      console.log('Res', res);
     } catch (err) {
-      console.log("err", err)
+      console.log('err', err);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userType = localStorage.getItem("userType") || undefined;
-        const username = localStorage.getItem("username") || undefined;
+        const userType = localStorage.getItem('userType') || undefined;
+        const username = localStorage.getItem('username') || undefined;
 
         setUserType(userType);
 
-        if (userType === "CaptainBee" && username) {
+        if (userType === 'CaptainBee' && username) {
           const data = await getCaptainBeeStatics(username);
           console.log(data.data);
           setStaticsData(data.data);
-          setGreetingCards(data.data.affiliateUserProfile.greetingCards)
+          setGreetingCards(data.data.affiliateUserProfile.greetingCards);
           if (data?.data?.powerPackData) {
-            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            const getPowerPack = PackData.find(
+              (x) => x.name === data?.data?.powerPackData?.type
+            );
             setPowerPackPhoto(getPowerPack?.photo);
           } else {
             setPowerPackPhoto(undefined);
           }
 
           if (data?.data?.affiliateUserProfile?.rank) {
-            const getRank = RankData.find(x => x.name === data?.data?.affiliateUserProfile?.rank)
+            const getRank = RankData.find(
+              (x) => x.name === data?.data?.affiliateUserProfile?.rank
+            );
             setRankPhoto(getRank?.photo);
           } else {
-            const getRank = RankData.find(x => x.name === "Bronze")
+            const getRank = RankData.find((x) => x.name === 'Bronze');
             setRankPhoto(getRank?.photo);
           }
 
           if (data?.data?.paypalSubscriptionDetails) {
             setSubscription(data?.data?.paypalSubscriptionDetails);
-            const hasValidSubscription = data?.data?.paypalSubscriptionDetails && Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
+            const hasValidSubscription =
+              data?.data?.paypalSubscriptionDetails &&
+              Object.keys(data?.data?.paypalSubscriptionDetails).length > 0;
             setCheckSubscription(hasValidSubscription);
           }
 
           if (data?.data?.affiliateUserProfile?.greetingCards) {
-            const areAllActive = data?.data?.affiliateUserProfile?.greetingCards.every(obj => obj.isActive);
+            const areAllActive =
+              data?.data?.affiliateUserProfile?.greetingCards.every(
+                (obj) => obj.isActive
+              );
             setGreetActive(areAllActive);
             // setGreetActive(false);
           }
@@ -327,9 +384,8 @@ const CaptainGreetCard = () => {
     fetchData();
   }, []);
 
-
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "light"
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {
@@ -345,7 +401,6 @@ const CaptainGreetCard = () => {
     };
   }, []);
 
-
   const copyClick = (code) => {
     navigator.clipboard.writeText(code);
     OpenNotification('success', 'Copied Successfully!');
@@ -358,27 +413,51 @@ const CaptainGreetCard = () => {
     const res = await checkEmail(String(emailid).toLowerCase());
     console.log(res);
     if (res.status === 200 && !res.success) {
-      OpenNotification('error', `${emailid} is already existing indexx user. Please send Greeting Cards to invite to new users.`);
+      OpenNotification(
+        'error',
+        `${emailid} is already existing indexx user. Please send Greeting Cards to invite to new users.`
+      );
       setLoadings(false);
       return;
-    }
-    else {
+    } else {
       setLoadings(true);
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
       let res;
       let greetingCardUrl = images[currentSlideIndex].imageUrl;
-      console.log(greetingCardUrl)
-      console.log(selectedGreetingCard)
-      console.log(decoded?.email, recName, emailid, greetWords, inviteType, selectedGreetingCard?.code, greetingCardUrl);
+      console.log(greetingCardUrl);
+      console.log(selectedGreetingCard);
+      console.log(
+        decoded?.email,
+        recName,
+        emailid,
+        greetWords,
+        inviteType,
+        selectedGreetingCard?.code,
+        greetingCardUrl
+      );
       setLoadings(false);
-      res = await shareGreetingCard(decoded?.email, recName, emailid, greetWords, inviteType, selectedGreetingCard?.code, greetingCardUrl);
+      res = await shareGreetingCard(
+        decoded?.email,
+        recName,
+        emailid,
+        greetWords,
+        inviteType,
+        selectedGreetingCard?.code,
+        greetingCardUrl
+      );
       if (res.status === 200) {
-        OpenNotification('success', `Greeting Cards to invite successfully sent to ${emailid}.`);
+        OpenNotification(
+          'success',
+          `Greeting Cards to invite successfully sent to ${emailid}.`
+        );
       } else {
         setLoadings(false);
         setMessage(res.data);
-        OpenNotification('error', `Something went wrong. Please try again after sometime.`);
+        OpenNotification(
+          'error',
+          `Something went wrong. Please try again after sometime.`
+        );
       }
     }
   };
@@ -395,7 +474,7 @@ const CaptainGreetCard = () => {
             width: '100%',
             height: '100%',
             // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            backdropFilter: "blur(8px)",
+            backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -405,130 +484,181 @@ const CaptainGreetCard = () => {
           }}
         >
           <img src={loadingGif} alt="Loading" />
-          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+          <p
+            style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
+          >
             Please wait while Greeting Card is loading
             <span className="dots-animation"></span>
           </p>
         </div>
       )}
 
-      <div style={{ paddingTop: `${isMobile ? "200px" : '180px'}` }}>
+      <div style={{ paddingTop: `${isMobile ? '200px' : '180px'}` }}>
         <div className="hive-container">
           <div
             className="d-flex justify-content-center"
             // style={{ width: '74%', maxWidth: '1140px' }}
-            style={{ flexDirection: `${isMobile ? "column" : "row"}` }}
+            style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
           >
-          {!isMobile &&
-            <div className="d-flex flex-direction-column mt-1" style={{ width: `${isMobile ? "100%" : "258px"}` }}>
-              <div className="d-flex  flex-direction-column align-items-center">
-                <div
-                  style={{
-                    width: '193px',
-                    height: '193px',
-                    backgroundImage: `url(${frame})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    // border:"none"
-                  }}
-                >
-                  <div className="hexagon">
+            {!isMobile && (
+              <div
+                className="d-flex flex-direction-column mt-1"
+                style={{ width: `${isMobile ? '100%' : '258px'}` }}
+              >
+                <div className="d-flex  flex-direction-column align-items-center">
+                  <div
+                    style={{
+                      width: '193px',
+                      height: '193px',
+                      backgroundImage: `url(${frame})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      // border:"none"
+                    }}
+                  >
+                    <div className="hexagon">
+                      <img
+                        alt=""
+                        src={
+                          staticsData?.affiliateUserProfile?.photoIdFileurl !==
+                          undefined
+                            ? staticsData?.affiliateUserProfile?.photoIdFileurl
+                            : dummy
+                        }
+                        width={'63px'}
+                        height={'66px'}
+                        ml={'-6px'}
+                        border={'none'}
+                      />
+                    </div>
+
                     <img
                       alt=""
-                      src={(staticsData?.affiliateUserProfile?.photoIdFileurl !== undefined) ? staticsData?.affiliateUserProfile?.photoIdFileurl : dummy}
-                      width={'63px'}
-                      height={'66px'}
-                      ml={'-6px'}
-                      border={'none'}
+                      src={rankPhoto}
+                      style={{
+                        position: 'absolute',
+                        bottom: '-25px',
+                        right: '17px',
+                        width: '79px',
+                        height: '81px',
+                      }}
                     />
                   </div>
-
-                  <img
-                    alt=""
-                    src={rankPhoto}
-                    style={{
-                      position: 'absolute',
-                      bottom: '-25px',
-                      right: '17px',
-                      width: '79px',
-                      height: '81px',
-                    }}
-                  />
                 </div>
-              </div>
-              <div className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex" style={{ justifyContent: `${isMobile ? "center" : "start"}` }}>
-                Captain Bee {staticsData?.affiliateUserProfile?.accname}
-              </div>
-              {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
-                (<div className="justify-content-center d-flex">
-                  <img src={powerPackPhoto} alt='pack' width={isMobile ? "45%" : "80%"} />
-                </div>) : (
-                  <div className="justify-content-center d-flex flex-direction-column" style={{ marginLeft: `${isMobile ? "40px" : 0}` }}>
+                <div
+                  className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
+                  style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
+                >
+                  Captain Bee {staticsData?.affiliateUserProfile?.accname}
+                </div>
+                {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
+                  <div className="justify-content-center d-flex">
+                    <img
+                      src={powerPackPhoto}
+                      alt="pack"
+                      width={isMobile ? '45%' : '80%'}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="justify-content-center d-flex flex-direction-column"
+                    style={{ marginLeft: `${isMobile ? '40px' : 0}` }}
+                  >
                     Please purchase the powerpack from the below URL: <br />
                     <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
                       Power Pack Purchase
                     </a>
                   </div>
-                )
-              }
-              <div className="align-items-start" style={{ marginLeft: `${isMobile ? "40px" : "0px"}` }}>
-                {(!subscription?.paypalSubscriptionDBData) ?
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_15x">
-                      Subscribe to your $300 monthly INEX investment today
-                    </div>
-                    <div className="d-flex align-items-start gap-2" style={{ width: "100%" }}>
-                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
-                      sx={{width:"20%"}}
+                )}
+                <div
+                  className="align-items-start"
+                  style={{ marginLeft: `${isMobile ? '40px' : '0px'}` }}
+                >
+                  {!subscription?.paypalSubscriptionDBData ? (
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
+                      <div className="font_15x">
+                        Subscribe to your $300 monthly INEX investment today
+                      </div>
+                      <div
+                        className="d-flex align-items-start gap-2"
+                        style={{ width: '100%' }}
                       >
-                        <Button
-                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          style={{ width: "auto", height: "auto", color: "#393939", display:"flex", alignItems:"center", paddingBlock:"9.5px" }}
-
+                        <BootstrapTooltip
+                          title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          sx={{ width: '20%' }}
                         >
-                          <img src={info} alt="info" />
-                        </Button>
-                      </BootstrapTooltip>
+                          <Button
+                            className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
+                            style={{
+                              width: 'auto',
+                              height: 'auto',
+                              color: '#393939',
+                              display: 'flex',
+                              alignItems: 'center',
+                              paddingBlock: '9.5px',
+                            }}
+                          >
+                            <img src={info} alt="info" />
+                          </Button>
+                        </BootstrapTooltip>
                         <Button
                           loading={loadings}
                           type="primary"
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
                           onClick={handleCreateSubscription}
-                          style={{ width: `${isMobile ? "70%" : "80%"}`, height: "auto", color: "#393939" }}
+                          style={{
+                            width: `${isMobile ? '70%' : '80%'}`,
+                            height: 'auto',
+                            color: '#393939',
+                          }}
                         >
                           Subscribe
                         </Button>
                       </div>
-                  </div>)
-                  :
-                  (<div className="d-flex flex-direction-column align-items-start mt-5">
-                    <div className="font_20x">
-                      $300 INEX Subscription Details
-                      <BootstrapTooltip title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!" 
-                      sx={{width:"20%"}}
-                      >
-                          <InfoOutlinedIcon sx={{fontSize :"18px", color:"var(--body_color)", mb:0.5, ml:0.8}}/>
-                      </BootstrapTooltip>
                     </div>
-                    <div className="font_13x mt-3">
-                      Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
-                    </div>
-                    <div className="font_13x">
-                      Status: {subscription?.paypalSubscriptionDetails?.status}
-                    </div>
-                    <div className="font_13x">
-                      Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
-                    </div>
-                    {/* <div>
+                  ) : (
+                    <div className="d-flex flex-direction-column align-items-start mt-5">
+                      <div className="font_20x">
+                        $300 INEX Subscription Details
+                        <BootstrapTooltip
+                          title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          sx={{ width: '20%' }}
+                        >
+                          <InfoOutlinedIcon
+                            sx={{
+                              fontSize: '18px',
+                              color: 'var(--body_color)',
+                              mb: 0.5,
+                              ml: 0.8,
+                            }}
+                          />
+                        </BootstrapTooltip>
+                      </div>
+                      <div className="font_13x mt-3">
+                        Subscription ID:{' '}
+                        {subscription?.paypalSubscriptionDetails?.id}
+                      </div>
+                      <div className="font_13x">
+                        Status:{' '}
+                        {subscription?.paypalSubscriptionDetails?.status}
+                      </div>
+                      <div className="font_13x">
+                        Next Billing Date:{' '}
+                        {formatReadableDate(
+                          subscription?.paypalSubscriptionDetails?.billing_info
+                            .next_billing_time
+                        )}
+                      </div>
+                      {/* <div>
                       <Button
                         type="danger"
                         className="atn-btn atn-btn-round atn-btn-hover mt-3"
@@ -538,148 +668,234 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         Cancel Subscription
                       </Button>
                     </div> */}
-                  </div>)
-                }
-              </div>
+                    </div>
+                  )}
+                </div>
 
-              <div className="align-items-start lh_32x" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-
-                {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
+                <div
+                  className="align-items-start lh_32x"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
                     `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
                   in indexx hive`}
                 </div> */}
-                <div className="font_13x d-flex align-items-center mt-4">
-                  {theme === "dark" ?
-                    <img alt="man" src={man_dark} className="me-1" />
-                    :
-                    <img alt="man" src={man} className="me-1" />
-                  }
-                  @{staticsData?.affiliateUserProfile?.Username}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={pin_dark} className="me-2" />
-                    :
-                    <img alt="man" src={pin} className="me-2" />
-                  }
-                  {staticsData?.affiliateUserProfile?.country}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={house_dark} className="me-1" />
-                    :
-                    <img alt="man" src={house} className="me-1" />
-                  }
-                  {staticsData?.affiliateUserProfile?.city}
-                </div>
-                <div className="font_13x d-flex align-items-center">
-                  {theme === "dark" ?
-                    <img alt="man" src={clock_dark} className="me-1" />
-                    :
-                    <img alt="man" src={clock} className="me-1" />
-                  }
-                  {staticsData?.formatedAccountCreationDate}
-                </div>
-                {staticsData?.affiliateUserProfile?.isPhonePublic &&
+                  <div className="font_13x d-flex align-items-center mt-4">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={man_dark} className="me-1" />
+                    ) : (
+                      <img alt="man" src={man} className="me-1" />
+                    )}
+                    @{staticsData?.affiliateUserProfile?.Username}
+                  </div>
                   <div className="font_13x d-flex align-items-center">
                     {theme === 'dark' ? (
-                      <img alt="man" src={phone_dark} className="me-2" />
+                      <img alt="man" src={pin_dark} className="me-2" />
                     ) : (
-                      <img alt="man" src={phone} className="me-2" />
+                      <img alt="man" src={pin} className="me-2" />
                     )}
-                    {String(`(${staticsData?.affiliateUserProfile?.Phone.slice(0, 3)}) ${staticsData?.affiliateUserProfile?.Phone.slice(3, 6)}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`)}
+                    {staticsData?.affiliateUserProfile?.country}
                   </div>
-                }
-                {staticsData?.affiliateUserProfile?.isEmailPublic &&
                   <div className="font_13x d-flex align-items-center">
                     {theme === 'dark' ? (
-                      <img alt="man" src={email_dark} className="me-2" />
+                      <img alt="man" src={house_dark} className="me-1" />
                     ) : (
-                      <img alt="man" src={email} className="me-2" />
+                      <img alt="man" src={house} className="me-1" />
                     )}
-                    {staticsData?.affiliateUserProfile?.Email}
+                    {staticsData?.affiliateUserProfile?.city}
                   </div>
-                }
-              </div>
+                  <div className="font_13x d-flex align-items-center">
+                    {theme === 'dark' ? (
+                      <img alt="man" src={clock_dark} className="me-1" />
+                    ) : (
+                      <img alt="man" src={clock} className="me-1" />
+                    )}
+                    {staticsData?.formatedAccountCreationDate}
+                  </div>
+                  {staticsData?.affiliateUserProfile?.isPhonePublic && (
+                    <div className="font_13x d-flex align-items-center">
+                      {theme === 'dark' ? (
+                        <img alt="man" src={phone_dark} className="me-2" />
+                      ) : (
+                        <img alt="man" src={phone} className="me-2" />
+                      )}
+                      {String(
+                        `(${staticsData?.affiliateUserProfile?.Phone.slice(
+                          0,
+                          3
+                        )}) ${staticsData?.affiliateUserProfile?.Phone.slice(
+                          3,
+                          6
+                        )}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`
+                      )}
+                    </div>
+                  )}
+                  {staticsData?.affiliateUserProfile?.isEmailPublic && (
+                    <div className="font_13x d-flex align-items-center">
+                      {theme === 'dark' ? (
+                        <img alt="man" src={email_dark} className="me-2" />
+                      ) : (
+                        <img alt="man" src={email} className="me-2" />
+                      )}
+                      {staticsData?.affiliateUserProfile?.Email}
+                    </div>
+                  )}
+                </div>
 
-              <div className="align-items-start lh_32x mt-4" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? staticsData?.affiliateUserProfile?.socialMediaLink?.discord : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.discord ? "_blank" : "_self"} rel="noopener noreferrer">
-                  {theme === "dark" ?
-                    <img alt="man" src={discord_dark} className="me-3" />
-                    :
-                    <img alt="Discord" src={discord} className="me-3" />
-                  }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? staticsData?.affiliateUserProfile?.socialMediaLink?.instagram : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.instagram ? "_blank" : "_self"} rel="noopener noreferrer">
-                  {theme === "dark" ?
-                    <img alt="man" src={insta_dark} className="me-3" />
-                    :
-                    <img alt="Instagram" src={insta} className="me-3" />
-                  }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin ? "_blank" : "_self"} rel="noopener noreferrer">
-                  {theme === "dark" ?
-                    <img alt="man" src={linkedin_dark} className="me-3" />
-                    :
-                    <img alt="LinkedIn" src={linkedin} className="me-3" />
-                  }
-                </a>
-                <a href={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? staticsData?.affiliateUserProfile?.socialMediaLink?.twitter : "#"} target={staticsData?.affiliateUserProfile?.socialMediaLink?.twitter ? "_blank" : "_self"} rel="noopener noreferrer">
-                  {theme === "dark" ?
-                    <img alt="man" src={twitter_dark} />
-                    :
-                    <img alt="Twitter" src={twitter} />
-                  }
-                </a>
+                <div
+                  className="align-items-start lh_32x mt-4"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.discord
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.discord
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.discord
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
+                      <img alt="man" src={discord_dark} className="me-3" />
+                    ) : (
+                      <img alt="Discord" src={discord} className="me-3" />
+                    )}
+                  </a>
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.instagram
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.instagram
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.instagram
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
+                      <img alt="man" src={insta_dark} className="me-3" />
+                    ) : (
+                      <img alt="Instagram" src={insta} className="me-3" />
+                    )}
+                  </a>
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.linkedin
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.linkedin
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.linkedin
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
+                      <img alt="man" src={linkedin_dark} className="me-3" />
+                    ) : (
+                      <img alt="LinkedIn" src={linkedin} className="me-3" />
+                    )}
+                  </a>
+                  <a
+                    href={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.twitter
+                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+                            ?.twitter
+                        : '#'
+                    }
+                    target={
+                      staticsData?.affiliateUserProfile?.socialMediaLink
+                        ?.twitter
+                        ? '_blank'
+                        : '_self'
+                    }
+                    rel="noopener noreferrer"
+                  >
+                    {theme === 'dark' ? (
+                      <img alt="man" src={twitter_dark} />
+                    ) : (
+                      <img alt="Twitter" src={twitter} />
+                    )}
+                  </a>
+                </div>
 
-              </div>
-
-              <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                <div>
-                  <span className='fw-bold'>
-                    Invite Honey Bee :
-                  </span>
+                <div
+                  className="d-flex flex-direction-column align-items-start mt-5"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  <div>
+                    <span className="fw-bold">Invite Honey Bee :</span>
+                    <br />
+                    {staticsData?.userFullData?.referralCode}
+                    <ContentCopyIcon
+                      fontSize="13px"
+                      onClick={() =>
+                        copyClick(
+                          baseCEXURL +
+                            '/indexx-exchange/buy-sell/get-started-honeybee?referral=' +
+                            staticsData?.userFullData?.referralCode
+                        )
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        marginBottom: '4px',
+                        marginLeft: '5px',
+                      }}
+                    />
+                  </div>
                   <br />
-                  {staticsData?.userFullData?.referralCode}
-                  <ContentCopyIcon
-                    fontSize="13px"
-                    onClick={() => copyClick(baseCEXURL +
-                      "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                      staticsData?.userFullData?.referralCode)}
-                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                  />
+                  <div>
+                    <span className="fw-bold">Invite Captain Bee :</span>
+                    <br />
+                    {staticsData?.userFullData?.referralCode}
+                    <ContentCopyIcon
+                      fontSize="13px"
+                      onClick={() =>
+                        copyClick(
+                          baseHiveURL +
+                            '/sign-up?referral=' +
+                            staticsData?.userFullData?.referralCode
+                        )
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        marginBottom: '4px',
+                        marginLeft: '5px',
+                      }}
+                    />
+                  </div>
                 </div>
-                <br />
-                <div>
-                  <span className='fw-bold'>
-                    Invite Captain Bee :
-                  </span>
-                  <br />
-                  {staticsData?.userFullData?.referralCode}
-                  <ContentCopyIcon
-                    fontSize="13px"
-                    onClick={() => copyClick(baseHiveURL +
-                      "/sign-up?referral=" +
-                      staticsData?.userFullData?.referralCode)}
-                    style={{ cursor: 'pointer', marginBottom: "4px", marginLeft: "5px" }}
-                  />
-                </div>
-              </div>
 
-              <div className="d-flex  flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                <div className="font_13x ">
-                  Your Rating
+                <div
+                  className="d-flex  flex-direction-column align-items-start mt-5"
+                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                >
+                  <div className="font_13x ">Your Rating</div>
+                  <div className="mt-4">
+                    <Rating name="read-only" value={4} readOnly size="large" />
+                  </div>
+                  <div className="font_40x mt-3">95%</div>
                 </div>
-                <div className='mt-4'>
-                  <Rating name="read-only" value={4} readOnly size='large' />
-                </div>
-                <div className="font_40x mt-3">
-                  95%
-                </div>
-              </div>
-              {/* 
+                {/* 
                 {timeRemaining?.days &&
                 <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
                   <div className="font_13x ">
@@ -690,13 +906,13 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   </div>
                 </div>
                 } */}
-              {/* <div className="font_20x mt-3">
+                {/* <div className="font_20x mt-3">
                     {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
                     <br />
                     {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
                     {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
                   </div> */}
-              {/* {timeRemaining?.days < 15 && (
+                {/* {timeRemaining?.days < 15 && (
                     <div>
                       <Button
                         type="primary"
@@ -709,11 +925,9 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       </Button>
                     </div>
                   )} */}
-              {/* </div> */}
-
-
-            </div>
-          }
+                {/* </div> */}
+              </div>
+            )}
 
             <div className="greet-container">
               <Box
@@ -721,106 +935,114 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 2,
-                  mt: 2
+                  mt: 2,
                 }}
               >
-
                 <Box>
-                {isMobile ? 
-
-                  <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'32px'}
-                        fontWeight={'bold'}
-                        textAlign={'center'}
-                        mb={2}
-                      >
-                        Send Greeting Cards
-                        <br /> 
-                        <span className='font_25x'>
-
+                  {isMobile ? (
+                    <Typography
+                      variant="text"
+                      component="p"
+                      fontSize={'32px'}
+                      fontWeight={'bold'}
+                      textAlign={'center'}
+                      mb={2}
+                    >
+                      Send Greeting Cards
+                      <br />
+                      <span className="font_25x">
                         to invite users to the Hive!
-                        </span>
-                      </Typography>
-                :
+                      </span>
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="text"
+                      component="p"
+                      fontSize={'40px'}
+                      fontWeight={'bold'}
+                      textAlign={'left'}
+                      mb={2}
+                    >
+                      Send Greeting Cards to invite
+                      <br /> friends and family to the Hive!
+                    </Typography>
+                  )}
 
-                <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'40px'}
-                        fontWeight={'bold'}
-                        textAlign={'left'}
-                        mb={2}
-                      >
-                        Send Greeting Cards to invite
-                        <br /> friends and family to the Hive!
-                      </Typography>
-                }
-                  
-                      {!isMobile &&
-                      <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'13px'}
-                        textAlign={'left'}
-                        mb={2}
-                      >
-                      Each Captain Bee gets 10 Greeting Cards to Share with people to invite them to their colony as honeybees or captainbees
-                      </Typography>
-                    }
-
-                  </Box>
+                  {!isMobile && (
+                    <Typography
+                      variant="text"
+                      component="p"
+                      fontSize={'13px'}
+                      textAlign={'left'}
+                      mb={2}
+                    >
+                      Each Captain Bee gets 10 Greeting Cards to Share with
+                      people to invite them to their colony as honeybees or
+                      captainbees
+                    </Typography>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: `${isMobile ? 'column' : 'row'}`,
+                    gap: isMobile ? 4 : 2,
+                    mt: 3,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: `${isMobile ? "column" : "row"}`,
-                      gap: isMobile ? 4 : 2,
-                      mt: 3
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      width: `${isMobile ? '100%' : '45%'}`,
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems:"center",
-                        width: `${isMobile ? "100%" : "45%"}`,
-                      }}
-                    >
-                    {greetActive === true ? 
+                    {greetActive === true ? (
                       <>
-                      <Slider 
-                      ref={liveSlideRef}
-                      {...sliderSettings} style={{ maxWidth: "100%", display: "flex", alignItems: "center", height: "fit-content" }}>
-
-                      {images?.map((token, index) => (
-                        <div key={index} className='greet-slide-div'>
-                          <img src={token.photo} alt="card" className="greet-slide-img"/>
-                        </div>
-                      ))}
-
-                    </Slider>
-                    <Button
-                      type="text"
-                      className="atn-btn atn-btn-round link-btn"
-                      onClick={() => handleMessage()}
-                    >
-                      See message
-                    </Button>        
-                    </>
-                    :
-                    <img src={no_holiday} alt="no_holiday" style={{width:"93%"}}/>
-                    }
-                    
+                        <Slider
+                          ref={liveSlideRef}
+                          {...sliderSettings}
+                          style={{
+                            maxWidth: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            height: 'fit-content',
+                          }}
+                        >
+                          {images?.map((token, index) => (
+                            <div key={index} className="greet-slide-div">
+                              <img
+                                src={token.photo}
+                                alt="card"
+                                className="greet-slide-img"
+                              />
+                            </div>
+                          ))}
+                        </Slider>
+                        <Button
+                          type="text"
+                          className="atn-btn atn-btn-round link-btn"
+                          onClick={() => handleMessage()}
+                        >
+                          See message
+                        </Button>
+                      </>
+                    ) : (
+                      <img
+                        src={no_holiday}
+                        alt="no_holiday"
+                        style={{ width: '93%' }}
+                      />
+                    )}
                   </Box>
-
 
                   <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
                       gap: 2,
-                      width: `${isMobile ? "100%" : "55%"}`,
+                      width: `${isMobile ? '100%' : '55%'}`,
                     }}
                   >
                     <Box
@@ -885,7 +1107,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           width: '100%',
                           background: 'var(--main-body)',
                           p: 1,
-                          gap:1
+                          gap: 1,
                         }}
                       >
                         <Typography
@@ -907,7 +1129,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             width: '60%',
                             borderRadius: 0,
                             background: 'var(--main-body)',
-                            color: "var(--body_color)",
+                            color: 'var(--body_color)',
                             border: 'none',
                             outline: 'none',
                             padding: 0,
@@ -922,7 +1144,11 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                               value={card.code}
                               disabled={card.isUsed}
                             >
-                              {`${card.title} (${card.code})${card.isUsed ? ` - Used by ${card.receiverEmail}` : ''}`}
+                              {`${card.title} (${card.code})${
+                                card.isUsed
+                                  ? ` - Used by ${card.receiverEmail}`
+                                  : ''
+                              }`}
                             </MenuItem>
                           ))}
                         </Select>
@@ -957,12 +1183,12 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             width: '70%',
                             borderRadius: 0,
                             background: 'var(--main-body)',
-                            color: "var(--body_color)",
+                            color: 'var(--body_color)',
                             border: 'none',
                             outline: 'none',
                             padding: 0,
                             fontSize: '20px',
-                            textAlign:"right"
+                            textAlign: 'right',
                           }}
                           size="small"
                           disableUnderline
@@ -996,7 +1222,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Typography>
                         <TextField
                           type="email"
-                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          InputLabelProps={{ shrink: true, readOnly: true }}
                           variant="outlined"
                           sx={{ width: '74%' }}
                           size="small" // Make the input box smaller
@@ -1005,7 +1231,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             setGreetWords(e.target.value);
                           }}
                           InputProps={{
-                            style: { fontSize: '13px', borderRadius: 0 }
+                            style: { fontSize: '13px', borderRadius: 0 },
                           }}
                         />
                       </Box>
@@ -1030,7 +1256,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Typography>
                         <TextField
                           type="email"
-                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          InputLabelProps={{ shrink: true, readOnly: true }}
                           variant="outlined"
                           sx={{ width: '74%' }}
                           size="small" // Make the input box smaller
@@ -1039,7 +1265,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             setRecName(e.target.value);
                           }}
                           InputProps={{
-                            style: { fontSize: '13px', borderRadius: 0 } // Set the desired font size
+                            style: { fontSize: '13px', borderRadius: 0 }, // Set the desired font size
                           }}
                         />
                       </Box>
@@ -1065,7 +1291,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         <TextField
                           // placeholder="abc@xyz.com"
                           type="email"
-                          InputLabelProps={{ shrink: true, readOnly: true, }}
+                          InputLabelProps={{ shrink: true, readOnly: true }}
                           variant="outlined"
                           sx={{ width: '74%' }}
                           size="small" // Make the input box smaller
@@ -1074,7 +1300,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             setEmailid(e.target.value);
                           }}
                           InputProps={{
-                            style: { fontSize: '13px', borderRadius: 0 } // Set the desired font size
+                            style: { fontSize: '13px', borderRadius: 0 }, // Set the desired font size
                           }}
                         />
                       </Box>
@@ -1083,132 +1309,151 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           type="primary"
                           disabled={!greetActive || loadings}
                           className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          style={{ width: "100%", height: "37px", color: "#393939", fontSize: "13px" }}
+                          style={{
+                            width: '100%',
+                            height: '37px',
+                            color: '#393939',
+                            fontSize: '13px',
+                          }}
                           onClick={handleSubmit}
                         >
-                          {loadings ? "Loading..." : "Submit"}
+                          {loadings ? 'Loading...' : 'Submit'}
                         </Button>
                       </Box>
-
                     </Box>
                   </Box>
                 </Box>
 
-                  {greetActive &&
+                {greetActive && (
                   <Box>
-                  <Typography component="div" fontSize={'20px'} lineHeight={'30px'} fontWeight={'bold'} mt={5} mb={3}>
-                  Email Template:
-                  </Typography>
+                    <Typography
+                      component="div"
+                      fontSize={'20px'}
+                      lineHeight={'30px'}
+                      fontWeight={'bold'}
+                      mt={5}
+                      mb={3}
+                    >
+                      Email Template:
+                    </Typography>
 
-                  <Typography component="div" fontSize={'20px'} lineHeight={'30px'} overflow={"auto"}>
-
-                    <span className='fw-bold'>
-                      Subject: 🎄Holiday Cheers from Captain Bee! 🐝🎁
-                    </span>
-
-                    <br />
-                    Dear {recName},
-                    <br />
-                    <br />
-                    {greetWords}
-                    <br />
-                    <br />
-                    Wishing you joy this season! 🎅🎉 Join our hive and enjoy an exclusive festive bonus:
-                    <br />
-                    <br />
-            🌟 Register with {" "}
-            {inviteType === 'captainbee' ?
-                          <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                    <Typography
+                      component="div"
+                      fontSize={'20px'}
+                      lineHeight={'30px'}
+                      overflow={'auto'}
+                    >
+                      <span className="fw-bold">
+                        Subject: 🎄Holiday Cheers from Captain Bee! 🐝🎁
+                      </span>
+                      <br />
+                      Dear {recName},
+                      <br />
+                      <br />
+                      {greetWords}
+                      <br />
+                      <br />
+                      Wishing you joy this season! 🎅🎉 Join our hive and enjoy
+                      an exclusive festive bonus:
+                      <br />
+                      <br />
+                      🌟 Register with{' '}
+                      {inviteType === 'captainbee' ? (
+                        <a
+                          href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`}
+                          className="hive_link"
+                        >
                           referral link
-                          </a>
-                          :
-                          <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                        </a>
+                      ) : (
+                        <a
+                          href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`}
+                          className="hive_link"
+                        >
                           referral link
-                          </a>
-                        }{" "}
-                        <br />
-                    
-                        💰 Instant bonus in your wallet of {codeAmount} INEX 
-                        <br />
-                        <br />
-                    🎊 How to Claim:
-                    <br />
-                    1. Click the {" "}
-                        {inviteType === 'captainbee' ?
-                          <a href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                        </a>
+                      )}{' '}
+                      <br />
+                      💰 Instant bonus in your wallet of {codeAmount} INEX
+                      <br />
+                      <br />
+                      🎊 How to Claim:
+                      <br />
+                      1. Click the{' '}
+                      {inviteType === 'captainbee' ? (
+                        <a
+                          href={`${baseHiveURL}/sign-up?referral=${staticsData?.userFullData?.referralCode}`}
+                          className="hive_link"
+                        >
                           link
-                          </a>
-                          :
-                          <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`} className='hive_link'>
+                        </a>
+                      ) : (
+                        <a
+                          href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${staticsData?.userFullData?.referralCode}`}
+                          className="hive_link"
+                        >
                           link
-                          </a>
-                        }
-                        <br />
-            2. Fill the form
-            <br />
-            3. Verify your email
-            <br />
-            <br />
-                     
-                        Enjoy your instant bonus!
-                        <br />
-            Dive into the hive as a Captain Bee or Honeybee for growth,
-            connections, and perks. Here's to a sweet and successful festive
-            season!
-            <br />
-            <br />
-            Learn more about Indexx Hive here: {" "}
-            <a href="https://hive.indexx.ai" className='hive_link'>
-            https://hive.indexx.ai
-            </a>
-            <br />
-            <br />
-                    Best,
-                    <br />
-
-                    Captain Bee {staticsData?.affiliateUserProfile?.accname},
-                    <br />
-                    Indexx Hive
-
-                  </Typography>
-
+                        </a>
+                      )}
+                      <br />
+                      2. Fill the form
+                      <br />
+                      3. Verify your email
+                      <br />
+                      <br />
+                      Enjoy your instant bonus!
+                      <br />
+                      Dive into the hive as a Captain Bee or Honeybee for
+                      growth, connections, and perks. Here's to a sweet and
+                      successful festive season!
+                      <br />
+                      <br />
+                      Learn more about Indexx Hive here:{' '}
+                      <a href="https://hive.indexx.ai" className="hive_link">
+                        https://hive.indexx.ai
+                      </a>
+                      <br />
+                      <br />
+                      Best,
+                      <br />
+                      Captain Bee {staticsData?.affiliateUserProfile?.accname},
+                      <br />
+                      Indexx Hive
+                    </Typography>
                   </Box>
-                }
+                )}
 
                 <div className="my-calendar">
-      {isMobile ? 
-<>
-
-        <div className="font_50x fw-bold align-self-start">
-        Key dates 
-        </div>
-        <div className="font_31x align-self-start">
-        for holidays
-        </div>
-        <div className="font_20x mb-5 align-self-start">
-          Don’t miss out any of these dates
-        </div>
-</>
-        :
-        <div style={{width:"66%"}}>
-
-        <div className="font_70x fw-bold align-self-start">
-        Key dates for holidays
-        </div>
-        <div className="font_20x mb-5 align-self-start">
-          Don’t miss out any of these dates
-        </div>
-        </div>
-        }
-        <ReadOnlyCalendar />
-      </div>
+                  {isMobile ? (
+                    <>
+                      <div className="font_50x fw-bold align-self-start">
+                        Key dates
+                      </div>
+                      <div className="font_31x align-self-start">
+                        for holidays
+                      </div>
+                      <div className="font_20x mb-5 align-self-start">
+                        Don’t miss out any of these dates
+                      </div>
+                    </>
+                  ) : (
+                    <div style={{ width: '66%' }}>
+                      <div className="font_70x fw-bold align-self-start">
+                        Key dates for holidays
+                      </div>
+                      <div className="font_20x mb-5 align-self-start">
+                        Don’t miss out any of these dates
+                      </div>
+                    </div>
+                  )}
+                  <ReadOnlyCalendar />
+                </div>
               </Box>
             </div>
           </div>
         </div>
       </div>
 
-      
       <div>
         <GreetLandscape
           isVisible={isModalOpen}

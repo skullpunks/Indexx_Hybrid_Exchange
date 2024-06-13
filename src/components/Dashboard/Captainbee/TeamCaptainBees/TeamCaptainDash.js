@@ -4,7 +4,7 @@ import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import greyman from "../../../../assets/hive-dashboard/empty_man_frame.png";
+import greyman from '../../../../assets/hive-dashboard/empty_man_frame.png';
 import { Rating } from '@mui/material';
 
 // import { LocalizationProvider, DatePicker } from '@mui/lab';
@@ -19,17 +19,23 @@ import { Rating } from '@mui/material';
 
 import '../../Captainbee/CaptainDash.css';
 import { Box, Grid, Button } from '@mui/material';
-import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
-import { baseCEXURL, baseHiveURL, getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import HoneyBeeComingSoon from '../../../../components/ComingSoon/HoneyBeeComingSoon';
+import {
+  baseCEXURL,
+  baseHiveURL,
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+  getReferredUserDetails,
+} from '../../../../services/api';
 import SubHeader from '../SubHeader/SubHeader';
 import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 
 const TeamCaptainDash = () => {
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [honeyBeeData, setHoneyBeeData] = useState();
@@ -42,17 +48,28 @@ const TeamCaptainDash = () => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
 
     setUserType(userType);
-    if (userType === "CaptainBee") {
+    if (userType === 'CaptainBee') {
       if (username) {
         getCaptainBeeStatics(username).then((data) => {
           setStaticsData(data.data);
           if (data?.data?.powerPackData) {
-            const getPowerPack = PackData.find(x => x.name === data?.data?.powerPackData?.type)
+            const getPowerPack = PackData.find(
+              (x) => x.name === data?.data?.powerPackData?.type
+            );
             setPowerPackPhoto(getPowerPack?.photo);
           } else {
             setPowerPackPhoto(undefined);
@@ -63,20 +80,19 @@ const TeamCaptainDash = () => {
       getHoneyUserDetails(user).then((data) => {
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
-      })
+      });
 
       getReferredUserDetails(user).then((data) => {
-        setRefferedUserData(data.data)
+        setRefferedUserData(data.data);
         setCaptainbeeCreateDate(data.data.accountCreationDate);
         setCaptainbeeOrders(data.data.totalOrder);
         setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
+      });
     }
-  }, [])
-
+  }, []);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || "light"
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {
@@ -98,7 +114,7 @@ const TeamCaptainDash = () => {
 
   // Define a function to render a single Honey Bee box.
   const renderHoneyBeeBox = (item) => (
-    <Grid item xs={1} sm={6} md={3} >
+    <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
           <div
@@ -120,7 +136,7 @@ const TeamCaptainDash = () => {
           >
             <div
               className="bee-hexagon"
-            // style={{ marginBottom: '7px' }}
+              // style={{ marginBottom: '7px' }}
             >
               <img
                 alt=""
@@ -133,32 +149,29 @@ const TeamCaptainDash = () => {
             </div>
           </div>
 
-
           <Box
             className=" d-flex justify-content-center"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
+              border: '1.5px solid #E1E1E1',
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
               width: '311px',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 backgroundColor: '#FFB300',
                 borderColor: '#FFB300',
               },
             }}
           >
+            <div className="font_15x d-flex align-items-center">CaptainBee</div>
             <div className="font_15x d-flex align-items-center">
-              CaptainBee
-            </div>
-            <div className="font_15x d-flex align-items-center">
-              {item.username} ({ item?.firstName + " " + item?.lastName})
+              {item.username} ({item?.firstName + ' ' + item?.lastName})
             </div>
           </Box>
         </div>
@@ -181,7 +194,7 @@ const TeamCaptainDash = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 backgroundColor: '#FFB300',
                 borderColor: '#FFB300',
@@ -209,7 +222,7 @@ const TeamCaptainDash = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               ml: 0.3,
               '&:hover': {
                 backgroundColor: '#FFB300',
@@ -228,7 +241,8 @@ const TeamCaptainDash = () => {
   );
 
   // Calculate the number of empty boxes to render.
-  const availableBeesCount = staticsData?.captainBeeRegisteredRequiredData?.length || 0;
+  const availableBeesCount =
+    staticsData?.captainBeeRegisteredRequiredData?.length || 0;
   const emptyBoxesCount = Math.max(6 - availableBeesCount, 0);
 
   // Define a function to render an empty Honey Bee box with the same styling as available users.
@@ -236,24 +250,27 @@ const TeamCaptainDash = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
-          <img src={greyman} alt="man" style={{ zIndex: 1, width: "80px", height: "80px" }} />
+          <img
+            src={greyman}
+            alt="man"
+            style={{ zIndex: 1, width: '80px', height: '80px' }}
+          />
 
           <Box
             className=" d-flex justify-content-center"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
+              border: '1.5px solid #E1E1E1',
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
               width: '311px',
-              transition: "0.3s ease-in-out",
-              '&:hover': {
-              },
+              transition: '0.3s ease-in-out',
+              '&:hover': {},
             }}
           >
             <div className="font_15x d-flex align-items-center">
@@ -285,7 +302,7 @@ const TeamCaptainDash = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 borderColor: '#E1E1E1', // Grey border color
               },
@@ -308,7 +325,7 @@ const TeamCaptainDash = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               ml: 0.3,
               '&:hover': {
                 borderColor: '#E1E1E1', // Grey border color
@@ -322,30 +339,40 @@ const TeamCaptainDash = () => {
     </Grid>
   );
 
-
   return (
     <>
       <SubHeader />
-      {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: `${isMobile ? "250px" : "220px"}` }}>
+      {userType === 'CaptainBee' ? (
+        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
           {/* {---} */}
-          <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: `${isMobile ? "95%" : "30%"}`, textAlign: "center" }}>
-              {availableBeesCount === 0 ? <>
-                Please invite the Captain Bees using this {" "}
-                <a href={`${baseHiveURL +
-                  "/sign-up?referral=" +
-                  staticsData?.userFullData?.referralCode
-                  }`}
-                  className='hive_link'>
-                  referral link
-                </a>
-                {" "} to guide them.
-              </>
-                :
+          <div className="font_20x  justify-content-center text-align-center d-flex mb-2">
+            <div
+              style={{
+                width: `${isMobile ? '95%' : '30%'}`,
+                textAlign: 'center',
+              }}
+            >
+              {availableBeesCount === 0 ? (
                 <>
-                  These are the Captain Bees that are part of your Hex Colony. Select one to guide them
-                </>}
+                  Please invite the Captain Bees using this{' '}
+                  <a
+                    href={`${
+                      baseHiveURL +
+                      '/sign-up?referral=' +
+                      staticsData?.userFullData?.referralCode
+                    }`}
+                    className="hive_link"
+                  >
+                    referral link
+                  </a>{' '}
+                  to guide them.
+                </>
+              ) : (
+                <>
+                  These are the Captain Bees that are part of your Hex Colony.
+                  Select one to guide them
+                </>
+              )}
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -353,7 +380,7 @@ const TeamCaptainDash = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
-                flexDirection: `${isMobile ? "column" : "row"}`,
+                flexDirection: `${isMobile ? 'column' : 'row'}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,
@@ -363,26 +390,26 @@ const TeamCaptainDash = () => {
                 container
                 columns={{ xs: 1, sm: 12, md: 9 }}
                 spacing={{ xs: 12, md: 2 }}
-                maxWidth={"1150px"}
+                maxWidth={'1150px'}
                 rowSpacing={12}
               >
-
-                {staticsData?.captainBeeRegisteredRequiredData?.map(renderHoneyBeeBox)}
+                {staticsData?.captainBeeRegisteredRequiredData?.map(
+                  renderHoneyBeeBox
+                )}
                 {/* Render empty gray boxes to fill the remaining slots first */}
-                {Array.from({ length: emptyBoxesCount }, (_, index) => (
+                {Array.from({ length: emptyBoxesCount }, (_, index) =>
                   renderEmptyHoneyBeeBox(index)
-                ))}
+                )}
               </Grid>
-
             </Box>
           </div>
-          <div>
-            {/* <FlowDiagram /> */}
-          </div>
-        </div>) :
-        <><HoneyBeeComingSoon />
+          <div>{/* <FlowDiagram /> */}</div>
+        </div>
+      ) : (
+        <>
+          <HoneyBeeComingSoon />
         </>
-      }
+      )}
       {/* <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-630px" }}>
  

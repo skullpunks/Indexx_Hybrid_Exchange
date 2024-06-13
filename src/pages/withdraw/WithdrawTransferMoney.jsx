@@ -76,7 +76,7 @@ const WithdrawTransferMoney = () => {
     <div>
       <WithdrawLayout>
         <h3 className={classes.heading}>
-          3. Transfer money to process with order
+          Transfer money to process with order
         </h3>
         <h4 className={classes.secondaryHeading}>
           Please transfer your funds (USD) to the account below with the bank

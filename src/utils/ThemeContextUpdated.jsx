@@ -11,8 +11,10 @@ export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
 
-export default function ThemeContextUpdated({ children }: any) {
-  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
+export default function ThemeContextUpdated({ children }) {
+  const selectedTheme = localStorage?.getItem('selectedTheme') || 'dark';
+  const [mode, setMode] = React.useState(selectedTheme ?? 'dark');
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {

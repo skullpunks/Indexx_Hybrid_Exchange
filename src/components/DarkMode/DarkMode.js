@@ -7,6 +7,10 @@ import './DarkMode.css';
 const DarkMode = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
+  const setDarkMode = () => {
+    document.querySelector('body').setAttribute('data-bs-theme', 'dark');
+    localStorage.setItem('selectedTheme', 'dark');
+  };
 
   const setDarkMode = () => {
     document.querySelector('body').setAttribute('data-bs-theme', 'dark');
@@ -29,7 +33,6 @@ const DarkMode = () => {
     else setLightMode();
     window.dispatchEvent(new Event('storage'));
   };
-
   return (
     <div className="dark_mode">
       <input

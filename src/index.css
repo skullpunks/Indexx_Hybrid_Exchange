@@ -36,7 +36,7 @@
 }
 
 [data-bs-theme='dark'] {
-  --main-body: #000;
+  --main-body: #181a21;
   --body_background: #171717;
   --body_color: #e8e8ed;
   --dark_text: #fff;
@@ -129,6 +129,7 @@ h3,
 h4,
 h5,
 h6 {
+  color: var(--body_color) !important;
 }
 
 .flex-align-start {
