@@ -18,6 +18,7 @@ const DarkMode = () => {
   };
 
   const selectedTheme = localStorage.getItem('selectedTheme') || 'dark';
+  // const selectedTheme = 'dark';
 
   if (selectedTheme === 'dark') {
     setDarkMode();

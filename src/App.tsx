@@ -88,6 +88,7 @@ import TeamCaptainDash from './components/Dashboard/Captainbee/TeamCaptainBees/T
 import LeaderCaptain from './components/Dashboard/Captainbee/LeaderCaptain/LeaderCaptain';
 
 import LottoHome from './components/Lottery/LottoHome';
+import { useTheme } from '@mui/material/styles';
 
 // import CareerSoon from './components/Careers/CareerSoon';
 import { ThemeProvider } from '@mui/material';
@@ -116,7 +117,7 @@ import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
 import HiveForgotPassword from './components/BuySell/HiveForgotPassword';
-import ThemeContextUpdated from './utils/ThemeContextUpdated';
+import ThemeContextUpdated from './utils/ThemeContextUpdated.jsx';
 import ThemeToggler from './components/ThemeToggler/index.js';
 import Login from './pages/auth/LoginEmail/index';
 import LoginPassword from './pages/auth/LoginPassword';
@@ -127,12 +128,19 @@ import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
 import RefferalPage from './pages/auth/Signup/Refferal';
 import SelectRolePage from './pages/auth/Signup/SelectRole';
 import BuySellPage from './pages/BuySell';
+import AssetsPage from './pages/Assets';
+import StakingPage from './pages/Staking';
+import DepositSelectCurrency from './pages/deposit/DepositSelectCurrency';
+import DepositEnterAmount from './pages/deposit/DepositEnterAmount';
+import DepositAddAccountInfo from './pages/deposit/AddAcountInfo';
+import WithdrawAddAccountInfo from './pages/withdraw/WithdrawInfo';
+import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
+import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
+import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
-  let theme = createTheme();
-  theme = responsiveFontSizes(theme);
-
+  const theme = useTheme();
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
 
   useEffect(() => {
@@ -156,8 +164,6 @@ function App() {
     };
   }, []);
 
-  const themeClass = `theme-${userLogged}`;
-
   const PrivateRoutes = () => {
     const isAuthenticated =
       localStorage.getItem('access_token') !== undefined &&
@@ -169,7 +175,7 @@ function App() {
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
-      return <Navigate to="/indexx-exchange/buy-sell/hive-login" />;
+      return <Navigate to="/update/home/" />;
     }
 
     if (isAllowed) {
@@ -181,7 +187,7 @@ function App() {
 
   return (
     <ThemeContextUpdated>
-      <div className={themeClass + ' globalnav-with-flyout-open'}>
+      <div>
         {/* <ThemeToggler /> */}
         <BrowserRouter>
           {/* <Headers /> */}
@@ -191,19 +197,46 @@ function App() {
 
           {/* <SecondaryHeader /> */}
           <Routes>
-            {localStorage.getItem('access_token') === undefined ||
-            localStorage.getItem('access_token') === null ? (
-              <Route path="/*" element={<BuySellLogin />} />
-            ) : (
-              <Route path="/*" element={<BuySell />} />
-            )}
-
-            <Route path="/update/home" element={<BuySellPage />} />
+            <Route path="/" element={<Navigate to="/update/home/" />} />
             <Route element={<PrivateRoutes />}>
               <Route
                 path="/indexx-exchange/send"
                 element={<HorizontalLinearStepper2 />}
               />
+              <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route
+                path="/indexx-exchange/buy-sell/staking"
+                element={<StakingPage />}
+              />
+              <Route
+                path="/deposit-select-currency"
+                element={<DepositSelectCurrency />}
+              />
+              <Route
+                path="/deposit-enter-amount"
+                element={<DepositEnterAmount />}
+              />
+              <Route
+                path="/deposit-add-account-information"
+                element={<DepositAddAccountInfo />}
+              />
+              <Route
+                path="/withdraw-add-information"
+                element={<WithdrawAddAccountInfo />}
+              />
+              <Route
+                path="/withdraw-enter-amount"
+                element={<WithdrawEnterAmount />}
+              />
+              <Route
+                path="/withdraw-transfer-money"
+                element={<WithdrawTransferMoney />}
+              />
+              <Route
+                path="/withdraw-success"
+                element={<WithdrawSuccessPage />}
+              />
+
               <Route
                 path="/indexx-exchange/power-hive"
                 element={<PowerPackInitial />}
@@ -304,7 +337,9 @@ function App() {
               element={<CreatePasswordPage />}
             />
             <Route path="/auth/signup-referral" element={<RefferalPage />} />
-            <Route path="/auth/signup-role" element={<SelectRolePage />} />
+            {/* <Route path="/auth/signup-role" element={<SelectRolePage />} /> */}
+
+            <Route path="/update/home/*" element={<BuySellPage />} />
 
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />
@@ -339,10 +374,6 @@ function App() {
               element={<SubscribeSuccess />}
             />
 
-            <Route
-              path="/indexx-exchange/buy-sell/staking"
-              element={<Staking />}
-            />
             <Route path="/indexx-exchange/bridge" element={<Bridge />} />
 
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
@@ -350,19 +381,6 @@ function App() {
             <Route
               path="/indexx-exchange/elite-learn/:id"
               element={<EliteLearnMore />}
-            />
-
-            <Route
-              path="/indexx-exchange/payment-zelle"
-              element={<Payment />}
-            />
-            <Route
-              path="/indexx-exchange/payment-venmo"
-              element={<PaymentVenmo />}
-            />
-            <Route
-              path="/indexx-exchange/payment-wire"
-              element={<PaymentWire />}
             />
 
             <Route
@@ -403,15 +421,9 @@ function App() {
 
             <Route
               path="/indexx-exchange/buy-sell/staking"
-              element={<Staking />}
+              element={<StakingPage />}
             />
             <Route path="/indexx-exchange/bridge" element={<Bridge />} />
-
-            {/* {
-                        // userData?.role === "Standard"
-                            ? <Route path="/indexx-exchange/dashboard" element={<BSDashhboard />} />
-                            : <Route path="/external-link" element={<External />} />
-                    } */}
 
             <Route path="/indexx-exchange/kyc" element={<BlockpassLink />} />
             <Route path="/indexx-exchange/swap" element={<IndexxSwap />} />
@@ -435,28 +447,25 @@ function App() {
             />
             <Route
               path="/indexx-exchange/buy-sell/login/*"
-              element={<BuySellLogin />}
+              element={<Navigate to="/update/home/" />}
             />
+
             {/* <Route
-            path="/indexx-exchange/buy-sell/all-login/*"
-            element={<BuySellAllLogin />}
-          /> */}
-            <Route
               path="/indexx-exchange/buy-sell/login-honeybee/*"
               element={<BuySellLoginHoneyBee />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/indexx-exchange/buy-sell/wallet"
               element={<BSWallet />}
-            />
+            /> */}
             <Route
               path="/indexx-exchange/buy-sell/withdraw-crypto/*"
               element={<BSWithdrawCryptoLayout />}

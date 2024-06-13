@@ -44,7 +44,7 @@ const TabExample = ({
   handleETFTabChange,
 }) => {
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
   const [userType, setUserType] = useState('');
   const [isCaptain, setisCaptain] = useState(false);

@@ -137,7 +137,7 @@ const TeamCaptainDashIndividual = () => {
 
   console.log(isLoading, 'load');
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {

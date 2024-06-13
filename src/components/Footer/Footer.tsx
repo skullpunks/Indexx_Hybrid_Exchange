@@ -71,7 +71,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   ];
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
