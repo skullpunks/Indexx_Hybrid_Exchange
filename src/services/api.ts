@@ -26,7 +26,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseAPIURL = 'https://test.api.indexx.ai';
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
-  // baseURL = 'https://test.indexx.ai';
+  baseURL = 'https://test.indexx.ai';
   baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
@@ -56,6 +56,86 @@ const API = axios.create({
 });
 
 export default baseAPIURL;
+
+function getFromLocalStorage(key: any) {
+  const item = localStorage.getItem(key);
+  if (!item) {
+    return null;
+  }
+
+  const parsedItem = JSON.parse(item);
+  const now = new Date().getTime();
+
+  // Check if the cached item is still valid
+  if (now > parsedItem.expiry) {
+    localStorage.removeItem(key);
+    return null;
+  }
+
+  return parsedItem.data;
+}
+
+function setToLocalStorage(key: any, data: any, ttl: any) {
+  const now = new Date().getTime();
+  const item = {
+    data: data,
+    expiry: now + ttl,
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+}
+
+export async function fetchCryptoData(subTitle: string) {
+  const cacheKey = `cryptoData:${subTitle}`;
+  const cachedData = getFromLocalStorage(cacheKey);
+
+  if (cachedData) {
+    return cachedData;
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${subTitle}`
+    );
+    const data = response.data;
+
+    const currentPrice = data.market_data.current_price.usd;
+    const twentyFourHourAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_24h / 100);
+    const sevenDaysAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_7d / 100);
+    const oneMonthAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_30d / 100);
+    const threeMonthsAgoPrice =
+      currentPrice / (1 + data.market_data.price_change_percentage_200d / 100);
+
+    const result = {
+      marketCapRank: data.market_cap_rank,
+      marketCap: data.market_data.market_cap.usd,
+      volume: data.market_data.total_volume.usd,
+      circulatingSupply: data.market_data.circulating_supply,
+      twentyFourhourExchangeRate: twentyFourHourAgoPrice,
+      SevenDaysexchangeRate: sevenDaysAgoPrice,
+      onemonthExchangeRate: oneMonthAgoPrice,
+      threemonthExchangeRate: threeMonthsAgoPrice,
+    };
+
+    setToLocalStorage(cacheKey, result, 86400000); // Cache for 24 hours
+
+    return result;
+  } catch (error) {
+    console.error('Error fetching data from CoinGecko:', error);
+    return {
+      marketCapRank: 'NA',
+      marketCap: 'NA',
+      volume: 'NA',
+      circulatingSupply: 'NA',
+      twentyFourhourExchangeRate: 0,
+      SevenDaysexchangeRate: 0,
+      onemonthExchangeRate: 0,
+      threemonthExchangeRate: 0,
+    };
+  }
+}
 
 export function formatReadableDate(isoDate: string) {
   const date = new Date(isoDate);
@@ -112,7 +192,66 @@ export function formatPhoneNumberToUSFormat(inputString: string) {
 
 export const checkEmail = async (email: string) => {
   try {
+    email = email.toLocaleLowerCase();
     const result = await API.post('/api/v1/inex/user/checkemail', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const sendOtp = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendOtp', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const sendForgotPasswordOtp = async (email: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendForgotOtp', {
+      email,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const validateOtp = async (email: string, code: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateOtp', {
+      email,
+      code,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const validateForgotOtp = async (email: string, code: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateForgotOtp', {
+      email,
+      code,
+    });
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const checkByemail = async (email: string) => {
+  try {
+    email = email.toLocaleLowerCase();
+    const result = await API.post('/api/v1/inex/user/checkByemail', {
       email,
     });
     return result.data;
@@ -691,6 +830,34 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const signupWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/register/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const loginWithGoogle = async (tokenResponse: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/login/google`, {
+      googleToken: tokenResponse,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDetails)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getHoneyUserDetails = async (email: string) => {
   try {
     const result = await API.get(
@@ -725,6 +892,9 @@ export const getCoinPriceByName = async (
   coin: string,
   type: string = 'Buy'
 ) => {
+  if (coin === 'INEX-ETHEREUM' || coin === 'INEX-POLYGON') {
+    coin = 'INEX';
+  }
   try {
     const result = await API.post(`/api/v1/inex/basic/getcoinprice/${coin}`, {
       type: type,
@@ -843,10 +1013,60 @@ export const marketsData = async () => {
   }
 };
 
+export const hotTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const hotStockTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotStockTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotStockTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const hotETFTokenData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/hotETFTokens');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (hotETFTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const stockMarketsData = async (symbol: string) => {
   try {
     const result = await API.get(
       `/api/v1/inex/basic/stockmarketPrice/${symbol}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (marketPrice)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const stockMarketsDataWithHistory = async (symbol: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/basic/stockmarketPriceWithHistory/${symbol}`
     );
     return result.data;
   } catch (e: any) {
