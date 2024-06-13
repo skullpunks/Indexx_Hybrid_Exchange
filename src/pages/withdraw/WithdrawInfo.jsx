@@ -6,6 +6,7 @@ import GenericButton from '../../components/updated/shared/Button';
 import InputField from '../../components/updated/shared/TextField';
 import { Country, State } from 'country-state-city';
 import { MenuItem, Select } from '@mui/material';
+import StyledSelect from '.';
 
 const useStyle = makeStyles((theme) => ({
   heading: {
@@ -56,13 +57,13 @@ const WithdrawAddAccountInfo = () => {
     if (countryCode) {
       const states = State.getStatesOfCountry(countryCode) || [];
       setStates(states);
-      if (!states.some((st) => st.name === state)) {
+      if (!states.some((st) => st.isoCode === state)) {
         setState('');
       }
     } else {
       setStates([]);
     }
-  }, [countryCode]);
+  }, [countryCode, state]);
 
   const handleContinue = () => {
     navigate('/withdraw-enter-amount', {
@@ -146,45 +147,43 @@ const WithdrawAddAccountInfo = () => {
         onChange={(e) => setAddressLine2(e.target.value)}
       />
       <div style={{ margin: '30px' }}></div>
-      <div className={classes.selectField}>
-        <label>Country</label>
-        <Select
-          fullWidth
-          value={countryCode}
-          onChange={(e) => {
-            const selectedCountry = Country.getCountryByCode(e.target.value);
-            setCountry(String(selectedCountry?.name));
-            setCountryCode(String(selectedCountry?.isoCode));
-          }}
-        >
-          {Country.getAllCountries().map((cntry) => (
-            <MenuItem key={cntry.isoCode} value={cntry.isoCode}>
-              {cntry.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
+      <InputField
+        label={'City'}
+        placeholder="City"
+        type={'text'}
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
       <div style={{ margin: '30px' }}></div>
-      <div className={classes.selectField}>
-        <label>State</label>
-        <Select
-          fullWidth
-          value={state}
-          onChange={(e) => {
-            const selectedState = states.find(
-              (st) => st.isoCode === e.target.value
-            )?.name;
-            setState(selectedState);
-          }}
-          disabled={!countryCode}
-        >
-          {states.map((st) => (
-            <MenuItem key={st.isoCode} value={st.isoCode}>
-              {st.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
+      <StyledSelect
+        label="Country"
+        value={countryCode}
+        onChange={(e) => {
+          const selectedCountry = Country.getCountryByCode(e.target.value);
+          setCountry(String(selectedCountry?.name));
+          setCountryCode(String(selectedCountry?.isoCode));
+        }}
+        options={Country.getAllCountries().map((cntry) => ({
+          value: cntry.isoCode,
+          label: cntry.name,
+        }))}
+      />
+      <div style={{ margin: '30px' }}></div>
+        <StyledSelect
+        label="State"
+        value={state}
+        onChange={(e) => {
+          const selectedState = states.find(
+            (st) => st.isoCode === e.target.value
+          )?.isoCode;
+          setState(selectedState || '');
+        }}
+        disabled={!countryCode}
+        options={states.map((st) => ({
+          value: st.isoCode,
+          label: st.name,
+        }))}
+      />
       <div style={{ margin: '30px' }}></div>
       <InputField
         label={'Zip Code'}
