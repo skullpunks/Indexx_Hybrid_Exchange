@@ -126,6 +126,7 @@ import SignUpEmailVerificationPage from './pages/auth/Signup/EmailVerification';
 import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
 import RefferalPage from './pages/auth/Signup/Refferal';
 import SelectRolePage from './pages/auth/Signup/SelectRole';
+import BuySellPage from './pages/BuySell';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -197,6 +198,7 @@ function App() {
               <Route path="/*" element={<BuySell />} />
             )}
 
+            <Route path="/update/home" element={<BuySellPage />} />
             <Route element={<PrivateRoutes />}>
               <Route
                 path="/indexx-exchange/send"

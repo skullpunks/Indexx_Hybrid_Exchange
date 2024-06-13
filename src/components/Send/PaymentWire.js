@@ -10,16 +10,19 @@ import '../BSDepositWithdraw/BSWithdraw.css';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import wire from '../../assets/arts/pay/wire.svg';
-import zelle_qr from '../../assets/arts/pay/zel-qr.svg';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import OpenNotification from '../OpenNotification/OpenNotification';
-import tick from "../../assets/arts/pay/tick.svg";
-import upload from "../../assets/arts/pay/upload 1.svg";
-import fortune from "../../assets/arts/pay/fortune-10 1.svg";
+import tick from '../../assets/arts/pay/tick.svg';
+import upload from '../../assets/arts/pay/upload 1.svg';
+import fortune from '../../assets/arts/pay/fortune-10 1.svg';
 import { TextField } from '@mui/material';
-import { createFiatDepositForOrder, decodeJWT, getOrderDetails } from '../../services/api';
+import {
+  createFiatDepositForOrder,
+  decodeJWT,
+  getOrderDetails,
+} from '../../services/api';
 import AWS from 'aws-sdk';
 
 const S3_BUCKET = 'indexx-exchange';
@@ -31,15 +34,20 @@ AWS.config.update({
 });
 var s3 = new AWS.S3();
 
-const Final = ({ orderData, fromDetails, toDetails, photoIdFile, photoIdUrl }) => {
-
+const Final = ({
+  orderData,
+  fromDetails,
+  toDetails,
+  photoIdFile,
+  photoIdUrl,
+}) => {
   const navigate = useNavigate();
   const handleWallet = () => {
     navigate('/indexx-exchange/buy-sell/wallet');
-  }
+  };
   const handleExchange = () => {
     navigate('/');
-  }
+  };
 
   // Add this inside your component to log the data when it's rendered
   useEffect(() => {
@@ -47,7 +55,13 @@ const Final = ({ orderData, fromDetails, toDetails, photoIdFile, photoIdUrl }) =
       const access_token = String(localStorage.getItem('access_token'));
       const decoded = await decodeJWT(access_token);
       let email = String(decoded.email);
-      const res = await createFiatDepositForOrder(email, orderData?.orderId, fromDetails, toDetails, photoIdUrl);
+      const res = await createFiatDepositForOrder(
+        email,
+        orderData?.orderId,
+        fromDetails,
+        toDetails,
+        photoIdUrl
+      );
     }
     finalDetails();
   }, [fromDetails, toDetails, photoIdUrl]);
@@ -61,19 +75,22 @@ const Final = ({ orderData, fromDetails, toDetails, photoIdFile, photoIdUrl }) =
         justifyContent: 'center',
       }}
     >
-      <Box className="d-flex flex-direction-column align-items-center" width={"55%"}>
-        <img src={fortune} alt="check" style={{ width: "60%" }} />
-        <div className="font_60x">
-          Thank you
-        </div>
-        <div className="font_17x" style={{ width: "350px" }}>
+      <Box
+        className="d-flex flex-direction-column align-items-center"
+        width={'55%'}
+      >
+        <img src={fortune} alt="check" style={{ width: '60%' }} />
+        <div className="font_60x">Thank you</div>
+        <div className="font_17x" style={{ width: '350px' }}>
           for choosing Indexx for your crypto purchase!
         </div>
         <div className="font_10x mt-4">
-          Our team is diligently verifying your order, and your tokens will be in your wallet within 1-2 business days. We appreciate your trust and patience!
+          Our team is diligently verifying your order, and your tokens will be
+          in your wallet within 1-2 business days. We appreciate your trust and
+          patience!
         </div>
         <br />
-        <div className='d-flex mb-2' style={{ gap: 10, minWidth: "100%" }}>
+        <div className="d-flex mb-2" style={{ gap: 10, minWidth: '100%' }}>
           <Button
             className="continue-btn"
             variant="contained"
@@ -96,12 +113,17 @@ const Final = ({ orderData, fromDetails, toDetails, photoIdFile, photoIdUrl }) =
   );
 };
 
-const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange, onToDetailsChange }) => {
-
+const FileComponent1 = ({
+  orderData,
+  onNext,
+  onStateChange,
+  onFromDetailsChange,
+  onToDetailsChange,
+}) => {
   const navigate = useNavigate();
   const handlePrev = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
   const [name, setName] = useState('');
   const [Bank, setBank] = useState('');
   const [accno, setaccno] = useState();
@@ -114,17 +136,17 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
     bankName: '',
     bankAccountNumber: '',
     address: '',
-    phoneNumber: ''
+    phoneNumber: '',
   });
 
   const toDetails = {
-    recipientName: "Indexx.ai",
-    recipientAddress: "41775 Elm St, ste. 202 Murrieta CA 92562 USA",
-    bankName: "Wells Fargo Bank, NA",
-    bankAccountNumber: "1793811546",
-    bankAddress: "420 Montgomery Street, San Francisco, CA 94104",
-    wireRoutingNumber: "121000248",
-    swiftCode: "WFBIUS6S"
+    recipientName: 'Indexx.ai',
+    recipientAddress: '41775 Elm St, ste. 202 Murrieta CA 92562 USA',
+    bankName: 'Wells Fargo Bank, NA',
+    bankAccountNumber: '1793811546',
+    bankAddress: '420 Montgomery Street, San Francisco, CA 94104',
+    wireRoutingNumber: '121000248',
+    swiftCode: 'WFBIUS6S',
   };
 
   const validatePhone = (phoneNumber) => {
@@ -138,18 +160,17 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
     const phoneNumber = e.target.value;
     console.log(phoneNumber);
     setPhone(phoneNumber);
-    handleInputChange(e, 'phoneNumber')
+    handleInputChange(e, 'phoneNumber');
     // Validate the phone number and update the state accordingly
     setIsValidPhone(validatePhone(phoneNumber));
   };
 
   const handleInputChange = (e, field) => {
-    setFromDetails(prev => ({
+    setFromDetails((prev) => ({
       ...prev,
-      [field]: e.target.value
+      [field]: e.target.value,
     }));
   };
-
 
   const handleSubmit = () => {
     onFromDetailsChange(fromDetails); // Pass the state up to the parent component
@@ -159,14 +180,29 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
 
   const isAnyInputBlank = (name, bankName, bankAccNo, address, phoneNumber) => {
     return (
-      !name || name.trim() === '' || name === null || name === undefined ||
-      !bankName || bankName.trim() === '' || bankName === null || bankName === undefined ||
-      !bankAccNo || bankAccNo.trim() === '' || bankAccNo === null || bankAccNo === undefined ||
-      !address || address.trim() === '' || address === null || address === undefined ||
-      !phoneNumber || phoneNumber.trim() === '' || phoneNumber === null || phoneNumber === undefined || !validatePhone(phoneNumber)
+      !name ||
+      name.trim() === '' ||
+      name === null ||
+      name === undefined ||
+      !bankName ||
+      bankName.trim() === '' ||
+      bankName === null ||
+      bankName === undefined ||
+      !bankAccNo ||
+      bankAccNo.trim() === '' ||
+      bankAccNo === null ||
+      bankAccNo === undefined ||
+      !address ||
+      address.trim() === '' ||
+      address === null ||
+      address === undefined ||
+      !phoneNumber ||
+      phoneNumber.trim() === '' ||
+      phoneNumber === null ||
+      phoneNumber === undefined ||
+      !validatePhone(phoneNumber)
     );
   };
-
 
   return (
     <Box
@@ -176,19 +212,28 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: "column"
+        flexDirection: 'column',
       }}
     >
       <div className="font_15x text-left mt-4">
         <h1 className="font_30x text-left mb-5">
-          Order Amount: {String(orderData?.orderType)?.includes("Pack") ? (orderData?.breakdown?.finalAmountAfterDiscount)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-            : (orderData?.breakdown?.inAmount)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  {orderData?.breakdown?.inCurrenyName}
+          Order Amount:{' '}
+          {String(orderData?.orderType)?.includes('Pack')
+            ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
+                'en-US',
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )
+            : orderData?.breakdown?.inAmount?.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{' '}
+          {orderData?.breakdown?.inCurrenyName}
         </h1>
         <WarningAmberIcon />
-        Kindly transfer the exact amount specified above using the provided recipient details
+        Kindly transfer the exact amount specified above using the provided
+        recipient details
       </div>
       <Box className="mt-5 w-100">
-
         <Box
           sx={{
             display: 'flex',
@@ -200,12 +245,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
             maxWidth: '1520px',
           }}
         >
-          <Typography
-            variant="text"
-            fontSize={'25px'}
-            fontWeight={500}
-            mb={2}
-          >
+          <Typography variant="text" fontSize={'25px'} fontWeight={500} mb={2}>
             Recipient Information
           </Typography>
 
@@ -229,7 +269,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               For Domestic wire transfers
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               Wire Routing Transit Number (ABA / RTN) 121000248
             </Box>
           </Box>
@@ -254,7 +295,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               For International wire transfers
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               SWIFT / BIC code WFBIUS6S
             </Box>
           </Box>
@@ -278,7 +320,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               Recipient Name
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               Indexx.ai
             </Box>
           </Box>
@@ -302,7 +345,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               Recipient Address
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               41775 Elm St, ste. 202 Murrieta CA 92562 USA
             </Box>
           </Box>
@@ -326,7 +370,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               Bank Name
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               Wells Fargo Bank, NA
             </Box>
           </Box>
@@ -351,7 +396,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               Bank Account Number
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               1793811546
             </Box>
           </Box>
@@ -375,11 +421,11 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               Bank Address
             </Typography>
             <Box
-              sx={{ mb: 2, width: '64%', fontSize: "15px", fontWeight: "bold" }}>
+              sx={{ mb: 2, width: '64%', fontSize: '15px', fontWeight: 'bold' }}
+            >
               420 Montgomery Street, San Francisco, CA 94104
             </Box>
           </Box>
-
         </Box>
 
         <Box
@@ -393,12 +439,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
             maxWidth: '1520px',
           }}
         >
-          <Typography
-            variant="text"
-            fontSize={'25px'}
-            fontWeight={500}
-            mb={2}
-          >
+          <Typography variant="text" fontSize={'25px'} fontWeight={500} mb={2}>
             Customer Information (For Verification)
           </Typography>
 
@@ -431,9 +472,8 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                handleInputChange(e, 'name')
+                handleInputChange(e, 'name');
               }}
-
             />
           </Box>
 
@@ -466,7 +506,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               value={Bank}
               onChange={(e) => {
                 setBank(e.target.value);
-                handleInputChange(e, 'bankName')
+                handleInputChange(e, 'bankName');
               }}
             />
           </Box>
@@ -500,8 +540,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               value={accno}
               onChange={(e) => {
                 setaccno(e.target.value);
-                handleInputChange(e, 'bankAccountNumber')
-
+                handleInputChange(e, 'bankAccountNumber');
               }}
             />
           </Box>
@@ -535,7 +574,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
               value={address}
               onChange={(e) => {
                 setAddress(e.target.value);
-                handleInputChange(e, 'address')
+                handleInputChange(e, 'address');
               }}
             />
           </Box>
@@ -576,7 +615,7 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
             />
           </Box>
         </Box>
-        <div className='d-flex mt-4 mb-2' style={{ gap: 10 }}>
+        <div className="d-flex mt-4 mb-2" style={{ gap: 10 }}>
           <Button
             className="continue-btn"
             variant="contained"
@@ -600,8 +639,15 @@ const FileComponent1 = ({ orderData, onNext, onStateChange, onFromDetailsChange,
   );
 };
 
-const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onStateChange, onPhotoIdUrlChange }) => {
-
+const FileComponent2 = ({
+  orderData,
+  fromDetails,
+  toDetails,
+  onPrev,
+  onNext,
+  onStateChange,
+  onPhotoIdUrlChange,
+}) => {
   const [photoIdFile, setPhotoIdFile] = useState(null);
   const [photoIdUrl, setPhotoIdUrl] = useState(null);
   const [photoIdFileerror, setPhotoIdFileerror] = useState(null);
@@ -612,17 +658,17 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
 
   const handleNext = () => {
     if (photoIdFile === null) {
-      setPhotoIdFileerror("Please add a proof")
+      setPhotoIdFileerror('Please add a proof');
       return;
     }
     onNext();
-  }
+  };
 
   const handleDropProfile = (e) => {
     e.preventDefault();
-    console.log("e", e)
+    console.log('e', e);
     const file = e.dataTransfer.files[0];
-    console.log("file", file)
+    console.log('file', file);
     if (file) {
       // Check file size
       if (file.size > 10 * 1024 * 1024) {
@@ -641,19 +687,18 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
       }
 
       setPhotoIdFile(file);
-      uploadToS3(file, "Receipt");
-      setPhotoIdFileerror("")
+      uploadToS3(file, 'Receipt');
+      setPhotoIdFileerror('');
       // uploadToS3(file, 'photoId');
     }
   };
-
 
   const uploadToS3 = async (file, fileType) => {
     const params = {
       Bucket: S3_BUCKET,
       Key: file.name,
       Body: file,
-      ContentType: file.type
+      ContentType: file.type,
     };
 
     try {
@@ -661,11 +706,11 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
       // Construct and set the file URL
       const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
 
-      console.log("url", url)
+      console.log('url', url);
       setPhotoIdUrl(url);
       onPhotoIdUrlChange(url);
     } catch (error) {
-      console.log("Error here", error)
+      console.log('Error here', error);
       alert('Error uploading file:', error);
     }
   };
@@ -690,12 +735,10 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
       }
 
       setPhotoIdFile(file);
-      setPhotoIdFileerror("");
-      uploadToS3(file, "Receipt");
-
+      setPhotoIdFileerror('');
+      uploadToS3(file, 'Receipt');
     }
   };
-
 
   return (
     <Box
@@ -707,26 +750,38 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
       }}
     >
       <Box className="send-box staking-toggle">
-        <h1 className="font_28x">
-          Upload proof of payment
-        </h1>
+        <h1 className="font_28x">Upload proof of payment</h1>
         <br />
-        <Box sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          width: "100%",
-          mb: 4,
-          gap: 1,
-        }}>
-          <Typography variant="text" fontSize={"13px"} width={"100%"} textAlign={"left"} mb={2}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            width: '100%',
+            mb: 4,
+            gap: 1,
+          }}
+        >
+          <Typography
+            variant="text"
+            fontSize={'13px'}
+            width={'100%'}
+            textAlign={'left'}
+            mb={2}
+          >
             Upload supporting file (jpeg, png, pdf, Maximum 10MB file size)
-            {photoIdFileerror &&
-              <span style={{ color: "#d32f2f", fontSize: "12px", paddingLeft: "20px" }}>
+            {photoIdFileerror && (
+              <span
+                style={{
+                  color: '#d32f2f',
+                  fontSize: '12px',
+                  paddingLeft: '20px',
+                }}
+              >
                 {photoIdFileerror}
               </span>
-            }
+            )}
           </Typography>
           <div
             onDrop={handleDropProfile}
@@ -743,31 +798,37 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
             {photoIdFile ? (
               <div>
                 <p>
-                  <img src={tick} alt="tick" style={{ marginRight: "10px", width: "40px" }} />
+                  <img
+                    src={tick}
+                    alt="tick"
+                    style={{ marginRight: '10px', width: '40px' }}
+                  />
                   {photoIdFile.name}
                   <Button
                     onClick={() => setPhotoIdFile(null)}
                     disableTouchRipple
-                    sx={{ width: "auto", color: "var(--body_color)", boxShadow: "none" }}
+                    sx={{
+                      width: 'auto',
+                      color: 'var(--body_color)',
+                      boxShadow: 'none',
+                    }}
                   >
-                    <CloseIcon
-                      fontSize={'1rem'}
-                      color='#171c26'
-                    />
+                    <CloseIcon fontSize={'1rem'} color="#171c26" />
                   </Button>
                 </p>
               </div>
             ) : (
               <p>
                 <Box
-                  component={"img"}
+                  component={'img'}
                   src={upload}
                   alt="logo"
-                  width={"50px"}
+                  width={'50px'}
                   mt={2}
                 />
                 <br />
-                Drag and drop a file here or</p>
+                Drag and drop a file here or
+              </p>
             )}
             <label htmlFor="profileInput">
               <Button
@@ -788,7 +849,7 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
                     backgroundColor: 'transparent',
                     borderColor: 'var(--border-color)',
                     boxShadow: 'none',
-                    borderWidth: "4px",
+                    borderWidth: '4px',
                   },
                 }}
               >
@@ -799,12 +860,12 @@ const FileComponent2 = ({ orderData, fromDetails, toDetails, onPrev, onNext, onS
                 onChange={handlePhotoIdFileChange}
                 style={{ display: 'none' }}
                 id="profileInput"
-                accept='image/*'
+                accept="image/*"
               />
             </label>
           </div>
         </Box>
-        <div className='d-flex mt-4 mb-2' style={{ gap: 10 }}>
+        <div className="d-flex mt-4 mb-2" style={{ gap: 10 }}>
           <Button
             className="continue-btn"
             variant="contained"
@@ -880,7 +941,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PaymentWire() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [coinFromStep2, setCoinFromStep2] = React.useState({ selectedCoin: '', receiveAmount: '', email: '', username: '', profilePic: '', userBalance: 0 });
+  const [coinFromStep2, setCoinFromStep2] = React.useState({
+    selectedCoin: '',
+    receiveAmount: '',
+    email: '',
+    username: '',
+    profilePic: '',
+    userBalance: 0,
+  });
 
   const classes = useStyles();
   const [orderData, setOrderData] = useState();
@@ -900,24 +968,24 @@ export default function PaymentWire() {
   };
 
   const handlePhotoIdFileChange = (file) => {
-    console.log("I am here", file)
+    console.log('I am here', file);
     setPhotoIdFile(file);
   };
   useEffect(() => {
-    const orderIdFromParam = searchParams.get("orderId");
+    const orderIdFromParam = searchParams.get('orderId');
     if (orderIdFromParam !== undefined) {
-      let access_token = String(localStorage.getItem("access_token"));
+      let access_token = String(localStorage.getItem('access_token'));
       let decoded = decodeJWT(access_token);
       getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
         if (res.status === 200) {
           let orderData = res.data;
           setOrderData(orderData);
         } else {
-          alert("Something went wrong. Please try again.")
+          alert('Something went wrong. Please try again.');
         }
-      })
+      });
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -932,7 +1000,7 @@ export default function PaymentWire() {
   };
 
   const handleStateChange = (newState) => {
-    setCoinFromStep2(prevState => ({ ...prevState, ...newState }));
+    setCoinFromStep2((prevState) => ({ ...prevState, ...newState }));
   };
 
   const steps = [
@@ -945,7 +1013,7 @@ export default function PaymentWire() {
           onFromDetailsChange={handleFromDetailsChange}
           onToDetailsChange={handleToDetailsChange}
         />
-      )
+      ),
     },
     {
       label: 'Upload proof of Payment',
@@ -959,7 +1027,7 @@ export default function PaymentWire() {
           onPhotoIdFileChange={handlePhotoIdFileChange}
           onPhotoIdUrlChange={setPhotoIdUrl}
         />
-      )
+      ),
     },
     {
       label: 'Payment Confirmation',
@@ -971,7 +1039,7 @@ export default function PaymentWire() {
           photoIdFile={photoIdFile}
           photoIdUrl={photoIdUrl}
         />
-      )
+      ),
     },
   ];
   return (
@@ -985,14 +1053,12 @@ export default function PaymentWire() {
         alignItems: 'center',
       }}
     >
-      <Box className="d-flex justify-content-center" sx={{ width: '50%', mb: 5 }}>
+      <Box
+        className="d-flex justify-content-center"
+        sx={{ width: '50%', mb: 5 }}
+      >
         <Typography variant="h3"></Typography>
-        <Box
-          component={"img"}
-          src={wire}
-          alt="logo"
-          width={"110px"}
-        />
+        <Box component={'img'} src={wire} alt="logo" width={'110px'} />
       </Box>
       <Box sx={{ width: '40%' }}>
         <Stepper
@@ -1000,45 +1066,47 @@ export default function PaymentWire() {
           alternativeLabel
           sx={{ fill: 'var(--primary_color)' }}
         >
-          {localStorage.getItem("userlogged") === 'normal' ?
-            (steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            )))
-            :
-            (steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel
-                  StepIconComponent={({ completed, active }) => (
-                    <div className={classes.customIconContainer}>
-                      {/* <div
+          {localStorage.getItem('userlogged') === 'normal'
+            ? steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))
+            : steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel
+                    StepIconComponent={({ completed, active }) => (
+                      <div className={classes.customIconContainer}>
+                        {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                      <div
-                        className={
-                          completed
-                            ? classes.completedIcon
-                            : activeStep === index
+                        <div
+                          className={
+                            completed
+                              ? classes.completedIcon
+                              : activeStep === index
                               ? classes.activeIcon
                               : classes.inactiveIcon
-                        }
-                      />
-                      <div className={classes.stepNumber}>{index + 1}</div>
-                    </div>
-                  )}
-
-                >
-                  {step.label}
-                </StepLabel>
-              </Step>
-            )))
-          }
+                          }
+                        />
+                        <div className={classes.stepNumber}>{index + 1}</div>
+                      </div>
+                    )}
+                  >
+                    {step.label}
+                  </StepLabel>
+                </Step>
+              ))}
         </Stepper>
 
         <Box>
           {activeStep === steps.length ? (
-            <Final orderData={orderData} fromDetails={fromDetails} toDetails={toDetails} photoIdFile={photoIdFile} />
+            <Final
+              orderData={orderData}
+              fromDetails={fromDetails}
+              toDetails={toDetails}
+              photoIdFile={photoIdFile}
+            />
           ) : (
             steps[activeStep].component()
           )}
