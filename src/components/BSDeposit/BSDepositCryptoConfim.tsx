@@ -15,7 +15,7 @@ export const BSDepositCryptoConfim = () => {
 <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'><div className='d-flex flex-align-center top_heading'>
         <span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
        </div>
-        <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
+        <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/deposit-select-currency")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
       </div>
 
             {/* <div className='margin-lr-auto'> <p className='margin-lr-auto padding-t-2x max_400'>NOTE: The arrival time of withdrawal depends on the region of your receiving bank. Usually it takes 2-4 business days.</p>

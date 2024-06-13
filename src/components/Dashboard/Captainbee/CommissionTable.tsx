@@ -355,7 +355,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
           <Button className='margin-r-1x com-btn ' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
             Withdraw INEX
           </Button>
-          <Button className='com-btn' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw")}>
+          <Button className='com-btn' onClick={() => navigate("/withdraw-add-information")}>
             Withdraw USD
           </Button>
 
