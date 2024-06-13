@@ -252,7 +252,11 @@ export const checkByemail = async (email: string) => {
   try {
     email = email.toLocaleLowerCase();
     const result = await API.post('/api/v1/inex/user/checkByemail', {
+<<<<<<< HEAD
         email,
+=======
+      email,
+>>>>>>> staging-updated
     });
     return result.data;
   } catch (e: any) {

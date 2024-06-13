@@ -56,7 +56,7 @@ const BuyContent: React.FC<Props> = ({
   const [filteredtokens, setFilteredtokens] = useState(newarr);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
   useEffect(() => {
     const handleStorageChange = (event: any) => {

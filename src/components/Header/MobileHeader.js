@@ -63,7 +63,7 @@ const MobileHeader = () => {
   const [url, setUrl] = useState('');
   const [haspowerpack, setHaspowerpack] = useState(false);
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {

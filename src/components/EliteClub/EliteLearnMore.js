@@ -19,12 +19,11 @@ const EliteLearnMore = () => {
   }, [id]);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
-
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -71,16 +70,24 @@ const EliteLearnMore = () => {
       ></Box>
       <Box
         className="d-flex justify-content-center over-bg"
-        mt={id === '1' ? `${isMobile ? '-70%' : '-50%'}` : `${isMobile ? '-90%' : '-70%'}`}
+        mt={
+          id === '1'
+            ? `${isMobile ? '-70%' : '-50%'}`
+            : `${isMobile ? '-90%' : '-70%'}`
+        }
         pt={20}
       >
         <Box component={'img'} src={data?.photo} alt="logo" width={'90%'} />
       </Box>
-      <Box className="d-flex justify-content-center" mt={isMobile ? 20 : 30} mb={isMobile ? 25 : 35}>
+      <Box
+        className="d-flex justify-content-center"
+        mt={isMobile ? 20 : 30}
+        mb={isMobile ? 25 : 35}
+      >
         <Typography
           fontWeight={'bold'}
           fontSize={isMobile ? '23px' : '50px'}
-          textAlign={isMobile ? 'center' : "left"}
+          textAlign={isMobile ? 'center' : 'left'}
           width={'85%'}
         >
           {data?.desc}
@@ -95,8 +102,11 @@ const EliteLearnMore = () => {
           width: '100%',
         }}
       >
-        <Box className="d-flex justify-content-center align-items-center over-bg-3" pt={7} pb={10}
-        sx={{flexDirection : `${isMobile ? 'column' : 'row'}`}}
+        <Box
+          className="d-flex justify-content-center align-items-center over-bg-3"
+          pt={7}
+          pb={10}
+          sx={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
         >
           <Box
             className="d-flex flex-column align-items-center align-self-center"
@@ -117,11 +127,13 @@ const EliteLearnMore = () => {
               Perks
             </Typography>
           </Box>
-          <Box className="d-flex flex-column" width={isMobile ? "90%" : '50%'}
-            sx={{alignItems : `${isMobile ? 'center' : 'left'}` }}
+          <Box
+            className="d-flex flex-column"
+            width={isMobile ? '90%' : '50%'}
+            sx={{ alignItems: `${isMobile ? 'center' : 'left'}` }}
           >
             {data?.perks.map((item) => (
-              <Box width={'80%'}  mt={3}>
+              <Box width={'80%'} mt={3}>
                 <Typography
                   fontWeight={'bold'}
                   fontSize={'20px'}
@@ -165,7 +177,7 @@ const EliteLearnMore = () => {
         <Typography
           fontWeight={500}
           fontSize={isMobile ? '15px' : '10px'}
-          textAlign={isMobile ? 'center' : "left"}
+          textAlign={isMobile ? 'center' : 'left'}
           width={isMobile ? '90%' : '520px'}
           lineHeight={'30px'}
           mt={3}
@@ -189,7 +201,12 @@ const EliteLearnMore = () => {
           pt={7}
           pb={10}
         >
-          <Box component={'img'} src={data?.photo} alt="logo" width={isMobile ? '95%' : '450px'} />
+          <Box
+            component={'img'}
+            src={data?.photo}
+            alt="logo"
+            width={isMobile ? '95%' : '450px'}
+          />
           <Typography
             // fontWeight={'bold'}
             fontSize={'54px'}
@@ -231,73 +248,78 @@ const EliteLearnMore = () => {
         <Box
           className="d-flex flex-column justify-content-center"
           width={isMobile ? '90%' : '75%'}
-          sx={{alignItems : `${isMobile ? 'center' : 'left'}` }}
+          sx={{ alignItems: `${isMobile ? 'center' : 'left'}` }}
         >
           <Typography
             fontWeight={'bold'}
             fontSize={isMobile ? '25px' : '40px'}
-            textAlign={isMobile ? 'center' : "left"}
+            textAlign={isMobile ? 'center' : 'left'}
             width={'95%'}
           >
             Indexx Investor Elite Club
           </Typography>
-          {isMobile ? 
-          <>
-
-          <Typography
-            fontWeight={'bold'}
-            fontSize={isMobile ? '50px' : '60px'}
-            textAlign={isMobile ? 'center' : "left"}
-            width={isMobile ? '90%' : '85%'}
-          >
-            {data?.name} 
-          </Typography>
-          <Typography
-            fontSize={isMobile ? '20px' : '60px'}
-            textAlign={isMobile ? 'center' : "left"}
-            width={isMobile ? '90%' : '85%'}
-          >
-            Investment Package
-          </Typography>
-          </>
-
-          :
-          <Typography
-            fontWeight={'bold'}
-            fontSize={isMobile ? '30px' : '60px'}
-            textAlign={isMobile ? 'center' : "left"}
-            width={isMobile ? '90%' : '85%'}
-          >
-            {data?.name} Investment Package
-          </Typography>
-          }
-          {data?.package.map((pack) => (
-            <Box className="d-flex" mt={10}
-            sx={{flexDirection : `${isMobile ? 'column' : 'row'}`, gap: 5,
-            alignItems : `${isMobile ? 'center' : 'left'}`,
-            justifyContent:`${isMobile ? 'center' : 'left'}`,
-             }}
-
+          {isMobile ? (
+            <>
+              <Typography
+                fontWeight={'bold'}
+                fontSize={isMobile ? '50px' : '60px'}
+                textAlign={isMobile ? 'center' : 'left'}
+                width={isMobile ? '90%' : '85%'}
+              >
+                {data?.name}
+              </Typography>
+              <Typography
+                fontSize={isMobile ? '20px' : '60px'}
+                textAlign={isMobile ? 'center' : 'left'}
+                width={isMobile ? '90%' : '85%'}
+              >
+                Investment Package
+              </Typography>
+            </>
+          ) : (
+            <Typography
+              fontWeight={'bold'}
+              fontSize={isMobile ? '30px' : '60px'}
+              textAlign={isMobile ? 'center' : 'left'}
+              width={isMobile ? '90%' : '85%'}
             >
-            <Box width={isMobile ? '100%' : "auto"} className="d-flex justify-content-center">
-
+              {data?.name} Investment Package
+            </Typography>
+          )}
+          {data?.package.map((pack) => (
+            <Box
+              className="d-flex"
+              mt={10}
+              sx={{
+                flexDirection: `${isMobile ? 'column' : 'row'}`,
+                gap: 5,
+                alignItems: `${isMobile ? 'center' : 'left'}`,
+                justifyContent: `${isMobile ? 'center' : 'left'}`,
+              }}
+            >
               <Box
-                component={'img'}
-                src={
-                  theme === 'dark' ? pack?.image : pack?.lightimg || pack?.image
-                }
-                alt="logo"
-                alignSelf={'baseline'}
-                width={isMobile ? '120px' : 'auto'}
-              />
-            </Box>
+                width={isMobile ? '100%' : 'auto'}
+                className="d-flex justify-content-center"
+              >
+                <Box
+                  component={'img'}
+                  src={
+                    theme === 'dark'
+                      ? pack?.image
+                      : pack?.lightimg || pack?.image
+                  }
+                  alt="logo"
+                  alignSelf={'baseline'}
+                  width={isMobile ? '120px' : 'auto'}
+                />
+              </Box>
               <Box>
                 <Typography
                   fontWeight={600}
                   fontSize={isMobile ? '20px' : '25px'}
                   lineHeight={'30px'}
                   // textAlign="left"
-                  textAlign={isMobile ? 'center' : "left"}
+                  textAlign={isMobile ? 'center' : 'left'}
 
                   // width={'85%'}
                 >
@@ -308,7 +330,7 @@ const EliteLearnMore = () => {
                     <Typography
                       fontSize={'10px'}
                       lineHeight={'30px'}
-                      textAlign={isMobile ? 'center' : "left"}
+                      textAlign={isMobile ? 'center' : 'left'}
                       // width={'85%'}
                     >
                       {item}
@@ -348,7 +370,6 @@ const EliteLearnMore = () => {
         <InvestElite
           isVisible={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          
         />
       </div>
     </Box>
