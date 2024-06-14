@@ -5,8 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SingleSelectPlaceholder({ items, type }) {
-  console.log('items', items);
+export default function SingleSelectPlaceholder({
+  items,
+  type,
+  onTokenSelect,
+}) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -50,6 +53,7 @@ export default function SingleSelectPlaceholder({ items, type }) {
       target: { value },
     } = event;
     setPersonName(value);
+    onTokenSelect(value);
   };
 
   return (
@@ -83,7 +87,7 @@ export default function SingleSelectPlaceholder({ items, type }) {
         }}
         renderValue={(selected) => {
           if (!selected) {
-            return <em style={{ color: theme.palette.text.primary }}>Token</em>;
+            return <em style={{ color: theme.palette.text.primary }}>{type}</em>;
           }
           return selected;
         }}
@@ -94,7 +98,7 @@ export default function SingleSelectPlaceholder({ items, type }) {
         <MenuItem disabled value="">
           <em>{type}</em>
         </MenuItem>
-        {type === 'Type'
+        {type === 'Type' || type === 'Coin' || type === 'Status'
           ? items?.map((name) => (
               <MenuItem key={name} value={name}>
                 {name}

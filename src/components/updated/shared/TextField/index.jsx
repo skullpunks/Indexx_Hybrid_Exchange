@@ -84,6 +84,7 @@ const InputField = ({
   style,
   helperText,
   error,
+  secondaryLabel,
   ...otherProps
 }) => {
   const classes = useStyles();
@@ -93,6 +94,7 @@ const InputField = ({
       <InputLabel shrink htmlFor={id}>
         {label}
       </InputLabel>
+
       <BootstrapInput
         type={type}
         defaultValue={defaultValue}

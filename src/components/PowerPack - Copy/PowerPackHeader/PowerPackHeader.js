@@ -32,7 +32,7 @@ import { getCaptainBeeStatics } from '../../../services/api';
 const PowerPackHeader = () => {
   const location = useLocation();
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {

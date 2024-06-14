@@ -5,9 +5,11 @@ import InputField from '../../shared/TextField';
 import iusd from '../../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../../shared/Button';
 import SingleSelectPlaceholder from '../CustomSelect';
-import { decodeJWT, getUserWallets } from '../../../../services/api';
+import { decodeJWT, getUserWallets, stakeCoin } from '../../../../services/api';
 import { useNavigate } from 'react-router-dom';
 import tokensList from '../../../../utils/Tokens.json';
+import Inex from '../../../../assets/updated/buySell/INEX.svg';
+import { title } from 'process';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -114,9 +116,13 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  errorText: {
+    color: theme.palette.error.main,
+    marginTop: '10px',
+  },
 }));
 
-const CustomSelect = ({ label, items, type }) => {
+const CustomSelect = ({ label, items, type, onTokenSelect }) => {
   const theme = useTheme();
   return (
     <div
@@ -147,24 +153,35 @@ const CustomSelect = ({ label, items, type }) => {
         </div>
       </div>
       <div>
-        <SingleSelectPlaceholder items={items} type={type}/>
+        <SingleSelectPlaceholder
+          items={items}
+          type={type}
+          onTokenSelect={onTokenSelect}
+        />
       </div>
     </div>
   );
 };
 
-const StakingTop = () => {
+const StakingTop = ({ onStakeSuccess }) => {
   const classes = useStyles();
-  let access_token = String(localStorage.getItem('access_token'));
-  let decoded = decodeJWT(access_token);
   const navigate = useNavigate();
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   const [stakingtype, setStakingtype] = useState('token');
   const [token, setToken] = useState('INEX');
-  const [selectedToken, setSelectedToken] = useState();
+  const [selectedToken, setSelectedToken] = useState({
+    title: 'INEX',
+    image: 'INEX',
+    stakingPercentage6months: 6,
+    stakingPercentage1year: 15,
+    chain: 'Binance Smart Chain',
+  });
+  const [selectedTokenBalance, setSelectedTokenBalance] = useState(0);
+  const [allWallets, setAllWallets] = useState();
+  const [tokenType, setTokenType] = useState('Tokens');
   const [calcAmt, setcalcAmt] = useState('');
   const [amt, setAmt] = useState('');
-  const [type, setType] = useState('Long');
+  const [type, setType] = useState('Short');
   const [isVisible, setIsVisible] = useState(true);
   const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
   const [honeyBeeId, setHoneyBeeId] = useState('');
@@ -182,6 +199,61 @@ const StakingTop = () => {
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
+    console.log('Button', button);
+    if (button === '1 Year') {
+      setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year / 100));
+      setType('Long');
+    } else if (button === '6 Months') {
+      setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
+      setType('Short');
+    }
+  };
+
+  const handleTokenSelect = (token) => {
+    console.log('I am here', token);
+    if (
+      token === 'Stock Tokens' ||
+      token === 'Tokens' ||
+      token === 'ETF Tokens'
+    ) {
+      setTokenType(token);
+    } else {
+      const findToken = initialTokens.find((x) => x.title === token);
+      console.log(findToken);
+      setSelectedToken(findToken);
+      const findTokenBal = allWallets.find((x) => {
+        if (
+          token === 'INEX' ||
+          token === 'INEX-POLYGON' ||
+          token === 'INEX-ETHEREUM'
+        ) {
+          return (
+            x.coinSymbol === findToken.image &&
+            x.coinNetwork === findToken.chain
+          );
+        }
+        return x.coinSymbol === token;
+      });
+      console.log('findTokenBal', findTokenBal);
+      if (findTokenBal) {
+        setSelectedTokenBalance(findTokenBal.coinBalance);
+        if (type === '1 Year') {
+          setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+          setFinalAmount(
+            amt * (1 + selectedToken.stakingPercentage1year / 100)
+          );
+        } else if (type === '6 Months') {
+          setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+          setFinalAmount(
+            amt * (1 + selectedToken.stakingPercentage6months / 100)
+          );
+        }
+      } else {
+        setSelectedTokenBalance(0); // or any default value you prefer
+      }
+    }
   };
 
   useEffect(() => {
@@ -193,26 +265,68 @@ const StakingTop = () => {
 
   const getAllUserWallet = async () => {
     try {
-      const userWallets = await getUserWallets(decoded.email);
+      let email = String(localStorage.getItem('email'));
+      const userWallets = await getUserWallets(email);
       const usersWallet = userWallets.data;
-      let totalBalInUSD = 0;
-
-      usersWallet.forEach((wallet) => {
-        const balance = Number(wallet.coinBalance);
-        if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
-          const price = Number(wallet.coinPrice);
-          if (!isNaN(price)) {
-            totalBalInUSD += balance * price;
-          }
-        } else {
-          totalBalInUSD += balance;
-        }
-      });
-
-      console.log('final total balance in USD', totalBalInUSD);
-      setTotalBalanceInUSD(totalBalInUSD);
+      setAllWallets(usersWallet);
+      const findTokenBal = usersWallet.find(
+        (x) => x.coinSymbol === selectedToken.title
+      );
+      setSelectedTokenBalance(findTokenBal.coinBalance);
     } catch (err) {
       console.error('Error in getAllUserWallet', err);
+    }
+  };
+
+  useEffect(() => {
+    getAllUserWallet();
+  }, []);
+
+  const getImage = (image) => {
+    try {
+      return require(`../../../../assets/token-icons/${image}.png`).default;
+    } catch (error) {
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
+
+  const filterTokens = () => {
+    return initialTokens.filter((token) => {
+      if (tokenType === 'Tokens') {
+        return token.commonToken && !token.isStock && !token.isETF;
+      } else if (tokenType === 'Stock Tokens') {
+        return token.isStock;
+      } else if (tokenType === 'ETF Tokens') {
+        return token.isETF;
+      }
+      return false;
+    });
+  };
+  const formatPrice = (value) =>
+    value < 1 ? value.toFixed(6) : value.toFixed(2);
+
+  const submitStake = async () => {
+    try {
+      setLoadings(true);
+      const email = localStorage.getItem('email');
+      let percentage =
+        type === 'Short'
+          ? selectedToken.stakingPercentage6months
+          : selectedToken.stakingPercentage1year;
+      let res = await stakeCoin(
+        email,
+        amt,
+        selectedToken.title,
+        type,
+        percentage
+      );
+      if (res.status === 200) {
+        setLoadings(false);
+        onStakeSuccess();
+        setAmt('');
+      }
+    } catch (err) {
+      setLoadings(false);
     }
   };
 
@@ -220,24 +334,93 @@ const StakingTop = () => {
     <div className={classes.container}>
       <div className={classes.item}>
         <div className={classes.selectContainer}>
-          <CustomSelect label="Staking type" items={['Tokens', 'Stock Tokens']} type={"Type"}/>
-          <CustomSelect label="Select Token" items={tokensList} type={"Tokens"}/>
+          <CustomSelect
+            label="Staking type"
+            items={['Tokens', 'Stock Tokens', 'ETF Tokens']}
+            type={'Type'}
+            onTokenSelect={handleTokenSelect}
+          />
+          <CustomSelect
+            label="Select Token"
+            items={filterTokens()}
+            type={'Tokens'}
+            onTokenSelect={handleTokenSelect}
+          />
         </div>
         <div className={classes.balanceContainer}>
-          <label className={classes.label}>Balance: 0</label>
+          <label className={classes.label}>
+            Balance: {formatPrice(selectedTokenBalance)}
+          </label>
           <InputField
             label=""
             type="text"
             placeholder="Enter Amount"
+            value={amt}
+            onChange={(e) => {
+              const inputAmt = e.target.value;
+              console.log('I am here', inputAmt);
+              setAmt(inputAmt);
+              let minimumRequired = 50;
+              try {
+                // Check if the token is among BTC, LTC, ETH, BCH, or BNB
+                if (
+                  ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(
+                    selectedToken.title
+                  )
+                ) {
+                  minimumRequired = 0.01;
+                }
+
+                if (inputAmt < minimumRequired) {
+                  console.log('I am heere in mumum');
+                  setError(
+                    `Minimum staking amount must be at least ${minimumRequired}.`
+                  );
+                } else if (inputAmt > selectedTokenBalance) {
+                  console.log('I am heere in Insufficient');
+                  setError(
+                    `Insufficient balance available to stake. Please buy ${selectedToken.title} or deposit ${selectedToken.title}.`
+                  );
+                } else {
+                  setError('');
+                  console.log('type', type);
+                  if (type === 'Long') {
+                    setRewards(
+                      inputAmt *
+                        (selectedToken?.stakingPercentage1year / 100) ?? 0
+                    );
+                    setFinalAmount(
+                      inputAmt *
+                        (1 + selectedToken?.stakingPercentage1year / 100 ?? 0)
+                    );
+                  } else if (type === 'Short') {
+                    setRewards(
+                      inputAmt *
+                        (selectedToken?.stakingPercentage6months / 100) ?? 0
+                    );
+                    setFinalAmount(
+                      inputAmt *
+                        (1 + selectedToken?.stakingPercentage6months / 100 ?? 0)
+                    );
+                  }
+                }
+              } catch (err) {
+                console.log('err', err);
+              }
+            }}
             endAdornment={
               <InputAdornment position="end">
                 <div className={classes.dropDownIconContainer}>
-                  <img src={iusd} alt="IUSD+" />
-                  <p>IUSD+</p>
+                  <img
+                    src={getImage(selectedToken?.image)}
+                    alt={selectedToken?.image}
+                  />
+                  <p>{selectedToken?.title}</p>
                 </div>
               </InputAdornment>
             }
           />
+          {error && <div className={classes.errorText}>{error}</div>}
         </div>
         <div className="lockup-container">
           <div className={classes.lockUpHeading}>Lock-up Period</div>
@@ -245,7 +428,11 @@ const StakingTop = () => {
             {['6 Months', '1 Year'].map((period) => (
               <GenericButton
                 key={period}
-                text={`${period} (${period === '6 Months' ? '6%' : '15%'})`}
+                text={`${period} (${
+                  period === '6 Months'
+                    ? `${selectedToken?.stakingPercentage6months} %`
+                    : `${selectedToken?.stakingPercentage1year} %`
+                })`}
                 onClick={() => handleButtonClick(period)}
                 className={
                   activeButton === period
@@ -256,11 +443,16 @@ const StakingTop = () => {
             ))}
           </div>
           <div className={classes.rewardContainer}>
-            <div>Reward you will receive</div>
-            <div>0</div>
+            <div> Rewards you will receive in INEX</div>
+            <div>{formatPrice(rewards)} INEX</div>
           </div>
           <div className={classes.fullWidthButton}>
-            <GenericButton text="Deposit" />
+            <GenericButton
+              text="Stake"
+              disabled={loadings}
+              loading={loadings}
+              onClick={submitStake}
+            />
           </div>
           <div className={classes.buttonContainer}>
             <GenericButton text="Deposit Amount" />
@@ -269,10 +461,6 @@ const StakingTop = () => {
         </div>
       </div>
       <div className={classes.item}>
-        <div className={classes.selectContainer}>
-          <CustomSelect label="Blockchain" />
-          <div></div>
-        </div>
         <div
           style={{
             background: '#174b35',
@@ -288,7 +476,11 @@ const StakingTop = () => {
             marginBottom: '15px',
           }}
         >
-          APR: 6%
+          APR:{' '}
+          {type === 'Short'
+            ? selectedToken?.stakingPercentage6months
+            : selectedToken?.stakingPercentage1year}{' '}
+          {'%'}
         </div>
         <div className={classes.lockUpHeading}>
           Calculate your approximate rewards
@@ -297,49 +489,63 @@ const StakingTop = () => {
           label=""
           type="text"
           placeholder="Enter Amount"
+          value={calcAmt}
+          onChange={(e) => {
+            setcalcAmt(e.target.value);
+            setSixMonthReward(
+              Number(e.target.value) *
+                (selectedToken?.stakingPercentage6months / 100) ?? 0
+            );
+            setOneYearReward(
+              Number(e.target.value) *
+                (selectedToken?.stakingPercentage1year / 100) ?? 0
+            );
+          }}
           endAdornment={
             <InputAdornment position="end">
               <div className={classes.dropDownIconContainer}>
-                <img src={iusd} alt="IUSD+" />
-                <p>IUSD+</p>
+                <img
+                  src={getImage(selectedToken?.image)}
+                  alt={selectedToken?.image}
+                />
+                <p>{selectedToken?.title}</p>
               </div>
             </InputAdornment>
           }
         />
         <div className={classes.inputFieldContainer}>
-          {['Rewards (by $0)', 'Per week', 'Per month'].map((label, index) => (
+          {[
+            { label: 'Rewards (by $0)', value: '' },
+            {
+              label: `Per 6 Months (${selectedToken?.stakingPercentage6months}%)`,
+              value: sixMonthReward,
+            },
+            {
+              label: `Per Year (${selectedToken?.stakingPercentage1year}%)`,
+              value: oneYearReward,
+            },
+          ].map((field) => (
             <InputField
-              key={label}
-              label={label}
+              key={field.label}
+              label={field.label}
               type="text"
-              placeholder={label === 'Rewards (by $0)' ? '' : 'Enter Amount'}
-              value={
-                label === 'Rewards (by $0)'
-                  ? ''
-                  : label === 'Per week'
-                  ? '0.05%'
-                  : '0.5%'
+              placeholder={
+                field.label === 'Rewards (by $0)' ? '' : 'Enter Amount'
               }
+              value={field.value}
               startAdornment={
-                label === 'Rewards (by $0)' ? (
+                field.label === 'Rewards (by $0)' ? (
                   <InputAdornment position="start" sx={{ marginLeft: '10px' }}>
                     <div className={classes.dropDownIconContainer}>
-                      <img src={iusd} alt="IUSD+" />
-                      <p>IUSD+</p>
+                      <img
+                        src={getImage(selectedToken?.image)}
+                        alt={selectedToken?.image}
+                      />
+                      <p>{selectedToken?.title}</p>
                     </div>
                   </InputAdornment>
                 ) : null
               }
-              //   endAdornment={
-              //     label === 'Rewards (by $0)' ? (
-              //       <InputAdornment position="end">
-              //         <GenericButton
-              //           text="Vesting"
-              //           styles={{ height: '90%', padding: '0 10px' }}
-              //         />
-              //       </InputAdornment>
-              //     ) : null
-              //   }
             />
           ))}
         </div>

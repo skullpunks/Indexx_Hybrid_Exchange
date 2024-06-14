@@ -263,7 +263,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                 >
                   {new Intl.NumberFormat('en-US', {
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 6,
                   }).format(row.amount)}
                 </TableCell>
                 {!isMobile && (

@@ -329,7 +329,7 @@ const CaptainDash = () => {
   }, []);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {

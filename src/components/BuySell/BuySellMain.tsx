@@ -119,8 +119,8 @@ import { useMediaQuery } from '@mui/material';
 import inexExchangeLight from '../../assets/exchange_coins_images/inex_white.png';
 import inexExchangeDark from '../../assets/exchange_coins_images/INEX_Black.png';
 
-import WIBSLight from "../../assets/exchange_coins_images/WIBS_light.png";
-import WIBSDark from "../../assets/exchange_coins_images/WIBS_dark.png";
+import WIBSLight from '../../assets/exchange_coins_images/WIBS_light.png';
+import WIBSDark from '../../assets/exchange_coins_images/WIBS_dark.png';
 import WIBSMarket from '../MarketAbout/WIBSMarket';
 // import iusdLight from '../../assets/exchange_coins_images/iusd+_white.png';
 // import iusdDark from '../../assets/exchange_coins_images/iusd+_black.png';
@@ -246,13 +246,10 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       ) {
         setIsGraphImage(true);
         setGraphImage('inexExchange');
-      } else if (
-        BSvalue.fromGraph === 'WIBSGraph'
-      ) {
+      } else if (BSvalue.fromGraph === 'WIBSGraph') {
         setIsGraphImage(true);
         setGraphImage('wibsTokenGraph');
-      }
-      else {
+      } else {
         setIsGraphImage(false);
         setGraphImage('');
       }
@@ -281,7 +278,7 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
   }, [hasEmail]);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem('selectedTheme') || 'light'
+    localStorage.getItem('selectedTheme') || 'dark'
   );
 
   useEffect(() => {
@@ -476,12 +473,13 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
         ) : (
           <p
             style={{
-              marginTop: `${(window.location.pathname.includes('for-honeybee') ||
+              marginTop: `${
+                (window.location.pathname.includes('for-honeybee') ||
                   (localStorage.getItem('userType') === 'CaptainBee' &&
                     localStorage.getItem('haspp') === 'false')) === true
                   ? `${isMobile ? '250px' : '300px'}`
                   : `${isMobile ? '180px' : '280px'}`
-                }`,
+              }`,
               fontSize: `${isMobile ? '20px' : '40px'}`,
             }}
           >
@@ -806,8 +804,8 @@ const BuySellMain: React.FC<Props> = ({ setStatus }) => {
       <MarketCoin />
 
       {screenName === '' ||
-        screenName === 'select' ||
-        screenName === 'create' ? (
+      screenName === 'select' ||
+      screenName === 'create' ? (
         <></>
       ) : (
         <></>

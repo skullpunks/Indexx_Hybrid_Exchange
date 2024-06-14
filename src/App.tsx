@@ -117,7 +117,7 @@ import PowerPackInitial from './components/PowerPackInitial';
 import PowerPackCaptainSecond from './components/PowerPackInitial/PowerPackCaptionSecond';
 import PowerPackHoneySecond from './components/PowerPackInitial/PowerPackHoneySecond';
 import HiveForgotPassword from './components/BuySell/HiveForgotPassword';
-import ThemeContextUpdated from './utils/ThemeContextUpdated';
+import ThemeContextUpdated from './utils/ThemeContextUpdated.jsx';
 import ThemeToggler from './components/ThemeToggler/index.js';
 import Login from './pages/auth/LoginEmail/index';
 import LoginPassword from './pages/auth/LoginPassword';
@@ -130,6 +130,13 @@ import SelectRolePage from './pages/auth/Signup/SelectRole';
 import BuySellPage from './pages/BuySell';
 import AssetsPage from './pages/Assets';
 import StakingPage from './pages/Staking';
+import DepositSelectCurrency from './pages/deposit/DepositSelectCurrency';
+import DepositEnterAmount from './pages/deposit/DepositEnterAmount';
+import DepositAddAccountInfo from './pages/deposit/AddAcountInfo';
+import WithdrawAddAccountInfo from './pages/withdraw/WithdrawInfo';
+import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
+import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
+import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -202,6 +209,35 @@ function App() {
                 // element={<StakingPage />}
                 element={<Staking />}
               />
+              <Route
+                path="/deposit-select-currency"
+                element={<DepositSelectCurrency />}
+              />
+              <Route
+                path="/deposit-enter-amount"
+                element={<DepositEnterAmount />}
+              />
+              <Route
+                path="/deposit-add-account-information"
+                element={<DepositAddAccountInfo />}
+              />
+              <Route
+                path="/withdraw-add-information"
+                element={<WithdrawAddAccountInfo />}
+              />
+              <Route
+                path="/withdraw-enter-amount"
+                element={<WithdrawEnterAmount />}
+              />
+              <Route
+                path="/withdraw-transfer-money"
+                element={<WithdrawTransferMoney />}
+              />
+              <Route
+                path="/withdraw-success"
+                element={<WithdrawSuccessPage />}
+              />
+
               <Route
                 path="/indexx-exchange/power-hive"
                 element={<PowerPackInitial />}
@@ -415,14 +451,14 @@ function App() {
               element={<Navigate to="/update/home/" />}
             />
 
-            {/* <Route
+            <Route
               path="/indexx-exchange/buy-sell/login-honeybee/*"
               element={<BuySellLoginHoneyBee />}
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
-            /> */}
+            />
             {/* <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}

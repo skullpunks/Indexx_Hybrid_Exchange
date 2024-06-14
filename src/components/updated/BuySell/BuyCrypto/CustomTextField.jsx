@@ -186,7 +186,7 @@ const CustomTextField = ({
     title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
     image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
   };
-  console.log("initialToken" , initialToken)
+  console.log('initialToken', initialToken);
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
@@ -273,7 +273,10 @@ const CustomTextField = ({
 
   useEffect(() => {
     async function updatedDefaultToken() {
-      if (tokenType === 'Tokens') {
+      if (defaultReceiveToken) {
+        setSelectedToken(fixedToken || defaultReceiveToken);
+        onSelectToken(defaultReceiveToken); // Call the callback with selected token
+      } else if (tokenType === 'Tokens') {
         const allFilteredTokens = await tokens.filter(
           (x) => x.commonToken && !x.isStock && !x.isETF
         );
@@ -290,7 +293,7 @@ const CustomTextField = ({
       }
     }
     updatedDefaultToken();
-  }, [tokenType]);
+  }, [tokenType, defaultReceiveToken]);
 
   return (
     <>
@@ -304,34 +307,39 @@ const CustomTextField = ({
               } !important`,
         }}
       >
-        <TextField
-          variant="outlined"
-          className={classes.textField}
-          placeholder={placeholder}
-          type="number"
-          value={label === 'Spend' ? userAmount : receiveAmount}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleAmountChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <div
-                  className={classes.dropDownIconContainer}
-                  style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
-                  onClick={disableDropdown ? null : handleOpenModal}
-                >
-                  <img
-                    src={getImage(selectedToken?.image)}
-                    alt={selectedToken?.title}
-                  />
-                  <p>{selectedToken?.title}</p>
-                  {!disableDropdown && <ArrowDropDownIcon />}
-                </div>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} shrink htmlFor="input-field">
+            {label}
+          </InputLabel>
+          <TextField
+            variant="outlined"
+            className={classes.textField}
+            placeholder={placeholder}
+            type="number"
+            value={label === 'Spend' ? userAmount : receiveAmount}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleAmountChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <div
+                    className={classes.dropDownIconContainer}
+                    style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
+                    onClick={disableDropdown ? null : handleOpenModal}
+                  >
+                    <img
+                      src={getImage(selectedToken?.image)}
+                      alt={selectedToken?.title}
+                    />
+                    <p>{selectedToken?.title}</p>
+                    {!disableDropdown && <ArrowDropDownIcon />}
+                  </div>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </FormControl>
       </Box>
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (

@@ -14,7 +14,7 @@
   --bs-dropdown-item-padding-y: 0.45rem;
 }
 
-.dropdown-menu{
+.dropdown-menu {
   --bs-dropdown-bg: var(--body_background) !important;
 }
 
@@ -145,7 +145,7 @@ a.nav-link:hover {
 }
 
 .logo__icon {
-  background-image: url("../../assets/indexx.ai\ white.png");
+  background-image: url('../../assets/indexx.ai\ white.png');
   font-size: 0;
   background-repeat: no-repeat;
   width: 119px;
@@ -155,7 +155,7 @@ a.nav-link:hover {
 }
 
 .logo__icon:hover {
-  background-image: url("../../assets/indexx.ai\ white.png");
+  background-image: url('../../assets/indexx.ai\ white.png');
   background-repeat: no-repeat;
   width: 119px;
   height: 36px;
@@ -165,7 +165,7 @@ a.nav-link:hover {
 }
 
 .hive_icon {
-  background-image: url("../../assets/indexx\ ai\ yellow\ 1.svg");
+  background-image: url('../../assets/indexx\ ai\ yellow\ 1.svg');
   font-size: 0;
   background-repeat: no-repeat;
   width: 119px;
@@ -175,7 +175,7 @@ a.nav-link:hover {
 }
 
 .hive_icon:hover {
-  background-image: url("../../assets/indexx\ ai\ yellow\ 1.svg");
+  background-image: url('../../assets/indexx\ ai\ yellow\ 1.svg');
   background-repeat: no-repeat;
   width: 119px;
   height: 36px;
@@ -213,7 +213,6 @@ a.nav-link:hover {
 .font_20x,
 .default-link.font_20x {
   font-size: 20px;
-  color: var(--body_color);
 }
 
 .padding-l-2x {
@@ -316,7 +315,7 @@ a.link.text-white:hover {
   color: var(--dropdown-hover) !important;
 }
 
-.buy-cryp a.nav-link:hover{
+.buy-cryp a.nav-link:hover {
   color: var(--link-hover) !important;
 }
 
@@ -431,7 +430,7 @@ a.link.text-white:hover {
 
 .ant-btn.buy_crypto_btn:hover,
 .ant-btn.buy_crypto_btn:focus,
-.ant-btn.buy_crypto_btn:active  {
+.ant-btn.buy_crypto_btn:active {
   background-image: url('../../assets/arts/arrowSwapIcon.svg') !important;
   background-repeat: no-repeat !important;
   background-position: left 10px center !important;
@@ -514,7 +513,7 @@ button.navbar-toggler {
     padding-right: 1rem;
   }
 
-  .main-div{
+  .main-div {
     width: 100% !important;
   }
 
@@ -525,8 +524,8 @@ button.navbar-toggler {
     border-radius: 0;
     border: none;
   }
-  
-  .main-menu{
+
+  .main-menu {
     padding: 0 !important;
     padding-left: 0 !important;
     flex-direction: column !important;
@@ -536,21 +535,18 @@ button.navbar-toggler {
   .back {
     display: none;
   }
-
 }
 
-
-.link-div{
+.link-div {
   padding-left: 0;
   background: transparent !important;
   font-size: 24px;
   /* color: #333336; */
   color: var(--body_color);
   font-weight: 600;
+}
 
-} 
-
-.link-style{
+.link-style {
   font-size: 24px;
   /* color: #333336; */
   color: var(--body_color);
@@ -560,12 +556,11 @@ button.navbar-toggler {
 
 .link-style :hover,
 .link-style :focus,
-.link-style :active
-{
+.link-style :active {
   background: transparent;
 }
 
-.action-link-div{
+.action-link-div {
   padding-left: 0;
   background: transparent !important;
   font-size: 12px;
@@ -574,7 +569,7 @@ button.navbar-toggler {
   color: rgb(134, 134, 139);
 
   /* color: var(--body_color); */
-} 
+}
 
 .action-link-style {
   font-size: 12px;
@@ -584,15 +579,15 @@ button.navbar-toggler {
   background: transparent;
 }
 
-.action-link-style :hover{
+.action-link-style :hover {
   background: transparent;
-} 
+}
 
-.main-div{
+.main-div {
   width: 200vw;
 }
 
-.black-div{
+.black-div {
   height: 26px;
   /* background: black;
   background-image: url('../../assets/arts/christmas_bg.png');
@@ -611,14 +606,13 @@ button.navbar-toggler {
   height: 100vh;
 }
 
-.back:hover{
+.back:hover {
   display: none;
 }
 
-.link-div:active + .dropdown-menu{
+.link-div:active + .dropdown-menu {
   display: none;
 }
-
 
 .my-menu .dropdown-menu {
   /* width:  calc(100vw - 17px); */
@@ -634,21 +628,20 @@ button.navbar-toggler {
   background: transparent;
 }
 
-.main-menu{
+.main-menu {
   padding: 30px;
   padding-left: 150px;
   background-color: var(--body_background);
 }
-.prod-menu .dropdown-menu{
+.prod-menu .dropdown-menu {
   margin-left: -360px;
 }
 
 .prod-menu .dropdown-menu .prod-back {
   top: 605px;
-  
 }
 
-.prog-menu .dropdown-menu{
+.prog-menu .dropdown-menu {
   margin-left: -461px;
 }
 
@@ -656,7 +649,7 @@ button.navbar-toggler {
   top: 362px;
 }
 
-.wallet-menu .dropdown-menu{
+.wallet-menu .dropdown-menu {
   margin-left: -561px;
 }
 
@@ -664,7 +657,7 @@ button.navbar-toggler {
   top: 210px;
 }
 
-.comp-menu .dropdown-menu{
+.comp-menu .dropdown-menu {
   margin-left: -645px;
 }
 
@@ -672,10 +665,10 @@ button.navbar-toggler {
   top: 402px;
 }
 
-.profile-menu .dropdown-menu{
+.profile-menu .dropdown-menu {
   margin-left: -77vw;
 }
-.profile-menu .main-menu{
+.profile-menu .main-menu {
   padding-left: 15vw;
 }
 
@@ -687,7 +680,6 @@ button.navbar-toggler {
   color: var(--primary-color);
 }
 
-
 @media screen and (min-width: 2500px) {
   .my-menu .dropdown-menu {
     width: auto;
@@ -697,36 +689,34 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 894px;
   }
-  
-  .profile-menu .main-menu{
+
+  .profile-menu .main-menu {
     padding-left: 30vw;
   }
 
-  .prod-menu .dropdown-menu{
+  .prod-menu .dropdown-menu {
     margin-left: -1108px;
   }
-  
-  .prog-menu .dropdown-menu{
+
+  .prog-menu .dropdown-menu {
     margin-left: -1208px;
   }
-  
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -1305px;
   }
-  
-  .comp-menu .dropdown-menu{
+
+  .comp-menu .dropdown-menu {
     margin-left: -1388px;
   }
 
-  .profile-menu .dropdown-menu{
+  .profile-menu .dropdown-menu {
     margin-left: -62.8vw;
   }
-  
-} 
+}
 
 @media screen and (min-width: 2200px) and (max-width: 2500px) {
   .my-menu .dropdown-menu {
@@ -737,34 +727,34 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 516px;
   }
 
-  .profile-menu .main-menu{
+  .profile-menu .main-menu {
     padding-left: 28vw;
   }
 
-  .prod-menu .dropdown-menu{
+  .prod-menu .dropdown-menu {
     margin-left: -730px;
   }
-  
-  .prog-menu .dropdown-menu{
+
+  .prog-menu .dropdown-menu {
     margin-left: -831px;
   }
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -931px;
   }
 
-  .comp-menu .dropdown-menu{
+  .comp-menu .dropdown-menu {
     margin-left: -1012px;
   }
-  
-  .profile-menu .dropdown-menu{
+
+  .profile-menu .dropdown-menu {
     margin-left: -67.4vw;
   }
-} 
+}
 
 @media screen and (min-width: 2000px) and (max-width: 2200px) {
   .my-menu .dropdown-menu {
@@ -775,37 +765,36 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 390px;
   }
-  
-  .profile-menu .main-menu{
+
+  .profile-menu .main-menu {
     padding-left: 25vw;
   }
 
-  .prod-menu .dropdown-menu{
+  .prod-menu .dropdown-menu {
     margin-left: -605px;
   }
-  
-  .prog-menu .dropdown-menu{
+
+  .prog-menu .dropdown-menu {
     margin-left: -705px;
   }
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -805px;
   }
-  
-  .comp-menu .dropdown-menu{
+
+  .comp-menu .dropdown-menu {
     margin-left: -891px;
   }
 
-  .profile-menu .dropdown-menu{
+  .profile-menu .dropdown-menu {
     margin-left: -69.6vw;
   }
-  
-} 
+}
 
-@media screen and (min-width: 1800px) and (max-width: 2000px)  {
+@media screen and (min-width: 1800px) and (max-width: 2000px) {
   .my-menu .dropdown-menu {
     width: auto;
     margin-left: -435px;
@@ -814,36 +803,34 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 328px;
   }
 
-  .profile-menu .main-menu{
+  .profile-menu .main-menu {
     padding-left: 23vw;
-
   }
-  
-  .prod-menu .dropdown-menu{
+
+  .prod-menu .dropdown-menu {
     margin-left: -540px;
   }
-  
-  .prog-menu .dropdown-menu{
+
+  .prog-menu .dropdown-menu {
     margin-left: -640px;
   }
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -741px;
   }
-  
-  .comp-menu .dropdown-menu{
+
+  .comp-menu .dropdown-menu {
     margin-left: -825px;
   }
 
-  .profile-menu .dropdown-menu{
+  .profile-menu .dropdown-menu {
     margin-left: -70.9vw;
   }
-  
-} 
+}
 
 @media screen and (min-width: 1650px) and (max-width: 1800px) {
   .my-menu .dropdown-menu {
@@ -854,35 +841,34 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 222px;
   }
-  
-  .prod-menu .dropdown-menu{
+
+  .prod-menu .dropdown-menu {
     margin-left: -436px;
   }
 
-  .prog-menu .dropdown-menu{
+  .prog-menu .dropdown-menu {
     margin-left: -539px;
   }
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -638px;
   }
-  
-  .comp-menu .dropdown-menu{
+
+  .comp-menu .dropdown-menu {
     margin-left: -723px;
   }
-  
-  .profile-menu .main-menu{
+
+  .profile-menu .main-menu {
     padding-left: 23vw;
   }
 
-  .profile-menu .dropdown-menu{
+  .profile-menu .dropdown-menu {
     margin-left: -73.6vw;
   }
-  
-} 
+}
 
 @media screen and (min-width: 768px) and (max-width: 1050px) {
   .my-menu .dropdown-menu {
@@ -893,37 +879,35 @@ button.navbar-toggler {
     border: none;
   }
 
-  .main-menu{
+  .main-menu {
     padding-left: 222px;
   }
-  
-  .prod-menu .dropdown-menu{
+
+  .prod-menu .dropdown-menu {
     margin-left: -436px;
   }
 
-  .prog-menu .dropdown-menu{
+  .prog-menu .dropdown-menu {
     margin-left: -539px;
   }
-  
-  .wallet-menu .dropdown-menu{
+
+  .wallet-menu .dropdown-menu {
     margin-left: -638px;
   }
-  
-  .comp-menu .dropdown-menu{
+
+  .comp-menu .dropdown-menu {
     margin-left: -723px;
   }
-  
-  
-  .profile-menu .main-menu{
+
+  .profile-menu .main-menu {
     padding-left: 120px;
   }
 
-  .profile-menu .dropdown-menu{
+  .profile-menu .dropdown-menu {
     margin-left: -800px;
   }
-  
 }
-.profile-menu .dropdown-toggle.nav-link{
+.profile-menu .dropdown-toggle.nav-link {
   display: flex;
   justify-content: flex-end;
   width: fit-content;
@@ -932,11 +916,11 @@ button.navbar-toggler {
   padding-left: 0;
 }
 
-a:hover{
+a:hover {
   color: var(--dropdown-hover);
 }
 
-.app-head{
+.app-head {
   background-color: #000 !important;
   /* background-image: url('../../assets/arts/header\ new\ year.svg'); */
 }
@@ -960,40 +944,39 @@ a:hover{
   box-sizing: border-box;
 }
 
-.mob-head button{
-    background: transparent;
+.mob-head button {
+  background: transparent;
 }
 .my-pap button,
-.sec-head button{
-    background: transparent;
-    color: var(--body_color) !important;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    width: 95%;
+.sec-head button {
+  background: transparent;
+  color: var(--body_color) !important;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  width: 95%;
 }
 
 .mob-head button:hover,
-.my-pap button:hover
-{
-    background: transparent;
+.my-pap button:hover {
+  background: transparent;
 }
 
-.main-list{
+.main-list {
   font-size: 28px !important;
   font-weight: 600 !important;
   line-height: 1.1428571429 !important;
-  letter-spacing: .007em !important;
+  letter-spacing: 0.007em !important;
 }
 
-.second-list{
+.second-list {
   font-size: 28px !important;
   font-weight: 600 !important;
   line-height: 1.1428571429 !important;
-  letter-spacing: .007em !important;
+  letter-spacing: 0.007em !important;
 }
 
-.act-list{
+.act-list {
   font-size: 17px !important;
   font-weight: 600 !important;
   line-height: 1 !important;
@@ -1002,13 +985,14 @@ a:hover{
 
 .css-1ps6pg7-MuiPaper-root {
   background-color: var(--main-body) !important;
-  color:var(--body_color) !important;
+  color: var(--body_color) !important;
   -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   border-radius: 4px;
-  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
-.ant-select-item-option-active:not(.ant-select-item-option-disabled){
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   background-color: var(--body_background);
 }

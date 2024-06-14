@@ -21,7 +21,7 @@ export const BSDepositCryptoWallet = () => {
       <div className='d-flex w_fiat flex-justify-between flex-align-center d_crypto_Container'><div className='d-flex flex-align-center top_heading'>
         <span onClick={() => navigate("/indexx-exchange/buy-sell/deposit-crypto")}>Deposit Crypto</span>
       </div>
-        <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/indexx-exchange/buy-sell/deposit-fiat")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
+        <div className='crypto_con_button'><Button danger className='danger_disabled' onClick={() => navigate("/deposit-select-currency")}>Deposit Fiat<ArrowRightOutlined /></Button></div>
       </div>
       <div className='card responsive_container bs_container sell_screens margin-lr-auto padding-lr-2x margin-t-3x'>
         <div className=' padding-t-2x d-flex flex-justify-between flex-align-center'><div><h1 className='font_20x'>Change Deposit Wallet</h1><div className='font_13x padding-t-1x'>Please select a wallet to use for deposit.</div></div><CloseOutlined className='font_15x' /></div>

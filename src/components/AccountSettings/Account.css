@@ -1,15 +1,15 @@
-.accounts_container .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+/* .accounts_container .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
   background: var(--dash-bg);
   color: var(--body_color);
   padding-left: 55px;
-}
+} */
 
 .basic_info > div,
 .security_container.border-1x,
 .preference_info {
-  border: 1px solid var(--border-color) !important;
+  /* border: 1px solid var(--border-color) !important; */
   border-radius: 5px;
-  background: var(--body_background);
+  /* background: var(--body_background); */
 }
 
 .basic_info .border-b-1x,
@@ -134,8 +134,7 @@
 }
 
 @media screen and (max-width: 768px) {
-
-.basic-det{
-  flex-direction: column;
-}
+  .basic-det {
+    flex-direction: column;
+  }
 }

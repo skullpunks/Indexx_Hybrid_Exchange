@@ -38,17 +38,22 @@ const Staking = () => {
   const classes = useStyles();
 
   const [selectedTab, setSelectedTab] = useState('Staking');
+  const [refresh, setRefresh] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+  };
+
+  const handleRefresh = () => {
+    setRefresh(true);
   };
 
   return (
     <>
       <div className={classes.container}>
         <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
-        <StakingTop />
-        <StakingBottom />
+        <StakingTop onStakeSuccess={handleRefresh} />
+        <StakingBottom refresh={refresh}/>
       </div>
       <div className={classes.subscribeWrapper}>
         <p>Indexx Affiliiate Program</p>

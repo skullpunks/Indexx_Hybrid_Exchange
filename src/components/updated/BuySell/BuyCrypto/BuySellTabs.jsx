@@ -144,7 +144,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: '4px',
+    marginTop: '5px',
+    marginBottom: '15px',
   },
   estimatedPrice: {
     fontSize: '15px',
@@ -424,7 +425,7 @@ const BuySellTabs = ({
       'INEX',
       'INEX-ETHEREUM',
       'INEX-POLYGON',
-      "WIBS",
+      'WIBS',
       'INXC',
       'IUSD+',
       'ALCRYP',
@@ -676,7 +677,7 @@ const BuySellTabs = ({
                   ~ {price} {'USD'}
                 </Typography>
               </div>
-              <br />
+
               <GenericButton
                 text={`${value === 'buy' ? 'Buy' : 'Sell'} ${
                   receiveToken?.title || ''
