@@ -147,6 +147,7 @@ export const BSWithdrawInfo = () => {
                 //onChange={(value) => setState(value)}
                 onChange={(value) => {
                   const selectedState = states.find(st => st.isoCode === value)?.name;
+                  console.log("selectedState",selectedState)
                   setState(selectedState);
                 }}
                 disabled={!country}
