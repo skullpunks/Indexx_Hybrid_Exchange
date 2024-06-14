@@ -15,6 +15,7 @@ import CrossIcon from '../../../assets/crossIcon.png';
 import CrossIconWhite from '../../../assets/cross_white.png';
 import { Button } from 'antd';
 import { Theme } from '../../../utils/themeContext';
+import GenericButton from '../../updated/shared/Button';
 
 const PaymentOptions = ({
   isVisible,
@@ -200,17 +201,24 @@ const PaymentOptions = ({
               />
             </RadioGroup>
           </FormControl>
-          <div class="pay-button-box mt-5">
-            <Button
-              type="primary"
-              className="pay-button-btn"
+          <div
+            class=" mt-5"
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '10px',
+            }}
+          >
+            <GenericButton
+              className=""
               onClick={handleClick}
               // onClick={() => createNewBuyOrder()}
               loading={isLoading}
-            >
-              {' '}
-              Continue
-            </Button>
+              text="Continue"
+              styles={{ maxWidth: '300px' }}
+            />
+
             {/* <button
               className="pay-button-btn"
               onClick={handleClick}

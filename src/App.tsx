@@ -440,7 +440,7 @@ function App() {
               element={<ImportTokens />}
             />
             <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
-            {/* <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} /> */}
+            <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
             <Route
               path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
               element={<BuySell />}
@@ -458,10 +458,10 @@ function App() {
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
             />
-            {/* <Route
+            <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
-            /> */}
+            />
             {/* <Route
               path="/indexx-exchange/buy-sell/wallet"
               element={<BSWallet />}
