@@ -3,7 +3,9 @@ import './style.css';
 
 import borderLeft from '../../assets/power-hive/Hive Arts-03 2.png';
 import borderLeftHoney from '../../assets/power-hive/honey-bee.png';
+import { useTheme } from '@mui/material/styles';
 const PopupModal = ({ open, setOpen, data }) => {
+  const theme = useTheme();
   const handleClose = () => {
     setOpen(false);
   };
@@ -11,7 +13,15 @@ const PopupModal = ({ open, setOpen, data }) => {
   return (
     <div className="app-container">
       {open && (
-        <div className="modal-overlay">
+        <div
+          className="modal-overlay"
+          style={{
+            background:
+              theme.palette.mode === 'dark'
+                ? 'rgba(0,0,0,0.5)'
+                : 'rgba(255,255,255,0.5)',
+          }}
+        >
           <div
             className="custom-modal-content"
             style={{
@@ -19,6 +29,7 @@ const PopupModal = ({ open, setOpen, data }) => {
                 data.type === 'Crypto Pack' || data.type === 'Power Pack'
                   ? '1px solid #ffb300'
                   : '1px solid #8EDF78',
+              background: theme.palette.mode === 'dark' ? 'black' : 'white',
             }}
           >
             <div
@@ -123,6 +134,9 @@ const PopupModal = ({ open, setOpen, data }) => {
                     ? 'custom-modal-button'
                     : 'custom-modal-button-honey'
                 }
+                style={{
+                  color: theme.palette.mode === 'dark' ? 'white' : 'black',
+                }}
                 onClick={handleClose}
               >
                 See Less

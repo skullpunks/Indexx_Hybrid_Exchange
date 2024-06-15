@@ -11,6 +11,7 @@ import red2 from '../../assets/red2.png';
 import red from '../../assets/red.png';
 import redv from '../../assets/vector.png';
 import tradetoearnlogo from '../../assets/arts/tradetoearnlogo.png';
+import { useTheme } from '@mui/material/styles';
 // import Footer from '../Footer/Footer';
 import {
   decodeJWT,
@@ -28,6 +29,7 @@ const { Text } = Typography;
 
 const TradeToEarn = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const navigateUser = (path: any) => {
     window.localStorage.setItem('redirect', window.location.pathname);
     navigate(path);
@@ -51,11 +53,10 @@ const TradeToEarn = () => {
     const decoded: any = decodeJWT(access_token);
     setEmail(decoded.email);
     const res = await updateRewardsWallet(decoded.email, walletAddress);
-    
+
     if (res.status === 200) {
       await getUserDetails();
     } else {
-      
     }
   };
 
@@ -65,7 +66,7 @@ const TradeToEarn = () => {
       const decoded: any = decodeJWT(access_token);
       const res = await getUserRewardDetails(decoded.email);
       setEmail(decoded.email);
-      
+
       if (res.data !== undefined || res.data === null) {
         setUserRewardDetails(res.data);
         setAmount(res.data?.rewardTokenBalanceInUSD);
@@ -93,27 +94,30 @@ const TradeToEarn = () => {
 
   const checkWalletAddress = async (address: string) => {
     const res = web3.utils.checkAddressChecksum(address);
-    
+
     setIsWalletAddrValid(res);
   };
 
   const withdrawMyINEX = async () => {
-    
-    
     setLoadings(true);
 
     let res = await withdrawINEX(email, withdrawAmount);
-    
+
     if (res.data.txData.status === 200) {
       setLoadings(false);
-      OpenNotification('success', 'Rewards successsfully withdraw, Tx: ' + res.data.txData.data.transactionHash);
+      OpenNotification(
+        'success',
+        'Rewards successsfully withdraw, Tx: ' +
+          res.data.txData.data.transactionHash
+      );
       setShowTxTest(true);
       setTxHash(res.data.txData.data.transactionHash);
-      
-      
     } else {
       setLoadings(false);
-      OpenNotification('error', 'Failed to Rewards. Please check balance and try agrain after sometime');
+      OpenNotification(
+        'error',
+        'Failed to Rewards. Please check balance and try agrain after sometime'
+      );
     }
   };
 
@@ -136,7 +140,7 @@ const TradeToEarn = () => {
             <p
               className="card__title"
               style={{
-                color: '#5F5F5F',
+                color: theme.palette.text.primary,
                 fontSize: '50px',
                 lineHeight: '1em',
                 margin: -19,
@@ -146,10 +150,14 @@ const TradeToEarn = () => {
             </p>
             <p style={{ marginLeft: 320 }}>&trade;</p>
             <br></br>
-            <Card>
+            <Card style={{ background: theme.palette.background.default }}>
               <h2
                 className="centered"
-                style={{ marginBottom: 0, color: '#5F5F5F', fontSize: '30px' }}
+                style={{
+                  marginBottom: 0,
+                  color: theme.palette.text.primary,
+                  fontSize: '30px',
+                }}
               >
                 Withdraw Earnings
               </h2>
@@ -170,7 +178,11 @@ const TradeToEarn = () => {
               </div>
               <h2
                 className="d-flex justify-content-center"
-                style={{ marginBottom: 10, color: '#5F5F5F', fontSize: '25px' }}
+                style={{
+                  marginBottom: 10,
+                  color: theme.palette.text.primary,
+                  fontSize: '25px',
+                }}
               >
                 indexx Exchange (INEX)
               </h2>
@@ -181,17 +193,19 @@ const TradeToEarn = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   opacity: '20%',
-                  color: '#5F5F5F',
+
                   fontSize: '90px',
                 }}
               >
-                {userRewardDetails?.rewardTokenBalanceInUSD > 0 ||
-                userRewardDetails?.rewardTokenBalanceInUSD !== undefined
-                  ? '$' +
-                    Math.floor(
-                      (userRewardDetails?.rewardTokenBalanceInUSD * 100) / 100
-                    )
-                  : '$' + 0}{' '}
+                <span style={{ color: theme.palette.text.primary }}>
+                  {userRewardDetails?.rewardTokenBalanceInUSD > 0 ||
+                  userRewardDetails?.rewardTokenBalanceInUSD !== undefined
+                    ? '$' +
+                      Math.floor(
+                        (userRewardDetails?.rewardTokenBalanceInUSD * 100) / 100
+                      )
+                    : '$' + 0}{' '}
+                </span>
               </h1>
               <br />
               <Input
@@ -204,19 +218,31 @@ const TradeToEarn = () => {
               />
               <Text
                 className="centered"
-                style={{ marginBottom: 0, color: '#5F5F5F', fontSize: '15px' }}
+                style={{
+                  marginBottom: 0,
+                  color: theme.palette.text.primary,
+                  fontSize: '15px',
+                }}
               >
                 Minimum limit:$1000
               </Text>
               <Text
                 className="centered"
-                style={{ marginBottom: 0, color: '#5F5F5F', fontSize: '20px' }}
+                style={{
+                  marginBottom: 0,
+                  color: theme.palette.text.primary,
+                  fontSize: '20px',
+                }}
               >
                 1 INEX = 0.1 USD
               </Text>
               <Text
                 className="centered"
-                style={{ marginBottom: 0, color: '#5F5F5F', fontSize: '20px' }}
+                style={{
+                  marginBottom: 0,
+                  color: theme.palette.text.primary,
+                  fontSize: '20px',
+                }}
               >
                 Earning Percentage = 10%
               </Text>
@@ -233,6 +259,7 @@ const TradeToEarn = () => {
                     height: '55px',
                     borderRadius: '5px',
                     width: '100%',
+                    color: theme.palette.text.primary,
                   }}
                   disabled={
                     !withdrawAmount ||
@@ -316,6 +343,7 @@ const TradeToEarn = () => {
                         height: '55px',
                         borderRadius: '5px',
                         width: '100%',
+                        color: theme.palette.text.primary,
                       }}
                       onClick={() => updateWalletAddress()}
                       disabled={
@@ -346,7 +374,7 @@ const TradeToEarn = () => {
               <span
                 className="card__title d-inline-block"
                 style={{
-                  color: '#5F5F5F',
+                  color: theme.palette.text.primary,
                   fontSize: '55px',
                   lineHeight: '1em',
                 }}
@@ -400,9 +428,10 @@ const TradeToEarn = () => {
           style={{
             marginTop: 40,
             width: 1008,
-            height: 400,
+
             textAlign: 'left',
             justifyContent: 'center',
+            background: theme.palette.background.default,
           }}
         >
           <span
@@ -418,12 +447,16 @@ const TradeToEarn = () => {
 
           <Text
             className="d-flex justify-content-center"
-            style={{ color: '#5F5F5F', fontSize: 32, marginBottom: 10 }}
+            style={{
+              color: theme.palette.text.primary,
+              fontSize: 32,
+              marginBottom: 10,
+            }}
           >
             How to Earn?
             <br />
           </Text>
-          <Text style={{ color: '#5F5F5F', fontSize: 20 }}>
+          <Text style={{ color: theme.palette.text.primary, fontSize: 20 }}>
             1. Please make sure that your trade to earn is unlocked in the task
             center before you start getting rewards.
             <br />
@@ -446,7 +479,7 @@ const TradeToEarn = () => {
           style={{
             marginTop: 40,
             width: 1008,
-            height: 450,
+            background: theme.palette.background.default,
             textAlign: 'left',
             justifyContent: 'center',
           }}
@@ -464,12 +497,16 @@ const TradeToEarn = () => {
 
           <Text
             className="d-flex justify-content-center"
-            style={{ color: '#5F5F5F', fontSize: 32, marginBottom: 10 }}
+            style={{
+              color: theme.palette.text.primary,
+              fontSize: 32,
+              marginBottom: 10,
+            }}
           >
             How much can I be rewarded?
             <br />
           </Text>
-          <Text style={{ color: '#5F5F5F', fontSize: 20 }}>
+          <Text style={{ color: theme.palette.text.primary, fontSize: 20 }}>
             ‍Every day, you’ll be rewarded from a pool of INDEXX tokens based
             upon the proportion of your trading volume to the total trading
             volume for the day. See an example for a single day below.

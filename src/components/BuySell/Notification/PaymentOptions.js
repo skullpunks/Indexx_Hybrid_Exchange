@@ -14,8 +14,9 @@ import { useContext, useEffect, useState } from 'react';
 import CrossIcon from '../../../assets/crossIcon.png';
 import CrossIconWhite from '../../../assets/cross_white.png';
 import { Button } from 'antd';
-import { Theme } from '../../../utils/themeContext';
+
 import GenericButton from '../../updated/shared/Button';
+import { useTheme } from '@mui/material/styles';
 
 const PaymentOptions = ({
   isVisible,
@@ -25,12 +26,7 @@ const PaymentOptions = ({
   message,
 }) => {
   const navigate = useNavigate();
-  const themeData = useContext(Theme);
-  const [theme, setTheme] = useState(themeData?.theme ?? 'light');
-
-  useEffect(() => {
-    setTheme(themeData?.theme);
-  }, [themeData]);
+  const theme = useTheme();
   const [selectedValue, setSelectedValue] = useState('wires');
   const [isLoading, setIsLoading] = useState(false);
   if (!isVisible) return null;
@@ -64,7 +60,7 @@ const PaymentOptions = ({
         <div class="pay-box">
           <div className="close-button-pay" onClick={onClose}>
             {/* &times; This is the close button (X) */}
-            {theme === 'light' ? (
+            {theme.palette.mode === 'light' ? (
               <img src={CrossIcon} style={{ width: '36px', height: '36px' }} />
             ) : (
               <img src={CrossIconWhite} />

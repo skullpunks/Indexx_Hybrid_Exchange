@@ -137,6 +137,7 @@ import WithdrawAddAccountInfo from './pages/withdraw/WithdrawInfo';
 import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
 import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
 import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
+import DashboardPage from './pages/Dashboard';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -204,6 +205,7 @@ function App() {
                 element={<HorizontalLinearStepper2 />}
               />
               <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
               <Route
                 path="/indexx-exchange/buy-sell/staking"
                 element={<StakingPage />}
