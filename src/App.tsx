@@ -459,14 +459,14 @@ function App() {
               path="/indexx-exchange/buy-sell/hive-login"
               element={<BuySellLoginContentHive />}
             />
-            {/* <Route
+            <Route
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/indexx-exchange/buy-sell/wallet"
-              element={<BSWallet />}
-            /> */}
+              element={<AssetsPage />}
+            />
             <Route
               path="/indexx-exchange/buy-sell/withdraw-crypto/*"
               element={<BSWithdrawCryptoLayout />}
