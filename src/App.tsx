@@ -141,6 +141,8 @@ import DashboardPage from './pages/Dashboard';
 import DepositSelectCoin from './pages/depositCrypto/DepositSelectCoin';
 import DepositCryptoChange from './pages/depositCrypto/DepositCryptoChange';
 import DepositCryptoSuccessPage from './pages/depositCrypto/DepositSuccess';
+import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSuccess';
+import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -236,6 +238,14 @@ function App() {
               <Route
                 path="/deposit-crypto-success"
                 element={<DepositCryptoSuccessPage />}
+              />
+              <Route
+                path="/withdraw-crypto-success"
+                element={<WithdrawCryptoSuccessPage />}
+              />
+              <Route
+                path="/withdraw-crypto-select-coin"
+                element={<WithdrawCryptoSelectCoin />}
               />
               <Route
                 path="/withdraw-add-information"
@@ -479,10 +489,10 @@ function App() {
               path="/indexx-exchange/buy-sell/hive-login/forgot-password"
               element={<HiveForgotPassword />}
             />
-            {/* <Route
+            <Route
               path="/indexx-exchange/buy-sell/wallet"
-              element={<BSWallet />}
-            /> */}
+              element={<AssetsPage />}
+            />
             <Route
               path="/indexx-exchange/buy-sell/withdraw-crypto/*"
               element={<BSWithdrawCryptoLayout />}
