@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   Container: {
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '24px',
-    height: '580px',
+    minHeight: '380px',
     padding: '40px',
     maxWidth: '540px',
     marginTop: '50px',

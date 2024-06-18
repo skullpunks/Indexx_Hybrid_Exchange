@@ -1,9 +1,10 @@
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import GenericButton from '../../components/updated/shared/Button';
-import WithdrawLayout from '../../components/updated/Withdraw';
-import successIcon from '../../assets/updated/withdraw/withdraw_success.svg';
+
+import successIcon from '../../assets/updated/deposit/paper and check 1.png';
 import { useNavigate, useLocation } from 'react-router-dom';
+import DepositCryptoLayout from '../../components/updated/DepositCrypto';
 
 const useStyle = makeStyles((theme) => ({
   heading: {
@@ -20,7 +21,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const DepositsuccessPage = () => {
+const DepositCryptoSuccessPage = () => {
   const classes = useStyle();
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,4 +50,4 @@ const DepositsuccessPage = () => {
   );
 };
 
-export default DepositsuccessPage;
+export default DepositCryptoSuccessPage;

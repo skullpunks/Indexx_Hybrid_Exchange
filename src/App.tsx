@@ -138,6 +138,9 @@ import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
 import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
 import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
 import DashboardPage from './pages/Dashboard';
+import DepositSelectCoin from './pages/depositCrypto/DepositSelectCoin';
+import DepositCryptoChange from './pages/depositCrypto/DepositCryptoChange';
+import DepositCryptoSuccessPage from './pages/depositCrypto/DepositSuccess';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -221,6 +224,18 @@ function App() {
               <Route
                 path="/deposit-add-account-information"
                 element={<DepositAddAccountInfo />}
+              />
+              <Route
+                path="/deposit-crypto-select-coin"
+                element={<DepositSelectCoin />}
+              />
+              <Route
+                path="/deposit-crypto-change-wallet"
+                element={<DepositCryptoChange />}
+              />
+              <Route
+                path="/deposit-crypto-success"
+                element={<DepositCryptoSuccessPage />}
               />
               <Route
                 path="/withdraw-add-information"
