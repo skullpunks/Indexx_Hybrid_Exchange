@@ -51,6 +51,7 @@ const BuySell = () => {
   useEffect(() => {
     const token = searchParams.get('token');
     const subscriptionId = searchParams.get('subscription_id');
+    const redirectFlag = localStorage.getItem('redirected');
 
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
@@ -84,10 +85,9 @@ const BuySell = () => {
       });
     }
 
-    if (defaultSignInToken) {
+    if (defaultSignInToken && !redirectFlag) {
       console.log('I am here ', defaultSignInToken);
       checkLogin(defaultSignInToken);
-      
     }
   }, []);
 
@@ -103,11 +103,13 @@ const BuySell = () => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
         window.location.reload();
-        if(searchParams.get('buyToken'))
-        navigate(`/update/home?buyToken=${defaultToken}`);
-        else 
-        navigate('/update/home');
+        if (searchParams.get('buyToken')) {
+          navigate(`/update/home?buyToken=${defaultToken}`);
+        } else {
+          navigate('/update/home');
+        }
       } else {
         console.log(res.data);
       }
