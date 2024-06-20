@@ -195,7 +195,9 @@ const BuySellTabs = ({
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
+    console.log("!!email && !!user", !!email && !!user)
     setIsLoggedIn(!!email && !!user);
+    debugger;
   }, []);
 
   console.log('defaultReceiveToken', defaultReceiveToken);
@@ -237,7 +239,7 @@ const BuySellTabs = ({
     if (findToken) {
       setDefaultSelectedToken(findToken);
     }
-  }, [defaultSelectedToken]);
+  }, [defaultSelectedToken, defaultReceiveToken]);
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);

@@ -7,7 +7,13 @@ import CryptoCarts from './CryptoCarts';
 import Conversion from './CryptoCarts/Conversions';
 import HowToBuyCrypto from './HowToBuyCrypto';
 import PopularConversion from './PopularConversion';
-import { getPaypalOrder, getPaypalSubscription } from '../../../services/api';
+import {
+  decodeJWT,
+  getPaypalOrder,
+  getPaypalSubscription,
+  getUserDetails,
+  loginWithToken,
+} from '../../../services/api';
 import Popup from './Popup';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +35,7 @@ const BuySell = () => {
   const [selectedTab, setSelectedTab] = useState('Tokens');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const defaultSignInToken = searchParams.get('signInToken');
 
   useEffect(() => {
     const path = location.pathname.toLowerCase();
@@ -76,7 +83,38 @@ const BuySell = () => {
         }
       });
     }
+
+    if (defaultSignInToken) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+      
+    }
   }, [searchParams, navigate]);
+
+  async function checkLogin(defaultSignInToken) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        window.location.reload();
+        if(searchParams.get('buyToken'))
+        navigate(`/update/home?buyToken=${defaultToken}`);
+        else 
+        navigate('/update/home');
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);

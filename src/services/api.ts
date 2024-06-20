@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -278,6 +278,21 @@ export const loginAPI = async (email: string, password: string) => {
     }
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (loginAPI)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const loginWithToken = async (signInToken: any) => {
+  try {
+      const result = await API.post('/api/v1/inex/user/loginWithToken', {
+        signInToken
+      });
+      return result.data;
+    
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (loginWithToken)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
