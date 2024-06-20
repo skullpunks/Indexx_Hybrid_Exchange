@@ -89,7 +89,7 @@ const BuySell = () => {
       checkLogin(defaultSignInToken);
       
     }
-  }, [searchParams, navigate]);
+  }, []);
 
   async function checkLogin(defaultSignInToken) {
     try {
