@@ -444,6 +444,7 @@ const HeaderTest = () => {
                                 backgroundImage: `url(${
                                   isCaptain === true ? frame : beeframe
                                 })`,
+                                transform: !isCaptain ? 'rotate(-30deg)' : '',
                                 // backgroundImage: `url(${frame})`,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'contain',
@@ -457,26 +458,26 @@ const HeaderTest = () => {
                                 // border:"none"
                               }}
                             >
-                              {isCaptain && (
-                                <div
-                                  className="bee-hexagon"
+                              <div
+                                className={
+                                  isCaptain ? 'bee-hexagon' : 'elipse-img'
+                                }
+                                style={{
+                                  marginBottom: `${
+                                    isCaptain === true ? 0 : '7px'
+                                  }`,
+                                }}
+                              >
+                                <img
+                                  alt=""
+                                  src={userProfile ? userProfile : dummy}
+                                  width={'63px'}
+                                  height={'66px'}
                                   style={{
-                                    marginBottom: `${
-                                      isCaptain === true ? 0 : '7px'
-                                    }`,
+                                    border: 'none',
                                   }}
-                                >
-                                  <img
-                                    alt=""
-                                    src={userProfile ? userProfile : dummy}
-                                    width={'63px'}
-                                    height={'66px'}
-                                    style={{
-                                      border: 'none',
-                                    }}
-                                  />
-                                </div>
-                              )}
+                                />
+                              </div>
                             </div>
                           </div>
                         )}
