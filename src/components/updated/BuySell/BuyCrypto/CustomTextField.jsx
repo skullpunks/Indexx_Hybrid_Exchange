@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,12 +8,13 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { List, ListItem, ListItemButton } from '@mui/material';
+import { List, ListItem, ListItemButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
+import { useLocation } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -157,6 +158,10 @@ const useStyles = makeStyles((theme) => ({
       color: `${theme.palette.text.primary} !important`,
     },
   },
+  message: {
+    marginTop: '10px',
+    color: theme.palette.success.main,
+  },
 }));
 const getImage = (image) => {
   try {
@@ -190,12 +195,14 @@ const CustomTextField = ({
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
+  const location = useLocation();
   const [selectedToken, setSelectedToken] = useState(initialToken);
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [userAmount, setUserAmount] = useState(amount);
   const [rateData, setRateData] = useState(0);
+  const fixedTokenRef = useRef(fixedToken);
   const theme = useTheme();
   const handleFocus = () => {
     setFocused(true);
@@ -227,13 +234,23 @@ const CustomTextField = ({
     setIsOpen(false);
   };
 
+  // const handleAmountChange = async (e) => {
+  //   const amount = e.target.value;
+  //   setUserAmount(amount);
+  //   if (onAmountChange) {
+  //     onAmountChange(amount);
+  //   }
+  // };
+
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
     setUserAmount(amount);
+
     if (onAmountChange) {
       onAmountChange(amount);
     }
   };
+
   const calculateReceiveAmount = (amount, rate) => {
     const receiveAmount = type === 'buy' ? amount / rate : amount * rate;
     return receiveAmount.toFixed(2);
@@ -273,27 +290,64 @@ const CustomTextField = ({
 
   useEffect(() => {
     async function updatedDefaultToken() {
-      if (defaultReceiveToken) {
-        setSelectedToken(fixedToken || defaultReceiveToken);
-        onSelectToken(defaultReceiveToken); // Call the callback with selected token
-      } else if (tokenType === 'Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.commonToken && !x.isStock && !x.isETF
-        );
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
-      } else if (tokenType === 'Stock Tokens') {
-        const allFilteredTokens = await tokens.filter((x) => x.isStock);
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
-      } else if (tokenType === 'ETF Tokens') {
-        const allFilteredTokens = await tokens.filter((x) => x.isETF);
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
+      const path = location.pathname.toLowerCase();
+      console.log('path is ', path);
+      let defaultToken;
+      if (path.includes('etf-tokens')) {
+        defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
+      } else if (path.includes('stock-token')) {
+        defaultToken = { title: 'AMZN', image: 'AMZN' };
+      } else {
+        defaultToken = { title: 'INEX', image: 'INEX' };
       }
+
+      setSelectedToken(fixedToken || defaultToken);
+      onSelectToken(fixedToken || defaultToken);
+      //debugger;
+      // if (defaultReceiveToken) {
+      //   setSelectedToken(fixedToken || defaultReceiveToken);
+      //   onSelectToken(defaultReceiveToken); // Call the callback with selected token
+      // } else if (tokenType === 'Tokens') {
+      //   const allFilteredTokens = await tokens.filter(
+      //     (x) => x.commonToken && !x.isStock && !x.isETF
+      //   );
+      //   setSelectedToken(fixedToken || allFilteredTokens[0]);
+      //   onSelectToken(allFilteredTokens[0]);
+      // } else if (tokenType === 'Stock Tokens') {
+      //   const allFilteredTokens = await tokens.filter((x) => x.isStock);
+      //   setSelectedToken(fixedToken || allFilteredTokens[0]);
+      //   onSelectToken(allFilteredTokens[0]);
+      // } else if (tokenType === 'ETF Tokens') {
+      //   const allFilteredTokens = await tokens.filter((x) => x.isETF);
+      //   setSelectedToken(fixedToken || allFilteredTokens[0]);
+      //   onSelectToken(allFilteredTokens[0]);
+      // }
     }
     updatedDefaultToken();
-  }, [tokenType, defaultReceiveToken]);
+  }, [tokenType, defaultReceiveToken, location.pathname]);
+
+  // useEffect(() => {
+  //   const path = location.pathname.toLowerCase();
+  //   let defaultToken;
+  //   if (path.includes('etf-tokens')) {
+  //     defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
+  //   } else if (path.includes('stock-token')) {
+  //     defaultToken = { title: 'AMZN', image: 'AMZN' };
+  //   } else {
+  //     defaultToken = { title: 'INEX', image: 'INEX' };
+  //   }
+
+  //   const isFixedTokenChanged = JSON.stringify(fixedTokenRef.current) !== JSON.stringify(fixedToken);
+
+  //   if (isFixedTokenChanged) {
+  //     fixedTokenRef.current = fixedToken;
+  //     setSelectedToken(fixedToken || defaultToken);
+  //     onSelectToken(fixedToken || defaultToken);
+  //   } else {
+  //     setSelectedToken(defaultToken);
+  //     onSelectToken(defaultToken);
+  //   }
+  // }, [location.pathname, fixedToken, onSelectToken]);
 
   return (
     <>
@@ -402,6 +456,11 @@ const CustomTextField = ({
               </div>
             </div>
           </ClickAwayListener>
+        )}
+        {selectedToken.title === 'WIBS' && (
+          <Typography className={classes.message}>
+            Sale is running: Buy 1 token get 9 tokens free!
+          </Typography>
         )}
       </div>
     </>

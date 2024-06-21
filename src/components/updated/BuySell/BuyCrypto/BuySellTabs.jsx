@@ -169,7 +169,7 @@ const BuySellTabs = ({
   });
   const [spendAmount, setSpendAmount] = useState('');
   const [receiveAmount, setReceiveAmount] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupOpen2, setPopupOpen2] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -308,7 +308,8 @@ const BuySellTabs = ({
     setLoadings(true);
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
-    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
+    console.log("receiveAmount", receiveAmount)
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
@@ -352,7 +353,8 @@ const BuySellTabs = ({
     setLoadings(true);
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
-    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
+    console.log("receiveAmount", receiveAmount)
     let res;
     console.log('paymentMethod', paymentMethod);
     if (id) {
@@ -519,6 +521,16 @@ const BuySellTabs = ({
     handlePopupClose();
   };
 
+  const formatPrice = (price) => {
+    if (price >= 1) {
+      return price.toFixed(2);
+    } else if (price >= 0.01) {
+      return price.toFixed(4);
+    } else {
+      return price.toFixed(6);
+    }
+  };
+
   return (
     <Box>
       <Box className={classes.card}>
@@ -675,7 +687,7 @@ const BuySellTabs = ({
                       theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
                   }}
                 >
-                  ~ {price} {'USD'}
+                  ~ {formatPrice(price)} {'USD'}
                 </Typography>
               </div>
 

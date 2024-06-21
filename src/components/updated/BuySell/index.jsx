@@ -30,7 +30,7 @@ const BuySell = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const defaultToken = searchParams.get('buyToken') || 'INEX';
+  let defaultToken = searchParams.get('buyToken') || 'INEX';
   const [receiveToken, setReceiveToken] = useState(defaultToken);
   const [selectedTab, setSelectedTab] = useState('Tokens');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,14 +39,23 @@ const BuySell = () => {
 
   useEffect(() => {
     const path = location.pathname.toLowerCase();
+    let newDefaultToken;
     if (path.includes('etf-tokens')) {
       setSelectedTab('ETF Tokens');
+      newDefaultToken = 'ALCRYP';
     } else if (path.includes('stock-token')) {
       setSelectedTab('Stock Tokens');
+      newDefaultToken = 'AMZN';
     } else {
       setSelectedTab('Tokens');
+      newDefaultToken = 'INEX';
+    }
+    if (defaultToken !== newDefaultToken) {
+      defaultToken = newDefaultToken;
+      setReceiveToken(defaultToken);
     }
   }, [location.pathname]);
+  
 
   useEffect(() => {
     const token = searchParams.get('token');
