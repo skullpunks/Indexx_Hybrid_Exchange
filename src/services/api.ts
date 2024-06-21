@@ -36,7 +36,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  baseAPIURL = 'http://localhost:5000';
+  //baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -83,6 +83,20 @@ function setToLocalStorage(key: any, data: any, ttl: any) {
   };
   localStorage.setItem(key, JSON.stringify(item));
 }
+
+export const getUserShortToken = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/createShortToken/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createShortToken)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
 
 export async function fetchCryptoData(subTitle: string) {
   const cacheKey = `cryptoData:${subTitle}`;
