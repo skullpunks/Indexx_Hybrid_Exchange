@@ -1,6 +1,32 @@
 // import token from '../../assets/BSheader/tokens icon 1.svg';
 // import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 
+import { decodeJWT, getUserShortToken } from "../../services/api";
+
+const baseCEXURL = 'https://test.cex.indexx.ai'; // Define your base URL
+
+const getAuthenticatedUrl = async (url:any) => {
+  const isAuthenticated = localStorage.getItem('access_token');
+  const email = localStorage.getItem('email');
+  let shortToken;
+
+  if (email) {
+    shortToken = await getUserShortToken(email);
+  } else if (isAuthenticated) {
+    let decodedValue = await decodeJWT(isAuthenticated);
+    shortToken = await getUserShortToken(decodedValue?.email);
+  }
+
+  if (isAuthenticated) {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('signInToken', shortToken?.data);
+    return urlObj.toString();
+  }
+
+  return url;
+};
+
+
 const header_data = [
   {
     mainTextDesktop: 'Exchange',
@@ -137,7 +163,7 @@ const header_data = [
     mainTextDesktop: 'Lotto',
     mainTextMob: 'Lotto',
     active: false,
-    href: 'https://lotto.indexx.ai/#',
+    href: 'https://test.lotto.indexx.ai/#',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -146,23 +172,23 @@ const header_data = [
         links: [
           {
             name: 'About',
-            href: 'https://lotto.indexx.ai/about',
+            href: 'https://test.lotto.indexx.ai/about',
           },
           {
             name: 'Buy Ticket',
-            href: 'https://lotto.indexx.ai/contest',
+            href: 'https://test.lotto.indexx.ai/contest',
           },
           {
             name: 'Contest',
-            href: 'https://lotto.indexx.ai/contest',
+            href: 'https://test.lotto.indexx.ai/contest',
           },
           {
             name: 'Grand Prize',
-            href: 'https://lotto.indexx.ai/grand-prize',
+            href: 'https://test.lotto.indexx.ai/grand-prize',
           },
           {
             name: 'Winners',
-            href: 'https://lotto.indexx.ai/winner',
+            href: 'https://test.lotto.indexx.ai/winner',
           },
         ],
       },
@@ -171,15 +197,15 @@ const header_data = [
         links: [
           {
             name: 'Win a Ferrari',
-            href: 'https://lotto.indexx.ai/grand-prize',
+            href: 'https://test.lotto.indexx.ai/grand-prize',
           },
           {
             name: 'Claim Rewards',
-            href: 'https://lotto.indexx.ai/reward',
+            href: 'https://test.lotto.indexx.ai/reward',
           },
           {
             name: 'See who won',
-            href: 'https://lotto.indexx.ai/winner',
+            href: 'https://test.lotto.indexx.ai/winner',
           },
         ],
       },
@@ -188,11 +214,11 @@ const header_data = [
         links: [
           {
             name: 'How does Fantasy Lotto work?',
-            href: 'https://lotto.indexx.ai/how-work',
+            href: 'https://test.lotto.indexx.ai/how-work',
           },
           {
             name: 'Contact Support',
-            href: 'https://lotto.indexx.ai/contact',
+            href: 'https://test.lotto.indexx.ai/contact',
           },
         ],
       },
@@ -299,7 +325,7 @@ const header_data = [
           },
           {
             name: 'Play Crypto Lottery',
-            href: 'https://lotto.indexx.ai/',
+            href: 'https://test.lotto.indexx.ai/',
           },
           {
             name: 'Buy Indexx Tokens',
@@ -881,3 +907,30 @@ export const auth_header_data = [
   },
 ];
 export default header_data;
+
+
+const processHeaderData = async (data:any) => {
+  const promises = data.map(async (item:any) => {
+    if (item.mainTextDesktop === 'Lotto' || item.mainTextMob === 'Lotto') {
+      item.href = await getAuthenticatedUrl(item.href);
+    }
+    if (item.dropDownContent) {
+      for (const content of item.dropDownContent) {
+        for (const link of content.links) {
+          link.href = await getAuthenticatedUrl(link.href);
+        }
+      }
+    }
+    return item;
+  });
+
+  return Promise.all(promises);
+};
+
+// Example usage
+const updateHeaderData = async () => {
+  const updatedHeaderData = await processHeaderData(header_data);
+  console.log(updatedHeaderData);
+};
+
+updateHeaderData();

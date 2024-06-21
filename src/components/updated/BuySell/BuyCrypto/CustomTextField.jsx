@@ -160,7 +160,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     marginTop: '10px',
-    color: theme.palette.success.main,
+    color: '#11BE6A',
   },
 }));
 const getImage = (image) => {
@@ -302,6 +302,7 @@ const CustomTextField = ({
       }
 
       setSelectedToken(fixedToken || defaultToken);
+      console.log("defaultReceiveToken", defaultReceiveToken)
       onSelectToken(fixedToken || defaultToken);
       //debugger;
       // if (defaultReceiveToken) {
