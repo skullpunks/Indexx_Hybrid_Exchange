@@ -10,7 +10,7 @@ const CreatePasswordPage = () => {
   return (
     <div
       style={{
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
@@ -19,7 +19,7 @@ const CreatePasswordPage = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <CreatePassword email={email}/>
+      <CreatePassword email={email} />
     </div>
   );
 };

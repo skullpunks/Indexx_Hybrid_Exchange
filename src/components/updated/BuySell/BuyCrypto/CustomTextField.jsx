@@ -15,6 +15,7 @@ import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
 import { useLocation } from 'react-router-dom';
+import smbanner from '../../../../assets/updated/buySell/Small Banner.svg';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -302,7 +303,7 @@ const CustomTextField = ({
       }
 
       setSelectedToken(fixedToken || defaultToken);
-      console.log("defaultReceiveToken", defaultReceiveToken)
+      console.log('defaultReceiveToken', defaultReceiveToken);
       onSelectToken(fixedToken || defaultToken);
       //debugger;
       // if (defaultReceiveToken) {
@@ -458,10 +459,11 @@ const CustomTextField = ({
             </div>
           </ClickAwayListener>
         )}
-        {selectedToken.title === 'WIBS' && (
-          <Typography className={classes.message}>
-            Sale is running: Buy 1 token get 9 tokens free!
-          </Typography>
+        {selectedToken.title === 'WIBS' && type === 'buy' && (
+          <img
+            src={smbanner}
+            style={{ marginBottom: loggedIn ? '-20px' : '-40px' }}
+          />
         )}
       </div>
     </>
