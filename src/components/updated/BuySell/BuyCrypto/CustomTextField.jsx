@@ -462,7 +462,10 @@ const CustomTextField = ({
         {selectedToken.title === 'WIBS' && type === 'buy' && (
           <img
             src={smbanner}
-            style={{ marginBottom: loggedIn ? '-20px' : '-40px' }}
+            style={{
+              marginBottom: loggedIn ? '-20px' : '-40px',
+              width: '100%',
+            }}
           />
         )}
       </div>
