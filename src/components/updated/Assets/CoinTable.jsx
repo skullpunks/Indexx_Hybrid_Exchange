@@ -64,6 +64,12 @@ const headCells = [
     label: 'Amount',
   },
   {
+    id: 'staking_balance',
+    numeric: true,
+    disablePadding: false,
+    label: 'Staking Balance',
+  },
+  {
     id: 'coin_price',
     numeric: true,
     disablePadding: false,
@@ -74,12 +80,6 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Today‘s PnL',
-  },
-  {
-    id: 'staking_balance',
-    numeric: true,
-    disablePadding: false,
-    label: 'Staking Balance',
   },
 ];
 
@@ -186,13 +186,13 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
+            staking_balance: item.coinStakedBalance
+              ? item.coinStakedBalance
+              : 0,
             coin_price: item?.coinPrice,
             todayPNL:
               item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
             coinNetwork: item.coinNetwork,
-            staking_balance: item.coinStakedBalance
-              ? item.coinStakedBalance
-              : 0, 
           }));
           setRows(formattedData);
         }
@@ -288,6 +288,16 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     maximumFractionDigits: 6,
                   }).format(row.amount)}
                 </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{ borderBottom: 'none !important' }}
+                >
+                  {new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  }).format(row.staking_balance)}
+                </TableCell>
+
                 {!isMobile && (
                   <>
                     <TableCell
@@ -303,15 +313,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                       sx={{ borderBottom: 'none !important' }}
                     >
                       {row.todayPNL}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 6,
-                      }).format(row.staking_balance)}
                     </TableCell>
                   </>
                 )}

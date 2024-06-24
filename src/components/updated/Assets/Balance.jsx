@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.divider}`,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
+      gap: '15px',
       border: 'none !important',
     },
   },
@@ -81,6 +82,7 @@ const BalanceOverview = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [visibleStaking, setVisibleStaking] = useState(false);
   const [pnl, setPnl] = useState({ value: 0, percentage: 0 });
   const [pnlClass, setPnlClass] = useState(classes.redText);
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
@@ -91,6 +93,9 @@ const BalanceOverview = () => {
     setVisible(!visible);
   };
 
+  const handleToggleStakingVisibility = () => {
+    setVisibleStaking(!visibleStaking);
+  };
   useEffect(() => {
     getAllUserWallet();
   }, [totalBalanceInUSD]);
@@ -193,29 +198,38 @@ const BalanceOverview = () => {
                   maximumFractionDigits: 2,
                 }).format(totalBalanceInUSD)}`}
           </Typography>
-        
         </Box>
-        <Box className={classes.balanceSectionWrapper}>
-          <Box className={classes.header}>
-            <Typography variant="h6">Staked Balance</Typography>
-          </Box>
-          <Typography className={classes.hiddenBalance}>
-            $
-            {visible
-              ? '*******'
-              : `${new Intl.NumberFormat('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(totalStakedBalanceInUSD)}`}
-          </Typography>
-        </Box>
+
+        {/* staking balance */}
+        <Typography className={classes.pnlText}>
+          Today's PNL:{' '}
+          <span
+            className={pnlClass}
+          >{`${pnl.value} (${pnl.percentage}%)`}</span>
+        </Typography>
       </Box>
-      <Typography className={classes.pnlText}>
-            Today's PNL:{' '}
-            <span
-              className={pnlClass}
-            >{`${pnl.value} (${pnl.percentage}%)`}</span>
-          </Typography>
+      <Box className={classes.balanceSectionWrapper}>
+        <Box className={classes.header}>
+          <Typography variant="h6">Staked Balance</Typography>
+          <div
+            className={classes.eyeIcon}
+            onClick={handleToggleStakingVisibility}
+            size="small"
+            style={{ cursor: 'pointer' }}
+          >
+            {visibleStaking ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </div>
+        </Box>
+        <Typography className={classes.hiddenBalance}>
+          $
+          {visibleStaking
+            ? '*******'
+            : `${new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(totalStakedBalanceInUSD)}`}
+        </Typography>
+      </Box>
       <Box className={classes.buttonContainer}>
         <GenericButton
           text={'Deposit'}
