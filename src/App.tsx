@@ -367,6 +367,8 @@ function App() {
             {/* <Route path="/auth/signup-role" element={<SelectRolePage />} /> */}
 
             <Route path="/update/home/*" element={<BuySellPage />} />
+            <Route path="/update/home/etf-tokens" element={<BuySellPage />} />
+            <Route path="/update/home/stock-token" element={<BuySellPage />} />
 
             <Route path="/indexx-exchange/lottery" element={<LottoHome />} />
             <Route path="/indexx-exchange/elite-club" element={<EliteClub />} />

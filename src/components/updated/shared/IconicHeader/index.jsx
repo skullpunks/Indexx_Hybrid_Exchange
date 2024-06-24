@@ -81,19 +81,19 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Tokens',
       light: tokenLight,
       dark: tokenDark,
-      path: '/update/home',
+      path: '/update/home?buyToken=INEX',
     },
     {
       label: 'Stock Tokens',
       light: wallStreetLight,
       dark: wallStreetDark,
-      path: '/update/home/stock-token',
+      path: '/update/home/stock-token?buyToken=AMZN',
     },
     {
       label: 'ETF Tokens',
       light: etfLight,
       dark: etfDark,
-      path: '/update/home/etf-tokens',
+      path: '/update/home/etf-tokens?buyToken=ALCRYP',
     },
   ];
 
@@ -121,13 +121,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
     } else if (label === 'Asset Wallet') {
       navigate('/wallet/overview');
     } else if (label === 'ETF Tokens') {
-      navigate('/update/home/etf-tokens');
+      navigate('/update/home/etf-tokens?buyToken=ALCRYP');
       onChange(event, label);
     } else if (label === 'Stock Tokens') {
-      navigate('/update/home/stock-token');
+      navigate('/update/home/stock-token?buyToken=AMZN');
       onChange(event, label);
     } else {
-      navigate('/update/home');
+      navigate('/update/home?buyToken=INEX');
       onChange(event, label);
     }
   };

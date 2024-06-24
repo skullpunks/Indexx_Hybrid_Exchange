@@ -50,7 +50,7 @@ const header_data = [
         links: [
           {
             name: 'Buy and Sell',
-            href: '/update/home',
+            href: '/update/home?buyToken=INEX',
           },
           {
             name: 'Convert',
@@ -558,7 +558,7 @@ const header_data = [
         links: [
           {
             name: 'Buy Stock Tokens',
-            href: '/update/home/stock-token',
+            href: '/update/home/stock-token?buyToken=AMZN',
           },
           {
             name: 'Buy Stock Certificates',
@@ -566,7 +566,7 @@ const header_data = [
           },
           {
             name: 'Buy ETFs',
-            href: '/update/home/etf-tokens',
+            href: '/update/home/etf-tokens?buyToken=ALCRYP',
           },
         ],
       },
