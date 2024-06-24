@@ -14,7 +14,7 @@ import {
   createSellOrder,
   getHoneyBeeDataByUsername,
 } from '../../../../services/api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
 import tokens from '../../../../utils/Tokens.json';
 
@@ -169,7 +169,7 @@ const BuySellTabs = ({
   });
   const [spendAmount, setSpendAmount] = useState('');
   const [receiveAmount, setReceiveAmount] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupOpen2, setPopupOpen2] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -191,7 +191,7 @@ const BuySellTabs = ({
   const [generalMessage, setGeneralMessage] = useState('');
 
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
@@ -217,19 +217,24 @@ const BuySellTabs = ({
     console.log('tokenType', tokenType);
   }, [tokenType]);
 
+  const defaultTokenFromUrl = searchParams.get('buyToken');
+
   const handleTokenSelect = useCallback(
     (token, type) => {
       console.log('type', type);
       console.log('value', value);
+
       if (type === 'Spend') {
         setSpendToken({ title: token?.title, image: token?.image });
       } else if (type === 'Receive') {
-        setReceiveToken({ title: token?.title, image: token?.image });
-        onReceiveTokenChange(token?.title);
-        console.log('receiveToken', token);
+        const selectedTokenTitle = defaultTokenFromUrl;
+        const selectedTokenImage = defaultTokenFromUrl;
+        setReceiveToken({ title: selectedTokenTitle, image: selectedTokenImage });
+        onReceiveTokenChange(selectedTokenTitle);
+        console.log('receiveToken', selectedTokenTitle);
       }
     },
-    [onReceiveTokenChange, value]
+    [onReceiveTokenChange, value, defaultTokenFromUrl]
   );
 
   useEffect(() => {
@@ -282,6 +287,16 @@ const BuySellTabs = ({
     } else {
     }
   };
+
+  const formatPrice = (price) => {
+    if (price >= 1) {
+      return price.toFixed(2);
+    } else if (price >= 0.01) {
+      return price.toFixed(4);
+    } else {
+      return price.toFixed(6);
+    }
+  };  
 
   useEffect(() => {
     if (id) {
@@ -674,13 +689,13 @@ const BuySellTabs = ({
                       theme.palette.mode === 'dark' ? '#EAECEF' : '#1E2329',
                   }}
                 >
-                  ~ {price} {'USD'}
+                  ~ {formatPrice(price)} {'USD'}
                 </Typography>
               </div>
 
               <GenericButton
                 text={`${value === 'buy' ? 'Buy' : 'Sell'} ${
-                  receiveToken?.title || ''
+                  defaultTokenFromUrl || ''
                 }`}
                 styles={{
                   fontSize: '20px',

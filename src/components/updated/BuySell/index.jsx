@@ -9,6 +9,7 @@ import HowToBuyCrypto from './HowToBuyCrypto';
 import PopularConversion from './PopularConversion';
 import { getPaypalOrder, getPaypalSubscription } from '../../../services/api';
 import Popup from './Popup';
+import tokens from '../../../utils/Tokens.json';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -89,11 +90,34 @@ const BuySell = () => {
   const handlePopupClose = () => {
     setIsModalOpen(false);
   };
-
-  const handleTokenSelect = (token) => {
-    console.log('Selected token from cryto in  BuySell :', token);
-    setReceiveToken(token.Symbol); // You can pass the selected token to another component or update the state as needed
+  
+  const handleTokenSelect = (selectedTokenValue) => {
+    console.log('Selected token from crypto in BuySell :', selectedTokenValue);
+    setReceiveToken(selectedTokenValue.Symbol); // You can pass the selected token to another component or update the state as needed
+  
+    // Find the selected token from the imported tokens
+    const selectedToken = tokens.find((token) => token.title === selectedTokenValue.Symbol);
+  
+    if (!selectedToken) {
+      console.error('Token not found:', selectedTokenValue.Symbol);
+      return;
+    }
+  
+    let basePath = '/update/home';
+  
+    if (selectedToken.isStock) {
+      basePath = '/update/home/stock-token';
+    } else if (selectedToken.isETF) {
+      basePath = '/update/home/etf-tokens';
+    }
+  
+    // Construct the new URL with the buyToken parameter
+    const newUrl = `${basePath}?buyToken=${selectedToken.title}`;
+  
+    navigate(newUrl);
   };
+  
+  
 
   return (
     <div className={classes.Container}>
@@ -101,7 +125,7 @@ const BuySell = () => {
       <BuyCrypto
         tokenType={selectedTab}
         onReceiveTokenChange={handleReceiveTokenChange}
-        defaultReceiveToken={defaultToken}
+        defaultReceiveToken={receiveToken} // Pass the updated state
         handleTokenSelect={handleTokenSelect}
       />
       <HowToBuyCrypto tokenType={selectedTab} receiveToken={receiveToken} />

@@ -14,6 +14,7 @@ import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -181,16 +182,22 @@ const CustomTextField = ({
   loggedIn,
   defaultReceiveToken,
 }) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const defaultTokenFromUrl = searchParams.get('buyToken');
   console.log('defaultReceiveToken in customField', defaultReceiveToken);
+  // Initialize the token
   const initialToken = fixedToken || {
-    title: defaultReceiveToken ? defaultReceiveToken?.title : 'INEX',
-    image: defaultReceiveToken ? defaultReceiveToken?.image : 'INEX',
+    title: defaultReceiveToken?.title || defaultTokenFromUrl || 'INEX',
+    image: defaultReceiveToken?.image || defaultTokenFromUrl || 'INEX',
   };
+
+  const [selectedToken, setSelectedToken] = useState(initialToken);
   console.log('initialToken', initialToken);
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
-  const [selectedToken, setSelectedToken] = useState(initialToken);
+  const location = useLocation();
   const [focused, setFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -214,8 +221,8 @@ const CustomTextField = ({
   };
 
   useEffect(() => {
-    getPricesData(selectedToken.title);
-  }, [selectedToken]);
+    getPricesData(defaultTokenFromUrl);
+  }, [defaultTokenFromUrl]);
 
   const handleTokenSelect = (token) => {
     console.log('I am here', token, disableDropdown);
@@ -223,6 +230,18 @@ const CustomTextField = ({
       getPricesData(token.title);
       setSelectedToken(token);
       onSelectToken(token);
+
+      let basePath = '/update/home';
+      if (token.isStock) {
+        basePath = '/update/home/stock-token';
+      } else if (token.isETF) {
+        basePath = '/update/home/etf-tokens';
+      }
+
+      // Construct the new URL with the buyToken parameter
+      const newUrl = `${basePath}?buyToken=${token.title}`;
+
+      navigate(newUrl);
     }
     setIsOpen(false);
   };
@@ -273,27 +292,33 @@ const CustomTextField = ({
 
   useEffect(() => {
     async function updatedDefaultToken() {
-      if (defaultReceiveToken) {
-        setSelectedToken(fixedToken || defaultReceiveToken);
-        onSelectToken(defaultReceiveToken); // Call the callback with selected token
-      } else if (tokenType === 'Tokens') {
-        const allFilteredTokens = await tokens.filter(
-          (x) => x.commonToken && !x.isStock && !x.isETF
-        );
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
-      } else if (tokenType === 'Stock Tokens') {
-        const allFilteredTokens = await tokens.filter((x) => x.isStock);
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
-      } else if (tokenType === 'ETF Tokens') {
-        const allFilteredTokens = await tokens.filter((x) => x.isETF);
-        setSelectedToken(fixedToken || allFilteredTokens[0]);
-        onSelectToken(allFilteredTokens[0]);
-      }
+      const path = location.pathname.toLowerCase();
+      console.log('path is ', path);
+
+      let defaultToken;
+
+     // Prioritize URL parameter
+     if (defaultTokenFromUrl) {
+      defaultToken = { title: defaultTokenFromUrl, image: defaultTokenFromUrl };
+    } else if (path === '/update/home') {
+      defaultToken = { title: 'INEX', image: 'INEX' };
+    } else if (path.includes('etf-tokens')) {
+      defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
+    } else if (path.includes('stock-token')) {
+      defaultToken = { title: 'AMZN', image: 'AMZN' };
+    } else if (defaultReceiveToken) {
+      // If defaultReceiveToken is available
+      defaultToken = defaultReceiveToken;
+    } else {
+      // Fallback to a hardcoded default token
+      defaultToken = { title: 'INEX', image: 'INEX' };
+    }
+
+      setSelectedToken(fixedToken || defaultToken);
+      onSelectToken(fixedToken || defaultToken); // Call the callback with selected token
     }
     updatedDefaultToken();
-  }, [tokenType, defaultReceiveToken]);
+  }, [tokenType, defaultReceiveToken, defaultTokenFromUrl]);
 
   return (
     <>
