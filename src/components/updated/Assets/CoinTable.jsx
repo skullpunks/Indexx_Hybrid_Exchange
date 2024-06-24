@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -14,7 +14,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
-import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
@@ -76,6 +75,12 @@ const headCells = [
     disablePadding: false,
     label: 'Today‘s PnL',
   },
+  {
+    id: 'staking_balance',
+    numeric: true,
+    disablePadding: false,
+    label: 'Staking Balance',
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -127,13 +132,27 @@ EnhancedTableHead.propTypes = {
 
 export default function EnhancedTable({ searchQuery, hideAssets }) {
   const navigate = useNavigate();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [rows, setRows] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
-  const [dense, setDense] = React.useState(false);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [dense, setDense] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  const calculateTodayPNL = (item) => {
+    const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS'];
+    if (fixedTokens.includes(item.coinSymbol)) {
+      return {
+        value: '0.00',
+        color: 'green',
+      };
+    }
+    return {
+      value: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : '0.00',
+      color: 'default',
+    };
+  };
 
   const getImage = (image) => {
     try {
@@ -153,7 +172,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
@@ -171,6 +190,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             todayPNL:
               item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
             coinNetwork: item.coinNetwork,
+            staking_balance: item.coinStakedBalance
+              ? item.coinStakedBalance
+              : 0, 
           }));
           setRows(formattedData);
         }
@@ -190,7 +212,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     setOrderBy(property);
   };
 
-  const filteredRows = React.useMemo(() => {
+  const filteredRows = useMemo(() => {
     return rows.filter((row) => {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -200,7 +222,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     });
   }, [rows, searchQuery, hideAssets]);
 
-  const visibleRows = React.useMemo(
+  const visibleRows = useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
     [order, orderBy, filteredRows]
   );
@@ -281,6 +303,15 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                       sx={{ borderBottom: 'none !important' }}
                     >
                       {row.todayPNL}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 6,
+                      }).format(row.staking_balance)}
                     </TableCell>
                   </>
                 )}

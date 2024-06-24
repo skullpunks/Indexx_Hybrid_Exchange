@@ -84,6 +84,7 @@ const BalanceOverview = () => {
   const [pnl, setPnl] = useState({ value: 0, percentage: 0 });
   const [pnlClass, setPnlClass] = useState(classes.redText);
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
+  const [totalStakedBalanceInUSD, setTotalStakedBalanceInUSD] = useState(0); // State for staked balance
   const [isLoading, setIsLoading] = useState(true);
 
   const handleToggleVisibility = () => {
@@ -107,16 +108,13 @@ const BalanceOverview = () => {
       const usersWallet = userWallets.data;
       let totalBalInUSD = 0;
       let totalPrevBalInUSD = 0;
+      let totalStakedBalInUSD = 0; // Variable for staked balance
 
       usersWallet.forEach((wallet) => {
         const balance = Number(wallet.coinBalance);
+        const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
         const price = Number(wallet.coinPrice);
         const prevPrice = Number(wallet.coinPrevPrice);
-
-        console.log(`Processing wallet: ${wallet.coinSymbol}`);
-        console.log(
-          `Balance: ${balance}, Price: ${price}, PrevPrice: ${prevPrice}`
-        );
 
         if (balance > 0 && wallet.coinSymbol !== 'USD') {
           if (
@@ -126,25 +124,24 @@ const BalanceOverview = () => {
           ) {
             totalBalInUSD += balance * price;
             totalPrevBalInUSD += balance * prevPrice;
-            console.log(`Updated totalBalInUSD: ${totalBalInUSD}`);
-            console.log(`Updated totalPrevBalInUSD: ${totalPrevBalInUSD}`);
           } else if (!isNaN(price)) {
             totalBalInUSD += balance * price;
-            console.log(`Updated totalBalInUSD (Non-Crypto): ${totalBalInUSD}`);
           } else {
             totalBalInUSD += balance;
-            console.log(`Updated totalBalInUSD (Fallback): ${totalBalInUSD}`);
           }
+        }
+
+        if (stakedBalance > 0 && !isNaN(price)) {
+          totalStakedBalInUSD += stakedBalance * price;
         }
       });
 
       setTotalBalanceInUSD(totalBalInUSD);
+      setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
 
       let pnlValue = 0;
       let pnlPercentage = 0;
 
-      console.log('Final totalBalanceInUSD', totalBalInUSD);
-      console.log('Final totalPrevBalInUSD', totalPrevBalInUSD);
       if (totalPrevBalInUSD > 0) {
         pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
         pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
@@ -175,32 +172,50 @@ const BalanceOverview = () => {
   return (
     <Box className={classes.container}>
       <Box className={classes.balanceSection}>
-        <Box className={classes.header}>
-          <Typography variant="h6">Estimated Balance</Typography>
-          <div
-            className={classes.eyeIcon}
-            onClick={handleToggleVisibility}
-            size="small"
-            style={{ cursor: 'pointer' }}
-          >
-            {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </div>
+        <Box className={classes.balanceSectionWrapper}>
+          <Box className={classes.header}>
+            <Typography variant="h6">Estimated Balance</Typography>
+            <div
+              className={classes.eyeIcon}
+              onClick={handleToggleVisibility}
+              size="small"
+              style={{ cursor: 'pointer' }}
+            >
+              {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </div>
+          </Box>
+          <Typography className={classes.hiddenBalance}>
+            $
+            {visible
+              ? '*******'
+              : `${new Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(totalBalanceInUSD)}`}
+          </Typography>
+        
         </Box>
-        <Typography className={classes.hiddenBalance}>
-          {visible
-            ? '*******'
-            : `${new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(totalBalanceInUSD)}`}
-        </Typography>
-        <Typography className={classes.pnlText}>
-          Today's PNL:{' '}
-          <span
-            className={pnlClass}
-          >{`${pnl.value} (${pnl.percentage}%)`}</span>
-        </Typography>
+        <Box className={classes.balanceSectionWrapper}>
+          <Box className={classes.header}>
+            <Typography variant="h6">Staked Balance</Typography>
+          </Box>
+          <Typography className={classes.hiddenBalance}>
+            $
+            {visible
+              ? '*******'
+              : `${new Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(totalStakedBalanceInUSD)}`}
+          </Typography>
+        </Box>
       </Box>
+      <Typography className={classes.pnlText}>
+            Today's PNL:{' '}
+            <span
+              className={pnlClass}
+            >{`${pnl.value} (${pnl.percentage}%)`}</span>
+          </Typography>
       <Box className={classes.buttonContainer}>
         <GenericButton
           text={'Deposit'}
