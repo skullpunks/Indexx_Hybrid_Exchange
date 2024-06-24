@@ -217,10 +217,18 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
-      const passesHideAssets = !hideAssets || row.amount * row.coin_price >= 1;
+  
+      // Show all rows when hideAssets is false
+      if (!hideAssets) {
+        return matchesSearchQuery;
+      }
+  
+      // When hideAssets is true, show rows with amount or staking_balance > 0
+      const passesHideAssets = (row.amount > 0 || row.staking_balance > 0);
       return matchesSearchQuery && passesHideAssets;
     });
   }, [rows, searchQuery, hideAssets]);
+  
 
   const visibleRows = useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
