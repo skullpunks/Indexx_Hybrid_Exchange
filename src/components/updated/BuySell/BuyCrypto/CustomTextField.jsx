@@ -15,6 +15,8 @@ import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import smbanner from '../../../../assets/updated/buySell/Small Banner.svg';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -297,22 +299,25 @@ const CustomTextField = ({
 
       let defaultToken;
 
-     // Prioritize URL parameter
-     if (defaultTokenFromUrl) {
-      defaultToken = { title: defaultTokenFromUrl, image: defaultTokenFromUrl };
-    } else if (path === '/update/home') {
-      defaultToken = { title: 'INEX', image: 'INEX' };
-    } else if (path.includes('etf-tokens')) {
-      defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
-    } else if (path.includes('stock-token')) {
-      defaultToken = { title: 'AMZN', image: 'AMZN' };
-    } else if (defaultReceiveToken) {
-      // If defaultReceiveToken is available
-      defaultToken = defaultReceiveToken;
-    } else {
-      // Fallback to a hardcoded default token
-      defaultToken = { title: 'INEX', image: 'INEX' };
-    }
+      // Prioritize URL parameter
+      if (defaultTokenFromUrl) {
+        defaultToken = {
+          title: defaultTokenFromUrl,
+          image: defaultTokenFromUrl,
+        };
+      } else if (path === '/update/home') {
+        defaultToken = { title: 'INEX', image: 'INEX' };
+      } else if (path.includes('etf-tokens')) {
+        defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
+      } else if (path.includes('stock-token')) {
+        defaultToken = { title: 'AMZN', image: 'AMZN' };
+      } else if (defaultReceiveToken) {
+        // If defaultReceiveToken is available
+        defaultToken = defaultReceiveToken;
+      } else {
+        // Fallback to a hardcoded default token
+        defaultToken = { title: 'INEX', image: 'INEX' };
+      }
 
       setSelectedToken(fixedToken || defaultToken);
       onSelectToken(fixedToken || defaultToken); // Call the callback with selected token
@@ -427,6 +432,15 @@ const CustomTextField = ({
               </div>
             </div>
           </ClickAwayListener>
+        )}
+        {selectedToken.title === 'WIBS' && type === 'buy' && (
+          <img
+            src={smbanner}
+            style={{
+              marginBottom: loggedIn ? '-20px' : '-40px',
+              width: '100%',
+            }}
+          />
         )}
       </div>
     </>
