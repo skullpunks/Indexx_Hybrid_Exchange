@@ -3,13 +3,20 @@
 
 import { decodeJWT, getUserShortToken } from "../../services/api";
 
-const baseCEXURL = 'https://test.cex.indexx.ai'; // Define your base URL
+let authenticatedUrl:any = null; // Variable to store the authenticated URL
 
-const getAuthenticatedUrl = async (url:any) => {
+const getAuthenticatedUrl = async (url: string) => {
+  if (authenticatedUrl) {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('signInToken', authenticatedUrl);
+    return urlObj.toString();
+  }
+
   const isAuthenticated = localStorage.getItem('access_token');
   const email = localStorage.getItem('email');
   let shortToken;
 
+  console.log("email", email)
   if (email) {
     shortToken = await getUserShortToken(email);
   } else if (isAuthenticated) {
@@ -18,8 +25,9 @@ const getAuthenticatedUrl = async (url:any) => {
   }
 
   if (isAuthenticated) {
+    authenticatedUrl = shortToken?.data;
     const urlObj = new URL(url);
-    urlObj.searchParams.set('signInToken', shortToken?.data);
+    urlObj.searchParams.set('signInToken', authenticatedUrl);
     return urlObj.toString();
   }
 
