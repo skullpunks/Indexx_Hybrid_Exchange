@@ -206,8 +206,8 @@ function App() {
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route
                 path="/indexx-exchange/buy-sell/staking"
-                // element={<StakingPage />}
-                element={<Staking />}
+               element={<StakingPage />}
+                //element={<Staking />}
               />
               <Route
                 path="/deposit-select-currency"
