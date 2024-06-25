@@ -67,7 +67,7 @@ const GenericButton = ({
     >
       {IconComponent && <div className="icon">{IconComponent}</div>}
       {text}
-      {true && <CircularProgress size={12} className={classes.progress} />}
+      {loading && <CircularProgress size={12} className={classes.progress} />}
     </LoadingButton>
   );
 };
