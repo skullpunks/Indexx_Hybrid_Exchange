@@ -189,13 +189,13 @@ const BuySellTabs = ({
   const [message, setMessage] = useState();
   const [defaultSelectedToken, setDefaultSelectedToken] = useState();
   const [generalMessage, setGeneralMessage] = useState('');
-
+  const [paymentMethodError, setPaymentMethodError] = useState('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
-    console.log("!!email && !!user", !!email && !!user)
+    console.log('!!email && !!user', !!email && !!user);
     setIsLoggedIn(!!email && !!user);
     debugger;
   }, []);
@@ -230,7 +230,10 @@ const BuySellTabs = ({
       } else if (type === 'Receive') {
         const selectedTokenTitle = defaultTokenFromUrl;
         const selectedTokenImage = defaultTokenFromUrl;
-        setReceiveToken({ title: selectedTokenTitle, image: selectedTokenImage });
+        setReceiveToken({
+          title: selectedTokenTitle,
+          image: selectedTokenImage,
+        });
         onReceiveTokenChange(selectedTokenTitle);
         console.log('receiveToken', selectedTokenTitle);
       }
@@ -281,11 +284,14 @@ const BuySellTabs = ({
     console.log('selectedPaymentMethod', value);
     console.log('selectedPaymentMethod', selectedPaymentMethod);
     if (selectedPaymentMethod && value === 'buy') {
+      setPaymentMethodError('');
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
+      setPaymentMethodError('');
       const res = await createNewSellOrder();
       console.log('res', res);
     } else {
+      setPaymentMethodError('Select Method*');
     }
   };
 
@@ -314,7 +320,7 @@ const BuySellTabs = ({
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
-    console.log("receiveAmount", receiveAmount)
+    console.log('receiveAmount', receiveAmount);
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
@@ -359,7 +365,7 @@ const BuySellTabs = ({
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
-    console.log("receiveAmount", receiveAmount)
+    console.log('receiveAmount', receiveAmount);
     let res;
     console.log('paymentMethod', paymentMethod);
     if (id) {
@@ -526,6 +532,11 @@ const BuySellTabs = ({
     handlePopupClose();
   };
 
+  useEffect(() => {
+    if (value !== 'buy') {
+      setSelectedPaymentMethod('Asset Wallet');
+    }
+  }, [value]);
   const formatPrice = (price) => {
     if (price >= 1) {
       return price.toFixed(2);
@@ -670,6 +681,7 @@ const BuySellTabs = ({
             <>
               <PaymentMethodSelection
                 onClick={handlePaymentMethodClick}
+                errorMsg={paymentMethodError}
                 buttonText={
                   selectedPaymentMethod || 'Select Transaction Method'
                 }

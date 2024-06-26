@@ -141,7 +141,11 @@ const SelectRole = ({ email, password, referralId }) => {
         </FormControl>
       </div>
 
-      <GenericButton text={'Next'} onClick={formik.handleSubmit} />
+      <GenericButton
+        text={'Next'}
+        onClick={formik.handleSubmit}
+        loading={loadings}
+      />
       <div style={{ margin: '10px auto' }}></div>
     </div>
   );

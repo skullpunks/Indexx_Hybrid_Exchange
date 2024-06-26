@@ -241,7 +241,7 @@ const LoginPassword = ({ email }) => {
       </div>
 
       <GenericButton
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
         onClick={formik.handleSubmit}
         loading={loadings}
       />
