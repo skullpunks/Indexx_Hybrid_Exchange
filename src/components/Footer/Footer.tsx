@@ -10,7 +10,7 @@ import Telegram from '../../assets/arts/telegram.png';
 // import needHelp from '../../assets/arts/needhelp.png';
 // import personFlipCoin from "../../assets/arts/personFlipCoin.webp";
 import personFlipCoin from '../../assets/arts/personFlip.png';
-
+import axios from 'axios';
 // import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
 import indexText_dark from '../../assets/indexx.ai_black.svg';
 import indexText from '../../assets/indexx.ai white.png';
@@ -29,15 +29,19 @@ import {
   baseShopURL,
   baseXnftURL,
   baseMktplaceURL,
+  getUserShortToken,
+  decodeJWT,
+  baseLottoUrl,
+  baseAcademyUrl,
 } from '../../services/api';
 import { useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import jwtDecode from 'jwt-decode';
 
 interface FooterProps {
   helpIcon?: boolean;
   footerArt?: string;
 }
-
 const useStyles = makeStyles((theme: any) => ({
   linkHover: {
     '&:hover': {
@@ -61,6 +65,8 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const classes = useStyles();
+  let cachedToken: any = null
+
   const icons = [
     {
       src: Instagram,
@@ -110,7 +116,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     };
   }, []);
 
-  const [userLogged, setUserLogged] = useState('normal'); // Set the user's type
+  const [userLogged, setUserLogged] = useState('normal');
 
   useEffect(() => {
     const user =
@@ -119,7 +125,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         : setUserLogged('normal');
     const handleStorageChange = (event: any) => {
       console.log(event);
-      // setTheme(event.currentTarget.localStorage.selectedTheme);
       if (setUserLogged !== event.currentTarget.localStorage.userlogged) {
         setUserLogged(event.currentTarget.localStorage.userlogged);
       }
@@ -131,6 +136,132 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
+
+  const [exchangeUrl, setExchangeUrl] = useState(baseCEXURL);
+  const [lottoUrl, setLottoUrl] = useState("https://test.lotto.indexx.ai/");
+
+  const [tokenizedUrls, setTokenizedUrls] = useState({
+    defaultUrl:  `${baseURL}`,
+    exchangeUrl: `${baseURL}/indexx-exchange/nfts`,
+    tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details`,
+    comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`,
+    aboutUrl: `${baseURL}/indexx-exchange/about`,
+    blogUrl: `${baseURL}/indexx-exchange/blog`,
+    careersUrl: `${baseURL}/indexx-exchange/careers`,
+    howItWorksUrl: `${baseURL}/indexx-exchange/how-it-works`,
+    marketsUrl: `${baseURL}/indexx-exchange/markets`,
+    vlogUrl: `${baseURL}/indexx-exchange/vlog`,
+    documentUrl: `${baseURL}/indexx-exchange/coming-soon?page=Document`,
+    privacyUrl: `${baseURL}/indexx-exchange/legal/privacypolicy`,
+    tandc: `${baseURL}/indexx-exchange/legal/termsandconditions`,
+    legalUrl: `${baseURL}/indexx-exchange/legal`,
+    tradeToEarnUrl: `${baseURL}/indexx-exchange/trade-to-earn`,
+    bitcoinCmgUrl: `${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`,
+    wallStreetUrl: baseWSURL, 
+    wallStreetCertUrl: `${baseWSURL}/certificate`, 
+    wallStreetDetailsUrl: `${baseWSURL}/details`, 
+    // Add other URLs here as needed
+  });
+
+  const getAuthenticatedUrl = async (url:any) => {
+    if (cachedToken) {
+      const urlObj = new URL(url, window.location.origin);
+      urlObj.searchParams.set("signInToken", cachedToken);
+      // Check if the URL is for the stock-token page
+      if (url.includes("/update/home/stock-token")) {
+        urlObj.searchParams.set("buyToken", "AMZN");
+      } else if (url.includes("/update/home")) {
+        urlObj.searchParams.set("buyToken", "INEX");
+      }
+      return urlObj.toString();
+    }
+
+    const isAuthenticated = localStorage.getItem("access_token");
+    const email = localStorage.getItem("email");
+    let shortToken;
+
+    if (email) {
+      shortToken = await getUserShortToken(email);
+    } else if (isAuthenticated) {
+      let decodedValue = await decodeJWT(isAuthenticated);
+      shortToken = await getUserShortToken(decodedValue?.email);
+    }
+
+    if (isAuthenticated) {
+      cachedToken = shortToken;
+      const urlObj = new URL(url, window.location.origin);
+      urlObj.searchParams.set("signInToken", shortToken);
+
+      // Check if the URL is for the stock-token page
+      if (url.includes("/update/home/stock-token")) {
+        urlObj.searchParams.set("buyToken", "AMZN");
+      } else if (url.includes("/update/home")) {
+        urlObj.searchParams.set("buyToken", "INEX");
+      }
+
+      return urlObj.toString();
+    }
+
+    return url;
+  };
+
+  useEffect(() => {
+    const fetchAuthenticatedUrls2 = async () => {
+      const isAuthenticated = localStorage.getItem("access_token");
+      const email = localStorage.getItem("email");
+      let shortToken;
+
+      if (email) {
+        shortToken = await getUserShortToken(email);
+      } else if (isAuthenticated) {
+        let decodedValue = await decodeJWT(isAuthenticated);
+        shortToken = await getUserShortToken(decodedValue?.email);
+      }
+
+      if (shortToken) {
+        const token = shortToken;
+
+        setTokenizedUrls({
+          defaultUrl:  `${baseURL}?signInToken=${token}`,
+          exchangeUrl: `${baseURL}/indexx-exchange/nfts?signInToken=${token}`,
+          tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details?signInToken=${token}`,
+          comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map&signInToken=${token}`,
+          aboutUrl: `${baseURL}/indexx-exchange/about?signInToken=${token}`,
+          blogUrl: `${baseURL}/indexx-exchange/blog?signInToken=${token}`,
+          careersUrl: `${baseURL}/indexx-exchange/careers?signInToken=${token}`,
+          howItWorksUrl: `${baseURL}/indexx-exchange/how-it-works?signInToken=${token}`,
+          marketsUrl: `${baseURL}/indexx-exchange/markets?signInToken=${token}`,
+          vlogUrl: `${baseURL}/indexx-exchange/vlog?signInToken=${token}`,
+          documentUrl: `${baseURL}/indexx-exchange/coming-soon?page=Document&signInToken=${token}`,
+          privacyUrl: `${baseURL}/indexx-exchange/legal/privacypolicy?signInToken=${token}`,
+          tandc: `${baseURL}/indexx-exchange/legal/termsandconditions?signInToken=${token}`,
+          legalUrl: `${baseURL}/indexx-exchange/legal?signInToken=${token}`,
+          tradeToEarnUrl: `${baseURL}/indexx-exchange/trade-to-earn?signInToken=${token}`,
+          bitcoinCmgUrl: `${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin?signInToken=${token}`,
+          wallStreetUrl: `${baseWSURL}?signInToken=${token}`, 
+          wallStreetCertUrl: `${baseWSURL}/certificates?ignInToken=${token}`, 
+          wallStreetDetailsUrl: `${baseWSURL}/details?signInToken=${token}`, 
+
+
+          // Add other URLs here as needed
+        });
+      }
+    };
+
+    fetchAuthenticatedUrls2();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthenticatedUrls = async () => {
+      if (localStorage.getItem("access_token")) {
+        setExchangeUrl(await getAuthenticatedUrl(baseCEXURL));
+        setLottoUrl(await getAuthenticatedUrl("https://lotto.indexx.ai/"));
+      }
+    };
+
+    fetchAuthenticatedUrls();
+  }, []);
+
 
   return (
     <>
@@ -156,7 +287,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         >
           <span style={{ marginBottom: '18px', marginTop: '18px' }}>
             <h1 className="align-middle">
-              <a href={baseURL}>
+              <a href={exchangeUrl}>
                 {theme === 'dark' ? (
                   <img
                     src={userLogged === 'normal' ? indexText : indexTextyellow}
@@ -193,7 +324,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                   <p className="fw-bold">Platform</p>
                   <p className="footer-text text-left">
                     <a
-                      href={baseCEXURL}
+                      href={exchangeUrl}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -202,7 +333,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href="https://lotto.indexx.ai/"
+                      href={lottoUrl}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -229,7 +360,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={baseWSURL}
+                      href={tokenizedUrls?.wallStreetUrl}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -271,7 +402,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/nfts`}
+                      href={`${tokenizedUrls?.exchangeUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -280,7 +411,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseWSURL}/certificates`}
+                      href={`${tokenizedUrls?.wallStreetCertUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -289,7 +420,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseWSURL}/details`}
+                      href={`${tokenizedUrls?.wallStreetDetailsUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -298,7 +429,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/token-details`}
+                      href={`${tokenizedUrls?.tokenDetailsUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -325,7 +456,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`}
+                      href={`${tokenizedUrls?.bitcoinCmgUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -369,7 +500,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/trade-to-earn`}
+                      href={`${tokenizedUrls?.tradeToEarnUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -427,7 +558,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     }}
                   >
                     <a
-                      href={`${baseURL}/indexx-exchange/about`}
+                      href={`${tokenizedUrls?.aboutUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -436,7 +567,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/blog`}
+                      href={`${tokenizedUrls?.blogUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -445,7 +576,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/careers`}
+                      href={`${tokenizedUrls?.careersUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -455,7 +586,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     <br />
 
                     <a
-                      href={`${baseURL}/indexx-exchange/how-it-works`}
+                      href={`${tokenizedUrls?.howItWorksUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -473,7 +604,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a> */}
                     <a
-                      href={`${baseURL}/indexx-exchange/markets`}
+                      href={`${tokenizedUrls?.marketsUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -483,7 +614,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     <br />
 
                     <a
-                      href={`${baseURL}/indexx-exchange/vlog`}
+                      href={`${tokenizedUrls?.vlogUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -492,7 +623,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${baseURL}/indexx-exchange/coming-soon?page=Document`}
+                      href={`${tokenizedUrls?.documentUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -555,24 +686,24 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
           >
-            <a href={`${baseURL}/indexx-exchange/legal/privacypolicy`}>
+            <a href={`${tokenizedUrls?.privacyUrl}`}>
               Privacy Policy
             </a>
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
           >
-            <a href={`${baseURL}/indexx-exchange/legal/termsandconditions`}>
+            <a href={`${tokenizedUrls?.tandc}`}>
               Terms Of Use
             </a>
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
           >
-            <a href={`${baseURL}/indexx-exchange/legal`}>Legal</a>
+            <a href={`${tokenizedUrls?.legalUrl}`}>Legal</a>
           </span>
           <span className={`${classes.copyrightHover} fit-content`}>
-            <a href={`${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`}>
+            <a href={`${tokenizedUrls?.comingSoonUrl}`}>
               Site Map
             </a>
           </span>
@@ -663,7 +794,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                   <span style={{ textAlign: 'start' }}>
                     <p className="text-extra-small" style={{}}>
                       <a
-                        href={baseCEXURL}
+                        href={exchangeUrl}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -672,7 +803,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href="https://lotto.indexx.ai/"
+                        href={lottoUrl}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -699,7 +830,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={baseWSURL}
+                        href={tokenizedUrls?.wallStreetUrl}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -768,7 +899,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/nfts`}
+                        href={`${tokenizedUrls?.exchangeUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -777,7 +908,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseWSURL}/certificates`}
+                        href={`${tokenizedUrls?.wallStreetCertUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -786,7 +917,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseWSURL}/details`}
+                        href={`${tokenizedUrls?.wallStreetDetailsUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -795,7 +926,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/token-details`}
+                        href={`${tokenizedUrls?.tokenDetailsUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -822,7 +953,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`}
+                        href={`${tokenizedUrls?.bitcoinCmgUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -884,7 +1015,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/trade-to-earn`}
+                        href={`${tokenizedUrls?.tradeToEarnUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -979,7 +1110,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       }}
                     >
                       <a
-                        href={`${baseURL}/indexx-exchange/about`}
+                        href={`${tokenizedUrls?.aboutUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -989,7 +1120,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/blog`}
+                        href={`${tokenizedUrls?.blogUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -999,7 +1130,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/careers`}
+                        href={`${tokenizedUrls?.careersUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -1008,7 +1139,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </a>
                       <br />
                       <a
-                        href={`${baseURL}/indexx-exchange/how-it-works`}
+                        href={`${tokenizedUrls?.howItWorksUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -1036,7 +1167,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br /> */}
                       <a
-                        href={`${baseURL}/indexx-exchange/markets`}
+                        href={`${tokenizedUrls?.marketsUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -1046,7 +1177,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       <br />
 
                       <a
-                        href={`${baseURL}/indexx-exchange/vlog`}
+                        href={`${tokenizedUrls?.vlogUrl}`}
                         style={{ color: '#9F9F9F', textDecoration: 'none' }}
                       >
                         <span className={`${classes.linkHover} link_sty`}>
@@ -1074,7 +1205,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
         </div>
         <div className="row mx-auto w-100" style={{ marginBottom: 40 }}>
           <a
-            href={baseURL}
+            href={tokenizedUrls?.defaultUrl}
             className="w-100 mx-auto d-flex justify-content-center"
           >
             {theme === 'dark' ? (

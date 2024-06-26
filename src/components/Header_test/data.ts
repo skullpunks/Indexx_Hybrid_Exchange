@@ -1,22 +1,30 @@
 // import token from '../../assets/BSheader/tokens icon 1.svg';
 // import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 
-import { decodeJWT, getUserShortToken } from "../../services/api";
+import { baseCEXURL, baseURL, decodeJWT, getUserShortToken } from '../../services/api';
 
-let authenticatedUrl:any = null; // Variable to store the authenticated URL
+let authenticatedUrl: any = null; // Variable to store the authenticated URL
 
-const getAuthenticatedUrl = async (url: string) => {
+const getAuthenticatedUrl = async (url: any) => {
+  const baseUrl = baseCEXURL; // Define your base URL here
+
+  // Ensure the URL is absolute
+  let absoluteUrl;
+  try {
+    absoluteUrl = new URL(url); // If url is already absolute, this will succeed
+  } catch (e) {
+    absoluteUrl = new URL(url, baseUrl); // If url is relative, construct an absolute URL
+  }
+
   if (authenticatedUrl) {
-    const urlObj = new URL(url);
-    urlObj.searchParams.set('signInToken', authenticatedUrl);
-    return urlObj.toString();
+    absoluteUrl.searchParams.set('signInToken', authenticatedUrl);
+    return absoluteUrl.toString().replace('/?', '?');
   }
 
   const isAuthenticated = localStorage.getItem('access_token');
   const email = localStorage.getItem('email');
   let shortToken;
 
-  console.log("email", email)
   if (email) {
     shortToken = await getUserShortToken(email);
   } else if (isAuthenticated) {
@@ -26,14 +34,12 @@ const getAuthenticatedUrl = async (url: string) => {
 
   if (isAuthenticated) {
     authenticatedUrl = shortToken?.data;
-    const urlObj = new URL(url);
-    urlObj.searchParams.set('signInToken', authenticatedUrl);
-    return urlObj.toString();
+    absoluteUrl.searchParams.set('signInToken', authenticatedUrl);
+    return absoluteUrl.toString().replace('/?', '?');
   }
 
-  return url;
+  return absoluteUrl.toString().replace('/?', '?');
 };
-
 
 const header_data = [
   {
@@ -96,7 +102,7 @@ const header_data = [
         links: [
           {
             name: 'How to buy Tokens',
-            href: 'https://indexx.ai/indexx-exchange/how-it-works/centralized',
+            href: 'https://test.indexx.ai/indexx-exchange/how-it-works/centralized',
           },
           {
             name: 'How does Staking work?',
@@ -104,7 +110,7 @@ const header_data = [
           },
           {
             name: 'Where are the token Whitepapers?',
-            href: 'https://indexx.ai/indexx-exchange/token-details',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details',
           },
         ],
       },
@@ -114,7 +120,7 @@ const header_data = [
     mainTextDesktop: 'Meme',
     mainTextMob: 'Meme',
     active: false,
-    href: 'https://indexx.ai/meme-details',
+    href: 'https://test.indexx.ai/meme-details',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -123,15 +129,15 @@ const header_data = [
         links: [
           {
             name: 'Meme Coins',
-            href: 'https://indexx.ai/meme-details/meme-coin',
+            href: 'https://test.indexx.ai/meme-details/meme-coin',
           },
           {
             name: 'Ordinals',
-            href: 'https://indexx.ai/meme-details/ordinal-coin',
+            href: 'https://test.indexx.ai/meme-details/ordinal-coin',
           },
           {
             name: 'NFTs',
-            href: 'https://indexx.ai/meme-details/nft',
+            href: 'https://test.indexx.ai/meme-details/nft',
           },
         ],
       },
@@ -144,11 +150,11 @@ const header_data = [
           },
           {
             name: 'Buy Ordinals',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon',
+            href: 'https://test.indexx.ai/indexx-exchange/coming-soon',
           },
           {
             name: 'Buy NFTs',
-            href: 'https://indexx.ai/meme-details/nft',
+            href: 'https://test.indexx.ai/meme-details/nft',
           },
         ],
       },
@@ -171,7 +177,7 @@ const header_data = [
     mainTextDesktop: 'Lotto',
     mainTextMob: 'Lotto',
     active: false,
-    href: 'https://test.lotto.indexx.ai/#',
+    href: 'https://test.lotto.indexx.ai',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -236,7 +242,7 @@ const header_data = [
     mainTextDesktop: 'Shop',
     mainTextMob: 'Shop',
     active: false,
-    href: 'https://indexx.ai/discount-shop',
+    href: 'https://test.indexx.ai/discount-shop',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -245,7 +251,7 @@ const header_data = [
         links: [
           {
             name: 'Bonus',
-            href: 'https://indexx.ai/discount-shop',
+            href: 'https://test.indexx.ai/discount-shop',
           },
           {
             name: 'Gifts',
@@ -312,11 +318,11 @@ const header_data = [
           },
           {
             name: 'Tokens',
-            href: 'https://indexx.ai/indexx-exchange/token-details',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details',
           },
           {
             name: 'Wallstreet',
-            href: 'https://wallstreet.indexx.ai/',
+            href: 'https://test.wallstreet.indexx.ai/',
           },
           {
             name: 'Web3 Wallet',
@@ -333,7 +339,7 @@ const header_data = [
           },
           {
             name: 'Play Crypto Lottery',
-            href: 'https://test.lotto.indexx.ai/',
+            href: 'https://test.lotto.indexx.ai',
           },
           {
             name: 'Buy Indexx Tokens',
@@ -360,7 +366,7 @@ const header_data = [
     mainTextDesktop: 'Tokens',
     mainTextMob: 'Tokens',
     active: false,
-    href: 'https://indexx.ai/indexx-exchange/token-details',
+    href: 'https://test.indexx.ai/indexx-exchange/token-details',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -373,23 +379,23 @@ const header_data = [
           },
           {
             name: 'INEX',
-            href: 'https://indexx.ai/indexx-exchange/token-details/inex',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/inex',
           },
           {
             name: 'IN500',
-            href: 'https://indexx.ai/indexx-exchange/token-details/in500',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/in500',
           },
           {
             name: 'INXC',
-            href: 'https://indexx.ai/indexx-exchange/token-details/crypto',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/crypto',
           },
           {
             name: 'INXP',
-            href: 'https://indexx.ai/indexx-exchange/token-details/phoenix',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/phoenix',
           },
           {
             name: 'IUSD+',
-            href: 'https://indexx.ai/indexx-exchange/token-details/usd',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/usd',
           },
           {
             name: 'SoRekt Token',
@@ -406,7 +412,7 @@ const header_data = [
         links: [
           {
             name: 'Get discounts',
-            href: 'https://indexx.ai/discount-shop',
+            href: 'https://test.indexx.ai/discount-shop',
           },
           {
             name: 'Get Gift Cards',
@@ -423,11 +429,11 @@ const header_data = [
         links: [
           {
             name: 'White Paper',
-            href: 'https://indexx.ai/indexx-exchange/token-details',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details',
           },
           {
             name: 'Legal Documents',
-            href: 'https://indexx.ai/indexx-exchange/legal',
+            href: 'https://test.indexx.ai/indexx-exchange/legal',
           },
         ],
       },
@@ -476,7 +482,7 @@ const header_data = [
           },
           {
             name: 'Contact Support',
-            href: 'https://indexx.ai/indexx-exchange/help/contact',
+            href: 'https://test.indexx.ai/indexx-exchange/help/contact',
           },
         ],
       },
@@ -532,7 +538,7 @@ const header_data = [
     mainTextDesktop: 'WallStreet',
     mainTextMob: 'WallStreet',
     active: false,
-    href: 'https://academy.indexx.ai/',
+    href: 'https://test.wallstreet.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -541,15 +547,15 @@ const header_data = [
         links: [
           {
             name: 'Stock Tokens',
-            href: 'https://wallstreet.indexx.ai/details?type=all',
+            href: 'https://test.wallstreet.indexx.ai/details?type=all',
           },
           {
             name: 'Stock Certificates',
-            href: 'https://wallstreet.indexx.ai/certificates?type=all',
+            href: 'https://test.wallstreet.indexx.ai/certificates?type=all',
           },
           {
             name: 'ETFs',
-            href: 'https://wallstreet.indexx.ai/etf',
+            href: 'https://test.wallstreet.indexx.ai/etf',
           },
         ],
       },
@@ -575,15 +581,15 @@ const header_data = [
         links: [
           {
             name: 'Learn about Stock Tokens',
-            href: 'https://wallstreet.indexx.ai/learn-tokens',
+            href: 'https://test.wallstreet.indexx.ai/learn-tokens',
           },
           {
             name: 'Learn about Stock Certificates',
-            href: 'https://wallstreet.indexx.ai/learn-certificates',
+            href: 'https://test.wallstreet.indexx.ai/learn-certificates',
           },
           {
             name: 'Learn about ETFs',
-            href: 'https://wallstreet.indexx.ai/learn-etfs',
+            href: 'https://test.wallstreet.indexx.ai/learn-etfs',
           },
         ],
       },
@@ -606,7 +612,7 @@ const header_data = [
           },
           {
             name: 'Trade to Earn',
-            href: 'https://indexx.ai/indexx-exchange/trade-to-earn',
+            href: 'https://test.indexx.ai/indexx-exchange/trade-to-earn',
           },
         ],
       },
@@ -687,7 +693,7 @@ const header_data = [
     mainTextDesktop: 'Company',
     mainTextMob: 'Company',
     active: false,
-    href: 'https://indexx.ai',
+    href: 'https://test.indexx.ai',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -696,31 +702,31 @@ const header_data = [
         links: [
           {
             name: 'About',
-            href: 'https://indexx.ai/indexx-exchange/about',
+            href: 'https://test.indexx.ai/indexx-exchange/about',
           },
           {
             name: 'Blog',
-            href: 'https://indexx.ai/indexx-exchange/blog',
+            href: 'https://test.indexx.ai/indexx-exchange/blog',
           },
           {
             name: 'Careers',
-            href: 'https://indexx.ai/indexx-exchange/careers',
+            href: 'https://test.indexx.ai/indexx-exchange/careers',
           },
           {
             name: 'How it Works',
-            href: 'https://indexx.ai/indexx-exchange/how-it-works',
+            href: 'https://test.indexx.ai/indexx-exchange/how-it-works',
           },
           {
             name: 'Markets',
-            href: 'https://indexx.ai/indexx-exchange/markets',
+            href: 'https://test.indexx.ai/indexx-exchange/markets',
           },
           {
             name: 'Vlog',
-            href: 'https://indexx.ai/indexx-exchange/vlog',
+            href: 'https://test.indexx.ai/indexx-exchange/vlog',
           },
           {
             name: 'Document',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon',
+            href: 'https://test.indexx.ai/indexx-exchange/coming-soon',
           },
         ],
       },
@@ -729,27 +735,27 @@ const header_data = [
         links: [
           {
             name: 'Know the company',
-            href: 'https://indexx.ai/indexx-exchange/about',
+            href: 'https://test.indexx.ai/indexx-exchange/about',
           },
           {
             name: 'Read updates',
-            href: 'https://indexx.ai/indexx-exchange/blog',
+            href: 'https://test.indexx.ai/indexx-exchange/blog',
           },
           {
             name: 'Find opportunity',
-            href: 'https://indexx.ai/indexx-exchange/careerst',
+            href: 'https://test.indexx.ai/indexx-exchange/careerst',
           },
           {
             name: 'Features',
-            href: 'https://indexx.ai/indexx-exchange/how-it-works',
+            href: 'https://test.indexx.ai/indexx-exchange/how-it-works',
           },
           {
             name: 'Crypto trends',
-            href: 'https://indexx.ai/indexx-exchange/markets',
+            href: 'https://test.indexx.ai/indexx-exchange/markets',
           },
           {
             name: 'Watch videos',
-            href: 'https://indexx.ai/indexx-exchange/vlog',
+            href: 'https://test.indexx.ai/indexx-exchange/vlog',
           },
         ],
       },
@@ -762,7 +768,7 @@ const header_data = [
           },
           {
             name: 'Legal docs',
-            href: 'https://indexx.ai/indexx-exchange/legal',
+            href: 'https://test.indexx.ai/indexx-exchange/legal',
           },
           {
             name: 'Patent documents',
@@ -794,7 +800,7 @@ export const auth_header_data = [
     mainTextMob: 'Login',
     isAuth: false,
     active: false,
-    href: 'https://test.indexx.ai/auth/login?redirectWebsiteLink=exchange',
+    href: `${baseURL}/auth/login?redirectWebsiteLink=exchange`,
     hasMegaDrop: false,
     dropDownContent: [],
   },
@@ -803,7 +809,7 @@ export const auth_header_data = [
     mainTextMob: 'Register',
     isAuth: false,
     active: false,
-    href: 'https://test.indexx.ai/auth/signup-email?redirectWebsiteLink=exchange',
+    href: `${baseURL}/auth/signup-email?redirectWebsiteLink=exchange`,
     hasMegaDrop: false,
     dropDownContent: [],
   },
@@ -885,7 +891,7 @@ export const auth_header_data = [
           },
           {
             name: 'Trade and Earn',
-            href: 'https://indexx.ai/indexx-exchange/token-details/in500',
+            href: 'https://test.indexx.ai/indexx-exchange/token-details/in500',
           },
           {
             name: 'Complete Tasks',
@@ -903,11 +909,11 @@ export const auth_header_data = [
         links: [
           {
             name: 'How to deposit',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
+            href: 'https://test.indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
           },
           {
             name: 'Know how to withdraw',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=Document',
+            href: 'https://test.indexx.ai/indexx-exchange/coming-soon?page=Document',
           },
         ],
       },
@@ -916,11 +922,14 @@ export const auth_header_data = [
 ];
 export default header_data;
 
-
-const processHeaderData = async (data:any) => {
-  const promises = data.map(async (item:any) => {
-    if (item.mainTextDesktop === 'Lotto' || item.mainTextMob === 'Lotto') {
+const processHeaderData = async (data: any) => {
+  const promises = data.map(async (item: any) => {
+    if (item.mainTextDesktop === 'Lotto' || item.mainTextMob === 'Lotto' || item.mainTextDesktop === 'WallStreet' || item.mainTextMob === 'WallStreet' ||
+      item.mainTextDesktop === 'Meme' || item.mainTextMob === 'Meme' || item.mainTextDesktop === 'Tokens' || item.mainTextMob === 'Tokens'
+    ) {
+      console.log('item.href', item.href);
       item.href = await getAuthenticatedUrl(item.href);
+      console.log('item.href after', item.href);
     }
     if (item.dropDownContent) {
       for (const content of item.dropDownContent) {

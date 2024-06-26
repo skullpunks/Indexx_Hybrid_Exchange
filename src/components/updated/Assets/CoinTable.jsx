@@ -16,12 +16,12 @@ import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getUserWallets } from '../../../services/api';
+import { decodeJWT, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
 // Define the makeStyles hook
@@ -139,6 +139,7 @@ EnhancedTableHead.propTypes = {
 export default function EnhancedTable({ searchQuery, hideAssets }) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('coin');
   const [rows, setRows] = React.useState([]);
@@ -171,9 +172,16 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
+
         if (!email) {
-          navigate('/auth/login');
-          return;
+          const signInToken = searchParams.get('signInToken');
+          if (signInToken) {
+            const decodedToken = await decodeJWT(signInToken);
+            email = decodedToken.email;
+          } else {
+            navigate('/auth/login');
+            return;
+          }
         }
   
         const userWallets = await getUserWallets(email);
@@ -257,7 +265,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows.map((row, index) => (
+            {visibleRows?.map((row, index) => (
               <TableRow role="checkbox" tabIndex={-1} key={row.id}>
                 <TableCell
                   component="th"

@@ -60,6 +60,7 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
       window.location.reload();
     else window.location.href = '/indexx-exchange/buy-sell/login';
   }
+  
 };
 
 const Links = [

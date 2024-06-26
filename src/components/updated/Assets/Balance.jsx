@@ -4,8 +4,8 @@ import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
-import { getUserWallets } from '../../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { getUserWallets, decodeJWT } from '../../../services/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const BalanceOverview = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [visible, setVisible] = useState(false);
   const [pnl, setPnl] = useState({ value: 0, percentage: 0 });
   const [pnlClass, setPnlClass] = useState(classes.redText);
@@ -95,10 +96,17 @@ const BalanceOverview = () => {
     const fetchUserWallets = async () => {
       setIsLoading(true);
       try {
-        const email = localStorage.getItem('email');
+        let email = localStorage.getItem('email');
+
         if (!email) {
-          navigate('/auth/login');
-          return;
+          const signInToken = searchParams.get('signInToken');
+          if (signInToken) {
+            const decodedToken = await decodeJWT(signInToken);
+            email = decodedToken.email;
+          } else {
+            navigate('/auth/login');
+            return;
+          }
         }
 
         const { data: userWallets } = await getUserWallets(email);
@@ -155,7 +163,7 @@ const BalanceOverview = () => {
     };
 
     fetchUserWallets();
-  }, [navigate]);
+  }, [navigate, searchParams]);
 
   return (
     <Box className={classes.container}>

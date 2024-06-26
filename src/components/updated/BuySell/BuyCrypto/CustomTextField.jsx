@@ -166,6 +166,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const getImage = (image) => {
+  console.log("my image", image)
   try {
     return require(`../../../../assets/token-icons/${image}.png`).default;
   } catch (error) {

@@ -81,19 +81,22 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Tokens',
       light: tokenLight,
       dark: tokenDark,
-      path: '/update/home?buyToken=INEX',
+      path: '/update/home',
+      search: 'buyToken=INEX',
     },
     {
       label: 'Stock Tokens',
       light: wallStreetLight,
       dark: wallStreetDark,
-      path: '/update/home/stock-token?buyToken=AMZN',
+      path: '/update/home/stock-token',
+      search: 'buyToken=AMZN',
     },
     {
       label: 'ETF Tokens',
       light: etfLight,
       dark: etfDark,
-      path: '/update/home/etf-tokens?buyToken=ALCRYP',
+      path: '/update/home/etf-tokens',
+      search: 'buyToken=ALCRYP',
     },
   ];
 
@@ -114,20 +117,27 @@ export default function IconicHeader({ selectedTab, onChange }) {
     );
   }
 
+  const getSelectedTab = () => {
+    const currentPath = location.pathname;
+    const currentSearch = location.search;
+
+    const matchedTab = tabsData.find(tab => 
+      tab.path === currentPath && (tab.search ? currentSearch.includes(tab.search) : true)
+    );
+    return matchedTab ? matchedTab.label : '';
+  };
+
+  const [selectedTabState, setSelectedTabState] = React.useState(getSelectedTab());
+
+  React.useEffect(() => {
+    setSelectedTabState(getSelectedTab());
+  }, [location]);
+
   const handleChange = (event, newValue) => {
     const label = event.currentTarget.innerText;
-    if (label === 'Staking') {
-      navigate('/indexx-exchange/buy-sell/staking');
-    } else if (label === 'Asset Wallet') {
-      navigate('/wallet/overview');
-    } else if (label === 'ETF Tokens') {
-      navigate('/update/home/etf-tokens?buyToken=ALCRYP');
-      onChange(event, label);
-    } else if (label === 'Stock Tokens') {
-      navigate('/update/home/stock-token?buyToken=AMZN');
-      onChange(event, label);
-    } else {
-      navigate('/update/home?buyToken=INEX');
+    const selectedTabData = tabsData.find(tab => tab.label === label);
+    if (selectedTabData) {
+      navigate(`${selectedTabData.path}${selectedTabData.search ? '?' + selectedTabData.search : ''}`);
       onChange(event, label);
     }
   };
@@ -168,7 +178,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
             iconPosition="top"
             label={tab.label}
             disableRipple
-            className={location.pathname === tab.path ? 'active' : ''}
+            className={selectedTab === tab.label ? 'active' : ''}
           />
         ))}
       </Tabs>

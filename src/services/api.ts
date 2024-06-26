@@ -11,6 +11,7 @@ export let baseWalletURL = '';
 export let baseShopURL = '';
 export let baseXnftURL = '';
 export let baseMktplaceURL = '';
+export let baseLottoUrl = '';
 //export const secretKey = process.env.YOUR_SECRET_KEY || "123456Indexx2023";
 export const secretKey =
   process.env.YOUR_SECRET_KEY === undefined
@@ -27,10 +28,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
+  baseURL = 'http://localhost:3001';
   baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
   //baseWalletURL = 'http://localhost:3001';
+  baseLottoUrl = "https://test.lotto.indexx.ai";
+  baseLottoUrl = "http://localhost:3000";
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
@@ -45,6 +49,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://test.wallet.indexx.ai';
+  baseLottoUrl = "https://test.lotto.indexx.ai";
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://test.xnftmarketplace.indexx.ai';

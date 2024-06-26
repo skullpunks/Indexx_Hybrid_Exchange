@@ -94,7 +94,6 @@ import { useTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { useState, useEffect, useMemo } from 'react';
-import Staking from './components/Staking/Staking';
 import BSStakingHistoryLayout from './components/BSStakingHistory/BSStakingHistoryLayout';
 import Bridge from './components/Bridge/Bridge';
 import CaptainResourceSales from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales';
@@ -177,18 +176,27 @@ function App() {
     const isAllowed =
       localStorage.getItem('userType') === 'CaptainBee' &&
       localStorage.getItem('haspp') === 'false';
-
+  
+    const params = new URLSearchParams(window.location.search);
+    const defaultSignInToken = params.get('signInToken');
+  
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
-      return <Navigate to="/update/home/" />;
+      if (defaultSignInToken) {
+        console.log("I am here");
+        // Optionally store the token or take other actions
+      } else {
+        return <Navigate to="/update/home/" />;
+      }
     }
-
+  
     if (isAllowed) {
       return <Navigate to="/indexx-exchange/power-pack" />;
     }
     return <Outlet />;
   };
+  
   console.log(window.location.pathname, 'path');
 
   return (
