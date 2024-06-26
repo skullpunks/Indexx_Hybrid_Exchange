@@ -49,13 +49,19 @@ const PaymentMethodSelection = ({
   buttonText = 'Select Transaction Method',
   onClick,
   selectedPaymentMethod,
-  type
+  errorMsg,
+  type,
 }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.container}>
-      <p className={classes.label}>{label}</p>
+      <p className={classes.label}>
+        {label}{' '}
+        {errorMsg && (
+          <span style={{ color: 'red', marginLeft: '5px' }}> {errorMsg} </span>
+        )}
+      </p>
       <button className={classes.button} onClick={onClick}>
         <Box className={classes.iconTextContainer}>
           <img src={transactionIcon} alt="Transaction Method" />

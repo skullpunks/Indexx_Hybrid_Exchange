@@ -80,7 +80,7 @@ const Refferal = () => {
   const [loadings, setLoadings] = React.useState(false);
   const [message, setMessage] = useState('');
   const { email, password } = location.state || '';
-  
+
   const validationSchema = Yup.object().shape({
     referralId: Yup.string().optional(),
     marketingUpdates: Yup.boolean().required(
@@ -159,7 +159,9 @@ const Refferal = () => {
       {message && (
         <Typography
           className={
-            message.includes('Successfully') ? classes.successText : classes.messageText
+            message.includes('Successfully')
+              ? classes.successText
+              : classes.messageText
           }
           variant="caption"
         >
@@ -168,7 +170,7 @@ const Refferal = () => {
       )}
 
       <GenericButton
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
         onClick={formik.handleSubmit}
         loading={loadings}
       />

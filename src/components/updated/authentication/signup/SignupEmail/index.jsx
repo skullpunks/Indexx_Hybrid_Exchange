@@ -122,7 +122,7 @@ const SignUpEmail = () => {
   };
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log("tokenResponse", tokenResponse);
+    console.log('tokenResponse', tokenResponse);
     const res = await signupWithGoogle(tokenResponse?.access_token);
 
     if (res.status === 200) {
@@ -164,7 +164,7 @@ const SignUpEmail = () => {
       </p>
 
       <GenericButton
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
         onClick={formik.handleSubmit}
         loading={loadings}
       />

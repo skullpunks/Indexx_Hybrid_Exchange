@@ -198,7 +198,8 @@ const LoginComponent = () => {
         {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
       </div>
       <GenericButton
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
+        loading={loadings}
         disabled={!isEmailValid}
         onClick={() => {
           formik.handleSubmit();
