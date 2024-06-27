@@ -1,6 +1,51 @@
 // import token from '../../assets/BSheader/tokens icon 1.svg';
 // import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 
+import {
+  baseCEXURL,
+  baseURL,
+  decodeJWT,
+  getUserShortToken,
+} from '../../services/api';
+
+let authenticatedUrl: any = null; // Variable to store the authenticated URL
+
+const getAuthenticatedUrl = async (url: any) => {
+  const baseUrl = baseCEXURL; // Define your base URL here
+
+  // Ensure the URL is absolute
+  let absoluteUrl;
+  try {
+    absoluteUrl = new URL(url); // If url is already absolute, this will succeed
+  } catch (e) {
+    absoluteUrl = new URL(url, baseUrl); // If url is relative, construct an absolute URL
+  }
+
+  if (authenticatedUrl) {
+    absoluteUrl.searchParams.set('signInToken', authenticatedUrl);
+    return absoluteUrl.toString().replace('/?', '?');
+  }
+
+  const isAuthenticated = localStorage.getItem('access_token');
+  const email = localStorage.getItem('email');
+  let shortToken;
+
+  if (email) {
+    shortToken = await getUserShortToken(email);
+  } else if (isAuthenticated) {
+    let decodedValue = await decodeJWT(isAuthenticated);
+    shortToken = await getUserShortToken(decodedValue?.email);
+  }
+
+  if (isAuthenticated) {
+    authenticatedUrl = shortToken?.data;
+    absoluteUrl.searchParams.set('signInToken', authenticatedUrl);
+    return absoluteUrl.toString().replace('/?', '?');
+  }
+
+  return absoluteUrl.toString().replace('/?', '?');
+};
+
 const header_data = [
   {
     mainTextDesktop: 'Exchange',
@@ -137,7 +182,7 @@ const header_data = [
     mainTextDesktop: 'Lotto',
     mainTextMob: 'Lotto',
     active: false,
-    href: 'https://lotto.indexx.ai/#',
+    href: 'https://lotto.indexx.ai',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -299,7 +344,7 @@ const header_data = [
           },
           {
             name: 'Play Crypto Lottery',
-            href: 'https://lotto.indexx.ai/',
+            href: 'https://lotto.indexx.ai',
           },
           {
             name: 'Buy Indexx Tokens',
@@ -335,7 +380,7 @@ const header_data = [
         links: [
           {
             name: 'Buy Token',
-            href: 'https://cex.indexx.ai/',
+            href: 'https://cex.indexx.ai/update/home',
           },
           {
             name: 'INEX',
@@ -448,57 +493,57 @@ const header_data = [
       },
     ],
   },
-  // {
-  //   mainTextDesktop: 'Academy',
-  //   mainTextMob: 'Academy',
-  //   active: false,
-  //   href: 'https://academy.indexx.ai/',
-  //   hasMegaDrop: true,
-  //   dropDownContent: [
-  //     {
-  //       heading: 'Explore',
-  //       mainList: true,
-  //       links: [
-  //         {
-  //           name: 'Become an Instructor',
-  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
-  //         },
-  //         {
-  //           name: 'Courses',
-  //           href: 'https://academy.indexx.ai/courses/?short=',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       heading: 'Action',
-  //       links: [
-  //         {
-  //           name: 'Log in',
-  //           href: 'https://academy.indexx.ai/authentication/',
-  //         },
-  //         {
-  //           name: 'Register',
-  //           href: 'https://academy.indexx.ai/authentication/',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       heading: 'Opportunity',
-  //       links: [
-  //         {
-  //           name: 'How to become an instructor?',
-  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    mainTextDesktop: 'Academy',
+    mainTextMob: 'Academy',
+    active: false,
+    href: 'https://academy.indexx.ai/',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore',
+        mainList: true,
+        links: [
+          {
+            name: 'Become an Instructor',
+            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+          },
+          {
+            name: 'Courses',
+            href: 'https://academy.indexx.ai/courses/?short=',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        links: [
+          {
+            name: 'Log in',
+            href: 'https://academy.indexx.ai/authentication/',
+          },
+          {
+            name: 'Register',
+            href: 'https://academy.indexx.ai/authentication/',
+          },
+        ],
+      },
+      {
+        heading: 'Opportunity',
+        links: [
+          {
+            name: 'How to become an instructor?',
+            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+          },
+        ],
+      },
+    ],
+  },
 
   {
     mainTextDesktop: 'WallStreet',
     mainTextMob: 'WallStreet',
     active: false,
-    href: 'https://academy.indexx.ai/',
+    href: 'https://wallstreet.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -760,7 +805,7 @@ export const auth_header_data = [
     mainTextMob: 'Login',
     isAuth: false,
     active: false,
-    href: '/auth/login/',
+    href: `${baseURL}/auth/login?redirectWebsiteLink=exchange`,
     hasMegaDrop: false,
     dropDownContent: [],
   },
@@ -769,7 +814,7 @@ export const auth_header_data = [
     mainTextMob: 'Register',
     isAuth: false,
     active: false,
-    href: '/auth/signup-email/',
+    href: `${baseURL}/auth/signup-email?redirectWebsiteLink=exchange`,
     hasMegaDrop: false,
     dropDownContent: [],
   },
@@ -881,3 +926,40 @@ export const auth_header_data = [
   },
 ];
 export default header_data;
+
+const processHeaderData = async (data: any) => {
+  const promises = data.map(async (item: any) => {
+    if (
+      item.mainTextDesktop === 'Lotto' ||
+      item.mainTextMob === 'Lotto' ||
+      item.mainTextDesktop === 'WallStreet' ||
+      item.mainTextMob === 'WallStreet' ||
+      item.mainTextDesktop === 'Meme' ||
+      item.mainTextMob === 'Meme' ||
+      item.mainTextDesktop === 'Tokens' ||
+      item.mainTextMob === 'Tokens'
+    ) {
+      console.log('item.href', item.href);
+      item.href = await getAuthenticatedUrl(item.href);
+      console.log('item.href after', item.href);
+    }
+    if (item.dropDownContent) {
+      for (const content of item.dropDownContent) {
+        for (const link of content.links) {
+          link.href = await getAuthenticatedUrl(link.href);
+        }
+      }
+    }
+    return item;
+  });
+
+  return Promise.all(promises);
+};
+
+// Example usage
+const updateHeaderData = async () => {
+  const updatedHeaderData = await processHeaderData(header_data);
+  console.log(updatedHeaderData);
+};
+
+updateHeaderData();

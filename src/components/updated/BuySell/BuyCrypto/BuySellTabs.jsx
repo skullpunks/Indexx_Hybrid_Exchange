@@ -9,6 +9,7 @@ import Popup from './PaymentPopup';
 import GeneralPopup from '../Popup';
 
 import {
+  baseURL,
   confirmSellOrder,
   createBuyOrder,
   createSellOrder,
@@ -189,13 +190,15 @@ const BuySellTabs = ({
   const [message, setMessage] = useState();
   const [defaultSelectedToken, setDefaultSelectedToken] = useState();
   const [generalMessage, setGeneralMessage] = useState('');
-
+  const [paymentMethodError, setPaymentMethodError] = useState('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
+    console.log('!!email && !!user', !!email && !!user);
     setIsLoggedIn(!!email && !!user);
+    debugger;
   }, []);
 
 
@@ -243,7 +246,7 @@ const BuySellTabs = ({
     if (findToken) {
       setDefaultSelectedToken(findToken);
     }
-  }, [defaultSelectedToken]);
+  }, [defaultSelectedToken, defaultReceiveToken]);
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
@@ -280,23 +283,16 @@ const BuySellTabs = ({
     console.log('selectedPaymentMethod', value);
     console.log('selectedPaymentMethod', selectedPaymentMethod);
     if (selectedPaymentMethod && value === 'buy') {
+      setPaymentMethodError('');
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
+      setPaymentMethodError('');
       const res = await createNewSellOrder();
       console.log('res', res);
     } else {
+      setPaymentMethodError('Select Method*');
     }
   };
-
-  const formatPrice = (price) => {
-    if (price >= 1) {
-      return price.toFixed(2);
-    } else if (price >= 0.01) {
-      return price.toFixed(4);
-    } else {
-      return price.toFixed(6);
-    }
-  };  
 
   useEffect(() => {
     if (id) {
@@ -322,7 +318,8 @@ const BuySellTabs = ({
     setLoadings(true);
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
-    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
+    console.log('receiveAmount', receiveAmount);
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
@@ -366,7 +363,8 @@ const BuySellTabs = ({
     setLoadings(true);
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
-    let outAmount = Math.floor(spendAmount * 1000000) / 1000000;
+    let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
+    console.log('receiveAmount', receiveAmount);
     let res;
     console.log('paymentMethod', paymentMethod);
     if (id) {
@@ -456,7 +454,7 @@ const BuySellTabs = ({
       'NVDA',
       'PEP',
       'SNP500',
-      'TLSA',
+      'TSLA',
       'TOB',
     ];
     return indexxTokens.includes(tokenTitle);
@@ -531,6 +529,23 @@ const BuySellTabs = ({
     setSelectedPaymentMethod(method);
     setPaymentMethod(method);
     handlePopupClose();
+  };
+
+  useEffect(() => {
+    if (value !== 'buy') {
+      setSelectedPaymentMethod('Asset Wallet');
+    } else {
+      setSelectedPaymentMethod('');
+    }
+  }, [value]);
+  const formatPrice = (price) => {
+    if (price >= 1) {
+      return price.toFixed(2);
+    } else if (price >= 0.01) {
+      return price.toFixed(4);
+    } else {
+      return price.toFixed(6);
+    }
   };
 
   return (
@@ -667,10 +682,12 @@ const BuySellTabs = ({
             <>
               <PaymentMethodSelection
                 onClick={handlePaymentMethodClick}
+                errorMsg={paymentMethodError}
                 buttonText={
                   selectedPaymentMethod || 'Select Transaction Method'
                 }
                 type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
+                spendToken={spendToken}
               />
               <div className={classes.estimatedPriceContainer}>
                 <Typography
@@ -718,7 +735,9 @@ const BuySellTabs = ({
             >
               <GenericButton
                 text="Login/Signup"
-                onClick={() => navigate(`/auth/login`)}
+                onClick={() =>  {
+                  window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+                }}
                 styles={{
                   fontSize: '20px',
                   fontWeight: '500',
@@ -741,6 +760,7 @@ const BuySellTabs = ({
         onSelectPaymentMethod={handlePaymentMethodSelect}
         type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
         token={receiveToken}
+        spendToken={spendToken}
       />
     </Box>
   );

@@ -43,6 +43,9 @@ import {
   baseXnftURL,
   baseAcademyUrl,
   decodeJWT,
+  checkEmail,
+  checkByemail,
+  getCaptainBeeByEmail,
 } from '../../services/api';
 
 import DarkMode from '../DarkMode/DarkMode';
@@ -123,44 +126,65 @@ const HeaderTest = () => {
         : (document.title = 'indexx.ai');
   }, [showText, pageName]);
   useEffect(() => {
-    const userType =
-      localStorage.getItem('userType') !== undefined
-        ? String(localStorage.getItem('userType'))
-        : undefined;
-    const username =
-      localStorage.getItem('username') !== undefined
-        ? String(localStorage.getItem('username'))
+    async function checkUserType() {
+      let userType =
+        localStorage.getItem('userType') !== undefined
+          ? String(localStorage.getItem('userType'))
+          : undefined;
+      let username =
+        localStorage.getItem('username') !== undefined
+          ? String(localStorage.getItem('username'))
+          : undefined;
+
+      const user =
+        localStorage.getItem('user') !== undefined
+          ? String(localStorage.getItem('user'))
+          : undefined;
+
+      const email = localStorage.getItem('email') !== undefined
+        ? String(localStorage.getItem('email'))
         : undefined;
 
-    const user =
-      localStorage.getItem('user') !== undefined
-        ? String(localStorage.getItem('user'))
-        : undefined;
+      let getUserType = await checkByemail(String(email))
+      userType = getUserType.userType
+      const accessToken =
+        localStorage.getItem('access_token') !== undefined
+          ? String(localStorage.getItem('access_token'))
+          : undefined;
+      if (accessToken && accessToken !== 'null' && accessToken !== '') {
+        debugger
+        let resObj = await getCaptainBeeByEmail(String(email));
+        console.log("resObj", resObj)
+        username = resObj?.data.Username;
+      }
 
-    if (userType === 'CaptainBee') {
-      setisCaptain(true);
-      if (username) {
-        getCaptainBeeStatics(String(username)).then((data) => {
-          setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
-          setStaticsData(data.data);
-          if (
-            data?.data?.powerPackData !== undefined &&
-            data?.data?.powerPackData !== null &&
-            data?.data?.powerPackData !== ''
-          ) {
-            setHaspowerpack(true);
-          }
+      if (userType === 'CaptainBee') {
+        setisCaptain(true);
+        if (username) {
+          getCaptainBeeStatics(String(username)).then((data) => {
+            setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
+            console.log("index header", data?.data?.affiliateUserProfile?.photoIdFileurl)
+            setStaticsData(data.data);
+            if (
+              data?.data?.powerPackData !== undefined &&
+              data?.data?.powerPackData !== null &&
+              data?.data?.powerPackData !== ''
+            ) {
+              setHaspowerpack(true);
+            }
+          });
+        }
+      } else {
+        setisCaptain(false);
+
+        getHoneyUserDetails(String(user)).then((data) => {
+          setHoneybeeCreateDate(data.data.accountCreationDate);
+          setHoneyBeeData(data?.data?._doc);
+          setUserProfile(data?.data?._doc?.profilePic);
         });
       }
-    } else {
-      setisCaptain(false);
-
-      getHoneyUserDetails(String(user)).then((data) => {
-        setHoneybeeCreateDate(data.data.accountCreationDate);
-        setHoneyBeeData(data?.data?._doc);
-        setUserProfile(data?.data?._doc?.profilePic);
-      });
     }
+    checkUserType();
   }, []);
 
   useEffect(() => {
@@ -260,19 +284,21 @@ const HeaderTest = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('redirected');
     localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;
-    if (userType === 'CaptainBee') {
-      window.location.href = '/auth/login';
-    } else if (userType === 'HoneyBee') {
-      window.location.href = '/auth/login';
-    } else {
-      if (window.location.pathname.includes('trade-to-earn'))
-        window.location.reload();
-      else window.location.href = '/auth/login';
-    }
+    window.location.href = `${baseURL}/auth/login?action=Logout`;
+    // if (userType === 'CaptainBee') {
+    //   window.location.href = '/auth/login';
+    // } else if (userType === 'HoneyBee') {
+    //   window.location.href = '/auth/login';
+    // } else {
+    //   if (window.location.pathname.includes('trade-to-earn'))
+    //     window.location.reload();
+    //   else window.location.href = '/auth/login';
+    // }
   };
   const handleLogout = (e: any, nm: string) => {
     if (nm !== 'logout') return;
@@ -428,19 +454,19 @@ const HeaderTest = () => {
                         {!isMobile && isAuthenticated && (
                           <div
                             style={{
-                              marginBottom: '-83px',
+                              marginBottom: '-23px',
                               zIndex: '10000000',
 
-                              transform: 'translateY(20px)',
+                              transform: 'translateY(10px)',
                             }}
                           >
                             <div
                               style={{
-                                width: isCaptain ? '80px' : '70px',
+                                width: isCaptain ? '60px' : '65px',
                                 height: isCaptain ? '80px' : '70px',
-                                backgroundImage: `url(${
-                                  isCaptain === true ? frame : beeframe
-                                })`,
+                                backgroundImage: `url(${isCaptain === true ? frame : beeframe
+                                  })`,
+                                transform: !isCaptain ? 'rotate(-30deg)' : '',
                                 // backgroundImage: `url(${frame})`,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'contain',
@@ -454,25 +480,26 @@ const HeaderTest = () => {
                                 // border:"none"
                               }}
                             >
-                              {isCaptain && (
-                                <div
-                                  className="bee-hexagon"
+                              <div
+                                className={
+                                  isCaptain ? 'bee-hexagon' : 'elipse-img'
+                                }
+                                style={{
+                                  marginBottom: `${isCaptain === true ? 0 : '7px'
+                                    }`,
+                                }}
+                              >
+                                <img
+                                  alt=""
+                                  src={userProfile ? userProfile : dummy}
+                                  width={'63px'}
+                                  height={'66px'}
                                   style={{
-                                    marginBottom: `${isCaptain === true ? 0 : '7px'
-                                      }`,
+                                    border: 'none',
                                   }}
-                                >
-                                  <img
-                                    alt=""
-                                    src={userProfile ? userProfile : dummy}
-                                    width={'63px'}
-                                    height={'66px'}
-                                    style={{
-                                      border: 'none',
-                                    }}
-                                  />
-                                </div>
-                              )}
+                                />
+
+                              </div>
                             </div>
                           </div>
                         )}

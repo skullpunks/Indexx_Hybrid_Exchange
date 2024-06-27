@@ -101,7 +101,7 @@ const TelsaStockTokenMarket = () => {
                     ><Divider style={{ marginTop: -20 }}></Divider>
                         <div style={{ textAlign: 'left', color: 'var(--body_color)' }}>
                             <Image preview={false} style={{ marginBottom: 10, width: 82, height: 82 }} src={ca}></Image><br />
-                            <p style={{ fontSize: 20 }}>TLSA Token </p>
+                            <p style={{ fontSize: 20 }}>TSLA Token </p>
                             <p style={{ fontSize: 15, lineHeight: 2 }}>
                                 Tesla's TSLA stock token represents ownership in the electric vehicle and clean energy giant, Tesla Inc. Holding TSLA stock tokens allows you to share in the company's success and future innovations. With a current price per TSLA stock token of $800, it's an opportune moment to invest in Tesla's growth. TSLA tokens are expected to increase in value over the next 3 - 6 months.
                             </p>

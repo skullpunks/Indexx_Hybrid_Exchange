@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useGoogleLogin } from '@react-oauth/google';
-import { checkEmail, signupWithGoogle } from '../../../../../services/api';
+import { baseURL, checkEmail, signupWithGoogle } from '../../../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -122,11 +122,11 @@ const SignUpEmail = () => {
   };
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log("tokenResponse", tokenResponse);
+    console.log('tokenResponse', tokenResponse);
     const res = await signupWithGoogle(tokenResponse?.access_token);
 
     if (res.status === 200) {
-      navigate('/auth/login');
+      window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
     } else {
       setErrorMessage(res.data);
     }
@@ -164,7 +164,7 @@ const SignUpEmail = () => {
       </p>
 
       <GenericButton
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
         onClick={formik.handleSubmit}
         loading={loadings}
       />

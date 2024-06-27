@@ -199,7 +199,9 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
         }}
       >
         <img src={hive_logo} height={'30px'} />
-        <h3 style={{ fontWeight: 'bold', fontSize: '32px' }}>{card_type}</h3>
+        <h3 style={{ fontWeight: 'bold', fontSize: '32px', color: 'black' }}>
+          {card_type}
+        </h3>
       </div>
     );
   };
@@ -242,7 +244,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
                 fontWeight={500}
                 lineHeight={1.3}
                 style={{
-                  color: 'inherit',
+                  color: 'black',
                 }}
               >
                 {card.name}
@@ -268,7 +270,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
                 lineHeight={1.3}
                 mb={5}
                 style={{
-                  color: 'inherit',
+                  color: 'black',
                 }}
               >
                 {card.name}
@@ -282,6 +284,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
               component="p"
               fontSize={'20px'}
               fontWeight={400}
+              color="black"
             >
               Total Return:
             </Typography>
@@ -312,6 +315,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
               fontWeight={400}
               // mb={5}
               mt={6}
+              style={{ color: '#343434' }}
             >
               Invest
             </Typography>
@@ -322,6 +326,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
               fontSize={'18px'}
               fontWeight={400}
               mb={2}
+              style={{ color: '#343434' }}
               //   mt={1}
             >
               {card.price}
@@ -445,7 +450,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
               sx={{
                 // background: '#FFB300',
                 backgroundColor: type === 'captainBee' ? '#FFB300' : '#8EDF78',
-                color: 'var(--body_color)',
+                color: 'black',
                 // border: '1px solid #FFB300',
                 border:
                   type === 'captainBee'
@@ -460,6 +465,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
                 fontWeight: '400',
                 textTransform: 'none',
                 zIndex: '5',
+
                 '&:hover': {
                   background: type === 'captainBee' ? '#FFD000' : '#8EDF78',
                   borderColor: type === 'captainBee' ? '#FFD000' : '#8EDF78',

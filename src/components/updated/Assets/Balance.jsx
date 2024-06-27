@@ -4,8 +4,8 @@ import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
-import { decodeJWT, getUserWallets } from '../../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { getUserWallets, decodeJWT } from '../../../services/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   eyeIcon: {
     marginLeft: '8px',
+    cursor: 'pointer',
   },
   redText: {
     color: 'red !important',
@@ -81,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 const BalanceOverview = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [visible, setVisible] = useState(false);
   const [visibleStaking, setVisibleStaking] = useState(false);
   const [pnl, setPnl] = useState({ value: 0, percentage: 0 });
@@ -97,82 +99,67 @@ const BalanceOverview = () => {
     setVisibleStaking(!visibleStaking);
   };
   useEffect(() => {
-    getAllUserWallet();
-  }, [totalBalanceInUSD]);
+    const getAllUserWallet = async () => {
+      setIsLoading(true);
+      try {
+        let email = String(localStorage.getItem('email'));
+        if (!email) {
+          navigate('/auth/login');
+          return;
+        }
 
-  const getAllUserWallet = async () => {
-    setIsLoading(true);
-    try {
-      let email = String(localStorage.getItem('email'));
-      if (!email) {
-        navigate('/auth/login');
-        return;
-      }
+        const userWallets = await getUserWallets(email);
+        const usersWallet = userWallets.data;
+        let totalBalInUSD = 0;
+        let totalPrevBalInUSD = 0;
+        let totalStakedBalInUSD = 0; // Variable for staked balance
 
-      const userWallets = await getUserWallets(email);
-      const usersWallet = userWallets.data;
-      let totalBalInUSD = 0;
-      let totalPrevBalInUSD = 0;
-      let totalStakedBalInUSD = 0; // Variable for staked balance
+        usersWallet.forEach((wallet) => {
+          const balance = Number(wallet.coinBalance);
+          const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
+          const price = Number(wallet.coinPrice);
+          const prevPrice = Number(wallet.coinPrevPrice);
 
-      usersWallet.forEach((wallet) => {
-        const balance = Number(wallet.coinBalance);
-        const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
-        const price = Number(wallet.coinPrice);
-        const prevPrice = Number(wallet.coinPrevPrice);
-
-        if (balance > 0 && wallet.coinSymbol !== 'USD') {
-          if (
-            wallet.coinType === 'Crypto' &&
-            !isNaN(price) &&
-            !isNaN(prevPrice)
-          ) {
-            totalBalInUSD += balance * price;
-            totalPrevBalInUSD += balance * prevPrice;
-          } else if (!isNaN(price)) {
-            totalBalInUSD += balance * price;
-          } else {
-            totalBalInUSD += balance;
+          if (balance > 0 && wallet.coinSymbol !== 'USD') {
+            if (
+              wallet.coinType === 'Crypto' &&
+              !isNaN(price) &&
+              !isNaN(prevPrice)
+            ) {
+              totalBalInUSD += balance * price;
+              totalPrevBalInUSD += balance * prevPrice;
+            } else if (!isNaN(price)) {
+              totalBalInUSD += balance * price;
+            } else {
+              totalBalInUSD += balance;
+            }
           }
-        }
 
-        if (stakedBalance > 0 && !isNaN(price)) {
-          totalStakedBalInUSD += stakedBalance * price;
-        }
-      });
+          if (stakedBalance > 0 && !isNaN(price)) {
+            totalStakedBalInUSD += stakedBalance * price;
+          }
+        });
 
-      setTotalBalanceInUSD(totalBalInUSD);
-      setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
+        setTotalBalanceInUSD(totalBalInUSD);
+        setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
 
-      let pnlValue = 0;
-      let pnlPercentage = 0;
+        userWallets.forEach((wallet) => {
+          const balance = Number(wallet.coinBalance);
+          const price = Number(wallet.coinPrice);
+          const prevPrice = Number(wallet.coinPrevPrice);
 
-      if (totalPrevBalInUSD > 0) {
-        pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
-        pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
+          if (totalPrevBalInUSD > 0) {
+            pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
+            pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
+          }
+        });
+      } catch (err) {
+      } finally {
+        setLoading(false);
       }
-
-      setPnl({
-        value: pnlValue.toFixed(2),
-        percentage: pnlPercentage.toFixed(2),
-      });
-
-      // Set the class based on PNL value
-      setPnlClass(pnlValue >= 0 ? classes.greenText : classes.redText);
-    } catch (err) {
-      console.error('Error in getAllUserWallet', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <Box className={classes.loading}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+    };
+    fetchUserWallets();
+  }, [navigate, searchParams]);
 
   return (
     <Box className={classes.container}>

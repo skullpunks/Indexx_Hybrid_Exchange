@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: any) => ({
   tabStyle: {
     color: `${theme.palette.text.primary} !important`,
     '&.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap': {
+      paddingLeft: '20px',
       background: `${theme.palette.divider}`,
       color: `${theme.palette.text.primary} !important`,
     },

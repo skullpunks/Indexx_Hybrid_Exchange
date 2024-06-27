@@ -7,7 +7,13 @@ import CryptoCarts from './CryptoCarts';
 import Conversion from './CryptoCarts/Conversions';
 import HowToBuyCrypto from './HowToBuyCrypto';
 import PopularConversion from './PopularConversion';
-import { getPaypalOrder, getPaypalSubscription } from '../../../services/api';
+import {
+  decodeJWT,
+  getPaypalOrder,
+  getPaypalSubscription,
+  getUserDetails,
+  loginWithToken,
+} from '../../../services/api';
 import Popup from './Popup';
 import tokens from '../../../utils/Tokens.json';
 
@@ -25,26 +31,37 @@ const BuySell = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const defaultToken = searchParams.get('buyToken') || 'INEX';
+  let defaultToken = searchParams.get('buyToken') || 'INEX';
   const [receiveToken, setReceiveToken] = useState(defaultToken);
   const [selectedTab, setSelectedTab] = useState('Tokens');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const defaultSignInToken = searchParams.get('signInToken');
 
   useEffect(() => {
     const path = location.pathname.toLowerCase();
+    let newDefaultToken;
     if (path.includes('etf-tokens')) {
       setSelectedTab('ETF Tokens');
+      newDefaultToken = 'ALCRYP';
     } else if (path.includes('stock-token')) {
       setSelectedTab('Stock Tokens');
+      newDefaultToken = 'AMZN';
     } else {
       setSelectedTab('Tokens');
+      newDefaultToken = 'INEX';
+    }
+    if (defaultToken !== newDefaultToken) {
+      defaultToken = newDefaultToken;
+      setReceiveToken(defaultToken);
     }
   }, [location.pathname]);
+  
 
   useEffect(() => {
     const token = searchParams.get('token');
     const subscriptionId = searchParams.get('subscription_id');
+    const redirectFlag = localStorage.getItem('redirected');
 
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
@@ -77,7 +94,39 @@ const BuySell = () => {
         }
       });
     }
-  }, [searchParams, navigate]);
+
+    if (defaultSignInToken && !redirectFlag) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  async function checkLogin(defaultSignInToken) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        window.location.reload();
+        if (searchParams.get('buyToken')) {
+          navigate(`/update/home?buyToken=${defaultToken}`);
+        } else {
+          navigate('/update/home');
+        }
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);

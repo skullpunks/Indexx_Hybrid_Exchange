@@ -46,19 +46,20 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
   localStorage.removeItem('refresh_token');
+  localStorage.removeItem('redirected');
   localStorage.removeItem('email');
   localStorage.clear(); //clear all localstorage
   console.log(userType);
   debugger;
-  if (userType === 'CaptainBee') {
-    window.location.href = '/indexx-exchange/buy-sell/hive-login';
-  } else if (userType === 'HoneyBee') {
-    window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
-  } else {
-    if (window.location.pathname.includes('trade-to-earn'))
-      window.location.reload();
-    else window.location.href = '/indexx-exchange/buy-sell/login';
-  }
+  window.location.href = `${baseURL}/auth/login?action=Logout`;
+  // if (userType === 'CaptainBee') {
+  //   window.location.href = '/indexx-exchange/buy-sell/hive-login';
+  // } else if (userType === 'HoneyBee') {
+  //   window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+  // } else {
+  //   window.location.href = `${baseURL}/auth/login?action=Logout`;
+  // }
+  
 };
 
 const Links = [
@@ -1532,9 +1533,9 @@ const HeaderNew = () => {
           //       <Nav.Link as={Link} to="/indexx-exchange/markets" className='text-white link' href="#">Markets</Nav.Link>
           //     ) : <></>} */}
 
-          //         {/* <Nav.Link  className='text-white link' href="https://test.wallet2.indexx.ai">Wallet</Nav.Link>
-          //     <Nav.Link  className='text-white link' href="https://test.swap.indexx.ai/ai-engine">Ai Engine</Nav.Link>
-          //     <Nav.Link  className='text-white link' href="https://test.indexx.ai/xchange">Indexx X</Nav.Link> */}
+          //         {/* <Nav.Link  className='text-white link' href="https://wallet2.indexx.ai">Wallet</Nav.Link>
+          //     <Nav.Link  className='text-white link' href="https://swap.indexx.ai/ai-engine">Ai Engine</Nav.Link>
+          //     <Nav.Link  className='text-white link' href="https://indexx.ai/xchange">Indexx X</Nav.Link> */}
           //       </Nav>
 
           //       <Nav className="align-items-center buy-cryp">

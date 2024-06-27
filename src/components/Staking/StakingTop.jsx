@@ -9,6 +9,7 @@ import {
   getHoneyBeeDataByUsername,
   getWalletBalance,
   stakeCoin,
+  loginWithToken,
 } from '../../services/api';
 import {
   Box,
@@ -66,47 +67,42 @@ const StakingTop = ({ refresh, handleRefresh }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // useEffect(() => {
-  //   getAllUserWallet();
-  //   if (id) {
-  //     setHoneyBeeId(String(id));
-  //     getHoneyBeeDataByUsername(String(id)).then((data) => {
-  //       setHoneyBeeEmail(data.data.userFullData?.email);
-  //     });
-  //   }
-  // }, []);
-
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (!email) {
-      navigate('/auth/login');
+    const redirectFlag = localStorage.getItem('redirected');
+    debugger;
+    if (defaultSignInToken && !redirectFlag) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    } else {
+      const email = localStorage.getItem('email');
+      if (!email) {
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+      }
     }
-  }, [navigate]);
-  
-  const getAllUserWallet = async () => {
+  }, []);
+
+  async function checkLogin(defaultSignInToken) {
     try {
-      const userWallets = await getUserWallets(decoded.email);
-      const usersWallet = userWallets.data;
-      let totalBalInUSD = 0;
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        let resObj = await decodeJWT(res.data.access_token);
 
-      usersWallet.forEach((wallet) => {
-        const balance = Number(wallet.coinBalance);
-        if (wallet.coinType === 'Crypto' && wallet.coinPrice) {
-          const price = Number(wallet.coinPrice);
-          if (!isNaN(price)) {
-            totalBalInUSD += balance * price;
-          }
-        } else {
-          totalBalInUSD += balance;
-        }
-      });
-
-      console.log('final total balance in USD', totalBalInUSD);
-      setTotalBalanceInUSD(totalBalInUSD);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', resObj?.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        window.location.reload();
+      } else {
+        console.log(res.data);
+      }
     } catch (err) {
-      console.error('Error in getAllUserWallet', err);
+      console.log('err', err);
     }
-  };
+  }
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);

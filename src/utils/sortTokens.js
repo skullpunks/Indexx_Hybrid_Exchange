@@ -347,9 +347,9 @@ const tokens = [
       "stakingPercentage1year": 5
     },
     {
-      "title": "TLSA",
+      "title": "TSLA",
       "subTitle": "IndexxTelsaStock",
-      "image": "TLSA",
+      "image": "TSLA",
       "address": "0x7b8dDF48d78847E92539d55feCEF9ae5110cAC11",
       "commonToken": true,
       "isStock": true,

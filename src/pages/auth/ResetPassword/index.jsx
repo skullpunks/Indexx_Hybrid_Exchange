@@ -10,11 +10,10 @@ const ResetPass = () => {
   const { email } = location.state || '';
   const [isOtpVerified, setIsOtpVerified] = useState(false);
 
-
   return (
     <div
       style={{
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         background: theme?.palette?.background.default,
         color: theme.palette.text.primary,
