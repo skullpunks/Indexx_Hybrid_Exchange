@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Staking from '../components/updated/Staking';
-import { decodeJWT, loginWithToken } from '../services/api';
+import { baseURL, decodeJWT, loginWithToken } from '../services/api';
 
 const StakingPage = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const StakingPage = () => {
     } else {
       const email = localStorage.getItem('email');
       if (!email) {
-        navigate('/auth/login');
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
       }
     }
   }, []);

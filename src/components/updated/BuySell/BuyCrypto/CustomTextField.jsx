@@ -166,7 +166,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const getImage = (image) => {
-  console.log("my image", image)
+  console.log('my image', image);
   try {
     return require(`../../../../assets/token-icons/${image}.png`).default;
   } catch (error) {
@@ -247,7 +247,13 @@ const CustomTextField = ({
       }
 
       // Construct the new URL with the buyToken parameter
-      const newUrl = `${basePath}?buyToken=${token.title}`;
+      let newUrl = `${basePath}?buyToken=${token.title}`;
+
+      if (token.title === 'IUSD+') {
+        const encodedTokenTitle = encodeURIComponent(token.title);
+
+        newUrl = `${basePath}?buyToken=${encodedTokenTitle}`;
+      }
 
       navigate(newUrl);
     }
@@ -315,22 +321,25 @@ const CustomTextField = ({
 
       let defaultToken;
 
-     // Prioritize URL parameter
-     if (defaultTokenFromUrl) {
-      defaultToken = { title: defaultTokenFromUrl, image: defaultTokenFromUrl };
-    } else if (path === '/update/home') {
-      defaultToken = { title: 'INEX', image: 'INEX' };
-    } else if (path.includes('etf-tokens')) {
-      defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
-    } else if (path.includes('stock-token')) {
-      defaultToken = { title: 'AMZN', image: 'AMZN' };
-    } else if (defaultReceiveToken) {
-      // If defaultReceiveToken is available
-      defaultToken = defaultReceiveToken;
-    } else {
-      // Fallback to a hardcoded default token
-      defaultToken = { title: 'INEX', image: 'INEX' };
-    }
+      // Prioritize URL parameter
+      if (defaultTokenFromUrl) {
+        defaultToken = {
+          title: defaultTokenFromUrl,
+          image: defaultTokenFromUrl,
+        };
+      } else if (path === '/update/home') {
+        defaultToken = { title: 'INEX', image: 'INEX' };
+      } else if (path.includes('etf-tokens')) {
+        defaultToken = { title: 'ALCRYP', image: 'ALCRYP' };
+      } else if (path.includes('stock-token')) {
+        defaultToken = { title: 'AMZN', image: 'AMZN' };
+      } else if (defaultReceiveToken) {
+        // If defaultReceiveToken is available
+        defaultToken = defaultReceiveToken;
+      } else {
+        // Fallback to a hardcoded default token
+        defaultToken = { title: 'INEX', image: 'INEX' };
+      }
 
       setSelectedToken(fixedToken || defaultToken);
       onSelectToken(fixedToken || defaultToken); // Call the callback with selected token

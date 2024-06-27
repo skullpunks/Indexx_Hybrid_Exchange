@@ -16,7 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getUserWallets } from '../../../services/api';
+import { baseURL, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
@@ -160,7 +160,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       try {
         let email = String(localStorage.getItem('email'));
         if (email === null || email === undefined || email === '') {
-          navigate('/auth/login');
+          window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
         } else {
           let userWallets = await getUserWallets(email);
           const formattedData = userWallets.data.map((item) => ({

@@ -104,7 +104,7 @@ const BalanceOverview = () => {
             const decodedToken = await decodeJWT(signInToken);
             email = decodedToken.email;
           } else {
-            navigate('/auth/login');
+            window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
             return;
           }
         }

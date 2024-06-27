@@ -16,7 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { decodeJWT, getUserWallets } from '../../../services/api';
+import { baseURL, decodeJWT, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
@@ -179,28 +179,34 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             const decodedToken = await decodeJWT(signInToken);
             email = decodedToken.email;
           } else {
-            navigate('/auth/login');
+            window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
             return;
           }
         }
-  
+
         const userWallets = await getUserWallets(email);
         const formattedData = userWallets.data.map((item) => {
           const coinBalance = Number(item.coinBalance);
           const coinPrice = Number(item.coinPrice);
           const coinPrevPrice = Number(item.coinPrevPrice);
           let todayPNL = null;
-  
-          if (coinBalance > 0 && !isNaN(coinPrice) && !isNaN(coinPrevPrice) && coinPrevPrice !== 0) {
+
+          if (
+            coinBalance > 0 &&
+            !isNaN(coinPrice) &&
+            !isNaN(coinPrevPrice) &&
+            coinPrevPrice !== 0
+          ) {
             const pnlValue = coinBalance * (coinPrice - coinPrevPrice);
-            const pnlPercentage = ((coinPrice - coinPrevPrice) / coinPrevPrice) * 100;
+            const pnlPercentage =
+              ((coinPrice - coinPrevPrice) / coinPrevPrice) * 100;
             todayPNL = {
               value: pnlValue.toFixed(2),
               percentage: pnlPercentage.toFixed(2),
               isPositive: pnlValue >= 0,
             };
           }
-  
+
           return {
             id: item.coinName,
             coin: item.coinSymbol,
@@ -217,7 +223,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, [navigate]);
 

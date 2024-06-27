@@ -141,7 +141,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const [lottoUrl, setLottoUrl] = useState("https://test.lotto.indexx.ai/");
 
   const [tokenizedUrls, setTokenizedUrls] = useState({
-    defaultUrl:  `${baseURL}`,
+    defaultUrl: `${baseURL}`,
     exchangeUrl: `${baseURL}/indexx-exchange/nfts`,
     tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details`,
     comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`,
@@ -157,13 +157,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     legalUrl: `${baseURL}/indexx-exchange/legal`,
     tradeToEarnUrl: `${baseURL}/indexx-exchange/trade-to-earn`,
     bitcoinCmgUrl: `${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin`,
-    wallStreetUrl: baseWSURL, 
-    wallStreetCertUrl: `${baseWSURL}/certificate`, 
-    wallStreetDetailsUrl: `${baseWSURL}/details`, 
+    wallStreetUrl: baseWSURL,
+    wallStreetCertUrl: `${baseWSURL}/certificate`,
+    wallStreetDetailsUrl: `${baseWSURL}/details`,
     // Add other URLs here as needed
   });
 
-  const getAuthenticatedUrl = async (url:any) => {
+  const getAuthenticatedUrl = async (url: any) => {
     if (cachedToken) {
       const urlObj = new URL(url, window.location.origin);
       urlObj.searchParams.set("signInToken", cachedToken);
@@ -188,9 +188,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     }
 
     if (isAuthenticated) {
-      cachedToken = shortToken;
+      cachedToken = shortToken.data;
       const urlObj = new URL(url, window.location.origin);
-      urlObj.searchParams.set("signInToken", shortToken);
+      urlObj.searchParams.set("signInToken", shortToken.data);
 
       // Check if the URL is for the stock-token page
       if (url.includes("/update/home/stock-token")) {
@@ -219,10 +219,10 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
       }
 
       if (shortToken) {
-        const token = shortToken;
+        const token = shortToken?.data;
 
         setTokenizedUrls({
-          defaultUrl:  `${baseURL}?signInToken=${token}`,
+          defaultUrl: `${baseURL}?signInToken=${token}`,
           exchangeUrl: `${baseURL}/indexx-exchange/nfts?signInToken=${token}`,
           tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details?signInToken=${token}`,
           comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map&signInToken=${token}`,
@@ -238,9 +238,9 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           legalUrl: `${baseURL}/indexx-exchange/legal?signInToken=${token}`,
           tradeToEarnUrl: `${baseURL}/indexx-exchange/trade-to-earn?signInToken=${token}`,
           bitcoinCmgUrl: `${baseURL}/indexx-exchange/coming-soon?page=$1%20Bitcoin?signInToken=${token}`,
-          wallStreetUrl: `${baseWSURL}?signInToken=${token}`, 
-          wallStreetCertUrl: `${baseWSURL}/certificates?ignInToken=${token}`, 
-          wallStreetDetailsUrl: `${baseWSURL}/details?signInToken=${token}`, 
+          wallStreetUrl: `${baseWSURL}?signInToken=${token}`,
+          wallStreetCertUrl: `${baseWSURL}/certificates?ignInToken=${token}`,
+          wallStreetDetailsUrl: `${baseWSURL}/details?signInToken=${token}`,
 
 
           // Add other URLs here as needed

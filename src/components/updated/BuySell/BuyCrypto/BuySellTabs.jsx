@@ -9,6 +9,7 @@ import Popup from './PaymentPopup';
 import GeneralPopup from '../Popup';
 
 import {
+  baseURL,
   confirmSellOrder,
   createBuyOrder,
   createSellOrder,
@@ -733,7 +734,9 @@ const BuySellTabs = ({
             >
               <GenericButton
                 text="Login/Signup"
-                onClick={() => navigate(`/auth/login`)}
+                onClick={() =>  {
+                  window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+                }}
                 styles={{
                   fontSize: '20px',
                   fontWeight: '500',

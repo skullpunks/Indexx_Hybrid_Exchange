@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
-import { decodeJWT, getUserWallets } from '../../../services/api';
+import { baseURL, decodeJWT, getUserWallets } from '../../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 // Define the makeStyles hook
@@ -99,7 +99,7 @@ const BalanceOverview = () => {
     try {
       let email = String(localStorage.getItem('email'));
       if (!email) {
-        navigate('/auth/login');
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
         return;
       }
 

@@ -375,7 +375,7 @@ const header_data = [
         links: [
           {
             name: 'Buy Token',
-            href: 'https://cex.indexx.ai/',
+            href: 'https://test.cex.indexx.ai/update/home',
           },
           {
             name: 'INEX',

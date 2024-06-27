@@ -76,7 +76,7 @@ const StakingTop = ({ refresh, handleRefresh }) => {
     } else {
       const email = localStorage.getItem('email');
       if (!email) {
-        navigate('/auth/login');
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
       }
     }
   }, []);

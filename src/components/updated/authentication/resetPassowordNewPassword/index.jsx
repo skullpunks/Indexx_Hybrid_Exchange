@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Check from '../../../../assets/authentication/Check';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { resetPassword } from '../../../../services/api';
+import { baseURL, resetPassword } from '../../../../services/api';
 import Popup from '../../shared/Popup';
 
 const useStyles = makeStyles((theme) => ({
@@ -157,7 +157,7 @@ const ResetPassword = ({ email }) => {
 
   const handlePopupClose = () => {
     setShowPopup(false);
-    navigate('/auth/login');
+    window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
   };
 
   return (

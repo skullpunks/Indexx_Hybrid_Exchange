@@ -51,15 +51,14 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   localStorage.clear(); //clear all localstorage
   console.log(userType);
   debugger;
-  if (userType === 'CaptainBee') {
-    window.location.href = '/indexx-exchange/buy-sell/hive-login';
-  } else if (userType === 'HoneyBee') {
-    window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
-  } else {
-    if (window.location.pathname.includes('trade-to-earn'))
-      window.location.reload();
-    else window.location.href = '/indexx-exchange/buy-sell/login';
-  }
+  window.location.href = `${baseURL}/auth/login?action=Logout`;
+  // if (userType === 'CaptainBee') {
+  //   window.location.href = '/indexx-exchange/buy-sell/hive-login';
+  // } else if (userType === 'HoneyBee') {
+  //   window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
+  // } else {
+  //   window.location.href = `${baseURL}/auth/login?action=Logout`;
+  // }
   
 };
 

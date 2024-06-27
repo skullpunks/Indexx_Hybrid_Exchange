@@ -43,6 +43,9 @@ import {
   baseXnftURL,
   baseAcademyUrl,
   decodeJWT,
+  checkEmail,
+  checkByemail,
+  getCaptainBeeByEmail,
 } from '../../services/api';
 
 import DarkMode from '../DarkMode/DarkMode';
@@ -118,48 +121,69 @@ const HeaderTest = () => {
     showText[0] !== ''
       ? (document.title = `${showText[0]} | indexx.ai`)
       : pageName
-      ? (document.title = `${pageName} | indexx.ai`)
-      : (document.title = 'indexx.ai');
+        ? (document.title = `${pageName} | indexx.ai`)
+        : (document.title = 'indexx.ai');
   }, [showText, pageName]);
   useEffect(() => {
-    const userType =
-      localStorage.getItem('userType') !== undefined
-        ? String(localStorage.getItem('userType'))
-        : undefined;
-    const username =
-      localStorage.getItem('username') !== undefined
-        ? String(localStorage.getItem('username'))
+    async function checkUserType() {
+      let userType =
+        localStorage.getItem('userType') !== undefined
+          ? String(localStorage.getItem('userType'))
+          : undefined;
+      let username =
+        localStorage.getItem('username') !== undefined
+          ? String(localStorage.getItem('username'))
+          : undefined;
+
+      const user =
+        localStorage.getItem('user') !== undefined
+          ? String(localStorage.getItem('user'))
+          : undefined;
+
+      const email = localStorage.getItem('email') !== undefined
+        ? String(localStorage.getItem('email'))
         : undefined;
 
-    const user =
-      localStorage.getItem('user') !== undefined
-        ? String(localStorage.getItem('user'))
-        : undefined;
+      let getUserType = await checkByemail(String(email))
+      userType = getUserType.userType
+      const accessToken =
+        localStorage.getItem('access_token') !== undefined
+          ? String(localStorage.getItem('access_token'))
+          : undefined;
+      if (accessToken && accessToken !== 'null' && accessToken !== '') {
+        debugger
+        let resObj = await getCaptainBeeByEmail(String(email));
+        console.log("resObj", resObj)
+        username = resObj?.data.Username;
+      }
 
-    if (userType === 'CaptainBee') {
-      setisCaptain(true);
-      if (username) {
-        getCaptainBeeStatics(String(username)).then((data) => {
-          setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
-          setStaticsData(data.data);
-          if (
-            data?.data?.powerPackData !== undefined &&
-            data?.data?.powerPackData !== null &&
-            data?.data?.powerPackData !== ''
-          ) {
-            setHaspowerpack(true);
-          }
+      if (userType === 'CaptainBee') {
+        setisCaptain(true);
+        if (username) {
+          getCaptainBeeStatics(String(username)).then((data) => {
+            setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
+            console.log("index header", data?.data?.affiliateUserProfile?.photoIdFileurl)
+            setStaticsData(data.data);
+            if (
+              data?.data?.powerPackData !== undefined &&
+              data?.data?.powerPackData !== null &&
+              data?.data?.powerPackData !== ''
+            ) {
+              setHaspowerpack(true);
+            }
+          });
+        }
+      } else {
+        setisCaptain(false);
+
+        getHoneyUserDetails(String(user)).then((data) => {
+          setHoneybeeCreateDate(data.data.accountCreationDate);
+          setHoneyBeeData(data?.data?._doc);
+          setUserProfile(data?.data?._doc?.profilePic);
         });
       }
-    } else {
-      setisCaptain(false);
-
-      getHoneyUserDetails(String(user)).then((data) => {
-        setHoneybeeCreateDate(data.data.accountCreationDate);
-        setHoneyBeeData(data?.data?._doc);
-        setUserProfile(data?.data?._doc?.profilePic);
-      });
     }
+    checkUserType();
   }, []);
 
   useEffect(() => {
@@ -264,15 +288,16 @@ const HeaderTest = () => {
     localStorage.clear(); //clear all localstorage
     console.log(userType);
     debugger;
-    if (userType === 'CaptainBee') {
-      window.location.href = '/auth/login';
-    } else if (userType === 'HoneyBee') {
-      window.location.href = '/auth/login';
-    } else {
-      if (window.location.pathname.includes('trade-to-earn'))
-        window.location.reload();
-      else window.location.href = '/auth/login';
-    }
+    window.location.href = `${baseURL}/auth/login?action=Logout`;
+    // if (userType === 'CaptainBee') {
+    //   window.location.href = '/auth/login';
+    // } else if (userType === 'HoneyBee') {
+    //   window.location.href = '/auth/login';
+    // } else {
+    //   if (window.location.pathname.includes('trade-to-earn'))
+    //     window.location.reload();
+    //   else window.location.href = '/auth/login';
+    // }
   };
   const handleLogout = (e: any, nm: string) => {
     if (nm !== 'logout') return;
@@ -315,9 +340,8 @@ const HeaderTest = () => {
                   >
                     <a
                       href={element.href}
-                      className={`desktop-item ${
-                        element.active ? 'link_active' : ''
-                      }`}
+                      className={`desktop-item ${element.active ? 'link_active' : ''
+                        }`}
                       onMouseEnter={() => updateBackDropVisibility('enter')}
                     >
                       {element.mainTextDesktop}
@@ -353,9 +377,8 @@ const HeaderTest = () => {
                             >
                               <header>{elem.heading}</header>
                               <ul
-                                className={`mega-links ${
-                                  elem.mainList ? 'main' : ''
-                                }`}
+                                className={`mega-links ${elem.mainList ? 'main' : ''
+                                  }`}
                               >
                                 {elem.links.map((el) => (
                                   <li>
@@ -398,17 +421,16 @@ const HeaderTest = () => {
                           display: 'flex',
                           cursor: 'pointer',
                         }}
-                        // onClick={(e) =>
-                        //   handleLogout(
-                        //     e,
-                        //     element.mainTextDesktop.toLocaleLowerCase()
-                        //   )
-                        // }
+                      // onClick={(e) =>
+                      //   handleLogout(
+                      //     e,
+                      //     element.mainTextDesktop.toLocaleLowerCase()
+                      //   )
+                      // }
                       >
                         <a
-                          className={`desktop-item ${
-                            element.active ? 'link_active' : ''
-                          }`}
+                          className={`desktop-item ${element.active ? 'link_active' : ''
+                            }`}
                           onClick={(e) => handleLogout(e, 'logout')}
                         >
                           Logout
@@ -441,9 +463,8 @@ const HeaderTest = () => {
                               style={{
                                 width: isCaptain ? '60px' : '65px',
                                 height: isCaptain ? '80px' : '70px',
-                                backgroundImage: `url(${
-                                  isCaptain === true ? frame : beeframe
-                                })`,
+                                backgroundImage: `url(${isCaptain === true ? frame : beeframe
+                                  })`,
                                 transform: !isCaptain ? 'rotate(-30deg)' : '',
                                 // backgroundImage: `url(${frame})`,
                                 backgroundRepeat: 'no-repeat',
@@ -463,9 +484,8 @@ const HeaderTest = () => {
                                   isCaptain ? 'bee-hexagon' : 'elipse-img'
                                 }
                                 style={{
-                                  marginBottom: `${
-                                    isCaptain === true ? 0 : '7px'
-                                  }`,
+                                  marginBottom: `${isCaptain === true ? 0 : '7px'
+                                    }`,
                                 }}
                               >
                                 <img
@@ -477,15 +497,15 @@ const HeaderTest = () => {
                                     border: 'none',
                                   }}
                                 />
+
                               </div>
                             </div>
                           </div>
                         )}
                         <a
                           href={element.href}
-                          className={`desktop-item ${
-                            element.active ? 'link_active' : ''
-                          }`}
+                          className={`desktop-item ${element.active ? 'link_active' : ''
+                            }`}
                         >
                           {isAuthenticated
                             ? userEmail
@@ -524,9 +544,8 @@ const HeaderTest = () => {
                                 >
                                   <header>{elem?.heading}</header>
                                   <ul
-                                    className={`mega-links ${
-                                      elem?.mainList ? 'main' : ''
-                                    }`}
+                                    className={`mega-links ${elem?.mainList ? 'main' : ''
+                                      }`}
                                   >
                                     {elem?.links.map((el) => (
                                       <li>

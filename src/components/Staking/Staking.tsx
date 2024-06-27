@@ -7,6 +7,7 @@ import StakingTable from './StakingTable';
 import StakingTop from './StakingTop';
 import { useNavigate } from 'react-router-dom';
 import IconicHeader from '../updated/shared/IconicHeader';
+import { baseURL } from '../../services/api';
 // import PowerPackHeader from '../PowerPack/PowerPackHeader/PowerPackHeader';
 // import { Link } from 'react-router-dom';
 // import { CaretRightOutlined, CheckCircleOutlined } from '@ant-design/icons';
@@ -31,7 +32,7 @@ const Staking = () => {
   useEffect(() => {
     const email = localStorage.getItem('email');
     if (!email) {
-      navigate('/auth/login');
+      window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
     }
   }, [navigate]);
 

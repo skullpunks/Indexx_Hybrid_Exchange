@@ -28,7 +28,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
   baseURL = 'https://test.indexx.ai';
-  baseURL = 'http://localhost:3001';
+  baseURL = 'http://localhost:3002';
   baseHiveURL = 'https://test.hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
@@ -40,7 +40,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   // baseAcademyUrl = 'http://localhost:3000';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  //baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://test.cex.indexx.ai';
   baseDEXURL = 'https://test.dex.indexx.ai';
@@ -325,6 +325,19 @@ export const getCaptainBeeStatics = async (
   try {
     const result = await API.get(
       `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getCaptainBeeByEmail = async (
+  email: string,
+) => {
+  try {
+    const result = await API.get(
+      `/api/v1/affiliate/getAllaffiliateUser/${email}`
     );
     return result.data;
   } catch (e: any) {

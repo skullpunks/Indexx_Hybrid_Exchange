@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Assets from '../components/updated/Assets';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { decodeJWT, loginWithToken } from '../services/api';
+import { baseURL, decodeJWT, loginWithToken } from '../services/api';
 
 const AssetsPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const AssetsPage = () => {
       } else {
         const email = localStorage.getItem('email');
         if (!email) {
-          navigate('/auth/login');
+          window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
         }
       }
     };

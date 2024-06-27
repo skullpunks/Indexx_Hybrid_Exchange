@@ -5,7 +5,7 @@ import InputField from '../../shared/TextField';
 import iusd from '../../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../../shared/Button';
 import SingleSelectPlaceholder from '../CustomSelect';
-import { decodeJWT, getUserWallets, loginWithToken, stakeCoin } from '../../../../services/api';
+import { baseURL, decodeJWT, getUserWallets, loginWithToken, stakeCoin } from '../../../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import tokensList from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
@@ -267,7 +267,7 @@ const StakingTop = ({ onStakeSuccess }) => {
     } else {
       const email = localStorage.getItem('email');
       if (!email) {
-        navigate('/auth/login');
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
       }
     }
   }, []);
