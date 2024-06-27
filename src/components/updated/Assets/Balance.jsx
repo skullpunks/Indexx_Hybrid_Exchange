@@ -99,7 +99,7 @@ const BalanceOverview = () => {
     setVisibleStaking(!visibleStaking);
   };
   useEffect(() => {
-    const getAllUserWallet = async () => {
+    const fetchUserWallets = async () => {
       setIsLoading(true);
       try {
         let email = String(localStorage.getItem('email'));
@@ -143,19 +143,9 @@ const BalanceOverview = () => {
         setTotalBalanceInUSD(totalBalInUSD);
         setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
 
-        userWallets.forEach((wallet) => {
-          const balance = Number(wallet.coinBalance);
-          const price = Number(wallet.coinPrice);
-          const prevPrice = Number(wallet.coinPrevPrice);
-
-          if (totalPrevBalInUSD > 0) {
-            pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
-            pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
-          }
-        });
       } catch (err) {
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchUserWallets();
