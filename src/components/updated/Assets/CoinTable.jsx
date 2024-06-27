@@ -67,7 +67,7 @@ const headCells = [
     id: 'staking_balance',
     numeric: true,
     disablePadding: false,
-    label: 'Staking Balance',
+    label: 'Staking Balance/ USD',
   },
   {
     id: 'coin_price',
@@ -217,18 +217,17 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
-  
+
       // Show all rows when hideAssets is false
       if (!hideAssets) {
         return matchesSearchQuery;
       }
-  
+
       // When hideAssets is true, show rows with amount or staking_balance > 0
-      const passesHideAssets = (row.amount > 0 || row.staking_balance > 0);
+      const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
   }, [rows, searchQuery, hideAssets]);
-  
 
   const visibleRows = useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
@@ -303,7 +302,8 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                   {new Intl.NumberFormat('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
-                  }).format(row.staking_balance)}
+                  }).format(row.staking_balance)}{' '}
+                  / {row.staking_balance * row.coin_price}
                 </TableCell>
 
                 {!isMobile && (
