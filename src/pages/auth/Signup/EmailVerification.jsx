@@ -7,11 +7,11 @@ const SignUpEmailVerificationPage = () => {
   const theme = useTheme();
   const location = useLocation();
   const { email } = location.state || '';
-  console.log("SignUpEmailVerificationPage email", email)
+  console.log('SignUpEmailVerificationPage email', email);
   return (
     <div
       style={{
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
@@ -20,7 +20,7 @@ const SignUpEmailVerificationPage = () => {
         color: theme.palette.text.primary,
       }}
     >
-      <SignUpEmailVerification email={email}/>
+      <SignUpEmailVerification email={email} />
     </div>
   );
 };

@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CryptoStats = ({ tokenType, onTokenSelect  }) => {
+const CryptoStats = ({ tokenType, onTokenSelect }) => {
   const classes = useStyles();
   const [cryptoData, setCryptoData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -136,9 +136,11 @@ const CryptoStats = ({ tokenType, onTokenSelect  }) => {
         let combinedData;
         if (tokenType === 'Tokens') {
           const importantTokens = ['INEX', 'WIBS', 'BTC', 'ETH'];
-          const filteredTokens = importantTokens.map(symbol =>
-            data.data.find(crypto => crypto.Symbol === symbol)
-          ).filter(Boolean); // Remove any undefined values if the token is not found
+          const filteredTokens = importantTokens
+            .map((symbol) =>
+              data.data.find((crypto) => crypto.Symbol === symbol)
+            )
+            .filter(Boolean); // Remove any undefined values if the token is not found
           const otherTokens = data.data.filter(
             (crypto) => !importantTokens.includes(crypto.Symbol)
           );
@@ -211,7 +213,10 @@ const CryptoStats = ({ tokenType, onTokenSelect  }) => {
           <List>
             {cryptoData.map((crypto) => (
               <ListItem key={crypto.Symbol} disablePadding>
-                <ListItemButton className={classes.listContainer}  onClick={() => onTokenSelect(crypto)}>
+                <ListItemButton
+                  className={classes.listContainer}
+                  onClick={() => onTokenSelect(crypto)}
+                >
                   <div className={classes.logoContainer}>
                     <img src={getImage(crypto.Symbol)} alt={crypto.Name} />
                     <Typography>{crypto.Symbol}</Typography>

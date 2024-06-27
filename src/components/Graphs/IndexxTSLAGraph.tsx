@@ -86,7 +86,7 @@
 
 //                         <img
 //                             src={
-//                                 require(`../../assets/token-icons/TLSA.png`)
+//                                 require(`../../assets/token-icons/TSLA.png`)
 //                                     .default
 //                             }
 //                             alt="bitcoin"
@@ -94,7 +94,7 @@
 //                         />
 //                         &emsp;
 //                         <h1>
-//                             {coinValue} USD/{"TLSA"}
+//                             {coinValue} USD/{"TSLA"}
 //                         </h1>
 //                     </div>
 //                     <div

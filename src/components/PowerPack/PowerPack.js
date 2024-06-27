@@ -18,7 +18,7 @@ const PowerPack = ({ type }) => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
-    <Box mt={18} pb={5} style={{ background: 'white' }}>
+    <Box mt={18} pb={5}>
       {/* <PowerPackHeader /> */}
       <Box
         sx={{

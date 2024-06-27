@@ -11,6 +11,7 @@ export let baseWalletURL = '';
 export let baseShopURL = '';
 export let baseXnftURL = '';
 export let baseMktplaceURL = '';
+export let baseLottoUrl = '';
 //export const secretKey = process.env.YOUR_SECRET_KEY || "123456Indexx2023";
 export const secretKey =
   process.env.YOUR_SECRET_KEY === undefined
@@ -31,6 +32,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
   //baseWalletURL = 'http://localhost:3001';
+  baseLottoUrl = "https://lotto.indexx.ai";
+  baseLottoUrl = "http://localhost:3000";
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
@@ -44,6 +47,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
+  baseLottoUrl = "https://lotto.indexx.ai";
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
@@ -82,6 +86,20 @@ function setToLocalStorage(key: any, data: any, ttl: any) {
   };
   localStorage.setItem(key, JSON.stringify(item));
 }
+
+export const getUserShortToken = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/createShortToken/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createShortToken)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
 
 export async function fetchCryptoData(subTitle: string) {
   const cacheKey = `cryptoData:${subTitle}`;
@@ -283,6 +301,21 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
+export const loginWithToken = async (signInToken: any) => {
+  try {
+      const result = await API.post('/api/v1/inex/user/loginWithToken', {
+        signInToken
+      });
+      return result.data;
+    
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (loginWithToken)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getCaptainBeeStatics = async (
   username: string,
   isPublicProfile: string = 'no',
@@ -291,6 +324,19 @@ export const getCaptainBeeStatics = async (
   try {
     const result = await API.get(
       `/api/v1/affiliate/getAffiliateUserDashbaord/${username}/${isPublicProfile}/${userType}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getCaptainBeeByEmail = async (
+  email: string,
+) => {
+  try {
+    const result = await API.get(
+      `/api/v1/affiliate/getAllaffiliateUser/${email}`
     );
     return result.data;
   } catch (e: any) {

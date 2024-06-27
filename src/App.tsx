@@ -94,7 +94,6 @@ import { useTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { useState, useEffect, useMemo } from 'react';
-import Staking from './components/Staking/Staking';
 import BSStakingHistoryLayout from './components/BSStakingHistory/BSStakingHistoryLayout';
 import Bridge from './components/Bridge/Bridge';
 import CaptainResourceSales from './components/Dashboard/Captainbee/CaptainResource/CaptainResourceSales';
@@ -137,6 +136,12 @@ import WithdrawAddAccountInfo from './pages/withdraw/WithdrawInfo';
 import WithdrawEnterAmount from './pages/withdraw/WithdrawEnterAmount';
 import WithdrawTransferMoney from './pages/withdraw/WithdrawTransferMoney';
 import WithdrawSuccessPage from './pages/withdraw/WithdrawSuccess';
+import DashboardPage from './pages/Dashboard';
+import DepositSelectCoin from './pages/depositCrypto/DepositSelectCoin';
+import DepositCryptoChange from './pages/depositCrypto/DepositCryptoChange';
+import DepositCryptoSuccessPage from './pages/depositCrypto/DepositSuccess';
+import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSuccess';
+import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -171,18 +176,27 @@ function App() {
     const isAllowed =
       localStorage.getItem('userType') === 'CaptainBee' &&
       localStorage.getItem('haspp') === 'false';
-
+  
+    const params = new URLSearchParams(window.location.search);
+    const defaultSignInToken = params.get('signInToken');
+  
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
-      return <Navigate to="/update/home/" />;
+      if (defaultSignInToken) {
+        console.log("I am here");
+        // Optionally store the token or take other actions
+      } else {
+        return <Navigate to="/update/home/" />;
+      }
     }
-
+  
     if (isAllowed) {
       return <Navigate to="/indexx-exchange/power-pack" />;
     }
     return <Outlet />;
   };
+  
   console.log(window.location.pathname, 'path');
 
   return (
@@ -204,6 +218,7 @@ function App() {
                 element={<HorizontalLinearStepper2 />}
               />
               <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
               <Route
                 path="/indexx-exchange/buy-sell/staking"
                element={<StakingPage />}
@@ -220,6 +235,26 @@ function App() {
               <Route
                 path="/deposit-add-account-information"
                 element={<DepositAddAccountInfo />}
+              />
+              <Route
+                path="/deposit-crypto-select-coin"
+                element={<DepositSelectCoin />}
+              />
+              <Route
+                path="/deposit-crypto-change-wallet"
+                element={<DepositCryptoChange />}
+              />
+              <Route
+                path="/deposit-crypto-success"
+                element={<DepositCryptoSuccessPage />}
+              />
+              <Route
+                path="/withdraw-crypto-success"
+                element={<WithdrawCryptoSuccessPage />}
+              />
+              <Route
+                path="/withdraw-crypto-select-coin"
+                element={<WithdrawCryptoSelectCoin />}
               />
               <Route
                 path="/withdraw-add-information"
@@ -443,7 +478,7 @@ function App() {
               element={<ImportTokens />}
             />
             <Route path="/indexx-exchange/tokens" element={<IndexxTokens />} />
-            {/* <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} /> */}
+            <Route path="/indexx-exchange/buy-sell/*" element={<BuySell />} />
             <Route
               path="/indexx-exchange/buy-sell/for-honeybee/:id/*"
               element={<BuySell />}

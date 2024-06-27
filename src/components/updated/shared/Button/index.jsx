@@ -35,14 +35,13 @@ const useStyles = makeStyles((theme) => ({
     },
     // '&.Mui-disabled': {
     //   backgroundColor: '#11BE6A !important', // Disabled state background color
-    //   color: '#666666 !important', // Disabled state text color
+    //   color: '#202630 !important', // Disabled state text color
     // },
   },
   progress: {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
+    color: '#202630 !important',
+    marginLeft: '5px',
+    marginTop: '-3px',
   },
 }));
 
@@ -64,11 +63,11 @@ const GenericButton = ({
       onClick={onClick}
       style={styles}
       disabled={disabled || loading}
-      loading={loading}
       {...rest}
     >
       {IconComponent && <div className="icon">{IconComponent}</div>}
       {text}
+      {loading && <CircularProgress size={12} className={classes.progress} />}
     </LoadingButton>
   );
 };

@@ -180,19 +180,20 @@ const MobileHeader = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('redirected');
     localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
-    debugger;
-    if (userType === 'CaptainBee') {
-      window.location.href = '/auth/login';
-    } else if (userType === 'HoneyBee') {
-      window.location.href = '/auth/login';
-    } else {
-      if (window.location.pathname.includes('trade-to-earn'))
-        window.location.reload();
-      else window.location.href = '/update/home/';
-    }
+    window.location.href = `${baseURL}/auth/login?action=Logout`;
+    // if (userType === 'CaptainBee') {
+    //   window.location.href = '/auth/login';
+    // } else if (userType === 'HoneyBee') {
+    //   window.location.href = '/auth/login';
+    // } else {
+    //   if (window.location.pathname.includes('trade-to-earn'))
+    //     window.location.reload();
+    //   else window.location.href = '/update/home/';
+    // }
   };
 
   const items = [

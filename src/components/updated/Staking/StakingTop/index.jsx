@@ -5,8 +5,8 @@ import InputField from '../../shared/TextField';
 import iusd from '../../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../../shared/Button';
 import SingleSelectPlaceholder from '../CustomSelect';
-import { decodeJWT, getUserWallets, stakeCoin } from '../../../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { baseURL, decodeJWT, getUserWallets, loginWithToken, stakeCoin } from '../../../../services/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import tokensList from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { title } from 'process';
@@ -195,7 +195,9 @@ const StakingTop = ({ onStakeSuccess }) => {
   const [loadings, setLoadings] = useState(false);
 
   const theme = useTheme();
+  const [searchParams] = useSearchParams();
   const [activeButton, setActiveButton] = useState('6 Months');
+  const defaultSignInToken = searchParams.get('signInToken');
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -257,11 +259,41 @@ const StakingTop = ({ onStakeSuccess }) => {
   };
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (!email) {
-      navigate('/auth/login');
+    const redirectFlag = localStorage.getItem('redirected');
+    debugger;
+    if (defaultSignInToken && !redirectFlag) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    } else {
+      const email = localStorage.getItem('email');
+      if (!email) {
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+      }
     }
-  }, [navigate]);
+  }, []);
+
+  async function checkLogin(defaultSignInToken) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        let resObj = await decodeJWT(res.data.access_token);
+
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', resObj?.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        window.location.reload();
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   const getAllUserWallet = async () => {
     try {

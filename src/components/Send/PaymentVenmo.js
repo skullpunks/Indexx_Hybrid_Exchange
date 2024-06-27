@@ -550,21 +550,21 @@ export default function PaymentVenmo() {
     setPhotoIdFile(file);
   };
 
-  // useEffect(() => {
-  //   const orderIdFromParam = searchParams.get('orderId');
-  //   if (orderIdFromParam !== undefined) {
-  //     let access_token = String(localStorage.getItem('access_token'));
-  //     let decoded = decodeJWT(access_token);
-  //     getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
-  //       if (res.status === 200) {
-  //         let orderData = res.data;
-  //         setOrderData(orderData);
-  //       } else {
-  //         alert('Something went wrong. Please try again.');
-  //       }
-  //     });
-  //   }
-  // }, [searchParams]);
+  useEffect(() => {
+    const orderIdFromParam = searchParams.get('orderId');
+    if (orderIdFromParam !== undefined) {
+      let access_token = String(localStorage.getItem('access_token'));
+      let decoded = decodeJWT(access_token);
+      getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
+        if (res.status === 200) {
+          let orderData = res.data;
+          setOrderData(orderData);
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

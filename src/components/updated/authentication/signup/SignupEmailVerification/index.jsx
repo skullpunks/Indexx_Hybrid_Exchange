@@ -11,7 +11,11 @@ import appleLogo from '../../../../../assets/authentication/ios.svg';
 import iosDark from '../../../../../assets/authentication/ios-dark.svg';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { resendEmailCode, sendOtp, validateOtp } from '../../../../../services/api';
+import {
+  resendEmailCode,
+  sendOtp,
+  validateOtp,
+} from '../../../../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -150,7 +154,7 @@ const SignUpEmailVerification = ({ email }) => {
       setMessage('Failed to resend verification code.');
       setLoadings(false);
     }
-  }
+  };
 
   return (
     <div className={classes.Container}>
@@ -164,8 +168,8 @@ const SignUpEmailVerification = ({ email }) => {
 
       <h3 className={classes.loginText}>Verify your email</h3>
       <h4>
-        Please enter the 6-digit verification code that was sent to
-        {" "}{email}. The code is valid for 30 minutes.
+        Please enter the 6-digit verification code that was sent to {email}. The
+        code is valid for 30 minutes.
       </h4>
       <div style={{ margin: '15px auto 25px auto' }}>
         <InputField
@@ -178,15 +182,21 @@ const SignUpEmailVerification = ({ email }) => {
           helperText={formik.errors.verificationCode}
         />
         {message && (
-        <p className={message.includes('Failed') ? classes.messageText : classes.successText}>
-          {message}
-        </p>
-      )}
+          <p
+            className={
+              message.includes('Failed')
+                ? classes.messageText
+                : classes.successText
+            }
+          >
+            {message}
+          </p>
+        )}
       </div>
-      
+
       <GenericButton
         onClick={formik.handleSubmit}
-        text={loadings ? 'Loading...' : 'Next'}
+        text={'Next'}
         loading={loadings}
       />
       <div style={{ margin: '20px auto' }}></div>
@@ -195,6 +205,7 @@ const SignUpEmailVerification = ({ email }) => {
         text={'Didn’t receive the code?'}
         className={classes.createLink}
         onClick={otpResend}
+        loading={loadings}
       />
     </div>
   );

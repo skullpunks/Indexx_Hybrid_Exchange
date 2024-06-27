@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
   IconButton,
   InputBase,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -140,11 +141,14 @@ const CoinBreakdown = () => {
 
           <FormControlLabel
             className={classes.checkboxLabel}
-            control={<Checkbox checked={hideAssets} onChange={handleCheckboxChange} />}
+            control={
+              <Checkbox checked={hideAssets} onChange={handleCheckboxChange} />
+            }
             label="Hide assets <1 USD"
           />
         </Box>
       </Box>
+
       <EnhancedTable searchQuery={searchQuery} hideAssets={hideAssets} />
     </Box>
   );

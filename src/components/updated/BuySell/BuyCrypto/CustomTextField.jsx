@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,7 +8,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { List, ListItem, ListItemButton } from '@mui/material';
+import { List, ListItem, ListItemButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import tokens from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
@@ -160,8 +160,13 @@ const useStyles = makeStyles((theme) => ({
       color: `${theme.palette.text.primary} !important`,
     },
   },
+  message: {
+    marginTop: '10px',
+    color: '#11BE6A',
+  },
 }));
 const getImage = (image) => {
+  console.log('my image', image);
   try {
     return require(`../../../../assets/token-icons/${image}.png`).default;
   } catch (error) {
@@ -205,6 +210,7 @@ const CustomTextField = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [userAmount, setUserAmount] = useState(amount);
   const [rateData, setRateData] = useState(0);
+  const fixedTokenRef = useRef(fixedToken);
   const theme = useTheme();
   const handleFocus = () => {
     setFocused(true);
@@ -241,20 +247,36 @@ const CustomTextField = ({
       }
 
       // Construct the new URL with the buyToken parameter
-      const newUrl = `${basePath}?buyToken=${token.title}`;
+      let newUrl = `${basePath}?buyToken=${token.title}`;
+
+      if (token.title === 'IUSD+') {
+        const encodedTokenTitle = encodeURIComponent(token.title);
+
+        newUrl = `${basePath}?buyToken=${encodedTokenTitle}`;
+      }
 
       navigate(newUrl);
     }
     setIsOpen(false);
   };
 
+  // const handleAmountChange = async (e) => {
+  //   const amount = e.target.value;
+  //   setUserAmount(amount);
+  //   if (onAmountChange) {
+  //     onAmountChange(amount);
+  //   }
+  // };
+
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
     setUserAmount(amount);
+
     if (onAmountChange) {
       onAmountChange(amount);
     }
   };
+
   const calculateReceiveAmount = (amount, rate) => {
     const receiveAmount = type === 'buy' ? amount / rate : amount * rate;
     return receiveAmount.toFixed(2);

@@ -29,19 +29,23 @@ const SubHeader = () => {
         zIndex: 999,
         background: '#FFB300',
         // height:"90px"}}>
-        height: `${isMobile ? '162px' : '90px'}`,
+        marginBottom: '50px',
         maxWidth: '100vw',
       }}
     >
-      <div className="container sub-page">
+      <div className="container sub-page" style={{ paddingBottom: '10px' }}>
         <div
-          className="row row-cols-1 row-cols-md-4 g-4 sub-logos"
+          className="sub-logos"
           style={{
-            justifyContent: 'center',
+            display: 'flex',
+            background: '#FFB300',
+            flexWrap: 'wrap',
+            gap: '5px',
+            justifyContent: 'flex-start',
             paddingTop: `${isMobile ? '25px' : '0'}`,
           }}
         >
-          <div className="col">
+          <div className="col card-container">
             <Link to="/indexx-exchange/dashboard">
               <div className="card">
                 <img
@@ -71,7 +75,7 @@ const SubHeader = () => {
             </Link>
           </div>
 
-          <div className="col">
+          <div className="col card-container">
             <Link to="/indexx-exchange/dashboard/capt-mycaptains">
               <div className="card">
                 <img
@@ -106,7 +110,7 @@ const SubHeader = () => {
               </div>
             </Link>
           </div>
-          <div className="col">
+          <div className="col card-container">
             <Link to="/indexx-exchange/dashboard/capt-leader">
               <div className="card">
                 <img
@@ -119,7 +123,7 @@ const SubHeader = () => {
                   }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Leader Captain Bee</h5>
+                  <h5 className="card-title">My Captain Bee</h5>
                   <Typography
                     component="p"
                     sx={
@@ -127,7 +131,7 @@ const SubHeader = () => {
                       '/indexx-exchange/dashboard/capt-leader'
                         ? {
                             height: '0.07px',
-                            width: '88px',
+                            width: '100%',
                             backgroundColor: '#000',
                           }
                         : null
@@ -137,7 +141,7 @@ const SubHeader = () => {
               </div>
             </Link>
           </div>
-          <div className="col" style={{ marginLeft: '-5px' }}>
+          <div className="col card-container">
             <Link to="/indexx-exchange/dashboard/capt-mybees">
               <div className="card">
                 <img
@@ -169,7 +173,7 @@ const SubHeader = () => {
               </div>
             </Link>
           </div>
-          <div className="col" style={{ marginLeft: '-15px' }}>
+          <div className="col card-container">
             <a href="/indexx-exchange/dashboard/capt-profile">
               <div className="card">
                 <img src={pen} className="card-img-top " alt="..." />
@@ -193,7 +197,7 @@ const SubHeader = () => {
             </a>
           </div>
 
-          <div className="col" style={{ marginLeft: '-20px' }}>
+          <div className="col card-container">
             <a href="/indexx-exchange/dashboard/honeycomb">
               <div className="card">
                 <img
@@ -224,7 +228,7 @@ const SubHeader = () => {
             </a>
           </div>
 
-          <div className="col" style={{ marginLeft: '-20px' }}>
+          <div className="col card-container">
             <a href="/indexx-exchange/dashboard/capt-greet">
               <div className="card">
                 <img
@@ -255,7 +259,7 @@ const SubHeader = () => {
             </a>
           </div>
 
-          <div className="col" style={{ marginLeft: '-20px' }}>
+          <div className="col card-container">
             <a href="/indexx-exchange/dashboard/capt-resource-mkt">
               <div className="card">
                 <img
@@ -293,7 +297,7 @@ const SubHeader = () => {
               </div>
             </a>
           </div>
-          <div className="col" style={{ marginLeft: '-20px' }}>
+          <div className="col card-container">
             <a href="/indexx-exchange/buy-sell">
               <div className="card">
                 <img
@@ -320,8 +324,6 @@ const SubHeader = () => {
               </div>
             </a>
           </div>
-
-          <div className="col" style={{ width: '100px' }}></div>
         </div>
       </div>
     </div>

@@ -15,12 +15,23 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getUserWallets } from '../../../services/api';
+import { baseURL, decodeJWT, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+
+// Define the makeStyles hook
+const useStyles = makeStyles((theme) => ({
+  greenText: {
+    color: `${theme.palette.success.main} !important`,
+  },
+  redText: {
+    color: `${theme.palette.error.main} !important`,
+  },
+}));
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -131,7 +142,9 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function EnhancedTable({ searchQuery, hideAssets }) {
+  const classes = useStyles();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [rows, setRows] = useState([]);
@@ -178,11 +191,42 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
-        if (email === null || email === undefined || email === '') {
-          navigate('/auth/login');
-        } else {
-          let userWallets = await getUserWallets(email);
-          const formattedData = userWallets.data.map((item) => ({
+
+        if (!email) {
+          const signInToken = searchParams.get('signInToken');
+          if (signInToken) {
+            const decodedToken = await decodeJWT(signInToken);
+            email = decodedToken.email;
+          } else {
+            window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+            return;
+          }
+        }
+
+        const userWallets = await getUserWallets(email);
+        const formattedData = userWallets.data.map((item) => {
+          const coinBalance = Number(item.coinBalance);
+          const coinPrice = Number(item.coinPrice);
+          const coinPrevPrice = Number(item.coinPrevPrice);
+          let todayPNL = null;
+
+          if (
+            coinBalance > 0 &&
+            !isNaN(coinPrice) &&
+            !isNaN(coinPrevPrice) &&
+            coinPrevPrice !== 0
+          ) {
+            const pnlValue = coinBalance * (coinPrice - coinPrevPrice);
+            const pnlPercentage =
+              ((coinPrice - coinPrevPrice) / coinPrevPrice) * 100;
+            todayPNL = {
+              value: pnlValue.toFixed(2),
+              percentage: pnlPercentage.toFixed(2),
+              isPositive: pnlValue >= 0,
+            };
+          }
+
+          return {
             id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
@@ -190,12 +234,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
               ? item.coinStakedBalance
               : 0,
             coin_price: item?.coinPrice,
-            todayPNL:
-              item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
+            todayPNL: todayPNL,
             coinNetwork: item.coinNetwork,
-          }));
-          setRows(formattedData);
-        }
+          };
+        });
+        setRows(formattedData);
       } catch (error) {
         setError(error);
       } finally {
@@ -204,7 +247,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     };
 
     fetchData();
-  }, []);
+  }, [navigate]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -257,7 +300,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows.map((row, index) => (
+            {visibleRows?.map((row, index) => (
               <TableRow role="checkbox" tabIndex={-1} key={row.id}>
                 <TableCell
                   component="th"
@@ -319,8 +362,17 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     <TableCell
                       align="right"
                       sx={{ borderBottom: 'none !important' }}
+                      className={
+                        row.todayPNL
+                          ? row.todayPNL.isPositive
+                            ? classes.greenText
+                            : classes.redText
+                          : ''
+                      }
                     >
-                      {row.todayPNL}
+                      {row.todayPNL
+                        ? `${row.todayPNL.value} (${row.todayPNL.percentage}%)`
+                        : '0.00'}
                     </TableCell>
                   </>
                 )}

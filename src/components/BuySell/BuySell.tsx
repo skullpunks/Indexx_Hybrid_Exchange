@@ -4,13 +4,53 @@ import '../IndexxSwap/IndexxSwap.css';
 import { BSProvider } from '../../utils/SwapContext';
 import BuySellMain from './BuySellMain';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { getCaptainBeeStatics } from '../../services/api';
+import { decodeJWT, getCaptainBeeStatics, loginWithToken } from '../../services/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const BuySell = () => {
   const [status, setStatus] = useState('');
-
+  const [searchParams] = useSearchParams();
   const [haspowerpack, setHaspowerpack] = useState(true);
   const [isCaptain, setisCaptain] = useState(false);
+  const defaultSignInToken = searchParams.get('signInToken');
+  let defaultToken = searchParams.get('buyToken') || 'INEX';
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const redirectFlag = localStorage.getItem('redirected');
+
+    if (defaultSignInToken && !redirectFlag) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  async function checkLogin(defaultSignInToken :any) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        window.location.reload();
+        // if (searchParams.get('buyToken')) {
+        //   navigate(`/update/home?buyToken=${defaultToken}`);
+        // } else {
+        //   navigate('/update/home');
+        // }
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   useEffect(() => {
     const userType =

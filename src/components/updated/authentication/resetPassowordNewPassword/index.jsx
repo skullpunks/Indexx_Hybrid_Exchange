@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Check from '../../../../assets/authentication/Check';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { resetPassword } from '../../../../services/api';
+import { baseURL, resetPassword } from '../../../../services/api';
 import Popup from '../../shared/Popup';
 
 const useStyles = makeStyles((theme) => ({
@@ -157,7 +157,7 @@ const ResetPassword = ({ email }) => {
 
   const handlePopupClose = () => {
     setShowPopup(false);
-    navigate('/auth/login');
+    window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
   };
 
   return (
@@ -179,7 +179,8 @@ const ResetPassword = ({ email }) => {
           <div className={classes.rightContentContainer}>
             <h3>Reset Password</h3>
             <div className="infoWindow">
-              In order to protect your account, withdrawals, payment services will be disabled for 24 hours after you change your password.
+              In order to protect your account, withdrawals, payment services
+              will be disabled for 24 hours after you change your password.
             </div>
             <InputField
               label={'New Password'}
@@ -255,16 +256,15 @@ const ResetPassword = ({ email }) => {
               helperText={formik.errors.confirmPassword}
             />
             <div style={{ margin: '25px 0px' }}></div>
-            <GenericButton 
-              text={loadings ? "Loading..." : "Submit"} 
-              onClick={formik.handleSubmit} 
+            <GenericButton
+              text={'Submit'}
+              onClick={formik.handleSubmit}
+              loading={loadings}
             />
           </div>
         </div>
       </div>
-      {showPopup && (
-        <Popup onClose={handlePopupClose} />
-      )}
+      {showPopup && <Popup onClose={handlePopupClose} />}
     </div>
   );
 };
