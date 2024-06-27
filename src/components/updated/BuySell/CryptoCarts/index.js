@@ -571,7 +571,7 @@ const allTokens = [
     threemonthExchangeRate: '+0.01%',
   },
   {
-    title: 'TLSA',
+    title: 'TSLA',
     subTitle: 'Indexx Stock Token',
     isCrypto: false,
     isStock: true,

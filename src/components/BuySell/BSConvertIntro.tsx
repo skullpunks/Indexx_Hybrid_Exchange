@@ -245,7 +245,7 @@ const BSConvertIntro: React.FC<(Props)> = ({ setScreenName, tokenType, subtokenT
 
     const isIndexxToken = (tokenTitle: string) => {
         const indexxTokens = ["IN500", "INEX", "INXC", "IUSD+", "ALCRYP", "AMZN", "APPL", "BCM", "CRYC10",
-            "EQSTK", "GOOGL", "INDXXF", "META", "MSFT", "NVDA", "PEP", "SNP500", "TLSA", "TOB"];
+            "EQSTK", "GOOGL", "INDXXF", "META", "MSFT", "NVDA", "PEP", "SNP500", "TSLA", "TOB"];
         return indexxTokens.includes(tokenTitle);
     };
 

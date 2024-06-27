@@ -369,7 +369,7 @@ const BSSellIntro: React.FC<Props> = ({
       'NVDA',
       'PEP',
       'SNP500',
-      'TLSA',
+      'TSLA',
       'TOB'
     ];
     return indexxTokens.includes(tokenTitle);

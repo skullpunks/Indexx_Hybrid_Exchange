@@ -455,7 +455,7 @@ const BuySellTabs = ({
       'NVDA',
       'PEP',
       'SNP500',
-      'TLSA',
+      'TSLA',
       'TOB',
     ];
     return indexxTokens.includes(tokenTitle);
