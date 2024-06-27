@@ -449,7 +449,7 @@ const CaptainDash = () => {
       )}
 
       {!isLoading && userType === 'CaptainBee' ? (
-        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+        <div style={{ paddingTop: `${isMobile ? '390px' : '220px'}` }}>
           <div
             className="font_20x fw-bold justify-content-center d-flex"
             style={{ marginLeft: `${isMobile ? '0' : '-535px'}` }}

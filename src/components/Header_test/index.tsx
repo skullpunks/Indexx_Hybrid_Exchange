@@ -434,12 +434,12 @@ const HeaderTest = () => {
                               marginBottom: '-83px',
                               zIndex: '10000000',
 
-                              transform: 'translateY(20px)',
+                              transform: 'translateY(10px)',
                             }}
                           >
                             <div
                               style={{
-                                width: isCaptain ? '80px' : '70px',
+                                width: isCaptain ? '60px' : '65px',
                                 height: isCaptain ? '80px' : '70px',
                                 backgroundImage: `url(${
                                   isCaptain === true ? frame : beeframe
