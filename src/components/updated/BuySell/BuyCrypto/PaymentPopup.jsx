@@ -155,7 +155,12 @@ const Popup = ({
   onSelectPaymentMethod,
   type,
   token,
+  spendToken,
 }) => {
+  console.log(
+    spendToken,
+    '=======================spendtoken====================='
+  );
   const classes = useStyles();
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -365,7 +370,9 @@ const Popup = ({
                   <img src={transactionIcon} alt="Asset Wallet" />
                   <p className={classes.btnText}>Asset Wallet</p>
                 </Box>
-                <p>${amount}</p>
+                <p>
+                  {amount} {spendToken?.title ?? ''}
+                </p>
               </button>
             ) : (
               <>

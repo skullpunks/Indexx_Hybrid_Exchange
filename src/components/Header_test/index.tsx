@@ -431,7 +431,7 @@ const HeaderTest = () => {
                         {!isMobile && isAuthenticated && (
                           <div
                             style={{
-                              marginBottom: '-83px',
+                              marginBottom: '-23px',
                               zIndex: '10000000',
 
                               transform: 'translateY(10px)',

@@ -535,6 +535,8 @@ const BuySellTabs = ({
   useEffect(() => {
     if (value !== 'buy') {
       setSelectedPaymentMethod('Asset Wallet');
+    } else {
+      setSelectedPaymentMethod('');
     }
   }, [value]);
   const formatPrice = (price) => {
@@ -686,6 +688,7 @@ const BuySellTabs = ({
                   selectedPaymentMethod || 'Select Transaction Method'
                 }
                 type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
+                spendToken={spendToken}
               />
               <div className={classes.estimatedPriceContainer}>
                 <Typography
@@ -756,6 +759,7 @@ const BuySellTabs = ({
         onSelectPaymentMethod={handlePaymentMethodSelect}
         type={`${value === 'buy' ? 'Buy' : 'Sell'}`}
         token={receiveToken}
+        spendToken={spendToken}
       />
     </Box>
   );
