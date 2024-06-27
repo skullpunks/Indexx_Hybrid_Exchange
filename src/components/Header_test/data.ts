@@ -1,7 +1,12 @@
 // import token from '../../assets/BSheader/tokens icon 1.svg';
 // import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 
-import { baseCEXURL, baseURL, decodeJWT, getUserShortToken } from '../../services/api';
+import {
+  baseCEXURL,
+  baseURL,
+  decodeJWT,
+  getUserShortToken,
+} from '../../services/api';
 
 let authenticatedUrl: any = null; // Variable to store the authenticated URL
 
@@ -488,51 +493,51 @@ const header_data = [
       },
     ],
   },
-  // {
-  //   mainTextDesktop: 'Academy',
-  //   mainTextMob: 'Academy',
-  //   active: false,
-  //   href: 'https://academy.indexx.ai/',
-  //   hasMegaDrop: true,
-  //   dropDownContent: [
-  //     {
-  //       heading: 'Explore',
-  //       mainList: true,
-  //       links: [
-  //         {
-  //           name: 'Become an Instructor',
-  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
-  //         },
-  //         {
-  //           name: 'Courses',
-  //           href: 'https://academy.indexx.ai/courses/?short=',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       heading: 'Action',
-  //       links: [
-  //         {
-  //           name: 'Log in',
-  //           href: 'https://academy.indexx.ai/authentication/',
-  //         },
-  //         {
-  //           name: 'Register',
-  //           href: 'https://academy.indexx.ai/authentication/',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       heading: 'Opportunity',
-  //       links: [
-  //         {
-  //           name: 'How to become an instructor?',
-  //           href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    mainTextDesktop: 'Academy',
+    mainTextMob: 'Academy',
+    active: false,
+    href: 'https://academy.indexx.ai/',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore',
+        mainList: true,
+        links: [
+          {
+            name: 'Become an Instructor',
+            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+          },
+          {
+            name: 'Courses',
+            href: 'https://academy.indexx.ai/courses/?short=',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        links: [
+          {
+            name: 'Log in',
+            href: 'https://academy.indexx.ai/authentication/',
+          },
+          {
+            name: 'Register',
+            href: 'https://academy.indexx.ai/authentication/',
+          },
+        ],
+      },
+      {
+        heading: 'Opportunity',
+        links: [
+          {
+            name: 'How to become an instructor?',
+            href: 'https://academy.indexx.ai/authentication/?next=%2Fbecome-an-instructor',
+          },
+        ],
+      },
+    ],
+  },
 
   {
     mainTextDesktop: 'WallStreet',
@@ -924,8 +929,15 @@ export default header_data;
 
 const processHeaderData = async (data: any) => {
   const promises = data.map(async (item: any) => {
-    if (item.mainTextDesktop === 'Lotto' || item.mainTextMob === 'Lotto' || item.mainTextDesktop === 'WallStreet' || item.mainTextMob === 'WallStreet' ||
-      item.mainTextDesktop === 'Meme' || item.mainTextMob === 'Meme' || item.mainTextDesktop === 'Tokens' || item.mainTextMob === 'Tokens'
+    if (
+      item.mainTextDesktop === 'Lotto' ||
+      item.mainTextMob === 'Lotto' ||
+      item.mainTextDesktop === 'WallStreet' ||
+      item.mainTextMob === 'WallStreet' ||
+      item.mainTextDesktop === 'Meme' ||
+      item.mainTextMob === 'Meme' ||
+      item.mainTextDesktop === 'Tokens' ||
+      item.mainTextMob === 'Tokens'
     ) {
       console.log('item.href', item.href);
       item.href = await getAuthenticatedUrl(item.href);
