@@ -191,7 +191,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
-
+  
         if (!email) {
           const signInToken = searchParams.get('signInToken');
           if (signInToken) {
@@ -202,14 +202,14 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             return;
           }
         }
-
+  
         const userWallets = await getUserWallets(email);
         const formattedData = userWallets.data.map((item) => {
           const coinBalance = Number(item.coinBalance);
           const coinPrice = Number(item.coinPrice);
           const coinPrevPrice = Number(item.coinPrevPrice);
           let todayPNL = null;
-
+  
           if (
             coinBalance > 0 &&
             !isNaN(coinPrice) &&
@@ -225,29 +225,34 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
               isPositive: pnlValue >= 0,
             };
           }
-
+  
           return {
             id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
-            staking_balance: item.coinStakedBalance
-              ? item.coinStakedBalance
-              : 0,
+            staking_balance: item.coinStakedBalance ? item.coinStakedBalance : 0,
             coin_price: item?.coinPrice,
             todayPNL: todayPNL,
             coinNetwork: item.coinNetwork,
           };
         });
-        setRows(formattedData);
+  
+        // Ensure unique rows by coin name (id)
+        const uniqueFormattedData = formattedData.filter((value, index, self) =>
+          index === self.findIndex((t) => t.id === value.id)
+        );
+  
+        setRows(uniqueFormattedData);
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, [navigate]);
+  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -260,22 +265,23 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
-
+  
       // Show all rows when hideAssets is false
       if (!hideAssets) {
         return matchesSearchQuery;
       }
-
+  
       // When hideAssets is true, show rows with amount or staking_balance > 0
       const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
   }, [rows, searchQuery, hideAssets]);
-
+  
   const visibleRows = useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
     [order, orderBy, filteredRows]
   );
+  
 
   if (loading) {
     return <div>Loading...</div>;
