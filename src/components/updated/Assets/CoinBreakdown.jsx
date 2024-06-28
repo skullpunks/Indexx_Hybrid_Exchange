@@ -105,7 +105,7 @@ const CoinBreakdown = () => {
   const classes = useStyles();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [hideAssets, setHideAssets] = useState(false);
+  const [hideAssets, setHideAssets] = useState(true);
 
   const handleSearchIconHover = () => {
     setSearchOpen(true);
