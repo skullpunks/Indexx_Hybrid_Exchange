@@ -151,14 +151,15 @@ const HeaderTest = () => {
         localStorage.getItem('access_token') !== undefined
           ? String(localStorage.getItem('access_token'))
           : undefined;
-      if (accessToken && accessToken !== 'null' && accessToken !== '') {
-        debugger
-        let resObj = await getCaptainBeeByEmail(String(email));
-        console.log("resObj", resObj)
-        username = resObj?.data.Username;
-      }
+      
 
       if (userType === 'CaptainBee') {
+        if (accessToken && accessToken !== 'null' && accessToken !== '') {
+          debugger
+          let resObj = await getCaptainBeeByEmail(String(email));
+          console.log("resObj", resObj)
+          username = resObj?.data.Username;
+        }
         setisCaptain(true);
         if (username) {
           getCaptainBeeStatics(String(username)).then((data) => {

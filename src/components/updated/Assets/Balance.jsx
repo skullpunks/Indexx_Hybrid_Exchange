@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
-import { getUserWallets, decodeJWT } from '../../../services/api';
+import { getUserWallets, decodeJWT, baseURL } from '../../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Define the makeStyles hook
