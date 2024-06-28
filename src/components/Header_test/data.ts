@@ -937,7 +937,9 @@ const processHeaderData = async (data: any) => {
       item.mainTextDesktop === 'Meme' ||
       item.mainTextMob === 'Meme' ||
       item.mainTextDesktop === 'Tokens' ||
-      item.mainTextMob === 'Tokens'
+      item.mainTextMob === 'Tokens' ||
+      item.mainTextDesktop === 'Academy' ||
+      item.mainTextMob === 'Academy'
     ) {
       console.log('item.href', item.href);
       item.href = await getAuthenticatedUrl(item.href);
