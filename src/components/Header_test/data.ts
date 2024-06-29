@@ -642,59 +642,6 @@ const header_data = [
     ],
   },
   {
-    mainTextDesktop: 'Elite Club',
-    mainTextMob: 'Elite Club',
-    active: false,
-    href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore Club',
-        mainList: true,
-        links: [
-          {
-            name: 'Asset Wallet',
-            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/wallet',
-          },
-          {
-            name: 'Power Packs',
-            href: 'https://cex.indexx.ai/indexx-exchange/power-pack',
-          },
-          {
-            name: 'Staking',
-            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/staking',
-          },
-          {
-            name: 'Web3 Wallet',
-            href: 'https://wallet.indexx.ai/login/sign-in',
-          },
-        ],
-      },
-      {
-        heading: 'Action',
-        links: [
-          {
-            name: 'Log in',
-            href: 'https://cex.indexx.ai/',
-          },
-          {
-            name: 'Register',
-            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/get-started',
-          },
-        ],
-      },
-      {
-        heading: 'Perks',
-        links: [
-          {
-            name: 'Benefits of elite club',
-            href: 'https://cex.indexx.ai/indexx-exchange/elite-club',
-          },
-        ],
-      },
-    ],
-  },
-  {
     mainTextDesktop: 'Company',
     mainTextMob: 'Company',
     active: false,
@@ -797,6 +744,15 @@ export const auth_header_data = [
     isAuth: true,
     active: false,
     href: '#',
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
+    mainTextDesktop: 'How it Works',
+    mainTextMob: 'How it Works',
+    isAuth: false,
+    active: false,
+    href: `https://indexx.ai/how-master-login-works`,
     hasMegaDrop: false,
     dropDownContent: [],
   },
