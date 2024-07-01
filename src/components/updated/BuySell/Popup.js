@@ -96,7 +96,7 @@ const GeneralPopup = ({ message, onClose }) => {
 
   const classes = useStyles();
   const handleAccountRedirect = () => {
-    navigate('/account');
+    navigate('/indexx-exchange/account');
   };
 
   return (
