@@ -326,9 +326,8 @@ const BuySellTabs = ({
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
-        setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
-        );
+        setGeneralMessage('As Captain bee, Please apply for buy approval from honey bee');
+        setIsModalOpen(true);
         setLoadings(false);
         return;
       }
@@ -356,7 +355,8 @@ const BuySellTabs = ({
       //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
-      setMessage(res.data);
+      setIsModalOpen(true);
+      setGeneralMessage(res.data);
     }
   };
 
@@ -372,9 +372,8 @@ const BuySellTabs = ({
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
-        setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
-        );
+        setGeneralMessage('As Captain bee, Please apply for buy approval from honey bee');
+        setIsModalOpen(true);
         setLoadings(false);
         return;
       }
@@ -406,7 +405,8 @@ const BuySellTabs = ({
       return res.data.orderId;
     } else {
       setLoadings(false);
-      setMessage(res.data);
+      setGeneralMessage(res.data);
+      setIsModalOpen(true);
       return null;
     }
   };
