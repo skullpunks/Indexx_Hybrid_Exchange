@@ -17,6 +17,7 @@ import {
   getHoneyBeeDataByUsername,
 } from '../../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
+import GeneralPopup from '../Popup';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -177,6 +178,7 @@ const Popup = ({
   const [permissionData, setPermissionData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [message, setMessage] = useState();
+  const [showMessagePopup, setShowMessagePopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -212,6 +214,7 @@ const Popup = ({
           'As Captain bee, Please apply for buy approval from honey bee'
         );
         setLoadings(false);
+        setShowMessagePopup(true);
         return;
       }
       res = await createBuyOrder(
@@ -239,6 +242,7 @@ const Popup = ({
     } else {
       setLoadings(false);
       setMessage(res.data);
+      setShowMessagePopup(true);
     }
   };
 
@@ -261,6 +265,7 @@ const Popup = ({
           'As Captain bee, Please apply for buy approval from honey bee'
         );
         setLoadings(false);
+        setShowMessagePopup(true);
         return;
       }
       res = await createBuyOrder(
@@ -291,6 +296,7 @@ const Popup = ({
     } else {
       setLoadings(false);
       setMessage(res.data);
+      setShowMessagePopup(true);
       return null;
     }
   };
@@ -333,98 +339,106 @@ const Popup = ({
   };
 
   return (
-    <div
-      className={`${open ? classes.dataShow : ''} ${classes.bnMask} ${
-        classes.bnModal
-      } ${classes.bidsFullModal}`}
-    >
-      <div className="bnModalWrap">
-        <div className={classes.contentContainer}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <div></div>
-            <h3>Pay With</h3>{' '}
-            <div onClick={onClose} style={{ cursor: 'pointer' }}>
-              <CloseIcon
-                color={theme.palette.text.secondary}
-                sx={{
-                  '&:hover': {
-                    color: theme.palette.text.primary,
-                  },
-                }}
-              />
+    <>
+      <div
+        className={`${open ? classes.dataShow : ''} ${classes.bnMask} ${
+          classes.bnModal
+        } ${classes.bidsFullModal}`}
+      >
+        <div className="bnModalWrap">
+          <div className={classes.contentContainer}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              <div></div>
+              <h3>Pay With</h3>{' '}
+              <div onClick={onClose} style={{ cursor: 'pointer' }}>
+                <CloseIcon
+                  color={theme.palette.text.secondary}
+                  sx={{
+                    '&:hover': {
+                      color: theme.palette.text.primary,
+                    },
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <Box className={classes.container} style={{ width: '100%' }}>
-            {type === 'Sell' ? (
-              <button
-                className={classes.button}
-                onClick={() => handlePaymentMethodSelect('Asset Wallet')}
-              >
-                <Box className={classes.iconTextContainer}>
-                  <img src={transactionIcon} alt="Asset Wallet" />
-                  <p className={classes.btnText}>Asset Wallet</p>
-                </Box>
-                <p>
-                  {amount} {spendToken?.title ?? ''}
-                </p>
-              </button>
-            ) : (
-              <>
+            <Box className={classes.container} style={{ width: '100%' }}>
+              {type === 'Sell' ? (
                 <button
                   className={classes.button}
-                  onClick={() => handlePaymentMethodSelect('Credit Card')}
+                  onClick={() => handlePaymentMethodSelect('Asset Wallet')}
                 >
                   <Box className={classes.iconTextContainer}>
-                    <img src={creditCard} alt="Credit Card" />
-                    <p className={classes.btnText}>Credit Card</p>
+                    <img src={transactionIcon} alt="Asset Wallet" />
+                    <p className={classes.btnText}>Asset Wallet</p>
                   </Box>
-                  <p>${amount}</p>
+                  <p>
+                    {amount} {spendToken?.title ?? ''}
+                  </p>
                 </button>
-                <button
-                  className={classes.button}
-                  onClick={() => handlePaymentMethodSelect('Paypal')}
-                >
-                  <Box className={classes.iconTextContainer}>
-                    <img src={paypal} alt="Paypal" />
-                    <p className={classes.btnText}>Paypal</p>
-                  </Box>
-                  <p>${amount}</p>
-                </button>
-                <button
-                  className={classes.button}
-                  onClick={() => handlePaymentMethodSelect('Zelle')}
-                >
-                  <Box className={classes.iconTextContainer}>
-                    <img src={zelle} alt="Zelle" />
-                    <p className={classes.btnText}>Zelle</p>
-                  </Box>
-                  <p>${amount}</p>
-                </button>
-                <button
-                  className={classes.button}
-                  onClick={() => handlePaymentMethodSelect('Venmo')}
-                >
-                  <Box className={classes.iconTextContainer}>
-                    <img src={venmo} alt="Venmo" />
-                    <p className={classes.btnText}>Venmo</p>
-                  </Box>
-                  <p>${amount}</p>
-                </button>
-              </>
-            )}
-          </Box>
-          <div className={classes.btnContainer}>
-            <GenericButton text="Confirm" onClick={onClose} />
+              ) : (
+                <>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('Credit Card')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={creditCard} alt="Credit Card" />
+                      <p className={classes.btnText}>Credit Card</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('Paypal')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={paypal} alt="Paypal" />
+                      <p className={classes.btnText}>Paypal</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('Zelle')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={zelle} alt="Zelle" />
+                      <p className={classes.btnText}>Zelle</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('Venmo')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={venmo} alt="Venmo" />
+                      <p className={classes.btnText}>Venmo</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                </>
+              )}
+            </Box>
+            <div className={classes.btnContainer}>
+              <GenericButton text="Confirm" onClick={onClose} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {showMessagePopup && (
+        <GeneralPopup
+          message={message}
+          onClose={() => setShowMessagePopup(false)}
+        />
+      )}
+    </>
   );
 };
 

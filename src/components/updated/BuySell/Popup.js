@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -90,8 +91,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = ({ message, onClose }) => {
+const GeneralPopup = ({ message, onClose }) => {
+  const navigate = useNavigate();
+
   const classes = useStyles();
+  const handleAccountRedirect = () => {
+    navigate('/account');
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal} ${classes.bidsFullModal}`}
@@ -101,6 +108,9 @@ const Popup = ({ message, onClose }) => {
           <h3>{message}</h3>
           <div className={classes.btnContainer}>
             <GenericButton text="Close" onClick={onClose} />
+            {message.includes('KYC') && (
+              <GenericButton text="Complete KYC Now" onClick={handleAccountRedirect} />
+            )}
           </div>
         </div>
       </div>
@@ -108,4 +118,4 @@ const Popup = ({ message, onClose }) => {
   );
 };
 
-export default Popup;
+export default GeneralPopup;
