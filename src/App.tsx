@@ -142,6 +142,7 @@ import DepositCryptoChange from './pages/depositCrypto/DepositCryptoChange';
 import DepositCryptoSuccessPage from './pages/depositCrypto/DepositSuccess';
 import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSuccess';
 import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
+import ReferralPage from './pages/Refferal';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -176,27 +177,27 @@ function App() {
     const isAllowed =
       localStorage.getItem('userType') === 'CaptainBee' &&
       localStorage.getItem('haspp') === 'false';
-  
+
     const params = new URLSearchParams(window.location.search);
     const defaultSignInToken = params.get('signInToken');
-  
+
     if (isAuthenticated && !isAllowed) {
       return <Outlet />;
     } else if (!isAuthenticated) {
       if (defaultSignInToken) {
-        console.log("I am here");
+        console.log('I am here');
         // Optionally store the token or take other actions
       } else {
         return <Navigate to="/update/home/" />;
       }
     }
-  
+
     if (isAllowed) {
       return <Navigate to="/indexx-exchange/power-pack" />;
     }
     return <Outlet />;
   };
-  
+
   console.log(window.location.pathname, 'path');
 
   return (
@@ -212,6 +213,8 @@ function App() {
           {/* <SecondaryHeader /> */}
           <Routes>
             <Route path="/" element={<Navigate to="/update/home/" />} />
+
+            <Route path="/referral" element={<ReferralPage />} />
             <Route element={<PrivateRoutes />}>
               <Route
                 path="/indexx-exchange/send"
@@ -219,6 +222,7 @@ function App() {
               />
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
+
               <Route
                 path="/indexx-exchange/buy-sell/staking"
                 element={<StakingPage />}
