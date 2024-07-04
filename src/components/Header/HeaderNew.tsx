@@ -50,7 +50,7 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   localStorage.removeItem('email');
   localStorage.clear(); //clear all localstorage
   console.log(userType);
-  debugger;
+  
   window.location.href = `${baseURL}/auth/login?action=Logout`;
   // if (userType === 'CaptainBee') {
   //   window.location.href = '/indexx-exchange/buy-sell/hive-login';

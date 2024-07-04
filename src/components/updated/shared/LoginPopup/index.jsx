@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
-import GenericButton from '../shared/Button';
-import { useNavigate } from 'react-router-dom';
+import GenericButton from '../Button';
+import passwordChanged from '../../../../assets/updated/popup/passchanged.svg';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   bidsFullModal: {},
   bnMask: {
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, .5)',
+    backgroundColor: ' rgba(0, 0, 0, .5)',
     bottom: 0,
     display: 'flex',
     justifyContent: 'center',
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
       transitionDuration: '250ms',
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
-      width: (props) => props.width || '360px', // dynamic width
+      width: '360px',
     },
   },
   contentContainer: {
@@ -91,26 +91,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GeneralPopup = ({ message, onClose, width }) => {
-  const navigate = useNavigate();
-  const classes = useStyles({ width });
-
-  const handleAccountRedirect = () => {
-    navigate('/indexx-exchange/account');
-  };
-
+const Popup = ({ onClose }) => {
+  const classes = useStyles();
   return (
     <div
-      className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal} ${classes.bidsFullModal}`}
+      className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
     >
       <div className="bnModalWrap">
         <div className={classes.contentContainer}>
-          <h3>{message}</h3>
+          <img src={passwordChanged} height="100px" />
+          <h3>Password Changed</h3>
+          <p>
+            Your password has been successfully changed. Please log in with the
+            new password.
+          </p>
           <div className={classes.btnContainer}>
-            <GenericButton text="Close" onClick={onClose} />
-            {message.includes('KYC') && (
-              <GenericButton text="Complete KYC Now" onClick={handleAccountRedirect} />
-            )}
+            <GenericButton text="Login" onClick={onClose} />
           </div>
         </div>
       </div>
@@ -118,4 +114,4 @@ const GeneralPopup = ({ message, onClose, width }) => {
   );
 };
 
-export default GeneralPopup;
+export default Popup;

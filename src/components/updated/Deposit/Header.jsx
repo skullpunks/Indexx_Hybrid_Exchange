@@ -56,7 +56,7 @@ const Header = () => {
   };
 
   const handleDepositCryptoClick = () => {
-    navigate('/indexx-exchange/buy-sell/deposit-crypto');
+    navigate('/deposit-crypto-select-coin');
   };
 
   return (

@@ -37,7 +37,7 @@ const BuySellLoginContentHive: React.FC = () => {
       OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
 
-      debugger;
+      
       localStorage.setItem('user', resObj?.email);
       const userKey = cryptr.encrypt(values.password);
       localStorage.setItem('userkey', userKey);

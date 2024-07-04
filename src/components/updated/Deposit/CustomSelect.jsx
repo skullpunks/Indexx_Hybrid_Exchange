@@ -5,8 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function CustomSelectBox({ items, type, onCurrencyChange  }) {
-  console.log('items', items);
+export default function CustomSelectBox({ items, type, onCurrencyChange, defaultValue }) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -16,7 +15,6 @@ export default function CustomSelectBox({ items, type, onCurrencyChange  }) {
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
         backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
         color: `${theme.palette.text.primary}`, // Custom dropdown text color
-        // bgColor: 'pink',
         '&>*': {
           backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
           color: `${theme.palette.text.primary}`, // Custom dropdown text color
@@ -44,20 +42,21 @@ export default function CustomSelectBox({ items, type, onCurrencyChange  }) {
     },
   };
 
-  const [selectedCurrency, setSelectedCurrency] = React.useState('');
+  const [selectedValue, setSelectedValue] = React.useState(defaultValue || '');
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedCurrency(value);
+    setSelectedValue(value);
     onCurrencyChange(value);
   };
+
   return (
     <FormControl sx={{ width: '100%' }}>
       <Select
         displayEmpty
-        value={selectedCurrency}
+        value={selectedValue}
         onChange={handleChange}
         sx={{
           width: '100%',
@@ -71,7 +70,6 @@ export default function CustomSelectBox({ items, type, onCurrencyChange  }) {
             borderRadius: '12px',
           },
           '& .MuiSelect-outlined': {
-            // border: 'none',
             borderRadius: '12px',
             backgroundColor: theme.palette.background.default,
             color: `${theme.palette.text.primary} !important`,

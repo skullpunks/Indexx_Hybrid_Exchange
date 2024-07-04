@@ -28,7 +28,7 @@ const BuySellEmailAuth = () => {
     if (value.length === maxLength) {
       let next = e.currentTarget.nextElementSibling;
       // let prev = e.currentTarget.previousElementSibling;
-      debugger;
+      
       if (next === null) {
         document.getElementById('verify_btn')?.focus();
       } else if (e.key === 'Tab' && e.shiftKey === true) {

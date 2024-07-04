@@ -53,7 +53,7 @@ const Bridge = () => {
   const handlewallet = () => {
     let access_token = String(localStorage.getItem('access_token'));
     console.log('access', access_token);
-    debugger;
+    
     if (access_token) {
       let decoded = decodeJWT(access_token);
       const userEmail = decoded.email;

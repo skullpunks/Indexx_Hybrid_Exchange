@@ -680,6 +680,14 @@ const header_data = [
             name: 'Document',
             href: 'https://indexx.ai/indexx-exchange/coming-soon',
           },
+          {
+            name: 'Whales Club',
+            href: 'https://docs.google.com/presentation/d/1qfCXCVQUYmpz2hGEmqzqLxrspHe4tue3Tk8CwW8sFoU/edit#slide=id.g2c4d99d1558_0_70',
+          },
+          {
+            name: 'Elite Club',
+            href: 'https://docs.google.com/presentation/d/1KdEK2hYxPFRpqeavjd2iol4lCErRZq-_xbURg2bFnAg/edit#slide=id.g2a028cbc650_0_0',
+          },
         ],
       },
       {
@@ -801,7 +809,7 @@ export const auth_header_data = [
           },
           {
             name: 'Deposit',
-            href: '/indexx-exchange/buy-sell/deposit-crypto',
+            href: '/deposit-crypto-select-coin',
           },
           {
             name: 'Notification',
@@ -833,7 +841,7 @@ export const auth_header_data = [
           },
           {
             name: 'Withdraw',
-            href: '/indexx-exchange/buy-sell/withdraw-crypto',
+            href: '/withdraw-crypto-select-coin',
           },
           {
             btn: true,

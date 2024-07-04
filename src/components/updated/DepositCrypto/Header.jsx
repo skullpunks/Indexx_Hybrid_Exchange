@@ -52,11 +52,11 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleOrderHistoryClick = () => {
-    // navigate('/indexx-exchange/buy-sell/order-history');
+    navigate('/indexx-exchange/buy-sell/order-history');
   };
 
-  const handleDepositCryptoClick = () => {
-    // navigate('/indexx-exchange/buy-sell/deposit-crypto');
+  const handleDepositFiatClick = () => {
+    navigate('/deposit-select-currency');
   };
 
   return (
@@ -75,7 +75,7 @@ const Header = () => {
             className={classes.button}
             variant="outlined"
             style={{ borderColor: '#E9E9E9', color: '#E9E9E9' }}
-            onClick={handleDepositCryptoClick}
+            onClick={handleDepositFiatClick}
           >
             Deposit Fiat <RightArrow fill={'#E9E9E9'} />
           </Button>

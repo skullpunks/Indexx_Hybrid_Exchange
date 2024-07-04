@@ -155,7 +155,7 @@ const HeaderTest = () => {
 
       if (userType === 'CaptainBee') {
         if (accessToken && accessToken !== 'null' && accessToken !== '') {
-          debugger
+          
           let resObj = await getCaptainBeeByEmail(String(email));
           console.log("resObj", resObj)
           username = resObj?.data.Username;
@@ -289,7 +289,7 @@ const HeaderTest = () => {
     localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
-    debugger;
+    
     window.location.href = `${baseURL}/auth/login?action=Logout`;
     // if (userType === 'CaptainBee') {
     //   window.location.href = '/auth/login';

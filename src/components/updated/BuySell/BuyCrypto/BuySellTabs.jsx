@@ -198,7 +198,7 @@ const BuySellTabs = ({
     const user = localStorage.getItem('user');
     console.log('!!email && !!user', !!email && !!user);
     setIsLoggedIn(!!email && !!user);
-    debugger;
+    
   }, []);
 
 
