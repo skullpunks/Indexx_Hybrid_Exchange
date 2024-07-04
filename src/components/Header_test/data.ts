@@ -845,7 +845,7 @@ export const auth_header_data = [
           },
           {
             name: 'Deposit',
-            href: '/indexx-exchange/buy-sell/deposit-crypto',
+            href: '/deposit-crypto-select-coin',
           },
           {
             name: 'Notification',
@@ -877,7 +877,7 @@ export const auth_header_data = [
           },
           {
             name: 'Withdraw',
-            href: '/indexx-exchange/buy-sell/withdraw-crypto',
+            href: '/withdraw-crypto-select-coin',
           },
           {
             btn: true,

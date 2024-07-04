@@ -283,7 +283,7 @@ const BuyContent: React.FC<Props> = ({
       e.currentTarget.style.fontSize = charFontSize + 'ch';
 
       let value = BSvalue?.fromToken;
-      // debugger;
+      // 
       let getRequiredCoin = filteredtokens.find((x) => x.address === value);
       await checkMinMaxValue(String(getRequiredCoin?.title), parseInt(testVal));
     }

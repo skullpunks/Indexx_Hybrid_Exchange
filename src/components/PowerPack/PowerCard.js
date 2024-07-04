@@ -76,7 +76,7 @@ const PowerCard = ({ card, type }) => {
         powerPackAmount,
         discountCode
       );
-      debugger;
+      
       let res = await createPowerPackOrder(
         purchasedProduct,
         paymentMethodUsed,

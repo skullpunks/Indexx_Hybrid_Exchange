@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
       transitionDuration: '250ms',
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
-      width: '360px',
+      width: (props) => props.width || '360px', // dynamic width
     },
   },
   contentContainer: {
@@ -91,10 +91,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GeneralPopup = ({ message, onClose }) => {
+const GeneralPopup = ({ message, onClose, width }) => {
   const navigate = useNavigate();
+  const classes = useStyles({ width });
 
-  const classes = useStyles();
   const handleAccountRedirect = () => {
     navigate('/indexx-exchange/account');
   };

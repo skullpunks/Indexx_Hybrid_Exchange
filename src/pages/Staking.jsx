@@ -10,7 +10,7 @@ const StakingPage = () => {
 
   useEffect(() => {
     const redirectFlag = localStorage.getItem('redirected');
-    debugger;
+    
     if (defaultSignInToken && !redirectFlag) {
       console.log('I am here ', defaultSignInToken);
       checkLogin(defaultSignInToken);

@@ -14,7 +14,7 @@ import Timer from "../../utils/Timer";
 
 import { useState, useEffect } from 'react';
 import OpenNotification from '../OpenNotification/OpenNotification';
-import { decodeJWT, resendEmailCode, validateEmail } from "../../services/api";
+import { decodeJWT, resendEmailCode, validateOtp, sendOtp } from "../../services/api";
 
 const BuySellVerifyEmail = () => {
     const [isTimerDone, setIsTimerDone] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const BuySellVerifyEmail = () => {
     const resendEmail = async () => {
         try {
             setLoadings(true);
-            let res = await resendEmailCode(email);
+            let res = await sendOtp(email);
             if (res.status === 200) {
                 OpenNotification('success', res.data);
                 setIsTimerDone(false);
@@ -59,7 +59,7 @@ const BuySellVerifyEmail = () => {
         if (value.length === maxLength) {
             let next = e.currentTarget.nextElementSibling;
             // let prev = e.currentTarget.previousElementSibling;
-            debugger;
+            
             if (next === null) {
                 document.getElementById('verify_btn')?.focus();
             } else if (e.key === 'Tab' && e.shiftKey === true) {
@@ -138,7 +138,7 @@ const BuySellVerifyEmail = () => {
         setLoadings(true);
         console.log("I am here", email)
 
-        const res = await validateEmail(email, otpCode.join('').toString());
+        const res = await validateOtp(email, otpCode.join('').toString());
         if (res.status === 200) {
             OpenNotification('success', res.data);
             navigate('/indexx-exchange/account');
