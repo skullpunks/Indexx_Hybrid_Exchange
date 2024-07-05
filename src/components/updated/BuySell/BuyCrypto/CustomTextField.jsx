@@ -15,7 +15,7 @@ import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import smbanner from '../../../../assets/updated/buySell/Small Banner.svg';
+//import smbanner from '../../../../assets/updated/buySell/Small Banner.svg';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -455,7 +455,7 @@ const CustomTextField = ({
             </div>
           </ClickAwayListener>
         )}
-        {selectedToken.title === 'WIBS' && type === 'buy' && (
+        {/* {selectedToken.title === 'WIBS' && type === 'buy' && (
           <img
             src={smbanner}
             style={{
@@ -463,7 +463,7 @@ const CustomTextField = ({
               width: '100%',
             }}
           />
-        )}
+        )} */}
       </div>
     </>
   );
