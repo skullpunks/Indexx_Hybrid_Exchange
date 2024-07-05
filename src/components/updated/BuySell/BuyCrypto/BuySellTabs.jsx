@@ -198,9 +198,7 @@ const BuySellTabs = ({
     const user = localStorage.getItem('user');
     console.log('!!email && !!user', !!email && !!user);
     setIsLoggedIn(!!email && !!user);
-    
   }, []);
-
 
   console.log('defaultReceiveToken', defaultReceiveToken);
   const handleChange = (value) => {
@@ -232,7 +230,10 @@ const BuySellTabs = ({
       } else if (type === 'Receive') {
         const selectedTokenTitle = defaultTokenFromUrl;
         const selectedTokenImage = defaultTokenFromUrl;
-        setReceiveToken({ title: selectedTokenTitle, image: selectedTokenImage });
+        setReceiveToken({
+          title: selectedTokenTitle,
+          image: selectedTokenImage,
+        });
         onReceiveTokenChange(selectedTokenTitle);
         console.log('receiveToken', selectedTokenTitle);
       }
@@ -324,7 +325,9 @@ const BuySellTabs = ({
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
-        setGeneralMessage('As Captain bee, Please apply for buy approval from honey bee');
+        setGeneralMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
         setIsModalOpen(true);
         setLoadings(false);
         return;
@@ -370,7 +373,9 @@ const BuySellTabs = ({
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
-        setGeneralMessage('As Captain bee, Please apply for buy approval from honey bee');
+        setGeneralMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
         setIsModalOpen(true);
         setLoadings(false);
         return;
@@ -735,7 +740,7 @@ const BuySellTabs = ({
             >
               <GenericButton
                 text="Login/Signup"
-                onClick={() =>  {
+                onClick={() => {
                   window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
                 }}
                 styles={{
