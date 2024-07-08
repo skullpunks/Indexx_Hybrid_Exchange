@@ -20,8 +20,9 @@ interface DataType {
     amount: number;
     destination: string;
     txid: string;
+    notes?: string;
+    balance?: number; // Adding balance field
 }
-
 
 const BSTransactionCryptoHistoryTable: React.FC = () => {
     const [selection, setSelection] = useState({
@@ -30,113 +31,88 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         status: '',
         time: '30',
         transactionHash: '',
-    })
+    });
     const pageSize = 10;
     const [current, setCurrent] = useState(1);
-    const [txList, setTxList] = useState() as any;
-    const [txListFilter, setTxListFilter] = useState() as any;
+    const [txList, setTxList] = useState([]) as any;
+    const [txListFilter, setTxListFilter] = useState([]) as any;
     const [, copy] = useCopyToClipboard();
     const [valueInput, setValueInput] = useState('');
+
     const columns: ColumnsType<DataType> = [
-
-        // {
-        //     title: "Time",
-        //     dataIndex: 'modified',
-        //     key: 'modified',
-        //     render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-        //     responsive: ["xs"]
-        // },
-        // {
-        //     title: "Amount",
-        //     render: (record) => (
-        //         <React.Fragment>
-        //             {record.amount}
-
-        //             {record.currencyRef}
-        //         </React.Fragment>
-        //     ),
-        //     responsive: ["xs"]
-        // },
         {
             title: 'Time',
-            dataIndex: 'modified',
-            key: 'modified',
+            dataIndex: 'txDate',
+            key: 'txDate',
             render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
-            // responsive: ["sm"],
         },
         {
             title: 'Asset',
             dataIndex: 'currencyRef',
             key: 'currencyRef',
             render: text => <span>{text}</span>,
-            // responsive: ["sm"],
         },
         {
             title: 'Type',
             dataIndex: 'transactionType',
             key: 'transactionType',
-            // responsive: ["sm"]
         },
         {
             title: 'Deposit Wallet',
             dataIndex: 'walletType',
             key: 'walletType',
             render: text => <span>{text}</span>,
-            // responsive: ["sm"],
         },
         {
-            title: 'Amount',
+            title: 'Amount / Balance',
             key: 'amount',
-            dataIndex: 'amount',
-            // responsive: ["sm"],
+            render: (_, record) => (
+                <span>
+                    {record.amount.toLocaleString()} / ${record.balance ? record.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
+                </span>
+            ),
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            // responsive: ["sm"],
         },
         {
             title: 'Transaction Hash',
             key: 'txId',
             render: (_, record) => (
                 <span>
-                    {/* {record.txId} */}
-                    {/* {ShortenText(record.txId, 0, 20) + "..."} */}
                     {(record.txId.length > 20) ? ShortenText(record.txId, 0, 20) + "..." : record.txId}
                     <CopyOutlined className='float-left padding-lr-5x hover_icon ' onClick={() => copy(record.txId)} />
                 </span>
-
             ),
-            // responsive: ["sm"],
         },
         {
             title: 'Destination',
             key: 'to',
             render: (_, record) => (
                 <span>
-                    <span>
-                        {/* {record.to} */}
-                        {/* {ShortenText(record.to, 0, 20) + "..."} */}
-                        {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
-
-                    </span>
+                    {(record.to.length > 20) ? ShortenText(record.to, 0, 20) + "..." : record.to}
                     <span style={{ textAlign: 'right' }}>
                         <CopyOutlined className='padding-lr-1x hover_icon' onClick={() => copy(record.to)} />
-                        {/* <LinkOutlined /> */}
                     </span>
                 </span>
             ),
-            // responsive: ["sm"],
         },
+        {
+            title: 'Notes',
+            key: 'notes',
+            dataIndex: 'notes',
+            render: text => text ? <span title={text}>{text.length > 25 ? `${text.slice(0, 25)}...` : text}</span> : null,
+        }
     ];
 
-
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken: any = decodeJWT(String(token)) as any;
+        const fetchData = async () => {
+            const token = localStorage.getItem('access_token');
+            const decodedToken: any = decodeJWT(String(token)) as any;
 
-        transactionList(decodedToken?.email, '').then((res) => {
+            const res = await transactionList(decodedToken?.email, '');
             const results = res.data;
             let finalArr = [];
             for (let i = 0; i < results.length; i++) {
@@ -145,13 +121,24 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     finalArr.push(results[i]);
                 }
             }
-            setTxList(finalArr);
-            setTxListFilter(finalArr);
-        });
+
+            // Add notes if the user has WIBS
+            const wibsNotes = "You have WIBS coins! These were purchased during a special offer: Buy 1 WIBS coin, receive 9 bonus coins.";
+            const transactionsWithNotes = finalArr.map(tx => {
+                if (tx.currencyRef === 'WIBS') {
+                    tx.notes = wibsNotes;
+                }
+                return tx;
+            });
+
+            setTxList(transactionsWithNotes);
+            setTxListFilter(transactionsWithNotes);
+        };
+
+        fetchData();
     }, []);
 
     const handleChangeTime = (value: string) => {
-
         const pastDate = moment().subtract(+value, "days").format('YYYY-MM-DD')
         if (!isNaN(+value)) {
             setSelection({
@@ -187,11 +174,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             })
             setTxListFilter(txListFilterData);
         }
-
     };
+
     const handleChangeStatus = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-
         if (value !== 'all') {
             setSelection({
                 type: selection.type,
@@ -202,13 +188,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-
                 return data.status?.toLowerCase() === value?.toLowerCase()
                     && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
-
             })
             setTxListFilter(txListFilterData);
         }
@@ -222,19 +206,18 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
+                    && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
                     && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
-
             })
             setTxListFilter(txListFilterData);
         }
     };
+
     const handleChangeType = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
-
         if (value !== 'all') {
             setSelection({
                 type: value,
@@ -243,25 +226,16 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: selection.time,
                 transactionHash: selection.transactionHash,
             });
-            
-            
             const txListFilterData = txList.filter((data: any) => {
-                
-                
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return data.transactionType?.toLowerCase() === value?.toLowerCase()
                     && (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
                     && (!selection.transactionHash || data.txId?.toLowerCase().includes(selection.transactionHash?.toLowerCase()));
-
             })
             setTxListFilter(txListFilterData);
-
-            // WITHDRAW_CYRPTO WITHDRAW_CRYPTO
         }
-
         else {
             setSelection({
                 type: '',
@@ -271,10 +245,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 transactionHash: selection.transactionHash,
             });
             const txListFilterData = txList.filter((data: any) => {
-                
-                
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                // && data.currencyRef?.toLowerCase() === value?.toLowerCase()
                 return (!selection.asset || data.currencyRef?.toLowerCase() === selection.asset?.toLowerCase())
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
@@ -283,6 +254,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             setTxListFilter(txListFilterData);
         }
     };
+
     const handleChangeAsset = (value: string) => {
         const pastDate = moment().subtract(+selection.time, "days").format('YYYY-MM-DD')
         if (value !== 'all') {
@@ -295,7 +267,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
                 return data.currencyRef?.toLowerCase() === value?.toLowerCase()
                     && (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
@@ -314,7 +285,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             });
             const txListFilterData = txList.filter((data: any) => {
                 let valueDate = moment(data.created).format('YYYY-MM-DD')
-                
                 return (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
                     && (!selection.type || data.transactionType?.toLowerCase() === selection.type?.toLowerCase())
                     && (!selection.status || data.status?.toLowerCase() === selection.status?.toLowerCase())
@@ -324,16 +294,14 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         }
     };
 
-
     const getData = (current: number, pageSize: number) => {
-        // Normally you should get the data from the server
         const xx = txListFilter && txListFilter.slice((current - 1) * pageSize, current * pageSize);
-        return xx
+        return xx;
     };
 
     const onChageSearch = (e: any) => {
         let val = e.currentTarget.value;
-        setValueInput(val)
+        setValueInput(val);
         setSelection({
             type: selection.type,
             asset: selection.asset,
@@ -354,6 +322,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         });
         setTxListFilter(filterDate);
     };
+
     const MyPagination = ({ total, onChange, current }: any) => {
         return (
             <Pagination
@@ -368,8 +337,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             />
         );
     };
+
     return (
-        <div className='flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x '>
+        <div className='flex-align-stretch bs_main width-100 margin-t-3x padding-t-2x'>
             <div className='d-flex transaction_filters margin-b-3x'>
                 <div>
                     <label>Type</label> <br />
@@ -410,7 +380,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <Select defaultValue="all" onChange={handleChangeStatus}>
                         <Option value="all">All</Option>
                         <Option value="Completed">Completed</Option>
-                        {/* ask */}
                         <Option value="Pending">Pending</Option>
                     </Select>
                 </div>
@@ -419,11 +388,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                     <Input size="large" placeholder="Search Transaction hash" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} />
                 </div>
             </div>
-            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)} 
-            // className="transaction_crypto_history" 
-            className='custom_table'              
-            scroll={{x:true}}
-            style={{maxWidth:"94vw"}} 
+            <Table columns={columns} pagination={false} dataSource={getData(current, pageSize)}
+                className='custom_table'
+                scroll={{ x: true }}
+                style={{ maxWidth: "94vw" }}
             />
             <MyPagination
                 total={txListFilter && txListFilter.length}
@@ -434,4 +402,4 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     )
 }
 
-export default BSTransactionCryptoHistoryTable
+export default BSTransactionCryptoHistoryTable;
