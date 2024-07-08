@@ -42,8 +42,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const columns: ColumnsType<DataType> = [
         {
             title: 'Time',
-            dataIndex: 'modified',
-            key: 'modified',
+            dataIndex: 'txDate',
+            key: 'txDate',
             render: text => <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>,
         },
         {
