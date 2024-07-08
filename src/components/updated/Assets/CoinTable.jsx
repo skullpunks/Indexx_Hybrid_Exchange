@@ -72,7 +72,7 @@ const headCells = [
     id: 'amount',
     numeric: true,
     disablePadding: false,
-    label: 'Amount',
+    label: 'Amount/ USD',
   },
   {
     id: 'staking_balance',
@@ -343,7 +343,8 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                   {new Intl.NumberFormat('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
-                  }).format(row.amount)}
+                  }).format(row.amount)}{' '}
+                  / ${row.amount * row.coin_price}
                 </TableCell>
                 <TableCell
                   align="right"
