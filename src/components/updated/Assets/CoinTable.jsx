@@ -344,7 +344,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
                   }).format(row.amount)}{' '}
-                  / ${(row.amount * row.coin_price).toFixed(2)}
+                  / $
+                  {(row.amount * row.coin_price).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </TableCell>
                 <TableCell
                   align="right"
@@ -354,7 +358,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
                   }).format(row.staking_balance)}{' '}
-                  Pcs / ${(row.staking_balance * row.coin_price).toFixed(2)}
+                  Pcs / $
+                  {(row.staking_balance * row.coin_price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                  )}
                 </TableCell>
 
                 {!isMobile && (
