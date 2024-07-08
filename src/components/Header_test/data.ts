@@ -836,7 +836,7 @@ export const auth_header_data = [
             href: '/indexx-exchange/buy-sell/transaction-history',
           },
           {
-            name: 'Wallet',
+            name: 'Asset Wallet',
             href: '/indexx-exchange/buy-sell/wallet',
           },
           {
