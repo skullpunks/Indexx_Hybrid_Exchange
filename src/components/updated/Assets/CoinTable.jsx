@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -15,23 +15,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { baseURL, decodeJWT, getUserWallets } from '../../../services/api';
+import { baseURL, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
-
-// Define the makeStyles hook
-const useStyles = makeStyles((theme) => ({
-  greenText: {
-    color: `${theme.palette.success.main} !important`,
-  },
-  redText: {
-    color: `${theme.palette.error.main} !important`,
-  },
-}));
+import { useNavigate } from 'react-router-dom';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -75,12 +64,6 @@ const headCells = [
     label: 'Amount',
   },
   {
-    id: 'staking_balance',
-    numeric: true,
-    disablePadding: false,
-    label: 'Staking Balance/ USD',
-  },
-  {
     id: 'coin_price',
     numeric: true,
     disablePadding: false,
@@ -91,6 +74,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Today‘s PnL',
+  },
+  {
+    id: 'notes', // Add this line
+    numeric: false,
+    disablePadding: false,
+    label: 'Notes', // Add this line
   },
 ];
 
@@ -142,30 +131,14 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function EnhancedTable({ searchQuery, hideAssets }) {
-  const classes = useStyles();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [dense, setDense] = useState(false);
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [rows, setRows] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [dense, setDense] = React.useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
-
-  const calculateTodayPNL = (item) => {
-    const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS'];
-    if (fixedTokens.includes(item.coinSymbol)) {
-      return {
-        value: '0.00',
-        color: 'green',
-      };
-    }
-    return {
-      value: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : '0.00',
-      color: 'default',
-    };
-  };
 
   const getImage = (image) => {
     try {
@@ -185,67 +158,28 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
-
-        if (!email) {
-          const signInToken = searchParams.get('signInToken');
-          if (signInToken) {
-            const decodedToken = await decodeJWT(signInToken);
-            email = decodedToken.email;
-          } else {
-            window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
-            return;
-          }
-        }
-
-        const userWallets = await getUserWallets(email);
-        const formattedData = userWallets.data.map((item) => {
-          const coinBalance = Number(item.coinBalance);
-          const coinPrice = Number(item.coinPrice);
-          const coinPrevPrice = Number(item.coinPrevPrice);
-          let todayPNL = null;
-
-          if (
-            coinBalance > 0 &&
-            !isNaN(coinPrice) &&
-            !isNaN(coinPrevPrice) &&
-            coinPrevPrice !== 0
-          ) {
-            const pnlValue = coinBalance * (coinPrice - coinPrevPrice);
-            const pnlPercentage =
-              ((coinPrice - coinPrevPrice) / coinPrevPrice) * 100;
-            todayPNL = {
-              value: pnlValue.toFixed(2),
-              percentage: pnlPercentage.toFixed(2),
-              isPositive: pnlValue >= 0,
-            };
-          }
-
-          return {
+        if (email === null || email === undefined || email === '') {
+          window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+        } else {
+          let userWallets = await getUserWallets(email);
+          const formattedData = userWallets.data.map((item) => ({
             id: item.coinName,
             coin: item.coinSymbol,
             amount: item.coinBalance,
-            staking_balance: item.coinStakedBalance
-              ? item.coinStakedBalance
-              : 0,
             coin_price: item?.coinPrice,
-            todayPNL: todayPNL,
+            todayPNL: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
             coinNetwork: item.coinNetwork,
-          };
-        });
-
-        // Ensure unique rows by coin name (id)
-        const uniqueFormattedData = formattedData.filter(
-          (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        );
-
-        setRows(uniqueFormattedData);
+            notes: item?.notes || null, // Adding notes field
+          }));
+          console.log("formattedData", formattedData)
+          setRows(formattedData);
+        }
       } catch (error) {
         setError(error);
       } finally {
@@ -254,7 +188,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     };
 
     fetchData();
-  }, [navigate]);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -262,24 +196,17 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     setOrderBy(property);
   };
 
-  const filteredRows = useMemo(() => {
+  const filteredRows = React.useMemo(() => {
     return rows.filter((row) => {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
-
-      // Show all rows when hideAssets is false
-      if (!hideAssets) {
-        return matchesSearchQuery;
-      }
-
-      // When hideAssets is true, show rows with amount or staking_balance > 0
-      const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
+      const passesHideAssets = !hideAssets || row.amount * row.coin_price >= 1;
       return matchesSearchQuery && passesHideAssets;
     });
   }, [rows, searchQuery, hideAssets]);
 
-  const visibleRows = useMemo(
+  const visibleRows = React.useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
     [order, orderBy, filteredRows]
   );
@@ -307,7 +234,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows?.map((row, index) => (
+            {visibleRows.map((row, index) => (
               <TableRow role="checkbox" tabIndex={-1} key={row.id}>
                 <TableCell
                   component="th"
@@ -345,17 +272,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     maximumFractionDigits: 6,
                   }).format(row.amount)}
                 </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {new Intl.NumberFormat('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6,
-                  }).format(row.staking_balance)}{' '}
-                  Pcs / ${row.staking_balance * row.coin_price}
-                </TableCell>
-
                 {!isMobile && (
                   <>
                     <TableCell
@@ -369,17 +285,14 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     <TableCell
                       align="right"
                       sx={{ borderBottom: 'none !important' }}
-                      className={
-                        row.todayPNL
-                          ? row.todayPNL.isPositive
-                            ? classes.greenText
-                            : classes.redText
-                          : ''
-                      }
                     >
-                      {row.todayPNL
-                        ? `${row.todayPNL.value} (${row.todayPNL.percentage}%)`
-                        : '0.00'}
+                      {row.todayPNL}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      {row.notes || '-'}
                     </TableCell>
                   </>
                 )}

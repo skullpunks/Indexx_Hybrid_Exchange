@@ -14,7 +14,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
-import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { baseURL, getUserWallets } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
@@ -75,6 +74,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Today‘s PnL',
+  },
+  {
+    id: 'notes', // Add this line
+    numeric: false,
+    disablePadding: false,
+    label: 'Notes', // Add this line
   },
 ];
 
@@ -168,10 +173,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             coin: item.coinSymbol,
             amount: item.coinBalance,
             coin_price: item?.coinPrice,
-            todayPNL:
-              item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
+            todayPNL: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
             coinNetwork: item.coinNetwork,
+            notes: item?.notes || null, // Adding notes field
           }));
+          console.log("formattedData", formattedData)
           setRows(formattedData);
         }
       } catch (error) {
@@ -281,6 +287,12 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                       sx={{ borderBottom: 'none !important' }}
                     >
                       {row.todayPNL}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      {row.notes || '-'}
                     </TableCell>
                   </>
                 )}
