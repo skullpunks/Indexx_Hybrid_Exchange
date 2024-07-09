@@ -58,7 +58,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             key: 'transactionType',
             render: text => (
                 <span>
-                    {text === 'GIFT_COINS' ? 'Gift' : text === 'PURCHASE_COINS' ? 'Purchase' : text}
+                    {text === 'GIFT_COINS' ? 'Gift' : text === 'PURCHASED_COINS' ? 'Buy' : text}
                 </span>
             ),
         },
@@ -121,8 +121,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             const results = res.data;
             let finalArr = [];
             for (let i = 0; i < results.length; i++) {
-                if (results[i].transactionType?.includes('FIAT')) {
-                } else {
+                if (!results[i].transactionType?.includes('FIAT')) {
                     finalArr.push(results[i]);
                 }
             }
@@ -135,6 +134,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 }
                 return tx;
             });
+
+            // Sort transactions by time in descending order
+            transactionsWithNotes.sort((a, b) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf());
 
             setTxList(transactionsWithNotes);
             setTxListFilter(transactionsWithNotes);
