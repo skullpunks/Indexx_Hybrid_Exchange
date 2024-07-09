@@ -72,7 +72,7 @@ const headCells = [
     id: 'amount',
     numeric: true,
     disablePadding: false,
-    label: 'Amount/ USD',
+    label: 'Crypto Amount/ USD',
   },
   {
     id: 'staking_balance',
@@ -358,7 +358,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
                   }).format(row.staking_balance)}{' '}
-                  Pcs / $
+                  / $
                   {(row.staking_balance * row.coin_price).toLocaleString(
                     undefined,
                     { minimumFractionDigits: 2, maximumFractionDigits: 2 }
