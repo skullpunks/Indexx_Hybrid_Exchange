@@ -56,12 +56,17 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             title: 'Type',
             dataIndex: 'transactionType',
             key: 'transactionType',
+            render: text => (
+                <span>
+                    {text === 'GIFT_COINS' ? 'Gift' : text === 'PURCHASE_COINS' ? 'Purchase' : text}
+                </span>
+            ),
         },
         {
             title: 'Deposit Wallet',
             dataIndex: 'walletType',
             key: 'walletType',
-            render: text => <span>{text}</span>,
+            render: text => <span>{text === 'ASSET_WALLET' ? 'Asset Wallet' : text}</span>,
         },
         {
             title: 'Amount / Balance',
