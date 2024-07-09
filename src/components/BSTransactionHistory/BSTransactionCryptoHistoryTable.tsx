@@ -58,7 +58,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             key: 'transactionType',
             render: text => (
                 <span>
-                    {text === 'GIFT_COIN' ? 'Gift' : text === 'PURCHASE_COIN' ? 'Purchase' : text}
+                    {text === 'GIFT_COINS' ? 'Gift' : text === 'PURCHASE_COINS' ? 'Purchase' : text}
                 </span>
             ),
         },
