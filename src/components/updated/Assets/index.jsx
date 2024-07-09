@@ -8,7 +8,7 @@ import IconicHeader from '../shared/IconicHeader';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: '936px',
+    maxWidth: '1200px',
     width: '100%',
     paddingTop: '50px',
     margin: '50px auto 50px auto', // Center the container

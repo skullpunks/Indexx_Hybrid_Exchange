@@ -225,7 +225,7 @@ function App() {
 
               <Route
                 path="/indexx-exchange/buy-sell/staking"
-               element={<StakingPage />}
+                element={<StakingPage />}
                 //element={<Staking />}
               />
               <Route

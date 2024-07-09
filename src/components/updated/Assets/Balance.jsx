@@ -10,7 +10,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: '936px',
+    maxWidth: '1200px',
     padding: '24px',
     borderRadius: '16px',
     display: 'flex',
@@ -142,7 +142,6 @@ const BalanceOverview = () => {
 
         setTotalBalanceInUSD(totalBalInUSD);
         setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
-
       } catch (err) {
       } finally {
         setIsLoading(false);
