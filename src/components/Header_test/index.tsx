@@ -25,7 +25,7 @@ import hive from '../../assets/BSheader/hive logo HD2 1.svg';
 import frame from '../../assets/updated/header/captain.png';
 import beeframe from '../../assets/updated/header/normal.png';
 
-import dummy from '../../assets/hive-dashboard/dummy.jpeg';
+import dummy from '../../assets/hive-dashboard/dummy.png';
 import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 
@@ -122,8 +122,8 @@ const HeaderTest = () => {
     showText[0] !== ''
       ? (document.title = `${showText[0]} | indexx.ai`)
       : pageName
-        ? (document.title = `${pageName} | indexx.ai`)
-        : (document.title = 'indexx.ai');
+      ? (document.title = `${pageName} | indexx.ai`)
+      : (document.title = 'indexx.ai');
   }, [showText, pageName]);
   useEffect(() => {
     async function checkUserType() {
@@ -141,30 +141,32 @@ const HeaderTest = () => {
           ? String(localStorage.getItem('user'))
           : undefined;
 
-      const email = localStorage.getItem('email') !== undefined
-        ? String(localStorage.getItem('email'))
-        : undefined;
+      const email =
+        localStorage.getItem('email') !== undefined
+          ? String(localStorage.getItem('email'))
+          : undefined;
 
-      let getUserType = await checkByemail(String(email))
-      userType = getUserType.userType
+      let getUserType = await checkByemail(String(email));
+      userType = getUserType.userType;
       const accessToken =
         localStorage.getItem('access_token') !== undefined
           ? String(localStorage.getItem('access_token'))
           : undefined;
-      
 
       if (userType === 'CaptainBee') {
         if (accessToken && accessToken !== 'null' && accessToken !== '') {
-          
           let resObj = await getCaptainBeeByEmail(String(email));
-          console.log("resObj", resObj)
+          console.log('resObj', resObj);
           username = resObj?.data.Username;
         }
         setisCaptain(true);
         if (username) {
           getCaptainBeeStatics(String(username)).then((data) => {
             setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
-            console.log("index header", data?.data?.affiliateUserProfile?.photoIdFileurl)
+            console.log(
+              'index header',
+              data?.data?.affiliateUserProfile?.photoIdFileurl
+            );
             setStaticsData(data.data);
             if (
               data?.data?.powerPackData !== undefined &&
@@ -289,7 +291,7 @@ const HeaderTest = () => {
     localStorage.removeItem('email');
     localStorage.clear(); //clear all localstorage
     console.log(userType);
-    
+
     window.location.href = `${baseURL}/auth/login?action=Logout`;
     // if (userType === 'CaptainBee') {
     //   window.location.href = '/auth/login';
@@ -333,6 +335,185 @@ const HeaderTest = () => {
               <label htmlFor="close-btn" className="btn close-btn">
                 x
               </label>
+              {isMobile &&
+                auth_header_data
+                  .filter((el) => el.isAuth === isAuthenticated)
+                  .map((element, i) => (
+                    <>
+                      {element.mainTextDesktop === 'Logout' ? (
+                        <li
+                          className="main"
+                          style={{
+                            marginLeft: i === 0 ? 'auto' : '',
+                            display: 'flex',
+                            cursor: 'pointer',
+                          }}
+                          // onClick={(e) =>
+                          //   handleLogout(
+                          //     e,
+                          //     element.mainTextDesktop.toLocaleLowerCase()
+                          //   )
+                          // }
+                        >
+                          <a
+                            className={`desktop-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                            onClick={(e) => handleLogout(e, 'logout')}
+                          >
+                            Logout
+                          </a>
+                        </li>
+                      ) : (
+                        <li
+                          className="main"
+                          style={{
+                            marginLeft: i === 0 ? 'auto' : '',
+                            display: 'flex',
+                          }}
+                          onMouseEnter={
+                            isAuthenticated
+                              ? () => updateBackDropVisibility('enter')
+                              : () => updateBackDropVisibility('leave')
+                          }
+                          onMouseLeave={() => updateBackDropVisibility('leave')}
+                        >
+                          {!isMobile && isAuthenticated && (
+                            <div
+                              style={{
+                                marginBottom: '-23px',
+                                zIndex: '10000000',
+
+                                transform: 'translateY(10px)',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: isCaptain ? '60px' : '65px',
+                                  height: isCaptain ? '80px' : '70px',
+                                  backgroundImage: `url(${
+                                    isCaptain === true ? frame : beeframe
+                                  })`,
+                                  transform: !isCaptain ? 'rotate(-30deg)' : '',
+                                  // backgroundImage: `url(${frame})`,
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: 'contain',
+                                  backgroundPosition: 'center',
+                                  position: 'relative',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  alignSelf: 'center',
+                                  // border:"none"
+                                }}
+                              >
+                                <div
+                                  className={
+                                    isCaptain ? 'bee-hexagon' : 'elipse-img'
+                                  }
+                                  style={{
+                                    marginBottom: `${
+                                      isCaptain === true ? 0 : '7px'
+                                    }`,
+                                  }}
+                                >
+                                  <img
+                                    alt=""
+                                    src={userProfile ? userProfile : dummy}
+                                    width={'63px'}
+                                    height={'66px'}
+                                    style={{
+                                      border: 'none',
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          <a
+                            href={element.href}
+                            className={`desktop-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                          >
+                            {isAuthenticated
+                              ? userEmail
+                              : element.mainTextDesktop}
+                          </a>
+                          <input type="checkbox" id={element.mainTextDesktop} />
+                          <label
+                            htmlFor={element.mainTextDesktop}
+                            className="mobile-item"
+                          >
+                            {isAuthenticated
+                              ? userEmail
+                              : element.mainTextDesktop}
+                          </label>
+                          {element.hasMegaDrop ? (
+                            <div
+                              className="mega-box"
+                              style={{
+                                background:
+                                  theme.palette.mode === 'light'
+                                    ? '#FAFAFC'
+                                    : '',
+                                color:
+                                  theme.palette.mode === 'light'
+                                    ? '#333336 !important'
+                                    : '',
+                              }}
+                              ref={elementRef}
+                            >
+                              <div className="content">
+                                {element.dropDownContent.map((elem) => (
+                                  <div
+                                    className="row"
+                                    style={{
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                    }}
+                                  >
+                                    <header>{elem?.heading}</header>
+                                    <ul
+                                      className={`mega-links ${
+                                        elem?.mainList ? 'main' : ''
+                                      }`}
+                                    >
+                                      {elem?.links.map((el) => (
+                                        <li>
+                                          <a
+                                            onClick={(e) =>
+                                              handleLogout(
+                                                e,
+                                                el.name.toLocaleLowerCase()
+                                              )
+                                            }
+                                            href={el.href}
+                                            className={
+                                              theme.palette.mode === 'light'
+                                                ? 'dark_color'
+                                                : ''
+                                            }
+                                          >
+                                            {el.name}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+
+                                <div className="row"></div>
+                              </div>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </li>
+                      )}
+                    </>
+                  ))}
               {header_data.map((element) => (
                 <>
                   <li
@@ -342,8 +523,9 @@ const HeaderTest = () => {
                   >
                     <a
                       href={element.href}
-                      className={`desktop-item ${element.active ? 'link_active' : ''
-                        }`}
+                      className={`desktop-item ${
+                        element.active ? 'link_active' : ''
+                      }`}
                       onMouseEnter={() => updateBackDropVisibility('enter')}
                     >
                       {element.mainTextDesktop}
@@ -379,8 +561,9 @@ const HeaderTest = () => {
                             >
                               <header>{elem.heading}</header>
                               <ul
-                                className={`mega-links ${elem.mainList ? 'main' : ''
-                                  }`}
+                                className={`mega-links ${
+                                  elem.mainList ? 'main' : ''
+                                }`}
                               >
                                 {elem.links.map((el) => (
                                   <li>
@@ -411,178 +594,185 @@ const HeaderTest = () => {
                 </>
               ))}
 
-              {auth_header_data
-                .filter((el) => el.isAuth === isAuthenticated)
-                .map((element, i) => (
-                  <>
-                    {element.mainTextDesktop === 'Logout' ? (
-                      <li
-                        className="main"
-                        style={{
-                          marginLeft: i === 0 ? 'auto' : '',
-                          display: 'flex',
-                          cursor: 'pointer',
-                        }}
-                      // onClick={(e) =>
-                      //   handleLogout(
-                      //     e,
-                      //     element.mainTextDesktop.toLocaleLowerCase()
-                      //   )
-                      // }
-                      >
-                        <a
-                          className={`desktop-item ${element.active ? 'link_active' : ''
-                            }`}
-                          onClick={(e) => handleLogout(e, 'logout')}
+              {!isMobile &&
+                auth_header_data
+                  .filter((el) => el.isAuth === isAuthenticated)
+                  .map((element, i) => (
+                    <>
+                      {element.mainTextDesktop === 'Logout' ? (
+                        <li
+                          className="main"
+                          style={{
+                            marginLeft: i === 0 ? 'auto' : '',
+                            display: 'flex',
+                            cursor: 'pointer',
+                          }}
+                          // onClick={(e) =>
+                          //   handleLogout(
+                          //     e,
+                          //     element.mainTextDesktop.toLocaleLowerCase()
+                          //   )
+                          // }
                         >
-                          Logout
-                        </a>
-                      </li>
-                    ) : (
-                      <li
-                        className="main"
-                        style={{
-                          marginLeft: i === 0 ? 'auto' : '',
-                          display: 'flex',
-                        }}
-                        onMouseEnter={
-                          isAuthenticated
-                            ? () => updateBackDropVisibility('enter')
-                            : () => updateBackDropVisibility('leave')
-                        }
-                        onMouseLeave={() => updateBackDropVisibility('leave')}
-                      >
-                        {!isMobile && isAuthenticated && (
-                          <div
-                            style={{
-                              marginBottom: '-23px',
-                              zIndex: '10000000',
-
-                              transform: 'translateY(10px)',
-                            }}
+                          <a
+                            className={`desktop-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                            onClick={(e) => handleLogout(e, 'logout')}
                           >
+                            Logout
+                          </a>
+                        </li>
+                      ) : (
+                        <li
+                          className="main"
+                          style={{
+                            marginLeft: i === 0 ? 'auto' : '',
+                            display: 'flex',
+                          }}
+                          onMouseEnter={
+                            isAuthenticated
+                              ? () => updateBackDropVisibility('enter')
+                              : () => updateBackDropVisibility('leave')
+                          }
+                          onMouseLeave={() => updateBackDropVisibility('leave')}
+                        >
+                          {!isMobile && isAuthenticated && (
                             <div
                               style={{
-                                width: isCaptain ? '60px' : '65px',
-                                height: isCaptain ? '80px' : '70px',
-                                backgroundImage: `url(${isCaptain === true ? frame : beeframe
-                                  })`,
-                                transform: !isCaptain ? 'rotate(-30deg)' : '',
-                                // backgroundImage: `url(${frame})`,
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                backgroundPosition: 'center',
-                                position: 'relative',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                alignSelf: 'center',
-                                // border:"none"
+                                marginBottom: '-23px',
+                                zIndex: '10000000',
+
+                                transform: 'translateY(10px)',
                               }}
                             >
                               <div
-                                className={
-                                  isCaptain ? 'bee-hexagon' : 'elipse-img'
-                                }
                                 style={{
-                                  marginBottom: `${isCaptain === true ? 0 : '7px'
-                                    }`,
+                                  width: isCaptain ? '60px' : '65px',
+                                  height: isCaptain ? '80px' : '70px',
+                                  backgroundImage: `url(${
+                                    isCaptain === true ? frame : beeframe
+                                  })`,
+                                  transform: !isCaptain ? 'rotate(-30deg)' : '',
+                                  // backgroundImage: `url(${frame})`,
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: 'contain',
+                                  backgroundPosition: 'center',
+                                  position: 'relative',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  alignSelf: 'center',
+                                  // border:"none"
                                 }}
                               >
-                                <img
-                                  alt=""
-                                  src={userProfile ? userProfile : dummy}
-                                  width={'63px'}
-                                  height={'66px'}
-                                  style={{
-                                    border: 'none',
-                                  }}
-                                />
-
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        <a
-                          href={element.href}
-                          className={`desktop-item ${element.active ? 'link_active' : ''
-                            }`}
-                        >
-                          {isAuthenticated
-                            ? userEmail
-                            : element.mainTextDesktop}
-                        </a>
-                        <input type="checkbox" id={element.mainTextDesktop} />
-                        <label
-                          htmlFor={element.mainTextDesktop}
-                          className="mobile-item"
-                        >
-                          {isAuthenticated
-                            ? userEmail
-                            : element.mainTextDesktop}
-                        </label>
-                        {element.hasMegaDrop ? (
-                          <div
-                            className="mega-box"
-                            style={{
-                              background:
-                                theme.palette.mode === 'light' ? '#FAFAFC' : '',
-                              color:
-                                theme.palette.mode === 'light'
-                                  ? '#333336 !important'
-                                  : '',
-                            }}
-                            ref={elementRef}
-                          >
-                            <div className="content">
-                              {element.dropDownContent.map((elem) => (
                                 <div
-                                  className="row"
+                                  className={
+                                    isCaptain ? 'bee-hexagon' : 'elipse-img'
+                                  }
                                   style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
+                                    marginBottom: `${
+                                      isCaptain === true ? 0 : '7px'
+                                    }`,
                                   }}
                                 >
-                                  <header>{elem?.heading}</header>
-                                  <ul
-                                    className={`mega-links ${elem?.mainList ? 'main' : ''
-                                      }`}
-                                  >
-                                    {elem?.links.map((el) => (
-                                      <li>
-                                        <a
-                                          onClick={(e) =>
-                                            handleLogout(
-                                              e,
-                                              el.name.toLocaleLowerCase()
-                                            )
-                                          }
-                                          href={el.href}
-                                          className={
-                                            theme.palette.mode === 'light'
-                                              ? 'dark_color'
-                                              : ''
-                                          }
-                                        >
-                                          {el.name}
-                                        </a>
-                                      </li>
-                                    ))}
-                                  </ul>
+                                  <img
+                                    alt=""
+                                    src={userProfile ? userProfile : dummy}
+                                    width={'63px'}
+                                    height={'66px'}
+                                    style={{
+                                      border: 'none',
+                                    }}
+                                  />
                                 </div>
-                              ))}
-
-                              <div className="row"></div>
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          ''
-                        )}
-                      </li>
-                    )}
-                  </>
-                ))}
+                          )}
+                          <a
+                            href={element.href}
+                            className={`desktop-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                          >
+                            {isAuthenticated
+                              ? userEmail
+                              : element.mainTextDesktop}
+                          </a>
+                          <input type="checkbox" id={element.mainTextDesktop} />
+                          <label
+                            htmlFor={element.mainTextDesktop}
+                            className="mobile-item"
+                          >
+                            {isAuthenticated
+                              ? userEmail
+                              : element.mainTextDesktop}
+                          </label>
+                          {element.hasMegaDrop ? (
+                            <div
+                              className="mega-box"
+                              style={{
+                                background:
+                                  theme.palette.mode === 'light'
+                                    ? '#FAFAFC'
+                                    : '',
+                                color:
+                                  theme.palette.mode === 'light'
+                                    ? '#333336 !important'
+                                    : '',
+                              }}
+                              ref={elementRef}
+                            >
+                              <div className="content">
+                                {element.dropDownContent.map((elem) => (
+                                  <div
+                                    className="row"
+                                    style={{
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                    }}
+                                  >
+                                    <header>{elem?.heading}</header>
+                                    <ul
+                                      className={`mega-links ${
+                                        elem?.mainList ? 'main' : ''
+                                      }`}
+                                    >
+                                      {elem?.links.map((el) => (
+                                        <li>
+                                          <a
+                                            onClick={(e) =>
+                                              handleLogout(
+                                                e,
+                                                el.name.toLocaleLowerCase()
+                                              )
+                                            }
+                                            href={el.href}
+                                            className={
+                                              theme.palette.mode === 'light'
+                                                ? 'dark_color'
+                                                : ''
+                                            }
+                                          >
+                                            {el.name}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+
+                                <div className="row"></div>
+                              </div>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </li>
+                      )}
+                    </>
+                  ))}
             </ul>
           </div>
           <div

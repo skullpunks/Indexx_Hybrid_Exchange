@@ -126,7 +126,13 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       render: (text) => (
         <span>
           {Math.floor(text.outAmount * 1000) / 1000} {text.outCurrencyName} / $
-          {(Math.floor(text.outAmount * 1000) / 1000) * text.rate}{' '}
+          {(
+            (Math.floor(text.outAmount * 1000) / 1000) *
+            (text?.rate ?? 0)
+          ).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}{' '}
         </span>
       ),
       // responsive: ["sm"],
