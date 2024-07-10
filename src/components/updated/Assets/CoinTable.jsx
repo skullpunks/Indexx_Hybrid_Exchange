@@ -78,7 +78,7 @@ const headCells = [
     id: 'staking_balance',
     numeric: true,
     disablePadding: false,
-    label: 'Staking Balance/ USD',
+    label: 'Staked Balance/ USD',
   },
   {
     id: 'coin_price',
