@@ -126,14 +126,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 }
             }
 
-            // Add notes if the user has WIBS
-            const wibsNotes = "You have WIBS coins! These were purchased during a special offer: Buy 1 WIBS coin, receive 9 bonus coins.";
-            const transactionsWithNotes = finalArr.map(tx => {
-                if (tx.currencyRef === 'WIBS') {
-                    tx.notes = wibsNotes;
-                }
-                return tx;
-            });
+            const transactionsWithNotes = finalArr;
 
             // Sort transactions by time in descending order
             transactionsWithNotes.sort((a, b) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf());
