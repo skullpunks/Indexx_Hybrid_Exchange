@@ -155,6 +155,17 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       dataIndex: 'exchangeFees',
       // responsive: ["sm"],
     },
+    {
+      title: 'Notes',
+      key: 'notes',
+      dataIndex: 'notes',
+      render: (text) =>
+        text ? (
+          <span title={text}>
+            {text.length > 25 ? `${text.slice(0, 25)}...` : text}
+          </span>
+        ) : null,
+    },
   ];
 
   useEffect(() => {
