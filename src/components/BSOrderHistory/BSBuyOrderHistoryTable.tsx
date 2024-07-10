@@ -15,7 +15,7 @@ interface DataType {
   finalAmount: string;
   destination: string;
   exchangeFees: string;
-  orderRate: string;
+  orderRate: { rate: number, currency: string };
   orderType: string;
   orderId: string;
 }
@@ -23,8 +23,8 @@ interface DataType {
 const BSBuyOrderHistoryTable: React.FC = () => {
   const pageSize = 10;
   const [current, setCurrent] = useState(1);
-  const [orderList, setOrderList] = useState() as any;
-  const [orderListFilter, setOrderTxListFilter] = useState() as any;
+  const [orderList, setOrderList] = useState<DataType[]>([]);
+  const [orderListFilter, setOrderTxListFilter] = useState<DataType[]>([]);
   const [isLoading, setLoadings] = useState(true);
   const [valueInput, setValueInput] = useState('');
   const [selection, setSelection] = useState({
@@ -33,6 +33,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     time: '30',
     orderId: '',
   });
+
   const tableLoading = {
     spinning: isLoading,
     indicator: (
@@ -44,40 +45,8 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       />
     ),
   };
+
   const columns: ColumnsType<DataType> = [
-    // {
-    //     title: "Time Type",
-    //     render: (record) => (
-    //         <React.Fragment>
-    //             {record.modified}
-    //             <br />
-    //             {record.modified}
-    //         </React.Fragment>
-    //     ),
-    //     responsive: ["xs"]
-    // },
-    // {
-    //     title: "Amount",
-    //     render: (record) => (
-    //         <React.Fragment>
-    //             {record.breakdown.inAamount}
-
-    //             {record.breakdown.inCurrenyName}
-    //         </React.Fragment>
-    //     ),
-    //     responsive: ["xs"]
-    // },
-    // {
-    //     title: "Final Amount",
-    //     render: (record) => (
-    //         <React.Fragment>
-    //             {record.breakdown.outAmount}
-
-    //             {record.breakdown.outCurrencyName}
-    //         </React.Fragment>
-    //     ),
-    //     responsive: ["xs"]
-    // },
     {
       title: 'Order Date and Time',
       dataIndex: 'created',
@@ -85,14 +54,12 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       render: (text) => (
         <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>
       ),
-      // responsive: ["sm"],
     },
     {
       title: 'Order Id',
       dataIndex: 'orderId',
       key: 'orderId',
       render: (text) => <span>{text}</span>,
-      // responsive: ["sm"],
     },
     {
       title: 'Order Rate',
@@ -106,54 +73,48 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       dataIndex: 'orderType',
       key: 'orderType',
       render: (text) => <span>{text}</span>,
-      // responsive: ["sm"],
     },
     {
       title: 'Amount',
       key: 'amount',
       dataIndex: 'breakdown',
-      render: (text) => (
+      render: (breakdown) => (
         <span>
-          {text.inAmount} {text.inCurrenyName}
+          {breakdown.inAmount} {breakdown.inCurrenyName}
         </span>
       ),
-      // responsive: ["sm"],
     },
     {
       title: 'Crypto Amount / USD',
-      key: 'amount',
-      dataIndex: 'breakdown',
-      render: (text) => (
+      key: 'cryptoAmountUSD',
+      render: (record) => (
         <span>
-          {Math.floor(text.outAmount * 1000) / 1000} {text.outCurrencyName} / $
+          {Math.floor(record.breakdown.outAmount * 1000) / 1000} {record.breakdown.outCurrencyName} / $
           {(
-            (Math.floor(text.outAmount * 1000) / 1000) *
-            (text?.rate ?? 0)
+            (Math.floor(record.breakdown.outAmount * 1000) / 1000) *
+            (record.orderRate?.rate ?? 0)
           ).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
-          })}{' '}
+          })}
         </span>
       ),
-      // responsive: ["sm"],
     },
     {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
-      // responsive: ["sm"],
     },
     {
       title: 'Payment Type',
       key: 'paymentType',
       dataIndex: 'paymentType',
-      // responsive: ["sm"],
     },
     {
       title: 'Exchange Fees',
       key: 'exchangeFees',
       dataIndex: 'exchangeFees',
-      // responsive: ["sm"],
+      render: (text) => <span>{text} %</span>,
     },
     {
       title: 'Notes',
@@ -212,7 +173,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-              selection.asset?.toLowerCase())
+            selection.asset?.toLowerCase())
         );
       });
       setOrderTxListFilter(txListFilterData);
@@ -233,13 +194,11 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-              selection.asset?.toLowerCase())
+            selection.asset?.toLowerCase())
         );
       });
       setOrderTxListFilter(txListFilterData);
     }
-
-    //
   };
 
   const handleChangeStatus = (value: string) => {
@@ -266,7 +225,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         );
       });
@@ -289,7 +248,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         );
 
@@ -322,7 +281,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
         (!selection.asset ||
           data.breakdown.outCurrencyName?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+          selection.asset?.toLowerCase()) &&
         (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
       );
     });
@@ -346,7 +305,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
 
         return (
           data.breakdown.outCurrencyName?.toLowerCase() ===
-            value?.toLowerCase() &&
+          value?.toLowerCase() &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.orderId ||
@@ -390,6 +349,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       orderListFilter.slice((current - 1) * pageSize, current * pageSize);
     return xx;
   };
+
   const MyPagination = ({ total, onChange, current }: any) => {
     return (
       <Pagination
@@ -405,6 +365,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       />
     );
   };
+
   return (
     <div className="flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x ">
       <div className="d-flex transaction_filters margin-b-3x">
@@ -451,6 +412,9 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             <Option value="LTC">
               LTC <span>Litecoin</span>
             </Option>
+            <Option value="WIBS">
+              WIBS <span>Who Is Bitcoin Satoshi</span>
+            </Option>
           </Select>
         </div>
         <div className="d-md-block d-none">
@@ -477,7 +441,6 @@ const BSBuyOrderHistoryTable: React.FC = () => {
         columns={columns}
         pagination={false}
         dataSource={getData(current, pageSize)}
-        // className="transaction_crypto_history"
         className="custom_table"
         loading={tableLoading}
         scroll={{ x: true }}
