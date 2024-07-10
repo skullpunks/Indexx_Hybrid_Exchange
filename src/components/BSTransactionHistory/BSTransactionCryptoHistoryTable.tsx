@@ -150,7 +150,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (text) =>
         text ? (
           <span title={text}>
-            {text.length > 25 ? `${text.slice(0, 25)}...` : text}
+            {text}
           </span>
         ) : null,
     },
