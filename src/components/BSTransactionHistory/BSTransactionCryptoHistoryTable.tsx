@@ -98,6 +98,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       key: 'amountInvested',
       render: (_, record) => (
         <span>
+          ${' '}
           {record?.amountInvested?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,

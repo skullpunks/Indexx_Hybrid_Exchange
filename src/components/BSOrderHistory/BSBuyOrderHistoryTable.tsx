@@ -116,6 +116,17 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       dataIndex: 'exchangeFees',
       render: (text) => <span>{text} %</span>,
     },
+    {
+      title: 'Notes',
+      key: 'notes',
+      dataIndex: 'notes',
+      render: (text) =>
+        text ? (
+          <span title={text}>
+            {text.length > 25 ? `${text.slice(0, 25)}...` : text}
+          </span>
+        ) : null,
+    },
   ];
 
   useEffect(() => {
