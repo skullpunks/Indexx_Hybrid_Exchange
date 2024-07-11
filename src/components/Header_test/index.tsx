@@ -369,7 +369,6 @@ const HeaderTest = () => {
                           className="main"
                           style={{
                             marginLeft: i === 0 ? 'auto' : '',
-                            display: 'flex',
                           }}
                           onMouseEnter={
                             isAuthenticated
@@ -441,6 +440,7 @@ const HeaderTest = () => {
                               ? userEmail
                               : element.mainTextDesktop}
                           </a>
+
                           <input type="checkbox" id={element.mainTextDesktop} />
                           <label
                             htmlFor={element.mainTextDesktop}
