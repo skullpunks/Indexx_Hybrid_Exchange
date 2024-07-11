@@ -369,7 +369,6 @@ const HeaderTest = () => {
                           className="main"
                           style={{
                             marginLeft: i === 0 ? 'auto' : '',
-                            display: 'flex',
                           }}
                           onMouseEnter={
                             isAuthenticated
@@ -441,6 +440,7 @@ const HeaderTest = () => {
                               ? userEmail
                               : element.mainTextDesktop}
                           </a>
+
                           <input type="checkbox" id={element.mainTextDesktop} />
                           <label
                             htmlFor={element.mainTextDesktop}
@@ -681,10 +681,7 @@ const HeaderTest = () => {
                                     alt=""
                                     src={userProfile ? userProfile : dummy}
                                     width={'63px'}
-                                    height={'66px'}
-                                    style={{
-                                      border: 'none',
-                                    }}
+                                    height={'75px'}
                                   />
                                 </div>
                               </div>

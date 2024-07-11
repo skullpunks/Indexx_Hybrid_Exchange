@@ -316,6 +316,7 @@ nav .wrapper {
   #Affiliate:checked ~ .mega-box,
   #Elite\ Club:checked ~ .mega-box,
   #Company:checked ~ .mega-box,
+  #profile:checked ~ .mega-box,
   #Exchange:checked ~ .mega-box {
     max-height: 100%;
   }
