@@ -34,7 +34,7 @@
   width: 57px;
   height: 59px;
   background-color: transparent;
-  clip-path: ellipse(30% 52% at 50% 50%);
+  clip-path: ellipse(30% 50% at 50% 50%);
   transform: rotate(41deg);
   /* margin: 0 auto; */
   overflow: hidden;

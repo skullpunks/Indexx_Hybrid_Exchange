@@ -681,10 +681,7 @@ const HeaderTest = () => {
                                     alt=""
                                     src={userProfile ? userProfile : dummy}
                                     width={'63px'}
-                                    height={'66px'}
-                                    style={{
-                                      border: 'none',
-                                    }}
+                                    height={'75px'}
                                   />
                                 </div>
                               </div>
