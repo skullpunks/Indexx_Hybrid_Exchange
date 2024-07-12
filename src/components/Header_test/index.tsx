@@ -7,7 +7,7 @@ import CrossIcon from '../../assets/header-icons/cross';
 import Fantasy_Lotto from '../../assets/BSheader/fantasy.png';
 import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
-import { auth_header_data } from './data';
+import { auth_header_data, auth_header_data_asset_wallet } from './data';
 import header_data from './data';
 // import { Button } from 'react-bootstrap';
 // import { BellOutlined } from "@ant-design/icons";
@@ -303,10 +303,39 @@ const HeaderTest = () => {
     //   else window.location.href = '/auth/login';
     // }
   };
+
+  const [isAssetWallet, setIsAssetWallet] = useState(false);
+  const [hoverAsset, setHoverAsset] = useState('');
   const handleLogout = (e: any, nm: string) => {
     if (nm !== 'logout') return;
     logOutUser(e);
   };
+  const onMouseEnterItem = (name: any) => {
+    setHoverAsset(name);
+  };
+
+  const onAssetWalletClick = () => {
+    setIsAssetWallet(true);
+  };
+  const onMouseLeaveItem = (name: any) => {
+    setHoverAsset('');
+  };
+  const simpleAuthData = [
+    'Account & Settings',
+    'Bridge',
+    'Hive Dashboard',
+    'Notification',
+    'Reward Center',
+    'Trade to Earn',
+    'Logout',
+  ];
+  const selectedDataFile = simpleAuthData.includes(hoverAsset)
+    ? auth_header_data
+    : hoverAsset === 'Asset Wallet'
+    ? auth_header_data_asset_wallet
+    : !simpleAuthData.includes(hoverAsset) && isAssetWallet
+    ? auth_header_data_asset_wallet
+    : auth_header_data;
   return (
     <>
       <nav style={{ position: 'fixed', top: 0, left: 0, zIndex: 10000 }}>
@@ -345,7 +374,7 @@ const HeaderTest = () => {
                           className="main"
                           style={{
                             marginLeft: i === 0 ? 'auto' : '',
-                            display: 'flex',
+
                             cursor: 'pointer',
                           }}
                           // onClick={(e) =>
@@ -363,6 +392,103 @@ const HeaderTest = () => {
                           >
                             Logout
                           </a>
+                          <a
+                            className={`mobile-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                            onClick={(e) => handleLogout(e, 'logout')}
+                          >
+                            Logout
+                          </a>
+                        </li>
+                      ) : element.mainTextDesktop === 'How it Works' ||
+                        element.mainTextDesktop === 'Login' ||
+                        element.mainTextDesktop === 'Register' ? (
+                        <li
+                          className="main"
+                          style={{
+                            marginLeft: i === 0 ? 'auto' : '',
+                          }}
+                          onMouseEnter={
+                            isAuthenticated
+                              ? () => updateBackDropVisibility('enter')
+                              : () => updateBackDropVisibility('leave')
+                          }
+                          onMouseLeave={() => updateBackDropVisibility('leave')}
+                        >
+                          <a
+                            href={element.href}
+                            className={`desktop-item ${
+                              element.active ? 'link_active' : ''
+                            }`}
+                          >
+                            {element.mainTextDesktop}
+                          </a>
+
+                          <input type="checkbox" id={element.mainTextDesktop} />
+                          <a href={element.href} className="mobile-item">
+                            {element.mainTextDesktop}
+                          </a>
+                          {element.hasMegaDrop ? (
+                            <div
+                              className="mega-box"
+                              style={{
+                                background:
+                                  theme.palette.mode === 'light'
+                                    ? '#FAFAFC'
+                                    : '',
+                                color:
+                                  theme.palette.mode === 'light'
+                                    ? '#333336 !important'
+                                    : '',
+                              }}
+                              ref={elementRef}
+                            >
+                              <div className="content">
+                                {element.dropDownContent.map((elem) => (
+                                  <div
+                                    className="row"
+                                    style={{
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                    }}
+                                  >
+                                    <header>{elem?.heading}</header>
+                                    <ul
+                                      className={`mega-links ${
+                                        elem?.mainList ? 'main' : ''
+                                      }`}
+                                    >
+                                      {elem?.links.map((el) => (
+                                        <li>
+                                          <a
+                                            onClick={(e) =>
+                                              handleLogout(
+                                                e,
+                                                el.name.toLocaleLowerCase()
+                                              )
+                                            }
+                                            href={el.href}
+                                            className={
+                                              theme.palette.mode === 'light'
+                                                ? 'dark_color'
+                                                : ''
+                                            }
+                                          >
+                                            {el.name}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+
+                                <div className="row"></div>
+                              </div>
+                            </div>
+                          ) : (
+                            ''
+                          )}
                         </li>
                       ) : (
                         <li
@@ -388,8 +514,8 @@ const HeaderTest = () => {
                             >
                               <div
                                 style={{
-                                  width: isCaptain ? '60px' : '65px',
-                                  height: isCaptain ? '80px' : '70px',
+                                  width: isCaptain ? '60px' : '50px',
+                                  height: isCaptain ? '80px' : '60px',
                                   backgroundImage: `url(${
                                     isCaptain === true ? frame : beeframe
                                   })`,
@@ -448,7 +574,7 @@ const HeaderTest = () => {
                           >
                             {isAuthenticated
                               ? userEmail
-                              : element.mainTextDesktop}
+                              : element.mainTextDesktop}{' '}
                           </label>
                           {element.hasMegaDrop ? (
                             <div
@@ -595,7 +721,7 @@ const HeaderTest = () => {
               ))}
 
               {!isMobile &&
-                auth_header_data
+                selectedDataFile
                   .filter((el) => el.isAuth === isAuthenticated)
                   .map((element, i) => (
                     <>
@@ -648,8 +774,8 @@ const HeaderTest = () => {
                             >
                               <div
                                 style={{
-                                  width: isCaptain ? '60px' : '65px',
-                                  height: isCaptain ? '80px' : '70px',
+                                  width: isCaptain ? '60px' : '50px',
+                                  height: isCaptain ? '80px' : '60px',
                                   backgroundImage: `url(${
                                     isCaptain === true ? frame : beeframe
                                   })`,
@@ -737,23 +863,66 @@ const HeaderTest = () => {
                                       }`}
                                     >
                                       {elem?.links.map((el) => (
-                                        <li>
-                                          <a
-                                            onClick={(e) =>
-                                              handleLogout(
-                                                e,
-                                                el.name.toLocaleLowerCase()
-                                              )
-                                            }
-                                            href={el.href}
-                                            className={
-                                              theme.palette.mode === 'light'
-                                                ? 'dark_color'
-                                                : ''
-                                            }
-                                          >
-                                            {el.name}
-                                          </a>
+                                        <li
+                                          style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+
+                                            textAlign: 'left',
+                                          }}
+                                          onMouseLeave={() =>
+                                            onMouseLeaveItem(el.name)
+                                          }
+                                          onMouseEnter={() =>
+                                            onMouseEnterItem(el.name)
+                                          }
+                                          className="profile-list-item"
+                                        >
+                                          {el.name.toLowerCase() ===
+                                          'asset wallet' ? (
+                                            <a
+                                              href="#"
+                                              onClick={onAssetWalletClick}
+                                              className={
+                                                theme.palette.mode === 'light'
+                                                  ? 'dark_color'
+                                                  : ''
+                                              }
+                                            >
+                                              {el.name}
+                                            </a>
+                                          ) : (
+                                            <a
+                                              onClick={(e) =>
+                                                handleLogout(
+                                                  e,
+                                                  el.name.toLocaleLowerCase()
+                                                )
+                                              }
+                                              href={el.href}
+                                              className={
+                                                theme.palette.mode === 'light'
+                                                  ? 'dark_color'
+                                                  : ''
+                                              }
+                                            >
+                                              {el.name}
+                                            </a>
+                                          )}
+
+                                          <div
+                                            className={`profile-inner-item-border-bottom ${
+                                              isAssetWallet &&
+                                              el.name === 'Asset Wallet' &&
+                                              'active-wallet'
+                                            }`}
+                                            style={{
+                                              background: 'green',
+                                              width: '16px',
+                                              height: '2px',
+                                              marginTop: '-5px',
+                                            }}
+                                          ></div>
                                         </li>
                                       ))}
                                     </ul>

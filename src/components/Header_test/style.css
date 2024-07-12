@@ -120,6 +120,15 @@ nav .wrapper {
   /* top: 70px; */
   transition-delay: 0.3s;
 }
+.profile-inner-item-border-bottom {
+  opacity: 0;
+}
+.profile-list-item:hover .profile-inner-item-border-bottom {
+  opacity: 1;
+}
+.active-wallet {
+  opacity: 1;
+}
 
 .mega-box .content {
   /* background: white; */
