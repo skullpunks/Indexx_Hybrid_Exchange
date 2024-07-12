@@ -52,7 +52,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleOrderHistoryClick = () => {
-    navigate('/indexx-exchange/buy-sell/order-history');
+    navigate('/indexx-exchange/buy-sell/transaction-history');
   };
 
   const handleWithdrawFiatClick = () => {
@@ -65,7 +65,7 @@ const Header = () => {
         <div className={classes.leftDiv}>Withdraw Crypto</div>
         <div className={classes.rightDiv}>
           <Button className={classes.button} variant="outlined" onClick={handleOrderHistoryClick}>
-            Order History <RightArrow fill={'#11BE6A'} />
+            Transaction History <RightArrow fill={'#11BE6A'} />
           </Button>
           <Button
             className={classes.button}
