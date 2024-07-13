@@ -926,9 +926,9 @@ const HeaderTest = () => {
                                               'active-wallet'
                                             }`}
                                             style={{
-                                              background: 'green',
+                                              background: '#11BE6A',
                                               width: '16px',
-                                              height: '2px',
+                                              height: '3px',
                                               marginTop: '-5px',
                                             }}
                                           ></div>
