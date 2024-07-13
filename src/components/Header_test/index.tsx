@@ -692,7 +692,7 @@ const HeaderTest = () => {
                                 }`}
                               >
                                 {elem.links.map((el) => (
-                                  <li>
+                                  <li className={`profile-list-item `}>
                                     <a
                                       href={el.href}
                                       className={
@@ -703,6 +703,15 @@ const HeaderTest = () => {
                                     >
                                       {el.name}
                                     </a>
+                                    <div
+                                      className={`profile-inner-item-border-bottom `}
+                                      style={{
+                                        background: 'green',
+                                        width: '16px',
+                                        height: '2px',
+                                        marginTop: '-5px',
+                                      }}
+                                    ></div>
                                   </li>
                                 ))}
                               </ul>
