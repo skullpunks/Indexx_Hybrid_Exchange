@@ -421,7 +421,8 @@ const BuySellTabs = ({
       } else if (
         paymentMethod === 'Zelle' ||
         paymentMethod === 'Wire' ||
-        paymentMethod === 'Venmo'
+        paymentMethod === 'Venmo' ||
+        paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {

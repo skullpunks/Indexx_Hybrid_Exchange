@@ -8,6 +8,7 @@ import transactionIcon from '../../../../assets/updated/buySell/transactionMetho
 import creditCard from '../../../../assets/updated/popup/credit-card.svg';
 import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
+import ach from '../../../../assets/updated/popup/ach.png';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
 
@@ -82,6 +83,8 @@ const PaymentMethodSelection = ({
                 ? zelle
                 : buttonText === 'Venmo'
                 ? venmo
+                : buttonText === 'ACH'
+                ? ach
                 : transactionIcon
             }
             alt="Transaction Method"

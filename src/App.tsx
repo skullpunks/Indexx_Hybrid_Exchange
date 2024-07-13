@@ -143,6 +143,7 @@ import DepositCryptoSuccessPage from './pages/depositCrypto/DepositSuccess';
 import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSuccess';
 import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
 import ReferralPage from './pages/Refferal';
+import PaymentACH from './components/Send/PaymentACH';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -401,6 +402,10 @@ function App() {
             <Route
               path="/indexx-exchange/payment-wire"
               element={<PaymentWire />}
+            />
+            <Route
+              path="/indexx-exchange/payment-ACH"
+              element={<PaymentACH />}
             />
 
             {/* <Route
