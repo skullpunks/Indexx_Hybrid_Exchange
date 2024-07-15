@@ -807,18 +807,12 @@ export const auth_header_data = [
             name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',
           },
-          {
-            name: 'Deposit',
-            href: '/deposit-crypto-select-coin',
-          },
+
           {
             name: 'Notification',
             href: '/indexx-exchange/notification',
           },
-          {
-            name: 'Order History',
-            href: '/indexx-exchange/buy-sell/order-history',
-          },
+
           {
             name: 'Reward Center',
             href: '/indexx-exchange/reward-center',
@@ -827,22 +821,12 @@ export const auth_header_data = [
             name: 'Trade to Earn',
             href: '/indexx-exchange/trade-to-earn',
           },
-          {
-            name: 'Staking History',
-            href: '/indexx-exchange/buy-sell/staking-history',
-          },
-          {
-            name: 'Transaction History',
-            href: '/indexx-exchange/buy-sell/transaction-history',
-          },
+
           {
             name: 'Asset Wallet',
             href: '/indexx-exchange/buy-sell/wallet',
           },
-          {
-            name: 'Withdraw',
-            href: '/withdraw-crypto-select-coin',
-          },
+
           {
             btn: true,
             name: 'Logout',
@@ -869,6 +853,143 @@ export const auth_header_data = [
           {
             name: 'Recent Transaction',
             href: 'https://shop.indexx.ai/collections/greeting-cards',
+          },
+        ],
+      },
+      {
+        heading: 'Support',
+        mainList: false,
+        links: [
+          {
+            name: 'How to deposit',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
+          },
+          {
+            name: 'Know how to withdraw',
+            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=Document',
+          },
+        ],
+      },
+    ],
+  },
+];
+export const auth_header_data_asset_wallet = [
+  {
+    mainTextDesktop: 'Logout',
+    mainTextMob: 'Logout',
+    img: false,
+    isAuth: true,
+    active: false,
+    href: '#',
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
+    mainTextDesktop: 'How it Works',
+    mainTextMob: 'How it Works',
+    isAuth: false,
+    active: false,
+    href: `https://indexx.ai/how-master-login-works`,
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
+    mainTextDesktop: 'Login',
+    mainTextMob: 'Login',
+    isAuth: false,
+    active: false,
+    href: `${baseURL}/auth/login?redirectWebsiteLink=exchange`,
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
+    mainTextDesktop: 'Register',
+    mainTextMob: 'Register',
+    isAuth: false,
+    active: false,
+    href: `${baseURL}/auth/signup-email?redirectWebsiteLink=exchange`,
+    hasMegaDrop: false,
+    dropDownContent: [],
+  },
+  {
+    mainTextDesktop: 'profile',
+    mainTextMob: 'profile',
+    img: true,
+    isAuth: true,
+    active: false,
+    href: '#',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore Hive Profile',
+        mainList: true,
+        links: [
+          {
+            name: 'Account & Settings',
+            href: '/indexx-exchange/account',
+          },
+          {
+            name: 'Bridge',
+            href: '/indexx-exchange/bridge',
+          },
+          {
+            name: 'Hive Dashboard',
+            href: '/indexx-exchange/dashboard',
+          },
+
+          {
+            name: 'Notification',
+            href: '/indexx-exchange/notification',
+          },
+
+          {
+            name: 'Reward Center',
+            href: '/indexx-exchange/reward-center',
+          },
+          {
+            name: 'Trade to Earn',
+            href: '/indexx-exchange/trade-to-earn',
+          },
+
+          {
+            name: 'Asset Wallet',
+            href: '/indexx-exchange/buy-sell/wallet',
+          },
+
+          {
+            btn: true,
+            name: 'Logout',
+            href: '/',
+          },
+        ],
+      },
+      {
+        heading: 'Action',
+        mainList: false,
+        links: [
+          {
+            name: 'Overview',
+            href: '/indexx-exchange/buy-sell/wallet',
+          },
+          {
+            name: 'Deposit',
+            href: '/deposit-crypto-select-coin',
+          },
+          {
+            name: 'Withdraw',
+            href: '/withdraw-crypto-select-coin',
+          },
+          {
+            name: 'Order History',
+            href: '/indexx-exchange/buy-sell/order-history',
+          },
+          {
+            name: 'Staking History',
+            href: '/indexx-exchange/buy-sell/staking-history',
+          },
+          {
+            name: 'Transaction History',
+            href: '/indexx-exchange/buy-sell/transaction-history',
           },
         ],
       },

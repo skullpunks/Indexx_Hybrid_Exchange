@@ -35,14 +35,17 @@
   height: 59px;
   background-color: transparent;
   clip-path: ellipse(30% 50% at 50% 50%);
-  transform: rotate(41deg);
+  transform: rotate(30deg);
   /* margin: 0 auto; */
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .elipse-img img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   object-fit: cover; /* Maintain aspect ratio and cover the entire hexagon */
 }
 

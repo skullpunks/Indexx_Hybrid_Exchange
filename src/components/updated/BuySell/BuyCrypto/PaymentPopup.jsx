@@ -8,6 +8,7 @@ import { Box, useTheme } from '@mui/material';
 
 import creditCard from '../../../../assets/updated/popup/credit-card.svg';
 import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
+import ach from '../../../../assets/updated/popup/ach.png';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
@@ -400,6 +401,16 @@ const Popup = ({
                     <Box className={classes.iconTextContainer}>
                       <img src={paypal} alt="Paypal" />
                       <p className={classes.btnText}>Paypal</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('ACH')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={ach} alt="ACH" />
+                      <p className={classes.btnText}>ACH</p>
                     </Box>
                     <p>${amount}</p>
                   </button>
