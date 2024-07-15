@@ -450,7 +450,7 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
           Send to
         </div>
         <div className='d-flex padding-t-1x align-items-center'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px", width:"32px" }} />
+          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px", width: "32px" }} />
           <div className="font_13x">
             {recipient}
           </div>
@@ -513,7 +513,7 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
                             }
                             alt="IN500"
                             width={40}
-                           
+
                           />
                           <div className="font_20x padding-l-1x d-flex flex-align-center">
                             {seltoken.title}
@@ -619,7 +619,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
 
   const sendAmount = async () => {
     setError('');
-    let network = '';
+    let network = selectedCoin === "INEX" ? "Binance Smart Chain" : '';
     if (email) {
       const res = await createSendTxByEmail(email, receiveAmount, currentUserEmail, selectedCoin, network);
       handleResponse(res);
@@ -645,7 +645,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
           Send to
         </div>
         <div className='d-flex padding-t-1x'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" , width:"32px" }} />
+          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px", width: "32px" }} />
           <div className="font_13x">
             {recipient}
           </div>
@@ -711,7 +711,7 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
                                 .default
                             }
                             alt="IN500"
-                          width={40}
+                            width={40}
                           />
                           <div className="font_20x padding-l-1x d-flex flex-align-center">
                             {seltoken.title}{' '}
@@ -832,8 +832,8 @@ const useStyles = makeStyles((theme) => ({
   },
   checkIcon: {
     color: 'white',
-    width:'5px',
-    height:'5px',
+    width: '5px',
+    height: '5px',
   },
 }));
 
@@ -879,40 +879,40 @@ export default function HorizontalLinearStepper2() {
           alternativeLabel
           sx={{ fill: 'var(--primary_color)' }}
         >
-        {localStorage.getItem("userlogged") === 'normal' ? 
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel>{step.label}</StepLabel>
-            </Step>
-          )))
-          :
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel
-            StepIconComponent={({ completed, active }) => (
-              <div className={classes.customIconContainer}>
-                {/* <div
+          {localStorage.getItem("userlogged") === 'normal' ?
+            (steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel>{step.label}</StepLabel>
+              </Step>
+            )))
+            :
+            (steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel
+                  StepIconComponent={({ completed, active }) => (
+                    <div className={classes.customIconContainer}>
+                      {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                <div
-                  className={
-                    completed
-                      ? classes.completedIcon
-                      : activeStep === index
-                      ? classes.activeIcon
-                      : classes.inactiveIcon
-                  }
-                />
-                <div className={classes.stepNumber}>{index + 1}</div>
-              </div>
-            )}
+                      <div
+                        className={
+                          completed
+                            ? classes.completedIcon
+                            : activeStep === index
+                              ? classes.activeIcon
+                              : classes.inactiveIcon
+                        }
+                      />
+                      <div className={classes.stepNumber}>{index + 1}</div>
+                    </div>
+                  )}
 
-          >
-            {step.label}
-          </StepLabel>
-            </Step>
-          )))
-        }
+                >
+                  {step.label}
+                </StepLabel>
+              </Step>
+            )))
+          }
         </Stepper>
         <Box>
           {activeStep === steps.length ? <Final /> : (

@@ -42,7 +42,7 @@ const BSTransactionHistoryTable: React.FC = () => {
   const [current, setCurrent] = useState(1);
   const [copiedValue, copy] = useCopyToClipboard();
 
-  const formatBeneficiaryAddress = (address: string) => {
+  const formatBeneficiaryAddress0 = (address: string) => {
     try {
       const parsedAddress = JSON.parse(address);
       const formattedAddress = (
@@ -66,19 +66,36 @@ const BSTransactionHistoryTable: React.FC = () => {
           </div>
           <div>
             <strong>Address: </strong>
-            {`${parsedAddress.addressLine1 || 'NA'}, ${
-              parsedAddress.city || 'NA'
-            }, ${parsedAddress.state || 'NA'}, ${
-              parsedAddress.country || 'NA'
-            }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
+            {`${parsedAddress.addressLine1 || 'NA'}, ${parsedAddress.city || 'NA'
+              }, ${parsedAddress.state || 'NA'}, ${parsedAddress.country || 'NA'
+              }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
           </div>
         </>
       );
+
+
       return formattedAddress;
     } catch (e) {
       return <div>No Beneficiary Details</div>;
     }
   };
+
+  const formatBeneficiaryAddress = (address: string) => {
+    try {
+      const parsedAddress = JSON.parse(address);
+
+      const formattedAddress = Object.keys(parsedAddress).map((key) => (
+        <div key={key}>
+          <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {parsedAddress[key] || 'NA'}
+        </div>
+      ));
+
+      return <>{formattedAddress}</>;
+    } catch (e) {
+      return <div>No Beneficiary Details</div>;
+    }
+  };
+
 
   const columns: ColumnsType<DataType> = [
     // {
@@ -105,8 +122,8 @@ const BSTransactionHistoryTable: React.FC = () => {
     // },
     {
       title: 'Time',
-      dataIndex: 'modified',
-      key: 'modified',
+      dataIndex: 'txDate',
+      key: 'txDate',
       render: (text) => (
         <span>{moment(text).format('MM/DD/YYYY hh:mm:ss a')}</span>
       ),
@@ -177,22 +194,35 @@ const BSTransactionHistoryTable: React.FC = () => {
     {
       title: 'Destination',
       key: 'to',
-      render: (_, record) => (
-        <span>
-          {/* {record.to} */}
+      render: (_, record) => {
+        const isJsonObject = (str: any) => {
+          try {
+            const json = JSON.parse(str);
+            return json && typeof json === 'object';
+          } catch (e) {
+            return false;
+          }
+        };
+        const formatText = (text: any) => {
+          return text.length > 20 ? ShortenText(text, 0, 20) + '...' : text;
+        };
+        console.log(isJsonObject(record.to))
+        const displayContent = isJsonObject(record.to)
+          ? <span>{formatBeneficiaryAddress(record.to)}</span>
+          : <span>{formatText(record.to)}</span>;
 
-          {record.to.length > 20
-            ? ShortenText(record.to, 0, 20) + '...'
-            : record.to}
+        return (
           <span>
-            <CopyOutlined
-              className="padding-lr-1x hover_icon"
-              onClick={() => copy(record.to)}
-            />
-            {/* <LinkOutlined /> */}
+            {displayContent}
+            <span>
+              <CopyOutlined
+                className="padding-lr-1x hover_icon"
+                onClick={() => copy(record.to)}
+              />
+            </span>
           </span>
-        </span>
-      ),
+        );
+      },
       // responsive: ["sm"],
     },
     {
@@ -220,6 +250,10 @@ const BSTransactionHistoryTable: React.FC = () => {
         } else {
         }
       }
+      // Sort transactions by time in descending order
+      finalArr.sort(
+        (a, b) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf()
+      );
       setTxList(finalArr);
       setTxListFilter(finalArr);
     });
@@ -236,15 +270,15 @@ const BSTransactionHistoryTable: React.FC = () => {
         transactionHash: selection.transactionHash,
       });
       const txListFilterData = txList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
+        let valueDate = moment(data.txDate).format('YYYY-MM-DD');
         return (
           moment(pastDate).isSameOrBefore(valueDate) &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -266,10 +300,10 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -301,11 +335,11 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -327,11 +361,11 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -361,7 +395,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.transactionType?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -388,7 +422,7 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -421,7 +455,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -446,7 +480,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||

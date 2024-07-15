@@ -149,7 +149,8 @@ const BalanceOverview = () => {
         console.log('Final totalBalanceInUSD', totalBalInUSD);
         console.log('Final totalPrevBalInUSD', totalPrevBalInUSD);
         if (totalPrevBalInUSD > 0) {
-          pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
+          pnlValue = totalBalInUSD - totalPrevBalInUSD;
+          console.log(pnlValue)
           pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
         }
 
