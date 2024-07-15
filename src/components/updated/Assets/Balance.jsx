@@ -142,6 +142,23 @@ const BalanceOverview = () => {
 
         setTotalBalanceInUSD(totalBalInUSD);
         setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
+
+        let pnlValue = 0;
+        let pnlPercentage = 0;
+
+        console.log('Final totalBalanceInUSD', totalBalInUSD);
+        console.log('Final totalPrevBalInUSD', totalPrevBalInUSD);
+        if (totalPrevBalInUSD > 0) {
+          pnlValue = totalBalanceInUSD - totalPrevBalInUSD;
+          pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
+        }
+
+        setPnl({
+          value: pnlValue.toFixed(2),
+          percentage: pnlPercentage.toFixed(2),
+        });
+        // Set the class based on PNL value
+        setPnlClass(pnlValue >= 0 ? classes.greenText : classes.redText);
       } catch (err) {
       } finally {
         setIsLoading(false);
