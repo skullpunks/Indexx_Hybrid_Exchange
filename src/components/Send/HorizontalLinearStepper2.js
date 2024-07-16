@@ -16,13 +16,23 @@ import { Select } from 'antd';
 import initialTokens from '../../utils/Tokens.json';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
-import { createSendTxByEmail, createSendTxByUsername, decodeJWT, getWalletBalance, validateUserEmail, validateUsername } from '../../services/api';
+import {
+  createSendTxByEmail,
+  createSendTxByUsername,
+  decodeJWT,
+  getWalletBalance,
+  validateUserEmail,
+  validateUsername,
+} from '../../services/api';
 import '../BSDepositWithdraw/BSWithdraw.css';
 import '../BuySell/BuySellDummy.css';
 import './HorizontalLinearStepper2.css';
+import Header from './Header';
+import InputField from '../updated/shared/TextField';
+import GenericButton from '../updated/shared/Button';
+import CustomSelectBox from './CustomSelect';
 
 const Final = () => {
-
   return (
     <Box
       sx={{
@@ -36,7 +46,7 @@ const Final = () => {
         <br />
         <br />
 
-        <img src={check} alt="check" style={{ width: "128px" }} />
+        <img src={check} alt="check" style={{ width: '128px' }} />
         <br />
         <h1 className="font_30x">Send Successful</h1>
         <br />
@@ -44,13 +54,13 @@ const Final = () => {
         <br />
         <br />
         <br />
-        <div style={{ minWidth: "100%" }}>
+        <div style={{ minWidth: '100%' }}>
           <Button
             className="continue-btn"
             variant="contained"
             onClick={() => window.location.reload()}
             disableTouchRipple
-            style={{ minWidth: "100%" }}
+            style={{ minWidth: '100%' }}
           >
             Done
           </Button>
@@ -79,8 +89,12 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
   };
 
   // Retrieve current user's email and username from localStorage
-  const currentUserEmail = localStorage.getItem("user") !== null ? localStorage.getItem("user") : '';
-  const currentUsername = localStorage.getItem("username") !== null ? localStorage.getItem("username") : '';
+  const currentUserEmail =
+    localStorage.getItem('user') !== null ? localStorage.getItem('user') : '';
+  const currentUsername =
+    localStorage.getItem('username') !== null
+      ? localStorage.getItem('username')
+      : '';
 
   const validateEmailAPI = async () => {
     try {
@@ -159,12 +173,14 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
       }}
     >
       <Box className="send-box staking-toggle">
-        <h1 className="font_30x">Send to</h1>
-        <br />
-        <div className="font_13x">
+        <h1 className="font_30x" style={{ marginBottom: '25px' }}>
+          Send to
+        </h1>
+
+        <div className="font_13x" style={{ marginBottom: '25px' }}>
           Send fiat or crypto to hive users via email or user name
         </div>
-        <br />
+
         <ToggleButtonGroup
           color="primary"
           value={type}
@@ -250,8 +266,6 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <br />
-        <br />
         <div className="">
           <Box
             className="d-flex flex-direction-column"
@@ -265,9 +279,8 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
                 <Typography variant="text" fontSize={'13px'} textAlign={'left'}>
                   Recipient's Email
                 </Typography>
-                <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
-                  <TextField
-                    variant="outlined"
+                <Box className="d-flex" sx={{ gap: 3 }}>
+                  <InputField
                     placeholder="Enter recipient’s email"
                     InputLabelProps={{ shrink: true }}
                     sx={{ mb: 2, width: '100%' }}
@@ -279,7 +292,6 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
                     }}
                     error={emailError !== ''}
                     helperText={emailError}
-                  // onBlur={validateEmail}
                   />
                 </Box>
                 {apiError && <Typography color="error">{apiError}</Typography>}
@@ -290,7 +302,7 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
                   Recipient's User Name
                 </Typography>
                 <Box className="d-flex" sx={{ gap: 3, mt: 1 }}>
-                  <TextField
+                  <InputField
                     variant="outlined"
                     placeholder="Enter recipient’s User Name"
                     InputLabelProps={{ shrink: true }}
@@ -300,8 +312,8 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
                     onChange={(e) => {
                       setUserName(e.target.value);
                     }}
-                  // error={!!error}
-                  // helperText={error}
+                    // error={!!error}
+                    // helperText={error}
                   />
                 </Box>
                 {apiError && <Typography color="error">{apiError}</Typography>}
@@ -309,22 +321,34 @@ const FileComponent1 = ({ onNext, onStateChange }) => {
             )}
           </Box>
           <br />
-          <Button
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handleNext}
-            disabled={(username === undefined || username.trim() === '' || username === null) && (email === undefined || email.trim() === '' || email === null || emailError !== '')}
-            disableTouchRipple
-          >
-            Continue
-          </Button>
+            disabled={
+              (username === undefined ||
+                username.trim() === '' ||
+                username === null) &&
+              (email === undefined ||
+                email.trim() === '' ||
+                email === null ||
+                emailError !== '')
+            }
+            text={'Continue'}
+          />
         </div>
       </Box>
     </Box>
   );
 };
 
-const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) => {
+const FileComponent2 = ({
+  onNext,
+  onStateChange,
+  email,
+  username,
+  profilePic,
+}) => {
   const [token, setToken] = useState('crypto');
   const [currentUserEmail, setCurrentUserEamil] = useState('');
   const [filteredtokens, setFilteredtokens] = useState();
@@ -344,7 +368,8 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
     setSelectedCoinObj(getRequiredCoin);
   };
 
-  const user_img = localStorage.getItem("userlogged") === 'normal' ? people_green : people;
+  const user_img =
+    localStorage.getItem('userlogged') === 'normal' ? people_green : people;
   const recipient = email || username;
   const recipientProfilePic = profilePic || user_img;
   const handleChangeType = (value) => {
@@ -363,10 +388,10 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
         setShowUserBalance(true);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    let access_token = localStorage.getItem("access_token");
+    let access_token = localStorage.getItem('access_token');
     if (access_token) {
       let decoded = decodeJWT(access_token);
       // Check if the email is actually different to avoid unnecessary updates
@@ -392,29 +417,32 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
 
   useEffect(() => {
     if (token === 'crypto') {
-      const filter = initialTokens.filter((x) => x.isStock === false && x.isETF === false);
+      const filter = initialTokens.filter(
+        (x) => x.isStock === false && x.isETF === false
+      );
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
       setSelectedCoinObj(filter[0]);
-    }
-    else if (token === 'stocktokens') {
+    } else if (token === 'stocktokens') {
       const filter = initialTokens.filter((x) => x.isStock === true);
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
       setSelectedCoinObj(filter[0]);
-    }
-    else if (token === 'etf') {
+    } else if (token === 'etf') {
       const filter = initialTokens.filter((x) => x.isETF === true);
       setFilteredtokens(filter);
       setSelectedCoin(filter[0].title);
       setSelectedCoinObj(filter[0]);
     }
-  }, [token])
+  }, [token]);
 
   React.useEffect(() => {
-    onStateChange({ selectedCoin, receiveAmount, currentUserBalance: userBalance });
+    onStateChange({
+      selectedCoin,
+      receiveAmount,
+      currentUserBalance: userBalance,
+    });
   }, [selectedCoin, receiveAmount]);
-
 
   const onChangeReceiveAmt = (e) => {
     const amount = e.target.value;
@@ -446,103 +474,58 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
       <Box className="send-box staking-toggle">
         <h1 className="font_30x">Enter Amount</h1>
         <br />
-        <div className="font_13x">
-          Send to
-        </div>
-        <div className='d-flex padding-t-1x align-items-center'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px", width:"32px" }} />
-          <div className="font_13x">
-            {recipient}
-          </div>
+        <div className="font_13x">Send to</div>
+        <div className="d-flex padding-t-1x align-items-center">
+          <img
+            src={recipientProfilePic}
+            alt="Profile"
+            style={{ marginRight: '10px', width: '32px' }}
+          />
+          <div className="font_13x">{recipient}</div>
         </div>
         <br />
-        <Box className="d-flex justify-content-between padding-t-1x">
-          <Box minWidth={"49%"}>
+        <Box
+          className="d-flex justify-content-between padding-t-1x "
+          style={{ gap: '5px' }}
+        >
+          <Box minWidth={'49%'}>
             <label>Type</label>
-            <div className=" d-flex flex-justify-between flex-align-center">
-              <Select
-                dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
-                className="width-100"
-                onChange={handleChangeType}
-                defaultValue="Select a Coin to Withdraw"
-                value={token}
-              >
-                <Option key="crypto" value="crypto">
-                  Crypto
-                </Option>
-                <Option key="stocktokens" value="stocktokens">
-                  Stock Tokens
-                </Option>
-                <Option key="etf" value="etf">
-                  ETF
-                </Option>
-              </Select>
-              {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
-              {/* <CaretDownOutlined /> */}
-
-              {/* <RightOutlined /> */}
-            </div>
+            <CustomSelectBox
+              items={[
+                { name: 'Crypto', value: 'crypto' },
+                { name: 'Stock Tokens', value: 'stocktokens' },
+                { name: 'ETF', value: 'etf' },
+              ]}
+              type={'Type'}
+              onCurrencyChange={handleChangeType}
+              value={token}
+            />
           </Box>
-          <Box minWidth={"49%"}>
+          <Box minWidth={'49%'}>
             <label>Currency</label>
-            <div className=" d-flex flex-justify-between flex-align-center">
-              <Select
-                dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
-                className="width-100"
-                onChange={handleChangeCurrency}
-                defaultValue="Select a Coin to Withdraw"
-                value={selectedCoinObj?.address}
-              >
-                {filteredtokens?.filter(
-                  (seltoken) => seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
-                )
-                  .map((seltoken, index) => {
-                    return (
-                      <Option
-                        key={index}
-                        value={seltoken.address}
-                        type="link"
-                        className="common__token d-flex bs_token_container"
-                        data-address={seltoken.address}
-                      >
-                        <div className="d-flex">
-                          <img
-                            src={
-                              require(`../../assets/token-icons/${seltoken.image}.png`)
-                                .default
-                            }
-                            alt="IN500"
-                            width={40}
-                           
-                          />
-                          <div className="font_20x padding-l-1x d-flex flex-align-center">
-                            {seltoken.title}
-                          </div>
-                        </div>
-                      </Option>
-                    );
-                  })}
-              </Select>
-              {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
-              {/* <CaretDownOutlined /> */}
-
-              {/* <RightOutlined /> */}
-            </div>
+            <CustomSelectBox
+              items={filteredtokens?.filter(
+                (seltoken) =>
+                  seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
+              )}
+              type={'Currency'}
+              onCurrencyChange={handleChangeType}
+              value={selectedCoinObj?.address}
+              isCurrency={true}
+            />
           </Box>
         </Box>
         <br />
         <div className="padding-t-1x">
           <label>Amount</label>
-          <br />
+
           <div
-            className="select_container d-flex flex-justify-between flex-align-center"
-            style={{ paddingLeft: 10 }}
+            className=" d-flex flex-justify-between flex-align-center"
+            style={{ margin: '-15px 0px' }}
           >
-            <input
+            <InputField
               type="number"
               placeholder="Enter Amount"
-              className="width-100 font_13x outline-none"
-              style={{ border: 'none' }}
               value={receiveAmount}
               onChange={onChangeReceiveAmt}
             />
@@ -550,7 +533,7 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
 
           {showUserBalance && (
             <Typography variant="subtitle1" style={{ marginTop: '10px' }}>
-              Your balance: {userBalance} {' '}{selectedCoin}
+              Your balance: {userBalance} {selectedCoin}
             </Typography>
           )}
           {balanceError && (
@@ -558,11 +541,9 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
               {balanceError}
             </Typography>
           )}
-
         </div>
         <br />
         <div className="">
-
           <br />
           {/* <Button
             className="continue-btn"
@@ -574,28 +555,38 @@ const FileComponent2 = ({ onNext, onStateChange, email, username, profilePic }) 
             Continue
           </Button> */}
 
-          <Button
+          <GenericButton
             className="continue-btn"
             variant="contained"
             onClick={handleContinue}
             disabled={!!balanceError || !receiveAmount}
             disableTouchRipple
-          >
-            Continue
-          </Button>
+            text={'Continue'}
+          />
         </div>
       </Box>
     </Box>
   );
 };
 
-const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, username, profilePic, currentUserBalance }) => {
+const FileComponent3 = ({
+  onPrev,
+  onNext,
+  selectedCoin,
+  receiveAmount,
+  email,
+  username,
+  profilePic,
+  currentUserBalance,
+}) => {
   const [selectedCoinObj, setSelectedCoinObj] = useState({
     address: '0xf58e5644a650C0e4db0d6831664CF1Cb6A3B005A',
     title: '',
   });
 
-  const user_img = localStorage.getItem("userlogged") === 'normal' ? people_green : people;
+  const classes = useStyles();
+  const user_img =
+    localStorage.getItem('userlogged') === 'normal' ? people_green : people;
   const recipient = email || username;
   const recipientProfilePic = profilePic || user_img;
   const [error, setError] = useState('');
@@ -604,10 +595,10 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
   useEffect(() => {
     let getRequiredCoin = initialTokens.find((x) => x.title === selectedCoin);
     setSelectedCoinObj(getRequiredCoin);
-  }, [selectedCoin])
+  }, [selectedCoin]);
 
-  const currentUserEmail = localStorage.getItem("user") !== null ? localStorage.getItem("user") : '';
-
+  const currentUserEmail =
+    localStorage.getItem('user') !== null ? localStorage.getItem('user') : '';
 
   const handleResponse = (res) => {
     if (res.status === 200) {
@@ -621,10 +612,22 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
     setError('');
     let network = '';
     if (email) {
-      const res = await createSendTxByEmail(email, receiveAmount, currentUserEmail, selectedCoin, network);
+      const res = await createSendTxByEmail(
+        email,
+        receiveAmount,
+        currentUserEmail,
+        selectedCoin,
+        network
+      );
       handleResponse(res);
     } else if (username) {
-      const res = await createSendTxByUsername(username, receiveAmount, currentUserEmail, selectedCoin, network);
+      const res = await createSendTxByUsername(
+        username,
+        receiveAmount,
+        currentUserEmail,
+        selectedCoin,
+        network
+      );
       handleResponse(res);
     }
   };
@@ -641,25 +644,21 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
       <Box className="send-box staking-toggle">
         <h1 className="font_30x">Confirm</h1>
         <br />
-        <div className="font_15x">
-          Send to
-        </div>
-        <div className='d-flex padding-t-1x'>
-          <img src={recipientProfilePic} alt="Profile" style={{ marginRight: "10px" , width:"32px" }} />
-          <div className="font_13x">
-            {recipient}
-          </div>
+        <div className="font_15x">Send to</div>
+        <div className="d-flex padding-t-1x">
+          <img
+            src={recipientProfilePic}
+            alt="Profile"
+            style={{ marginRight: '10px', width: '32px' }}
+          />
+          <div className="font_13x">{recipient}</div>
         </div>
 
         <br />
         <div className="padding-t-1x">
-          <div className="font_15x  fw-bold">
-            Amount
-          </div>
-          <div className='d-flex justify-content-between align-items-center'>
-            <div className="font_13x">
-              Payee receives
-            </div>
+          <div className="font_15x  fw-bold">Amount</div>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="font_13x">Payee receives</div>
             <div className="font_20x fw-bold">
               {receiveAmount} {selectedCoin}
             </div>
@@ -667,104 +666,68 @@ const FileComponent3 = ({ onPrev, onNext, selectedCoin, receiveAmount, email, us
         </div>
         <br />
 
-        <div className="font_15x fw-bold">
-          Payment Method
-        </div>
-        <div className='d-flex padding-t-1x'>
-          <img src={wallet} alt="people" style={{ marginRight: "10px", width: "36px" }} />
+        <div className="font_15x fw-bold">Payment Method</div>
+        <div className="d-flex padding-t-1x">
+          <img
+            src={wallet}
+            alt="people"
+            style={{ marginRight: '10px', width: '36px' }}
+          />
           <div className="font_15x">
             Asset Wallet
             <br />
-            <span className='font_13x'>Balance: {currentUserBalance} {" "} {selectedCoin}</span>
+            <span className="font_13x">
+              Balance: {currentUserBalance} {selectedCoin}
+            </span>
           </div>
         </div>
         <br />
         <Box className="d-flex justify-content-between padding-t-1x">
-          <Box minWidth={"100%"}>
-            <label className='font_15x fw-bold'>Sending Asset</label>
-            <div className=" d-flex flex-justify-between flex-align-center">
-              <Select
-                dropdownStyle={{ width: '300px', maxHeight: '400px', overflow: 'auto' }}
-                className="width-100"
-                // onChange={handleChangeCurrency}
-                defaultValue="Select a Coin to Withdraw"
-                value={selectedCoinObj?.address}
-                disabled
-              >
-                {initialTokens
-                  .filter(
-                    (seltoken) => seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
-                  )
-                  .map((seltoken, index) => {
-                    return (
-                      <Option
-                        key={index}
-                        value={seltoken.address}
-                        type="link"
-                        className="common__token d-flex bs_token_container"
-                        data-address={seltoken.address}
-                      >
-                        <div className="d-flex">
-                          <img
-                            src={
-                              require(`../../assets/token-icons/${seltoken.image}.png`)
-                                .default
-                            }
-                            alt="IN500"
-                          width={40}
-                          />
-                          <div className="font_20x padding-l-1x d-flex flex-align-center">
-                            {seltoken.title}{' '}
-                            <span
-                              style={{ color: 'rgba(95, 95, 95, 0.5)' }}
-                              className="margin-l-0_5x"
-                            >
-                              {seltoken.subTitle}
-                            </span>{' '}
-                          </div>
-                        </div>
-                      </Option>
-                    );
-                  })}
-              </Select>
-              {/* <div className='d-flex'><img src={IN500} alt="IN500" width="38"   /><div className='font_20x padding-l-1x d-flex flex-align-center'>IN500 <span style={{ color: "rgba(95, 95, 95, 0.5)" }} className="margin-l-0_5x">Indexx 500</span> </div></div> */}
-              {/* <CaretDownOutlined /> */}
-
-              {/* <RightOutlined /> */}
-            </div>
+          <Box minWidth={'100%'}>
+            <label
+              className="font_15x fw-bold"
+              style={{ marginBottom: '10px' }}
+            >
+              Sending Asset
+            </label>
+            <CustomSelectBox
+              items={initialTokens?.filter(
+                (seltoken) =>
+                  seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
+              )}
+              type={'Currency'}
+              value={selectedCoinObj?.address}
+              isCurrency={true}
+            />
           </Box>
         </Box>
         <div className="">
           <br />
           <div className="font_13x">
-            Please make sure the payee and amount information is correct. Refunds are not supported
+            Please make sure the payee and amount information is correct.
+            Refunds are not supported
           </div>
           <br />
-          <div className='d-flex' style={{ gap: 10 }}>
-            <Button
-              className="continue-outlined-btn"
+          <div className="d-flex" style={{ gap: 10 }}>
+            <GenericButton
+              className={classes.outlinedBtn}
               variant="outlined"
               onClick={onPrev}
               disableTouchRipple
-            >
-              Previous step
-            </Button>
-            <Button
-              className="continue-btn"
-              variant="contained"
+              text={' Previous step'}
+            />
+
+            <GenericButton
               onClick={sendAmount} //onNext}
               disableTouchRipple
-            >
-              Confirm
-            </Button>
+              text={'Confirm'}
+            />
           </div>
-          {
-            error && (
-              <Typography color="error" style={{ marginTop: '10px' }}>
-                {error}
-              </Typography>
-            )
-          }
+          {error && (
+            <Typography color="error" style={{ marginTop: '10px' }}>
+              {error}
+            </Typography>
+          )}
         </div>
       </Box>
     </Box>
@@ -830,16 +793,34 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: 12,
   },
+  outlinedBtn: {
+    background: 'none !important',
+    border: `1px solid ${theme.palette.primary.main} !important`,
+    color: `${theme.palette.text.primary} !important`,
+  },
   checkIcon: {
     color: 'white',
-    width:'5px',
-    height:'5px',
+    width: '5px',
+    height: '5px',
+  },
+  contentWrapper: {
+    maxWidth: '1100px',
+    margin: '50px auto',
+    padding: '20px',
+    width: '100%',
   },
 }));
 
 export default function HorizontalLinearStepper2() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [coinFromStep2, setCoinFromStep2] = React.useState({ selectedCoin: '', receiveAmount: '', email: '', username: '', profilePic: '', userBalance: 0 });
+  const [activeStep, setActiveStep] = React.useState(2);
+  const [coinFromStep2, setCoinFromStep2] = React.useState({
+    selectedCoin: '',
+    receiveAmount: '',
+    email: '',
+    username: '',
+    profilePic: '',
+    userBalance: 0,
+  });
 
   const classes = useStyles();
 
@@ -851,71 +832,65 @@ export default function HorizontalLinearStepper2() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const handleStateChange = (newState) => {
-    setCoinFromStep2(prevState => ({ ...prevState, ...newState }));
+    setCoinFromStep2((prevState) => ({ ...prevState, ...newState }));
   };
 
   return (
     <Box
       sx={{
         width: '100%',
-        paddingTop: '200px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: '70px',
       }}
     >
-      <Box sx={{ width: '50%', mb: 5 }}>
-        <Typography variant="h3">Send</Typography>
-      </Box>
-      <Box sx={{ width: '40%' }}>
+      <Header />
+
+      <Box className={classes.contentWrapper}>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          sx={{ fill: 'var(--primary_color)' }}
+          // sx={{ fill: 'var(--primary_color)' }}
         >
-        {localStorage.getItem("userlogged") === 'normal' ? 
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel>{step.label}</StepLabel>
-            </Step>
-          )))
-          :
-          (steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel
-            StepIconComponent={({ completed, active }) => (
-              <div className={classes.customIconContainer}>
-                {/* <div
+          {localStorage.getItem('userType') !== 'CaptainBee'
+            ? steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))
+            : steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel
+                    StepIconComponent={({ completed, active }) => (
+                      <div className={classes.customIconContainer}>
+                        {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                <div
-                  className={
-                    completed
-                      ? classes.completedIcon
-                      : activeStep === index
-                      ? classes.activeIcon
-                      : classes.inactiveIcon
-                  }
-                />
-                <div className={classes.stepNumber}>{index + 1}</div>
-              </div>
-            )}
-
-          >
-            {step.label}
-          </StepLabel>
-            </Step>
-          )))
-        }
+                        <div
+                          className={
+                            completed
+                              ? classes.completedIcon
+                              : activeStep === index
+                              ? classes.activeIcon
+                              : classes.inactiveIcon
+                          }
+                        />
+                        <div className={classes.stepNumber}>{index + 1}</div>
+                      </div>
+                    )}
+                  >
+                    {step.label}
+                  </StepLabel>
+                </Step>
+              ))}
         </Stepper>
         <Box>
-          {activeStep === steps.length ? <Final /> : (
+          {activeStep === steps.length ? (
+            <Final />
+          ) : (
             React.cloneElement(steps[activeStep].component, {
               onNext: handleNext,
               onPrev: handleBack,

@@ -11,7 +11,7 @@ const AssetsPage = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       const redirectFlag = localStorage.getItem('redirected');
-      
+
       if (defaultSignInToken && !redirectFlag) {
         console.log('I am here ', defaultSignInToken);
         await checkLogin(defaultSignInToken);

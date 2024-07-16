@@ -121,13 +121,17 @@ export default function IconicHeader({ selectedTab, onChange }) {
     const currentPath = location.pathname;
     const currentSearch = location.search;
 
-    const matchedTab = tabsData.find(tab => 
-      tab.path === currentPath && (tab.search ? currentSearch.includes(tab.search) : true)
+    const matchedTab = tabsData.find(
+      (tab) =>
+        tab.path === currentPath &&
+        (tab.search ? currentSearch.includes(tab.search) : true)
     );
     return matchedTab ? matchedTab.label : '';
   };
 
-  const [selectedTabState, setSelectedTabState] = React.useState(getSelectedTab());
+  const [selectedTabState, setSelectedTabState] = React.useState(
+    getSelectedTab()
+  );
 
   React.useEffect(() => {
     setSelectedTabState(getSelectedTab());
@@ -135,9 +139,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   const handleChange = (event, newValue) => {
     const label = event.currentTarget.innerText;
-    const selectedTabData = tabsData.find(tab => tab.label === label);
+    const selectedTabData = tabsData.find((tab) => tab.label === label);
     if (selectedTabData) {
-      navigate(`${selectedTabData.path}${selectedTabData.search ? '?' + selectedTabData.search : ''}`);
+      navigate(
+        `${selectedTabData.path}${
+          selectedTabData.search ? '?' + selectedTabData.search : ''
+        }`
+      );
       onChange(event, label);
     }
   };

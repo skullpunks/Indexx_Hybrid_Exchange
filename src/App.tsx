@@ -216,12 +216,14 @@ function App() {
             <Route path="/" element={<Navigate to="/update/home/" />} />
 
             <Route path="/referral" element={<ReferralPage />} />
+
             <Route element={<PrivateRoutes />}>
+              <Route path="/wallet/overview" element={<AssetsPage />} />
+
               <Route
                 path="/indexx-exchange/send"
                 element={<HorizontalLinearStepper2 />}
               />
-              <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
 
               <Route
