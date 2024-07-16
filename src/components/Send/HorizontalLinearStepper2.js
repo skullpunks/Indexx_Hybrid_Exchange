@@ -532,12 +532,12 @@ const FileComponent2 = ({
           </div>
 
           {showUserBalance && (
-            <Typography variant="subtitle1" style={{ marginTop: '10px' }}>
+            <Typography variant="subtitle1" style={{ marginTop: '20px' }}>
               Your balance: {userBalance} {selectedCoin}
             </Typography>
           )}
           {balanceError && (
-            <Typography color="error" style={{ marginTop: '10px' }}>
+            <Typography color="error" style={{ marginTop: '15px' }}>
               {balanceError}
             </Typography>
           )}
@@ -610,7 +610,7 @@ const FileComponent3 = ({
 
   const sendAmount = async () => {
     setError('');
-    let network = '';
+    let network = selectedCoin === 'INEX' ? 'Binance Smart Chain' : '';
     if (email) {
       const res = await createSendTxByEmail(
         email,
@@ -690,14 +690,10 @@ const FileComponent3 = ({
             >
               Sending Asset
             </label>
-            <CustomSelectBox
-              items={initialTokens?.filter(
-                (seltoken) =>
-                  seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
-              )}
+            <InputField
               type={'Currency'}
-              value={selectedCoinObj?.address}
-              isCurrency={true}
+              value={selectedCoinObj?.title}
+              disabled
             />
           </Box>
         </Box>
@@ -812,7 +808,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HorizontalLinearStepper2() {
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [coinFromStep2, setCoinFromStep2] = React.useState({
     selectedCoin: '',
     receiveAmount: '',

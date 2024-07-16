@@ -345,10 +345,15 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     maximumFractionDigits: 6,
                   }).format(row.amount)}{' '}
                   / $
-                  {(row.amount * row.coin_price).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  {row.coin === 'USD'
+                    ? row.amount.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : (row.amount * row.coin_price).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                 </TableCell>
                 <TableCell
                   align="right"

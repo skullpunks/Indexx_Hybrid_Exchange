@@ -45,28 +45,36 @@ const Final = ({
 }) => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const [apiCalled, setApiCalled] = useState(false);
+
+  useEffect(() => {
+    async function finalDetails() {
+      if (!apiCalled) {
+        const access_token = String(localStorage.getItem('access_token'));
+        const decoded = await decodeJWT(access_token);
+        let email = String(decoded.email);
+        const res = await createFiatDepositForOrder(
+          email,
+          orderData?.orderId,
+          fromDetails,
+          toDetails,
+          photoIdUrl
+        );
+        if (res.status === 200) {
+          setApiCalled(true);
+        }
+      }
+    }
+    finalDetails();
+  }, [fromDetails, toDetails, photoIdUrl, apiCalled]);
+
   const handleWallet = () => {
     navigate('/wallet/overview');
   };
+
   const handleExchange = () => {
     navigate('/update/home');
   };
-  // Add this inside your component to log the data when it's rendered
-  useEffect(() => {
-    async function finalDetails() {
-      const access_token = String(localStorage.getItem('access_token'));
-      const decoded = await decodeJWT(access_token);
-      let email = String(decoded.email);
-      const res = await createFiatDepositForOrder(
-        email,
-        orderData?.orderId,
-        fromDetails,
-        toDetails,
-        photoIdUrl
-      );
-    }
-    finalDetails();
-  }, [fromDetails, toDetails, photoIdUrl]);
 
   return (
     <Box
@@ -155,8 +163,7 @@ const FileComponent1 = ({
     bankName: 'Wells Fargo Bank, NA',
     bankAccountNumber: '1793811546',
     bankAddress: '420 Montgomery Street, San Francisco, CA 94104',
-    wireRoutingNumber: '121000248',
-    swiftCode: 'WFBIUS6S',
+    wireRoutingNumber: '121042882',
   };
 
   const validatePhone = (phoneNumber) => {
@@ -1041,21 +1048,21 @@ export default function PaymentACH() {
     console.log('I am here', file);
     setPhotoIdFile(file);
   };
-  // useEffect(() => {
-  //   const orderIdFromParam = searchParams.get('orderId');
-  //   if (orderIdFromParam !== undefined) {
-  //     let access_token = String(localStorage.getItem('access_token'));
-  //     let decoded = decodeJWT(access_token);
-  //     getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
-  //       if (res.status === 200) {
-  //         let orderData = res.data;
-  //         setOrderData(orderData);
-  //       } else {
-  //         alert('Something went wrong. Please try again.');
-  //       }
-  //     });
-  //   }
-  // }, [searchParams]);
+  useEffect(() => {
+    const orderIdFromParam = searchParams.get('orderId');
+    if (orderIdFromParam !== undefined) {
+      let access_token = String(localStorage.getItem('access_token'));
+      let decoded = decodeJWT(access_token);
+      getOrderDetails(decoded.email, orderIdFromParam).then((res) => {
+        if (res.status === 200) {
+          let orderData = res.data;
+          setOrderData(orderData);
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

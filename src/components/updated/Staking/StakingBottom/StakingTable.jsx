@@ -92,6 +92,7 @@ const StakingTable = ({ refresh }) => {
   };
 
   const uniqueCoins = [...new Set(txList.map((item) => item.coin))];
+  const uniqueTypes = [...new Set(txList.map((item) => item.type))];
 
   return (
     <div style={{ padding: '20px' }}>
@@ -104,7 +105,7 @@ const StakingTable = ({ refresh }) => {
             onTokenSelect={handleIsActiveSelect}
           />
           <SingleSelectPlaceholder
-            items={['Short', 'Long']}
+            items={uniqueTypes}
             type={'Type'}
             onTokenSelect={handleTypeSelect}
           />
