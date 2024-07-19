@@ -193,9 +193,9 @@ function App() {
       }
     }
 
-    if (isAllowed) {
-      return <Navigate to="/indexx-exchange/power-pack" />;
-    }
+    // if (isAllowed) {
+    //   return <Navigate to="/indexx-exchange/power-pack" />;
+    // }
     return <Outlet />;
   };
 
