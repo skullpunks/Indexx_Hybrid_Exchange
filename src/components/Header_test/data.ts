@@ -792,7 +792,7 @@ export const auth_header_data = [
     hasMegaDrop: true,
     dropDownContent: [
       {
-        heading: 'Explore Hive Profile',
+        heading: 'Explore',
         mainList: true,
         links: [
           {
