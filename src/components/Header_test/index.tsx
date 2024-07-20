@@ -101,10 +101,19 @@ const HeaderTest = () => {
   const [isCaptain, setisCaptain] = useState(false);
   const [userProfile, setUserProfile] = useState();
   const [url, setUrl] = useState('');
+  const [loginUserType, setLoginUserType] = useState<any>();
   const [haspowerpack, setHaspowerpack] = useState(false);
 
   console.log(haspowerpack, 'has pack');
 
+  useEffect(() => {
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+
+    setLoginUserType(userType);
+  }, []);
   let pageName = searchParams.get('page');
   // alert(pageName)
   useEffect(() => {
@@ -329,13 +338,14 @@ const HeaderTest = () => {
     'Trade to Earn',
     'Logout',
   ];
-  const selectedDataFile = simpleAuthData.includes(hoverAsset)
+  let selectedDataFile = simpleAuthData.includes(hoverAsset)
     ? auth_header_data
     : hoverAsset === 'Asset Wallet'
     ? auth_header_data_asset_wallet
     : !simpleAuthData.includes(hoverAsset) && isAssetWallet
     ? auth_header_data_asset_wallet
     : auth_header_data;
+
   return (
     <>
       <nav style={{ position: 'fixed', top: 0, left: 0, zIndex: 10000 }}>
@@ -732,6 +742,7 @@ const HeaderTest = () => {
               {!isMobile &&
                 selectedDataFile
                   .filter((el) => el.isAuth === isAuthenticated)
+
                   .map((element, i) => (
                     <>
                       {element.mainTextDesktop === 'Logout' ? (
@@ -871,69 +882,74 @@ const HeaderTest = () => {
                                         elem?.mainList ? 'main' : ''
                                       }`}
                                     >
-                                      {elem?.links.map((el) => (
-                                        <li
-                                          style={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-
-                                            textAlign: 'left',
-                                          }}
-                                          onMouseLeave={() =>
-                                            onMouseLeaveItem(el.name)
-                                          }
-                                          onMouseEnter={() =>
-                                            onMouseEnterItem(el.name)
-                                          }
-                                          className="profile-list-item"
-                                        >
-                                          {el.name.toLowerCase() ===
-                                          'asset wallet' ? (
-                                            <a
-                                              href="#"
-                                              onClick={onAssetWalletClick}
-                                              className={
-                                                theme.palette.mode === 'light'
-                                                  ? 'dark_color'
-                                                  : ''
-                                              }
-                                            >
-                                              {el.name}
-                                            </a>
-                                          ) : (
-                                            <a
-                                              onClick={(e) =>
-                                                handleLogout(
-                                                  e,
-                                                  el.name.toLocaleLowerCase()
-                                                )
-                                              }
-                                              href={el.href}
-                                              className={
-                                                theme.palette.mode === 'light'
-                                                  ? 'dark_color'
-                                                  : ''
-                                              }
-                                            >
-                                              {el.name}
-                                            </a>
-                                          )}
-
-                                          <div
-                                            className={`profile-inner-item-border-bottom ${
-                                              isAssetWallet &&
-                                              el.name === 'Asset Wallet' &&
-                                              'active-wallet'
-                                            }`}
+                                      {elem?.links.map((el) =>
+                                        el.name === 'Hive Dashboard' &&
+                                        loginUserType !== 'CaptainBee' ? (
+                                          ''
+                                        ) : (
+                                          <li
                                             style={{
-                                              background: '#11BE6A',
-                                              width: '16px',
-                                              height: '3px',
-                                              marginTop: '-5px',
+                                              display: 'flex',
+                                              flexDirection: 'column',
+
+                                              textAlign: 'left',
                                             }}
-                                          ></div>
-                                        </li>
-                                      ))}
+                                            onMouseLeave={() =>
+                                              onMouseLeaveItem(el.name)
+                                            }
+                                            onMouseEnter={() =>
+                                              onMouseEnterItem(el.name)
+                                            }
+                                            className="profile-list-item"
+                                          >
+                                            {el.name.toLowerCase() ===
+                                            'asset wallet' ? (
+                                              <a
+                                                href="#"
+                                                onClick={onAssetWalletClick}
+                                                className={
+                                                  theme.palette.mode === 'light'
+                                                    ? 'dark_color'
+                                                    : ''
+                                                }
+                                              >
+                                                {el.name}
+                                              </a>
+                                            ) : (
+                                              <a
+                                                onClick={(e) =>
+                                                  handleLogout(
+                                                    e,
+                                                    el.name.toLocaleLowerCase()
+                                                  )
+                                                }
+                                                href={el.href}
+                                                className={
+                                                  theme.palette.mode === 'light'
+                                                    ? 'dark_color'
+                                                    : ''
+                                                }
+                                              >
+                                                {el.name}
+                                              </a>
+                                            )}
+
+                                            <div
+                                              className={`profile-inner-item-border-bottom ${
+                                                isAssetWallet &&
+                                                el.name === 'Asset Wallet' &&
+                                                'active-wallet'
+                                              }`}
+                                              style={{
+                                                background: '#11BE6A',
+                                                width: '16px',
+                                                height: '3px',
+                                                marginTop: '-5px',
+                                              }}
+                                            ></div>
+                                          </li>
+                                        )
+                                      )}
                                     </ul>
                                   </div>
                                 ))}

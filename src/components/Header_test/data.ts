@@ -799,10 +799,10 @@ export const auth_header_data = [
             name: 'Account & Settings',
             href: '/indexx-exchange/account',
           },
-          {
-            name: 'Bridge',
-            href: '/indexx-exchange/bridge',
-          },
+          // {
+          //   name: 'Bridge',
+          //   href: '/indexx-exchange/bridge',
+          // },
           {
             name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',
@@ -817,10 +817,10 @@ export const auth_header_data = [
             name: 'Reward Center',
             href: '/indexx-exchange/reward-center',
           },
-          {
-            name: 'Trade to Earn',
-            href: '/indexx-exchange/trade-to-earn',
-          },
+          // {
+          //   name: 'Trade to Earn',
+          //   href: '/indexx-exchange/trade-to-earn',
+          // },
 
           {
             name: 'Asset Wallet',
@@ -840,19 +840,19 @@ export const auth_header_data = [
         links: [
           {
             name: 'Sales',
-            href: '/indexx-exchange/buy-sell',
+            href: '/',
           },
-          {
-            name: 'Trade and Earn',
-            href: 'https://indexx.ai/indexx-exchange/token-details/in500',
-          },
+          // {
+          //   name: 'Trade and Earn',
+          //   href: 'https://indexx.ai/indexx-exchange/token-details/in500',
+          // },
           {
             name: 'Complete Tasks',
-            href: 'https://shop.indexx.ai/',
+            href: '/indexx-exchange/reward-center',
           },
           {
             name: 'Recent Transaction',
-            href: 'https://shop.indexx.ai/collections/greeting-cards',
+            href: '/indexx-exchange/buy-sell/transaction-history',
           },
         ],
       },
@@ -862,11 +862,11 @@ export const auth_header_data = [
         links: [
           {
             name: 'How to deposit',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works/centralized',
           },
           {
             name: 'Know how to withdraw',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=Document',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works/centralized',
           },
         ],
       },
@@ -921,17 +921,17 @@ export const auth_header_data_asset_wallet = [
     hasMegaDrop: true,
     dropDownContent: [
       {
-        heading: 'Explore Hive Profile',
+        heading: 'Explore',
         mainList: true,
         links: [
           {
             name: 'Account & Settings',
             href: '/indexx-exchange/account',
           },
-          {
-            name: 'Bridge',
-            href: '/indexx-exchange/bridge',
-          },
+          // {
+          //   name: 'Bridge',
+          //   href: '/indexx-exchange/bridge',
+          // },
           {
             name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',
@@ -946,10 +946,10 @@ export const auth_header_data_asset_wallet = [
             name: 'Reward Center',
             href: '/indexx-exchange/reward-center',
           },
-          {
-            name: 'Trade to Earn',
-            href: '/indexx-exchange/trade-to-earn',
-          },
+          // {
+          //   name: 'Trade to Earn',
+          //   href: '/indexx-exchange/trade-to-earn',
+          // },
 
           {
             name: 'Asset Wallet',
@@ -999,11 +999,11 @@ export const auth_header_data_asset_wallet = [
         links: [
           {
             name: 'How to deposit',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=$1%20Bitcoin',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works/centralized',
           },
           {
             name: 'Know how to withdraw',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon?page=Document',
+            href: 'https://indexx.ai/indexx-exchange/how-it-works/centralized',
           },
         ],
       },

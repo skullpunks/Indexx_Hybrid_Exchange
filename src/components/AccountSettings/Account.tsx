@@ -39,7 +39,7 @@ const Account = () => {
     <div style={{ paddingTop: 190 }} className="accounts_container">
       <Tabs defaultActiveKey="1" className={classes.tabStyle}>
         <Tabs.TabPane tab="Basic Info" key="1">
-          <BasicInfo theme={theme} />
+          {/* <BasicInfo theme={theme} /> */}
         </Tabs.TabPane>
         <Tabs.TabPane tab="Security" key="2">
           <Security />
@@ -47,9 +47,9 @@ const Account = () => {
         <Tabs.TabPane tab="Preferences" key="3">
           <Preferences />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Payment Method" key="4">
+        {/* <Tabs.TabPane tab="Payment Method" key="4">
           <PaymentMethod />
-        </Tabs.TabPane>
+        </Tabs.TabPane> */}
         {localStorage.getItem('userlogged') === 'normal' && (
           <Tabs.TabPane tab="Convert to Captain Bee" key="5">
             <Signup />
