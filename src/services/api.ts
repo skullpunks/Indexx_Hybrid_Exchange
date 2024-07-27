@@ -32,13 +32,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
   //baseWalletURL = 'http://localhost:3001';
-  baseLottoUrl = "https://lotto.indexx.ai";
-  baseLottoUrl = "http://localhost:3000";
+  baseLottoUrl = 'https://lotto.indexx.ai';
+  baseLottoUrl = 'http://localhost:3000';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  baseAPIURL = 'http://localhost:5000';
+  // baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -47,7 +47,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
   baseWalletURL = 'https://wallet.indexx.ai';
-  baseLottoUrl = "https://lotto.indexx.ai";
+  baseLottoUrl = 'https://lotto.indexx.ai';
   baseShopURL = 'https://shop.indexx.ai';
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
@@ -89,9 +89,7 @@ function setToLocalStorage(key: any, data: any, ttl: any) {
 
 export const getUserShortToken = async (email: string) => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/createShortToken/${email}`
-    );
+    const result = await API.get(`/api/v1/inex/user/createShortToken/${email}`);
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createShortToken)');
@@ -303,11 +301,10 @@ export const loginAPI = async (email: string, password: string) => {
 
 export const loginWithToken = async (signInToken: any) => {
   try {
-      const result = await API.post('/api/v1/inex/user/loginWithToken', {
-        signInToken
-      });
-      return result.data;
-    
+    const result = await API.post('/api/v1/inex/user/loginWithToken', {
+      signInToken,
+    });
+    return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (loginWithToken)');
     console.log(e);
@@ -319,7 +316,7 @@ export const loginWithToken = async (signInToken: any) => {
 export const getCaptainBeeStatics = async (
   username: string,
   isPublicProfile: string = 'no',
-  userType: string = "CaptainBee"
+  userType: string = 'CaptainBee'
 ) => {
   try {
     const result = await API.get(
@@ -331,9 +328,7 @@ export const getCaptainBeeStatics = async (
   }
 };
 
-export const getCaptainBeeByEmail = async (
-  email: string,
-) => {
+export const getCaptainBeeByEmail = async (email: string) => {
   try {
     const result = await API.get(
       `/api/v1/affiliate/getAllaffiliateUser/${email}`
