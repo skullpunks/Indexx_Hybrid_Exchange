@@ -876,6 +876,18 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const getAllRefferedDetails = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/getAllRefferedUsers/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getAllRefferedUsers)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const signupWithGoogle = async (tokenResponse: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/register/google`, {

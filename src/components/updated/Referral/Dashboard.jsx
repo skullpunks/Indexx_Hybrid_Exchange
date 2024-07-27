@@ -1,6 +1,9 @@
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dashboardIcon from '../../../assets/referral/dashboard.svg';
+import axios from 'axios';
+import { decodeJWT, getAllRefferedDetails } from '../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: '1380px',
@@ -54,6 +57,41 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardStats = () => {
   const classes = useStyles();
+  const [referredUsers, setReferredUsers] = useState([]);
+  const [tradeCount, setTradeCount] = useState(0);
+  const [friendsCount, setFriendsCount] = useState(0);
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    async function fetchReferredUsers() {
+      try {
+        let access_token = String(localStorage.getItem('access_token'));
+        let decoded = decodeJWT(access_token);
+        setEmail(decoded.email);
+        const response = await getAllRefferedDetails(decoded.email);
+        console.log(response,"response")
+        if (response.data) {
+          const users = response.data;
+          let tradeCount = 0;
+
+          users.forEach((user) => {
+            if (user.orders.length > 0) {
+              tradeCount += 1;
+            }
+          });
+
+          setReferredUsers(users);
+          setTradeCount(tradeCount);
+          setFriendsCount(users.length);
+        }
+      } catch (error) {
+        console.error('Error fetching referred users:', error);
+      }
+    }
+
+    fetchReferredUsers();
+  }, []);
+
   return (
     <>
       <div className={classes.container}>
@@ -65,7 +103,7 @@ const DashboardStats = () => {
             justifyContent: 'flex-start',
           }}
         >
-          <img src={dashboardIcon} />
+          <img src={dashboardIcon} alt="Dashboard Icon" />
           <h3 style={{ margin: '0' }}>Dashboard</h3>
         </div>
 
@@ -91,14 +129,14 @@ const DashboardStats = () => {
             <span className={classes.statHeading}>
               Friends Who Started Trading
             </span>
-            <span className={classes.statValue}>0</span>
-            <span className={classes.statSubtext}>+0</span>
+            <span className={classes.statValue}>{tradeCount}</span>
+            <span className={classes.statSubtext}>+{tradeCount}</span>
           </div>
 
           <div className={classes.statCard}>
             <span className={classes.statHeading}>Friends</span>
-            <span className={classes.statValue}>0</span>
-            <span className={classes.statSubtext}>+0</span>
+            <span className={classes.statValue}>{friendsCount}</span>
+            <span className={classes.statSubtext}>+{friendsCount}</span>
           </div>
         </div>
       </div>
