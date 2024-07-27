@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = ({ onClose, walletRedirect, value }) => {
+const Popup = ({ onClose, walletRedirect, value, currency }) => {
   const classes = useStyles();
   const formattedValue = new Intl.NumberFormat().format(Number(value).toFixed(2));
   
@@ -103,7 +103,7 @@ const Popup = ({ onClose, walletRedirect, value }) => {
         <div className={classes.contentContainer}>
           <img src={greenCheck} height="100px" alt="Success" />
           <h3>Redeemed Successfully</h3>
-          <p>{formattedValue} INEX was deposited to your asset wallet.</p>
+          <p>{formattedValue} {currency} was deposited to your asset wallet.</p>
           <div className={classes.btnContainer}>
             <GenericButton text="Redeem Again" onClick={onClose} />
             <GenericButton text="Asset Wallet" onClick={walletRedirect} />

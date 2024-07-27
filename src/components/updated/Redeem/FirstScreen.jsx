@@ -201,6 +201,8 @@ const FirstScreen = () => {
       setErrorMessage(response.error);
     } else if (response.status === 500) {
       setErrorMessage(response.error);
+    } else if (response.status === 404) {
+      setErrorMessage(response.error);
     } else {
       setShowPopup(true);
     }
@@ -217,7 +219,7 @@ const FirstScreen = () => {
 
   const wallet = () => {
     navigate('/wallet/overview');
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -257,11 +259,17 @@ const FirstScreen = () => {
                 }}
               />
             </div>
-            <Button className={classes.greyButton} onClick={handleRedeem} disabled={isLoading}>
+            <Button
+              className={classes.greyButton}
+              onClick={handleRedeem}
+              disabled={isLoading}
+            >
               {isLoading ? <CircularProgress size={24} /> : 'Redeem'}
             </Button>
           </div>
-          {errorMessage && <div className={classes.errorMessage}>{errorMessage}</div>}
+          {errorMessage && (
+            <div className={classes.errorMessage}>{errorMessage}</div>
+          )}
           <div className={classes.paragraph}>
             The code is a 16-character sequence combining digits and letters.
             Example: A1BC23D4EFG78H56 <br />
@@ -317,7 +325,14 @@ const FirstScreen = () => {
           </div>
         </div>
       </div>
-      {showPopup && <Popup onClose={closePopup} walletRedirect={wallet}value={redeemResponse.value} />}
+      {showPopup && (
+        <Popup
+          onClose={closePopup}
+          walletRedirect={wallet}
+          value={redeemResponse.value}
+          currency={redeemResponse.currency}
+        />
+      )}
     </div>
   );
 };
