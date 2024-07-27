@@ -170,9 +170,6 @@ const HeroSection = () => {
         <div className={classes.rightContainer}>
           <div className={`${classes.rightDiv} ${classes.transparent}`}>
             <span className={classes.leftText}>Default Referral</span>
-            <span className={classes.rightText}>
-              Change referral settings &gt;
-            </span>
           </div>
           <div className={`${classes.rightDiv}`}>
             <div className={classes.section}>
@@ -207,15 +204,15 @@ const HeroSection = () => {
             </span>
           </div>
           <div className={`${classes.rightDiv} ${classes.black}`}>
-            <span className={classes.leftText}>Referral ID</span>
+            <span className={classes.leftText}>Referral Link</span>
             <span className={classes.rightText}>
               {' '}
               <span className={classes.rightText} style={{ color: '#EAECEF' }}>
                 <div style={{ display: 'flex', gap: '4px' }}>
-                  <span>VBJQP4DB </span>
+                  <span>abc.... </span>
                   <div
                     className={classes.copyButton}
-                    onClick={() => copyToClipboard('VBJQP4DB')}
+                    onClick={() => copyToClipboard('abc....')}
                   >
                     <ContentCopy
                       sx={{

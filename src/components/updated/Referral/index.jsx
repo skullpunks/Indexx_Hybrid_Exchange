@@ -48,44 +48,6 @@ const Referral = () => {
 
           <ReferralList />
         </div>
-        <div
-          className={classes.tableContainer}
-          style={{ margin: '120px auto' }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '10px',
-              marginBottom: '10px',
-            }}
-          >
-            <img src={DollarIcon} style={{ height: '35px' }} />
-            <h3 style={{ margin: '0' }}>Commission Rebate</h3>
-          </div>
-
-          <ReferralList />
-        </div>
-        <div
-          className={classes.tableContainer}
-          style={{ margin: '120px auto' }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '10px',
-              marginBottom: '10px',
-            }}
-          >
-            <img src={DollarIcon} style={{ height: '35px' }} />
-            <h3 style={{ margin: '0' }}>Shared Commision</h3>
-          </div>
-
-          <ReferralList />
-        </div>
       </div>
     </>
   );
