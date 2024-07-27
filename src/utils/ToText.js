@@ -31,3 +31,18 @@ export default function ToText(node) {
     "chain": "Ethereum"
   },
 */
+/**
+ * 
+ *  // {
+  //   "title": "DaCrazy",
+  //   "subTitle": "DaCrazyHawaiian",
+  //   "image": "DaCrazy",
+  //   "address": "0x506387C852aed3908039f0Ce9E144e7A8eBD8389",
+  //   "commonToken": true,
+  //   "isStock": false,
+  //   "isETF": false,
+  //   "graph": "IndexxExchange",
+  //   "stakingPercentage6months": 2,
+  //   "stakingPercentage1year": 5
+  // },
+ */
