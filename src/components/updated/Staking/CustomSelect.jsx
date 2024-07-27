@@ -16,10 +16,11 @@ export default function SingleSelectPlaceholder({
   const MenuProps = {
     PaperProps: {
       sx: {
+        borderRadius: '8px',
+        marginTop: '4px',
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
         backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
         color: `${theme.palette.text.primary}`, // Custom dropdown text color
-        // bgColor: 'pink',
         '&>*': {
           backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
           color: `${theme.palette.text.primary}`, // Custom dropdown text color
@@ -43,6 +44,9 @@ export default function SingleSelectPlaceholder({
               ? '#5f6673 !important'
               : '#b7bdc6 !important', // Keep the same color on hover
         },
+        '& .Mui-selected': {
+          background: 'none !important',
+        },
       },
     },
   };
@@ -64,10 +68,11 @@ export default function SingleSelectPlaceholder({
         onChange={handleChange}
         sx={{
           width: '100%',
-
+          borderRadius: '8px',
           color: `${theme.palette.text.primary} !important`,
           '& .MuiSvgIcon-root': {
             color: `${theme.palette.text.primary} !important`,
+            borderRadius: '8px',
           },
           '& > * ': {
             border: 'none !important',
@@ -87,7 +92,9 @@ export default function SingleSelectPlaceholder({
         }}
         renderValue={(selected) => {
           if (!selected) {
-            return <em style={{ color: theme.palette.text.primary }}>{type}</em>;
+            return (
+              <em style={{ color: theme.palette.text.primary }}>{type}</em>
+            );
           }
           return selected;
         }}
@@ -100,12 +107,28 @@ export default function SingleSelectPlaceholder({
         </MenuItem>
         {type === 'Type' || type === 'Coin' || type === 'Status'
           ? items?.map((name) => (
-              <MenuItem key={name} value={name}>
+              <MenuItem
+                key={name}
+                value={name}
+                sx={{
+                  '&.Mui-selected': {
+                    backgroundColor: 'none !important',
+                  },
+                }}
+              >
                 {name}
               </MenuItem>
             ))
           : items?.map((name) => (
-              <MenuItem key={name?.title} value={name?.title}>
+              <MenuItem
+                key={name?.title}
+                value={name?.title}
+                sx={{
+                  '&.Mui-selected': {
+                    backgroundColor: 'none !important',
+                  },
+                }}
+              >
                 {name?.title}
               </MenuItem>
             ))}

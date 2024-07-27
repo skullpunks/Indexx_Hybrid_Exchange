@@ -144,6 +144,7 @@ import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSucce
 import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
 import ReferralPage from './pages/Refferal';
 import PaymentACH from './components/Send/PaymentACH';
+import RedeemPage from './pages/Redeem';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -216,6 +217,7 @@ function App() {
             <Route path="/" element={<Navigate to="/update/home/" />} />
 
             <Route path="/referral" element={<ReferralPage />} />
+            <Route path="/redeem" element={<RedeemPage />} />
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
