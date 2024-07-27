@@ -91,20 +91,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Popup = ({ onClose }) => {
+const Popup = ({ onClose, walletRedirect, value }) => {
   const classes = useStyles();
+  const formattedValue = new Intl.NumberFormat().format(Number(value).toFixed(2));
+  
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
     >
       <div className="bnModalWrap">
         <div className={classes.contentContainer}>
-          <img src={greenCheck} height="100px" />
+          <img src={greenCheck} height="100px" alt="Success" />
           <h3>Redeemed Successfully</h3>
-          <p>10 INEX was deposited to your asset wallet.</p>
+          <p>{formattedValue} INEX was deposited to your asset wallet.</p>
           <div className={classes.btnContainer}>
             <GenericButton text="Redeem Again" onClick={onClose} />
-            <GenericButton text="Asset Wallet" onClick={onClose} />
+            <GenericButton text="Asset Wallet" onClick={walletRedirect} />
           </div>
         </div>
       </div>
