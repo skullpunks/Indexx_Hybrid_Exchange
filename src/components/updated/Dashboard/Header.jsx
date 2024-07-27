@@ -1,12 +1,10 @@
-import React from 'react';
-import {
-  Box,
-  Avatar,
-  Typography,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Avatar, Typography, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import {
+  getCaptainBeeByEmail,
+  getHoneyUserDetails,
+} from '../../../services/api';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -67,20 +65,59 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const [userDetails, setUserDetails] = useState(null);
+  const [userType, setUserType] = useState(null);
+
+  useEffect(() => {
+    async function fetchUserDetails() {
+      let userType =
+        localStorage.getItem('userType') !== undefined
+          ? String(localStorage.getItem('userType'))
+          : undefined;
+      const email =
+        localStorage.getItem('email') !== undefined
+          ? String(localStorage.getItem('email'))
+          : undefined;
+
+      if (userType === 'CaptainBee') {
+        let resObj = await getCaptainBeeByEmail(email);
+        setUserDetails(resObj.data);
+        setUserType('CaptainBee');
+      } else {
+        let resObj = await getHoneyUserDetails(email);
+        setUserDetails(resObj.data._doc);
+        setUserType('HoneyUser');
+      }
+    }
+    fetchUserDetails();
+  }, []);
+
+  if (!userDetails) {
+    return <div>Loading...</div>;
+  }
+
+  const username = userDetails.Username || userDetails.email;
+  const profilePic =
+    userType === 'CaptainBee'
+      ? userDetails.photoIdFileurl
+      : userDetails.profilePic;
+  const userId = userType === 'CaptainBee' ? userDetails._id : userDetails._id;
+  const vipLevel =
+    userType === 'HoneyUser' ? userDetails.vipLevel : userDetails?.rank;
+  const userTypeText =
+    userType === 'HoneyUser' ? userDetails.userType : 'Captain Bee';
 
   return (
     <Box className={classes.container}>
       <Box className={classes.leftDiv}>
-        <Avatar className={classes.avatar} />
-        <Typography className={classes.username}>Username</Typography>
+        <Avatar className={classes.avatar} src={profilePic} />
+        <Typography className={classes.username}>{username}</Typography>
       </Box>
       <Box className={classes.rightDiv}>
         {[
-          { heading: 'User ID', text: '1234567890' },
-          { heading: 'VIP Level', text: 'Regular User' },
-          { heading: 'User Type', text: 'Personal' },
-          { heading: 'Following', text: '0' },
-          { heading: 'Followers', text: '0' },
+          { heading: 'User ID', text: userId },
+          { heading: 'VIP Level', text: vipLevel },
+          { heading: 'User Type', text: userTypeText },
         ].map((component, index) => (
           <Box key={index} className={classes.componentBox}>
             <Typography className={classes.heading}>
