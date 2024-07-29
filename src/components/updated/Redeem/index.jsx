@@ -11,9 +11,9 @@ const Redeem = () => {
     <div>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader />
-      {/* <FirstScreen /> */}
+      <FirstScreen />
       {/* <CreateCards /> */}
-      <SendCard />
+      {/* <SendCard /> */}
       {/* <SendCardSuccessfully /> */}
       {/* <Popup /> */}
     </div>
