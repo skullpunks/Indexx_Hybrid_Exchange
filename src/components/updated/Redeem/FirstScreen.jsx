@@ -1,6 +1,7 @@
-import React from 'react';
 import { makeStyles } from '@mui/styles';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.png';
@@ -23,6 +24,9 @@ import greeting6 from '../../../assets/redeem/greeting6.svg';
 import greeting7 from '../../../assets/redeem/greeting7.svg';
 import greeting8 from '../../../assets/redeem/greeting8.svg';
 import { useTheme } from '@mui/material';
+
+import { redeemGiftCard, validateGiftCard } from '../../../services/api'; // Adjust the path according to your project structure
+import Popup from './RedeemPopup'; // Adjust the path according to your project structure
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -157,12 +161,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '5px',
   },
+  errorMessage: {
+    color: 'red',
+    marginTop: '10px',
+  },
 }));
 
 const FirstScreen = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
+  const [voucher, setVoucher] = useState('');
+  const [redeemResponse, setRedeemResponse] = useState(null);
+  const [validateResponse, setValidateResponse] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
   const greetingArr = [
     greeting1,
@@ -174,6 +189,38 @@ const FirstScreen = () => {
     greeting7,
     greeting8,
   ];
+
+  const handleRedeem = async () => {
+    setIsLoading(true);
+    setErrorMessage('');
+    const response = await redeemGiftCard(voucher);
+    setRedeemResponse(response);
+    setIsLoading(false);
+    console.log(response);
+    if (response.status === 400) {
+      setErrorMessage(response.error);
+    } else if (response.status === 500) {
+      setErrorMessage(response.error);
+    } else if (response.status === 404) {
+      setErrorMessage(response.error);
+    } else {
+      setShowPopup(true);
+    }
+  };
+
+  const handleValidate = async () => {
+    const response = await validateGiftCard(voucher);
+    setValidateResponse(response);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+  const wallet = () => {
+    navigate('/wallet/overview');
+  };
+
   return (
     <div className={classes.root}>
       {/* Top Section */}
@@ -191,8 +238,12 @@ const FirstScreen = () => {
       <div className={classes.redeemRoot}>
         <div className={classes.redeemLeft}>
           <div className={classes.redeemBtnContainer}>
-            <Button className={classes.greenBtn}>Redeem to Crypto</Button>
-            <Button className={classes.transparentBtn}>Check Card</Button>
+            <Button className={classes.greenBtn} disabled={isLoading}>
+              {'Redeem to Crypto'}
+            </Button>
+            <Button className={classes.transparentBtn} onClick={handleValidate}>
+              Check Card
+            </Button>
           </div>
           <div className={classes.inputFieldRoot}>
             <div className="textfieldInner">
@@ -200,14 +251,25 @@ const FirstScreen = () => {
                 type={'text'}
                 label={'Redeem Code'}
                 placeholder="Enter the Redeem Code"
+                value={voucher}
+                onChange={(e) => setVoucher(e.target.value)}
                 style={{
                   background:
                     theme.palette.mode === 'light' ? '#fff' : '#2B3139',
                 }}
               />
             </div>
-            <Button className={classes.greyButton}>Redeem</Button>
+            <Button
+              className={classes.greyButton}
+              onClick={handleRedeem}
+              disabled={isLoading}
+            >
+              {isLoading ? <CircularProgress size={24} /> : 'Redeem'}
+            </Button>
           </div>
+          {errorMessage && (
+            <div className={classes.errorMessage}>{errorMessage}</div>
+          )}
           <div className={classes.paragraph}>
             The code is a 16-character sequence combining digits and letters.
             Example: A1BC23D4EFG78H56 <br />
@@ -216,6 +278,8 @@ const FirstScreen = () => {
             any unlawful conduct or fraud by any third party associated with any
             Gift Card.
           </div>
+          {/* {redeemResponse && <div className={classes.paragraph}>Redeem Response: {JSON.stringify(redeemResponse)}</div>}
+          {validateResponse && <div className={classes.paragraph}>Validate Response: {JSON.stringify(validateResponse)}</div>} */}
         </div>
         <div style={{ flex: '50%' }}>
           <img src={redeemImg} alt="" style={{ width: '100%' }} />
@@ -234,7 +298,7 @@ const FirstScreen = () => {
 
           <div className={classes.cardGrid}>
             {giftArr.map((curr, i) => (
-              <div>
+              <div key={i}>
                 <img src={curr} alt="img" style={{ width: '100%' }} />
               </div>
             ))}
@@ -253,7 +317,7 @@ const FirstScreen = () => {
 
             <div className={classes.cardGrid}>
               {greetingArr.map((curr, i) => (
-                <div>
+                <div key={i}>
                   <img src={curr} alt="img" style={{ width: '100%' }} />
                 </div>
               ))}
@@ -261,6 +325,14 @@ const FirstScreen = () => {
           </div>
         </div>
       </div>
+      {showPopup && (
+        <Popup
+          onClose={closePopup}
+          walletRedirect={wallet}
+          value={redeemResponse.value}
+          currency={redeemResponse.currency}
+        />
+      )}
     </div>
   );
 };

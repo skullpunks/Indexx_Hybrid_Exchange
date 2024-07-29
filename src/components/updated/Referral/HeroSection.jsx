@@ -1,11 +1,12 @@
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GenericButton from '../shared/Button';
-// import bg from '../../../assets/referral/backgound-hero-section.png';
 import bg from '../../../assets/updated/deposit/Group 35385.png';
 import { useTheme } from '@mui/material';
 import { ContentCopy } from '@mui/icons-material';
 import buttonIcon from '../../../assets/referral/buttonIcon.png';
+import { getUserDetails, decodeJWT } from '../../../services/api'; // Assuming these are the correct import paths
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundImage: `url("${bg}")`,
@@ -18,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-
     maxWidth: '1380px',
     margin: 'auto',
   },
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   rightContainer: {
     maxWidth: '560px',
     width: '100%',
-
     borderRadius: '11px',
     backgroundColor: '#181A20',
     padding: '24px',
@@ -97,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0.8,
     },
   },
-
   amount: {
     display: 'block',
     fontSize: '20px',
@@ -135,7 +133,6 @@ const useStyles = makeStyles((theme) => ({
     referralRules: {
       textAlign: 'center',
     },
-
     copyButton: {
       display: 'flex',
       alignItems: 'center',
@@ -152,9 +149,26 @@ const useStyles = makeStyles((theme) => ({
 const HeroSection = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const [email, setEmail] = useState('');
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    let access_token = String(localStorage.getItem('access_token'));
+    let decoded = decodeJWT(access_token);
+
+    setEmail(decoded.email);
+    getUserDetails(decoded.email).then((res) => {
+      if (res.status === 200) {
+        console.log('res.data', res.data);
+        setUserData(res.data);
+      }
+    });
+  }, [email]);
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
   };
+
   return (
     <div className={classes.root}>
       <div className={classes.heroSection}>
@@ -185,10 +199,10 @@ const HeroSection = () => {
             <span className={classes.leftText}>Referral ID</span>
             <span className={classes.rightText} style={{ color: '#EAECEF' }}>
               <div style={{ display: 'flex', gap: '4px' }}>
-                <span>VBJQP4DB </span>
+                <span>{userData?.referralCode || 'Loading...'}</span>
                 <div
                   className={classes.copyButton}
-                  onClick={() => copyToClipboard('VBJQP4DB')}
+                  onClick={() => copyToClipboard(userData?.referralCode || '')}
                 >
                   <ContentCopy
                     sx={{
@@ -206,13 +220,12 @@ const HeroSection = () => {
           <div className={`${classes.rightDiv} ${classes.black}`}>
             <span className={classes.leftText}>Referral Link</span>
             <span className={classes.rightText}>
-              {' '}
               <span className={classes.rightText} style={{ color: '#EAECEF' }}>
                 <div style={{ display: 'flex', gap: '4px' }}>
-                  <span>abc.... </span>
+                  <span>https://indexx.ai//auth/signup-email?referral={userData?.referralCode || 'Loading...'}</span>
                   <div
                     className={classes.copyButton}
-                    onClick={() => copyToClipboard('abc....')}
+                    onClick={() => copyToClipboard(`https://indexx.ai/auth/signup-email?referral=${userData?.referralCode || ''}`)}
                   >
                     <ContentCopy
                       sx={{

@@ -38,7 +38,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -871,6 +871,20 @@ export const getUserDetails = async (email: string) => {
   }
 };
 
+export const getAllRefferedDetails = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getAllRefferedUsers/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getAllRefferedUsers)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const signupWithGoogle = async (tokenResponse: string) => {
   try {
     const result = await API.post(`/api/v1/inex/user/register/google`, {
@@ -1306,6 +1320,35 @@ export const createPowerPackOrder = async (
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createPowerPackOrder)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const redeemGiftCard = async (voucher: string, email?: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/redeemCoupon', {
+      voucher: voucher,
+      email: email ? email : localStorage.getItem('email'),
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (redeemGiftCard)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const validateGiftCard = async (voucher: string) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/validateVoucher', {
+      voucher: voucher,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (validateGiftCard)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
