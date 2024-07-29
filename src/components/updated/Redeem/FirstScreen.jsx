@@ -3,25 +3,25 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
-import redeemImg from '../../../assets/redeem/redeemimg.svg';
+import redeemImg from '../../../assets/redeem/redeemimg.png';
 
-import gift1 from '../../../assets/redeem/gift1.png';
-import gift2 from '../../../assets/redeem/gift2.png';
-import gift3 from '../../../assets/redeem/gift3.png';
-import gift4 from '../../../assets/redeem/gift4.png';
-import gift5 from '../../../assets/redeem/gift5.png';
-import gift6 from '../../../assets/redeem/gift6.png';
-import gift7 from '../../../assets/redeem/gift7.png';
-import gift8 from '../../../assets/redeem/gift8.png';
+import gift1 from '../../../assets/redeem/gift1.svg';
+import gift2 from '../../../assets/redeem/gift2.svg';
+import gift3 from '../../../assets/redeem/gift3.svg';
+import gift4 from '../../../assets/redeem/gift4.svg';
+import gift5 from '../../../assets/redeem/gift5.svg';
+import gift6 from '../../../assets/redeem/gift6.svg';
+import gift7 from '../../../assets/redeem/gift7.svg';
+import gift8 from '../../../assets/redeem/gift8.svg';
 
-import greeting1 from '../../../assets/redeem/greeting1.png';
-import greeting2 from '../../../assets/redeem/greeting2.png';
-import greeting3 from '../../../assets/redeem/greeting3.png';
-import greeting4 from '../../../assets/redeem/greeting4.png';
-import greeting5 from '../../../assets/redeem/greeting5.png';
-import greeting6 from '../../../assets/redeem/greeting6.png';
-import greeting7 from '../../../assets/redeem/greeting7.png';
-import greeting8 from '../../../assets/redeem/greeting8.png';
+import greeting1 from '../../../assets/redeem/greeting1.svg';
+import greeting2 from '../../../assets/redeem/greeting2.svg';
+import greeting3 from '../../../assets/redeem/greeting3.svg';
+import greeting4 from '../../../assets/redeem/greeting4.svg';
+import greeting5 from '../../../assets/redeem/greeting5.svg';
+import greeting6 from '../../../assets/redeem/greeting6.svg';
+import greeting7 from '../../../assets/redeem/greeting7.svg';
+import greeting8 from '../../../assets/redeem/greeting8.svg';
 import { useTheme } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
     maxWidth: '1280px',
     margin: 'auto',
-    marginTop: '180px',
+    marginTop: '50px',
   },
   sendCryptoRoot: {
     maxWidth: '500px',
@@ -217,7 +217,7 @@ const FirstScreen = () => {
             Gift Card.
           </div>
         </div>
-        <div>
+        <div style={{ flex: '50%' }}>
           <img src={redeemImg} alt="" style={{ width: '100%' }} />
         </div>
       </div>

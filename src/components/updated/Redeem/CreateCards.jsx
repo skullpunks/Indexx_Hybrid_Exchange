@@ -5,31 +5,34 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.svg';
 
-import gift1 from '../../../assets/redeem/gift1.png';
-import gift2 from '../../../assets/redeem/gift2.png';
-import gift3 from '../../../assets/redeem/gift3.png';
-import gift4 from '../../../assets/redeem/gift4.png';
-import gift5 from '../../../assets/redeem/gift5.png';
-import gift6 from '../../../assets/redeem/gift6.png';
-import gift7 from '../../../assets/redeem/gift7.png';
-import gift8 from '../../../assets/redeem/gift8.png';
+import gift1 from '../../../assets/redeem/gift1.svg';
+import gift2 from '../../../assets/redeem/gift2.svg';
+import gift3 from '../../../assets/redeem/gift3.svg';
+import gift4 from '../../../assets/redeem/gift4.svg';
+import gift5 from '../../../assets/redeem/gift5.svg';
+import gift6 from '../../../assets/redeem/gift6.svg';
+import gift7 from '../../../assets/redeem/gift7.svg';
+import gift8 from '../../../assets/redeem/gift8.svg';
 
-import greeting1 from '../../../assets/redeem/greeting1.png';
-import greeting2 from '../../../assets/redeem/greeting2.png';
-import greeting3 from '../../../assets/redeem/greeting3.png';
-import greeting4 from '../../../assets/redeem/greeting4.png';
-import greeting5 from '../../../assets/redeem/greeting5.png';
-import greeting6 from '../../../assets/redeem/greeting6.png';
-import greeting7 from '../../../assets/redeem/greeting7.png';
-import greeting8 from '../../../assets/redeem/greeting8.png';
+import greeting1 from '../../../assets/redeem/greeting1.svg';
+import greeting2 from '../../../assets/redeem/greeting2.svg';
+import greeting3 from '../../../assets/redeem/greeting3.svg';
+import greeting4 from '../../../assets/redeem/greeting4.svg';
+import greeting5 from '../../../assets/redeem/greeting5.svg';
+import greeting6 from '../../../assets/redeem/greeting6.svg';
+import greeting7 from '../../../assets/redeem/greeting7.svg';
+import greeting8 from '../../../assets/redeem/greeting8.svg';
 import { useTheme } from '@mui/material';
+import CustomSelectBox from './CustomSelect';
+import GenericButton from '../shared/Button';
+import CardCreatedPopup from './CardCreatedPopup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '20px',
     maxWidth: '1280px',
     margin: 'auto',
-    marginTop: '180px',
+    marginTop: '50px',
   },
   sendCryptoRoot: {
     maxWidth: '500px',
@@ -69,9 +72,7 @@ const useStyles = makeStyles((theme) => ({
   redeemLeft: {
     padding: '20px',
     borderRadius: '4px',
-
     flex: '50%',
-    border: '1px solid red',
   },
   redeemBtnContainer: {
     display: 'flex',
@@ -158,6 +159,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '5px',
   },
+  btnContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  selectTypeContainer: {
+    marginBottom: '20px',
+    '& label': {
+      fontSize: '11px',
+      marginBottom: '10px',
+    },
+  },
+  enterAmountContainer: {
+    marginBottom: '20px',
+  },
+  quantityContainer: {
+    marginBottom: '20px',
+  },
 }));
 
 const CreateCards = () => {
@@ -185,10 +204,50 @@ const CreateCards = () => {
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
-        <div style={{ flex: '50%' }}>
+        <div style={{ flex: '30%' }}>
           <img src={gift1} alt="" style={{ width: '100%' }} />
         </div>
-        <div className={classes.redeemLeft}></div>
+        <div className={classes.redeemLeft}>
+          <div className={classes.selectTypeContainer}>
+            <label>Select Type</label>
+            <CustomSelectBox
+              items={[
+                { name: 'Gift Card', value: 'gift' },
+                { name: 'Greeting Card', value: 'greeting' },
+              ]}
+              value={'gift'}
+              hasborder
+            />
+          </div>
+          <div className={classes.enterAmountContainer}>
+            <InputField
+              label={'Enter Amount'}
+              type="number"
+              endAdornment={
+                <div style={{ transform: 'translateX(10px)' }}>
+                  {' '}
+                  <CustomSelectBox
+                    items={[
+                      { name: 'Crypto', value: 'crypto' },
+                      { name: 'Stock Tokens', value: 'stocktokens' },
+                      { name: 'ETF', value: 'etf' },
+                    ]}
+                    type={'Type'}
+                  />
+                </div>
+              }
+            />
+          </div>
+          <div className={classes.quantityContainer}>
+            {' '}
+            <InputField label={'Quantity'} type="number" />
+          </div>
+
+          <div className={classes.btnContainer}>
+            <p style={{ flex: '70%' }}>Total Amount: 50.00 INEX</p>
+            <GenericButton text={'Create'} styles={{ flex: 1 }} />
+          </div>
+        </div>
       </div>
       {/* Gift card listing */}
       <div>
@@ -210,6 +269,8 @@ const CreateCards = () => {
           </div>
         </div>
       </div>
+
+      <CardCreatedPopup />
     </div>
   );
 };
