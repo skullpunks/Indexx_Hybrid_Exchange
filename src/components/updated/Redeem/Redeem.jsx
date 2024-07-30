@@ -232,7 +232,9 @@ const FirstScreen = () => {
           Gift crypto with your referral code and choose from our amazing
           designs
         </p>
-        <Button>Send a Crypto gift card</Button>
+        <Button onClick={() => navigate('/redeem/create-card')}>
+          Create a Crypto card
+        </Button>
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
@@ -286,7 +288,7 @@ const FirstScreen = () => {
         </div>
       </div>
       {/* Gift card listing */}
-      <div>
+      {/* <div>
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
@@ -324,7 +326,7 @@ const FirstScreen = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {showPopup && (
         <Popup
           onClose={closePopup}

@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 export default function CustomSelectBox({
   items,
   type,
-  onCurrencyChange,
+  onChange,
   value,
   isCurrency,
   hasborder,
@@ -53,30 +53,12 @@ export default function CustomSelectBox({
     },
   };
 
-  const [selectedCurrency, setSelectedCurrency] = React.useState(
-    !isCurrency
-      ? items?.find((el) => el.value === value)?.name
-      : items?.find((el) => el.address === value)?.title
-  );
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    const selected = !isCurrency
-      ? items?.find((el) => el.value === value)?.name
-      : items?.find((el) => el.address === value)?.title;
-
-    setSelectedCurrency(selected);
-    onCurrencyChange(value);
-  };
-
   return (
     <FormControl sx={{ width: '100%' }}>
       <Select
         displayEmpty
-        value={selectedCurrency || ''}
-        onChange={handleChange}
+        value={value}
+        onChange={onChange}
         sx={{
           width: '100%',
           border: hasborder && `1px solid ${theme.palette.divider} !important`,
@@ -116,20 +98,11 @@ export default function CustomSelectBox({
         input={<OutlinedInput />}
         inputProps={{ 'aria-label': 'Without label' }}
       >
-        <MenuItem disabled value="">
-          <em>{type}</em>
-        </MenuItem>
-        {!isCurrency
-          ? items?.map(({ name, value }) => (
-              <MenuItem key={name} value={value}>
-                {name}
-              </MenuItem>
-            ))
-          : items?.map(({ title, address }) => (
-              <MenuItem key={title} value={address}>
-                {title}
-              </MenuItem>
-            ))}
+        {items?.map(({ name, value }) => (
+          <MenuItem key={name} value={value}>
+            {name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

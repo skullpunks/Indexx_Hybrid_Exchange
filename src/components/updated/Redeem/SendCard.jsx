@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.svg';
 
@@ -176,6 +176,10 @@ const useStyles = makeStyles((theme) => ({
 const SendCard = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  const selectedImg = state?.selectedImg;
+
   const theme = useTheme();
   const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
   const greetingArr = [
@@ -202,7 +206,7 @@ const SendCard = () => {
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
         <div style={{ flex: '30%' }}>
-          <img src={gift1} alt="" style={{ width: '100%' }} />
+          <img src={selectedImg} alt="" style={{ width: '100%' }} />
         </div>
         <div className={classes.redeemLeft}>
           <div>
@@ -236,12 +240,20 @@ const SendCard = () => {
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton text={'Send'} styles={{ width: '40%' }} />
+            <GenericButton
+              text={'Send'}
+              styles={{ width: '40%' }}
+              onClick={() =>
+                navigate('/redeem/send-card-successful', {
+                  state: { selectedImg },
+                })
+              }
+            />
           </div>
         </div>
       </div>
       {/* Gift card listing */}
-      <div>
+      {/* <div>
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
@@ -259,7 +271,7 @@ const SendCard = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <CardCreatedPopup /> */}
     </div>

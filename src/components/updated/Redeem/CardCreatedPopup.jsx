@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import gift1 from '../../../assets/redeem/gift1.svg';
-
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -92,7 +92,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardCreatedPopup = ({ onClose }) => {
+const CardCreatedPopup = ({ onClose, selectedImg }) => {
+  const navigate = useNavigate();
   const classes = useStyles();
   return (
     <div
@@ -102,7 +103,7 @@ const CardCreatedPopup = ({ onClose }) => {
         <div className={classes.contentContainer}>
           <img src={greenCheck} height="100px" />
           <h3>Created Successfully</h3>
-          <img src={gift1} width={'100%'} />
+          <img src={selectedImg} width={'100%'} />
           <div
             style={{
               textAlign: 'left',
@@ -117,7 +118,12 @@ const CardCreatedPopup = ({ onClose }) => {
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton text="Send Now" onClick={onClose} />
+            <GenericButton
+              text="Send Now"
+              onClick={() =>
+                navigate('/redeem/send-card', { state: { selectedImg } })
+              }
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -178,23 +178,57 @@ const useStyles = makeStyles((theme) => ({
   quantityContainer: {
     marginBottom: '20px',
   },
+  activeImg: {
+    border: `5px solid ${theme.palette.primary.main}`,
+  },
 }));
 
 const CreateCards = () => {
   const classes = useStyles();
+  const giftArr = [
+    { id: 1, img: gift1 },
+    { id: 2, img: gift2 },
+    { id: 3, img: gift3 },
+    { id: 4, img: gift4 },
+    { id: 5, img: gift5 },
+    { id: 6, img: gift6 },
+    { id: 7, img: gift7 },
+    { id: 8, img: gift8 },
+  ];
+  const greetingArr = [
+    { id: 1, img: greeting1 },
+    { id: 2, img: greeting2 },
+    { id: 3, img: greeting3 },
+    { id: 4, img: greeting4 },
+    { id: 5, img: greeting5 },
+    { id: 6, img: greeting6 },
+    { id: 7, img: greeting7 },
+    { id: 8, img: greeting8 },
+  ];
+  const [value, setValue] = useState('gift');
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedCard, setSelectedCards] = useState(
+    value === 'gift' ? giftArr : greetingArr
+  );
+  const [selectedImg, setSelectedImg] = useState(
+    value === 'gift' ? gift1 : greeting1
+  );
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   const navigate = useNavigate();
   const theme = useTheme();
-  const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
-  const greetingArr = [
-    greeting1,
-    greeting2,
-    greeting3,
-    greeting4,
-    greeting5,
-    greeting6,
-    greeting7,
-    greeting8,
-  ];
+
+  useEffect(() => {
+    if (value) {
+      setSelectedCards(value === 'gift' ? giftArr : greetingArr);
+    }
+  }, [value]);
+
+  const handleImgClick = (data) => {
+    setSelectedImg(data.img);
+  };
+  console.log(selectedImg, 'selectedImg');
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -208,7 +242,7 @@ const CreateCards = () => {
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
         <div style={{ flex: '30%' }}>
-          <img src={gift1} alt="" style={{ width: '100%' }} />
+          <img src={selectedImg} alt="" style={{ width: '100%' }} />
         </div>
         <div className={classes.redeemLeft}>
           <div className={classes.selectTypeContainer}>
@@ -218,7 +252,8 @@ const CreateCards = () => {
                 { name: 'Gift Card', value: 'gift' },
                 { name: 'Greeting Card', value: 'greeting' },
               ]}
-              value={'gift'}
+              value={value}
+              onChange={handleChange}
               hasborder
             />
           </div>
@@ -248,7 +283,11 @@ const CreateCards = () => {
 
           <div className={classes.btnContainer}>
             <p style={{ flex: '70%' }}>Total Amount: 50.00 INEX</p>
-            <GenericButton text={'Create'} styles={{ flex: 1 }} />
+            <GenericButton
+              text={'Create'}
+              styles={{ flex: 1 }}
+              onClick={() => setOpenPopup(true)}
+            />
           </div>
         </div>
       </div>
@@ -257,23 +296,30 @@ const CreateCards = () => {
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
-              <h3>Gift Cards</h3>
-              <p>Send a crypto gift card for any occasion</p>
+              <h3>{value === 'gift' ? 'Gift Cards' : 'Greeting Cards'} </h3>
+              <p>
+                {' '}
+                {value === 'gift'
+                  ? 'Send a crypto gift card for any occasion'
+                  : 'Send a crypto greeting card for any occasion'}
+              </p>
             </div>
-            <div className={classes.cardHeaderRight}>View more Gift Cards</div>
+            {/* <div className={classes.cardHeaderRight}>View more Gift Cards</div> */}
           </div>
 
           <div className={classes.cardGrid}>
-            {giftArr.map((curr, i) => (
-              <div>
-                <img src={curr} alt="img" style={{ width: '100%' }} />
+            {selectedCard.map((curr, i) => (
+              <div
+                onClick={() => handleImgClick(curr)}
+                className={curr.img === selectedImg && classes.activeImg}
+              >
+                <img src={curr.img} alt="img" style={{ width: '100%' }} />
               </div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* <CardCreatedPopup /> */}
+      {openPopup && <CardCreatedPopup selectedImg={selectedImg} />}
     </div>
   );
 };

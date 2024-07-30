@@ -4,6 +4,7 @@ import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import gift1 from '../../../assets/redeem/gift1.svg';
 import IconicHeader from '../shared/IconicHeader';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -66,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
 
 const SendCardSuccessfully = ({ onClose }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  const selectedImg = state?.selectedImg;
+
   return (
     <div>
       <div className={classes.contentContainer}>
@@ -78,7 +84,7 @@ const SendCardSuccessfully = ({ onClose }) => {
         </h4>
         <div className={classes.boxContainer}>
           <div style={{ flex: '50%' }}>
-            <img src={gift1} width={'100%'} />
+            <img src={selectedImg} width={'100%'} />
           </div>
           <div
             style={{
@@ -119,7 +125,10 @@ const SendCardSuccessfully = ({ onClose }) => {
         </div>
 
         <div className={classes.btnContainer}>
-          <GenericButton text="Send Another card" onClick={onClose} />
+          <GenericButton
+            text="Send Another card"
+            onClick={() => navigate('/redeem/')}
+          />
         </div>
       </div>
     </div>
