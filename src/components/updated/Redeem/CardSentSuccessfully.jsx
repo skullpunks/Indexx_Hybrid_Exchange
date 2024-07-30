@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import gift1 from '../../../assets/redeem/gift1.svg';
+import IconicHeader from '../shared/IconicHeader';
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -68,6 +69,7 @@ const SendCardSuccessfully = ({ onClose }) => {
   return (
     <div>
       <div className={classes.contentContainer}>
+        <IconicHeader />
         <img src={greenCheck} height="100px" />
         <h3>Sent Successfully</h3>
         <h4>

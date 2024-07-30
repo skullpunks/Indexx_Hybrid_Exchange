@@ -1,23 +1,16 @@
 import React from 'react';
-import FirstScreen from './FirstScreen';
-import Popup from './RedeemPopup';
-import CreateCards from './CreateCards';
-import SendCard from './SendCard';
-import SendCardSuccessfully from './CardSentSuccessfully';
+import Redeem from './Redeem';
+
 import IconicHeader from '../shared/IconicHeader';
 
-const Redeem = () => {
+const RedeemPage = () => {
   return (
     <div>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader />
-      <FirstScreen />
-      {/* <CreateCards /> */}
-      {/* <SendCard /> */}
-      {/* <SendCardSuccessfully /> */}
-      {/* <Popup /> */}
+      <Redeem />
     </div>
   );
 };
 
-export default Redeem;
+export default RedeemPage;

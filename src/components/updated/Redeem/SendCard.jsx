@@ -26,6 +26,7 @@ import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
+import IconicHeader from '../shared/IconicHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -189,6 +190,9 @@ const SendCard = () => {
   ];
   return (
     <div className={classes.root}>
+      <div style={{ margin: '100px' }}></div>
+      <IconicHeader />
+
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>Send</h3>

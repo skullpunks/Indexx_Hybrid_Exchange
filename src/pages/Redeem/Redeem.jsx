@@ -1,5 +1,5 @@
 import React from 'react';
-import Redeem from '../components/updated/Redeem';
+import Redeem from '../../components/updated/Redeem';
 
 const RedeemPage = () => {
   return (

@@ -144,7 +144,10 @@ import WithdrawCryptoSuccessPage from './pages/withdrawCrypto/WitdrawCryptoSucce
 import WithdrawCryptoSelectCoin from './pages/withdrawCrypto/WithdrawCryptoSelectCoin';
 import ReferralPage from './pages/Refferal';
 import PaymentACH from './components/Send/PaymentACH';
-import RedeemPage from './pages/Redeem';
+import RedeemPage from './pages/Redeem/Redeem';
+import CreateCardPage from './pages/Redeem/CreateCard';
+import SendCardPage from './pages/Redeem/SendCard';
+import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -218,6 +221,12 @@ function App() {
 
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/redeem" element={<RedeemPage />} />
+            <Route path="/redeem/create-card" element={<CreateCardPage />} />
+            <Route path="/redeem/send-card" element={<SendCardPage />} />
+            <Route
+              path="/redeem/send-card-successful"
+              element={<SendCardSuccessfulPage />}
+            />
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
