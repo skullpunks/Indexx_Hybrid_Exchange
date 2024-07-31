@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
     maxWidth: '1280px',
     margin: 'auto',
-    marginTop: '50px',
   },
   sendCryptoRoot: {
     maxWidth: '500px',
@@ -210,6 +209,10 @@ const SendCard = () => {
     }
     isLoading(false);
   };
+  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   const theme = useTheme();
   const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
@@ -224,14 +227,14 @@ const SendCard = () => {
     greeting8,
   ];
 
-  const redirect = async() => {
+  const redirect = async () => {
     navigate('/redeem');
-  }
+  };
 
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
-      <IconicHeader />
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
 
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>

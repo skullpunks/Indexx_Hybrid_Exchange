@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: '24px',
     textAlign: 'center',
-    marginTop: '50px',
     color: `${theme.palette.text.primary} !important`,
     '& h3': {
       color: `${theme.palette.text.primary} !important`,
@@ -70,11 +69,15 @@ const SendCardSuccessfully = ({ onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { giftCardData, selectedImg } = location.state || {};
+  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <div>
       <div className={classes.contentContainer}>
-        <IconicHeader />
+        <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
         <img src={greenCheck} height="100px" />
         <h3>Sent Successfully</h3>
         <h4>

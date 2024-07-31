@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
+import redeemImg from '../../../assets/redeem/redeemimg.svg';
+import defaultImg from '../../../assets/redeem/defaultImg.png';
 import gift1 from '../../../assets/redeem/gift1.svg';
 import gift2 from '../../../assets/redeem/gift2.svg';
 import gift3 from '../../../assets/redeem/gift3.svg';
@@ -56,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
     maxWidth: '1280px',
     margin: 'auto',
-    marginTop: '50px',
   },
   sendCryptoRoot: {
     maxWidth: '500px',
@@ -84,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
   redeemRoot: {
     display: 'flex',
     justifyContent: 'space-between',
+
     gap: '20px',
     marginBottom: '80px',
     marginTop: '50px',
@@ -150,6 +152,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateCards = ({ onSendCard }) => {
   const classes = useStyles();
+  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   const giftArr = [
     {
       id: 1,
@@ -373,12 +379,10 @@ const CreateCards = ({ onSendCard }) => {
   const [selectedCard, setSelectedCards] = useState(
     value === 'Gift Card' ? giftArr : greetingArr
   );
-  const [selectedImg, setSelectedImg] = useState(
-    value === 'Gift Card' ? gift1 : greeting1
-  );
   const [selectedImgUrl, setSelectedImgUrl] = useState(
     value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
   );
+  const [selectedImg, setSelectedImg] = useState(defaultImg);
   const handleChange = (event) => {
     if (
       event.target.value === 'Gift Card' ||
@@ -473,7 +477,7 @@ const CreateCards = ({ onSendCard }) => {
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
-      <IconicHeader />
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>Create</h3>

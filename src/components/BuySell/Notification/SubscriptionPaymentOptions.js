@@ -12,7 +12,13 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState } from 'react';
 
-const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndWireConfirm, message }) => {
+const SubscriptionPaymentOptions = ({
+  isVisible,
+  onClose,
+  onConfirm,
+  onZelleAndWireConfirm,
+  message,
+}) => {
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState('wire');
   const [isLoading, setIsLoading] = useState(false);
@@ -20,11 +26,17 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
   const handleClick = async () => {
     setIsLoading(true);
     let orderId;
-    if (selectedValue === 'zelle' || selectedValue === 'wire' || selectedValue === 'venmo') {
+    if (
+      selectedValue === 'zelle' ||
+      selectedValue === 'wire'
+      //|| selectedValue === 'venmo'
+    ) {
       // Use the special function for Zelle and Wire
       orderId = await onZelleAndWireConfirm(selectedValue);
       if (orderId) {
-        navigate(`/indexx-exchange/payment-${selectedValue}?orderId=${orderId}`);
+        navigate(
+          `/indexx-exchange/payment-${selectedValue}?orderId=${orderId}`
+        );
       }
     } else if (selectedValue === 'paypal') {
       onConfirm();
@@ -33,12 +45,11 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
     onClose();
   };
 
-  console.log("selected value", selectedValue)
+  console.log('selected value', selectedValue);
 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
-
 
   return (
     <>
@@ -73,8 +84,9 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
                     <img
                       src={wire}
                       alt="Other"
-                      className={`pay-image ${selectedValue === 'wire' ? 'selected' : ''
-                        }`}
+                      className={`pay-image ${
+                        selectedValue === 'wire' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       Swift and secure direct electronic transfers, renowned for
@@ -85,7 +97,7 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
                 }
               />
 
-              <FormControlLabel
+              {/* <FormControlLabel
                 value="venmo"
                 control={<Radio className="radio-button" />}
                 labelPlacement="start"
@@ -102,7 +114,7 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
                     </p>
                   </div>
                 }
-              />
+              /> */}
 
               <FormControlLabel
                 value="zelle"
@@ -113,8 +125,9 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
                     <img
                       src={zelle}
                       alt="Male"
-                      className={`pay-image ${selectedValue === 'zelle' ? 'selected' : ''
-                        }`}
+                      className={`pay-image ${
+                        selectedValue === 'zelle' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       Swift and secure money transfers, effortlessly sending and
@@ -134,8 +147,9 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
                     <img
                       alt="Female"
                       src={paypal}
-                      className={`pay-image ${selectedValue === 'paypal' ? 'selected' : ''
-                        }`}
+                      className={`pay-image ${
+                        selectedValue === 'paypal' ? 'selected' : ''
+                      }`}
                     />
                     <p className="pay-description">
                       {' '}
@@ -148,7 +162,11 @@ const SubscriptionPaymentOptions = ({ isVisible, onClose, onConfirm, onZelleAndW
             </RadioGroup>
           </FormControl>
           <div class="pay-button-box mt-5">
-            <button className="pay-button-btn" onClick={handleClick} disabled={isLoading}>
+            <button
+              className="pay-button-btn"
+              onClick={handleClick}
+              disabled={isLoading}
+            >
               {isLoading ? 'Processing...' : 'Continue'}
             </button>
           </div>
