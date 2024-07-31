@@ -408,10 +408,10 @@ function App() {
               path="/indexx-exchange/payment-zelle"
               element={<Payment />}
             />
-            <Route
+            {/* <Route
               path="/indexx-exchange/payment-venmo"
               element={<PaymentVenmo />}
-            />
+            /> */}
             <Route
               path="/indexx-exchange/payment-wire"
               element={<PaymentWire />}

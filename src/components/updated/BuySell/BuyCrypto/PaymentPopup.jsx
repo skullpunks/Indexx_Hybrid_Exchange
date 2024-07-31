@@ -308,8 +308,8 @@ const Popup = ({
         await createNewBuyOrder();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire' ||
-        paymentMethod === 'Venmo'
+        paymentMethod === 'Wire'
+        // ||  paymentMethod === 'Venmo'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
@@ -434,7 +434,7 @@ const Popup = ({
                     </Box>
                     <p>${amount}</p>
                   </button>
-                  <button
+                  {/* <button
                     className={classes.button}
                     onClick={() => handlePaymentMethodSelect('Venmo')}
                   >
@@ -443,7 +443,7 @@ const Popup = ({
                       <p className={classes.btnText}>Venmo</p>
                     </Box>
                     <p>${amount}</p>
-                  </button>
+                  </button> */}
                 </>
               )}
             </Box>

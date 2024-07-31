@@ -35,8 +35,8 @@ const PaymentOptions = ({
     let orderId;
     if (
       selectedValue === 'zelle' ||
-      selectedValue === 'wire' ||
-      selectedValue === 'venmo'
+      selectedValue === 'wire'
+      //  ||selectedValue === 'venmo'
     ) {
       // Use the special function for Zelle and Wire
       orderId = await onZelleAndWireConfirm(selectedValue);
@@ -129,7 +129,7 @@ const PaymentOptions = ({
                   </div>
                 }
               />
-
+              {/* 
               <FormControlLabel
                 value="venmo"
                 control={<Radio className="radio-button" />}
@@ -150,7 +150,7 @@ const PaymentOptions = ({
                     </p>
                   </div>
                 }
-              />
+              /> */}
 
               <FormControlLabel
                 value="zelle"
