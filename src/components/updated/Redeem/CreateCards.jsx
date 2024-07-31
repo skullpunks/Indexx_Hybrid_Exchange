@@ -14,14 +14,33 @@ import gift6 from '../../../assets/redeem/gift6.svg';
 import gift7 from '../../../assets/redeem/gift7.svg';
 import gift8 from '../../../assets/redeem/gift8.svg';
 
-import greeting1 from '../../../assets/redeem/greeting1.svg';
-import greeting2 from '../../../assets/redeem/greeting2.svg';
-import greeting3 from '../../../assets/redeem/greeting3.svg';
-import greeting4 from '../../../assets/redeem/greeting4.svg';
-import greeting5 from '../../../assets/redeem/greeting5.svg';
-import greeting6 from '../../../assets/redeem/greeting6.svg';
-import greeting7 from '../../../assets/redeem/greeting7.svg';
-import greeting8 from '../../../assets/redeem/greeting8.svg';
+import greeting1 from '../../../assets/redeem/greeting1.png';
+import greeting2 from '../../../assets/redeem/greeting2.png';
+import greeting3 from '../../../assets/redeem/greeting3.png';
+import greeting4 from '../../../assets/redeem/greeting4.png';
+import greeting5 from '../../../assets/redeem/greeting5.png';
+import greeting6 from '../../../assets/redeem/greeting6.png';
+import greeting7 from '../../../assets/redeem/greeting7.png';
+import greeting8 from '../../../assets/redeem/greeting8.png';
+import greeting9 from '../../../assets/redeem/greeting9.png';
+import greeting10 from '../../../assets/redeem/greeting10.png';
+import greeting11 from '../../../assets/redeem/greeting11.png';
+import greeting12 from '../../../assets/redeem/greeting12.png';
+import greeting13 from '../../../assets/redeem/greeting13.png';
+import greeting14 from '../../../assets/redeem/greeting14.png';
+import greeting15 from '../../../assets/redeem/greeting15.png';
+import greeting16 from '../../../assets/redeem/greeting16.png';
+import greeting17 from '../../../assets/redeem/greeting17.png';
+import greeting18 from '../../../assets/redeem/greeting18.png';
+import greeting19 from '../../../assets/redeem/greeting19.png';
+import greeting20 from '../../../assets/redeem/greeting20.png';
+import greeting21 from '../../../assets/redeem/greeting21.png';
+import greeting22 from '../../../assets/redeem/greeting22.png';
+import greeting23 from '../../../assets/redeem/greeting23.png';
+import greeting24 from '../../../assets/redeem/greeting24.png';
+import greeting25 from '../../../assets/redeem/greeting25.png';
+import greeting26 from '../../../assets/redeem/greeting26.png';
+import greeting27 from '../../../assets/redeem/greeting27.png';
 import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
@@ -204,6 +223,29 @@ const CreateCards = () => {
     { id: 6, img: greeting6 },
     { id: 7, img: greeting7 },
     { id: 8, img: greeting8 },
+
+    { id: 9, img: greeting9 },
+    { id: 10, img: greeting10 },
+    { id: 11, img: greeting11 },
+    { id: 12, img: greeting12 },
+    { id: 13, img: greeting13 },
+
+    { id: 14, img: greeting14 },
+    { id: 15, img: greeting15 },
+    { id: 16, img: greeting16 },
+    { id: 17, img: greeting17 },
+    { id: 18, img: greeting18 },
+
+    { id: 19, img: greeting19 },
+    { id: 20, img: greeting20 },
+    { id: 21, img: greeting21 },
+    { id: 22, img: greeting22 },
+    { id: 23, img: greeting23 },
+
+    { id: 24, img: greeting24 },
+    { id: 25, img: greeting25 },
+    { id: 26, img: greeting26 },
+    { id: 27, img: greeting27 },
   ];
   const [value, setValue] = useState('gift');
   const [openPopup, setOpenPopup] = useState(false);
@@ -236,7 +278,7 @@ const CreateCards = () => {
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>Create</h3>
-        <p>Send Crypto Gift Card and Greeting Cards to anyone in the world</p>
+        <p>Create Crypto Gift Card and Greeting Cards to anyone in the world</p>
         <Button>Redeem to Crypto</Button>
       </div>
       {/* Redeem form */}
