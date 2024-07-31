@@ -4,6 +4,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Inex from '../../../assets/updated/buySell/INEX.svg'; // Fallback image
 
 export default function CustomSelectBox({
   items,
@@ -12,6 +13,7 @@ export default function CustomSelectBox({
   value,
   isCurrency,
   hasborder,
+  onCurrencyChange
 }) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
@@ -53,16 +55,41 @@ export default function CustomSelectBox({
     },
   };
 
+  const getImage = (image) => {
+    try {
+      return require(`../../../assets/token-icons/${image}.png`).default;
+    } catch (error) {
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
+
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    !isCurrency
+      ? items?.find((el) => el.value === value)?.name
+      : items?.find((el) => el.address === value)?.title
+  );
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    const selected = !isCurrency
+      ? items?.find((el) => el.value === value)?.name
+      : items?.find((el) => el.address === value)?.title;
+
+    setSelectedCurrency(selected);
+    if (type === 'Coin') onCurrencyChange(value);
+  };
+
   return (
     <FormControl sx={{ width: '100%' }}>
       <Select
         displayEmpty
         value={value}
-        onChange={onChange}
+        onChange={(e) => { handleChange(e); onChange(e); }}
         sx={{
           width: '100%',
           border: hasborder && `1px solid ${theme.palette.divider} !important`,
-
           borderRadius: '12px',
           color: `${theme.palette.text.primary} !important`,
           '& .MuiSvgIcon-root': {
@@ -92,17 +119,54 @@ export default function CustomSelectBox({
               <em style={{ color: theme.palette.text.primary }}>{type}</em>
             );
           }
-          return selected;
+          const selectedItem = items.find((item) =>
+            isCurrency ? item.address === value : item.value === value
+          );
+          return (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {type === 'Coin' && selectedItem && (
+                <img
+                  src={getImage(selectedItem.image)}
+                  alt={selectedItem.name}
+                  style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                />
+              )}
+              {selected}
+            </div>
+          );
         }}
         MenuProps={MenuProps}
         input={<OutlinedInput />}
         inputProps={{ 'aria-label': 'Without label' }}
       >
-        {items?.map(({ name, value }) => (
-          <MenuItem key={name} value={value}>
-            {name}
-          </MenuItem>
-        ))}
+        <MenuItem disabled value="">
+          <em>{type}</em>
+        </MenuItem>
+        {!isCurrency
+          ? items?.map(({ name, value, image }) => (
+              <MenuItem key={name} value={value}>
+                {type === 'Coin' && (
+                  <img
+                    src={getImage(image)}
+                    alt={name}
+                    style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                  />
+                )}
+                {name}
+              </MenuItem>
+            ))
+          : items?.map(({ title, address, image }) => (
+              <MenuItem key={title} value={address}>
+                {type === 'Coin' && (
+                  <img
+                    src={getImage(image)}
+                    alt={title}
+                    style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                  />
+                )}
+                {title}
+              </MenuItem>
+            ))}
       </Select>
     </FormControl>
   );

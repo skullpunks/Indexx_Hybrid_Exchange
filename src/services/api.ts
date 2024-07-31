@@ -38,7 +38,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -259,6 +259,54 @@ export const validateForgotOtp = async (email: string, code: string) => {
     });
     return result.data;
   } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const createGiftcard = async (
+  amount: number,
+  email: string,
+  currency: string,
+  giftCardUrl: string
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/createGiftcard', {
+      email,
+      amount,
+      currency,
+      giftCardUrl,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createGiftcard)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const sendGiftcard = async (
+  giftcardVoucher: string,
+  senderEmail: string,
+  recevierEmail: string,
+  senderMessage: string,
+  senderName: string,
+  selectedImgUrl: string
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/sendGiftcard', {
+      giftcardVoucher,
+      senderEmail,
+      recevierEmail,
+      senderMessage,
+      senderName,
+      selectedImgUrl
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (sendGiftcard)');
+    console.log(e);
+    console.log(e.response.data);
     return e.response.data;
   }
 };

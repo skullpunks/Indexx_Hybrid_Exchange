@@ -71,7 +71,7 @@ const DashboardStats = () => {
         const response = await getAllRefferedDetails(decoded.email);
         console.log(response,"response")
         if (response.data) {
-          const users = response.data;
+          const users = response.data.referredUsers;
           let tradeCount = 0;
 
           users.forEach((user) => {

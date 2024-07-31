@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardCreatedPopup = ({ onClose, selectedImg }) => {
+const CardCreatedPopup = ({ onClose, selectedImg, giftCardData, selectedImgUrl }) => {
   const navigate = useNavigate();
   const classes = useStyles();
   return (
@@ -108,20 +108,19 @@ const CardCreatedPopup = ({ onClose, selectedImg }) => {
             style={{
               textAlign: 'left',
               marginTop: '15px',
-
               width: '100%',
             }}
           >
-            <p>Quantity: 1</p>
-            <p>Amount: 100.00 INEX</p>
-            <p>Gift Card Number: 1234567890ANHUW</p>
+            <p>Quantity: {1}</p>
+            <p>Amount: {giftCardData.amount} {giftCardData?.type}</p>
+            <p>Gift Card Number: {giftCardData.voucher}</p>
           </div>
 
           <div className={classes.btnContainer}>
             <GenericButton
               text="Send Now"
               onClick={() =>
-                navigate('/redeem/send-card', { state: { selectedImg } })
+                navigate('/redeem/send-card', { state: { selectedImg, giftCardData, selectedImgUrl } })
               }
             />
           </div>

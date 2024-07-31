@@ -3,8 +3,6 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
-import redeemImg from '../../../assets/redeem/redeemimg.svg';
-
 import gift1 from '../../../assets/redeem/gift1.svg';
 import gift2 from '../../../assets/redeem/gift2.svg';
 import gift3 from '../../../assets/redeem/gift3.svg';
@@ -46,6 +44,12 @@ import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
 import IconicHeader from '../shared/IconicHeader';
+import {
+  createGiftcard,
+  decodeJWT,
+  getUserWallets,
+} from '../../../services/api';
+import initialTokens from '../../../utils/Tokens.json';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   sendCryptoRoot: {
     maxWidth: '500px',
     width: '100%',
-
     '& h3': {
       color: theme.palette.text.primary,
       fontSize: '44px',
@@ -84,7 +87,6 @@ const useStyles = makeStyles((theme) => ({
     gap: '20px',
     marginBottom: '80px',
     marginTop: '50px',
-
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
     },
@@ -94,28 +96,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px',
     flex: '50%',
   },
-  redeemBtnContainer: {
-    display: 'flex',
-    gap: '20px',
-    justifyContent: 'flex-start',
-    marginBottom: '20px',
-  },
-  greenBtn: {
-    background: `${theme.palette.primary.main} !important`,
-    color: '#000 !important',
-    width: 'fit-content',
-    padding: '32px',
-    height: '34px',
-    textTransform: 'capitalize !important',
-  },
-  transparentBtn: {
-    background: `${theme.palette.divider} !important`,
-    color: `${theme.palette.text.primary} !important`,
-    width: 'fit-content',
-    padding: '16px',
-    height: '34px',
-    textTransform: 'capitalize !important',
-  },
   inputFieldRoot: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -124,60 +104,6 @@ const useStyles = makeStyles((theme) => ({
     '& .textfieldInner': {
       flex: 1,
     },
-  },
-  greyButton: {
-    width: 'fit-content',
-    background: '#EAECEF !important',
-    color: '#000 !important',
-    height: '44px',
-    textTransform: 'capitalize !important',
-    padding: '16px !important',
-  },
-  paragraph: {
-    color: theme.palette.text.secondary,
-    fontSize: '12px',
-  },
-  cardListHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: '50px auto',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      gap: '20px',
-    },
-  },
-  cardHeaderLeft: {
-    '& h3': {
-      color: theme.palette.text.primary,
-      fontSize: '44px',
-      fontWeight: '500',
-    },
-    '& p': {
-      color: theme.palette.text.secondary,
-      fontSize: '15px',
-    },
-  },
-  cardHeaderRight: {
-    color: theme.palette.text.secondary,
-    fontSize: '13px',
-  },
-  cardGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4,1fr)',
-    gap: '10px',
-    [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2,1fr)',
-    },
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1,1fr)',
-    },
-  },
-  button: {
-    width: 'fit-content',
-    display: 'flex',
-    gap: '5px',
   },
   btnContainer: {
     display: 'flex',
@@ -200,77 +126,350 @@ const useStyles = makeStyles((theme) => ({
   activeImg: {
     border: `5px solid ${theme.palette.primary.main}`,
   },
+  errorMessage: {
+    color: 'red',
+    marginBottom: '20px',
+  },
+  currencyDisplay: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '10px',
+    '& img': {
+      width: '24px',
+      height: '24px',
+      marginRight: '10px',
+    },
+  },
+  balanceDisplay: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '10px',
+  },
 }));
 
-const CreateCards = () => {
+const CreateCards = ({ onSendCard }) => {
   const classes = useStyles();
   const giftArr = [
-    { id: 1, img: gift1 },
-    { id: 2, img: gift2 },
-    { id: 3, img: gift3 },
-    { id: 4, img: gift4 },
-    { id: 5, img: gift5 },
-    { id: 6, img: gift6 },
-    { id: 7, img: gift7 },
-    { id: 8, img: gift8 },
+    {
+      id: 1,
+      img: gift1,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc1.png',
+    },
+    {
+      id: 2,
+      img: gift2,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc2.png',
+    },
+    {
+      id: 3,
+      img: gift3,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc3.png',
+    },
+    {
+      id: 4,
+      img: gift4,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc4.png',
+    },
+    {
+      id: 5,
+      img: gift5,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
+    },
+    {
+      id: 6,
+      img: gift6,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
+    },
+    {
+      id: 7,
+      img: gift7,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc7.png',
+    },
+    {
+      id: 8,
+      img: gift8,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc8.png',
+    },
   ];
   const greetingArr = [
-    { id: 1, img: greeting1 },
-    { id: 2, img: greeting2 },
-    { id: 3, img: greeting3 },
-    { id: 4, img: greeting4 },
-    { id: 5, img: greeting5 },
-    { id: 6, img: greeting6 },
-    { id: 7, img: greeting7 },
-    { id: 8, img: greeting8 },
+    {
+      id: 1,
+      img: greeting1,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting1.png',
+    },
+    {
+      id: 2,
+      img: greeting2,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting2.png',
+    },
+    {
+      id: 3,
+      img: greeting3,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting3.png',
+    },
+    {
+      id: 4,
+      img: greeting4,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting4.png',
+    },
+    {
+      id: 5,
+      img: greeting5,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting5.png',
+    },
+    {
+      id: 6,
+      img: greeting6,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting6.png',
+    },
+    {
+      id: 7,
+      img: greeting7,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting7.png',
+    },
+    {
+      id: 8,
+      img: greeting8,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting8.png',
+    },
 
-    { id: 9, img: greeting9 },
-    { id: 10, img: greeting10 },
-    { id: 11, img: greeting11 },
-    { id: 12, img: greeting12 },
-    { id: 13, img: greeting13 },
+    {
+      id: 9,
+      img: greeting9,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting9.png',
+    },
+    {
+      id: 10,
+      img: greeting10,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting10.png',
+    },
+    {
+      id: 11,
+      img: greeting11,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting11.png',
+    },
+    {
+      id: 12,
+      img: greeting12,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting12.png',
+    },
+    {
+      id: 13,
+      img: greeting13,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting13.png',
+    },
 
-    { id: 14, img: greeting14 },
-    { id: 15, img: greeting15 },
-    { id: 16, img: greeting16 },
-    { id: 17, img: greeting17 },
-    { id: 18, img: greeting18 },
+    {
+      id: 14,
+      img: greeting14,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting14.png',
+    },
+    {
+      id: 15,
+      img: greeting15,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting15.png',
+    },
+    {
+      id: 16,
+      img: greeting16,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting16.png',
+    },
+    {
+      id: 17,
+      img: greeting17,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting17.png',
+    },
+    {
+      id: 18,
+      img: greeting18,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting18.png',
+    },
 
-    { id: 19, img: greeting19 },
-    { id: 20, img: greeting20 },
-    { id: 21, img: greeting21 },
-    { id: 22, img: greeting22 },
-    { id: 23, img: greeting23 },
+    {
+      id: 19,
+      img: greeting19,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting19.png',
+    },
+    {
+      id: 20,
+      img: greeting20,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting20.png',
+    },
+    {
+      id: 21,
+      img: greeting21,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting21.png',
+    },
+    {
+      id: 22,
+      img: greeting22,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting22.png',
+    },
+    {
+      id: 23,
+      img: greeting23,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting23.png',
+    },
 
-    { id: 24, img: greeting24 },
-    { id: 25, img: greeting25 },
-    { id: 26, img: greeting26 },
-    { id: 27, img: greeting27 },
+    {
+      id: 24,
+      img: greeting24,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting24.png',
+    },
+    {
+      id: 25,
+      img: greeting25,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting25.png',
+    },
+    {
+      id: 26,
+      img: greeting26,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting26.png',
+    },
+    {
+      id: 27,
+      img: greeting27,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
+    },
   ];
-  const [value, setValue] = useState('gift');
+  const [value, setValue] = useState('Gift Card');
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
-    value === 'gift' ? giftArr : greetingArr
+    value === 'Gift Card' ? giftArr : greetingArr
   );
   const [selectedImg, setSelectedImg] = useState(
-    value === 'gift' ? gift1 : greeting1
+    value === 'Gift Card' ? gift1 : greeting1
+  );
+  const [selectedImgUrl, setSelectedImgUrl] = useState(
+    value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
   );
   const handleChange = (event) => {
-    setValue(event.target.value);
+    if (
+      event.target.value === 'Gift Card' ||
+      event.target.value === 'Greeting Card'
+    ) {
+      setValue(event.target.value);
+      setSelectedImg(event.target.value === 'Gift Card' ? gift1 : greeting1);
+      setSelectedImgUrl(event.target.value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl);
+    } else {
+      console.log('event', event.target.value);
+    }
   };
   const navigate = useNavigate();
   const theme = useTheme();
 
+  const [amount, setAmount] = useState(0);
+  const [email, setEmail] = useState('');
+  const [currentUserEmail, setCurrentUserEmail] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [giftCardData, setGiftCardData] = useState(null);
+  const [loading, isLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [currency, setCurrency] = useState(initialTokens[0]?.value);
+  const [singleWallet, setSingleWallet] = useState(null);
+  const [allWallets, setAllWallets] = useState([]);
+
+  const handleCreateGiftcard = async () => {
+    isLoading(true);
+    if (!amount || !email || !currency) {
+      setError('All fields are required.');
+      return;
+    }
+    setError(''); // Clear any previous error messages
+    const result = await createGiftcard(
+      Number(amount),
+      currentUserEmail,
+      currency,
+      'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
+    );
+    console.log(result);
+    if (result && result.status === 200) {
+      setGiftCardData(result.data.giftCardDetails); // Store the API response data
+      setShowPopup(true);
+    } else {
+      console.error('Failed to create gift card', result);
+      setError('Failed to create gift card');
+    }
+    isLoading(false);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   useEffect(() => {
     if (value) {
-      setSelectedCards(value === 'gift' ? giftArr : greetingArr);
+      setSelectedCards(value === 'Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
 
   const handleImgClick = (data) => {
     setSelectedImg(data.img);
+    setSelectedImgUrl(data.imgUrl)
   };
   console.log(selectedImg, 'selectedImg');
+
+  // Fetch all wallets once and store them in state
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const decodedToken = decodeJWT(String(token));
+    setCurrentUserEmail(decodedToken?.email);
+    getUserWallets(decodedToken?.email).then((res) => {
+      setAllWallets(res.data);
+    });
+  }, []);
+
+  // Update singleWallet when currency changes, using the allWallets stored in state
+  useEffect(() => {
+    const userWallet = allWallets.find(
+      (wallet) => wallet.coinSymbol === currency
+    );
+    console.log('userWallet', userWallet);
+    setSingleWallet(userWallet);
+  }, [currency, allWallets]);
+
+  const isFormValid = amount && email && currency;
+
+  const redirect = async () => {
+    navigate('/redeem');
+  };
+
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -278,8 +477,8 @@ const CreateCards = () => {
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>Create</h3>
-        <p>Create Crypto Gift Card and Greeting Cards to anyone in the world</p>
-        <Button>Redeem to Crypto</Button>
+        <p>Send Crypto Gift Card and Greeting Cards to anyone in the world</p>
+        <Button onClick={redirect}>Redeem to Crypto</Button>
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
@@ -291,8 +490,8 @@ const CreateCards = () => {
             <label>Select Type</label>
             <CustomSelectBox
               items={[
-                { name: 'Gift Card', value: 'gift' },
-                { name: 'Greeting Card', value: 'greeting' },
+                { name: 'Gift Card', value: 'Gift Card' },
+                { name: 'Greeting Card', value: 'Greeting Card' },
               ]}
               value={value}
               onChange={handleChange}
@@ -303,34 +502,61 @@ const CreateCards = () => {
             <InputField
               label={'Enter Amount'}
               type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               endAdornment={
                 <div style={{ transform: 'translateX(10px)' }}>
-                  {' '}
                   <CustomSelectBox
-                    items={[
-                      { name: 'Crypto', value: 'crypto' },
-                      { name: 'Stock Tokens', value: 'stocktokens' },
-                      { name: 'ETF', value: 'etf' },
-                    ]}
-                    type={'Type'}
+                    items={initialTokens.map((token) => ({
+                      name: token.title,
+                      value: token.title,
+                      image: token.image,
+                    }))}
+                    type={'Coin'}
+                    value={currency}
+                    onCurrencyChange={(value) => setCurrency(value)}
+                    onChange={handleChange}
                   />
                 </div>
               }
             />
           </div>
+          {singleWallet && (
+            <div className={classes.balanceDisplay}>
+              <span>
+                Asset Balance:{' '}
+                {new Intl.NumberFormat('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 6,
+                }).format(singleWallet.coinBalance)}{' '}
+                {currency}
+              </span>
+            </div>
+          )}
+          <br />
           <div className={classes.quantityContainer}>
-            {' '}
-            <InputField label={'Quantity'} type="number" />
+            <InputField
+              label={'Recipient Email'}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className={classes.btnContainer}>
-            <p style={{ flex: '70%' }}>Total Amount: 50.00 INEX</p>
+            <p style={{ flex: '70%' }}>
+              Total Amount: {amount} {currency}
+            </p>
             <GenericButton
               text={'Create'}
+              loading={loading}
               styles={{ flex: 1 }}
-              onClick={() => setOpenPopup(true)}
+              onClick={handleCreateGiftcard}
+              disabled={!isFormValid}
             />
           </div>
+          {error && <div className={classes.errorMessage}>{error}</div>}
         </div>
       </div>
       {/* Gift card listing */}
@@ -338,10 +564,12 @@ const CreateCards = () => {
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
-              <h3>{value === 'gift' ? 'Gift Cards' : 'Greeting Cards'} </h3>
+              <h3>
+                {value === 'Gift Card' ? 'Gift Cards' : 'Greeting Cards'}{' '}
+              </h3>
               <p>
                 {' '}
-                {value === 'gift'
+                {value === 'Gift Card'
                   ? 'Send a crypto gift card for any occasion'
                   : 'Send a crypto greeting card for any occasion'}
               </p>
@@ -352,8 +580,9 @@ const CreateCards = () => {
           <div className={classes.cardGrid}>
             {selectedCard.map((curr, i) => (
               <div
+                key={i} // Added key to the map iterator
                 onClick={() => handleImgClick(curr)}
-                className={curr.img === selectedImg && classes.activeImg}
+                className={curr.img === selectedImg ? classes.activeImg : ''}
               >
                 <img src={curr.img} alt="img" style={{ width: '100%' }} />
               </div>
@@ -361,7 +590,15 @@ const CreateCards = () => {
           </div>
         </div>
       </div>
-      {openPopup && <CardCreatedPopup selectedImg={selectedImg} />}
+
+      {showPopup && (
+        <CardCreatedPopup
+          onClose={closePopup}
+          giftCardData={giftCardData}
+          selectedImg={selectedImg}
+          selectedImgUrl={selectedImgUrl}
+        />
+      )}
     </div>
   );
 };

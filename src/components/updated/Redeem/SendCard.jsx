@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -27,6 +27,7 @@ import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
 import IconicHeader from '../shared/IconicHeader';
+import { decodeJWT, sendGiftcard } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -177,8 +178,38 @@ const SendCard = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location;
-  const selectedImg = state?.selectedImg;
+  const { giftCardData, selectedImg, selectedImgUrl } = location.state || {}; // Extracting giftCardData from location state
+  console.log(location.state);
+  const [recipientEmail, setRecipientEmail] = useState('');
+  const [senderName, setSenderName] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, isLoading] = useState(false);
+
+  const handleSendGiftcard = async () => {
+    isLoading(true);
+    if (!recipientEmail || !senderName) {
+      alert('Recipient email and sender name are required.');
+      return;
+    }
+
+    const result = await sendGiftcard(
+      giftCardData.voucher,
+      giftCardData.createdBy,
+      recipientEmail,
+      message,
+      senderName,
+      selectedImgUrl
+    );
+    if (result.status === 200) {
+      navigate('/redeem/send-card-successful', {
+        state: { selectedImg, giftCardData },
+      });
+    } else {
+      console.error('Failed to send gift/greeting card:', result);
+      alert('Failed to send gift/greeting card.');
+    }
+    isLoading(false);
+  };
 
   const theme = useTheme();
   const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
@@ -192,6 +223,11 @@ const SendCard = () => {
     greeting7,
     greeting8,
   ];
+
+  const redirect = async() => {
+    navigate('/redeem');
+  }
+
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -201,7 +237,7 @@ const SendCard = () => {
       <div className={classes.sendCryptoRoot}>
         <h3>Send</h3>
         <p>Send Crypto Gift Card and Greeting Cards to anyone in the world</p>
-        <Button>Redeem to Crypto</Button>
+        <Button onClick={redirect}>Redeem to Crypto</Button>
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
@@ -220,6 +256,8 @@ const SendCard = () => {
               label={'Recipient’s Email'}
               type="text"
               placeholder="abc@xyz.com"
+              value={recipientEmail}
+              onChange={(e) => setRecipientEmail(e.target.value)}
             />
           </div>
           <div className={classes.quantityContainer}>
@@ -228,6 +266,8 @@ const SendCard = () => {
               label={'Your Name'}
               type="text"
               placeholder="Enter your name"
+              value={senderName}
+              onChange={(e) => setSenderName(e.target.value)}
             />
           </div>
           <div className={classes.quantityContainer}>
@@ -236,18 +276,17 @@ const SendCard = () => {
               label={'Leave message (optional) '}
               type="text"
               placeholder="Write a message for your friend and your family"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
           </div>
 
           <div className={classes.btnContainer}>
             <GenericButton
               text={'Send'}
+              loading={loading}
               styles={{ width: '40%' }}
-              onClick={() =>
-                navigate('/redeem/send-card-successful', {
-                  state: { selectedImg },
-                })
-              }
+              onClick={handleSendGiftcard}
             />
           </div>
         </div>

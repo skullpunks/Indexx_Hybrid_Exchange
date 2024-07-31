@@ -69,8 +69,7 @@ const SendCardSuccessfully = ({ onClose }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location;
-  const selectedImg = state?.selectedImg;
+  const { giftCardData, selectedImg } = location.state || {};
 
   return (
     <div>
@@ -110,7 +109,7 @@ const SendCardSuccessfully = ({ onClose }) => {
                 marginBottom: '15px',
               }}
             >
-              Amount: 100.00 INEX
+              Amount: {giftCardData?.amount} {giftCardData?.type}
             </p>
             <p
               style={{
@@ -119,7 +118,7 @@ const SendCardSuccessfully = ({ onClose }) => {
                 marginBottom: '15px',
               }}
             >
-              Gift Card Number: 1234567890ANHUW
+              Gift Card Number:{giftCardData?.voucher}
             </p>
           </div>
         </div>
@@ -127,7 +126,7 @@ const SendCardSuccessfully = ({ onClose }) => {
         <div className={classes.btnContainer}>
           <GenericButton
             text="Send Another card"
-            onClick={() => navigate('/redeem/')}
+            onClick={() => navigate('/redeem/create-card')}
           />
         </div>
       </div>

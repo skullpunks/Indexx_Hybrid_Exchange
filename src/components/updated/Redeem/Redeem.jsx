@@ -1,11 +1,11 @@
-import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.png';
-
 import gift1 from '../../../assets/redeem/gift1.svg';
 import gift2 from '../../../assets/redeem/gift2.svg';
 import gift3 from '../../../assets/redeem/gift3.svg';
@@ -14,7 +14,6 @@ import gift5 from '../../../assets/redeem/gift5.svg';
 import gift6 from '../../../assets/redeem/gift6.svg';
 import gift7 from '../../../assets/redeem/gift7.svg';
 import gift8 from '../../../assets/redeem/gift8.svg';
-
 import greeting1 from '../../../assets/redeem/greeting1.svg';
 import greeting2 from '../../../assets/redeem/greeting2.svg';
 import greeting3 from '../../../assets/redeem/greeting3.svg';
@@ -23,8 +22,6 @@ import greeting5 from '../../../assets/redeem/greeting5.svg';
 import greeting6 from '../../../assets/redeem/greeting6.svg';
 import greeting7 from '../../../assets/redeem/greeting7.svg';
 import greeting8 from '../../../assets/redeem/greeting8.svg';
-import { useTheme } from '@mui/material';
-
 import { redeemGiftCard, validateGiftCard } from '../../../services/api'; // Adjust the path according to your project structure
 import Popup from './RedeemPopup'; // Adjust the path according to your project structure
 
@@ -167,7 +164,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FirstScreen = () => {
+const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -236,6 +233,7 @@ const FirstScreen = () => {
           Create a Crypto card
         </Button>
       </div>
+
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
         <div className={classes.redeemLeft}>
