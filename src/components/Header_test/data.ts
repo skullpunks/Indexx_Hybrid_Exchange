@@ -821,6 +821,10 @@ export const auth_header_data = [
           //   name: 'Trade to Earn',
           //   href: '/indexx-exchange/trade-to-earn',
           // },
+          {
+            name: 'Redeem Gift',
+            href: '/redeem',
+          },
 
           {
             name: 'Asset Wallet',
@@ -950,7 +954,10 @@ export const auth_header_data_asset_wallet = [
           //   name: 'Trade to Earn',
           //   href: '/indexx-exchange/trade-to-earn',
           // },
-
+          {
+            name: 'Redeem Gift',
+            href: '/redeem',
+          },
           {
             name: 'Asset Wallet',
             href: '/indexx-exchange/buy-sell/wallet',

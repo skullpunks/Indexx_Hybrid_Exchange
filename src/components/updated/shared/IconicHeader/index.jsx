@@ -15,7 +15,8 @@ import stakingLight from '../../../../assets/updated/iconicHeader/lightMode/Stak
 import stakingDark from '../../../../assets/updated/iconicHeader/Staking.svg';
 import etfLight from '../../../../assets/updated/iconicHeader/lightMode/etf-logo.svg';
 import etfDark from '../../../../assets/updated/iconicHeader/ETF_dark.svg';
-
+import giftLight from '../../../../assets/redeem/giftWhite.svg';
+import giftDark from '../../../../assets/redeem/giftBlack.svg';
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
@@ -109,6 +110,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
         path: '/indexx-exchange/buy-sell/staking',
       },
       {
+        label: 'Send Gift',
+        light: giftDark,
+        dark: giftLight,
+        path: '/redeem',
+      },
+
+      {
         label: 'Asset Wallet',
         light: assetLight,
         dark: assetDark,
@@ -156,7 +164,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        maxWidth: isLoggedIn ? '740px' : '500px',
+        maxWidth: isLoggedIn ? '880px' : '500px',
         margin: '20px auto 50px auto',
       }}
     >

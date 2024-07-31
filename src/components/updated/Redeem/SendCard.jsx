@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
     maxWidth: '1280px',
     margin: 'auto',
-    marginTop: '50px',
   },
   sendCryptoRoot: {
     maxWidth: '500px',
@@ -177,6 +176,10 @@ const SendCard = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   const { state } = location;
   const selectedImg = state?.selectedImg;
 
@@ -195,7 +198,7 @@ const SendCard = () => {
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
-      <IconicHeader />
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
 
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
