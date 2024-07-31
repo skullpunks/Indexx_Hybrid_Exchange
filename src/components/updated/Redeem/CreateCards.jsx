@@ -148,6 +148,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginTop: '10px',
   },
+  cardGrid: {
+    marginTop: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4,1fr)',
+    gap: '10px',
+  },
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: 'repeat(2,1fr)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: 'repeat(1,1fr)',
+  },
 }));
 
 const CreateCards = ({ onSendCard }) => {
@@ -390,7 +402,11 @@ const CreateCards = ({ onSendCard }) => {
     ) {
       setValue(event.target.value);
       setSelectedImg(event.target.value === 'Gift Card' ? gift1 : greeting1);
-      setSelectedImgUrl(event.target.value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl);
+      setSelectedImgUrl(
+        event.target.value === 'Gift Card'
+          ? giftArr[0].imgUrl
+          : greetingArr[0].imgUrl
+      );
     } else {
       console.log('event', event.target.value);
     }
@@ -445,7 +461,7 @@ const CreateCards = ({ onSendCard }) => {
 
   const handleImgClick = (data) => {
     setSelectedImg(data.img);
-    setSelectedImgUrl(data.imgUrl)
+    setSelectedImgUrl(data.imgUrl);
   };
   console.log(selectedImg, 'selectedImg');
 
