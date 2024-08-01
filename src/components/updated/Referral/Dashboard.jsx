@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   statValue: {
     fontSize: '34px',
     fontWeight: 600,
-    marginTop: '05px',
+    marginTop: '5px',
   },
   statSubtext: {
     fontSize: '16px',
@@ -60,6 +60,8 @@ const DashboardStats = () => {
   const [referredUsers, setReferredUsers] = useState([]);
   const [tradeCount, setTradeCount] = useState(0);
   const [friendsCount, setFriendsCount] = useState(0);
+  const [totalEarned, setTotalEarned] = useState(0);
+  const [commissionCurrency, setCommissionCurrency] = useState('INEX');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
@@ -69,9 +71,10 @@ const DashboardStats = () => {
         let decoded = decodeJWT(access_token);
         setEmail(decoded.email);
         const response = await getAllRefferedDetails(decoded.email);
-        console.log(response,"response")
+        console.log(response, "response");
         if (response.data) {
           const users = response.data.referredUsers;
+          const referralData = response.data.referralData;
           let tradeCount = 0;
 
           users.forEach((user) => {
@@ -83,6 +86,8 @@ const DashboardStats = () => {
           setReferredUsers(users);
           setTradeCount(tradeCount);
           setFriendsCount(users.length);
+          setTotalEarned(referralData.totalEarned);
+          setCommissionCurrency(referralData.commissionCurrency);
         }
       } catch (error) {
         console.error('Error fetching referred users:', error);
@@ -110,19 +115,8 @@ const DashboardStats = () => {
         <div className={classes.statsSection}>
           <div className={classes.statCard}>
             <span className={classes.statHeading}>Your Earnings</span>
-            <span className={classes.statValue}>0 INEX</span>
+            <span className={classes.statValue}>{totalEarned} {commissionCurrency}</span>
             <span className={classes.statSubtext}>+0 BTC</span>
-            <div
-              style={{
-                marginTop: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <span className={classes.statHeading}>Your Earnings</span>
-              <span className={classes.statValue}>500.64 INEX</span>
-              <span className={classes.statSubtext}>ID 42****24</span>
-            </div>
           </div>
 
           <div className={classes.statCard}>
