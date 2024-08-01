@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import gift1 from '../../../assets/redeem/gift1.svg';
-import IconicHeader from '../shared/IconicHeader';
+import IconicHeader from '../shared/RedeemIconicHeader';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +69,7 @@ const SendCardSuccessfully = ({ onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { giftCardData, selectedImg } = location.state || {};
-  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const [selectedTab, setSelectedTab] = useState('Send');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };

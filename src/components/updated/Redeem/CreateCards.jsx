@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.svg';
-import defaultImg from '../../../assets/redeem/defaultImg.png';
 import gift1 from '../../../assets/redeem/gift1.svg';
 import gift2 from '../../../assets/redeem/gift2.svg';
 import gift3 from '../../../assets/redeem/gift3.svg';
@@ -45,7 +44,7 @@ import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
-import IconicHeader from '../shared/IconicHeader';
+import IconicHeader from '../shared/RedeemIconicHeader';
 import {
   createGiftcard,
   decodeJWT,
@@ -164,7 +163,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateCards = ({ onSendCard }) => {
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const [selectedTab, setSelectedTab] = useState('Create');
+  const location = useLocation();
+  const { type, selectedImg: defaultImg } = location.state || {};
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -386,7 +388,7 @@ const CreateCards = ({ onSendCard }) => {
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
     },
   ];
-  const [value, setValue] = useState('Gift Card');
+  const [value, setValue] = useState(type);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
     value === 'Gift Card' ? giftArr : greetingArr

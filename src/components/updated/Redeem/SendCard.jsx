@@ -26,7 +26,7 @@ import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
-import IconicHeader from '../shared/IconicHeader';
+import IconicHeader from '../shared/RedeemIconicHeader';
 import { decodeJWT, sendGiftcard } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -209,7 +209,7 @@ const SendCard = () => {
     }
     isLoading(false);
   };
-  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const [selectedTab, setSelectedTab] = useState('Send');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };

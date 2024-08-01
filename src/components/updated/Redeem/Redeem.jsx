@@ -22,6 +22,25 @@ import greeting5 from '../../../assets/redeem/greeting5.svg';
 import greeting6 from '../../../assets/redeem/greeting6.svg';
 import greeting7 from '../../../assets/redeem/greeting7.svg';
 import greeting8 from '../../../assets/redeem/greeting8.svg';
+import greeting9 from '../../../assets/redeem/greeting9.png';
+import greeting10 from '../../../assets/redeem/greeting10.png';
+import greeting11 from '../../../assets/redeem/greeting11.png';
+import greeting12 from '../../../assets/redeem/greeting12.png';
+import greeting13 from '../../../assets/redeem/greeting13.png';
+import greeting14 from '../../../assets/redeem/greeting14.png';
+import greeting15 from '../../../assets/redeem/greeting15.png';
+import greeting16 from '../../../assets/redeem/greeting16.png';
+import greeting17 from '../../../assets/redeem/greeting17.png';
+import greeting18 from '../../../assets/redeem/greeting18.png';
+import greeting19 from '../../../assets/redeem/greeting19.png';
+import greeting20 from '../../../assets/redeem/greeting20.png';
+import greeting21 from '../../../assets/redeem/greeting21.png';
+import greeting22 from '../../../assets/redeem/greeting22.png';
+import greeting23 from '../../../assets/redeem/greeting23.png';
+import greeting24 from '../../../assets/redeem/greeting24.png';
+import greeting25 from '../../../assets/redeem/greeting25.png';
+import greeting26 from '../../../assets/redeem/greeting26.png';
+import greeting27 from '../../../assets/redeem/greeting27.png';
 import { redeemGiftCard, validateGiftCard } from '../../../services/api'; // Adjust the path according to your project structure
 import Popup from './RedeemPopup'; // Adjust the path according to your project structure
 
@@ -138,6 +157,19 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '15px',
     },
   },
+  cardHeaderRoot: {
+    width: '70%',
+    '& h3': {
+      color: theme.palette.text.primary,
+      fontSize: '40px',
+      fontWeight: '500',
+    },
+    '& p': {
+      color: theme.palette.text.secondary,
+      fontSize: '13px',
+    },
+  },
+
   cardHeaderRight: {
     color: theme.palette.text.secondary,
     fontSize: '13px',
@@ -175,16 +207,223 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
+  const giftArr = [
+    {
+      id: 1,
+      img: gift1,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc1.png',
+    },
+    {
+      id: 2,
+      img: gift2,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc2.png',
+    },
+    {
+      id: 3,
+      img: gift3,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc3.png',
+    },
+    {
+      id: 4,
+      img: gift4,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc4.png',
+    },
+    {
+      id: 5,
+      img: gift5,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
+    },
+    {
+      id: 6,
+      img: gift6,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
+    },
+    {
+      id: 7,
+      img: gift7,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc7.png',
+    },
+    {
+      id: 8,
+      img: gift8,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc8.png',
+    },
+  ];
   const greetingArr = [
-    greeting1,
-    greeting2,
-    greeting3,
-    greeting4,
-    greeting5,
-    greeting6,
-    greeting7,
-    greeting8,
+    {
+      id: 1,
+      img: greeting1,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting1.png',
+    },
+    {
+      id: 2,
+      img: greeting2,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting2.png',
+    },
+    {
+      id: 3,
+      img: greeting3,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting3.png',
+    },
+    {
+      id: 4,
+      img: greeting4,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting4.png',
+    },
+    {
+      id: 5,
+      img: greeting5,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting5.png',
+    },
+    {
+      id: 6,
+      img: greeting6,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting6.png',
+    },
+    {
+      id: 7,
+      img: greeting7,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting7.png',
+    },
+    {
+      id: 8,
+      img: greeting8,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting8.png',
+    },
+
+    {
+      id: 9,
+      img: greeting9,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting9.png',
+    },
+    {
+      id: 10,
+      img: greeting10,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting10.png',
+    },
+    {
+      id: 11,
+      img: greeting11,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting11.png',
+    },
+    {
+      id: 12,
+      img: greeting12,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting12.png',
+    },
+    {
+      id: 13,
+      img: greeting13,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting13.png',
+    },
+
+    {
+      id: 14,
+      img: greeting14,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting14.png',
+    },
+    {
+      id: 15,
+      img: greeting15,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting15.png',
+    },
+    {
+      id: 16,
+      img: greeting16,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting16.png',
+    },
+    {
+      id: 17,
+      img: greeting17,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting17.png',
+    },
+    {
+      id: 18,
+      img: greeting18,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting18.png',
+    },
+
+    {
+      id: 19,
+      img: greeting19,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting19.png',
+    },
+    {
+      id: 20,
+      img: greeting20,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting20.png',
+    },
+    {
+      id: 21,
+      img: greeting21,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting21.png',
+    },
+    {
+      id: 22,
+      img: greeting22,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting22.png',
+    },
+    {
+      id: 23,
+      img: greeting23,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting23.png',
+    },
+
+    {
+      id: 24,
+      img: greeting24,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting24.png',
+    },
+    {
+      id: 25,
+      img: greeting25,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting25.png',
+    },
+    {
+      id: 26,
+      img: greeting26,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting26.png',
+    },
+    {
+      id: 27,
+      img: greeting27,
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
+    },
   ];
 
   const handleRedeem = async () => {
@@ -222,29 +461,24 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
     <div className={classes.root}>
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>
-          Send Crypto <br /> with indexx Gift Cards
-        </h3>
-        <p>
-          Gift crypto with your referral code and choose from our amazing
-          designs
-        </p>
-        <Button onClick={() => navigate('/redeem/create-card')}>
+        <h3>Redeem Crypto with Gift & Greeting Cards</h3>
+        <p>Redeem Crypto gifts sent to you by your friends and family.</p>
+        {/* <Button onClick={() => navigate('/redeem/create-card')}>
           Create a Crypto card
-        </Button>
+        </Button> */}
       </div>
 
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
         <div className={classes.redeemLeft}>
-          <div className={classes.redeemBtnContainer}>
+          {/* <div className={classes.redeemBtnContainer}>
             <Button className={classes.greenBtn} disabled={isLoading}>
               {'Redeem to Crypto'}
             </Button>
             <Button className={classes.transparentBtn} onClick={handleValidate}>
               Check Card
             </Button>
-          </div>
+          </div> */}
           <div className={classes.inputFieldRoot}>
             <div className="textfieldInner">
               <InputField
@@ -286,20 +520,35 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
         </div>
       </div>
       {/* Gift card listing */}
-      {/* <div>
+      <div>
+        <div className={classes.cardHeaderRoot}>
+          <h3>Create & Send a Crypto gift with Gift & Greeting Cards</h3>
+          <p>
+            Have you run out of options to gift someone something new and
+            exciting? How about an investment of the future? Send someone a
+            custom crypto gift card now and stay ahead of the gifting game.
+          </p>
+        </div>
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
               <h3>Gift Cards</h3>
               <p>Send a crypto gift card for any occasion</p>
             </div>
-            <div className={classes.cardHeaderRight}>View more Gift Cards</div>
+            {/* <div className={classes.cardHeaderRight}>View more Gift Cards</div> */}
           </div>
 
           <div className={classes.cardGrid}>
             {giftArr.map((curr, i) => (
-              <div key={i}>
-                <img src={curr} alt="img" style={{ width: '100%' }} />
+              <div
+                key={i}
+                onClick={() =>
+                  navigate('/redeem/create-card', {
+                    state: { selectedImg: curr.img, type: 'Gift Card' },
+                  })
+                }
+              >
+                <img src={curr.img} alt="img" style={{ width: '100%' }} />
               </div>
             ))}
           </div>
@@ -317,14 +566,21 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
 
             <div className={classes.cardGrid}>
               {greetingArr.map((curr, i) => (
-                <div key={i}>
-                  <img src={curr} alt="img" style={{ width: '100%' }} />
+                <div
+                  key={i}
+                  onClick={() =>
+                    navigate('/redeem/create-card', {
+                      state: { selectedImg: curr.img, type: 'Greeting Card' },
+                    })
+                  }
+                >
+                  <img src={curr.img} alt="img" style={{ width: '100%' }} />
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
       {showPopup && (
         <Popup
           onClose={closePopup}
