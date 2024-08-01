@@ -13,7 +13,7 @@ import personFlipCoin from '../../assets/arts/personFlip.png';
 import axios from 'axios';
 // import womanFlipCoin from '../../assets/arts/womanFlipCoin.svg';
 import indexText_dark from '../../assets/indexx.ai_black.svg';
-import indexText from '../../assets/indexx.ai white.png';
+import indexText from '../../assets/header-icons/new indexx.ai logo.svg';
 import indexTextyellow from '../../assets/indexx ai yellow 1.svg';
 import indexTextyellowdark from '../../assets/yellow_dark.svg';
 import arrow from '../../assets/arrow-.svg';
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const classes = useStyles();
-  let cachedToken: any = null
+  let cachedToken: any = null;
 
   const icons = [
     {
@@ -138,7 +138,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   }, []);
 
   const [exchangeUrl, setExchangeUrl] = useState(baseCEXURL);
-  const [lottoUrl, setLottoUrl] = useState("https://lotto.indexx.ai/");
+  const [lottoUrl, setLottoUrl] = useState('https://lotto.indexx.ai/');
 
   const [tokenizedUrls, setTokenizedUrls] = useState({
     defaultUrl: `${baseURL}`,
@@ -166,18 +166,18 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
   const getAuthenticatedUrl = async (url: any) => {
     if (cachedToken) {
       const urlObj = new URL(url, window.location.origin);
-      urlObj.searchParams.set("signInToken", cachedToken);
+      urlObj.searchParams.set('signInToken', cachedToken);
       // Check if the URL is for the stock-token page
-      if (url.includes("/update/home/stock-token")) {
-        urlObj.searchParams.set("buyToken", "AMZN");
-      } else if (url.includes("/update/home")) {
-        urlObj.searchParams.set("buyToken", "INEX");
+      if (url.includes('/update/home/stock-token')) {
+        urlObj.searchParams.set('buyToken', 'AMZN');
+      } else if (url.includes('/update/home')) {
+        urlObj.searchParams.set('buyToken', 'INEX');
       }
       return urlObj.toString();
     }
 
-    const isAuthenticated = localStorage.getItem("access_token");
-    const email = localStorage.getItem("email");
+    const isAuthenticated = localStorage.getItem('access_token');
+    const email = localStorage.getItem('email');
     let shortToken;
 
     if (email) {
@@ -190,13 +190,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     if (isAuthenticated) {
       cachedToken = shortToken.data;
       const urlObj = new URL(url, window.location.origin);
-      urlObj.searchParams.set("signInToken", shortToken.data);
+      urlObj.searchParams.set('signInToken', shortToken.data);
 
       // Check if the URL is for the stock-token page
-      if (url.includes("/update/home/stock-token")) {
-        urlObj.searchParams.set("buyToken", "AMZN");
-      } else if (url.includes("/update/home")) {
-        urlObj.searchParams.set("buyToken", "INEX");
+      if (url.includes('/update/home/stock-token')) {
+        urlObj.searchParams.set('buyToken', 'AMZN');
+      } else if (url.includes('/update/home')) {
+        urlObj.searchParams.set('buyToken', 'INEX');
       }
 
       return urlObj.toString();
@@ -207,8 +207,8 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
   useEffect(() => {
     const fetchAuthenticatedUrls2 = async () => {
-      const isAuthenticated = localStorage.getItem("access_token");
-      const email = localStorage.getItem("email");
+      const isAuthenticated = localStorage.getItem('access_token');
+      const email = localStorage.getItem('email');
       let shortToken;
 
       if (email) {
@@ -242,7 +242,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           wallStreetCertUrl: `${baseWSURL}/certificates?ignInToken=${token}`,
           wallStreetDetailsUrl: `${baseWSURL}/details?signInToken=${token}`,
 
-
           // Add other URLs here as needed
         });
       }
@@ -253,15 +252,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
   useEffect(() => {
     const fetchAuthenticatedUrls = async () => {
-      if (localStorage.getItem("access_token")) {
+      if (localStorage.getItem('access_token')) {
         setExchangeUrl(await getAuthenticatedUrl(baseCEXURL));
-        setLottoUrl(await getAuthenticatedUrl("https://lotto.indexx.ai/"));
+        setLottoUrl(await getAuthenticatedUrl('https://lotto.indexx.ai/'));
       }
     };
 
     fetchAuthenticatedUrls();
   }, []);
-
 
   return (
     <>
@@ -290,18 +288,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
               <a href={exchangeUrl}>
                 {theme === 'dark' ? (
                   <img
-                    src={userLogged === 'normal' ? indexText : indexTextyellow}
+                    src={indexText}
                     alt="index logo"
                     width={'60px'}
                     className="logo_ind"
                   />
                 ) : (
                   <img
-                    src={
-                      userLogged === 'normal'
-                        ? indexText_dark
-                        : indexTextyellowdark
-                    }
+                    src={indexText_dark}
                     alt="index logo"
                     width={'60px'}
                     className="logo_ind"
@@ -686,16 +680,12 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
           >
-            <a href={`${tokenizedUrls?.privacyUrl}`}>
-              Privacy Policy
-            </a>
+            <a href={`${tokenizedUrls?.privacyUrl}`}>Privacy Policy</a>
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
           >
-            <a href={`${tokenizedUrls?.tandc}`}>
-              Terms Of Use
-            </a>
+            <a href={`${tokenizedUrls?.tandc}`}>Terms Of Use</a>
           </span>
           <span
             className={`${classes.copyrightHover} fit-content border-right`}
@@ -703,9 +693,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
             <a href={`${tokenizedUrls?.legalUrl}`}>Legal</a>
           </span>
           <span className={`${classes.copyrightHover} fit-content`}>
-            <a href={`${tokenizedUrls?.comingSoonUrl}`}>
-              Site Map
-            </a>
+            <a href={`${tokenizedUrls?.comingSoonUrl}`}>Site Map</a>
           </span>
         </div>
       </footer>
