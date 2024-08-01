@@ -12,6 +12,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { makeStyles } from '@mui/styles';
+import { decodeJWT, getAllRefferedDetails } from '../../../services/api';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -148,62 +149,48 @@ export default function EnhancedTable() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('type');
-  const [rows, setRows] = React.useState([
-    {
-      id: 1,
-      type: 'Crypto',
-      name: 'Bitcoin',
-      date: '2023-06-28',
-      rank: 1,
-      commission: 0.02,
-      commission_percentage: 0.5,
-      orderTotal: 1000,
-    },
-    {
-      id: 2,
-      type: 'Crypto',
-      name: 'Ethereum',
-      date: '2023-06-27',
-      rank: 2,
-      commission: 0.03,
-      commission_percentage: 0.7,
-      orderTotal: 2000,
-    },
-    {
-      id: 3,
-      type: 'Stock',
-      name: 'Apple',
-      date: '2023-06-26',
-      rank: 3,
-      commission: 0.01,
-      commission_percentage: 0.3,
-      orderTotal: 1500,
-    },
-    {
-      id: 4,
-      type: 'Crypto',
-      name: 'Ethereum',
-      date: '2023-06-27',
-      rank: 2,
-      commission: 0.03,
-      commission_percentage: 0.7,
-      orderTotal: 2000,
-    },
-    {
-      id: 5,
-      type: 'Stock',
-      name: 'Apple',
-      date: '2023-06-26',
-      rank: 3,
-      commission: 0.01,
-      commission_percentage: 0.3,
-      orderTotal: 1500,
-    },
-    // Add more dummy data as needed
-  ]);
-  const [loading, setLoading] = React.useState(false);
+  const [rows, setRows] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
-  const [dense, setDense] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchReferredUsers() {
+      try {
+        let access_token = String(localStorage.getItem('access_token'));
+        let decoded = decodeJWT(access_token);
+        const response = await getAllRefferedDetails(decoded.email);
+        if (response.data) {
+          const users = response.data.referredUsers.map((user, index) => {
+            const orders = user.orders || [];
+            return {
+              id: index + 1,
+              type: 'User', // Assuming 'User' as the type
+              name: user.email,
+              date:
+                orders.length > 0
+                  ? new Date(orders[0].date).toLocaleDateString()
+                  : 'N/A',
+              rank: 'N/A', // Rank is not provided, setting as 'N/A'
+              commission: orders.length > 0 ? orders[0].commission : 0,
+              commission_percentage:
+                orders.length > 0 ? orders[0].commission_percentage : 0,
+              orderTotal: orders.length > 0 ? orders[0].total : 0,
+            };
+          });
+          setRows(users);
+        } else {
+          setRows([]);
+        }
+      } catch (error) {
+        console.error('Error fetching referred users:', error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchReferredUsers();
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -211,11 +198,9 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const filteredRows = rows;
-
   const visibleRows = React.useMemo(
-    () => stableSort(filteredRows, getComparator(order, orderBy)),
-    [order, orderBy, filteredRows]
+    () => stableSort(rows, getComparator(order, orderBy)),
+    [order, orderBy, rows]
   );
 
   if (loading) {
@@ -232,7 +217,7 @@ export default function EnhancedTable() {
         <Table
           sx={{ minWidth: { xs: '100%', sm: 750 } }} // Use minWidth based on screen size
           aria-labelledby="tableTitle"
-          size={dense ? 'small' : 'medium'}
+          size="medium"
         >
           <EnhancedTableHead
             order={order}
@@ -241,58 +226,66 @@ export default function EnhancedTable() {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows?.map((row, index) => (
-              <TableRow role="checkbox" tabIndex={-1} key={row.id}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  padding="none"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {row.type}
+            {visibleRows.length > 0 ? (
+              visibleRows.map((row, index) => (
+                <TableRow role="checkbox" tabIndex={-1} key={row.id}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    padding="none"
+                    sx={{ borderBottom: 'none !important' }}
+                  >
+                    {row.type}
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{ borderBottom: 'none !important' }}
+                  >
+                    {row.name}
+                  </TableCell>
+                  {!isMobile && (
+                    <>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {row.date}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {row.rank}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {row.commission}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {row.commission_percentage}%
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {row.orderTotal}
+                      </TableCell>
+                    </>
+                  )}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  No referral users found
                 </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {row.name}
-                </TableCell>
-                {!isMobile && (
-                  <>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {row.date}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {row.rank}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {row.commission}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {row.commission_percentage}%
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {row.orderTotal}
-                    </TableCell>
-                  </>
-                )}
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -301,6 +294,6 @@ export default function EnhancedTable() {
 }
 
 EnhancedTable.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  hideAssets: PropTypes.bool.isRequired,
+  searchQuery: PropTypes.string,
+  hideAssets: PropTypes.bool,
 };

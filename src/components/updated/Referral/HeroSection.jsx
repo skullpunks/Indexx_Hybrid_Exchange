@@ -188,7 +188,7 @@ const HeroSection = () => {
           <div className={`${classes.rightDiv}`}>
             <div className={classes.section}>
               <span className={classes.leftText}>You Receive</span>
-              <span className={classes.amount}>20%</span>
+              <span className={classes.amount}>5%</span>
             </div>
             <div className={classes.section}>
               <span className={classes.leftText}>Friends Received</span>
@@ -222,7 +222,7 @@ const HeroSection = () => {
             <span className={classes.rightText}>
               <span className={classes.rightText} style={{ color: '#EAECEF' }}>
                 <div style={{ display: 'flex', gap: '4px' }}>
-                  <span>https://indexx.ai//auth/signup-email?referral={userData?.referralCode || 'Loading...'}</span>
+                  <span>https://indexx.ai/auth/signup-email?referral={userData?.referralCode || 'Loading...'}</span>
                   <div
                     className={classes.copyButton}
                     onClick={() => copyToClipboard(`https://indexx.ai/auth/signup-email?referral=${userData?.referralCode || ''}`)}
