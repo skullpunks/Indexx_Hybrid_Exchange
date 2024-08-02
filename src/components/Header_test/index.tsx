@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import greetingCard from '../../assets/header-icons/sec_header_greeting.svg';
-import logo from '../../assets/header-icons/indexx_logo.svg';
+// import logo from '../../assets/header-icons/indexx_logo.svg';
+import logo from '../../assets/header-icons/new indexx.ai logo.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
 

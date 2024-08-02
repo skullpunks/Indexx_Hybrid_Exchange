@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Redeem from './Redeem';
 
-import IconicHeader from '../shared/IconicHeader';
+import IconicHeader from '../shared/RedeemIconicHeader';
 
 const RedeemPage = () => {
-  const [selectedTab, setSelectedTab] = useState('Send Gift');
+  const [selectedTab, setSelectedTab] = useState('Redeem');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
