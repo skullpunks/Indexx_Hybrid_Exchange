@@ -95,14 +95,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardCreatedPopup = ({
-  onClose,
-  selectedImg,
-  giftCardData,
-  selectedImgUrl,
-}) => {
-  const theme = useTheme();
 
+  
+  const CardCreatedPopup = ({ onClose, selectedImg, giftCardData, selectedImgUrl, email }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
   return (
@@ -152,9 +148,7 @@ const CardCreatedPopup = ({
             <GenericButton
               text="Send Now"
               onClick={() =>
-                navigate('/redeem/send-card', {
-                  state: { selectedImg, giftCardData, selectedImgUrl },
-                })
+                navigate('/redeem/send-card', { state: { selectedImg, giftCardData, selectedImgUrl, email } })
               }
             />
           </div>

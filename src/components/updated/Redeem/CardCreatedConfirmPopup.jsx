@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
@@ -6,6 +6,7 @@ import gift1 from '../../../assets/redeem/gift1.svg';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
+import { createGiftcard } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -98,36 +99,48 @@ const useStyles = makeStyles((theme) => ({
 const CardCreatedConfirmPopup = ({
   onClose,
   selectedImg,
-  giftCardData,
   selectedImgUrl,
+  email,
+  amount,
+  currency,
+  setGiftCardData,
+  setShowPopup,
+  setShowConfirmPopup,
+  isLoading,
+  currentUserEmail,
+  cardType
 }) => {
   const theme = useTheme();
 
   const navigate = useNavigate();
   const classes = useStyles();
-  // const handleCreateGiftcard = async () => {
-  //   isLoading(true);
-  //   if (!amount || !email || !currency) {
-  //     setError('All fields are required.');
-  //     return;
-  //   }
-  //   setError(''); // Clear any previous error messages
-  //   const result = await createGiftcard(
-  //     Number(amount),
-  //     currentUserEmail,
-  //     currency,
-  //     'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
-  //   );
-  //   console.log(result);
-  //   if (result && result.status === 200) {
-  //     setGiftCardData(result.data.giftCardDetails); // Store the API response data
-  //     setShowPopup(true);
-  //   } else {
-  //     console.error('Failed to create gift card', result);
-  //     setError('Failed to create gift card');
-  //   }
-  //   isLoading(false);
-  // };
+  const [error, setError] = useState('');
+
+  const handleCreateGiftcard = async () => {
+    setShowConfirmPopup(false);
+    isLoading(true);
+    if (!amount || !email || !currency) {
+      setError('All fields are required.');
+      return;
+    }
+    setError(''); // Clear any previous error messages
+    const result = await createGiftcard(
+      Number(amount),
+      currentUserEmail,
+      currency,
+      selectedImg,
+      cardType
+    );
+    console.log(result);
+    if (result && result.status === 200) {
+      setGiftCardData(result.data.giftCardDetails); // Store the API response data
+      setShowPopup(true);
+    } else {
+      console.error('Failed to create gift card', result);
+      setError('Failed to create gift card');
+    }
+    isLoading(false);
+  };
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -166,13 +179,16 @@ const CardCreatedConfirmPopup = ({
           >
             <p>Quantity: {1}</p>
             <p>
-              Amount: {giftCardData.amount} {giftCardData?.type}
+              Amount: {amount} {currency}
             </p>
-            <p>Gift Card Number: {giftCardData.voucher}</p>
+            {/* <p>Gift Card Number: {giftCardData.voucher}</p> */}
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton text="Create" onClick={() => {}} />
+            <GenericButton
+              text="Create"
+              onClick={() => handleCreateGiftcard()}
+            />
             <GenericButton text="Cancel" onClick={onClose} />
           </div>
         </div>

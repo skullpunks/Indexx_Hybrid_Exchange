@@ -413,45 +413,27 @@ const CreateCards = ({ onSendCard }) => {
       );
     } else {
       console.log('event', event.target.value);
+      const userWallet = allWallets.find(
+        (wallet) => wallet.coinSymbol === event.target.value
+      );
+      console.log('userWallet', userWallet);
+      setSingleWallet(userWallet);
     }
   };
   const navigate = useNavigate();
   const theme = useTheme();
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [email, setEmail] = useState('');
   const [currentUserEmail, setCurrentUserEmail] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [giftCardData, setGiftCardData] = useState(null);
   const [loading, isLoading] = useState(false);
   const [error, setError] = useState('');
-  const [currency, setCurrency] = useState(initialTokens[0]?.value);
+  const [currency, setCurrency] = useState(initialTokens[0]?.title);
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  // const handleCreateGiftcard = async () => {
-  //   isLoading(true);
-  //   if (!amount || !email || !currency) {
-  //     setError('All fields are required.');
-  //     return;
-  //   }
-  //   setError(''); // Clear any previous error messages
-  //   const result = await createGiftcard(
-  //     Number(amount),
-  //     currentUserEmail,
-  //     currency,
-  //     'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
-  //   );
-  //   console.log(result);
-  //   if (result && result.status === 200) {
-  //     setGiftCardData(result.data.giftCardDetails); // Store the API response data
-  //     setShowPopup(true);
-  //   } else {
-  //     console.error('Failed to create gift card', result);
-  //     setError('Failed to create gift card');
-  //   }
-  //   isLoading(false);
-  // };
 
   const closePopup = () => {
     setShowPopup(false);
@@ -467,20 +449,31 @@ const CreateCards = ({ onSendCard }) => {
     setSelectedImg(data.img);
     setSelectedImgUrl(data.imgUrl);
   };
-  console.log(selectedImg, 'selectedImg');
 
   // Fetch all wallets once and store them in state
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    const decodedToken = decodeJWT(String(token));
-    setCurrentUserEmail(decodedToken?.email);
-    getUserWallets(decodedToken?.email).then((res) => {
-      setAllWallets(res.data);
-    });
+    async function fetchWallet() {
+      try {
+        const token = localStorage.getItem('access_token');
+        const decodedToken = decodeJWT(String(token));
+        setCurrentUserEmail(decodedToken?.email);
+        console.log('decodedToken', decodedToken);
+        let res = await getUserWallets(decodedToken?.email);
+        console.log(
+          'Res',
+          res
+        );
+        setAllWallets(res.data);
+      } catch (err) {
+        console.log('err', err);
+      }
+    }
+    fetchWallet();
   }, []);
 
   // Update singleWallet when currency changes, using the allWallets stored in state
   useEffect(() => {
+    console.log('allWallets', allWallets);
     const userWallet = allWallets.find(
       (wallet) => wallet.coinSymbol === currency
     );
@@ -497,6 +490,7 @@ const CreateCards = ({ onSendCard }) => {
   const closeConfirmPopup = () => {
     setShowConfirmPopup(false);
   };
+
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -605,7 +599,6 @@ const CreateCards = ({ onSendCard }) => {
                   : 'Send a crypto greeting card for any occasion'}
               </p>
             </div>
-            {/* <div className={classes.cardHeaderRight}>View more Gift Cards</div> */}
           </div>
 
           <div className={classes.cardGrid}>
@@ -628,6 +621,7 @@ const CreateCards = ({ onSendCard }) => {
           giftCardData={giftCardData}
           selectedImg={selectedImg}
           selectedImgUrl={selectedImgUrl}
+          email={email}
         />
       )}
       {showConfirmPopup && (
@@ -636,6 +630,15 @@ const CreateCards = ({ onSendCard }) => {
           giftCardData={giftCardData}
           selectedImg={selectedImg}
           selectedImgUrl={selectedImgUrl}
+          amount={amount}
+          email={email}
+          currency={currency}
+          setGiftCardData={setGiftCardData}
+          setShowConfirmPopup={setShowConfirmPopup}
+          setShowPopup={setShowPopup}
+          isLoading={isLoading}
+          currentUserEmail={currentUserEmail}
+          cardType={value}
         />
       )}
     </div>

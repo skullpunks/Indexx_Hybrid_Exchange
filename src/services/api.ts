@@ -38,7 +38,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseXnftURL = 'https://xnft.indexx.ai';
   baseMktplaceURL = 'https://xnftmarketplace.indexx.ai';
   baseAcademyUrl = 'https://academy.indexx.ai';
-  // baseAPIURL = 'http://localhost:5000';
+  //baseAPIURL = 'http://localhost:5000';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -267,7 +267,8 @@ export const createGiftcard = async (
   amount: number,
   email: string,
   currency: string,
-  giftCardUrl: string
+  giftCardUrl: string,
+  cardType: string
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/createGiftcard', {
@@ -275,6 +276,7 @@ export const createGiftcard = async (
       amount,
       currency,
       giftCardUrl,
+      cardType
     });
     return result.data;
   } catch (e: any) {
@@ -380,6 +382,17 @@ export const getCaptainBeeByEmail = async (email: string) => {
   try {
     const result = await API.get(
       `/api/v1/affiliate/getAllaffiliateUser/${email}`
+    );
+    return result.data;
+  } catch (e: any) {
+    return e.response.data;
+  }
+};
+
+export const getAllGiftCards = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getAllGiftCard/${email}`
     );
     return result.data;
   } catch (e: any) {
@@ -706,6 +719,18 @@ export const getUserWallets = async (email: string) => {
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (getUserWallets)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getAllGiftCard = async (email: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/getAllGiftCard/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getAllGiftCard)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;

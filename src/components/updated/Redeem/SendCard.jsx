@@ -1,33 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
-import redeemImg from '../../../assets/redeem/redeemimg.svg';
-
-import gift1 from '../../../assets/redeem/gift1.svg';
-import gift2 from '../../../assets/redeem/gift2.svg';
-import gift3 from '../../../assets/redeem/gift3.svg';
-import gift4 from '../../../assets/redeem/gift4.svg';
-import gift5 from '../../../assets/redeem/gift5.svg';
-import gift6 from '../../../assets/redeem/gift6.svg';
-import gift7 from '../../../assets/redeem/gift7.svg';
-import gift8 from '../../../assets/redeem/gift8.svg';
-
-import greeting1 from '../../../assets/redeem/greeting1.svg';
-import greeting2 from '../../../assets/redeem/greeting2.svg';
-import greeting3 from '../../../assets/redeem/greeting3.svg';
-import greeting4 from '../../../assets/redeem/greeting4.svg';
-import greeting5 from '../../../assets/redeem/greeting5.svg';
-import greeting6 from '../../../assets/redeem/greeting6.svg';
-import greeting7 from '../../../assets/redeem/greeting7.svg';
-import greeting8 from '../../../assets/redeem/greeting8.svg';
 import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
-import CardCreatedPopup from './CardCreatedPopup';
 import IconicHeader from '../shared/RedeemIconicHeader';
-import { decodeJWT, sendGiftcard } from '../../../services/api';
+import {
+  decodeJWT,
+  getAllGiftCards,
+  sendGiftcard,
+} from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -192,23 +175,40 @@ const SendCard = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { giftCardData, selectedImg, selectedImgUrl } = location.state || {}; // Extracting giftCardData from location state
+  const { giftCardData, selectedImg, selectedImgUrl, email } =
+    location.state || {}; // Extracting giftCardData from location state
   console.log(location.state);
-  const [recipientEmail, setRecipientEmail] = useState('');
+  const [recipientEmail, setRecipientEmail] = useState(email);
   const [senderName, setSenderName] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, isLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [giftCards, setGiftCards] = useState([]);
+  const [selectedGiftCard, setSelectedGiftCard] = useState(
+    giftCardData?.voucher
+  );
+
+  useEffect(() => {
+    async function fetchGiftCard() {
+      const token = localStorage.getItem('access_token');
+      const decodedToken = decodeJWT(String(token));
+      let res = await getAllGiftCards(decodedToken?.email);
+      setGiftCards(res.data);
+      console.log(res);
+    }
+    fetchGiftCard();
+  }, []);
 
   const handleSendGiftcard = async () => {
-    isLoading(true);
+    setLoading(true);
     if (!recipientEmail || !senderName) {
       alert('Recipient email and sender name are required.');
+      setLoading(false);
       return;
     }
 
     const result = await sendGiftcard(
-      giftCardData.voucher,
-      giftCardData.createdBy,
+      selectedGiftCard,
+      giftCards.find((card) => card.voucher === selectedGiftCard)?.createdBy,
       recipientEmail,
       message,
       senderName,
@@ -216,36 +216,35 @@ const SendCard = () => {
     );
     if (result.status === 200) {
       navigate('/redeem/send-card-successful', {
-        state: { selectedImg, giftCardData },
+        state: {
+          selectedImg: selectedImg
+            ? selectedImg
+            : giftCards?.find((card) => card.voucher === selectedGiftCard)
+                ?.giftCardImgUrl,
+          giftCardData: giftCardData
+            ? giftCardData
+            : giftCards?.find((card) => card.voucher === selectedGiftCard),
+        },
       });
     } else {
       console.error('Failed to send gift/greeting card:', result);
       alert('Failed to send gift/greeting card.');
     }
-    isLoading(false);
+    setLoading(false);
   };
+
   const [selectedTab, setSelectedTab] = useState('Send');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
 
   const theme = useTheme();
-  const giftArr = [gift1, gift2, gift3, gift4, gift5, gift6, gift7, gift8];
-  const greetingArr = [
-    greeting1,
-    greeting2,
-    greeting3,
-    greeting4,
-    greeting5,
-    greeting6,
-    greeting7,
-    greeting8,
-  ];
 
   const redirect = async () => {
     navigate('/redeem');
   };
 
+  console.log('selectedGiftCard', selectedGiftCard);
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -263,27 +262,55 @@ const SendCard = () => {
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
-        <div style={{ flex: '30%' }}>
-          <img src={selectedImg} alt="" style={{ width: '100%' }} />
-        </div>
+        {selectedGiftCard && (
+          <div style={{ flex: '30%' }}>
+            <img
+              src={
+                giftCards?.find((card) => card.voucher === selectedGiftCard)
+                  ?.giftCardImgUrl || selectedImg
+              }
+              alt=""
+              style={{ width: '100%' }}
+            />
+          </div>
+        )}
         <div className={classes.redeemLeft}>
           <div className={classes.selectTypeContainer}>
             <label>Select previously created gift cards here:</label>
             <CustomSelectBox
-              items={[
-                { name: 'Gift Card', value: 'Gift Card' },
-                { name: 'Greeting Card', value: 'Greeting Card' },
-              ]}
-              // value={value}
-              // onChange={handleChange}
+              items={giftCards}
+              type="Gift Card"
+              value={selectedGiftCard}
+              onChange={(e) => setSelectedGiftCard(e.target.value)}
               hasborder
+              isGiftCard
             />
           </div>
-          <div className={classes.giftCardDetails}>
-            <p>Type: Gift Card</p>
-            <p>Amount: 100</p>
-            <p>Token: INEX</p>
-          </div>
+          {selectedGiftCard && (
+            <div className={classes.giftCardDetails}>
+              <p>
+                Type:{' '}
+                {
+                  giftCards?.find((card) => card.voucher === selectedGiftCard)
+                    ?.cardType
+                }
+              </p>
+              <p>
+                Amount:{' '}
+                {
+                  giftCards?.find((card) => card.voucher === selectedGiftCard)
+                    ?.amount
+                }
+              </p>
+              <p>
+                Token:{' '}
+                {
+                  giftCards?.find((card) => card.voucher === selectedGiftCard)
+                    ?.type
+                }
+              </p>
+            </div>
+          )}
           <div className={classes.enterAmountContainer}>
             <InputField
               label={'Recipient’s Email'}
@@ -324,28 +351,6 @@ const SendCard = () => {
           </div>
         </div>
       </div>
-      {/* Gift card listing */}
-      {/* <div>
-        <div className={classes.cardListingRoot}>
-          <div className={classes.cardListHeader}>
-            <div className={classes.cardHeaderLeft}>
-              <h3>Gift Cards</h3>
-              <p>Send a crypto gift card for any occasion</p>
-            </div>
-            <div className={classes.cardHeaderRight}>View more Gift Cards</div>
-          </div>
-
-          <div className={classes.cardGrid}>
-            {giftArr.map((curr, i) => (
-              <div>
-                <img src={curr} alt="img" style={{ width: '100%' }} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
-
-      {/* <CardCreatedPopup /> */}
     </div>
   );
 };

@@ -13,7 +13,8 @@ export default function CustomSelectBox({
   value,
   isCurrency,
   hasborder,
-  onCurrencyChange
+  onCurrencyChange,
+  isGiftCard,
 }) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
@@ -79,6 +80,7 @@ export default function CustomSelectBox({
 
     setSelectedCurrency(selected);
     if (type === 'Coin') onCurrencyChange(value);
+    else if (type === 'Gift Card') console.log('value', value);
   };
 
   return (
@@ -86,7 +88,10 @@ export default function CustomSelectBox({
       <Select
         displayEmpty
         value={value}
-        onChange={(e) => { handleChange(e); onChange(e); }}
+        onChange={(e) => {
+          handleChange(e);
+          onChange(e);
+        }}
         sx={{
           width: '100%',
           border: hasborder && `1px solid ${theme.palette.divider} !important`,
@@ -142,14 +147,28 @@ export default function CustomSelectBox({
         <MenuItem disabled value="">
           <em>{type}</em>
         </MenuItem>
-        {!isCurrency
+        {isGiftCard
+          ? items?.map((card) => (
+              <MenuItem
+                key={card.voucher}
+                value={card.voucher}
+                disabled={card.isUsed}
+              >
+                {`${card.voucher} - ${card.amount} ${card.type}`}
+              </MenuItem>
+            ))
+          : !isCurrency
           ? items?.map(({ name, value, image }) => (
               <MenuItem key={name} value={value}>
                 {type === 'Coin' && (
                   <img
                     src={getImage(image)}
                     alt={name}
-                    style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      marginRight: '10px',
+                    }}
                   />
                 )}
                 {name}
@@ -161,7 +180,11 @@ export default function CustomSelectBox({
                   <img
                     src={getImage(image)}
                     alt={title}
-                    style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      marginRight: '10px',
+                    }}
                   />
                 )}
                 {title}

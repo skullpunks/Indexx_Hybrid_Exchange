@@ -135,7 +135,7 @@ const CryptoStats = ({ tokenType, onTokenSelect }) => {
       if (data.status === 200) {
         let combinedData;
         if (tokenType === 'Tokens') {
-          const importantTokens = ['INEX', 'WIBS', 'BTC', 'ETH'];
+          const importantTokens = ['INEX', 'WIBS', 'DaCrazy', 'BTC', 'ETH'];
           const filteredTokens = importantTokens
             .map((symbol) =>
               data.data.find((crypto) => crypto.Symbol === symbol)
@@ -144,8 +144,8 @@ const CryptoStats = ({ tokenType, onTokenSelect }) => {
           const otherTokens = data.data.filter(
             (crypto) => !importantTokens.includes(crypto.Symbol)
           );
-          const randomOtherToken = sampleSize(otherTokens, 1);
-          combinedData = [...filteredTokens, ...randomOtherToken];
+          //const randomOtherToken = sampleSize(otherTokens, 1);
+          combinedData = [...filteredTokens];
         } else {
           combinedData = sampleSize(data.data, 5);
         }
