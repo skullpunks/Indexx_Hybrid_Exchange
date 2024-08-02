@@ -130,8 +130,7 @@ const BSWalletTable = () => {
         multiple: 4,
       },
       render: (_, record) => {
-        // Check if the price is exactly 0.00021
-        if (record.coinPrice === 0.00021) {
+        if (record.coinSymbol === "WIBS" || record.coinBalance === "DaCrazy") {
           return record.coinPrice.toFixed(5); // Fix to 5 decimal places
         } else {
           return record.coinPrice.toFixed(2); // Fix to 2 decimal places for all other values

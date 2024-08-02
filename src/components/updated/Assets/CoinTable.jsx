@@ -154,7 +154,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const calculateTodayPNL = (item) => {
-    const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS'];
+    const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS', 'DaCrazy'];
     if (fixedTokens.includes(item.coinSymbol)) {
       return {
         value: '0.00',
@@ -376,7 +376,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                       align="right"
                       sx={{ borderBottom: 'none !important' }}
                     >
-                      {row.coin_price === 0.00021
+                      {(row.coin === "WIBS" || row.coin === "DaCrazy")
                         ? row.coin_price.toFixed(5)
                         : row.coin_price.toFixed(2)}
                     </TableCell>

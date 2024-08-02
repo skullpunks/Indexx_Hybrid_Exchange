@@ -173,11 +173,12 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             coin: item.coinSymbol,
             amount: item.coinBalance,
             coin_price: item?.coinPrice,
-            todayPNL: item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
+            todayPNL:
+              item.coinBalance > 0 ? (Math.random() * 10).toFixed(2) : 0,
             coinNetwork: item.coinNetwork,
             notes: item?.notes || null, // Adding notes field
           }));
-          console.log("formattedData", formattedData)
+          console.log('formattedData', formattedData);
           setRows(formattedData);
         }
       } catch (error) {
@@ -278,7 +279,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                       align="right"
                       sx={{ borderBottom: 'none !important' }}
                     >
-                      {row.coin_price === 0.00021
+                      {row.coin === 'WIBS' || row.coin === 'DaCrazy'
                         ? row.coin_price.toFixed(5)
                         : row.coin_price.toFixed(2)}
                     </TableCell>
