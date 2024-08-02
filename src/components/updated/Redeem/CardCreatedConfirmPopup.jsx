@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardCreatedPopup = ({
+const CardCreatedConfirmPopup = ({
   onClose,
   selectedImg,
   giftCardData,
@@ -105,6 +105,29 @@ const CardCreatedPopup = ({
 
   const navigate = useNavigate();
   const classes = useStyles();
+  // const handleCreateGiftcard = async () => {
+  //   isLoading(true);
+  //   if (!amount || !email || !currency) {
+  //     setError('All fields are required.');
+  //     return;
+  //   }
+  //   setError(''); // Clear any previous error messages
+  //   const result = await createGiftcard(
+  //     Number(amount),
+  //     currentUserEmail,
+  //     currency,
+  //     'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
+  //   );
+  //   console.log(result);
+  //   if (result && result.status === 200) {
+  //     setGiftCardData(result.data.giftCardDetails); // Store the API response data
+  //     setShowPopup(true);
+  //   } else {
+  //     console.error('Failed to create gift card', result);
+  //     setError('Failed to create gift card');
+  //   }
+  //   isLoading(false);
+  // };
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -132,7 +155,7 @@ const CardCreatedPopup = ({
             </div>
           </div>
           <img src={greenCheck} height="100px" />
-          <h3>Created Successfully</h3>
+          <h3>Confirm Details</h3>
           <img src={selectedImg} width={'100%'} />
           <div
             style={{
@@ -149,14 +172,8 @@ const CardCreatedPopup = ({
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton
-              text="Send Now"
-              onClick={() =>
-                navigate('/redeem/send-card', {
-                  state: { selectedImg, giftCardData, selectedImgUrl },
-                })
-              }
-            />
+            <GenericButton text="Create" onClick={() => {}} />
+            <GenericButton text="Cancel" onClick={onClose} />
           </div>
         </div>
       </div>
@@ -164,4 +181,4 @@ const CardCreatedPopup = ({
   );
 };
 
-export default CardCreatedPopup;
+export default CardCreatedConfirmPopup;

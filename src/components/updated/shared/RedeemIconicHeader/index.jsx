@@ -82,12 +82,6 @@ export default function IconicHeader({ selectedTab, onChange }) {
   if (isLoggedIn) {
     tabsData.push(
       {
-        label: 'Redeem',
-        light: radeemLightMode,
-        dark: radeemDarkMode,
-        path: '/redeem',
-      },
-      {
         label: 'Create',
         light: createLightMode,
         dark: createDarkMode,
@@ -99,6 +93,12 @@ export default function IconicHeader({ selectedTab, onChange }) {
         light: sendLightMode,
         dark: sendDarkMode,
         path: '/redeem/send-card',
+      },
+      {
+        label: 'Redeem',
+        light: radeemLightMode,
+        dark: radeemDarkMode,
+        path: '/redeem',
       }
     );
   }

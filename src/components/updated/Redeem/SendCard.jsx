@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   sendCryptoRoot: {
-    maxWidth: '500px',
+    maxWidth: '700px',
     width: '100%',
 
     '& h3': {
       color: theme.palette.text.primary,
-      fontSize: '44px',
+      fontSize: '40px',
       fontWeight: '500',
     },
     '& p': {
@@ -171,6 +171,21 @@ const useStyles = makeStyles((theme) => ({
   quantityContainer: {
     marginBottom: '20px',
   },
+  selectTypeContainer: {
+    marginBottom: '20px',
+    '& label': {
+      fontSize: '11px',
+      marginBottom: '10px',
+    },
+  },
+  giftCardDetails: {
+    margin: '20px 0px',
+    '& p': {
+      fontSize: '14px',
+      color: theme.palette.text.primary,
+      margin: '10px 0px',
+    },
+  },
 }));
 
 const SendCard = () => {
@@ -238,9 +253,13 @@ const SendCard = () => {
 
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Send</h3>
-        <p>Send Crypto Gift Card and Greeting Cards to anyone in the world</p>
-        <Button onClick={redirect}>Redeem to Crypto</Button>
+        <h3>Send Gift Card or Greeting Cards</h3>
+        <p>
+          Struggling to find a unique gift? Our crypto gift cards are the
+          perfect solution. Redeemable on our exchange, they are not just a
+          present, but an investment for the future. The perfect gift for the
+          modern age!
+        </p>
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
@@ -248,11 +267,22 @@ const SendCard = () => {
           <img src={selectedImg} alt="" style={{ width: '100%' }} />
         </div>
         <div className={classes.redeemLeft}>
-          <div>
-            <GenericButton
-              text={'Send Via Email'}
-              styles={{ width: '40%', marginBottom: '20px' }}
+          <div className={classes.selectTypeContainer}>
+            <label>Select previously created gift cards here:</label>
+            <CustomSelectBox
+              items={[
+                { name: 'Gift Card', value: 'Gift Card' },
+                { name: 'Greeting Card', value: 'Greeting Card' },
+              ]}
+              // value={value}
+              // onChange={handleChange}
+              hasborder
             />
+          </div>
+          <div className={classes.giftCardDetails}>
+            <p>Type: Gift Card</p>
+            <p>Amount: 100</p>
+            <p>Token: INEX</p>
           </div>
           <div className={classes.enterAmountContainer}>
             <InputField

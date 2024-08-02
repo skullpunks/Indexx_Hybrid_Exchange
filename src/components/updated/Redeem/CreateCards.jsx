@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.svg';
+import defaultImage from '../../../assets/redeem/defaultImg.png';
 import gift1 from '../../../assets/redeem/gift1.svg';
 import gift2 from '../../../assets/redeem/gift2.svg';
 import gift3 from '../../../assets/redeem/gift3.svg';
@@ -51,6 +52,7 @@ import {
   getUserWallets,
 } from '../../../services/api';
 import initialTokens from '../../../utils/Tokens.json';
+import CardCreatedConfirmPopup from './CardCreatedConfirmPopup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,11 +61,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   sendCryptoRoot: {
-    maxWidth: '500px',
+    maxWidth: '700px',
     width: '100%',
     '& h3': {
       color: theme.palette.text.primary,
-      fontSize: '44px',
+      fontSize: '38px',
       fontWeight: '500',
     },
     '& p': {
@@ -93,9 +95,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   redeemLeft: {
-    padding: '20px',
     borderRadius: '4px',
     flex: '50%',
+    marginTop: '-5px',
   },
   inputFieldRoot: {
     display: 'flex',
@@ -388,7 +390,7 @@ const CreateCards = ({ onSendCard }) => {
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
     },
   ];
-  const [value, setValue] = useState(type);
+  const [value, setValue] = useState(type ?? 'Gift Card');
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
     value === 'Gift Card' ? giftArr : greetingArr
@@ -396,7 +398,7 @@ const CreateCards = ({ onSendCard }) => {
   const [selectedImgUrl, setSelectedImgUrl] = useState(
     value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
   );
-  const [selectedImg, setSelectedImg] = useState(defaultImg);
+  const [selectedImg, setSelectedImg] = useState(defaultImg ?? defaultImage);
   const handleChange = (event) => {
     if (
       event.target.value === 'Gift Card' ||
@@ -426,30 +428,30 @@ const CreateCards = ({ onSendCard }) => {
   const [currency, setCurrency] = useState(initialTokens[0]?.value);
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
-
-  const handleCreateGiftcard = async () => {
-    isLoading(true);
-    if (!amount || !email || !currency) {
-      setError('All fields are required.');
-      return;
-    }
-    setError(''); // Clear any previous error messages
-    const result = await createGiftcard(
-      Number(amount),
-      currentUserEmail,
-      currency,
-      'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
-    );
-    console.log(result);
-    if (result && result.status === 200) {
-      setGiftCardData(result.data.giftCardDetails); // Store the API response data
-      setShowPopup(true);
-    } else {
-      console.error('Failed to create gift card', result);
-      setError('Failed to create gift card');
-    }
-    isLoading(false);
-  };
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  // const handleCreateGiftcard = async () => {
+  //   isLoading(true);
+  //   if (!amount || !email || !currency) {
+  //     setError('All fields are required.');
+  //     return;
+  //   }
+  //   setError(''); // Clear any previous error messages
+  //   const result = await createGiftcard(
+  //     Number(amount),
+  //     currentUserEmail,
+  //     currency,
+  //     'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/Gift+cards/100-01.png'
+  //   );
+  //   console.log(result);
+  //   if (result && result.status === 200) {
+  //     setGiftCardData(result.data.giftCardDetails); // Store the API response data
+  //     setShowPopup(true);
+  //   } else {
+  //     console.error('Failed to create gift card', result);
+  //     setError('Failed to create gift card');
+  //   }
+  //   isLoading(false);
+  // };
 
   const closePopup = () => {
     setShowPopup(false);
@@ -492,15 +494,22 @@ const CreateCards = ({ onSendCard }) => {
     navigate('/redeem');
   };
 
+  const closeConfirmPopup = () => {
+    setShowConfirmPopup(false);
+  };
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Create</h3>
-        <p>Send Crypto Gift Card and Greeting Cards to anyone in the world</p>
-        <Button onClick={redirect}>Redeem to Crypto</Button>
+        <h3>Create Gift Card or Greeting Cards</h3>
+        <p>
+          Struggling to find a unique gift? Our crypto gift cards are the
+          perfect solution. Redeemable on our exchange, they are not just a
+          present, but an investment for the future. The perfect gift for the
+          modern age!
+        </p>
       </div>
       {/* Redeem form */}
       <div className={classes.redeemRoot}>
@@ -574,7 +583,7 @@ const CreateCards = ({ onSendCard }) => {
               text={'Create'}
               loading={loading}
               styles={{ flex: 1 }}
-              onClick={handleCreateGiftcard}
+              onClick={() => setShowConfirmPopup(true)}
               disabled={!isFormValid}
             />
           </div>
@@ -616,6 +625,14 @@ const CreateCards = ({ onSendCard }) => {
       {showPopup && (
         <CardCreatedPopup
           onClose={closePopup}
+          giftCardData={giftCardData}
+          selectedImg={selectedImg}
+          selectedImgUrl={selectedImgUrl}
+        />
+      )}
+      {showConfirmPopup && (
+        <CardCreatedConfirmPopup
+          onClose={closeConfirmPopup}
           giftCardData={giftCardData}
           selectedImg={selectedImg}
           selectedImgUrl={selectedImgUrl}

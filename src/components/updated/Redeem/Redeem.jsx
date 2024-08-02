@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   sendCryptoRoot: {
     maxWidth: '500px',
     width: '100%',
-
+    marginBottom: '-40px',
     '& h3': {
       color: theme.palette.text.primary,
       fontSize: '44px',
