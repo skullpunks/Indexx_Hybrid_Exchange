@@ -502,7 +502,7 @@ const CreateCards = ({ onSendCard }) => {
     fetchPrice();
   }, [currency, allWallets]);
 
-  const isFormValid = amount && email && currency;
+  const isFormValid = amount && currency;
 
   const redirect = async () => {
     navigate('/redeem');
