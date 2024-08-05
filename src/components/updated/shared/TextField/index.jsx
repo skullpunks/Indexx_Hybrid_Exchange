@@ -4,9 +4,8 @@ import InputBase from '@mui/material/InputBase';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { OutlinedInputProps } from '@mui/material/OutlinedInput';
-import { makeStyles } from '@mui/styles';
 import FormHelperText from '@mui/material/FormHelperText';
+import { makeStyles } from '@mui/styles';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -85,6 +84,7 @@ const InputField = ({
   helperText,
   error,
   secondaryLabel,
+  rows,
   ...otherProps
 }) => {
   const classes = useStyles();
@@ -96,7 +96,7 @@ const InputField = ({
       </InputLabel>
 
       <BootstrapInput
-        type={type}
+        type={type === 'textarea' ? 'text' : type}
         defaultValue={defaultValue}
         id={id}
         startAdornment={startAdornment}
@@ -104,6 +104,8 @@ const InputField = ({
         className={className}
         style={style}
         error={error}
+        multiline={type === 'textarea'}
+        rows={type === 'textarea' ? rows : undefined}
         {...otherProps}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

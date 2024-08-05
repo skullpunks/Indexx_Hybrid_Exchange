@@ -110,10 +110,10 @@ export default function IconicHeader({ selectedTab, onChange }) {
         path: '/indexx-exchange/buy-sell/staking',
       },
       {
-        label: 'Send Gift',
+        label: 'Gifts',
         light: giftDark,
         dark: giftLight,
-        path: '/redeem',
+        path: '/redeem/create-card',
       },
 
       {

@@ -5,14 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import InputField from '../shared/TextField';
 import redeemImg from '../../../assets/redeem/redeemimg.svg';
 import defaultImage from '../../../assets/redeem/defaultImg.png';
-import gift1 from '../../../assets/redeem/gift1.svg';
-import gift2 from '../../../assets/redeem/gift2.svg';
-import gift3 from '../../../assets/redeem/gift3.svg';
-import gift4 from '../../../assets/redeem/gift4.svg';
-import gift5 from '../../../assets/redeem/gift5.svg';
-import gift6 from '../../../assets/redeem/gift6.svg';
-import gift7 from '../../../assets/redeem/gift7.svg';
-import gift8 from '../../../assets/redeem/gift8.svg';
+import gift1 from '../../../assets/redeem/gift1.png';
+import gift2 from '../../../assets/redeem/gift2.png';
+import gift3 from '../../../assets/redeem/gift3.png';
+import gift4 from '../../../assets/redeem/gift4.png';
+import gift5 from '../../../assets/redeem/gift5.png';
+import gift6 from '../../../assets/redeem/gift6.png';
+import gift7 from '../../../assets/redeem/gift7.png';
+import gift8 from '../../../assets/redeem/gift8.png';
 
 import greeting1 from '../../../assets/redeem/greeting1.png';
 import greeting2 from '../../../assets/redeem/greeting2.png';
@@ -399,7 +399,7 @@ const CreateCards = ({ onSendCard }) => {
   const [selectedImgUrl, setSelectedImgUrl] = useState(
     value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
   );
-  const [selectedImg, setSelectedImg] = useState(defaultImg ?? defaultImage);
+  const [selectedImg, setSelectedImg] = useState(defaultImg ?? selectedImgUrl);
   const handleChange = (event) => {
     if (
       event.target.value === 'Gift Card' ||
@@ -502,7 +502,7 @@ const CreateCards = ({ onSendCard }) => {
     fetchPrice();
   }, [currency, allWallets]);
 
-  const isFormValid = amount && email && currency;
+  const isFormValid = amount && currency;
 
   const redirect = async () => {
     navigate('/redeem');
@@ -581,19 +581,6 @@ const CreateCards = ({ onSendCard }) => {
             </div>
           )}
           <br />
-          {error && <div className={classes.errorMessage}>{error}</div>}
-          {balanceError && (
-            <div className={classes.errorMessage}>{balanceError}</div>
-          )}
-          <br />
-          <div className={classes.quantityContainer}>
-            <InputField
-              label={'Recipient Email'}
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
 
           <div className={classes.btnContainer}>
             <p style={{ flex: '70%' }}>
@@ -624,7 +611,9 @@ const CreateCards = ({ onSendCard }) => {
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
               <h3>
-                {value === 'Gift Card' ? 'Gift Cards' : 'Greeting Cards'}{' '}
+                {value === 'Gift Card'
+                  ? 'Select any gift card design from below:'
+                  : 'Select any greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
