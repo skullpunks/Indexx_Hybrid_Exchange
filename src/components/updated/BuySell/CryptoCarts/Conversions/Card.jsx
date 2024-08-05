@@ -62,7 +62,7 @@ const ConversionCards = ({ heading, type, receiveToken = "INEX" }) => {
     );
   }
 
-  const formatPrice = (value) => (value < 1 ? value.toFixed(6) : value.toFixed(2));
+  const formatPrice = (value) => (value < 1 ? value.toFixed(5) : value.toFixed(2));
 
  const inexTousdt = [
     [`0.5 ${receiveToken}`, `${formatPrice(0.5 * price)} USD`],

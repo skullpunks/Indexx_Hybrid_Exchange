@@ -85,7 +85,7 @@ const PopularConversion = ({ receiveToken = 'INEX' }) => {
         const price = inexPriceInUSD * exchangeRates[currency.code];
         return {
           ...currency,
-          price: price < 1 ? price.toFixed(6) : price.toFixed(2),
+          price: price < 1 ? price.toFixed(5) : price.toFixed(2),
           logo: getCurrencyLogo(currency.code),
         };
       });

@@ -335,7 +335,7 @@ const StakingTop = ({ onStakeSuccess }) => {
     });
   };
   const formatPrice = (value) =>
-    value < 1 ? value.toFixed(6) : value.toFixed(2);
+    value < 1 ? value.toFixed(5) : value.toFixed(2);
 
   const submitStake = async () => {
     try {

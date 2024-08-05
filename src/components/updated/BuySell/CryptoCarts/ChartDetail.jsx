@@ -51,7 +51,7 @@ const formatPrice = (value) => {
     return 'N/A';
   }
   const numberValue = Number(value);
-  return numberValue < 1 ? numberValue.toFixed(6) : numberValue.toFixed(2);
+  return numberValue < 1 ? numberValue.toFixed(5) : numberValue.toFixed(2);
 };
 
 const ChartDetail = ({ chartData }) => {
