@@ -13,6 +13,7 @@ import {
   getPaypalSubscription,
   getUserDetails,
   loginWithToken,
+  getOrderDetails,
 } from '../../../services/api';
 import Popup from './Popup';
 import tokens from '../../../utils/Tokens.json';
@@ -56,13 +57,15 @@ const BuySell = () => {
       setReceiveToken(defaultToken);
     }
   }, [location.pathname]);
-  
 
   useEffect(() => {
     const token = searchParams.get('token');
     const subscriptionId = searchParams.get('subscription_id');
+    const type = searchParams.get('type');
+    const orderId = searchParams.get('orderId');
     const redirectFlag = localStorage.getItem('redirected');
 
+    console.log("type", type)
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
         if (res.status === 200) {
@@ -90,6 +93,25 @@ const BuySell = () => {
             navigate(
               `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`
             );
+          }
+        }
+      });
+    } else if (type === 'tygapay') {
+      let email = localStorage.getItem('email');
+      console.log(email)
+      getOrderDetails(email, String(orderId)).then((res) => {
+        //setOrderData(order.data);
+        if (res.status === 200) {
+          let orderData = res.data;
+          if (
+            orderData?.orderType === 'Buy' ||
+            orderData?.orderType === 'Sell' ||
+            orderData?.orderType === 'Convert'
+          ) {
+            setPopupMessage(
+              `${orderData?.orderType} Order processed successfully`
+            );
+            setIsModalOpen(true);
           }
         }
       });
@@ -139,34 +161,34 @@ const BuySell = () => {
   const handlePopupClose = () => {
     setIsModalOpen(false);
   };
-  
+
   const handleTokenSelect = (selectedTokenValue) => {
     console.log('Selected token from crypto in BuySell :', selectedTokenValue);
     setReceiveToken(selectedTokenValue.Symbol); // You can pass the selected token to another component or update the state as needed
-  
+
     // Find the selected token from the imported tokens
-    const selectedToken = tokens.find((token) => token.title === selectedTokenValue.Symbol);
-  
+    const selectedToken = tokens.find(
+      (token) => token.title === selectedTokenValue.Symbol
+    );
+
     if (!selectedToken) {
       console.error('Token not found:', selectedTokenValue.Symbol);
       return;
     }
-  
+
     let basePath = '/update/home';
-  
+
     if (selectedToken.isStock) {
       basePath = '/update/home/stock-token';
     } else if (selectedToken.isETF) {
       basePath = '/update/home/etf-tokens';
     }
-  
+
     // Construct the new URL with the buyToken parameter
     const newUrl = `${basePath}?buyToken=${selectedToken.title}`;
-  
+
     navigate(newUrl);
   };
-  
-  
 
   return (
     <div className={classes.Container}>
