@@ -268,7 +268,8 @@ export const createGiftcard = async (
   email: string,
   currency: string,
   giftCardUrl: string,
-  cardType: string
+  cardType: string,
+  recevierEmail: string
 ) => {
   try {
     const result = await API.post('/api/v1/inex/user/createGiftcard', {
@@ -276,7 +277,8 @@ export const createGiftcard = async (
       amount,
       currency,
       giftCardUrl,
-      cardType
+      cardType,
+      recevierEmail
     });
     return result.data;
   } catch (e: any) {
