@@ -68,7 +68,7 @@ const SendCardSuccessfully = ({ onClose }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { giftCardData, selectedImg } = location.state || {};
+  const { giftCardData, selectedImg, amountInUsd } = location.state || {};
   const [selectedTab, setSelectedTab] = useState('Send');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -96,7 +96,7 @@ const SendCardSuccessfully = ({ onClose }) => {
               fontSize: '28px',
             }}
           >
-            <p
+            {/* <p
               style={{
                 fontSize: '18px',
                 lineHeight: '30px',
@@ -104,6 +104,15 @@ const SendCardSuccessfully = ({ onClose }) => {
               }}
             >
               Quantity: 1
+            </p> */}
+            <p
+              style={{
+                fontSize: '18px',
+                lineHeight: '30px',
+                marginBottom: '15px',
+              }}
+            >
+              Token Amount: {giftCardData?.amount} {giftCardData?.type}
             </p>
             <p
               style={{
@@ -112,7 +121,12 @@ const SendCardSuccessfully = ({ onClose }) => {
                 marginBottom: '15px',
               }}
             >
-              Amount: {giftCardData?.amount} {giftCardData?.type}
+              Amount in USD: $
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6,
+              }).format(amountInUsd)}
             </p>
             <p
               style={{

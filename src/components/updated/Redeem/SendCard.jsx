@@ -175,7 +175,7 @@ const SendCard = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { giftCardData, selectedImg, selectedImgUrl, email } =
+  const { giftCardData, selectedImg, selectedImgUrl, email, amountInUsd } =
     location.state || {}; // Extracting giftCardData from location state
   console.log(location.state);
   const [recipientEmail, setRecipientEmail] = useState(email);
@@ -224,6 +224,7 @@ const SendCard = () => {
           giftCardData: giftCardData
             ? giftCardData
             : giftCards?.find((card) => card.voucher === selectedGiftCard),
+            amountInUsd
         },
       });
     } else {
@@ -296,18 +297,23 @@ const SendCard = () => {
                 }
               </p>
               <p>
-                Amount:{' '}
+                Token Amount:{' '}
                 {
                   giftCards?.find((card) => card.voucher === selectedGiftCard)
                     ?.amount
-                }
-              </p>
-              <p>
-                Token:{' '}
+                }{' '}
                 {
                   giftCards?.find((card) => card.voucher === selectedGiftCard)
                     ?.type
                 }
+              </p>
+              <p>
+                Amount in USD: ${' '}
+                {new Intl.NumberFormat('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 6,
+                }).format(amountInUsd)}
               </p>
             </div>
           )}

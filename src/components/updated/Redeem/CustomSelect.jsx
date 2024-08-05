@@ -152,7 +152,7 @@ export default function CustomSelectBox({
               <MenuItem
                 key={card.voucher}
                 value={card.voucher}
-                disabled={card.isUsed}
+                disabled={card.isUsed || card.assignedToUser}
               >
                 {`${card.voucher} - ${card.amount} ${card.type}`}
               </MenuItem>

@@ -95,9 +95,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-  
-  const CardCreatedPopup = ({ onClose, selectedImg, giftCardData, selectedImgUrl, email }) => {
+const CardCreatedPopup = ({
+  onClose,
+  selectedImg,
+  giftCardData,
+  selectedImgUrl,
+  email,
+  amountInUsd,
+}) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -137,9 +142,17 @@ const useStyles = makeStyles((theme) => ({
               width: '100%',
             }}
           >
-            <p>Quantity: {1}</p>
+            {/* <p>Quantity: {1}</p> */}
             <p>
-              Amount: {giftCardData.amount} {giftCardData?.type}
+              Token Amount: {giftCardData.amount} {giftCardData?.type}
+            </p>
+            <p>
+              Amount in USD: $
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6,
+              }).format(amountInUsd)}
             </p>
             <p>Gift Card Number: {giftCardData.voucher}</p>
           </div>
@@ -148,7 +161,15 @@ const useStyles = makeStyles((theme) => ({
             <GenericButton
               text="Send Now"
               onClick={() =>
-                navigate('/redeem/send-card', { state: { selectedImg, giftCardData, selectedImgUrl, email } })
+                navigate('/redeem/send-card', {
+                  state: {
+                    selectedImg,
+                    giftCardData,
+                    selectedImgUrl,
+                    email,
+                    amountInUsd,
+                  },
+                })
               }
             />
           </div>

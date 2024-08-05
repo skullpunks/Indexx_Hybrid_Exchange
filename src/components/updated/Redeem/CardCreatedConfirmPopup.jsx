@@ -108,7 +108,8 @@ const CardCreatedConfirmPopup = ({
   setShowConfirmPopup,
   isLoading,
   currentUserEmail,
-  cardType
+  cardType,
+  amountInUsd,
 }) => {
   const theme = useTheme();
 
@@ -129,7 +130,8 @@ const CardCreatedConfirmPopup = ({
       currentUserEmail,
       currency,
       selectedImg,
-      cardType
+      cardType,
+      email
     );
     console.log(result);
     if (result && result.status === 200) {
@@ -177,9 +179,17 @@ const CardCreatedConfirmPopup = ({
               width: '100%',
             }}
           >
-            <p>Quantity: {1}</p>
+            {/* <p>Quantity: {1}</p> */}
             <p>
-              Amount: {amount} {currency}
+              Token Amount: {amount} {currency}
+            </p>
+            <p>
+              Amount in USD: $
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6,
+              }).format(amountInUsd)}
             </p>
             {/* <p>Gift Card Number: {giftCardData.voucher}</p> */}
           </div>

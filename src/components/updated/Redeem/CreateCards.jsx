@@ -50,6 +50,7 @@ import {
   createGiftcard,
   decodeJWT,
   getUserWallets,
+  getCoinPriceByName,
 } from '../../../services/api';
 import initialTokens from '../../../utils/Tokens.json';
 import CardCreatedConfirmPopup from './CardCreatedConfirmPopup';
@@ -168,7 +169,7 @@ const CreateCards = ({ onSendCard }) => {
   const [selectedTab, setSelectedTab] = useState('Create');
   const location = useLocation();
   const { type, selectedImg: defaultImg } = location.state || {};
-
+  const [balanceError, setBalanceError] = useState('');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -430,6 +431,7 @@ const CreateCards = ({ onSendCard }) => {
   const [giftCardData, setGiftCardData] = useState(null);
   const [loading, isLoading] = useState(false);
   const [error, setError] = useState('');
+  const [amountInUsd, setAmountInUsd] = useState(0);
   const [currency, setCurrency] = useState(initialTokens[0]?.title);
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
@@ -445,6 +447,22 @@ const CreateCards = ({ onSendCard }) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    async function fetchPrice() {
+      if (amount && singleWallet) {
+        if (parseFloat(amount) > parseFloat(singleWallet.coinBalance)) {
+          setBalanceError('Insufficient balance');
+        } else {
+          setBalanceError('');
+        }
+      }
+      const res = await getCoinPriceByName(String(currency));
+      let priceData = res.data.results.data;
+      setAmountInUsd(priceData * Number(amount));
+    }
+    fetchPrice();
+  }, [amount, singleWallet]);
+
   const handleImgClick = (data) => {
     setSelectedImg(data.img);
     setSelectedImgUrl(data.imgUrl);
@@ -459,10 +477,7 @@ const CreateCards = ({ onSendCard }) => {
         setCurrentUserEmail(decodedToken?.email);
         console.log('decodedToken', decodedToken);
         let res = await getUserWallets(decodedToken?.email);
-        console.log(
-          'Res',
-          res
-        );
+        console.log('Res', res);
         setAllWallets(res.data);
       } catch (err) {
         console.log('err', err);
@@ -473,12 +488,18 @@ const CreateCards = ({ onSendCard }) => {
 
   // Update singleWallet when currency changes, using the allWallets stored in state
   useEffect(() => {
-    console.log('allWallets', allWallets);
-    const userWallet = allWallets.find(
-      (wallet) => wallet.coinSymbol === currency
-    );
-    console.log('userWallet', userWallet);
-    setSingleWallet(userWallet);
+    async function fetchPrice() {
+      console.log('allWallets', allWallets);
+      const userWallet = allWallets.find(
+        (wallet) => wallet.coinSymbol === currency
+      );
+      console.log('userWallet', userWallet);
+      setSingleWallet(userWallet);
+      const res = await getCoinPriceByName(String(currency));
+      let priceData = res.data.results.data;
+      setAmountInUsd(priceData * Number(amount));
+    }
+    fetchPrice();
   }, [currency, allWallets]);
 
   const isFormValid = amount && email && currency;
@@ -560,6 +581,11 @@ const CreateCards = ({ onSendCard }) => {
             </div>
           )}
           <br />
+          {error && <div className={classes.errorMessage}>{error}</div>}
+          {balanceError && (
+            <div className={classes.errorMessage}>{balanceError}</div>
+          )}
+          <br />
           <div className={classes.quantityContainer}>
             <InputField
               label={'Recipient Email'}
@@ -571,14 +597,22 @@ const CreateCards = ({ onSendCard }) => {
 
           <div className={classes.btnContainer}>
             <p style={{ flex: '70%' }}>
-              Total Amount: {amount} {currency}
+              Total Amount: {amount} {currency} (Amount in USD: $
+              {amountInUsd
+                ? new Intl.NumberFormat('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  }).format(amountInUsd)
+                : 0}
+              )
             </p>
             <GenericButton
               text={'Create'}
               loading={loading}
               styles={{ flex: 1 }}
               onClick={() => setShowConfirmPopup(true)}
-              disabled={!isFormValid}
+              disabled={!isFormValid || balanceError}
             />
           </div>
           {error && <div className={classes.errorMessage}>{error}</div>}
@@ -622,6 +656,7 @@ const CreateCards = ({ onSendCard }) => {
           selectedImg={selectedImg}
           selectedImgUrl={selectedImgUrl}
           email={email}
+          amountInUsd={amountInUsd}
         />
       )}
       {showConfirmPopup && (
@@ -639,6 +674,7 @@ const CreateCards = ({ onSendCard }) => {
           isLoading={isLoading}
           currentUserEmail={currentUserEmail}
           cardType={value}
+          amountInUsd={amountInUsd}
         />
       )}
     </div>
