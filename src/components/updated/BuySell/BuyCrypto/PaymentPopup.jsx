@@ -12,6 +12,7 @@ import ach from '../../../../assets/updated/popup/ach.png';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
+import tygpay from '../../../../assets/updated/tyga_icon.png'
 import CloseIcon from '@mui/icons-material/Close';
 import {
   createBuyOrder,
@@ -431,6 +432,16 @@ const Popup = ({
                     <Box className={classes.iconTextContainer}>
                       <img src={zelle} alt="Zelle" />
                       <p className={classes.btnText}>Zelle</p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('TygaPay')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={tygpay} alt="TygaPay" />
+                      <p className={classes.btnText}>TygaPay</p>
                     </Box>
                     <p>${amount}</p>
                   </button>

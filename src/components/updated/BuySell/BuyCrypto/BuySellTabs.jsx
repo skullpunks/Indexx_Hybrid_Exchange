@@ -361,6 +361,59 @@ const BuySellTabs = ({
     }
   };
 
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrderForTygaPay = async () => {
+    setLoadings(true);
+    let basecoin = receiveToken.title;
+    let quotecoin = 'USD';
+    let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
+    console.log('receiveAmount', receiveAmount);
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        setGeneralMessage(
+          'As Captain bee, Please apply for buy approval from honey bee'
+        );
+        setIsModalOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        honeyBeeEmail,
+        true,
+        'tygapay'
+      );
+    } else {
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        '',
+        false,
+        'tygapay'
+      );
+    }
+    console.log(res)
+    if (res.status === 200) {
+      console.log('Res', res);
+      console.log("res.data.data.paymentUrl", res.data.data.paymentUrl)
+      setLoadings(false);
+      window.location.href = res.data.data.paymentUrl;
+    } else {
+      setLoadings(false);
+      setIsModalOpen(true);
+      setGeneralMessage(res.data);
+    }
+  };
+
   const createBuyOrderForZelleAndWire = async (paymentMethod) => {
     setLoadings(true);
     setLoadings(true);
@@ -418,6 +471,8 @@ const BuySellTabs = ({
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder();
+      } else if (paymentMethod === 'TygaPay') {
+        await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
         paymentMethod === 'Wire' ||
