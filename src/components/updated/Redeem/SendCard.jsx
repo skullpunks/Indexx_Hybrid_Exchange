@@ -180,7 +180,13 @@ const SendCard = () => {
   console.log(location.state);
   const [recipientEmail, setRecipientEmail] = useState(email);
   const [senderName, setSenderName] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(`Hey [Receiver's Name],
+
+This is [Your Name], and I'm excited to gift you something truly special - a Crypto Gift Card!
+
+Consider it the gift of the future and an investment in what's to come. Redeem it now to kickstart your crypto journey.
+
+Enjoy and happy investing!`);
   const [loading, setLoading] = useState(false);
   const [giftCards, setGiftCards] = useState([]);
   const [selectedGiftCard, setSelectedGiftCard] = useState(
@@ -323,9 +329,9 @@ const SendCard = () => {
           <div className={classes.quantityContainer}>
             {' '}
             <InputField
-              label={'Your Name'}
+              label={"Sender's Name"}
               type="text"
-              placeholder="Enter your name"
+              placeholder="Enter sender's name"
               value={senderName}
               onChange={(e) => setSenderName(e.target.value)}
             />
@@ -334,7 +340,7 @@ const SendCard = () => {
             {' '}
             <InputField
               label={'Leave message (optional) '}
-              type="text"
+              type="textarea"
               placeholder="Write a message for your friend and your family"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
