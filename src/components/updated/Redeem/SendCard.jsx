@@ -9,6 +9,7 @@ import IconicHeader from '../shared/RedeemIconicHeader';
 import {
   decodeJWT,
   getAllGiftCards,
+  getCoinPriceByName,
   sendGiftcard,
 } from '../../../services/api';
 
@@ -180,6 +181,8 @@ const SendCard = () => {
   console.log(location.state);
   const [recipientEmail, setRecipientEmail] = useState(email);
   const [senderName, setSenderName] = useState('');
+  const [amountInUsdValue, setAmountInUsd] = useState(0);
+
   const [message, setMessage] = useState(`Hey [Receiver's Name],
 
 This is [Your Name], and I'm excited to gift you something truly special - a Crypto Gift Card!
@@ -230,7 +233,7 @@ Enjoy and happy investing!`);
           giftCardData: giftCardData
             ? giftCardData
             : giftCards?.find((card) => card.voucher === selectedGiftCard),
-            amountInUsd
+          amountInUsd,
         },
       });
     } else {
@@ -251,6 +254,15 @@ Enjoy and happy investing!`);
     navigate('/redeem');
   };
 
+  const handleGiftCardChange = async (e) => {
+    setSelectedGiftCard(e.target.value);
+    let requiredGiftCard = giftCards.find(
+      (card) => card.voucher === e.target.value
+    );
+    const result = await getCoinPriceByName(String(requiredGiftCard?.type));
+    let priceData = result.data.results.data;
+    setAmountInUsd(priceData * Number(requiredGiftCard?.amount));
+  };
   console.log('selectedGiftCard', selectedGiftCard);
   return (
     <div className={classes.root}>
@@ -288,7 +300,7 @@ Enjoy and happy investing!`);
               items={giftCards}
               type="Gift Card"
               value={selectedGiftCard}
-              onChange={(e) => setSelectedGiftCard(e.target.value)}
+              onChange={handleGiftCardChange}
               hasborder
               isGiftCard
             />
@@ -314,12 +326,16 @@ Enjoy and happy investing!`);
                 }
               </p>
               <p>
-                Amount in USD: ${' '}
-                {new Intl.NumberFormat('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 6,
-                }).format(amountInUsd)}
+                {`Amount in USD: ${' '}
+  ${new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6,
+  }).format(
+    isNaN(amountInUsd) || amountInUsd === null || amountInUsd === undefined
+      ? amountInUsdValue
+      : amountInUsd
+  )}`}
               </p>
             </div>
           )}
