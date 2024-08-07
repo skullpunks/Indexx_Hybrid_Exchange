@@ -120,7 +120,7 @@ const CardCreatedConfirmPopup = ({
   const handleCreateGiftcard = async () => {
     setShowConfirmPopup(false);
     isLoading(true);
-    if (!amount || !email || !currency) {
+    if (!amount || !currency) {
       setError('All fields are required.');
       return;
     }
