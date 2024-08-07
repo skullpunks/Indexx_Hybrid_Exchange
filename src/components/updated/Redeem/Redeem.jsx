@@ -522,7 +522,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
       {/* Gift card listing */}
       <div>
         <div className={classes.cardHeaderRoot}>
-          <h3>Create & Send a Crypto gift with Gift & Greeting Cards</h3>
+          <h3>Create & Send a Crypto Gift or Crypto Greeting Cards</h3>
           <p>
             Have you run out of options to gift someone something new and
             exciting? How about an investment of the future? Send someone a

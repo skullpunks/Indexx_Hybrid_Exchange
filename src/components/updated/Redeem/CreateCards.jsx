@@ -54,6 +54,7 @@ import {
 } from '../../../services/api';
 import initialTokens from '../../../utils/Tokens.json';
 import CardCreatedConfirmPopup from './CardCreatedConfirmPopup';
+import InsufficientBalancePopup from './InsufficientBalancePopup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -436,11 +437,17 @@ const CreateCards = ({ onSendCard }) => {
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-
+  const [openInsufficientPopup, setOpenInsufficientPopup] = useState(false);
   const closePopup = () => {
     setShowPopup(false);
   };
 
+  // useEffect(() => {
+  //   console.log(balanceError, 'balanceError');
+  //   if (balanceError) {
+  //     setOpenInsufficientPopup(true);
+  //   }
+  // }, [balanceError]);
   useEffect(() => {
     if (value) {
       setSelectedCards(value === 'Gift Card' ? giftArr : greetingArr);
@@ -452,8 +459,10 @@ const CreateCards = ({ onSendCard }) => {
       if (amount && singleWallet) {
         if (parseFloat(amount) > parseFloat(singleWallet.coinBalance)) {
           setBalanceError('Insufficient balance');
+          setOpenInsufficientPopup(true);
         } else {
           setBalanceError('');
+          setOpenInsufficientPopup(false);
         }
       }
       const res = await getCoinPriceByName(String(currency));
@@ -664,6 +673,12 @@ const CreateCards = ({ onSendCard }) => {
           currentUserEmail={currentUserEmail}
           cardType={value}
           amountInUsd={amountInUsd}
+        />
+      )}
+      {openInsufficientPopup && (
+        <InsufficientBalancePopup
+          currency={currency}
+          onClose={() => setOpenInsufficientPopup(false)}
         />
       )}
     </div>
