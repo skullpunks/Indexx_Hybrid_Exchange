@@ -418,8 +418,9 @@ const CreateCards = ({ onSendCard }) => {
       const userWallet = allWallets.find(
         (wallet) => wallet.coinSymbol === event.target.value
       );
-      console.log('userWallet', userWallet);
       setSingleWallet(userWallet);
+      if(allWallets.length > 0 && userWallet === undefined)
+        setIsWallet(true);
     }
   };
   const navigate = useNavigate();
@@ -434,7 +435,8 @@ const CreateCards = ({ onSendCard }) => {
   const [error, setError] = useState('');
   const [amountInUsd, setAmountInUsd] = useState(0);
   const [currency, setCurrency] = useState(initialTokens[0]?.title);
-  const [singleWallet, setSingleWallet] = useState(null);
+  const [singleWallet, setSingleWallet] = useState({});
+  const [isWallet, setIsWallet] = useState(false);
   const [allWallets, setAllWallets] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [openInsufficientPopup, setOpenInsufficientPopup] = useState(false);
@@ -456,14 +458,19 @@ const CreateCards = ({ onSendCard }) => {
 
   useEffect(() => {
     async function fetchPrice() {
+      console.log('singleWallet', singleWallet, singleWallet === undefined, amount && singleWallet, isWallet);
       if (amount && singleWallet) {
         if (parseFloat(amount) > parseFloat(singleWallet.coinBalance)) {
           setBalanceError('Insufficient balance');
           setOpenInsufficientPopup(true);
         } else {
+          setIsWallet(false);
           setBalanceError('');
           setOpenInsufficientPopup(false);
         }
+      } else if (isWallet) {
+        setBalanceError('Insufficient balance');
+        setOpenInsufficientPopup(true);
       }
       const res = await getCoinPriceByName(String(currency));
       let priceData = res.data.results.data;
@@ -484,9 +491,7 @@ const CreateCards = ({ onSendCard }) => {
         const token = localStorage.getItem('access_token');
         const decodedToken = decodeJWT(String(token));
         setCurrentUserEmail(decodedToken?.email);
-        console.log('decodedToken', decodedToken);
         let res = await getUserWallets(decodedToken?.email);
-        console.log('Res', res);
         setAllWallets(res.data);
       } catch (err) {
         console.log('err', err);
@@ -498,12 +503,12 @@ const CreateCards = ({ onSendCard }) => {
   // Update singleWallet when currency changes, using the allWallets stored in state
   useEffect(() => {
     async function fetchPrice() {
-      console.log('allWallets', allWallets);
       const userWallet = allWallets.find(
         (wallet) => wallet.coinSymbol === currency
       );
-      console.log('userWallet', userWallet);
       setSingleWallet(userWallet);
+      if(allWallets.length > 0 && userWallet === undefined)
+        setIsWallet(true);
       const res = await getCoinPriceByName(String(currency));
       let priceData = res.data.results.data;
       setAmountInUsd(priceData * Number(amount));
