@@ -683,7 +683,7 @@ const CreateCards = ({ onSendCard }) => {
               loading={loading}
               styles={{ flex: 1 }}
               onClick={() => setShowConfirmPopup(true)}
-              disabled={!isFormValid || balanceError}
+              disabled={!isFormValid || balanceError || (singleWallet?.coinBalance === undefined)}
             />
           </div>
           {error && <div className={classes.errorMessage}>{error}</div>}
