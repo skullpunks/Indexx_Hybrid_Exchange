@@ -178,48 +178,65 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 1,
       img: gift1,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc1.png',
     },
     {
       id: 2,
       img: gift2,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc2.png',
     },
     {
       id: 3,
       img: gift3,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc3.png',
     },
     {
       id: 4,
       img: gift4,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc4.png',
     },
     {
       id: 5,
       img: gift5,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
     },
     {
       id: 6,
       img: gift6,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
     },
     {
+      type: 'Gift Card',
       id: 7,
       img: gift7,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc7.png',
     },
     {
       id: 8,
       img: gift8,
+      type: 'Gift Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc8.png',
     },
@@ -228,48 +245,63 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 1,
       img: greeting1,
+      type: 'Greeting Card',
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting1.png',
     },
     {
       id: 2,
       img: greeting2,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting2.png',
     },
     {
       id: 3,
       img: greeting3,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting3.png',
     },
     {
       id: 4,
       img: greeting4,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting4.png',
     },
     {
       id: 5,
       img: greeting5,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting5.png',
     },
     {
       id: 6,
       img: greeting6,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting6.png',
     },
     {
       id: 7,
       img: greeting7,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting7.png',
     },
     {
       id: 8,
       img: greeting8,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting8.png',
     },
@@ -277,30 +309,40 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 9,
       img: greeting9,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting9.png',
     },
     {
       id: 10,
       img: greeting10,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting10.png',
     },
     {
       id: 11,
       img: greeting11,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting11.png',
     },
     {
       id: 12,
       img: greeting12,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting12.png',
     },
     {
       id: 13,
       img: greeting13,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting13.png',
     },
@@ -308,30 +350,40 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 14,
       img: greeting14,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting14.png',
     },
     {
       id: 15,
       img: greeting15,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting15.png',
     },
     {
       id: 16,
       img: greeting16,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting16.png',
     },
     {
       id: 17,
       img: greeting17,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting17.png',
     },
     {
       id: 18,
       img: greeting18,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting18.png',
     },
@@ -339,30 +391,40 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 19,
       img: greeting19,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting19.png',
     },
     {
       id: 20,
       img: greeting20,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting20.png',
     },
     {
       id: 21,
       img: greeting21,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting21.png',
     },
     {
       id: 22,
       img: greeting22,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting22.png',
     },
     {
       id: 23,
       img: greeting23,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting23.png',
     },
@@ -370,24 +432,32 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 24,
       img: greeting24,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting24.png',
     },
     {
       id: 25,
       img: greeting25,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting25.png',
     },
     {
       id: 26,
       img: greeting26,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting26.png',
     },
     {
       id: 27,
       img: greeting27,
+      type: 'Greeting Card',
+
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
     },
@@ -396,6 +466,9 @@ const CreateCards = ({ onSendCard }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
     value === 'Gift Card' ? giftArr : greetingArr
+  );
+  const [nonSelectedCard, setNonSelectedCards] = useState(
+    value !== 'Gift Card' ? giftArr : greetingArr
   );
   const [selectedImgUrl, setSelectedImgUrl] = useState(
     value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
@@ -451,6 +524,7 @@ const CreateCards = ({ onSendCard }) => {
   useEffect(() => {
     if (value) {
       setSelectedCards(value === 'Gift Card' ? giftArr : greetingArr);
+      setNonSelectedCards(value !== 'Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
 
@@ -474,6 +548,7 @@ const CreateCards = ({ onSendCard }) => {
 
   const handleImgClick = (data) => {
     setSelectedImg(data.img);
+    setValue(data.type);
     setSelectedImgUrl(data.imgUrl);
   };
 
@@ -527,7 +602,7 @@ const CreateCards = ({ onSendCard }) => {
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Create Gift Card or Greeting Cards</h3>
+        <h3>Create Crypto Gift Card or Crypto Greeting Cards</h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
           perfect solution. Redeemable on our exchange, they are not just a
@@ -621,8 +696,8 @@ const CreateCards = ({ onSendCard }) => {
             <div className={classes.cardHeaderLeft}>
               <h3>
                 {value === 'Gift Card'
-                  ? 'Select any gift card design from below:'
-                  : 'Select any greeting card design from below:'}{' '}
+                  ? 'Select any crypto gift card design from below:'
+                  : 'Select any crypto greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
@@ -635,6 +710,38 @@ const CreateCards = ({ onSendCard }) => {
 
           <div className={classes.cardGrid}>
             {selectedCard.map((curr, i) => (
+              <div
+                key={i} // Added key to the map iterator
+                onClick={() => handleImgClick(curr)}
+                className={curr.img === selectedImg ? classes.activeImg : ''}
+              >
+                <img src={curr.img} alt="img" style={{ width: '100%' }} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={classes.cardListingRoot}>
+          <div className={classes.cardListHeader}>
+            <div
+              className={classes.cardHeaderLeft}
+              style={{ marginTop: '50px' }}
+            >
+              <h3>
+                {value !== 'Gift Card'
+                  ? 'Select any crypto gift card design from below:'
+                  : 'Select any crypto greeting card design from below:'}{' '}
+              </h3>
+              <p>
+                {' '}
+                {value !== 'Gift Card'
+                  ? 'Send a crypto gift card for any occasion'
+                  : 'Send a crypto greeting card for any occasion'}
+              </p>
+            </div>
+          </div>
+
+          <div className={classes.cardGrid}>
+            {nonSelectedCard.map((curr, i) => (
               <div
                 key={i} // Added key to the map iterator
                 onClick={() => handleImgClick(curr)}

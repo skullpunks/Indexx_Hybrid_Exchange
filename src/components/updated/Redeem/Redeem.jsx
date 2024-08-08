@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '50px',
   },
   sendCryptoRoot: {
-    maxWidth: '500px',
+    maxWidth: '700px',
     width: '100%',
     marginBottom: '-40px',
     '& h3': {
@@ -461,7 +461,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
     <div className={classes.root}>
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Redeem Crypto with Gift & Greeting Cards</h3>
+        <h3>Redeem Crypto with Crypto Gift & Crypto Greeting Cards</h3>
         <p>Redeem Crypto gifts sent to you by your friends and family.</p>
         {/* <Button onClick={() => navigate('/redeem/create-card')}>
           Create a Crypto card
@@ -532,7 +532,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
         <div className={classes.cardListingRoot}>
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
-              <h3>Gift Cards</h3>
+              <h3>Crypto Gift Cards</h3>
               <p>Send a crypto gift card for any occasion</p>
             </div>
             {/* <div className={classes.cardHeaderRight}>View more Gift Cards</div> */}
@@ -556,11 +556,8 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
           <div style={{ marginTop: '100px' }}>
             <div className={classes.cardListHeader}>
               <div className={classes.cardHeaderLeft}>
-                <h3>Greeting Cards</h3>
+                <h3>Crypto Greeting Cards</h3>
                 <p>Send a crypto greeting card for any occasion</p>
-              </div>
-              <div className={classes.cardHeaderRight}>
-                View more Greeting Cards
               </div>
             </div>
 
