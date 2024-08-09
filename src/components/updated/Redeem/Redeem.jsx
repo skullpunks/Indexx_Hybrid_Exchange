@@ -461,7 +461,11 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
     <div className={classes.root}>
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Redeem Crypto with Crypto Gift & Crypto Greeting Cards</h3>
+        <h3>
+          Redeem Crypto with <br />
+          Crypto Gift & <br />
+          Crypto Greeting Cards
+        </h3>
         <p>Redeem Crypto gifts sent to you by your friends and family.</p>
         {/* <Button onClick={() => navigate('/redeem/create-card')}>
           Create a Crypto card
@@ -522,7 +526,10 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
       {/* Gift card listing */}
       <div>
         <div className={classes.cardHeaderRoot}>
-          <h3>Create & Send a Crypto Gift or Crypto Greeting Cards</h3>
+          <h3>
+            Create & Send a Crypto Gift or <br />
+            Crypto Greeting Cards
+          </h3>
           <p>
             Have you run out of options to gift someone something new and
             exciting? How about an investment of the future? Send someone a

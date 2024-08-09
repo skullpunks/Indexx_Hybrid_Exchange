@@ -271,7 +271,10 @@ Enjoy and happy investing!`);
 
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Send Crypto Gift Card or Crypto Greeting Cards</h3>
+        <h3>
+          Send Crypto Gift Card or <br />
+          Crypto Greeting Cards
+        </h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
           perfect solution. Redeemable on our exchange, they are not just a

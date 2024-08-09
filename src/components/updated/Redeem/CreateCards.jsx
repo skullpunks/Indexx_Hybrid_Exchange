@@ -178,7 +178,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 1,
       img: gift1,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc1.png',
@@ -186,7 +186,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 2,
       img: gift2,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc2.png',
@@ -194,7 +194,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 3,
       img: gift3,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc3.png',
@@ -202,7 +202,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 4,
       img: gift4,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc4.png',
@@ -210,7 +210,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 5,
       img: gift5,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
@@ -218,16 +218,16 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 6,
       img: gift6,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc5.png',
     },
     {
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
       id: 7,
       img: gift7,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc7.png',
@@ -235,7 +235,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 8,
       img: gift8,
-      type: 'Gift Card',
+      type: 'Crypto Gift Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/-gc8.png',
@@ -245,14 +245,14 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 1,
       img: greeting1,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting1.png',
     },
     {
       id: 2,
       img: greeting2,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting2.png',
@@ -260,7 +260,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 3,
       img: greeting3,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting3.png',
@@ -268,7 +268,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 4,
       img: greeting4,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting4.png',
@@ -276,7 +276,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 5,
       img: greeting5,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting5.png',
@@ -284,7 +284,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 6,
       img: greeting6,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting6.png',
@@ -292,7 +292,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 7,
       img: greeting7,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting7.png',
@@ -300,7 +300,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 8,
       img: greeting8,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting8.png',
@@ -309,7 +309,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 9,
       img: greeting9,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting9.png',
@@ -317,7 +317,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 10,
       img: greeting10,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting10.png',
@@ -325,7 +325,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 11,
       img: greeting11,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting11.png',
@@ -333,7 +333,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 12,
       img: greeting12,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting12.png',
@@ -341,7 +341,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 13,
       img: greeting13,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting13.png',
@@ -350,7 +350,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 14,
       img: greeting14,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting14.png',
@@ -358,7 +358,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 15,
       img: greeting15,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting15.png',
@@ -366,7 +366,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 16,
       img: greeting16,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting16.png',
@@ -374,7 +374,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 17,
       img: greeting17,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting17.png',
@@ -382,7 +382,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 18,
       img: greeting18,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting18.png',
@@ -391,7 +391,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 19,
       img: greeting19,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting19.png',
@@ -399,7 +399,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 20,
       img: greeting20,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting20.png',
@@ -407,7 +407,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 21,
       img: greeting21,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting21.png',
@@ -415,7 +415,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 22,
       img: greeting22,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting22.png',
@@ -423,7 +423,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 23,
       img: greeting23,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting23.png',
@@ -432,7 +432,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 24,
       img: greeting24,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting24.png',
@@ -440,7 +440,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 25,
       img: greeting25,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting25.png',
@@ -448,7 +448,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 26,
       img: greeting26,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting26.png',
@@ -456,33 +456,35 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 27,
       img: greeting27,
-      type: 'Greeting Card',
+      type: 'Crypto Greeting Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
     },
   ];
-  const [value, setValue] = useState(type ?? 'Gift Card');
+  const [value, setValue] = useState(type ?? 'Crypto Gift Card');
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
-    value === 'Gift Card' ? giftArr : greetingArr
+    value === 'Crypto Gift Card' ? giftArr : greetingArr
   );
   const [nonSelectedCard, setNonSelectedCards] = useState(
-    value !== 'Gift Card' ? giftArr : greetingArr
+    value !== 'Crypto Gift Card' ? giftArr : greetingArr
   );
   const [selectedImgUrl, setSelectedImgUrl] = useState(
-    value === 'Gift Card' ? giftArr[0].imgUrl : greetingArr[0].imgUrl
+    value === 'Crypto Gift Card' ? giftArr[0].img : greetingArr[0].img
   );
   const [selectedImg, setSelectedImg] = useState(defaultImg ?? selectedImgUrl);
   const handleChange = (event) => {
     if (
-      event.target.value === 'Gift Card' ||
-      event.target.value === 'Greeting Card'
+      event.target.value === 'Crypto Gift Card' ||
+      event.target.value === 'Crypto Greeting Card'
     ) {
       setValue(event.target.value);
-      setSelectedImg(event.target.value === 'Gift Card' ? gift1 : greeting1);
+      setSelectedImg(
+        event.target.value === 'Crypto Gift Card' ? gift1 : greeting1
+      );
       setSelectedImgUrl(
-        event.target.value === 'Gift Card'
+        event.target.value === 'Crypto Gift Card'
           ? giftArr[0].imgUrl
           : greetingArr[0].imgUrl
       );
@@ -523,8 +525,8 @@ const CreateCards = ({ onSendCard }) => {
   // }, [balanceError]);
   useEffect(() => {
     if (value) {
-      setSelectedCards(value === 'Gift Card' ? giftArr : greetingArr);
-      setNonSelectedCards(value !== 'Gift Card' ? giftArr : greetingArr);
+      setSelectedCards(value === 'Crypto Gift Card' ? giftArr : greetingArr);
+      setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
 
@@ -602,7 +604,9 @@ const CreateCards = ({ onSendCard }) => {
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
-        <h3>Create Crypto Gift Card or Crypto Greeting Cards</h3>
+        <h3>
+          Create Crypto Gift Card or <br /> Crypto Greeting Cards
+        </h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
           perfect solution. Redeemable on our exchange, they are not just a
@@ -620,8 +624,8 @@ const CreateCards = ({ onSendCard }) => {
             <label>Select Type</label>
             <CustomSelectBox
               items={[
-                { name: 'Gift Card', value: 'Gift Card' },
-                { name: 'Greeting Card', value: 'Greeting Card' },
+                { name: 'Crypto Gift Card', value: 'Crypto Gift Card' },
+                { name: 'Crypto Greeting Card', value: 'Crypto Greeting Card' },
               ]}
               value={value}
               onChange={handleChange}
@@ -683,7 +687,11 @@ const CreateCards = ({ onSendCard }) => {
               loading={loading}
               styles={{ flex: 1 }}
               onClick={() => setShowConfirmPopup(true)}
-              disabled={!isFormValid || balanceError || (singleWallet?.coinBalance === undefined)}
+              disabled={
+                !isFormValid ||
+                balanceError ||
+                singleWallet?.coinBalance === undefined
+              }
             />
           </div>
           {error && <div className={classes.errorMessage}>{error}</div>}
@@ -695,13 +703,13 @@ const CreateCards = ({ onSendCard }) => {
           <div className={classes.cardListHeader}>
             <div className={classes.cardHeaderLeft}>
               <h3>
-                {value === 'Gift Card'
+                {value === 'Crypto Gift Card'
                   ? 'Select any crypto gift card design from below:'
                   : 'Select any crypto greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
-                {value === 'Gift Card'
+                {value === 'Crypto Gift Card'
                   ? 'Send a crypto gift card for any occasion'
                   : 'Send a crypto greeting card for any occasion'}
               </p>
@@ -727,13 +735,13 @@ const CreateCards = ({ onSendCard }) => {
               style={{ marginTop: '50px' }}
             >
               <h3>
-                {value !== 'Gift Card'
+                {value !== 'Crypto Gift Card'
                   ? 'Select any crypto gift card design from below:'
                   : 'Select any crypto greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
-                {value !== 'Gift Card'
+                {value !== 'Crypto Gift Card'
                   ? 'Send a crypto gift card for any occasion'
                   : 'Send a crypto greeting card for any occasion'}
               </p>
