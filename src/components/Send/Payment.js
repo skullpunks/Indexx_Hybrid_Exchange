@@ -10,10 +10,10 @@ import '../BSDepositWithdraw/BSWithdraw.css';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import zelleWhite from '../../assets/arts/pay/zelle_white.svg';
-import zelle_qr_white from '../../assets/arts/pay/zel-qr_white.svg';
+import zelle_qr_white from '../../assets/arts/pay/Zelle.png';
 
 import zelleDark from '../../assets/arts/pay/zelle.svg';
-import zelle_qr_dark from '../../assets/arts/pay/zelle_qr.svg';
+import zelle_qr_dark from '../../assets/arts/pay/Zelle.png';
 
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
@@ -56,25 +56,25 @@ const Final = ({
   };
 
   // Add this inside your component to log the data when it's rendered
-  useEffect(() => {
-    async function finalDetails() {
-      const access_token = String(localStorage.getItem('access_token'));
-      const decoded = await decodeJWT(access_token);
-      let email = String(decoded.email);
-      fromDetails = email;
-      toDetails = 'lili@Indexx500Graph.ai';
-      if (photoIdUrl) {
-        let res = await createFiatDepositForOrder(
-          email,
-          orderData?.orderId,
-          fromDetails,
-          toDetails,
-          photoIdUrl
-        );
-      }
-    }
-    finalDetails();
-  }, [photoIdUrl]);
+  // useEffect(() => {
+  //   async function finalDetails() {
+  //     const access_token = String(localStorage.getItem('access_token'));
+  //     const decoded = await decodeJWT(access_token);
+  //     let email = String(decoded.email);
+  //     fromDetails = email;
+  //     toDetails = 'lili@Indexx500Graph.ai';
+  //     if (photoIdUrl) {
+  //       let res = await createFiatDepositForOrder(
+  //         email,
+  //         orderData?.orderId,
+  //         fromDetails,
+  //         toDetails,
+  //         photoIdUrl
+  //       );
+  //     }
+  //   }
+  //   finalDetails();
+  // }, [photoIdUrl]);
 
   return (
     <Box
@@ -166,13 +166,13 @@ const FileComponent1 = ({
           </div>
           {String(orderData?.orderType)?.includes('Pack')
             ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
-              'en-US',
-              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-            )
+                'en-US',
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )
             : orderData?.breakdown?.inAmount?.toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}{' '}
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{' '}
           {orderData?.breakdown?.inCurrenyName}
         </h1>
       </div>
@@ -655,35 +655,35 @@ export default function Payment() {
         >
           {localStorage.getItem('userlogged') === 'normal'
             ? steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            ))
+                <Step key={step.label}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))
             : steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel
-                  StepIconComponent={({ completed, active }) => (
-                    <div className={classes.customIconContainer}>
-                      {/* <div
+                <Step key={step.label}>
+                  <StepLabel
+                    StepIconComponent={({ completed, active }) => (
+                      <div className={classes.customIconContainer}>
+                        {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                      <div
-                        className={
-                          completed
-                            ? classes.completedIcon
-                            : activeStep === index
+                        <div
+                          className={
+                            completed
+                              ? classes.completedIcon
+                              : activeStep === index
                               ? classes.activeIcon
                               : classes.inactiveIcon
-                        }
-                      />
-                      <div className={classes.stepNumber}>{index + 1}</div>
-                    </div>
-                  )}
-                >
-                  {step.label}
-                </StepLabel>
-              </Step>
-            ))}
+                          }
+                        />
+                        <div className={classes.stepNumber}>{index + 1}</div>
+                      </div>
+                    )}
+                  >
+                    {step.label}
+                  </StepLabel>
+                </Step>
+              ))}
         </Stepper>
         <Box>
           {activeStep === steps.length ? (

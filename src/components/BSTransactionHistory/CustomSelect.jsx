@@ -5,10 +5,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SingleSelectPlaceholder({
+export default function CustomSelectBox({
   items,
   type,
-  onTokenSelect,
+  onChange,
+  value,
+  isCurrency,
+  hasborder,
+  onCurrencyChange,
 }) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
@@ -16,8 +20,7 @@ export default function SingleSelectPlaceholder({
   const MenuProps = {
     PaperProps: {
       sx: {
-        borderRadius: '8px',
-        marginTop: '4px',
+        marginTop: '6px',
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
         backgroundColor: `${theme.palette.divider} !important`, // Custom dropdown background color
         color: `${theme.palette.text.primary}`, // Custom dropdown text color
@@ -41,8 +44,8 @@ export default function SingleSelectPlaceholder({
         '&::-webkit-scrollbar-thumb:hover': {
           backgroundColor:
             theme.palette.mode === 'dark'
-              ? '#484f59 !important' // Darker color for dark mode
-              : '#a0a6af !important', // Darker color for light mode
+              ? '#5f6673 !important'
+              : '#b7bdc6 !important', // Keep the same color on hover
         },
         '& .Mui-selected': {
           background: 'none !important',
@@ -50,43 +53,58 @@ export default function SingleSelectPlaceholder({
       },
     },
   };
-  const [personName, setPersonName] = React.useState('');
+
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    !isCurrency
+      ? items?.find((el) => el.value === value)?.name
+      : items?.find((el) => el.address === value)?.title
+  );
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(value);
-    onTokenSelect(value);
+    const selected = !isCurrency
+      ? items?.find((el) => el.value === value)?.name
+      : items?.find((el) => el.address === value)?.title;
+
+    setSelectedCurrency(selected);
+    if (type === 'Coin') onCurrencyChange(value);
+    else if (type === 'Gift Card') console.log('value', value);
   };
 
   return (
     <FormControl sx={{ width: '100%' }}>
       <Select
         displayEmpty
-        value={personName}
-        onChange={handleChange}
+        value={value}
+        onChange={(e) => {
+          handleChange(e);
+          onChange(e);
+        }}
         sx={{
           width: '100%',
-          borderRadius: '8px',
+          border: hasborder && `1px solid ${theme.palette.divider} !important`,
+          borderRadius: '12px',
           color: `${theme.palette.text.primary} !important`,
           '& .MuiSvgIcon-root': {
             color: `${theme.palette.text.primary} !important`,
-            borderRadius: '8px',
           },
           '& > * ': {
-            border: 'none !important',
             color: `${theme.palette.text.primary} !important`,
-            borderRadius: '0',
+            borderRadius: '12px',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            border: 'none !important',
           },
           '& .MuiSelect-outlined': {
-            border: 'none',
-            borderRadius: '0',
-            backgroundColor: theme.palette.divider,
+            borderRadius: '12px',
+            backgroundColor: theme.palette.background.default,
             color: `${theme.palette.text.primary} !important`,
             '&:focus': {
-              backgroundColor: theme.palette.divider,
+              backgroundColor: theme.palette.background.default,
               color: `${theme.palette.text.primary} !important`,
+              border: 'none',
             },
           },
         }}
@@ -96,7 +114,14 @@ export default function SingleSelectPlaceholder({
               <em style={{ color: theme.palette.text.primary }}>{type}</em>
             );
           }
-          return selected;
+          const selectedItem = items.find((item) =>
+            isCurrency ? item.address === value : item.value === value
+          );
+          return (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {selected}
+            </div>
+          );
         }}
         MenuProps={MenuProps}
         input={<OutlinedInput />}
@@ -105,33 +130,11 @@ export default function SingleSelectPlaceholder({
         <MenuItem disabled value="">
           <em>{type}</em>
         </MenuItem>
-        {type === 'Type' || type === 'Coin' || type === 'Status'
-          ? items?.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'none !important',
-                  },
-                }}
-              >
-                {name}
-              </MenuItem>
-            ))
-          : items?.map((name) => (
-              <MenuItem
-                key={name?.title}
-                value={name?.title}
-                sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'none !important',
-                  },
-                }}
-              >
-                {name?.title}
-              </MenuItem>
-            ))}
+        {items?.map(({ name, value }) => (
+          <MenuItem key={name} value={value}>
+            {name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

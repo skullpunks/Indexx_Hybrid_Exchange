@@ -1,5 +1,5 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { AutoComplete, Pagination, Table, Tooltip } from 'antd';
+import { AutoComplete, Button, Pagination, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +7,10 @@ import { decodeJWT, transactionList } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import ShortenText from '../../utils/ShortenText';
 import moment from 'moment';
+import CustomSelectBox from './CustomSelect';
+import InputField from '../updated/shared/TextField';
+import GenericButton from '../updated/shared/Button';
+import { useTheme } from '@mui/material';
 
 const { Option } = Select;
 interface DataType {
@@ -37,6 +41,7 @@ const BSTransactionHistoryTable: React.FC = () => {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
+  const theme = useTheme();
   const [txListFilter, setTxListFilter] = useState() as any;
   const pageSize = 10;
   const [current, setCurrent] = useState(1);
@@ -66,13 +71,14 @@ const BSTransactionHistoryTable: React.FC = () => {
           </div>
           <div>
             <strong>Address: </strong>
-            {`${parsedAddress.addressLine1 || 'NA'}, ${parsedAddress.city || 'NA'
-              }, ${parsedAddress.state || 'NA'}, ${parsedAddress.country || 'NA'
-              }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
+            {`${parsedAddress.addressLine1 || 'NA'}, ${
+              parsedAddress.city || 'NA'
+            }, ${parsedAddress.state || 'NA'}, ${
+              parsedAddress.country || 'NA'
+            }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
           </div>
         </>
       );
-
 
       return formattedAddress;
     } catch (e) {
@@ -86,7 +92,13 @@ const BSTransactionHistoryTable: React.FC = () => {
 
       const formattedAddress = Object.keys(parsedAddress).map((key) => (
         <div key={key}>
-          <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {parsedAddress[key] || 'NA'}
+          <strong>
+            {key
+              .replace(/([A-Z])/g, ' $1')
+              .replace(/^./, (str) => str.toUpperCase())}
+            :
+          </strong>{' '}
+          {parsedAddress[key] || 'NA'}
         </div>
       ));
 
@@ -95,7 +107,6 @@ const BSTransactionHistoryTable: React.FC = () => {
       return <div>No Beneficiary Details</div>;
     }
   };
-
 
   const columns: ColumnsType<DataType> = [
     // {
@@ -206,10 +217,12 @@ const BSTransactionHistoryTable: React.FC = () => {
         const formatText = (text: any) => {
           return text.length > 20 ? ShortenText(text, 0, 20) + '...' : text;
         };
-        console.log(isJsonObject(record.to))
-        const displayContent = isJsonObject(record.to)
-          ? <span>{formatBeneficiaryAddress(record.to)}</span>
-          : <span>{formatText(record.to)}</span>;
+        console.log(isJsonObject(record.to));
+        const displayContent = isJsonObject(record.to) ? (
+          <span>{formatBeneficiaryAddress(record.to)}</span>
+        ) : (
+          <span>{formatText(record.to)}</span>
+        );
 
         return (
           <span>
@@ -275,10 +288,10 @@ const BSTransactionHistoryTable: React.FC = () => {
           moment(pastDate).isSameOrBefore(valueDate) &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -300,10 +313,10 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -335,11 +348,11 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -361,11 +374,11 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -395,7 +408,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.transactionType?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -422,7 +435,7 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -455,7 +468,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -480,7 +493,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -537,47 +550,134 @@ const BSTransactionHistoryTable: React.FC = () => {
   return (
     <div className="flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x ">
       <div className="d-flex transaction_filters margin-b-3x">
-        <div>
+        <div className="filter-item">
           <label>Type</label> <br />
-          <Select defaultValue="all" onChange={handleChangeType}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
+              { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
+              { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
+            ]}
+            value={'all'}
+            onChange={handleChangeType}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="all" onChange={handleChangeType}>
             <Option value="all">All</Option>
             <Option value="DEPOSIT_FIAT">Deposit</Option>
             <Option value="WITHDRAW_FIAT">Withdraw</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Time</label> <br />
-          <Select defaultValue="30" onChange={handleChangeTime}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Past 7 days', value: '7' },
+              { name: 'Past 30 days', value: '30' },
+              { name: 'Past 90 days', value: '90' },
+            ]}
+            value={'30'}
+            onChange={handleChangeTime}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="30" onChange={handleChangeTime}>
             <Option value="all">All</Option>
             <Option value="7">Past 7 days</Option>
             <Option value="30">Past 30 days</Option>
             <Option value="90">Past 90 days</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Asset</label> <br />
-          <Select defaultValue="all" onChange={handleChangeAsset}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+
+              { name: 'USD', value: 'USD' },
+            ]}
+            value={'all'}
+            onChange={handleChangeAsset}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="all" onChange={handleChangeAsset}>
             <Option value="all">All</Option>
             <Option value="USD">USD</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Status</label> <br />
-          <Select defaultValue="all" onChange={handleChangeStatus}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Completed', value: 'Completed' },
+              { name: 'Pending', value: 'Pending' },
+            ]}
+            value={'all'}
+            onChange={handleChangeStatus}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="all" onChange={handleChangeStatus}>
             <Option value="all">All</Option>
             <Option value="completed">Completed</Option>
             <Option value="pending">Pending</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Transaction Hash</label> <br />
-          <AutoComplete
+          <InputField
+            size="large"
+            placeholder="Search Transaction hash"
+            style={{ height: '55px', marginTop: '0px' }}
+            value={''}
+            onChange={() => {}}
+            maxLength={50}
+            type={undefined}
+            label={undefined}
+            defaultValue={undefined}
+            id={undefined}
+            startAdornment={undefined}
+            endAdornment={undefined}
+            className={undefined}
+            helperText={undefined}
+            error={undefined}
+            secondaryLabel={undefined}
+            rows={undefined}
+          />
+          {/* <AutoComplete
             onSearch={handleSearch}
             placeholder="Search transaction id"
             onSelect={handleSearchHashId}
             options={options}
             allowClear={true}
-          />
+          /> */}
+        </div>
+        <div className="filter-item">
+          <Button
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: theme.palette.text.primary,
+              fontSize: '16px',
+              width: 'fit-content',
+              marginBottom: '10px',
+            }}
+          >
+            Reset
+          </Button>
         </div>
       </div>
       <Table

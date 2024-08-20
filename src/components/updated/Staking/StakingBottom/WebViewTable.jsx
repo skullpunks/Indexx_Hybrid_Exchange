@@ -141,8 +141,8 @@ export default function StickyHeadTable({
           '&::-webkit-scrollbar-thumb:hover': {
             backgroundColor:
               theme.palette.mode === 'dark'
-                ? '#5f6673 !important'
-                : '#b7bdc6 !important', // Keep the same color on hover
+                ? '#484f59 !important' // Darker color for dark mode
+                : '#a0a6af !important', // Darker color for light mode
           },
         }}
       >

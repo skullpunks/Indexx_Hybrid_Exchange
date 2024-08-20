@@ -148,6 +148,7 @@ import RedeemPage from './pages/Redeem/Redeem';
 import CreateCardPage from './pages/Redeem/CreateCard';
 import SendCardPage from './pages/Redeem/SendCard';
 import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
+import PaypalPartnershipPage from './pages/PaypalPartnership';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -218,7 +219,10 @@ function App() {
           {/* <SecondaryHeader /> */}
           <Routes>
             <Route path="/" element={<Navigate to="/update/home/" />} />
-
+            <Route
+              path="/paypal-partnership-with-indexx"
+              element={<PaypalPartnershipPage />}
+            />
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/redeem" element={<RedeemPage />} />
             <Route path="/redeem/create-card" element={<CreateCardPage />} />
@@ -230,6 +234,10 @@ function App() {
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
+              {/* <Route
+                path="/paypal-partnership-with-indexx"
+                element={<PaypalPartnershipPage />}
+              /> */}
 
               <Route
                 path="/indexx-exchange/send"

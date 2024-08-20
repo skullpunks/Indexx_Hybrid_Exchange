@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     height: '100%',
     overflowY: 'auto',
+    padding: '0px 12px',
 
     '&::-webkit-scrollbar': {
       width: '7px',
@@ -40,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     '&::-webkit-scrollbar-thumb:hover': {
       backgroundColor:
         theme.palette.mode === 'dark'
-          ? '#5f6673 !important'
-          : '#b7bdc6 !important', // Keep the same color on hover
+          ? '#484f59 !important' // Darker color for dark mode
+          : '#a0a6af !important', // Darker color for light mode
     },
   },
 }));
@@ -83,7 +84,9 @@ const ChartDetail = ({ chartData }) => {
         </div>
         <div>
           <h2 className={classes.secondaryHeading}>Circulation Supply</h2>
-          <p className={classes.heading}>{chartData?.circulationSupply ?? 'NA'}</p>
+          <p className={classes.heading}>
+            {chartData?.circulationSupply ?? 'NA'}
+          </p>
         </div>
       </div>
       <p className={classes.secondaryHeading}>{chartData?.text1 ?? ''}</p>

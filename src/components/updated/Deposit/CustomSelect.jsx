@@ -5,7 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function CustomSelectBox({ items, type, onCurrencyChange, defaultValue }) {
+export default function CustomSelectBox({
+  items,
+  type,
+  onCurrencyChange,
+  defaultValue,
+}) {
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -35,8 +40,8 @@ export default function CustomSelectBox({ items, type, onCurrencyChange, default
         '&::-webkit-scrollbar-thumb:hover': {
           backgroundColor:
             theme.palette.mode === 'dark'
-              ? '#5f6673 !important'
-              : '#b7bdc6 !important', // Keep the same color on hover
+              ? '#484f59 !important' // Darker color for dark mode
+              : '#a0a6af !important', // Darker color for light mode
         },
       },
     },
@@ -82,7 +87,9 @@ export default function CustomSelectBox({ items, type, onCurrencyChange, default
         }}
         renderValue={(selected) => {
           if (!selected) {
-            return <em style={{ color: theme.palette.text.primary }}>{type}</em>;
+            return (
+              <em style={{ color: theme.palette.text.primary }}>{type}</em>
+            );
           }
           return selected;
         }}

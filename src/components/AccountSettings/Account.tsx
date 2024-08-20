@@ -39,7 +39,7 @@ const Account = () => {
     <div style={{ paddingTop: 190 }} className="accounts_container">
       <Tabs defaultActiveKey="1" className={classes.tabStyle}>
         <Tabs.TabPane tab="Basic Info" key="1">
-          {/* <BasicInfo theme={theme} /> */}
+          <BasicInfo theme={theme} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Security" key="2">
           <Security />
@@ -50,7 +50,7 @@ const Account = () => {
         {/* <Tabs.TabPane tab="Payment Method" key="4">
           <PaymentMethod />
         </Tabs.TabPane> */}
-        {localStorage.getItem('userlogged') === 'normal' && (
+        {localStorage.getItem('userType') === 'Indexx Exchange' && (
           <Tabs.TabPane tab="Convert to Captain Bee" key="5">
             <Signup />
           </Tabs.TabPane>

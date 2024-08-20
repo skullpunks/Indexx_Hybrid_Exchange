@@ -1,15 +1,20 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Input, Pagination, Select, Table } from 'antd';
+import { Button, Input, Pagination, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { decodeJWT, transactionList } from '../../services/api';
 import ShortenText from '../../utils/ShortenText';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
+import CustomSelectBox from './CustomSelect';
+import InputField from '../updated/shared/TextField';
+import GenericButton from '../updated/shared/Button';
+import { useTheme } from '@mui/material';
 
 const { Option } = Select;
 
 interface DataType {
+  transactionType: string;
   to: string;
   txId: string;
   key: string;
@@ -40,6 +45,24 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
   const [txListFilter, setTxListFilter] = useState([]) as any;
   const [, copy] = useCopyToClipboard();
   const [valueInput, setValueInput] = useState('');
+  const theme = useTheme();
+
+  const calculateTransactionFees = (
+    type: string,
+    asset: string,
+    amount: number
+  ) => {
+    if (type === 'Create Gift') {
+      return 'N/A';
+    } else if (type === 'SEND_CRYPTO') {
+      if (asset === 'INEX') {
+        return (amount * 0.01).toFixed(2);
+      } else {
+        return (amount * 0.06).toFixed(2);
+      }
+    }
+    return 'N/A';
+  };
 
   const columns: ColumnsType<DataType> = [
     {
@@ -107,6 +130,19 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       ),
     },
     {
+      title: 'Transaction Fees',
+      key: 'transactionFees',
+      render: (_, record) => (
+        <span>
+          {calculateTransactionFees(
+            record.transactionType,
+            record.currencyRef,
+            record.balance ?? 0
+          )}
+        </span>
+      ),
+    },
+    {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
@@ -147,12 +183,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       title: 'Notes',
       key: 'notes',
       dataIndex: 'notes',
-      render: (text) =>
-        text ? (
-          <span title={text}>
-            {text}
-          </span>
-        ) : null,
+      render: (text) => (text ? <span title={text}>{text}</span> : null),
     },
   ];
 
@@ -470,88 +501,133 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
 
   return (
     <div className="flex-align-stretch bs_main width-100 margin-t-3x padding-t-2x">
-      <div className="d-flex transaction_filters margin-b-3x">
-        <div>
+      <div
+        className="d-flex transaction_filters margin-b-3x"
+        style={{ gap: '10px', flexWrap: 'wrap' }}
+      >
+        <div className="filter-item">
           <label>Type</label> <br />
-          <Select defaultValue="all" onChange={handleChangeType}>
-            <Option value="all">All</Option>
-            <Option value="DEPOSIT_CYRPTO">Deposit</Option>
-            <Option value="WITHDRAW_CRYPTO">Withdraw</Option>
-            <Option value="WITHDRAW_REWARDS">Reward Withdraw</Option>
-          </Select>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
+              { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
+              { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
+            ]}
+            value={'all'}
+            onChange={handleChangeType}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
         </div>
-        <div className="d-md-block d-none">
+
+        <div className="filter-item">
           <label>Time</label> <br />
-          <Select defaultValue="30" onChange={handleChangeTime}>
-            <Option value="all">All</Option>
-            <Option value="7">Past 7 days</Option>
-            <Option value="30">Past 30 days</Option>
-            <Option value="90">Past 90 days</Option>
-          </Select>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Past 7 days', value: '7' },
+              { name: 'Past 30 days', value: '30' },
+              { name: 'Past 90 days', value: '90' },
+            ]}
+            value={'30'}
+            onChange={handleChangeTime}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
         </div>
-        <div className="d-md-block d-none">
+
+        <div className="filter-item">
           <label>Asset</label> <br />
-          <Select defaultValue="all" onChange={handleChangeAsset}>
-            <Option value="all">All</Option>
-            <Option value="IN500">
-              IN500 <span>Indexx 500</span>
-            </Option>
-            <Option value="INXC">
-              INXC <span>Indexx Crypto</span>
-            </Option>
-            <Option value="INEX">
-              INEX <span>Indexx Exchange</span>
-            </Option>
-            <Option value="IUSD+">
-              IUSD+ <span>Indexx USD+</span>
-            </Option>
-            <Option value="INXP">
-              INXP <span>Indexx Phoenix</span>
-            </Option>
-            <Option value="BNB">
-              BNB <span>Binance</span>
-            </Option>
-            <Option value="FTT">
-              FTT <span>FTX Token</span>
-            </Option>
-            <Option value="ETH">
-              ETH <span>Ethereum</span>
-            </Option>
-            <Option value="BTC">
-              BTC <span>Bitcoin</span>
-            </Option>
-            <Option value="LTC">
-              LTC <span>Litecoin</span>
-            </Option>
-          </Select>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'IN500 Indexx 500', value: 'IN500' },
+              { name: 'INXC Indexx Crypto', value: 'INXC' },
+              { name: 'INEX Indexx Exchange', value: 'INEX' },
+              { name: 'IUSD+ Indexx USD+', value: 'IUSD+' },
+              { name: 'INXP Indexx Phoenix', value: 'INXP' },
+              { name: 'BNB Binance', value: 'BNB' },
+              { name: 'FTT FTX Token', value: 'FTT' },
+              { name: 'ETH Ethereum', value: 'ETH' },
+              { name: 'BTC Bitcoin', value: 'BTC' },
+              { name: 'LTC Litecoin', value: 'LTC' },
+            ]}
+            value={'all'}
+            onChange={handleChangeAsset}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
         </div>
-        <div className="d-md-block d-none">
+
+        <div className="filter-item">
           <label>Status</label> <br />
-          <Select defaultValue="all" onChange={handleChangeStatus}>
-            <Option value="all">All</Option>
-            <Option value="Completed">Completed</Option>
-            <Option value="Pending">Pending</Option>
-          </Select>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Completed', value: 'Completed' },
+              { name: 'Pending', value: 'Pending' },
+            ]}
+            value={'all'}
+            onChange={handleChangeStatus}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
         </div>
-        <div className="d-md-block d-none">
+
+        <div className="filter-item">
           <label>Transaction Hash</label> <br />
-          <Input
+          <InputField
             size="large"
             placeholder="Search Transaction hash"
-            style={{ height: '55px' }}
+            style={{ height: '55px', marginTop: '0px' }}
             value={valueInput}
             onChange={onChageSearch}
             maxLength={50}
+            type={undefined}
+            label={undefined}
+            defaultValue={undefined}
+            id={undefined}
+            startAdornment={undefined}
+            endAdornment={undefined}
+            className={undefined}
+            helperText={undefined}
+            error={undefined}
+            secondaryLabel={undefined}
+            rows={undefined}
           />
         </div>
+        <div className="filter-item">
+          <Button
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: theme.palette.text.primary,
+              fontSize: '16px',
+              width: 'fit-content',
+              marginBottom: '10px',
+            }}
+          >
+            Reset
+          </Button>
+        </div>
       </div>
+
       <Table
         columns={columns}
         pagination={false}
         dataSource={getData(current, pageSize)}
         className="custom_table"
-        scroll={{ x: true }}
-        style={{ maxWidth: '94vw' }}
+        scroll={{ x: '2200px' }}
+        style={{ maxWidth: '1440px' }}
       />
       <MyPagination
         total={txListFilter && txListFilter.length}

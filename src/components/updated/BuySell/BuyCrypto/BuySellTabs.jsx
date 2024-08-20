@@ -18,6 +18,7 @@ import {
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
 import tokens from '../../../../utils/Tokens.json';
+import ErrorPage from './ErrorPopup';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -191,6 +192,7 @@ const BuySellTabs = ({
   const [defaultSelectedToken, setDefaultSelectedToken] = useState();
   const [generalMessage, setGeneralMessage] = useState('');
   const [paymentMethodError, setPaymentMethodError] = useState('');
+  const [openErrorPopup, setOpenErrorPopup] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   useEffect(() => {
@@ -281,6 +283,10 @@ const BuySellTabs = ({
   };
 
   const handleSubmit = async () => {
+    if (spendAmount === '') {
+      setOpenErrorPopup(true);
+      return;
+    }
     console.log('selectedPaymentMethod', value);
     console.log('selectedPaymentMethod', selectedPaymentMethod);
     if (selectedPaymentMethod && value === 'buy') {
@@ -401,10 +407,10 @@ const BuySellTabs = ({
         'tygapay'
       );
     }
-    console.log(res)
+    console.log(res);
     if (res.status === 200) {
       console.log('Res', res);
-      console.log("res.data.data.paymentUrl", res.data.data.paymentUrl)
+      console.log('res.data.data.paymentUrl', res.data.data.paymentUrl);
       setLoadings(false);
       window.location.href = res.data.data.paymentUrl;
     } else {
@@ -781,7 +787,7 @@ const BuySellTabs = ({
                   marginTop: 'auto',
                 }}
                 onClick={handleSubmit}
-                disabled={spendAmount === '' || loadings}
+                // disabled={spendAmount === '' || loadings}
                 loading={loadings}
               />
             </>
@@ -823,6 +829,7 @@ const BuySellTabs = ({
         token={receiveToken}
         spendToken={spendToken}
       />
+      {openErrorPopup && <ErrorPage onClose={() => setOpenErrorPopup(false)} />}
     </Box>
   );
 };
