@@ -353,12 +353,15 @@ const BuySellTabs = ({
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
-
+      let payPalPaymentLink = '';
       for (let i = 0; i < res.data.links.length; i++) {
         if (res.data.links[i].rel.includes('approve')) {
-          window.location.href = res.data.links[i].href;
+          //window.location.href = res.data.links[i].href;
+          payPalPaymentLink = res.data.links[i].href;
+          break;
         }
       }
+      navigate('/paypal-partnership-with-indexx', { state: { payPalPaymentLink } });
       //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);

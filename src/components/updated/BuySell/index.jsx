@@ -81,9 +81,9 @@ const BuySell = () => {
         if (res.status === 200) {
           let orderData = res.data.data;
           if (
-            orderData?.orderType === 'Buy' ||
+            (orderData?.orderType === 'Buy' ||
             orderData?.orderType === 'Sell' ||
-            orderData?.orderType === 'Convert'
+            orderData?.orderType === 'Convert')
           ) {
             setPopupMessage(
               `${orderData?.orderType} Order processed successfully`
