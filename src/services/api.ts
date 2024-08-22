@@ -327,6 +327,23 @@ export const checkByemail = async (email: string) => {
   }
 };
 
+
+export const getAllAffiliateUser = async () => {
+  try {
+    const result = await API.get(`/api/v1/affiliate/getAllaffiliateUsers`);
+    const formattedData = result.data.data.map((item:any) => {
+      return {
+        ...item._doc,
+        userData: item.userData
+      };
+    });
+    
+    return formattedData;
+  } catch (err:any) {
+    return err.response.data;
+  }
+}
+
 export const loginAPI = async (email: string, password: string) => {
   try {
     let isEmailProvided = isEmail(email);

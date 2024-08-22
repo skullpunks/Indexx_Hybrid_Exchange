@@ -8,7 +8,7 @@ import banner_mobile from "../../assets/Registration_mobile.svg"
 import banner_mobile_dark from "../../assets/Registration_mobile_dark.svg"
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import { baseAPIURL } from '../../services/api';
+import { baseAPIURL, getAllAffiliateUser } from '../../services/api';
 import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
@@ -133,11 +133,11 @@ const Signup = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   getAllAffiliateUser().then((data) => {
-  //     setCaptainBees(data);
-  //   })
-  // }, [])
+  useEffect(() => {
+    getAllAffiliateUser().then((data) => {
+      setCaptainBees(data);
+    })
+  }, [])
 
 
   useEffect(() => {
@@ -525,7 +525,7 @@ const Signup = () => {
 
     } else if (isEmailValid && isPasswordValid && isConfirmPasswordValid && isSSNValid && isChecked) {
       try {
-        const response = await axios.post(`${baseAPIURL}/api/v1/affiliate/adduser`, {
+        const response = await axios.post(`${baseAPIURL}/api/v1/affiliate/convertnormalUser`, {
           firstname,
           lastname,
           Username,
@@ -1663,7 +1663,7 @@ const Signup = () => {
               <MenuItem value="">Select Captain Bee</MenuItem>
               {captainbees?.map((bee, id) => (
                 <MenuItem key={id} value={bee?.userData?.referralCode}>
-                  <LightTooltip title={<a href={`/captainbee/${bee.Username}`} target='blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }} classes={{ tooltip: classes.customTooltip }}>Click to view {bee.accname}</a>} placement='right'>
+                  <LightTooltip title={<a href={`https://hive.indexx.ai/captainbee/${bee.Username}`} target='blank' style={{ textTransform: "none", color: "var(--main_body)", fontSize: 15 }} classes={{ tooltip: classes.customTooltip }}>Click to view {bee.accname}</a>} placement='right'>
                     <Box sx={{
                       display: "flex",
                       flexDirection: "row",
