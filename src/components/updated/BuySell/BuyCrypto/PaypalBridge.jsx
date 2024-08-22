@@ -5,6 +5,7 @@ import partnershipDark from '../../../../assets/paypalPartnership/indexxPaypalFo
 import partnershipLight from '../../../../assets/paypalPartnership/indexxPaypalForWhiteMode.svg';
 import partnershipFirst from '../../../../assets/paypalPartnership/paypalTopBanner.svg';
 import GenericButton from '../../shared/Button';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -73,6 +74,19 @@ const useStyles = makeStyles((theme) => ({
 const PaypalBridge = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const location = useLocation();
+  const { payPalPaymentLink } = location.state || {};
+
+  const handleProceedToPaypal = () => {
+    console.log("payPalPaymentLink", payPalPaymentLink)
+    if (payPalPaymentLink) {
+      window.location.href = payPalPaymentLink;
+    } else {
+      // Handle the case where the link is not available
+      console.log('PayPal payment link is not available');
+      console.error('PayPal payment link is not available');
+    }
+  };
 
   return (
     <Box className={classes.container}>
@@ -89,6 +103,7 @@ const PaypalBridge = () => {
         <GenericButton
           text={'Proceed to Paypal'}
           styles={{ padding: '10px 30px' }}
+          onClick={handleProceedToPaypal}
         />
       </div>
 
