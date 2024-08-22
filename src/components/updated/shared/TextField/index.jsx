@@ -7,7 +7,9 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import { makeStyles } from '@mui/styles';
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
+const BootstrapInput = styled(InputBase, {
+  shouldForwardProp: (prop) => prop !== 'yellowBorders',
+})(({ theme, yellowBorders }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
@@ -20,13 +22,13 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     paddingRight: '15px',
     transition: theme.transitions.create(['border-color', 'background-color']),
     '&:hover': {
-      borderColor: theme.palette.primary.main,
+      borderColor: yellowBorders ? '#FFB300' : theme.palette.primary.main,
     },
     '&.Mui-error': {
       borderColor: 'red !important',
     },
     '&.Mui-focused': {
-      borderColor: theme.palette.primary.main,
+      borderColor: yellowBorders ? '#FFB300' : theme.palette.primary.main,
     },
   },
   '& .MuiInputBase-input': {
@@ -85,6 +87,7 @@ const InputField = ({
   error,
   secondaryLabel,
   rows,
+  yellowBorders,
   ...otherProps
 }) => {
   const classes = useStyles();
@@ -98,6 +101,7 @@ const InputField = ({
       <BootstrapInput
         type={type === 'textarea' ? 'text' : type}
         defaultValue={defaultValue}
+        yellowBorders={yellowBorders}
         id={id}
         startAdornment={startAdornment}
         endAdornment={endAdornment}

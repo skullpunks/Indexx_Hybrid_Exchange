@@ -10,6 +10,7 @@ import CustomSelectBox from './CustomSelect';
 import InputField from '../updated/shared/TextField';
 import GenericButton from '../updated/shared/Button';
 import { useTheme } from '@mui/material';
+import { AnyArn } from 'aws-sdk/clients/groundstation';
 
 const { Option } = Select;
 
@@ -33,10 +34,10 @@ interface DataType {
 
 const BSTransactionCryptoHistoryTable: React.FC = () => {
   const [selection, setSelection] = useState({
-    type: '',
-    asset: '',
-    status: '',
-    time: '30',
+    type: 'all',
+    asset: 'all',
+    status: 'all',
+    time: 'all',
     transactionHash: '',
   });
   const pageSize = 10;
@@ -215,7 +216,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleChangeTime = (value: string) => {
+  const handleChangeTime = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment().subtract(+value, 'days').format('YYYY-MM-DD');
     if (!isNaN(+value)) {
       setSelection({
@@ -249,7 +251,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         type: selection.type,
         asset: selection.asset,
         status: selection.status,
-        time: '',
+        time: 'all',
         transactionHash: selection.transactionHash,
       });
       const txListFilterData = txList.filter((data: any) => {
@@ -272,7 +274,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeStatus = (value: string) => {
+  const handleChangeStatus = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -306,7 +309,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       setSelection({
         type: selection.type,
         asset: selection.asset,
-        status: '',
+        status: 'all',
         time: selection.time,
         transactionHash: selection.transactionHash,
       });
@@ -332,7 +335,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeType = (value: string) => {
+  const handleChangeType = (el: any) => {
+    const value = el.target.value;
+    console.log(value, 'value');
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -363,7 +368,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       setTxListFilter(txListFilterData);
     } else {
       setSelection({
-        type: '',
+        type: 'all',
         asset: selection.asset,
         status: selection.status,
         time: selection.time,
@@ -388,7 +393,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeAsset = (value: string) => {
+  const handleChangeAsset = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -420,7 +426,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     } else {
       setSelection({
         type: selection.type,
-        asset: '',
+        asset: 'all',
         status: selection.status,
         time: selection.time,
         transactionHash: selection.transactionHash,
@@ -514,7 +520,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
               { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
               { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
             ]}
-            value={'all'}
+            value={selection.type}
             onChange={handleChangeType}
             hasborder
             type={undefined}
@@ -532,7 +538,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
               { name: 'Past 30 days', value: '30' },
               { name: 'Past 90 days', value: '90' },
             ]}
-            value={'30'}
+            value={selection.time}
             onChange={handleChangeTime}
             hasborder
             type={undefined}
@@ -557,7 +563,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
               { name: 'BTC Bitcoin', value: 'BTC' },
               { name: 'LTC Litecoin', value: 'LTC' },
             ]}
-            value={'all'}
+            value={selection.asset}
             onChange={handleChangeAsset}
             hasborder
             type={undefined}
@@ -574,7 +580,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
               { name: 'Completed', value: 'Completed' },
               { name: 'Pending', value: 'Pending' },
             ]}
-            value={'all'}
+            value={selection.status}
             onChange={handleChangeStatus}
             hasborder
             type={undefined}
@@ -589,7 +595,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             size="large"
             placeholder="Search Transaction hash"
             style={{ height: '55px', marginTop: '0px' }}
-            value={valueInput}
+            value={selection.transactionHash}
             onChange={onChageSearch}
             maxLength={50}
             type={undefined}
@@ -603,6 +609,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             error={undefined}
             secondaryLabel={undefined}
             rows={undefined}
+            yellowBorders={undefined}
           />
         </div>
         <div className="filter-item">
@@ -614,6 +621,15 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
               fontSize: '16px',
               width: 'fit-content',
               marginBottom: '10px',
+            }}
+            onClick={() => {
+              setSelection({
+                type: 'all',
+                asset: 'all',
+                status: 'all',
+                time: 'all',
+                transactionHash: '',
+              });
             }}
           >
             Reset
@@ -627,7 +643,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         dataSource={getData(current, pageSize)}
         className="custom_table"
         scroll={{ x: '2200px' }}
-        style={{ maxWidth: '1440px' }}
       />
       <MyPagination
         total={txListFilter && txListFilter.length}
