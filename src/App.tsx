@@ -149,6 +149,7 @@ import CreateCardPage from './pages/Redeem/CreateCard';
 import SendCardPage from './pages/Redeem/SendCard';
 import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
 import PaypalPartnershipPage from './pages/PaypalPartnership';
+import ConvertPage from './pages/Convert';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 function App() {
@@ -223,6 +224,7 @@ function App() {
               path="/paypal-partnership-with-indexx"
               element={<PaypalPartnershipPage />}
             />
+            <Route path="/convert/*" element={<ConvertPage />} />
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/redeem" element={<RedeemPage />} />
             <Route path="/redeem/create-card" element={<CreateCardPage />} />

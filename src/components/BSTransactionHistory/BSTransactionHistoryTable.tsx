@@ -656,6 +656,7 @@ const BSTransactionHistoryTable: React.FC = () => {
             error={undefined}
             secondaryLabel={undefined}
             rows={undefined}
+            yellowBorders={undefined}
           />
           {/* <AutoComplete
             onSearch={handleSearch}
