@@ -65,7 +65,7 @@ const header_data = [
           },
           {
             name: 'Convert',
-            href: '/indexx-exchange/buy-sell?type=convert',
+            href: '/convert',
           },
           {
             name: 'Asset Wallet',

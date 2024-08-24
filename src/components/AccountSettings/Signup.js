@@ -629,6 +629,177 @@ const Signup = () => {
             Captain Bee Information
           </Typography>
 
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              width: '100%',
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="text"
+              fontSize={isMobile ? '15px' : '18px'}
+              fontWeight={400}
+              width={'35%'}
+              textAlign={'left'}
+            >
+              Name
+            </Typography>
+            <TextField
+              //   label="First Name"
+              placeholder="First Name"
+              variant="outlined"
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2, width: '31.2%' }}
+              size="small" // Make the input box smaller
+              value={firstname}
+              onChange={(e) => {
+                setFirstname(e.target.value);
+              }}
+            />
+            <TextField
+              //   label="Last Name"
+              placeholder="Last Name"
+              variant="outlined"
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2, width: '31.2%' }}
+              size="small" // Make the input box smaller
+              value={lastname}
+              onChange={(e) => {
+                setLastname(e.target.value);
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              width: '100%',
+              mb: 2,
+            }}
+          >
+            <Typography
+              variant="text"
+              fontSize={isMobile ? '15px' : '18px'}
+              fontWeight={400}
+              width={'35%'}
+              textAlign={'left'}
+            >
+              Password
+            </Typography>
+
+            <TextField
+              //   label="Password"
+              variant="outlined"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              InputLabelProps={{ shrink: true }}
+              sx={{
+                mb: 2,
+                width: '54.27%',
+                '& input:invalid': {
+                  borderColor: 'red',
+                },
+              }}
+              size="small"
+              value={password}
+              error={passwordError !== ''}
+              helperText={passwordError}
+              // onBlur={validatePassword}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                validatePassword(e.target.value);
+              }}
+            />
+            <Button
+              onClick={() => setShowPassword(!showPassword)} // Toggle show/hide password
+              variant="text"
+              disableTouchRipple
+              sx={{
+                color: '#FFB300',
+                textTransform: 'none',
+                fontSize: '13px',
+                backgroundColor: 'none',
+                '&:hover': {
+                  backgroundColor: 'none',
+                },
+                // border:"1px solid black",
+                py: 1,
+                width: '9%',
+                minWidth: `${isMobile ? '25px' : '64px'}`,
+              }}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              width: '100%',
+              mb: 2,
+            }}
+          >
+            <Typography
+              variant="text"
+              fontSize={isMobile ? '15px' : '18px'}
+              fontWeight={400}
+              width={'35%'}
+              textAlign={'left'}
+            >
+              Password (Confirm)
+            </Typography>
+            <TextField
+              //   label="Password (Confirm)"
+              variant="outlined"
+              placeholder="Password (Confirm)"
+              type={showConfirmPassword ? 'text' : 'password'}
+              InputLabelProps={{ shrink: true }}
+              sx={{
+                mb: 2,
+                width: '54.27%',
+                '& input:invalid': {
+                  borderColor: 'red',
+                },
+              }}
+              size="small" // Make the input box smaller
+              value={confirmpass}
+              error={confirmPasswordError !== ''}
+              helperText={confirmPasswordError}
+              // onBlur={validateConfirmPassword}
+              onChange={(e) => {
+                setConfirmpass(e.target.value);
+                validateConfirmPassword(e.target.value);
+              }}
+            />
+            <Button
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle show/hide confirm password
+              variant="text"
+              disableTouchRipple
+              sx={{
+                color: '#FFB300',
+                textTransform: 'none',
+                fontSize: '13px',
+                backgroundColor: 'none',
+                '&:hover': {
+                  backgroundColor: 'none',
+                },
+                // border:"1px solid black",
+                py: 1,
+                width: '9%',
+                minWidth: `${isMobile ? '25px' : '64px'}`,
+              }}
+            >
+              {showConfirmPassword ? 'Hide' : 'Show'}
+            </Button>
+          </Box>
           {/* <Box sx={{
         display: "flex",
         flexDirection: "row",

@@ -9,6 +9,8 @@ import InputField from '../shared/TextField';
 import GenericButton from '../shared/Button';
 import CustomTextField from './CustomTextField';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import IconicHeader from './IconicHeader';
+import CoinsPopup from './CoinsPopup';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -27,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
       padding: '0px 0px',
     },
   },
+  heading: {
+    fontSize: '14px',
+    fontWeight: '400',
+    color: theme.palette.text.primary,
+    textAlign: 'left',
+    background: 'none',
+  },
   link: {
     fontWeight: 500,
     fontSize: '20px',
@@ -44,15 +53,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
 
-  rightContainer: {
-    [theme.breakpoints.down('md')]: {
-      flexBasis: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  },
+  rightContainer: {},
   rightContentContainer: {
-    maxWidth: '384px',
+    maxWidth: '584px',
+    width: '100%',
     '& h3': {
       fontSize: '32px',
       fontWeight: 600,
@@ -76,26 +80,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const obfuscateEmail = (email) => {
-  const [localPart, domain] = email.split('@');
-  const visibleChars = Math.min(3, localPart.length);
-  const obfuscatedLocalPart =
-    localPart.slice(0, visibleChars) +
-    '*'.repeat(localPart.length - visibleChars);
-  const [domainName, domainExtension] = domain.split('.');
-  const obfuscatedDomain =
-    domainName.slice(0, visibleChars) +
-    '*'.repeat(domainName.length - visibleChars) +
-    '.' +
-    domainExtension;
-  return `${obfuscatedLocalPart}@${obfuscatedDomain}`;
-};
-
 const ConvertCrypto = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showCoinsDropdown, setShowCoinsDropdown] = useState(false);
   const validationSchema = Yup.object({
     verificationCode: Yup.number()
       .test(
@@ -123,11 +112,14 @@ const ConvertCrypto = () => {
       </div>
       <div className={classes.contentContent}>
         <div className={classes.rightContainer}>
+          <IconicHeader />
+          <h6 className={classes.heading}>Wallet</h6>
           <div className={classes.rightContentContainer}>
             <CustomTextField
               label="From"
               placeholder="0.01 - 2500000"
               type="sell"
+              setShowCoinsDropdown={setShowCoinsDropdown}
               //   onAmountChange={handleSpendAmountChange}
               //   onReceiveAmountChange={handleReceiveAmountChange}
               //   onPriceChange={handlePriceChange}
@@ -145,6 +137,7 @@ const ConvertCrypto = () => {
               label="To"
               placeholder="0.000000017 - 43"
               type="sell"
+              setShowCoinsDropdown={setShowCoinsDropdown}
               //   onAmountChange={handleSpendAmountChange}
               //   onReceiveAmountChange={handleReceiveAmountChange}
               //   onPriceChange={handlePriceChange}
@@ -163,6 +156,9 @@ const ConvertCrypto = () => {
           </div>
         </div>
       </div>
+      {showCoinsDropdown && (
+        <CoinsPopup onClose={() => setShowCoinsDropdown(false)} />
+      )}
     </div>
   );
 };

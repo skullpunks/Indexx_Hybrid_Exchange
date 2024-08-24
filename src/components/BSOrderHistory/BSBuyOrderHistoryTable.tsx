@@ -1,8 +1,11 @@
-import { Input, Pagination, Select, Table } from 'antd';
+import { Button, Input, Pagination, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { decodeJWT, getUserOrders } from '../../services/api';
+import CustomSelectBox from './CustomSelect';
+import InputField from '../updated/shared/TextField';
+import { useTheme } from '@mui/material';
 
 const { Option } = Select;
 
@@ -15,22 +18,23 @@ interface DataType {
   finalAmount: string;
   destination: string;
   exchangeFees: string;
-  orderRate: { rate: number, currency: string };
+  orderRate: { rate: number; currency: string };
   orderType: string;
   orderId: string;
 }
 
 const BSBuyOrderHistoryTable: React.FC = () => {
   const pageSize = 10;
+  const theme = useTheme();
   const [current, setCurrent] = useState(1);
   const [orderList, setOrderList] = useState<DataType[]>([]);
   const [orderListFilter, setOrderTxListFilter] = useState<DataType[]>([]);
   const [isLoading, setLoadings] = useState(true);
   const [valueInput, setValueInput] = useState('');
   const [selection, setSelection] = useState({
-    asset: '',
-    status: '',
-    time: '30',
+    asset: 'all',
+    status: 'all',
+    time: 'all',
     orderId: '',
   });
 
@@ -89,7 +93,8 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       key: 'cryptoAmountUSD',
       render: (record) => (
         <span>
-          {Math.floor(record.breakdown.outAmount * 1000) / 1000} {record.breakdown.outCurrencyName} / $
+          {Math.floor(record.breakdown.outAmount * 1000) / 1000}{' '}
+          {record.breakdown.outCurrencyName} / $
           {(
             (Math.floor(record.breakdown.outAmount * 1000) / 1000) *
             (record.orderRate?.rate ?? 0)
@@ -120,12 +125,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       title: 'Notes',
       key: 'notes',
       dataIndex: 'notes',
-      render: (text) =>
-        text ? (
-          <span title={text}>
-            {text}
-          </span>
-        ) : null,
+      render: (text) => (text ? <span title={text}>{text}</span> : null),
     },
   ];
 
@@ -150,7 +150,8 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     });
   }, []);
 
-  const handleChangeTime = (value: string) => {
+  const handleChangeTime = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment().subtract(+value, 'days').format('YYYY-MM-DD');
 
     if (!isNaN(+value)) {
@@ -173,7 +174,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-            selection.asset?.toLowerCase())
+              selection.asset?.toLowerCase())
         );
       });
       setOrderTxListFilter(txListFilterData);
@@ -181,7 +182,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       setSelection({
         asset: selection.asset,
         status: selection.status,
-        time: '',
+        time: 'all',
         orderId: selection.orderId,
       });
       const txListFilterData = orderList.filter((data: any) => {
@@ -194,14 +195,15 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-            selection.asset?.toLowerCase())
+              selection.asset?.toLowerCase())
         );
       });
       setOrderTxListFilter(txListFilterData);
     }
   };
 
-  const handleChangeStatus = (value: string) => {
+  const handleChangeStatus = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -225,7 +227,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         );
       });
@@ -234,7 +236,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
     } else {
       setSelection({
         asset: selection.asset,
-        status: '',
+        status: 'all',
         time: selection.time,
         orderId: selection.orderId,
       });
@@ -248,7 +250,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
               .includes(selection.orderId?.toLowerCase())) &&
           (!selection.asset ||
             data.breakdown.outCurrencyName?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
         );
 
@@ -281,14 +283,15 @@ const BSBuyOrderHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
         (!selection.asset ||
           data.breakdown.outCurrencyName?.toLowerCase() ===
-          selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
         (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
       );
     });
     setOrderTxListFilter(filterDate);
   };
 
-  const handleChangeAsset = (value: string) => {
+  const handleChangeAsset = (el: any) => {
+    const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -305,7 +308,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
 
         return (
           data.breakdown.outCurrencyName?.toLowerCase() ===
-          value?.toLowerCase() &&
+            value?.toLowerCase() &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.orderId ||
@@ -318,7 +321,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
       setOrderTxListFilter(txListFilterData);
     } else {
       setSelection({
-        asset: '',
+        asset: 'all',
         status: selection.status,
         time: selection.time,
         orderId: selection.orderId,
@@ -369,18 +372,54 @@ const BSBuyOrderHistoryTable: React.FC = () => {
   return (
     <div className="flex-align-stretch bs_main width-100  margin-t-3x padding-t-2x ">
       <div className="d-flex transaction_filters margin-b-3x">
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Time</label> <br />
-          <Select defaultValue="30" onChange={handleChangeTime}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Past 7 days', value: '7' },
+              { name: 'Past 30 days', value: '30' },
+              { name: 'Past 90 days', value: '90' },
+            ]}
+            value={selection.time}
+            onChange={handleChangeTime}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="30" onChange={handleChangeTime}>
             <Option value="all">All</Option>
             <Option value="7">Past 7 days</Option>
             <Option value="30">Past 30 days</Option>
             <Option value="90">Past 90 days</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Asset</label> <br />
-          <Select defaultValue="all" onChange={handleChangeAsset}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'IN500 Indexx 500', value: 'IN500' },
+              { name: 'INXC Indexx Crypto', value: 'INXC' },
+              { name: 'INEX Indexx Exchange', value: 'INEX' },
+              { name: 'IUSD+ Indexx USD+', value: 'IUSD+' },
+              { name: 'INXP Indexx Phoenix', value: 'INXP' },
+              { name: 'BNB Binance', value: 'BNB' },
+              { name: 'FTT FTX Token', value: 'FTT' },
+              { name: 'ETH Ethereum', value: 'ETH' },
+              { name: 'BTC Bitcoin', value: 'BTC' },
+              { name: 'LTC Litecoin', value: 'LTC' },
+              { name: 'WIBS Who Is Bitcoin Satoshi', value: 'WIBS' },
+            ]}
+            value={selection.asset}
+            onChange={handleChangeAsset}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="all" onChange={handleChangeAsset}>
             <Option value="all">All</Option>
             <Option value="IN500">
               IN500 <span>Indexx 500</span>
@@ -415,26 +454,81 @@ const BSBuyOrderHistoryTable: React.FC = () => {
             <Option value="WIBS">
               WIBS <span>Who Is Bitcoin Satoshi</span>
             </Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Status</label> <br />
-          <Select defaultValue="all" onChange={handleChangeStatus}>
+          <CustomSelectBox
+            items={[
+              { name: 'All', value: 'all' },
+              { name: 'Completed', value: 'Completed' },
+              { name: 'Quoted', value: 'Quoted' },
+            ]}
+            value={selection.status}
+            onChange={handleChangeStatus}
+            hasborder
+            type={undefined}
+            isCurrency={undefined}
+            onCurrencyChange={undefined}
+          />
+          {/* <Select defaultValue="all" onChange={handleChangeStatus}>
             <Option value="all">All</Option>
             <Option value="Completed">Completed</Option>
             <Option value="Quoted">Quoted</Option>
-          </Select>
+          </Select> */}
         </div>
-        <div className="d-md-block d-none">
+        <div className="filter-item">
           <label>Order Id</label> <br />
-          <Input
+          <InputField
+            size="large"
+            placeholder="Search Transaction hash"
+            style={{ height: '55px', marginTop: '0px' }}
+            value={selection.orderId}
+            onChange={onChageSearch}
+            maxLength={50}
+            type={undefined}
+            label={undefined}
+            defaultValue={undefined}
+            id={undefined}
+            startAdornment={undefined}
+            endAdornment={undefined}
+            className={undefined}
+            helperText={undefined}
+            error={undefined}
+            secondaryLabel={undefined}
+            rows={undefined}
+            yellowBorders={undefined}
+          />
+          {/* <Input
             size="large"
             placeholder="Search Order Id"
             style={{ height: '55px' }}
             value={valueInput}
             onChange={onChageSearch}
             maxLength={50}
-          />
+          /> */}
+        </div>
+        <div className="filter-item">
+          <Button
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: theme.palette.text.primary,
+              fontSize: '16px',
+              width: 'fit-content',
+              marginBottom: '10px',
+            }}
+            onClick={() => {
+              setSelection({
+                asset: 'all',
+                status: 'all',
+                time: 'all',
+                orderId: '',
+              });
+            }}
+          >
+            Reset
+          </Button>
         </div>
       </div>
       <Table
@@ -443,8 +537,7 @@ const BSBuyOrderHistoryTable: React.FC = () => {
         dataSource={getData(current, pageSize)}
         className="custom_table"
         loading={tableLoading}
-        scroll={{ x: true }}
-        style={{ maxWidth: '94vw' }}
+        scroll={{ x: '2200px' }}
       />
       <MyPagination
         total={orderListFilter && orderListFilter.length}

@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   label: {
-    fontSize: '18px !important',
+    fontSize: '14px !important',
     fontFamily: 'poppins !important',
-    fontWeight: '600 !important',
-    marginBottom: '20px !important',
+    fontWeight: '400 !important',
+    marginBottom: '10px !important',
   },
   formControl: {
     width: '100%',
@@ -174,6 +174,8 @@ const CustomTextField = ({
   onSelectToken,
   onAmountChange,
   onReceiveAmountChange,
+  setShowCoinsDropdown,
+
   onPriceChange,
   amount,
   receiveAmount,
@@ -325,9 +327,22 @@ const CustomTextField = ({
         }}
       >
         <FormControl className={classes.formControl}>
-          <InputLabel className={classes.label} shrink htmlFor="input-field">
-            {label}
-          </InputLabel>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '0px 10px',
+            }}
+          >
+            {' '}
+            <div className={classes.label} shrink htmlFor="input-field">
+              {label}
+            </div>
+            <div className={classes.label} shrink htmlFor="input-field">
+              Balance : 0.34284978 USDT
+            </div>
+          </div>
+
           <TextField
             variant="outlined"
             className={classes.textField}
@@ -343,7 +358,7 @@ const CustomTextField = ({
                   <div
                     className={classes.dropDownIconContainer}
                     style={{ cursor: disableDropdown ? 'default' : 'pointer' }}
-                    onClick={disableDropdown ? null : handleOpenModal}
+                    onClick={() => setShowCoinsDropdown(true)}
                   >
                     <img
                       src={getImage(selectedToken?.image)}
