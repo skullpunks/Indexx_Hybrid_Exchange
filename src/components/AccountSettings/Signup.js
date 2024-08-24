@@ -18,7 +18,7 @@ import banner_mobile from '../../assets/Registration_mobile.svg';
 import banner_mobile_dark from '../../assets/Registration_mobile_dark.svg';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import { baseAPIURL } from '../../services/api';
+import { baseAPIURL, getAllAffiliateUser } from '../../services/api';
 import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
@@ -140,11 +140,11 @@ const Signup = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   getAllAffiliateUser().then((data) => {
-  //     setCaptainBees(data);
-  //   })
-  // }, [])
+  useEffect(() => {
+    getAllAffiliateUser().then((data) => {
+      setCaptainBees(data);
+    })
+  }, [])
 
   useEffect(() => {
     if (refcode !== 'null' || refcode !== 'undefined') {
@@ -535,34 +535,32 @@ const Signup = () => {
       isChecked
     ) {
       try {
-        const response = await axios.post(
-          `${baseAPIURL}/api/v1/affiliate/adduser`,
-          {
-            firstname,
-            lastname,
-            Username,
-            Email,
-            ssn,
-            code,
-            Phone,
-            country,
-            address1,
-            address2,
-            city,
-            state,
-            Zip,
-            password,
-            confirmpass,
-            Currency,
-            photoIdFileurl,
-            frontFileurl,
-            backFileurl,
-            accname,
-            Website,
-            protocol,
-            referralCode: Captain,
-          }
-        );
+        const response = await axios.post(`${baseAPIURL}/api/v1/affiliate/convertnormalUser`, {
+          firstname,
+          lastname,
+          Username,
+          Email,
+          ssn,
+          code,
+          Phone,
+          country,
+          address1,
+          address2,
+          city,
+          state,
+          Zip,
+          password,
+          confirmpass,
+          Currency,
+          photoIdFileurl,
+          frontFileurl,
+          backFileurl,
+          accname,
+          Website,
+          protocol,
+          referralCode: Captain
+        });
+
 
         if (response.status === 200) {
           setIsLoading(false);
@@ -1060,7 +1058,7 @@ const Signup = () => {
                   <LightTooltip
                     title={
                       <a
-                        href={`/captainbee/${bee.Username}`}
+                        href={`https://hive.indexx.ai/captainbee/${bee.Username}`}
                         target="blank"
                         style={{
                           textTransform: 'none',
