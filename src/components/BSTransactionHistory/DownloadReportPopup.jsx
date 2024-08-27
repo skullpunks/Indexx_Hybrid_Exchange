@@ -9,6 +9,7 @@ import PDFGenerator from './TransactionHistoryReport';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import indexxLogo from '../../assets/header-icons/indexx grey.438c3bb4.png';
+import { getReportTransactions } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -184,7 +185,7 @@ const DownloadReportPopup = ({ onClose }) => {
     ],
   };
 
-  const generatePDF = () => {
+  const generatePDF0 = () => {
     const doc = new jsPDF({
       orientation: 'l', // Landscape orientation
       unit: 'mm',
@@ -335,7 +336,162 @@ const DownloadReportPopup = ({ onClose }) => {
     };
   };
 
+  const generatePDF = () => {
+    if (!reportData) return;
+
+    const doc = new jsPDF({
+      orientation: 'l', // Landscape orientation
+      unit: 'mm',
+      format: [297, 210], // Custom page size with increased width
+    });
+
+    const padding = 10;
+    doc.setFontSize(10);
+    doc.text('', padding, padding);
+
+    // Logo image using SVG
+    const logo = new Image();
+    logo.src = indexxLogo;
+
+    logo.onload = () => {
+      doc.addImage(logo, 'PNG', padding, padding, 55, 20);
+
+      // Bold heading
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Transaction History Report', padding, 40);
+
+      // Paragraph with reduced font size
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text('This is the transaction history report for the selected period.', padding, 50);
+
+      // Date and filters
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Date', padding, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Date: ${dateFilter}`, padding, 70);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Filter', padding + 60, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Type: ${transactionType}`, padding + 60, 70);
+      doc.text(`Asset: ${assetType}`, padding + 60, 75);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Customer', padding + 120, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Email: ${reportData.customerEmail}`, padding + 120, 70);
+
+      // Portfolio Summary
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Portfolio Summary', padding, 90);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Portfolio summary balances are as of ${reportData.toDate} 23:59:59 UTC`, padding, 95);
+
+      const portfolioSummary = [
+        ['Asset', 'Quantity', 'Market Price', 'Market Value'],
+        ...reportData.portfolioSummary.map((item) => [
+          item.asset,
+          item.quantity,
+          item.marketPrice,
+          item.marketValue,
+        ]),
+      ];
+
+      doc.autoTable({
+        startY: 100,
+        head: [portfolioSummary[0]],
+        body: portfolioSummary.slice(1),
+        styles: {
+          fontSize: 8,
+        },
+        headStyles: {
+          fillColor: [211, 211, 211],
+          textColor: 0,
+          fontStyle: 'bold',
+        },
+        margin: { left: padding, right: padding },
+      });
+
+      // Transaction History
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Transaction History', padding, doc.autoTable.previous.finalY + 10);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Transaction history data for ${dateFilter}`, padding, doc.autoTable.previous.finalY + 15);
+
+      const transactionHistory = [
+        [
+          'Timestamp',
+          'Transaction Type',
+          'Asset',
+          'Quantity Transacted',
+          'Price at Transaction',
+          'Subtotal',
+          'Total',
+          'Notes',
+        ],
+        ...reportData.transactionHistory.map((item) => [
+          item.timestamp,
+          item.transactionType,
+          item.asset,
+          item.quantityTransacted,
+          item.priceAtTransaction,
+          item.subtotal,
+          item.total,
+          item.notes,
+        ]),
+      ];
+
+      doc.autoTable({
+        startY: doc.autoTable.previous.finalY + 20,
+        head: [transactionHistory[0]],
+        body: transactionHistory.slice(1),
+        styles: {
+          fontSize: 8,
+        },
+        headStyles: {
+          fillColor: [211, 211, 211],
+          textColor: 0,
+          fontStyle: 'bold',
+        },
+        margin: { left: padding, right: padding },
+      });
+
+      doc.save('Transaction_History_Report.pdf');
+    };
+  };
+
   const classes = useStyles();
+
+  const handleGenerateReport = async () => {
+    setLoading(true);
+
+    try {
+      let access_token = String(localStorage.getItem("access_token"));
+      let decoded = decodeJWT(access_token);
+      const email = decoded.email; // Replace with dynamic email if needed
+      const data = await getReportTransactions(email, dateFilter, assetType, transactionType);
+      setReportData(data);
+      generatePDF(); // Generate PDF after fetching data
+    } catch (error) {
+      console.error('Failed to generate report:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
