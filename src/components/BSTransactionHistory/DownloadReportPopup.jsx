@@ -9,7 +9,7 @@ import PDFGenerator from './TransactionHistoryReport';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import indexxLogo from '../../assets/header-icons/indexx grey.438c3bb4.png';
-import { getReportTransactions } from '../../services/api';
+import { getReportTransactions, decodeJWT } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -111,6 +111,8 @@ const DownloadReportPopup = ({ onClose }) => {
   const [dateFilter, setDateFilter] = useState('All time');
   const [assetType, setAssetType] = useState('All Asset');
   const [transactionType, setTransactionType] = useState('All Transactions');
+  const [loading, setLoading] = useState(false);
+  const [reportData, setReportData] = useState(null);
   const theme = useTheme();
   const navigate = useNavigate();
 
