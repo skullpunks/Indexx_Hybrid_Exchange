@@ -11,6 +11,7 @@ import CustomTextField from './CustomTextField';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import IconicHeader from './IconicHeader';
 import CoinsPopup from './CoinsPopup';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -78,6 +79,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     marginTop: '8px',
   },
+  mainHeading: {
+    fontSize: '20px',
+    fontWeight: '600px',
+    color: theme.palette.text.primary,
+  },
 }));
 
 const ConvertCrypto = () => {
@@ -106,12 +112,13 @@ const ConvertCrypto = () => {
   return (
     <div className={classes.Container}>
       <div className={classes.header}>
-        <Link className={classes.link} to="/auth/login-password">
-          Convert
+        <Link className={classes.link} to="/">
+          <ArrowBackIcon /> Buy Sell
         </Link>
       </div>
       <div className={classes.contentContent}>
         <div className={classes.rightContainer}>
+          <h2 className={classes.mainHeading}>Convert</h2>
           <IconicHeader />
           <h6 className={classes.heading}>Wallet</h6>
           <div className={classes.rightContentContainer}>

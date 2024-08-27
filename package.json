@@ -40,6 +40,8 @@
     "date-fns": "^2.30.0",
     "ethers": "5.7.0",
     "formik": "^2.4.6",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "jwt-decode": "^3.1.2",
     "lightweight-charts": "^4.1.4",
     "lodash": "^4.17.21",

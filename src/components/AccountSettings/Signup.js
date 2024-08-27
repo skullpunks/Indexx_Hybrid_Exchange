@@ -9,21 +9,18 @@ import {
   FormControlLabel,
   Checkbox,
   useMediaQuery,
+  InputAdornment,
 } from '@mui/material';
-import banner from '../../assets/Registration.svg';
+
 import loadingGif from '../../assets/beeloade.gif';
-import tick from '../../assets/arts/pay/tick.svg';
-import banner_dark from '../../assets/Registration_dark.svg';
-import banner_mobile from '../../assets/Registration_mobile.svg';
-import banner_mobile_dark from '../../assets/Registration_mobile_dark.svg';
+
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import { baseAPIURL, getAllAffiliateUser } from '../../services/api';
 import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
-// import metadata from 'libphonenumber-js/metadata.min.json';
-// import { getCountryCallingCode } from 'libphonenumber-js';
+
 import currencyCodes from 'currency-codes';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSearchParams } from 'react-router-dom';
@@ -33,6 +30,9 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import './Signup.css';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import InputField from '../updated/shared/TextField';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import CustomSelectBox from './CustomSelect';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 AWS.config.update({
@@ -143,8 +143,8 @@ const Signup = () => {
   useEffect(() => {
     getAllAffiliateUser().then((data) => {
       setCaptainBees(data);
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
     if (refcode !== 'null' || refcode !== 'undefined') {
@@ -242,10 +242,6 @@ const Signup = () => {
     setShowSSN(!showSSN); // Toggle the showSSN state
   };
 
-  // const handleShowEIN = () => {
-  //   setShowEIN(!showEIN); // Toggle the showSSN state
-  // };
-
   // Helper function to format SSN with hyphens
   const formatSSN = (ssn) => {
     if (ssn.length === 9) {
@@ -324,89 +320,6 @@ const Signup = () => {
     return isValid;
   };
 
-  const handleFrontFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Check file size
-      if (file.size > 10 * 1024 * 1024) {
-        OpenNotification('error', 'File size should be less than 10MB');
-
-        return;
-      }
-
-      // Check file extension
-      const allowedExtensions = ['jpeg', 'jpg', 'png', 'pdf'];
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-
-      if (!allowedExtensions.includes(fileExtension)) {
-        OpenNotification('error', 'File must be a JPEG or PNG image or PDF');
-        return;
-      }
-
-      setFrontFile(file);
-      uploadToS3(file, 'front');
-    }
-  };
-
-  const handlePhotoIdFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Check file size
-      if (file.size > 10 * 1024 * 1024) {
-        OpenNotification('error', 'File size should be less than 10MB');
-
-        return;
-      }
-
-      // Check file extension
-      const allowedExtensions = ['jpeg', 'jpg', 'png'];
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-
-      if (!allowedExtensions.includes(fileExtension)) {
-        OpenNotification('error', 'File must be a JPEG or PNG image');
-        return;
-      }
-
-      setPhotoIdFile(file);
-      uploadToS3(file, 'photoId');
-    }
-  };
-
-  const handleBackFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Check file size
-      if (file.size > 10 * 1024 * 1024) {
-        OpenNotification('error', 'File size should be less than 10MB');
-
-        return;
-      }
-
-      // Check file extension
-      const allowedExtensions = ['jpeg', 'jpg', 'png', 'pdf'];
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-
-      if (!allowedExtensions.includes(fileExtension)) {
-        OpenNotification('error', 'File must be a JPEG or PNG image or PDF');
-        return;
-      }
-
-      setBackFile(file);
-      uploadToS3(file, 'back');
-    }
-  };
-
-  // useEffect(() => {
-  //   const supportedCountries = Object.keys(metadata.countries);
-
-  //   const phoneCodes = supportedCountries.map(country => ({
-  //     code: '+' + getCountryCallingCode(country),
-  //     country: country
-  //   }));
-
-  //   setCountryCodes(phoneCodes);
-  // }, []);
-
   useEffect(() => {
     if (country) {
       const countryInfo = countries.find((c) => c.name === country);
@@ -475,33 +388,6 @@ const Signup = () => {
     //setCountryCodes([]);
   };
 
-  // const checkUserNameExist = async (usname) => {
-  //   const res = await checkUserName(String(usname).toLowerCase());
-  //   console.log(res);
-
-  //   if (res && !res.success) {
-  //     // Set the error message if username check fails
-  //     setUsernameError(res.data);
-  //   } else {
-  //     // Clear any existing error message if the username check is successful
-  //     setUsernameError('');
-  //   }
-  // }
-
-  // const checkEmailExist = async (mail) => {
-  //   const res = await checkEmail(String(mail).toLowerCase());
-  //   console.log(res);
-
-  //   if (res && !res.success) {
-  //     console.log("res.data", res.data)
-  //     // Set the error message if username check fails
-  //     setEmailError(res.data);
-  //   } else {
-  //     // Clear any existing error message if the username check is successful
-  //     setEmailError('');
-  //   }
-  // }
-
   const handleSubmit = async () => {
     setIsLoading(true);
     // Validate input fields before submitting
@@ -535,32 +421,34 @@ const Signup = () => {
       isChecked
     ) {
       try {
-        const response = await axios.post(`${baseAPIURL}/api/v1/affiliate/convertnormalUser`, {
-          firstname,
-          lastname,
-          Username,
-          Email,
-          ssn,
-          code,
-          Phone,
-          country,
-          address1,
-          address2,
-          city,
-          state,
-          Zip,
-          password,
-          confirmpass,
-          Currency,
-          photoIdFileurl,
-          frontFileurl,
-          backFileurl,
-          accname,
-          Website,
-          protocol,
-          referralCode: Captain
-        });
-
+        const response = await axios.post(
+          `${baseAPIURL}/api/v1/affiliate/convertnormalUser`,
+          {
+            firstname,
+            lastname,
+            Username,
+            Email,
+            ssn,
+            code,
+            Phone,
+            country,
+            address1,
+            address2,
+            city,
+            state,
+            Zip,
+            password,
+            confirmpass,
+            Currency,
+            photoIdFileurl,
+            frontFileurl,
+            backFileurl,
+            accname,
+            Website,
+            protocol,
+            referralCode: Captain,
+          }
+        );
 
         if (response.status === 200) {
           setIsLoading(false);
@@ -578,45 +466,106 @@ const Signup = () => {
     }
   };
 
+  const handleCaptainChange = (event) => {
+    setCaptain(event.target.value);
+  };
+
+  const items = captainbees?.map((bee) => ({
+    name: (
+      <LightTooltip
+        title={
+          <a
+            href={`https://hive.indexx.ai/captainbee/${bee.Username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textTransform: 'none',
+              color: 'var(--main_body)',
+              fontSize: 15,
+            }}
+          >
+            Click to view {bee.accname}
+          </a>
+        }
+        placement="right"
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignSelf: 'center',
+            minWidth: '100%',
+          }}
+        >
+          <Box
+            sx={{
+              minWidth: '40px',
+              minHeight: '40px',
+              backgroundImage: `url(${frame})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              position: 'relative',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+            }}
+          >
+            {bee?.photoIdFileurl && (
+              <Box className="drop-hexagon">
+                <img
+                  alt=""
+                  src={bee?.photoIdFileurl}
+                  width={'30px'}
+                  height={'31px'}
+                  style={{ border: 'none' }}
+                />
+              </Box>
+            )}
+          </Box>
+          <Box alignSelf={'center'} ml={2}>
+            <Typography
+              variant="text"
+              fontSize={'15px'}
+              fontWeight={400}
+              textAlign={'center'}
+            >
+              {bee?.accname}
+            </Typography>
+          </Box>
+          <Box alignSelf={'center'} ml={'auto'}>
+            <Typography
+              variant="text"
+              fontSize={'15px'}
+              fontWeight={400}
+              textAlign={'center'}
+            >
+              Referral Code : {bee?.userData?.referralCode}
+            </Typography>
+          </Box>
+        </Box>
+      </LightTooltip>
+    ),
+    value: bee?.userData?.referralCode,
+  }));
+
   const classes = useStyles();
 
   return (
     <>
       <Box
-        mt={8}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          // maxWidth:"1520px",
+          maxWidth: '1520px',
+          margin: '50px auto',
+          padding: '20px',
         }}
       >
-        {/* <Box
-          component="img"
-          src={
-            isMobile
-              ? seltheme === 'dark'
-                ? banner_mobile_dark
-                : banner_mobile
-              : seltheme === 'dark'
-              ? banner_dark
-              : banner
-          }
-          width={isMobile ? '100%' : 'auto'}
-          alt=""
-          mt={8}
-          mb={4}
-        /> */}
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            width: `${isMobile ? '85%' : '48%'}`,
-            // width:"48%",
-            maxWidth: '1520px',
+            maxWidth: '1000px',
+            margin: 'auto',
           }}
         >
           <Typography
@@ -629,284 +578,135 @@ const Signup = () => {
 
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              width: '100%',
               my: 2,
+              width: '100%',
             }}
           >
-            <Typography
-              variant="text"
-              fontSize={isMobile ? '15px' : '18px'}
-              fontWeight={400}
-              width={'35%'}
-              textAlign={'left'}
-            >
-              Name
-            </Typography>
-            <TextField
-              //   label="First Name"
-              placeholder="First Name"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{ mb: 2, width: '31.2%' }}
-              size="small" // Make the input box smaller
-              value={firstname}
-              onChange={(e) => {
-                setFirstname(e.target.value);
-              }}
-            />
-            <TextField
-              //   label="Last Name"
-              placeholder="Last Name"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{ mb: 2, width: '31.2%' }}
-              size="small" // Make the input box smaller
-              value={lastname}
-              onChange={(e) => {
-                setLastname(e.target.value);
-              }}
-            />
+            <div style={{ width: '100%' }}>
+              {' '}
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '15px' : '18px'}
+                fontWeight={400}
+                textAlign={'left'}
+              >
+                First Name
+              </Typography>
+              <InputField
+                placeholder="First Name"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                sx={{ mb: 2 }}
+                size="small" // Make the input box smaller
+                value={firstname}
+                onChange={(e) => {
+                  setFirstname(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '15px' : '18px'}
+                fontWeight={400}
+                textAlign={'left'}
+              >
+                Last Name
+              </Typography>
+              <InputField
+                placeholder="Last Name"
+                sx={{ mb: 2 }}
+                size="small" // Make the input box smaller
+                value={lastname}
+                onChange={(e) => {
+                  setLastname(e.target.value);
+                }}
+              />
+            </div>
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
               width: '100%',
-              mb: 2,
             }}
           >
             <Typography
               variant="text"
               fontSize={isMobile ? '15px' : '18px'}
               fontWeight={400}
-              width={'35%'}
               textAlign={'left'}
             >
               Password
             </Typography>
 
-            <TextField
-              //   label="Password"
-              variant="outlined"
+            <InputField
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '54.27%',
-                '& input:invalid': {
-                  borderColor: 'red',
-                },
-              }}
               size="small"
               value={password}
               error={passwordError !== ''}
+              sx={{ mb: 2 }}
               helperText={passwordError}
-              // onBlur={validatePassword}
               onChange={(e) => {
                 setPassword(e.target.value);
                 validatePassword(e.target.value);
               }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <span
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </span>
+                </InputAdornment>
+              }
             />
-            <Button
-              onClick={() => setShowPassword(!showPassword)} // Toggle show/hide password
-              variant="text"
-              disableTouchRipple
-              sx={{
-                color: '#FFB300',
-                textTransform: 'none',
-                fontSize: '13px',
-                backgroundColor: 'none',
-                '&:hover': {
-                  backgroundColor: 'none',
-                },
-                // border:"1px solid black",
-                py: 1,
-                width: '9%',
-                minWidth: `${isMobile ? '25px' : '64px'}`,
-              }}
-            >
-              {showPassword ? 'Hide' : 'Show'}
-            </Button>
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
               width: '100%',
-              mb: 2,
             }}
           >
             <Typography
               variant="text"
               fontSize={isMobile ? '15px' : '18px'}
               fontWeight={400}
-              width={'35%'}
               textAlign={'left'}
             >
               Password (Confirm)
             </Typography>
-            <TextField
-              //   label="Password (Confirm)"
-              variant="outlined"
-              placeholder="Password (Confirm)"
+            <InputField
               type={showConfirmPassword ? 'text' : 'password'}
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '54.27%',
-                '& input:invalid': {
-                  borderColor: 'red',
-                },
-              }}
-              size="small" // Make the input box smaller
+              placeholder="Password (Confirm)"
+              size="small"
               value={confirmpass}
               error={confirmPasswordError !== ''}
               helperText={confirmPasswordError}
-              // onBlur={validateConfirmPassword}
               onChange={(e) => {
                 setConfirmpass(e.target.value);
                 validateConfirmPassword(e.target.value);
               }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <span
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </span>
+                </InputAdornment>
+              }
             />
-            <Button
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle show/hide confirm password
-              variant="text"
-              disableTouchRipple
-              sx={{
-                color: '#FFB300',
-                textTransform: 'none',
-                fontSize: '13px',
-                backgroundColor: 'none',
-                '&:hover': {
-                  backgroundColor: 'none',
-                },
-                // border:"1px solid black",
-                py: 1,
-                width: '9%',
-                minWidth: `${isMobile ? '25px' : '64px'}`,
-              }}
-            >
-              {showConfirmPassword ? 'Hide' : 'Show'}
-            </Button>
           </Box>
-          {/* <Box sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "baseline",
-        width: "100%",
-        mb: 2
-      }}>
-        <Typography variant="text" fontSize={isMobile ? "15px" : "18px"} fontWeight={400} width={"35%"} textAlign={"left"}>
-          Employer Identification Number
-        </Typography>
-        <TextField
-          variant="outlined"
-          placeholder='Enter EIN here'
-          type={showEIN ? 'text' : 'password'}
-          InputLabelProps={{ shrink: true }}
-          sx={{ mb: 2, width: '54.27%' }}
-          size="small"
-          value={showEIN ? formatEIN(ein) : ein}
-          error={einError !== ''}
-          helperText={einError}
-          onBlur={validateEIN}
-          onChange={(e) => {
-            setein(e.target.value);
-          }}
-        />
-        <Button
-          onClick={handleShowEIN} // Toggle show/hide SSN
-          variant="text"
-          disableTouchRipple
-          sx={{
-            color: "#FFB300",
-            textTransform: "none",
-            fontSize: "13px",
-            backgroundColor:"transparent",
-            // border:"1px solid black",
-            py:1,
-            width:"9%",
-            minWidth :  `${isMobile ? "25px" : "64px"}`,
-          }}
-        >
-          {showEIN ? 'Hide' : 'Show'}
-        </Button>
-      </Box> */}
-
-          {/* <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            width: "100%",
-            mb: 2,
-            gap: 1
-          }}>
-            <Typography variant="text" fontSize={isMobile ? "15px" : "18px"} fontWeight={400} width={"100%"} textAlign={"left"}>
-              Attach Photo ID (jpeg, png, pdf)
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-              <TextField
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                sx={{ width: '550px' }}
-                size="small"
-                value={photoIdFile?.name || ''}
-                readOnly // Prevent users from editing the filename
-              />
-              <Input
-                type="file"
-                onChange={handlePhotoIdFileChange}
-                style={{ display: 'none' }}
-                id="photoFileInput"
-              />
-              <label htmlFor="photoFileInput">
-                <Button variant="outlined" component="span"
-                  disableTouchRipple
-                  sx={{
-                    borderColor: "#FFB300",
-                    borderRadius: "4px",
-                    color: "#282828",
-                    px: 10,
-                    py: 1,
-                    textTransform: "none",
-                    fontSize: "13px",
-                    boxShadow: "none",
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                      borderColor: "#FFA200",
-                      boxShadow: "none",
-                    },
-                  }}
-                >
-                  Browse Photo ID
-                </Button>
-              </label>
-            </Box>
-
-          </Box> */}
         </Box>
 
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            width: `${isMobile ? '85%' : '48%'}`,
-            // width: "48%",
             mt: 7,
-            maxWidth: '1520px',
+            maxWidth: '1000px',
+            margin: '50px auto',
           }}
         >
           <Typography
@@ -920,10 +720,6 @@ const Signup = () => {
 
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
               width: '100%',
               my: 2,
             }}
@@ -937,12 +733,9 @@ const Signup = () => {
             >
               Account Display Name
             </Typography>
-            <TextField
-              //   label="Account Name"
-              variant="outlined"
+            <InputField
               placeholder="Brian’s HoneyComb"
-              InputLabelProps={{ shrink: true }}
-              sx={{ mb: 2, width: '64%' }}
+              sx={{ mb: 2 }}
               size="small" // Make the input box smaller
               value={accname}
               onChange={(e) => {
@@ -952,10 +745,6 @@ const Signup = () => {
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
               width: '100%',
               mb: 2,
             }}
@@ -969,24 +758,10 @@ const Signup = () => {
             >
               Personal Website (Optional)
             </Typography>
-            {/* <Select
-            value={protocol}
-            onChange={(e) => {
-              setProtocol(e.target.value);
-            }}
-            sx={{ mb: 2, width: '15%' }}
-            className={classes.select}
-          >
-            <MenuItem value="">Select protocol</MenuItem>
-            <MenuItem value="http">http</MenuItem>
-            <MenuItem value="https">https</MenuItem>
-          </Select> */}
-            <TextField
-              //   label="Website Link"
-              variant="outlined"
+
+            <InputField
               placeholder="www.yourwebsite.com"
-              InputLabelProps={{ shrink: true }}
-              sx={{ mb: 2, width: '64%' }}
+              sx={{ mb: 2 }}
               size="small" // Make the input box smaller
               value={Website}
               onChange={(e) => {
@@ -995,39 +770,8 @@ const Signup = () => {
             />
           </Box>
 
-          {/* <Box sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            width: "100%",
-            mb: 2
-          }}>
-
-          <Typography variant="text" fontSize={isMobile ? "15px" : "18px"} fontWeight={400} width={"35%"} textAlign={"left"}>
-            Captain Bee Referral Code
-          </Typography>
-          <TextField
-            //   label="Email"
-            placeholder='Referral Code'
-            type='email'
-            InputLabelProps={{ shrink: true }}
-            variant="outlined"
-            sx={{ mb: 2, width: '64%' }}
-            size="small" // Make the input box smaller
-            value={referralCode === "null" ? "" : referralCode}
-            onChange={(e) => {
-              setreferralCode(e.target.value);
-            }}
-          />
-        </Box> */}
-
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
               width: '100%',
               mb: 2,
             }}
@@ -1036,112 +780,19 @@ const Signup = () => {
               variant="text"
               fontSize={isMobile ? '15px' : '18px'}
               fontWeight={400}
-              width={'35%'}
               textAlign={'left'}
             >
               Select your Captain Bee
             </Typography>
-            <Select
+            <div style={{ margin: '15px' }}></div>
+            <CustomSelectBox
+              items={items}
+              type="Select Captain Bee"
+              onChange={handleCaptainChange}
               value={Captain}
-              onChange={(e) => {
-                setCaptain(e.target.value);
-              }}
-              InputLabelProps={{ shrink: true }}
-              sx={{ mb: 6, width: '64%' }}
-              size="small" // Make the input box smaller
-              required={true}
-              MenuProps={{ classes: { paper: 'custom-sel' } }}
-            >
-              <MenuItem value="">Select Captain Bee</MenuItem>
-              {captainbees?.map((bee, id) => (
-                <MenuItem key={id} value={bee?.userData?.referralCode}>
-                  <LightTooltip
-                    title={
-                      <a
-                        href={`https://hive.indexx.ai/captainbee/${bee.Username}`}
-                        target="blank"
-                        style={{
-                          textTransform: 'none',
-                          color: 'var(--main_body)',
-                          fontSize: 15,
-                        }}
-                        classes={{ tooltip: classes.customTooltip }}
-                      >
-                        Click to view {bee.accname}
-                      </a>
-                    }
-                    placement="right"
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignSelf: 'center',
-                        minWidth: '100%',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          minWidth: '40px',
-                          minHeight: '40px',
-                          backgroundImage: `url(${frame})`,
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: 'contain',
-                          backgroundPosition: 'center',
-                          position: 'relative',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          alignSelf: 'center',
-                          // border:"none"
-                        }}
-                      >
-                        {bee?.photoIdFileurl === null ||
-                        bee?.photoIdFileurl === undefined ? null : (
-                          <Box className="drop-hexagon">
-                            <img
-                              alt=""
-                              // src={abcd}
-                              src={bee?.photoIdFileurl}
-                              // src={(collection?.photoIdFileurl === undefined || collection?.photoIdFileurl === null) ? frame : collection?.photoIdFileurl}
-                              width={'30px'}
-                              height={'31px'}
-                              ml={'-2px'}
-                              border={'none'}
-                            />
-                          </Box>
-                        )}
-                      </Box>
-                      <Box alignSelf={'center'} ml={2}>
-                        <Typography
-                          variant="text"
-                          fontSize={'15px'}
-                          fontWeight={400}
-                          textAlign={'center'}
-                          style={{ verticalAlign: 'center' }}
-                        >
-                          {bee?.accname}
-
-                          {/* {bee?.firstname + " " + bee?.lastname} */}
-                        </Typography>
-                      </Box>
-                      <Box alignSelf={'center'} ml={'auto'}>
-                        <Typography
-                          variant="text"
-                          fontSize={'15px'}
-                          fontWeight={400}
-                          textAlign={'center'}
-                          style={{ verticalAlign: 'center' }}
-                        >
-                          Referral Code : {bee?.userData?.referralCode}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </LightTooltip>
-                </MenuItem>
-              ))}
-            </Select>
+              isCurrency={false}
+              hasborder={true}
+            />
           </Box>
 
           <FormControlLabel
@@ -1197,31 +848,6 @@ const Signup = () => {
             sx={{ mb: 8 }}
           />
 
-          {/* <Button
-            variant='contained'
-            onClick={handleSubmit}
-            disableTouchRipple
-            disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              backgroundColor: "#FFB300",
-              borderRadius: "2px",
-              color: "#282828",
-              width: "100%",
-              px: 10,
-              py: 1,
-              textTransform: "none",
-              fontSize: "13px",
-              fontWeight: 700,
-              boxShadow: "none",
-              //   mt:3,
-              "&:hover": {
-                backgroundColor: "#FFD000",
-                boxShadow: "none",
-              },
-            }}
-          >
-            Submit
-          </Button> */}
           <Button
             variant="contained"
             onClick={handleSubmit}

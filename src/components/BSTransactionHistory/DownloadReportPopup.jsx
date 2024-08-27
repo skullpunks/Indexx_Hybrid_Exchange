@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../updated/shared/Button';
+import PDFGenerator from './TransactionHistoryReport';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import indexxLogo from '../../assets/header-icons/indexx grey.438c3bb4.png';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -79,6 +83,14 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: '22px',
     },
   },
+  dropdownContainer: {
+    display: 'flex',
+    gap: '10px',
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
   btnContainer: {
     display: 'flex',
     width: '100%',
@@ -95,8 +107,234 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DownloadReportPopup = ({ onClose }) => {
+  const [dateFilter, setDateFilter] = useState('All time');
+  const [assetType, setAssetType] = useState('All Asset');
+  const [transactionType, setTransactionType] = useState('All Transactions');
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const data = {
+    date: dateFilter,
+    customerEmail: 'customer@example.com',
+    portfolioSummary: [
+      {
+        asset: 'Bitcoin',
+        quantity: '2',
+        marketPrice: '$30,000',
+        marketValue: '$60,000',
+      },
+      {
+        asset: 'Ethereum',
+        quantity: '5',
+        marketPrice: '$2,000',
+        marketValue: '$10,000',
+      },
+      {
+        asset: 'Cardano',
+        quantity: '1000',
+        marketPrice: '$1',
+        marketValue: '$1,000',
+      },
+    ],
+    transactionHistory: [
+      {
+        timestamp: '2024-01-10',
+        transactionType: 'Buy',
+        asset: 'Bitcoin',
+        quantityTransacted: '1',
+        priceCurrency: 'USD',
+        priceAtTransaction: '$29,000',
+        subtotal: '$29,000',
+        total: '$29,000',
+        notes: 'First Bitcoin purchase',
+      },
+      {
+        timestamp: '2024-01-15',
+        transactionType: 'Buy',
+        asset: 'Ethereum',
+        quantityTransacted: '3',
+        priceCurrency: 'USD',
+        priceAtTransaction: '$1,900',
+        subtotal: '$5,700',
+        total: '$5,700',
+        notes: 'Bought more Ethereum',
+      },
+      {
+        timestamp: '2024-01-20',
+        transactionType: 'Sell',
+        asset: 'Ethereum',
+        quantityTransacted: '2',
+        priceCurrency: 'USD',
+        priceAtTransaction: '$1,800',
+        subtotal: '$3,600',
+        total: '$3,600',
+        notes: 'Sold part of Ethereum holdings',
+      },
+      {
+        timestamp: '2024-01-25',
+        transactionType: 'Buy',
+        asset: 'Cardano',
+        quantityTransacted: '1000',
+        priceCurrency: 'USD',
+        priceAtTransaction: '$1',
+        subtotal: '$1,000',
+        total: '$1,000',
+        notes: 'Bought Cardano',
+      },
+    ],
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF({
+      orientation: 'l', // Landscape orientation
+      unit: 'mm',
+      format: [297, 210], // Custom page size with increased width
+    });
+
+    // Container with padding
+    const padding = 10;
+    doc.setFontSize(10);
+    doc.text('', padding, padding);
+
+    // Logo image using SVG
+    const logo = new Image();
+    logo.src = indexxLogo;
+
+    logo.onload = () => {
+      doc.addImage(logo, 'PNG', padding, padding, 55, 20);
+
+      // Bold heading
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Transaction History Report', padding, 40);
+
+      // Paragraph with reduced font size
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(
+        'This is the transaction history report for the selected period.',
+        padding,
+        50
+      );
+
+      // First column
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Date', padding, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Date: ${data.date}`, padding, 70);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Filter', padding + 60, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Type: ${transactionType}`, padding + 60, 70);
+      doc.text(`Asset: ${assetType}`, padding + 60, 75);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Customer', padding + 120, 65);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Email: ${data.customerEmail}`, padding + 120, 70);
+
+      // Portfolio Summary
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Portfolio Summary', padding, 90);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(
+        `Portfolio summary balances are as of ${data.toDate} 23:59:59 UTC`,
+        padding,
+        95
+      );
+
+      const portfolioSummary = [
+        ['Asset', 'Quantity', 'Market Price', 'Market Value'],
+        ...data.portfolioSummary.map((item) => [
+          item.asset,
+          item.quantity,
+          item.marketPrice,
+          item.marketValue,
+        ]),
+      ];
+
+      doc.autoTable({
+        startY: 100,
+        head: [portfolioSummary[0]],
+        body: portfolioSummary.slice(1),
+        styles: {
+          fontSize: 8, // Reduced column text size
+        },
+        headStyles: {
+          fillColor: [211, 211, 211], // Light grey color
+          textColor: 0,
+          fontStyle: 'bold',
+        },
+        margin: { left: padding, right: padding }, // Align table with the content
+      });
+
+      // Transaction History
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(
+        'Transaction History',
+        padding,
+        doc.autoTable.previous.finalY + 10
+      );
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(
+        `Transaction history data for ${data.date}`,
+        padding,
+        doc.autoTable.previous.finalY + 15
+      );
+
+      const transactionHistory = [
+        [
+          'Timestamp',
+          'Transaction Type',
+          'Asset',
+          'Quantity Transacted',
+          'Price at Transaction',
+          'Subtotal',
+          'Total',
+          'Notes',
+        ],
+        ...data.transactionHistory.map((item) => [
+          item.timestamp,
+          item.transactionType,
+          item.asset,
+          item.quantityTransacted,
+          item.priceAtTransaction,
+          item.subtotal,
+          item.total,
+          item.notes,
+        ]),
+      ];
+
+      doc.autoTable({
+        startY: doc.autoTable.previous.finalY + 20,
+        head: [transactionHistory[0]],
+        body: transactionHistory.slice(1),
+        styles: {
+          fontSize: 8, // Reduced column text size
+        },
+        headStyles: {
+          fillColor: [211, 211, 211], // Light grey color
+          textColor: 0,
+          fontStyle: 'bold',
+        },
+        margin: { left: padding, right: padding }, // Align table with the content
+      });
+
+      doc.save('Transaction_History_Report.pdf');
+    };
+  };
+
   const classes = useStyles();
   return (
     <div
@@ -129,7 +367,7 @@ const DownloadReportPopup = ({ onClose }) => {
             Select a report to download. The PDF acts as a printable statement
             for your records.
           </h3>
-          <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
+          <div className={classes.dropdownContainer}>
             <CustomSelectBox
               items={[
                 { name: 'All time', value: 'All time' },
@@ -137,9 +375,10 @@ const DownloadReportPopup = ({ onClose }) => {
                 { name: 'Yesterday', value: 'Yesterday' },
                 { name: 'Last Week', value: 'Last Week' },
               ]}
-              value={'All time'}
+              value={dateFilter}
               hasborder
               type={undefined}
+              onChange={(e) => setDateFilter(e.target.value)}
               isCurrency={undefined}
               onCurrencyChange={undefined}
             />
@@ -149,9 +388,10 @@ const DownloadReportPopup = ({ onClose }) => {
                 { name: 'BTC', value: 'BTC' },
                 { name: 'INEX', value: 'INEX' },
               ]}
-              value={'All Asset'}
+              value={assetType}
               hasborder
               type={undefined}
+              onChange={(e) => setAssetType(e.target.value)}
               isCurrency={undefined}
               onCurrencyChange={undefined}
             />
@@ -162,15 +402,19 @@ const DownloadReportPopup = ({ onClose }) => {
                 { name: 'Sell', value: 'Sell' },
               ]}
               hasborder
-              value={'All Transactions'}
+              value={transactionType}
               type={undefined}
               isCurrency={undefined}
+              onChange={(e) => setTransactionType(e.target.value)}
               onCurrencyChange={undefined}
             />
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton text="Generate Report" />
+            <GenericButton
+              text="Generate Report"
+              onClick={() => generatePDF()}
+            />
           </div>
         </div>
       </div>

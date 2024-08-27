@@ -1,61 +1,125 @@
-import React from 'react';
-
-import './Account.css';
-import { Tabs } from 'antd';
-
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { styled, useTheme } from '@mui/material/styles';
+import CaptainBeeBridge from './CaptainBeeBridge';
 import BasicInfo from './BasicInfo';
-import { PaymentMethod } from './PaymentMethod';
-import Preferences from './Preferences';
 import Security from './Security';
+import Preferences from './Preferences';
 import Signup from './Signup';
-import { useTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme: any) => ({
-  tabStyle: {
-    color: `${theme.palette.text.primary} !important`,
-    '&.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap': {
-      paddingLeft: '20px',
-      background: `${theme.palette.divider}`,
-      color: `${theme.palette.text.primary} !important`,
-    },
-    '& .ant-tabs-tab': {
-      color: `${theme.palette.text.primary} !important`,
-    },
-    '& .ant-tabs-tab-active': {
-      color: `${theme.palette.text.primary} !important`,
-      border: 'none',
-    },
-    '& .ant-tabs-tab-btn': {
-      color: `${theme.palette.text.primary} !important`,
-      border: 'none',
+const CustomTab = styled(Tab)(({ theme }) => ({
+  textTransform: 'none',
+  minWidth: 0,
+  width: '180px',
+  margin: '0 10px',
+  padding: '12px 16px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  alignItems: 'center',
+  position: 'relative',
+  background: 'transparent !important',
+  '&.active': {
+    color: theme.palette.primary.light,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      left: 'calc(50% - 10px)',
+      width: '16px',
+      borderBottom: `3px solid ${theme.palette.primary.light}`,
     },
   },
-})) as any;
+  '&:hover': {
+    color: theme.palette.primary.light,
+    background: 'transparent !important',
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      left: 'calc(50% - 10px)',
+      width: '16px',
+      borderBottom: `3px solid ${theme.palette.primary.light}`,
+    },
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '3px',
+    background: 'transparent',
+  },
+}));
+
 const Account = () => {
   const theme = useTheme();
-  const classes = useStyles();
+  const [captainBeeForm, setCaptainBeeForm] = useState(false);
+
+  const tabsData = [
+    { label: 'Basic Info', component: <BasicInfo theme={theme} />, key: '1' },
+    { label: 'Security', component: <Security />, key: '2' },
+    { label: 'Preferences', component: <Preferences />, key: '3' },
+    // { label: 'Payment Method', component: <PaymentMethod />, key: '4' },
+  ];
+
+  if (localStorage.getItem('userType') === 'Indexx Exchange') {
+    tabsData.push({
+      label: 'Convert to Captain Bee',
+      component: captainBeeForm ? (
+        <Signup />
+      ) : (
+        <CaptainBeeBridge handleCaptainBee={() => setCaptainBeeForm(true)} />
+      ),
+      key: '5',
+    });
+  }
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleChange = (event: any, newValue: any) => {
+    setSelectedTab(newValue);
+  };
+
   return (
-    <div style={{ paddingTop: 190 }} className="accounts_container">
-      <Tabs defaultActiveKey="1" className={classes.tabStyle}>
-        <Tabs.TabPane tab="Basic Info" key="1">
-          <BasicInfo theme={theme} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Security" key="2">
-          <Security />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Preferences" key="3">
-          <Preferences />
-        </Tabs.TabPane>
-        {/* <Tabs.TabPane tab="Payment Method" key="4">
-          <PaymentMethod />
-        </Tabs.TabPane> */}
-        {localStorage.getItem('userType') === 'Indexx Exchange' && (
-          <Tabs.TabPane tab="Convert to Captain Bee" key="5">
-            <Signup />
-          </Tabs.TabPane>
-        )}
-      </Tabs>
+    <div style={{ paddingTop: 100 }} className="accounts_container">
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          maxWidth: `${190 * tabsData.length}px`,
+          margin: '20px auto 50px auto',
+        }}
+      >
+        <Tabs
+          value={selectedTab}
+          onChange={handleChange}
+          centered
+          variant="scrollable"
+          scrollButtons={false}
+          sx={{
+            width: '100%',
+            background: 'none',
+            '& .MuiTabs-indicator': {
+              display: 'none',
+            },
+          }}
+        >
+          {tabsData.map((tab, index) => (
+            <CustomTab
+              key={tab.key}
+              label={tab.label}
+              disableRipple
+              className={selectedTab === index ? 'active' : ''}
+            />
+          ))}
+        </Tabs>
+      </Box>
+      <Box>{tabsData[selectedTab]?.component}</Box>
     </div>
   );
 };

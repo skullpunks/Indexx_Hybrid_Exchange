@@ -8,6 +8,7 @@ import DownloadReportPopup from './DownloadReportPopup';
 
 const BSTransactionHistoryContent = () => {
   const [pdfDownload, setPdfDownload] = useState(false);
+
   return (
     <div className="flex-align-stretch bs_main width-100 large_card position-relative  ">
       <div
