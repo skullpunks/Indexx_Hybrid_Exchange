@@ -15,7 +15,9 @@ import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { getCoinPriceByName } from '../../../../services/api';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import smbanner from '../../../../assets/updated/buySell/smbanner.svg';
+import smbannerlight from '../../../../assets/updated/buySell/lightModeWib.png';
+import smbannerDark from '../../../../assets/updated/buySell/darkModeWib.png';
+
 import smbannerDaCrazy from '../../../../assets/updated/buySell/Small Banner Da Crazy.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -458,7 +460,7 @@ const CustomTextField = ({
         )}
         {selectedToken.title === 'WIBS' && type === 'buy' && (
           <img
-            src={smbanner}
+            src={theme.palette.mode === 'light' ? smbannerlight : smbannerDark}
             style={{
               marginBottom: loggedIn ? '-20px' : '-40px',
               width: '100%',

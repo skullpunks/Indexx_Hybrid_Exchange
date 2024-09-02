@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:hover': {
       boxShadow: 'none !important',
-      opacity: 0.9,
+      opacity: 0.7,
     },
     // '&.Mui-disabled': {
     //   backgroundColor: '#11BE6A !important', // Disabled state background color

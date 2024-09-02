@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,6 +9,7 @@ import PDFGenerator from './TransactionHistoryReport';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import indexxLogo from '../../assets/header-icons/indexx grey.438c3bb4.png';
+import { getUserTransactionHistory, getUserWallets } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -110,81 +111,85 @@ const DownloadReportPopup = ({ onClose }) => {
   const [dateFilter, setDateFilter] = useState('All time');
   const [assetType, setAssetType] = useState('All Asset');
   const [transactionType, setTransactionType] = useState('All Transactions');
+  const [portfilioSumamryData, setPortfolioSummaryData] = useState([]);
+  const [transactionHistoryData, setTransactionHistoryData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  function getDateRange(period) {
+    const today = new Date();
+    let fromDate, toDate;
+
+    switch (period.toLowerCase()) {
+      case 'today':
+        fromDate = new Date(today);
+        toDate = new Date(today);
+        break;
+
+      case 'yesterday':
+        fromDate = new Date(today);
+        fromDate.setDate(today.getDate() - 1);
+        toDate = new Date(fromDate);
+        break;
+
+      case 'last week':
+        const dayOfWeek = today.getDay();
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - dayOfWeek - 7);
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        fromDate = startOfWeek;
+        toDate = endOfWeek;
+        break;
+
+      case 'this week':
+        const startOfThisWeek = new Date(today);
+        startOfThisWeek.setDate(today.getDate() - dayOfWeek);
+        const endOfThisWeek = new Date(startOfThisWeek);
+        endOfThisWeek.setDate(startOfThisWeek.getDate() + 6);
+
+        fromDate = startOfThisWeek;
+        toDate = endOfThisWeek;
+        break;
+
+      case 'last month':
+        fromDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        toDate = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of the previous month
+        break;
+
+      case 'this month':
+        fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Last day of this month
+        break;
+
+      case 'last year':
+        fromDate = new Date(today.getFullYear() - 1, 0, 1);
+        toDate = new Date(today.getFullYear() - 1, 11, 31);
+        break;
+
+      case 'this year':
+        fromDate = new Date(today.getFullYear(), 0, 1);
+        toDate = new Date(today.getFullYear(), 11, 31);
+        break;
+
+      default:
+        throw new Error(
+          'Invalid period. Use "today", "yesterday", "last week", etc.'
+        );
+    }
+
+    // Format the dates as YYYY-MM-DD strings
+    const formatDate = (date) => date.toISOString().split('T')[0];
+
+    return {
+      fromDate: formatDate(fromDate),
+      toDate: formatDate(toDate),
+    };
+  }
+
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const data = {
-    date: dateFilter,
-    customerEmail: 'customer@example.com',
-    portfolioSummary: [
-      {
-        asset: 'Bitcoin',
-        quantity: '2',
-        marketPrice: '$30,000',
-        marketValue: '$60,000',
-      },
-      {
-        asset: 'Ethereum',
-        quantity: '5',
-        marketPrice: '$2,000',
-        marketValue: '$10,000',
-      },
-      {
-        asset: 'Cardano',
-        quantity: '1000',
-        marketPrice: '$1',
-        marketValue: '$1,000',
-      },
-    ],
-    transactionHistory: [
-      {
-        timestamp: '2024-01-10',
-        transactionType: 'Buy',
-        asset: 'Bitcoin',
-        quantityTransacted: '1',
-        priceCurrency: 'USD',
-        priceAtTransaction: '$29,000',
-        subtotal: '$29,000',
-        total: '$29,000',
-        notes: 'First Bitcoin purchase',
-      },
-      {
-        timestamp: '2024-01-15',
-        transactionType: 'Buy',
-        asset: 'Ethereum',
-        quantityTransacted: '3',
-        priceCurrency: 'USD',
-        priceAtTransaction: '$1,900',
-        subtotal: '$5,700',
-        total: '$5,700',
-        notes: 'Bought more Ethereum',
-      },
-      {
-        timestamp: '2024-01-20',
-        transactionType: 'Sell',
-        asset: 'Ethereum',
-        quantityTransacted: '2',
-        priceCurrency: 'USD',
-        priceAtTransaction: '$1,800',
-        subtotal: '$3,600',
-        total: '$3,600',
-        notes: 'Sold part of Ethereum holdings',
-      },
-      {
-        timestamp: '2024-01-25',
-        transactionType: 'Buy',
-        asset: 'Cardano',
-        quantityTransacted: '1000',
-        priceCurrency: 'USD',
-        priceAtTransaction: '$1',
-        subtotal: '$1,000',
-        total: '$1,000',
-        notes: 'Bought Cardano',
-      },
-    ],
-  };
-
-  const generatePDF = () => {
+  const generatePDF = (data) => {
     const doc = new jsPDF({
       orientation: 'l', // Landscape orientation
       unit: 'mm',
@@ -334,7 +339,83 @@ const DownloadReportPopup = ({ onClose }) => {
       doc.save('Transaction_History_Report.pdf');
     };
   };
+  const fetchData = async () => {
+    setLoading(true);
 
+    try {
+      let email = String(localStorage.getItem('email'));
+
+      const userWallets = await getUserWallets(email);
+      const portfolioSummaryData = userWallets.data.map((item) => {
+        const coinBalance = Number(item.coinBalance);
+        const coinPrice = Number(item.coinPrice);
+
+        return {
+          asset: item.coinName, // Assuming coinName represents the full name of the coin like 'Bitcoin'
+          quantity: coinBalance.toString(),
+          marketPrice: `$${coinPrice.toFixed(2)}`, // Format the price as a string with a dollar sign
+          marketValue: `$${(coinBalance * coinPrice).toFixed(2)}`, // Calculate market value
+        };
+      });
+
+      // Ensure unique rows by asset name
+      const uniquePortfolioSummaryData = portfolioSummaryData.filter(
+        (value, index, self) =>
+          index === self.findIndex((t) => t.asset === value.asset)
+      );
+      setPortfolioSummaryData(uniquePortfolioSummaryData);
+      let fromDate,
+        toDate = undefined;
+      if (dateFilter !== 'All time') {
+        ({ fromDate, toDate } = getDateRange(dateFilter));
+      } else {
+        fromDate = undefined;
+        toDate = undefined;
+      }
+      const transactionTypeParamenter =
+        transactionType === 'All Transactions' ? 'Buy' : transactionType;
+      const currency = assetType === 'All Asset' ? undefined : assetType;
+
+      // Fetch Transaction History Data
+      const { data: transactionHistoryData } = await getUserTransactionHistory(
+        email,
+        fromDate,
+        toDate,
+        transactionTypeParamenter,
+        currency
+      );
+      const transactionHistory = transactionHistoryData
+        .filter((el) => el.status.toLowerCase() === 'completed')
+        .map((item) => ({
+          timestamp: item?.orderCompletedOn,
+          transactionType: item?.orderType,
+          asset: item?.orderRate?.currency,
+          quantityTransacted: item?.breakdown?.outAmount?.toFixed(2),
+          priceAtTransaction: item?.orderRate?.rate,
+          subtotal: (
+            item?.breakdown?.outAmount * item?.orderRate?.rate
+          ).toFixed(2),
+          total: (item?.breakdown?.outAmount * item?.orderRate?.rate).toFixed(
+            2
+          ),
+          notes: item.notes,
+        }));
+      setTransactionHistoryData(transactionHistory);
+      const data = {
+        date: dateFilter,
+        customerEmail: 'customer@example.com',
+        portfolioSummary: portfilioSumamryData?.filter(
+          (el) => el.quantity !== '0'
+        ),
+        transactionHistory: transactionHistory,
+      };
+      generatePDF(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const classes = useStyles();
   return (
     <div
@@ -411,10 +492,7 @@ const DownloadReportPopup = ({ onClose }) => {
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton
-              text="Generate Report"
-              onClick={() => generatePDF()}
-            />
+            <GenericButton text="Generate Report" onClick={() => fetchData()} />
           </div>
         </div>
       </div>

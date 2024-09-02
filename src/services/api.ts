@@ -278,7 +278,7 @@ export const createGiftcard = async (
       currency,
       giftCardUrl,
       cardType,
-      recevierEmail
+      recevierEmail,
     });
     return result.data;
   } catch (e: any) {
@@ -327,22 +327,21 @@ export const checkByemail = async (email: string) => {
   }
 };
 
-
 export const getAllAffiliateUser = async () => {
   try {
     const result = await API.get(`/api/v1/affiliate/getAllaffiliateUsers`);
-    const formattedData = result.data.data.map((item:any) => {
+    const formattedData = result.data.data.map((item: any) => {
       return {
         ...item._doc,
-        userData: item.userData
+        userData: item.userData,
       };
     });
-    
+
     return formattedData;
-  } catch (err:any) {
+  } catch (err: any) {
     return err.response.data;
   }
-}
+};
 
 export const loginAPI = async (email: string, password: string) => {
   try {
@@ -410,9 +409,7 @@ export const getCaptainBeeByEmail = async (email: string) => {
 
 export const getAllGiftCards = async (email: string) => {
   try {
-    const result = await API.get(
-      `/api/v1/inex/user/getAllGiftCard/${email}`
-    );
+    const result = await API.get(`/api/v1/inex/user/getAllGiftCard/${email}`);
     return result.data;
   } catch (e: any) {
     return e.response.data;
@@ -741,6 +738,41 @@ export const getUserWallets = async (email: string) => {
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
+  }
+};
+export const getUserTransactionHistory = async (
+  email: string,
+  fromDate?: string,
+  toDate?: string,
+  transactionType?: string,
+  currency?: string
+) => {
+  try {
+    // Construct the query parameters dynamically
+    const queryParams: string[] = [];
+    if (fromDate) queryParams.push(`fromDate=${encodeURIComponent(fromDate)}`);
+    if (toDate) queryParams.push(`toDate=${encodeURIComponent(toDate)}`);
+    if (transactionType)
+      queryParams.push(
+        `transactionType=${encodeURIComponent(transactionType)}`
+      );
+    if (currency) queryParams.push(`currency=${encodeURIComponent(currency)}`);
+
+    // Join the query parameters into a single string
+    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+
+    // Construct the full URL
+    const url = `/api/v1/inex/user/transactions-report/${email}${queryString}`;
+
+    const result = await API.get(url);
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (getUserTransactionHistory)'
+    );
+    console.log(e);
+    console.log(e.response?.data);
+    return e.response?.data;
   }
 };
 

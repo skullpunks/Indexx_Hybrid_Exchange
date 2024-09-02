@@ -8,7 +8,8 @@ import { decodeJWT, getUserDetails, resendEmailCode } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
-
+import GenericButton from '../updated/shared/Button';
+import './Account.css';
 const BasicInfo = ({ theme }: { theme: any }) => {
   const [email, setEmail] = useState('');
   const [userData, setUserData] = useState() as any;
@@ -71,11 +72,11 @@ const BasicInfo = ({ theme }: { theme: any }) => {
             >
               {userData?.email}
             </p>
-            <div className="d-flex basic-det">
+            <div className="basic-det">
               <div>{userData?.vipLevel}</div>
-              <div className="padding-lr-1x">Personal</div>
+              <div>Personal</div>
               <div>User ID</div>
-              <div className="padding-lr-1x d-flex align-items-center">
+              <div className=" d-flex align-items-center">
                 <span>{String(userData?.email)}</span>
                 <CopyOutlined
                   className="hover_icon"
@@ -84,11 +85,11 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                 {/* <Tooltip title="Copied to Clipboard!" ></Tooltip> */}
               </div>
               <div>Referral Code</div>
-              <div className="padding-lr-1x d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 <span>{userData?.referralCode}</span>
                 {/* <Tooltip title="Click to copy"><CopyOutlined className='padding-lr-1x hover_icon' /> </Tooltip> */}
                 <CopyOutlined
-                  className="padding-lr-1x hover_icon"
+                  className="hover_icon"
                   onClick={() => copy(userData?.referralCode)}
                 />
               </div>
@@ -110,9 +111,13 @@ const BasicInfo = ({ theme }: { theme: any }) => {
               <div
                 className={
                   userData?.verification?.emailVerified
-                    ? 'd-flex align-items-center border-1x-orange padding-1x'
-                    : 'd-flex align-items-center border padding-1x'
+                    ? 'd-flex align-items-center  padding-1x'
+                    : 'd-flex align-items-center padding-1x'
                 }
+                style={{
+                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: '8px',
+                }}
               >
                 {userData?.verification?.emailVerified ? (
                   <div className="d-flex align-items-center">
@@ -169,9 +174,13 @@ const BasicInfo = ({ theme }: { theme: any }) => {
               <div
                 className={
                   !userData?.isKYCPass
-                    ? 'd-flex align-items-center border margin-t-2x padding-1x'
-                    : 'd-flex align-items-center border-1x-orange padding-1x'
+                    ? 'd-flex align-items-center  margin-t-2x padding-1x'
+                    : 'd-flex align-items-center  padding-1x'
                 }
+                style={{
+                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: '8px',
+                }}
               >
                 {!userData?.isKYCPass ? (
                   <div>
@@ -213,7 +222,10 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                 </div>
               </div>
               {!userData?.isKYCPass && (
-                <div className="d-flex align-items-center align-items-stretch margin-t-2x  padding-1x">
+                <div
+                  className="d-flex align-items-center align-items-stretch"
+                  style={{ margin: '20px 0px' }}
+                >
                   <div className="font_12x w-100">
                     Please verify your identity first in order to start advanced
                     verification
@@ -245,24 +257,27 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                             <div className="padding-tb-1x ">Region currently not supported</div> */}
               <br></br>
               {!userData?.verification?.emailVerified && (
-                <Button
-                  type="primary"
-                  className="margin-l-2x"
+                <GenericButton
+                  text={'Verify Email'}
                   loading={loadings}
                   onClick={() => resendEmail()}
-                >
-                  Verify Email
-                </Button>
+                  IconComponent={undefined}
+                  className={undefined}
+                  styles={undefined}
+                  disabled={undefined}
+                />
               )}
               {userData?.verification?.emailVerified &&
                 !userData?.isKYCPass && (
-                  <Button
-                    type="primary"
-                    className="margin-l-2x"
+                  <GenericButton
+                    text={'Verify Identity'}
                     onClick={() => openBlockpassLink()}
-                  >
-                    Verify Identity
-                  </Button>
+                    IconComponent={undefined}
+                    styles={undefined}
+                    disabled={undefined}
+                    loading={undefined}
+                    className={undefined}
+                  />
                 )}
             </div>
           </div>

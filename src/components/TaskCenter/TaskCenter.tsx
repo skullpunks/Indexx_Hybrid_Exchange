@@ -232,15 +232,15 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row w-55 shadow-sm p-3 bg-white rounded"
+              className="row w-55 shadow-sm p-3 "
             >
               <div className="col-12 sm-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
               </div>
               <div className="col-12 sm-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Invite 5 normal to Sign Up using your refferal code
-                </Text>
+                </p>
                 <Progress
                   // style={{ width: 439 }}
                   style={{ width: '100%' }}
@@ -253,15 +253,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 sm-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
                 >
                   100
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
               <div
                 className="button_group col-12 sm-12 col-md-2"
@@ -319,16 +319,16 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row  shadow-sm p-3 bg-white rounded"
+              className="row  shadow-sm p-3"
             >
               <div className="col-12 col-md-2 d-flex justify-content-center">
                 <Image preview={false} src={iusd} width={60}></Image>
               </div>
               {/* <div className="col-5"> */}
               <div className="col-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Invite 7 normal to Sign Up using your refferal code
-                </Text>
+                </p>
                 <Progress
                   // style={{ width: 439 }}
                   style={{ width: '100%' }}
@@ -341,15 +341,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
                 >
                   210
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
               <div
                 className="button_group col-12 col-md-2"
@@ -407,7 +407,7 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row w-55 shadow-sm p-3 bg-white rounded"
+              className="row w-55 shadow-sm p-3"
             >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
@@ -415,9 +415,9 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-5"> */}
               <div className="col-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Invite 10 normal to Sign Up using your refferal code
-                </Text>
+                </p>
                 <Progress
                   // style={{ width: 439 }}
                   style={{ width: '100%' }}
@@ -430,15 +430,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 50, marginTop: -20 }}
                 >
                   500
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
               <div
                 className="button_group col-12 col-md-2"
@@ -496,7 +496,7 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row w-55 shadow-sm p-3 bg-white rounded"
+              className="row w-55 shadow-sm p-3"
             >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
@@ -504,9 +504,9 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-5"> */}
               <div className="col-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Make a transaction on indexx Exchange.
-                </Text>{' '}
+                </p>{' '}
                 <br />
                 <Progress
                   // style={{ width: 439 }}
@@ -521,15 +521,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                 >
                   {taskCenterDetails?.transactionPoints}
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
 
               <div
@@ -592,7 +592,7 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row w-55 shadow-sm p-3 bg-white rounded"
+              className="row w-55 shadow-sm p-3"
             >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
@@ -600,9 +600,9 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-5"> */}
               <div className="col-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Report a bug on Indexx.ai.
-                </Text>
+                </p>
                 <Progress
                   // style={{ width: 439 }}
                   style={{ width: '100%' }}
@@ -611,15 +611,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                 >
                   {taskCenterDetails?.reportedBugPoints}
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
               <div
                 className="button_group col-12 col-md-2"
@@ -671,7 +671,7 @@ const TaskCenter = () => {
               style={{
                 margin: 0,
               }}
-              className="row w-55 shadow-sm p-3 bg-white rounded"
+              className="row w-55 shadow-sm p-3"
             >
               {/* <div className="col-2 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
@@ -679,9 +679,9 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-5"> */}
               <div className="col-12 col-md-5">
-                <Text style={{ fontSize: 20, fontWeight: 100 }}>
+                <p style={{ fontSize: 20, fontWeight: 100 }}>
                   Buy a ticket in Fantasy Lotto.
-                </Text>
+                </p>
                 <Progress
                   //   style={{ width: 439 }}
                   style={{ width: '100%' }}
@@ -689,15 +689,15 @@ const TaskCenter = () => {
               </div>
               {/* <div className="col-1 d-flex justify-content-center"> */}
               <div className="col-12 col-md-2 d-flex justify-content-center">
-                <Text
+                <p
                   className="opacity-75"
                   style={{ fontSize: 50, fontWeight: 100, marginTop: -20 }}
                 >
                   {taskCenterDetails?.lottoPoints}
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 100, marginTop: 20 }}>
                   IUSD+
-                </Text>
+                </p>
               </div>
               <div
                 className="button_group col-12 col-md-2"

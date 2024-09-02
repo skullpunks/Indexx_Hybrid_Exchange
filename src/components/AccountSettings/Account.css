@@ -132,9 +132,18 @@
 .dis-btn:hover {
   background-color: var(--body_background);
 }
+.basic-det {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
 
 @media screen and (max-width: 768px) {
   .basic-det {
-    flex-direction: column;
+    /* flex-direction: column; */
+  }
+  .d-none-mob {
+    display: none !important;
   }
 }

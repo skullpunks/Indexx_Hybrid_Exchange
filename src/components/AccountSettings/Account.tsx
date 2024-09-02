@@ -9,6 +9,18 @@ import Security from './Security';
 import Preferences from './Preferences';
 import Signup from './Signup';
 
+import basicLight from '../../assets/updated/accountIconicHeader/basicInfoLightMode.png';
+import basicDark from '../../assets/updated/accountIconicHeader/basicInfoDarkMode.png';
+
+import securityLight from '../../assets/updated/accountIconicHeader/securityLightMode.png';
+import securityDark from '../../assets/updated/accountIconicHeader/securityDarkMode.png';
+
+import preferenceLight from '../../assets/updated/accountIconicHeader/preferrencesLightMode.png';
+import preferenceDark from '../../assets/updated/accountIconicHeader/preferencesDarkMode.png';
+
+import convertLight from '../../assets/updated/accountIconicHeader/convertLightMode.svg';
+import convertDark from '../../assets/updated/accountIconicHeader/convertDarkMode.svg';
+
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
@@ -60,15 +72,34 @@ const Account = () => {
   const [captainBeeForm, setCaptainBeeForm] = useState(false);
 
   const tabsData = [
-    { label: 'Basic Info', component: <BasicInfo theme={theme} />, key: '1' },
-    { label: 'Security', component: <Security />, key: '2' },
-    { label: 'Preferences', component: <Preferences />, key: '3' },
-    // { label: 'Payment Method', component: <PaymentMethod />, key: '4' },
+    {
+      label: 'Basic Info',
+      light: basicLight,
+      dark: basicDark,
+      component: <BasicInfo theme={theme} />,
+      key: '1',
+    },
+    {
+      label: 'Security',
+      light: securityLight,
+      dark: securityDark,
+      component: <Security />,
+      key: '2',
+    },
+    {
+      label: 'Preferences',
+      light: preferenceLight,
+      dark: preferenceDark,
+      component: <Preferences />,
+      key: '3',
+    },
   ];
 
   if (localStorage.getItem('userType') === 'Indexx Exchange') {
     tabsData.push({
       label: 'Convert to Captain Bee',
+      light: convertLight,
+      dark: convertDark,
       component: captainBeeForm ? (
         <Signup />
       ) : (
@@ -91,7 +122,7 @@ const Account = () => {
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
-          maxWidth: `${190 * tabsData.length}px`,
+          maxWidth: `${210 * tabsData.length}px`,
           margin: '20px auto 50px auto',
         }}
       >
@@ -115,6 +146,12 @@ const Account = () => {
               label={tab.label}
               disableRipple
               className={selectedTab === index ? 'active' : ''}
+              icon={
+                <img
+                  src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
+                  style={{ height: '25px', marginBottom: '0px' }}
+                />
+              }
             />
           ))}
         </Tabs>
