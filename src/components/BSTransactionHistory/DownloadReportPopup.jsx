@@ -417,6 +417,7 @@ const DownloadReportPopup = ({ onClose }) => {
     }
   };
   const classes = useStyles();
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}

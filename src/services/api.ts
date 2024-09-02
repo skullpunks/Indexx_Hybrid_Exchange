@@ -901,6 +901,32 @@ export const getAllTransactions = async (email: string) => {
   }
 };
 
+export const getReportTransactions = async (
+  email: string,
+  dateFilter: string,
+  assetType: string,
+  transactionType: string
+) => {
+  try {
+    const result = await axios.post(
+      `/api/v1/inex/user/transactions-report/${email}`,
+      {
+        dateFilter,
+        assetType,
+        transactionType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (getReportTransactions)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getUserRewardDetails = async (email: string) => {
   try {
     const result = await API.get(
