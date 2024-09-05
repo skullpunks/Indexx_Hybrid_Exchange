@@ -8,14 +8,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import assetLight from '../../../../assets/updated/iconicHeader/lightMode/Vector.svg';
 import assetDark from '../../../../assets/updated/iconicHeader/Asset wallet.svg';
 
-import radeemDarkMode from '../../../../assets/redeem/redeem.svg';
-import radeemLightMode from '../../../../assets/redeem/redeem Black.svg';
+import radeemDarkMode from '../../../../assets/redeem/RedeemDarkMode.svg';
+import radeemLightMode from '../../../../assets/redeem/redeemWhiteMode.svg';
 
-import createDarkMode from '../../../../assets/redeem/Create.svg';
-import createLightMode from '../../../../assets/redeem/Create Black.svg';
+import createDarkMode from '../../../../assets/redeem/createDarkMode.svg';
+import createLightMode from '../../../../assets/redeem/createWhiteMode.svg';
 
-import sendDarkMode from '../../../../assets/redeem/Send.svg';
-import sendLightMode from '../../../../assets/redeem/Send black.svg';
+import sendDarkMode from '../../../../assets/redeem/sendDarkMode.svg';
+import sendLightMode from '../../../../assets/redeem/sendWhiteMode.svg';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
