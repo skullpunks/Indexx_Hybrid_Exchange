@@ -247,7 +247,7 @@ const header_data = [
     mainTextDesktop: 'Shop',
     mainTextMob: 'Shop',
     active: false,
-    href: 'https://indexx.ai/discount-shop',
+    href: 'https://shop.indexx.ai/?category=gift-cards',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -255,16 +255,24 @@ const header_data = [
         mainList: true,
         links: [
           {
-            name: 'Bonus',
-            href: 'https://indexx.ai/discount-shop',
-          },
-          {
             name: 'Gifts',
-            href: 'https://indexxgifts.com',
+            href: 'https://shop.indexx.ai/?category=gift',
           },
           {
-            name: 'Membership',
-            href: 'https://indexxgifts.com/products/hive-membership-cards',
+            name: 'Greeting',
+            href: 'https://shop.indexx.ai/?category=greeting',
+          },
+          {
+            name: 'Carnival',
+            href: 'https://shop.indexx.ai/?category=carnival',
+          },
+          {
+            name: 'Hive Pack',
+            href: 'https://shop.indexx.ai/?category=hive-pack',
+          },
+          {
+            name: 'Create Gift',
+            href: 'https://cex.indexx.ai/redeem/create-card',
           },
           {
             name: 'XMarket',
@@ -282,7 +290,7 @@ const header_data = [
           },
           {
             name: 'Be part of Elite Club',
-            href: '/indexx-exchange/elite-club',
+            href: `${baseCEXURL}/indexx-exchange/elite-club`,
           },
         ],
       },
@@ -300,7 +308,7 @@ const header_data = [
           },
           {
             name: 'Benefits of Membership',
-            href: '/indexx-exchange/elite-club',
+            href: `${baseCEXURL}indexx-exchange/elite-club`,
           },
         ],
       },
