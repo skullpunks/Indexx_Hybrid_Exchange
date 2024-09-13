@@ -81,9 +81,9 @@ const PaymentMethodSelection = ({
                 ? paypal
                 : buttonText === 'Zelle'
                 ? zelle
-                : // : buttonText === 'Venmo'
-                // ? venmo
-                buttonText === 'ACH'
+                : buttonText === 'Venmo'
+                ? venmo
+                : buttonText === 'ACH'
                 ? ach
                 : transactionIcon
             }

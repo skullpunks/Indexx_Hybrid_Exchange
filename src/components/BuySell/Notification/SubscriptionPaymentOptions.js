@@ -97,7 +97,7 @@ const SubscriptionPaymentOptions = ({
                 }
               />
 
-              {/* <FormControlLabel
+              <FormControlLabel
                 value="venmo"
                 control={<Radio className="radio-button" />}
                 labelPlacement="start"
@@ -114,7 +114,7 @@ const SubscriptionPaymentOptions = ({
                     </p>
                   </div>
                 }
-              /> */}
+              />
 
               <FormControlLabel
                 value="zelle"
