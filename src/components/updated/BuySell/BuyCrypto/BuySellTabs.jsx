@@ -321,7 +321,7 @@ const BuySellTabs = ({
   }, []);
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
-  const createNewBuyOrder = async () => {
+  const createNewBuyOrder = async (paymentMethod) => {
     setLoadings(true);
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
@@ -345,10 +345,11 @@ const BuySellTabs = ({
         outAmount,
         0,
         honeyBeeEmail,
-        true
+        true,
+        paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount);
+      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount, 0, '', false, paymentMethod);
     }
     if (res.status === 200) {
       setLoadings(false);
@@ -479,7 +480,7 @@ const BuySellTabs = ({
   const confirmPayment = async () => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
-        await createNewBuyOrder();
+        await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();
       } else if (

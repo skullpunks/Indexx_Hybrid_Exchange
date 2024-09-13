@@ -203,7 +203,7 @@ const Popup = ({
   }, []);
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
-  const createNewBuyOrder = async () => {
+  const createNewBuyOrder = async (paymentMethod) => {
     setLoadings(true);
     let basecoin = token.title;
     let quotecoin = 'USD';
@@ -226,10 +226,11 @@ const Popup = ({
         outAmount,
         0,
         honeyBeeEmail,
-        true
+        true,
+        paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, paymentMethod);
     }
     if (res.status === 200) {
       setLoadings(false);
