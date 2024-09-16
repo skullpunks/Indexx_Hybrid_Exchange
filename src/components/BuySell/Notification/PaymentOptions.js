@@ -36,7 +36,7 @@ const PaymentOptions = ({
     if (
       selectedValue === 'zelle' ||
       selectedValue === 'wire'
-      //  ||selectedValue === 'venmo'
+      || selectedValue === 'venmo'
     ) {
       // Use the special function for Zelle and Wire
       orderId = await onZelleAndWireConfirm(selectedValue);
@@ -97,9 +97,8 @@ const PaymentOptions = ({
                     <img
                       src={credit}
                       alt="Other"
-                      className={`pay-image ${
-                        selectedValue === 'wires' ? 'selected' : ''
-                      }`}
+                      className={`pay-image ${selectedValue === 'wires' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
                       Purchase cryptocurrencies using credit/debit cards,
@@ -117,9 +116,8 @@ const PaymentOptions = ({
                     <img
                       src={wire}
                       alt="Other"
-                      className={`pay-image ${
-                        selectedValue === 'wire' ? 'selected' : ''
-                      }`}
+                      className={`pay-image ${selectedValue === 'wire' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
                       Swift and secure direct electronic transfers, renowned for
@@ -129,7 +127,7 @@ const PaymentOptions = ({
                   </div>
                 }
               />
-              {/* 
+              
               <FormControlLabel
                 value="venmo"
                 control={<Radio className="radio-button" />}
@@ -150,7 +148,7 @@ const PaymentOptions = ({
                     </p>
                   </div>
                 }
-              /> */}
+              />
 
               <FormControlLabel
                 value="zelle"
@@ -161,9 +159,8 @@ const PaymentOptions = ({
                     <img
                       src={zelle}
                       alt="Male"
-                      className={`pay-image ${
-                        selectedValue === 'zelle' ? 'selected' : ''
-                      }`}
+                      className={`pay-image ${selectedValue === 'zelle' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
                       Swift and secure money transfers, effortlessly sending and
@@ -183,9 +180,8 @@ const PaymentOptions = ({
                     <img
                       alt="Female"
                       src={paypal}
-                      className={`pay-image ${
-                        selectedValue === 'paypal' ? 'selected' : ''
-                      }`}
+                      className={`pay-image ${selectedValue === 'paypal' ? 'selected' : ''
+                        }`}
                     />
                     <p className="pay-description">
                       {' '}

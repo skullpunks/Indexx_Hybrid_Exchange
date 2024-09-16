@@ -12,7 +12,7 @@ import ach from '../../../../assets/updated/popup/ach.png';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
-import tygpay from '../../../../assets/updated/tyga_icon.png'
+import tygpay from '../../../../assets/updated/tyga_icon.png';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   createBuyOrder,
@@ -203,7 +203,7 @@ const Popup = ({
   }, []);
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
-  const createNewBuyOrder = async () => {
+  const createNewBuyOrder = async (paymentMethod) => {
     setLoadings(true);
     let basecoin = token.title;
     let quotecoin = 'USD';
@@ -226,10 +226,11 @@ const Popup = ({
         outAmount,
         0,
         honeyBeeEmail,
-        true
+        true,
+        paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount);
+      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, paymentMethod);
     }
     if (res.status === 200) {
       setLoadings(false);
@@ -309,8 +310,8 @@ const Popup = ({
         await createNewBuyOrder();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire'
-        // ||  paymentMethod === 'Venmo'
+        paymentMethod === 'Wire' ||
+        paymentMethod === 'Venmo'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
@@ -445,7 +446,7 @@ const Popup = ({
                     </Box>
                     <p>${amount}</p>
                   </button>
-                  {/* <button
+                  <button
                     className={classes.button}
                     onClick={() => handlePaymentMethodSelect('Venmo')}
                   >
@@ -454,7 +455,7 @@ const Popup = ({
                       <p className={classes.btnText}>Venmo</p>
                     </Box>
                     <p>${amount}</p>
-                  </button> */}
+                  </button>
                 </>
               )}
             </Box>
