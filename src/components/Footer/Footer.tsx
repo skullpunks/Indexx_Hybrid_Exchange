@@ -80,7 +80,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     },
     {
       src: YouTube,
-      href: 'https://www.youtube.com/channel/UCYXrfhPg7jUMBxPEBCEsaFw',
+      href: 'https://www.youtube.com/channel/UCDBjhB2zS-WHArfeEISJLrQ',
       alt: 'You-tube',
     },
     {

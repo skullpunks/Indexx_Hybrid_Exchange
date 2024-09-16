@@ -131,6 +131,11 @@ const useStyles = makeStyles((theme) => ({
   activeImg: {
     border: `5px solid ${theme.palette.primary.main}`,
   },
+  hoverCardEffect: {
+    '&:hover': {
+      border: `5px solid ${theme.palette.primary.main}`,
+    },
+  },
   errorMessage: {
     color: 'red',
     marginBottom: '20px',
@@ -501,13 +506,14 @@ const CreateCards = ({ onSendCard }) => {
   const theme = useTheme();
 
   const [amount, setAmount] = useState();
+
   const [email, setEmail] = useState('');
   const [currentUserEmail, setCurrentUserEmail] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [giftCardData, setGiftCardData] = useState(null);
   const [loading, isLoading] = useState(false);
   const [error, setError] = useState('');
-  const [amountInUsd, setAmountInUsd] = useState(0);
+  const [amountInUsd, setAmountInUsd] = useState('');
   const [currency, setCurrency] = useState(initialTokens[0]?.title);
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
@@ -541,9 +547,8 @@ const CreateCards = ({ onSendCard }) => {
           setOpenInsufficientPopup(false);
         }
       }
-      const res = await getCoinPriceByName(String(currency));
-      let priceData = res.data.results.data;
-      setAmountInUsd(priceData * Number(amount));
+
+      // setAmountInUsd(priceData * Number(amount));
     }
     fetchPrice();
   }, [amount, singleWallet]);
@@ -583,7 +588,7 @@ const CreateCards = ({ onSendCard }) => {
       setSingleWallet(userWallet);
       const res = await getCoinPriceByName(String(currency));
       let priceData = res.data.results.data;
-      setAmountInUsd(priceData * Number(amount));
+      // setAmountInUsd(priceData * Number(amount));
     }
     fetchPrice();
   }, [currency, allWallets]);
@@ -598,6 +603,16 @@ const CreateCards = ({ onSendCard }) => {
     setShowConfirmPopup(false);
   };
 
+  useEffect(() => {
+    try {
+      async function fetchPrice() {
+        const res = await getCoinPriceByName(String(currency));
+        let priceData = res.data.results.data;
+        setAmount(amountInUsd / priceData);
+      }
+      fetchPrice();
+    } catch (err) {}
+  }, [amountInUsd]);
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -632,33 +647,33 @@ const CreateCards = ({ onSendCard }) => {
               hasborder
             />
           </div>
+          <div className={classes.selectTypeContainer}>
+            <label>Select Token</label>
+            <CustomSelectBox
+              items={initialTokens.map((token) => ({
+                name: token.title,
+                value: token.title,
+                image: token.image,
+              }))}
+              type={'Coin'}
+              value={currency}
+              onCurrencyChange={(value) => setCurrency(value)}
+              onChange={handleChange}
+              hasborder={true}
+            />
+          </div>
           <div className={classes.enterAmountContainer}>
             <InputField
-              label={'Enter Amount'}
+              label={'Enter Amount in USD'}
               type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              endAdornment={
-                <div style={{ transform: 'translateX(10px)' }}>
-                  <CustomSelectBox
-                    items={initialTokens.map((token) => ({
-                      name: token.title,
-                      value: token.title,
-                      image: token.image,
-                    }))}
-                    type={'Coin'}
-                    value={currency}
-                    onCurrencyChange={(value) => setCurrency(value)}
-                    onChange={handleChange}
-                  />
-                </div>
-              }
+              value={amountInUsd}
+              onChange={(e) => setAmountInUsd(e.target.value)}
             />
           </div>
           {singleWallet && (
             <div className={classes.balanceDisplay}>
               <span>
-                Asset Balance:{' '}
+                {currency} Balance:{' '}
                 {new Intl.NumberFormat('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
@@ -672,15 +687,13 @@ const CreateCards = ({ onSendCard }) => {
 
           <div className={classes.btnContainer}>
             <p style={{ flex: '70%' }}>
-              Total Amount: {amount} {currency} (Amount in USD: $
-              {amountInUsd
-                ? new Intl.NumberFormat('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6,
-                  }).format(amountInUsd)
-                : 0}
-              )
+              Calculated {currency} Quantity:{' '}
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4,
+              }).format(amount)}{' '}
+              {}
             </p>
             <GenericButton
               text={'Create'}
@@ -721,7 +734,9 @@ const CreateCards = ({ onSendCard }) => {
               <div
                 key={i} // Added key to the map iterator
                 onClick={() => handleImgClick(curr)}
-                className={curr.img === selectedImg ? classes.activeImg : ''}
+                className={`${classes.hoverCardEffect} ${
+                  curr.img === selectedImg ? classes.activeImg : ''
+                } `}
               >
                 <img src={curr.img} alt="img" style={{ width: '100%' }} />
               </div>
@@ -753,7 +768,9 @@ const CreateCards = ({ onSendCard }) => {
               <div
                 key={i} // Added key to the map iterator
                 onClick={() => handleImgClick(curr)}
-                className={curr.img === selectedImg ? classes.activeImg : ''}
+                className={`${classes.hoverCardEffect} ${
+                  curr.img === selectedImg ? classes.activeImg : ''
+                } `}
               >
                 <img src={curr.img} alt="img" style={{ width: '100%' }} />
               </div>

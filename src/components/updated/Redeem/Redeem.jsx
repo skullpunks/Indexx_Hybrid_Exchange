@@ -190,6 +190,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     gap: '5px',
   },
+  hoverCardEffect: {
+    cursor: 'pointer',
+    '&:hover': {
+      border: `5px solid ${theme.palette.primary.main}`,
+    },
+  },
   errorMessage: {
     color: 'red',
     marginTop: '10px',
@@ -549,6 +555,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
             {giftArr.map((curr, i) => (
               <div
                 key={i}
+                className={`${classes.hoverCardEffect}`}
                 onClick={() =>
                   navigate('/redeem/create-card', {
                     state: { selectedImg: curr.img, type: 'Gift Card' },
@@ -572,6 +579,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
               {greetingArr.map((curr, i) => (
                 <div
                   key={i}
+                  className={`${classes.hoverCardEffect}`}
                   onClick={() =>
                     navigate('/redeem/create-card', {
                       state: { selectedImg: curr.img, type: 'Greeting Card' },

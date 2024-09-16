@@ -48,8 +48,8 @@ const getAuthenticatedUrl = async (url: any) => {
 
 const header_data = [
   {
-    mainTextDesktop: 'Exchange',
-    mainTextMob: 'Exchange',
+    mainTextDesktop: 'Buy Crypto',
+    mainTextMob: 'Buy Crypto',
     active: true,
     href: '/',
     hasMegaDrop: true,
@@ -116,128 +116,6 @@ const header_data = [
           {
             name: 'Where are the token Whitepapers?',
             href: 'https://indexx.ai/indexx-exchange/token-details',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    mainTextDesktop: 'Meme',
-    mainTextMob: 'Meme',
-    active: false,
-    href: 'https://indexx.ai/meme-details',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore',
-        mainList: true,
-        links: [
-          {
-            name: 'Meme Coins',
-            href: 'https://indexx.ai/meme-details/meme-coin',
-          },
-          {
-            name: 'Ordinals',
-            href: 'https://indexx.ai/meme-details/ordinal-coin',
-          },
-          {
-            name: 'NFTs',
-            href: 'https://indexx.ai/meme-details/nft',
-          },
-        ],
-      },
-      {
-        heading: 'Action',
-        links: [
-          {
-            name: 'Buy WIBS meme coins',
-            href: 'https://whoisbitcoinsatoshi.wtf/coin',
-          },
-          {
-            name: 'Buy Ordinals',
-            href: 'https://indexx.ai/indexx-exchange/coming-soon',
-          },
-          {
-            name: 'Buy NFTs',
-            href: 'https://indexx.ai/meme-details/nft',
-          },
-        ],
-      },
-      {
-        heading: 'Learn More',
-        links: [
-          {
-            name: 'WIBS Whitepaper',
-            href: 'https://smallpdf.com/file#s=b3cde823-96de-4a01-b35f-5fc7b06c72e1',
-          },
-          {
-            name: 'WIBS Audit Report',
-            href: 'https://smallpdf.com/file#s=94f05479-8ca5-4236-a44c-a977bd34230b',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    mainTextDesktop: 'Lotto',
-    mainTextMob: 'Lotto',
-    active: false,
-    href: 'https://lotto.indexx.ai',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore Lotto',
-        mainList: true,
-        links: [
-          {
-            name: 'About',
-            href: 'https://lotto.indexx.ai/about',
-          },
-          {
-            name: 'Buy Ticket',
-            href: 'https://lotto.indexx.ai/contest',
-          },
-          {
-            name: 'Contest',
-            href: 'https://lotto.indexx.ai/contest',
-          },
-          {
-            name: 'Grand Prize',
-            href: 'https://lotto.indexx.ai/grand-prize',
-          },
-          {
-            name: 'Winners',
-            href: 'https://lotto.indexx.ai/winner',
-          },
-        ],
-      },
-      {
-        heading: 'Rewards',
-        links: [
-          {
-            name: 'Win a Ferrari',
-            href: 'https://lotto.indexx.ai/grand-prize',
-          },
-          {
-            name: 'Claim Rewards',
-            href: 'https://lotto.indexx.ai/reward',
-          },
-          {
-            name: 'See who won',
-            href: 'https://lotto.indexx.ai/winner',
-          },
-        ],
-      },
-      {
-        heading: 'Learn More',
-        links: [
-          {
-            name: 'How does Fantasy Lotto work?',
-            href: 'https://lotto.indexx.ai/how-work',
-          },
-          {
-            name: 'Contact Support',
-            href: 'https://lotto.indexx.ai/contact',
           },
         ],
       },
@@ -315,10 +193,76 @@ const header_data = [
     ],
   },
   {
-    mainTextDesktop: 'Swap',
-    mainTextMob: 'Swap',
+    mainTextDesktop: 'Lotto',
+    mainTextMob: 'Lotto',
     active: false,
-    href: 'https://swap.indexx.ai/',
+    href: 'https://lotto.indexx.ai',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore Lotto',
+        mainList: true,
+        links: [
+          {
+            name: 'About',
+            href: 'https://lotto.indexx.ai/about',
+          },
+          {
+            name: 'Buy Ticket',
+            href: 'https://lotto.indexx.ai/contest',
+          },
+          {
+            name: 'Contest',
+            href: 'https://lotto.indexx.ai/contest',
+          },
+          {
+            name: 'Grand Prize',
+            href: 'https://lotto.indexx.ai/grand-prize',
+          },
+          {
+            name: 'Winners',
+            href: 'https://lotto.indexx.ai/winner',
+          },
+        ],
+      },
+      {
+        heading: 'Rewards',
+        links: [
+          {
+            name: 'Win a Ferrari',
+            href: 'https://lotto.indexx.ai/grand-prize',
+          },
+          {
+            name: 'Claim Rewards',
+            href: 'https://lotto.indexx.ai/reward',
+          },
+          {
+            name: 'See who won',
+            href: 'https://lotto.indexx.ai/winner',
+          },
+        ],
+      },
+      {
+        heading: 'Learn More',
+        links: [
+          {
+            name: 'How does Fantasy Lotto work?',
+            href: 'https://lotto.indexx.ai/how-work',
+          },
+          {
+            name: 'Contact Support',
+            href: 'https://lotto.indexx.ai/contact',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    mainTextDesktop: 'Hive',
+    mainTextMob: 'Hive',
+    active: false,
+    href: 'https://hive.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {
@@ -326,58 +270,47 @@ const header_data = [
         mainList: true,
         links: [
           {
-            name: 'Staking',
-            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/staking',
+            name: 'Captain Bee',
+            href: 'https://hive.indexx.ai/bees',
           },
           {
-            name: 'Tokens',
-            href: 'https://indexx.ai/indexx-exchange/token-details',
-          },
-          {
-            name: 'Wallstreet',
-            href: 'https://wallstreet.indexx.ai/',
-          },
-          {
-            name: 'Web3 Wallet',
-            href: 'https://wallet.indexx.ai/',
+            name: 'Honey Bee',
+            href: 'https://hive.indexx.ai/honey-bees',
           },
         ],
       },
       {
-        heading: 'Action',
+        heading: 'Become a member',
         links: [
           {
-            name: 'Register on Exchange',
-            href: 'https://cex.indexx.ai/indexx-exchange/buy-sell/get-started/',
+            name: 'Register as Caption Bee',
+            href: 'https://hive.indexx.ai/sign-up',
           },
           {
-            name: 'Play Crypto Lottery',
-            href: 'https://lotto.indexx.ai',
-          },
-          {
-            name: 'Buy Indexx Tokens',
-            href: 'https://cex.indexx.ai/',
+            name: 'Sign Up as Honey Bee',
+            href: '/indexx-exchange/buy-sell/get-started-honeybee',
           },
         ],
       },
       {
-        heading: 'More on Indexx',
+        heading: 'Learn The Hive',
         links: [
           {
-            name: 'White Paper',
-            href: '/indexx-exchange/token-details',
+            name: 'How does Hive work?',
+            href: 'https://hive.indexx.ai/',
           },
           {
-            name: 'Legal Documents',
-            href: '/indexx-exchange/legal',
+            name: 'Contact Support',
+            href: 'https://indexx.ai/indexx-exchange/help/contact',
           },
         ],
       },
     ],
   },
+
   {
-    mainTextDesktop: 'Tokens',
-    mainTextMob: 'Tokens',
+    mainTextDesktop: 'xTokens',
+    mainTextMob: 'xTokens',
     active: false,
     href: 'https://indexx.ai/indexx-exchange/token-details',
     hasMegaDrop: true,
@@ -452,55 +385,7 @@ const header_data = [
       },
     ],
   },
-  {
-    mainTextDesktop: 'Hive',
-    mainTextMob: 'Hive',
-    active: false,
-    href: 'https://hive.indexx.ai/',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore',
-        mainList: true,
-        links: [
-          {
-            name: 'Captain Bee',
-            href: 'https://hive.indexx.ai/bees',
-          },
-          {
-            name: 'Honey Bee',
-            href: 'https://hive.indexx.ai/honey-bees',
-          },
-        ],
-      },
-      {
-        heading: 'Become a member',
-        links: [
-          {
-            name: 'Register as Caption Bee',
-            href: 'https://hive.indexx.ai/sign-up',
-          },
-          {
-            name: 'Sign Up as Honey Bee',
-            href: '/indexx-exchange/buy-sell/get-started-honeybee',
-          },
-        ],
-      },
-      {
-        heading: 'Learn The Hive',
-        links: [
-          {
-            name: 'How does Hive work?',
-            href: 'https://hive.indexx.ai/',
-          },
-          {
-            name: 'Contact Support',
-            href: 'https://indexx.ai/indexx-exchange/help/contact',
-          },
-        ],
-      },
-    ],
-  },
+
   {
     mainTextDesktop: 'Academy',
     mainTextMob: 'Academy',
@@ -547,108 +432,6 @@ const header_data = [
     ],
   },
 
-  {
-    mainTextDesktop: 'WallStreet',
-    mainTextMob: 'WallStreet',
-    active: false,
-    href: 'https://wallstreet.indexx.ai/',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore',
-        mainList: true,
-        links: [
-          {
-            name: 'Stock Tokens',
-            href: 'https://wallstreet.indexx.ai/details?type=all',
-          },
-          {
-            name: 'Stock Certificates',
-            href: 'https://wallstreet.indexx.ai/certificates?type=all',
-          },
-          {
-            name: 'ETFs',
-            href: 'https://wallstreet.indexx.ai/etf',
-          },
-        ],
-      },
-      {
-        heading: 'Action',
-        links: [
-          {
-            name: 'Buy Stock Tokens',
-            href: '/update/home/stock-token?buyToken=AMZN',
-          },
-          {
-            name: 'Buy Stock Certificates',
-            href: ' ',
-          },
-          {
-            name: 'Buy ETFs',
-            href: '/update/home/etf-tokens?buyToken=ALCRYP',
-          },
-        ],
-      },
-      {
-        heading: 'Learn more',
-        links: [
-          {
-            name: 'Learn about Stock Tokens',
-            href: 'https://wallstreet.indexx.ai/learn-tokens',
-          },
-          {
-            name: 'Learn about Stock Certificates',
-            href: 'https://wallstreet.indexx.ai/learn-certificates',
-          },
-          {
-            name: 'Learn about ETFs',
-            href: 'https://wallstreet.indexx.ai/learn-etfs',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    mainTextDesktop: 'Affiliate',
-    mainTextMob: 'Affiliate',
-    active: false,
-    href: 'https://register.affiliate.indexx.ai/',
-    hasMegaDrop: true,
-    dropDownContent: [
-      {
-        heading: 'Explore',
-        mainList: true,
-        links: [
-          {
-            name: 'Become an Affiliate',
-            href: 'https://register.affiliate.indexx.ai/',
-          },
-          {
-            name: 'Trade to Earn',
-            href: 'https://indexx.ai/indexx-exchange/trade-to-earn',
-          },
-        ],
-      },
-      {
-        heading: 'Action',
-        links: [
-          {
-            name: 'Become an affiliate',
-            href: 'https://register.affiliate.indexx.ai/about',
-          },
-        ],
-      },
-      {
-        heading: 'Support',
-        links: [
-          {
-            name: 'How to get my earnings?',
-            href: '#',
-          },
-        ],
-      },
-    ],
-  },
   {
     mainTextDesktop: 'Company',
     mainTextMob: 'Company',
