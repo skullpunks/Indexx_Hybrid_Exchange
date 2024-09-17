@@ -116,8 +116,8 @@ const ConvertCrypto = () => {
   const [loadingRate, setLoadingRate] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false); // Global loading state if needed
-  const [fromTokenImage, setFromTokenImage] = useState(getImage('INEX')); // Default image
-  const [toTokenImage, setToTokenImage] = useState(getImage('IUSD+')); // Default image
+  const [fromTokenImage, setFromTokenImage] = useState(Inex); // Default image
+  const [toTokenImage, setToTokenImage] = useState(Inex); // Default image
 
   const createProcessOrder = async () => {
     setLoading(true); // Set loading true when API call starts
