@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogActions, Button, Typography, CircularProgress } from '@mui/material';
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
 
 const ConversionPreviewModal = ({
   open,
@@ -13,9 +20,9 @@ const ConversionPreviewModal = ({
   insufficientBalance,
   createProcessOrder,
   fromTokenImage,
-  toTokenImage
+  toTokenImage,
 }) => {
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const handleConfirmConvert = async () => {
     setLoading(true);
@@ -36,20 +43,41 @@ const ConversionPreviewModal = ({
         <Typography variant="h6" gutterBottom>
           Confirm
         </Typography>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-        <img src={fromTokenImage} alt={fromToken.title} style={{ width: 40, marginRight: 10 }} />
-          <Typography variant="body1">{amount} {fromToken.title}</Typography>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '10px',
+          }}
+        >
+          <img
+            src={fromTokenImage}
+            alt={fromToken.title}
+            style={{ width: 40, marginRight: 10 }}
+          />
+          <Typography variant="body1">
+            {amount} {fromToken.title}
+          </Typography>
           <Typography variant="body1">→</Typography>
-          <img src={toTokenImage} alt={toToken.title} style={{ width: 40, marginRight: 10 }} />
-          <Typography variant="body1">{totalAmountToPay} {toToken.title}</Typography>
+          <img
+            src={toTokenImage}
+            alt={toToken.title}
+            style={{ width: 40, marginRight: 10 }}
+          />
+          <Typography variant="body1">
+            {totalAmountToPay} {toToken.title}
+          </Typography>
         </div>
-        
         <Typography variant="body2" gutterBottom>
-          <strong>Rate:</strong> 1 {fromToken.title} = {rateData1.toFixed(2)} {toToken.title}
+          <strong>Rate: </strong>1 {fromToken.title} ={' '}
+          {(rateData1 / rateData2).toFixed(4)} {toToken.title}
         </Typography>
+
         <Typography variant="body2" gutterBottom>
-          <strong>Inverse Rate:</strong> 1 {toToken.title} = {(1 / rateData1).toFixed(8)} {fromToken.title}
+          <strong>Inverse Rate: </strong>1 {toToken.title} ={' '}
+          {(rateData2 / rateData1).toFixed(4)} {fromToken.title}
         </Typography>
+
         <Typography variant="body2" gutterBottom>
           <strong>Transaction Fees:</strong> 0 {toToken.title}
         </Typography>
