@@ -21,6 +21,7 @@ import {
 } from '../../../services/api';
 import ConversionPreviewModal from './ConversionPreviewModal';
 import OpenNotification from '../../OpenNotification/OpenNotification';
+import Inex from '../../../assets/updated/buySell/INEX.svg'; // Default image
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -115,6 +116,8 @@ const ConvertCrypto = () => {
   const [loadingRate, setLoadingRate] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false); // Global loading state if needed
+  const [fromTokenImage, setFromTokenImage] = useState(getImage('INEX')); // Default image
+  const [toTokenImage, setToTokenImage] = useState(getImage('IUSD+')); // Default image
 
   const createProcessOrder = async () => {
     setLoading(true); // Set loading true when API call starts
@@ -269,10 +272,20 @@ const ConvertCrypto = () => {
     fetchConversionRate();
   };
 
+   // Fetch token image paths dynamically based on the selected token
+   const getImage = (tokenImage) => {
+    try {
+      return require(`../../../assets/token-icons/${tokenImage}.png`).default;
+    } catch {
+      return Inex; // Fallback image
+    }
+  };
+
   const handleFromTokenChange = (token) => {
     setFromToken(token);
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setFromBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'fromToken'
+    setFromTokenImage(getImage(token.image)); // Set the image when token changes
   };
 
   const handlePreviewConversion = () => {
@@ -285,6 +298,7 @@ const ConvertCrypto = () => {
     setToToken(token);
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setToBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'toToken'
+    setToTokenImage(getImage(token.image)); // Set the image when token changes
   };
 
   return (
@@ -353,6 +367,8 @@ const ConvertCrypto = () => {
               rateData2={rateData2}
               insufficientBalance={fromBalance < Number(amount)} // Check for insufficient balance
               createProcessOrder={createProcessOrder}
+              fromTokenImage={fromTokenImage}
+              toTokenImage={toTokenImage}
             />
           </div>
         </div>

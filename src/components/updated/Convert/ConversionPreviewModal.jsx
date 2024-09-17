@@ -11,7 +11,9 @@ const ConversionPreviewModal = ({
   rateData1,
   rateData2,
   insufficientBalance,
-  createProcessOrder
+  createProcessOrder,
+  fromTokenImage,
+  toTokenImage
 }) => {
   const [loading, setLoading] = useState(false); 
 
@@ -35,8 +37,10 @@ const ConversionPreviewModal = ({
           Confirm
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+        <img src={fromTokenImage} alt={fromToken.title} style={{ width: 40, marginRight: 10 }} />
           <Typography variant="body1">{amount} {fromToken.title}</Typography>
           <Typography variant="body1">→</Typography>
+          <img src={toTokenImage} alt={toToken.title} style={{ width: 40, marginRight: 10 }} />
           <Typography variant="body1">{totalAmountToPay} {toToken.title}</Typography>
         </div>
         
