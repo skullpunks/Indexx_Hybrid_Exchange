@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CoinsPopup = ({ onClose }) => {
+const CoinsPopup = ({ onClose, onTokenSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const theme = useTheme();
   const classes = useStyles();
@@ -200,6 +200,12 @@ const CoinsPopup = ({ onClose }) => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const handleTokenSelect = (token) => {
+    onTokenSelect(token); // Pass the selected token to the parent component
+    onClose(); // Close the popup
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -285,7 +291,7 @@ const CoinsPopup = ({ onClose }) => {
                 <ListItem key={token.title} disablePadding>
                   <ListItemButton
                     className={classes.listContainer}
-                    onClick={() => {}}
+                    onClick={() => handleTokenSelect(token)}
                   >
                     <div className={classes.logoContainer}>
                       <img src={getImage(token.image)} alt={token.title} />

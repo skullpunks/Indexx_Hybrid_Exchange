@@ -162,8 +162,9 @@ const useStyles = makeStyles((theme) => ({
 const getImage = (image) => {
   console.log('my image', image);
   try {
-    return require(`../../../../assets/token-icons/${image}.png`).default;
+    return require(`../../../assets/token-icons/${image}.png`).default;
   } catch (error) {
+    console.log("er",error)
     return Inex; // Fallback image if specific token icon is not found
   }
 };
@@ -175,7 +176,7 @@ const CustomTextField = ({
   onAmountChange,
   onReceiveAmountChange,
   setShowCoinsDropdown,
-
+  balance,
   onPriceChange,
   amount,
   receiveAmount,
@@ -191,12 +192,12 @@ const CustomTextField = ({
   console.log('defaultReceiveToken in customField', defaultReceiveToken);
   // Initialize the token
   const initialToken = fixedToken || {
-    title: defaultReceiveToken?.title || defaultTokenFromUrl || 'INEX',
-    image: defaultReceiveToken?.image || defaultTokenFromUrl || 'INEX',
+    title: defaultReceiveToken?.title,
+    image: defaultReceiveToken?.image,
   };
 
   const [selectedToken, setSelectedToken] = useState(initialToken);
-  console.log('initialToken', initialToken);
+  console.log('initialToken', initialToken, tokenType);
   const classes = useStyles({
     cryptoSymbol: initialToken.title,
   });
@@ -258,6 +259,7 @@ const CustomTextField = ({
   //   }
   // };
 
+  console.log("amount", amount)
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
     setUserAmount(amount);
@@ -339,7 +341,7 @@ const CustomTextField = ({
               {label}
             </div>
             <div className={classes.label} shrink htmlFor="input-field">
-              Balance : 0.34284978 USDT
+              Balance : {balance} {defaultReceiveToken?.title}
             </div>
           </div>
 
@@ -348,7 +350,7 @@ const CustomTextField = ({
             className={classes.textField}
             placeholder={placeholder}
             type="number"
-            value={label === 'Spend' ? userAmount : receiveAmount}
+            value={label === 'From' ? userAmount : amount}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleAmountChange}
