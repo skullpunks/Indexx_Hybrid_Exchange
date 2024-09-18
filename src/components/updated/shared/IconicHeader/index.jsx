@@ -18,6 +18,10 @@ import etfDark from '../../../../assets/updated/iconicHeader/ETF_dark.svg';
 import giftLight from '../../../../assets/redeem/giftWhite.svg';
 import giftDark from '../../../../assets/redeem/giftBlack.svg';
 
+import darkModeConvert from '../../../../assets/updated/iconicHeader/darkModeConvert.png';
+import lightModeConvert from '../../../../assets/updated/iconicHeader/lightModeConvert.png';
+import yellowModeConvert from '../../../../assets/updated/iconicHeader/yellow convert.svg';
+
 import tokenHive from '../../../../assets/updated/iconicHeader/token_hive.svg';
 import stockTokenHive from '../../../../assets/updated/iconicHeader/stock_token_hive.svg';
 import etfHive from '../../../../assets/updated/iconicHeader/etf_hive.svg';
@@ -137,7 +141,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
     if (email) {
       checkByemail(String(email)).then((res) => {
         if (res && res.userType) {
-          setUserType(res.userType);
+          // setUserType(res.userType);
         }
       });
     }
@@ -152,19 +156,28 @@ export default function IconicHeader({ selectedTab, onChange }) {
       search: 'buyToken=INEX',
     },
     {
-      label: 'Stock Tokens',
-      light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,
-      dark: userType === 'Indexx Exchange' ? wallStreetDark : stockTokenHive,
-      path: '/update/home/stock-token',
-      search: 'buyToken=AMZN',
+      label: 'Convert',
+      light:
+        userType === 'Indexx Exchange' ? lightModeConvert : yellowModeConvert,
+      dark:
+        userType === 'Indexx Exchange' ? darkModeConvert : yellowModeConvert,
+      path: '/convert',
+      search: '',
     },
-    {
-      label: 'ETF Tokens',
-      light: userType === 'Indexx Exchange' ? etfLight : etfHive,
-      dark: userType === 'Indexx Exchange' ? etfDark : etfHive,
-      path: '/update/home/etf-tokens',
-      search: 'buyToken=ALCRYP',
-    },
+    // {
+    //   label: 'Stock Tokens',
+    //   light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,
+    //   dark: userType === 'Indexx Exchange' ? wallStreetDark : stockTokenHive,
+    //   path: '/update/home/stock-token',
+    //   search: 'buyToken=AMZN',
+    // },
+    // {
+    //   label: 'ETF Tokens',
+    //   light: userType === 'Indexx Exchange' ? etfLight : etfHive,
+    //   dark: userType === 'Indexx Exchange' ? etfDark : etfHive,
+    //   path: '/update/home/etf-tokens',
+    //   search: 'buyToken=ALCRYP',
+    // },
   ];
 
   if (isLoggedIn) {
@@ -239,7 +252,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1000px';
   } else {
-    maxWidthTabContainer = '500px';
+    maxWidthTabContainer = '400px';
   }
 
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;
