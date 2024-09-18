@@ -125,7 +125,7 @@ const header_data = [
     mainTextDesktop: 'Shop',
     mainTextMob: 'Shop',
     active: false,
-    href: 'https://shop.indexx.ai/?category=gift-cards',
+    href: 'https://shop.indexx.ai/',
     hasMegaDrop: true,
     dropDownContent: [
       {

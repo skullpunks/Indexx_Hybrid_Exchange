@@ -22,6 +22,8 @@ import {
 import ConversionPreviewModal from './ConversionPreviewModal';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import Inex from '../../../assets/updated/buySell/INEX.svg'; // Default image
+import PreviewConversionpopup from './PreviewConversionpopup';
+import SuccessPopup from './SuccessfulConvertPopup';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -118,25 +120,35 @@ const ConvertCrypto = () => {
   const [loading, setLoading] = useState(false); // Global loading state if needed
   const [fromTokenImage, setFromTokenImage] = useState(Inex); // Default image
   const [toTokenImage, setToTokenImage] = useState(Inex); // Default image
-
+  const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
   const createProcessOrder = async () => {
     setLoading(true); // Set loading true when API call starts
     try {
       const basecoin = fromToken.title;
       const quotecoin = toToken.title;
-      let res=  await createConvertOrder(basecoin, quotecoin, Number(amount), receiveAmount);
+      let res = await createConvertOrder(
+        basecoin,
+        quotecoin,
+        Number(amount),
+        receiveAmount
+      );
 
       if (res.status === 200) {
         await processConvertOrder(res.data); // Process the order
         setLoading(false); // Stop loading
-        OpenNotification('success', "Conversion successful!");
         setOpenModal(false); // Close the modal
+        setOpenSuccessPopup(true);
       } else {
-        throw new Error('Failed to Process Convert Order. Please check balance on the wallet');
+        throw new Error(
+          'Failed to Process Convert Order. Please check balance on the wallet'
+        );
       }
     } catch (error) {
       setLoading(false); // Stop loading
-      OpenNotification('error', error.message || 'Failed to process conversion');
+      OpenNotification(
+        'error',
+        error.message || 'Failed to process conversion'
+      );
     }
   };
 
@@ -145,10 +157,12 @@ const ConvertCrypto = () => {
 
     if (res.status === 200) {
       setLoading(false);
-      OpenNotification('success', 'Successfully Processed Convert Order');
-    } else {
+      setOpenSuccessPopup(true);
       setLoading(false);
-      OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
+      OpenNotification(
+        'error',
+        'Failed to Process Convert Order. Please check balance on the wallet'
+      );
     }
   };
 
@@ -201,8 +215,8 @@ const ConvertCrypto = () => {
     setShowCoinsDropdown(false); // Close the dropdown after selecting the token
   };
 
-   // Function to format the balance based on its value
-   const formatBalance = (balance) => {
+  // Function to format the balance based on its value
+  const formatBalance = (balance) => {
     if (balance < 0.001) {
       // Format to 5 or 6 decimal places if balance is less than 0.001
       return balance.toLocaleString('en-US', {
@@ -227,13 +241,17 @@ const ConvertCrypto = () => {
       const userWallets = await getUserWallets(decodedToken?.email);
       setUsersWallets(userWallets.data);
       setFromBalance(
-        formatBalance(userWallets.data.find((x) => x.coinSymbol === fromToken.title)
-          ?.coinBalance || 0
-      ));
+        formatBalance(
+          userWallets.data.find((x) => x.coinSymbol === fromToken.title)
+            ?.coinBalance || 0
+        )
+      );
       setToBalance(
-        formatBalance(userWallets.data.find((x) => x.coinSymbol === toToken.title)
-          ?.coinBalance || 0
-      ));
+        formatBalance(
+          userWallets.data.find((x) => x.coinSymbol === toToken.title)
+            ?.coinBalance || 0
+        )
+      );
     };
 
     fetchUserWallets();
@@ -272,8 +290,8 @@ const ConvertCrypto = () => {
     fetchConversionRate();
   };
 
-   // Fetch token image paths dynamically based on the selected token
-   const getImage = (tokenImage) => {
+  // Fetch token image paths dynamically based on the selected token
+  const getImage = (tokenImage) => {
     try {
       return require(`../../../assets/token-icons/${tokenImage}.png`).default;
     } catch {
@@ -355,7 +373,7 @@ const ConvertCrypto = () => {
               onClick={handlePreviewConversion}
             />
             {/* Conversion Preview Modal */}
-            <ConversionPreviewModal
+            {/* <ConversionPreviewModal
               open={openModal}
               onClose={handleCloseModal}
               fromToken={fromToken}
@@ -369,7 +387,7 @@ const ConvertCrypto = () => {
               createProcessOrder={createProcessOrder}
               fromTokenImage={fromTokenImage}
               toTokenImage={toTokenImage}
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -378,6 +396,25 @@ const ConvertCrypto = () => {
           onClose={() => setShowCoinsDropdown(false)}
           onTokenSelect={handleTokenSelection}
         />
+      )}
+      {openModal && (
+        <PreviewConversionpopup
+          onClose={() => handleCloseModal(false)}
+          fromTokenImage={fromTokenImage}
+          toTokenImage={toTokenImage}
+          fromToken={fromToken}
+          toToken={toToken}
+          amount={amount}
+          onAmountChange={handleToAmountChange}
+          totalAmountToPay={receiveAmount}
+          rateData1={rateData1}
+          rateData2={rateData2}
+          createProcessOrder={createProcessOrder}
+          insufficientBalance={fromBalance < Number(amount)} // Check for insufficient balance
+        />
+      )}
+      {openSuccessPopup && (
+        <SuccessPopup onClose={() => setOpenSuccessPopup(false)} />
       )}
     </div>
   );
