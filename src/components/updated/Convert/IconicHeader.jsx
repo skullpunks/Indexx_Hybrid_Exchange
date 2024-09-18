@@ -65,10 +65,10 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Markets',
       path: '',
     },
-    {
-      label: 'Limits',
-      path: '',
-    },
+    // {
+    //   label: 'Limits',
+    //   path: '',
+    // },
   ];
 
   const handleChange = (event, newValue) => {
