@@ -141,7 +141,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
     if (email) {
       checkByemail(String(email)).then((res) => {
         if (res && res.userType) {
-          // setUserType(res.userType);
+          setUserType(res.userType);
         }
       });
     }
