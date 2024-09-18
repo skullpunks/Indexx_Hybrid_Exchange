@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PaymentIcon from '@mui/icons-material/Payment'; // Replace with your desired icon
 import transactionIcon from '../../../../assets/updated/buySell/transactionMethod.svg';
-
+import usd from '../../../../assets/token-icons/USD.png';
 import creditCard from '../../../../assets/updated/popup/credit-card.svg';
 import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import venmo from '../../../../assets/updated/popup/venmo.svg';
@@ -85,6 +85,8 @@ const PaymentMethodSelection = ({
                 ? venmo
                 : buttonText === 'ACH'
                 ? ach
+                : buttonText === 'ACH'
+                ? usd
                 : transactionIcon
             }
             alt="Transaction Method"

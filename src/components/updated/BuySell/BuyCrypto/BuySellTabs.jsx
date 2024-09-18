@@ -349,20 +349,38 @@ const BuySellTabs = ({
         paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount, 0, '', false, paymentMethod);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        '',
+        false,
+        paymentMethod
+      );
     }
     if (res.status === 200) {
-      setLoadings(false);
-      //--Below code is to enable paypal Order---
-      let payPalPaymentLink = '';
-      for (let i = 0; i < res.data.links.length; i++) {
-        if (res.data.links[i].rel.includes('approve')) {
-          //window.location.href = res.data.links[i].href;
-          payPalPaymentLink = res.data.links[i].href;
-          break;
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        setLoadings(false);
+        //--Below code is to enable paypal Order---
+        let payPalPaymentLink = '';
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes('approve')) {
+            //window.location.href = res.data.links[i].href;
+            payPalPaymentLink = res.data.links[i].href;
+            break;
+          }
         }
+        navigate('/paypal-partnership-with-indexx', {
+          state: { payPalPaymentLink },
+        });
+      } else {
+        setLoadings(false);
+        console.log('res.data', res.data);
+        setIsModalOpen(true);
+        setGeneralMessage('Order Completed');
       }
-      navigate('/paypal-partnership-with-indexx', { state: { payPalPaymentLink } });
       //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
@@ -480,6 +498,8 @@ const BuySellTabs = ({
   const confirmPayment = async () => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        await createNewBuyOrder(paymentMethod);
+      } else if (paymentMethod === 'USD') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();

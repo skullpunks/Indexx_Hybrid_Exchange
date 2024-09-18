@@ -6,6 +6,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import transactionIcon from '../../../../assets/updated/buySell/transactionMethod.svg';
 import { Box, useTheme } from '@mui/material';
 
+import usd from '../../../../assets/token-icons/USD.png';
 import creditCard from '../../../../assets/updated/popup/credit-card.svg';
 import wireTransfer from '../../../../assets/updated/popup/wiretransfer.svg';
 import ach from '../../../../assets/updated/popup/ach.png';
@@ -16,7 +17,9 @@ import tygpay from '../../../../assets/updated/tyga_icon.png';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   createBuyOrder,
+  decodeJWT,
   getHoneyBeeDataByUsername,
+  getUserWallets,
 } from '../../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import GeneralPopup from '../Popup';
@@ -182,6 +185,8 @@ const Popup = ({
   const [message, setMessage] = useState();
   const [showMessagePopup, setShowMessagePopup] = useState(false);
   const navigate = useNavigate();
+  const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
+  const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
 
   useEffect(() => {
     if (id) {
@@ -201,6 +206,41 @@ const Popup = ({
       });
     }
   }, []);
+
+  // Fetch user wallets and USD balance
+  useEffect(() => {
+    const fetchUserWallets = async () => {
+      const token = localStorage.getItem('access_token');
+      const decodedToken = decodeJWT(String(token)); // Decode JWT
+
+      const userWallets = await getUserWallets(decodedToken?.email);
+      setUsersWallets(userWallets.data);
+
+      // Find USD coin balance and format it
+      setUsdBalance(
+        formatBalance(
+          userWallets.data.find((x) => x.coinSymbol === 'USD')?.coinBalance || 0
+        )
+      );
+    };
+
+    fetchUserWallets();
+  }, []);
+
+  // Format the balance based on its value
+  const formatBalance = (balance) => {
+    if (balance < 0.001) {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 5,
+        maximumFractionDigits: 6,
+      });
+    } else {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+  };
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
   const createNewBuyOrder = async (paymentMethod) => {
@@ -230,7 +270,13 @@ const Popup = ({
         paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, amount, outAmount, paymentMethod);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        outAmount,
+        paymentMethod
+      );
     }
     if (res.status === 200) {
       setLoadings(false);
@@ -386,6 +432,21 @@ const Popup = ({
                 </button>
               ) : (
                 <>
+                  <button
+                    className={classes.button}
+                    onClick={() => handlePaymentMethodSelect('USD')}
+                  >
+                    <Box className={classes.iconTextContainer}>
+                      <img src={usd} alt="USD" />
+                      <p className={classes.btnText}>
+                        USD Balance
+                        <span className={classes.usdBalanceText}>
+                          (Available: ${usdBalance})
+                        </span>
+                      </p>
+                    </Box>
+                    <p>${amount}</p>
+                  </button>
                   <button
                     className={classes.button}
                     onClick={() => handlePaymentMethodSelect('Credit Card')}
