@@ -16,7 +16,7 @@ import loadingGif from '../../assets/beeloade.gif';
 
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import { baseAPIURL, getAllAffiliateUser } from '../../services/api';
+import { baseAPIURL, decodeJWT, getAllAffiliateUser } from '../../services/api';
 import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
@@ -143,6 +143,14 @@ const Signup = () => {
   useEffect(() => {
     getAllAffiliateUser().then((data) => {
       setCaptainBees(data);
+      const accessToken = localStorage.getItem('access_token');
+      let emailFromToken = '';
+
+      if (accessToken) {
+        const decoded = decodeJWT(String(accessToken));
+        emailFromToken = decoded.email;
+        setEmail(emailFromToken);
+      }
     });
   }, []);
 
@@ -422,10 +430,10 @@ const Signup = () => {
       );
       setIsLoading(false);
     } else if (
-      isEmailValid &&
+      //isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
-      isSSNValid &&
+      //isSSNValid &&
       isChecked
     ) {
       try {
