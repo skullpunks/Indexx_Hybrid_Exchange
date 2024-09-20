@@ -400,7 +400,7 @@ const Signup = () => {
       firstname.trim() === '' ||
       lastname.trim() === '' ||
       Username.trim() === '' ||
-      Email.trim() === '' ||
+      //Email.trim() === '' ||
       //(ssn.trim() === '' && ein.trim() === '') ||
       password.trim() === '' ||
       confirmpass.trim() === '' ||
@@ -413,6 +413,7 @@ const Signup = () => {
       alert(
         'Please fill in all required fields and check the checkbox before submitting.'
       );
+      setIsLoading(false);
     } else if (
       isEmailValid &&
       isPasswordValid &&
