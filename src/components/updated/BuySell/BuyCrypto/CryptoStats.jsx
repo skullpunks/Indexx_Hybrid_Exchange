@@ -20,7 +20,9 @@ import paypal from '../../../../assets/updated/buySell/paypal.png';
 import mastercard from '../../../../assets/updated/buySell/mastercard.png';
 const useStyles = makeStyles((theme) => ({
   heading: {
-    fontSize: '54px',
+    fontSize: '56px',
+    marginTop: '-7px',
+    lineHeight: '56px',
     color: `${theme.palette.text.primary} !important`,
     fontWeight: 600,
     [theme.breakpoints.down('md')]: {

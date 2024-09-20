@@ -33,10 +33,9 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: 'none !important',
       opacity: 0.7,
     },
-    // '&.Mui-disabled': {
-    //   backgroundColor: '#11BE6A !important', // Disabled state background color
-    //   color: '#202630 !important', // Disabled state text color
-    // },
+    '&.Mui-disabled': {
+      opacity: 0.7,
+    },
   },
   progress: {
     color: '#202630 !important',

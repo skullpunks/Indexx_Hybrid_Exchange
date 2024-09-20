@@ -323,7 +323,7 @@ const ConvertCrypto = () => {
     <div className={classes.Container}>
       <div className={classes.header}>
         <Link className={classes.link} to="/">
-          <ArrowBackIcon /> Buy Sell
+          <ArrowBackIcon /> Buy and Sell
         </Link>
       </div>
       <div className={classes.contentContent}>
@@ -334,7 +334,7 @@ const ConvertCrypto = () => {
           <div className={classes.rightContentContainer}>
             <CustomTextField
               label="From"
-              placeholder="Enter amount"
+              placeholder="0.01 - 5000000"
               tokenType="from"
               setShowCoinsDropdown={(isOpen) => {
                 setShowCoinsDropdown(isOpen);
@@ -354,7 +354,7 @@ const ConvertCrypto = () => {
             </div>
             <CustomTextField
               label="To"
-              placeholder="Enter amount"
+              placeholder="0.00000017 - 84"
               tokenType="to"
               setShowCoinsDropdown={(isOpen) => {
                 setShowCoinsDropdown(isOpen);
@@ -367,10 +367,28 @@ const ConvertCrypto = () => {
               defaultReceiveToken={toToken}
             />
             <div style={{ margin: '25px 0px' }}></div>
+            {amount && (
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontSize: '13px',
+                  }}
+                >
+                  <span>Rate </span>1 {fromToken.title} ≈{' '}
+                  {(rateData1 / rateData2).toFixed(4)} {toToken.title}
+                </div>
+                <div style={{ margin: '25px 0px' }}></div>
+              </>
+            )}
+
             <GenericButton
               text="Preview Conversion"
               //onClick={formik.handleSubmit}
               onClick={handlePreviewConversion}
+              disabled={!amount}
             />
             {/* Conversion Preview Modal */}
             {/* <ConversionPreviewModal

@@ -8,6 +8,7 @@ import Inex from '../../../assets/updated/buySell/INEX.svg';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import GenericButton from '../shared/Button';
+import info from '../../../assets/updated/popup/infoCircle.svg';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bnModal: {
     '& .bnModalWrap': {
-      marginTop: '20px',
+      marginTop: '50px',
       backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#1e2329',
       borderRadius: '16px',
       boxShadow: '0px 3px 6px rgba(0,0,0,.04)',
@@ -251,9 +252,13 @@ const PreviewConversionpopup = ({
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
                 <img src={fromTokenImage} alt="" style={{ height: '30px' }} />
-                <span>{amount}</span>
+                <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
+                  {amount}
+                </span>
               </div>
-              {fromToken.title}
+              <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
+                {fromToken.title}
+              </span>
             </div>
             {/* down arrow */}
             <ArrowDownwardIcon sx={{ marginLeft: '4px' }} />
@@ -268,9 +273,13 @@ const PreviewConversionpopup = ({
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
                 <img src={toTokenImage} alt="" style={{ height: '30px' }} />
-                <span>{totalAmountToPay}</span>
+                <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
+                  {totalAmountToPay}
+                </span>
               </div>
-              {toToken.title}
+              <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
+                {toToken.title}
+              </span>
             </div>
           </div>
           <div>
@@ -280,6 +289,7 @@ const PreviewConversionpopup = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '10px 20px',
+                fontSize: '18px',
               }}
             >
               <span style={{ color: theme.palette.text.secondary }}>Rate</span>
@@ -295,6 +305,7 @@ const PreviewConversionpopup = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '10px 20px',
+                fontSize: '18px',
               }}
             >
               <span style={{ color: theme.palette.text.secondary }}>
@@ -312,6 +323,7 @@ const PreviewConversionpopup = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '10px 20px',
+                fontSize: '18px',
               }}
             >
               <span style={{ color: theme.palette.text.secondary }}>
@@ -326,12 +338,18 @@ const PreviewConversionpopup = ({
               <div
                 style={{
                   background: theme.palette.divider,
-                  padding: '10px',
+                  padding: '15px',
                   borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
                 }}
               >
-                ⚠️ Your account has insufficient balance. Please fund your
-                account.
+                <span>
+                  <img src={info} />
+                </span>
+                {'  '}
+                Your account has insufficient balance. Please fund your account.
               </div>
             </div>
           )}

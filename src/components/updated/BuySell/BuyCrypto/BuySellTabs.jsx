@@ -19,7 +19,8 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
 import tokens from '../../../../utils/Tokens.json';
 import ErrorPage from './ErrorPopup';
-
+import exchangeLight from '../../../../assets/updated/buySell/Exchange for Light mode.svg';
+import exchangeDark from '../../../../assets/updated/buySell/exchange for Dark mode.svg';
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
@@ -349,7 +350,16 @@ const BuySellTabs = ({
         paymentMethod
       );
     } else {
-      res = await createBuyOrder(basecoin, quotecoin, spendAmount, outAmount, 0, '', false, paymentMethod);
+      res = await createBuyOrder(
+        basecoin,
+        quotecoin,
+        spendAmount,
+        outAmount,
+        0,
+        '',
+        false,
+        paymentMethod
+      );
     }
     if (res.status === 200) {
       setLoadings(false);
@@ -362,7 +372,9 @@ const BuySellTabs = ({
           break;
         }
       }
-      navigate('/paypal-partnership-with-indexx', { state: { payPalPaymentLink } });
+      navigate('/paypal-partnership-with-indexx', {
+        state: { payPalPaymentLink },
+      });
       //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
@@ -621,6 +633,17 @@ const BuySellTabs = ({
 
   return (
     <Box>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <span>
+          <img
+            src={theme.palette.mode === 'dark' ? exchangeDark : exchangeLight}
+          />
+        </span>
+        <h3 className={classes.heading} style={{ marginBottom: '0px' }}>
+          {' '}
+          Exchange / Bug Crypto
+        </h3>
+      </div>
       <Box className={classes.card}>
         <div
           className={`${classes.tabContainer} ${

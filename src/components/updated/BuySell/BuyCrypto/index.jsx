@@ -10,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    marginTop: '120px',
+
+    alignItems: 'flex-start',
     gap: '20px', // Add some space between the containers
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
@@ -38,7 +40,7 @@ const BuyCrypto = ({
   tokenType,
   onReceiveTokenChange,
   defaultReceiveToken,
-  handleTokenSelect
+  handleTokenSelect,
 }) => {
   const classes = useStyles();
 
@@ -46,7 +48,10 @@ const BuyCrypto = ({
     <TokenProvider>
       <div className={classes.root}>
         <div className={`${classes.container} ${classes.container1}`}>
-          <CryptoStats tokenType={tokenType} onTokenSelect={handleTokenSelect}/>
+          <CryptoStats
+            tokenType={tokenType}
+            onTokenSelect={handleTokenSelect}
+          />
         </div>
         <div className={`${classes.container} ${classes.container2}`}>
           <BuySellTabs

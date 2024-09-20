@@ -158,13 +158,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     color: '#11BE6A',
   },
+  approx: {
+    padding: '0px 15px',
+    margin: '-15px 0px 10px 0px',
+    fontSize: '12px',
+    color: theme.palette.text.secondary,
+  },
 }));
 const getImage = (image) => {
   console.log('my image', image);
   try {
     return require(`../../../assets/token-icons/${image}.png`).default;
   } catch (error) {
-    console.log("er",error)
+    console.log('er', error);
     return Inex; // Fallback image if specific token icon is not found
   }
 };
@@ -259,7 +265,7 @@ const CustomTextField = ({
   //   }
   // };
 
-  console.log("amount", amount)
+  console.log('amount', amount);
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
     setUserAmount(amount);
@@ -373,6 +379,8 @@ const CustomTextField = ({
               ),
             }}
           />
+
+          <span className={classes.approx}> ≈ 0.01</span>
         </FormControl>
       </Box>
       {/* <div style={{ position: 'relative', width: '100%' }}>
