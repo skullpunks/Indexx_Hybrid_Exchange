@@ -399,7 +399,7 @@ const Signup = () => {
     if (
       firstname.trim() === '' ||
       lastname.trim() === '' ||
-      Username.trim() === '' ||
+      //Username.trim() === '' ||
       //Email.trim() === '' ||
       //(ssn.trim() === '' && ein.trim() === '') ||
       password.trim() === '' ||
