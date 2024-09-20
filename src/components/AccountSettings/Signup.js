@@ -396,10 +396,22 @@ const Signup = () => {
     const isConfirmPasswordValid = validateConfirmPassword(confirmpass);
     const isSSNValid = validateSSN(ssn) || validateEIN(ein);
 
+    console.log(
+      firstname.trim() === '' ||
+      lastname.trim() === '' ||
+      //Email.trim() === '' ||
+      //(ssn.trim() === '' && ein.trim() === '') ||
+      password.trim() === '' ||
+      confirmpass.trim() === '' ||
+      //country.trim() === '' ||
+      //Phone.trim() === '' ||
+      //Currency.trim() === '' ||
+      isChecked === false ||
+      Captain === ''
+    )
     if (
       firstname.trim() === '' ||
       lastname.trim() === '' ||
-      //Username.trim() === '' ||
       //Email.trim() === '' ||
       //(ssn.trim() === '' && ein.trim() === '') ||
       password.trim() === '' ||
