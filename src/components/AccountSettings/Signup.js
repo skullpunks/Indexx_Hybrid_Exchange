@@ -401,12 +401,12 @@ const Signup = () => {
       lastname.trim() === '' ||
       Username.trim() === '' ||
       Email.trim() === '' ||
-      (ssn.trim() === '' && ein.trim() === '') ||
+      //(ssn.trim() === '' && ein.trim() === '') ||
       password.trim() === '' ||
       confirmpass.trim() === '' ||
-      country.trim() === '' ||
-      Phone.trim() === '' ||
-      Currency.trim() === '' ||
+      //country.trim() === '' ||
+      //Phone.trim() === '' ||
+      //Currency.trim() === '' ||
       isChecked === false ||
       Captain === ''
     ) {
@@ -855,9 +855,9 @@ const Signup = () => {
             disabled={
               !isChecked ||
               !isChecked2 ||
-              !frontFile ||
-              !backFile ||
-              !photoIdFile ||
+              // !frontFile ||
+              // !backFile ||
+              // !photoIdFile ||
               isLoading
             }
             sx={{
