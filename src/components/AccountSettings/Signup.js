@@ -16,7 +16,7 @@ import loadingGif from '../../assets/beeloade.gif';
 
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import { baseAPIURL, getAllAffiliateUser } from '../../services/api';
+import { baseAPIURL, decodeJWT, getAllAffiliateUser } from '../../services/api';
 import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
@@ -143,6 +143,14 @@ const Signup = () => {
   useEffect(() => {
     getAllAffiliateUser().then((data) => {
       setCaptainBees(data);
+      const accessToken = localStorage.getItem('access_token');
+      let emailFromToken = '';
+
+      if (accessToken) {
+        const decoded = decodeJWT(String(accessToken));
+        emailFromToken = decoded.email;
+        setEmail(emailFromToken);
+      }
     });
   }, []);
 
@@ -396,28 +404,36 @@ const Signup = () => {
     const isConfirmPasswordValid = validateConfirmPassword(confirmpass);
     const isSSNValid = validateSSN(ssn) || validateEIN(ein);
 
+    console.log(
+      firstname.trim(),
+      lastname.trim(),
+      password.trim(),
+      confirmpass.trim(),
+      isChecked,
+      Captain
+    )
     if (
       firstname.trim() === '' ||
       lastname.trim() === '' ||
-      Username.trim() === '' ||
-      Email.trim() === '' ||
-      (ssn.trim() === '' && ein.trim() === '') ||
+      //Email.trim() === '' ||
+      //(ssn.trim() === '' && ein.trim() === '') ||
       password.trim() === '' ||
       confirmpass.trim() === '' ||
-      country.trim() === '' ||
-      Phone.trim() === '' ||
-      Currency.trim() === '' ||
+      //country.trim() === '' ||
+      //Phone.trim() === '' ||
+      //Currency.trim() === '' ||
       isChecked === false ||
       Captain === ''
     ) {
       alert(
         'Please fill in all required fields and check the checkbox before submitting.'
       );
+      setIsLoading(false);
     } else if (
-      isEmailValid &&
+      //isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
-      isSSNValid &&
+      //isSSNValid &&
       isChecked
     ) {
       try {
@@ -855,9 +871,9 @@ const Signup = () => {
             disabled={
               !isChecked ||
               !isChecked2 ||
-              !frontFile ||
-              !backFile ||
-              !photoIdFile ||
+              // !frontFile ||
+              // !backFile ||
+              // !photoIdFile ||
               isLoading
             }
             sx={{
