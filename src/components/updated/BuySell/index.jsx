@@ -192,14 +192,14 @@ const BuySell = () => {
 
   return (
     <div className={classes.Container}>
-      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
+      <IconicHeader selectedTab={'Crypto'} onChange={handleTabChange} />
       <BuyCrypto
-        tokenType={selectedTab}
+        tokenType={'Tokens'}
         onReceiveTokenChange={handleReceiveTokenChange}
         defaultReceiveToken={receiveToken} // Pass the updated state
         handleTokenSelect={handleTokenSelect}
       />
-      <HowToBuyCrypto tokenType={selectedTab} receiveToken={receiveToken} />
+      <HowToBuyCrypto tokenType={'Tokens'} receiveToken={receiveToken} />
       <CryptoCarts receiveToken={receiveToken} />
       <PopularConversion receiveToken={receiveToken} />
       {isModalOpen && (
