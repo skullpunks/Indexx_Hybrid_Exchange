@@ -496,7 +496,7 @@ const FirstScreen = ({ onSendCryptoGiftCardClick }) => {
                 label={'Redeem Code'}
                 placeholder="Enter the Redeem Code"
                 value={voucher}
-                onChange={(e) => setVoucher(e.target.value)}
+                onChange={(e) => setVoucher(e.target.value.trim())}
                 style={{
                   background:
                     theme.palette.mode === 'light' ? '#fff' : '#2B3139',
