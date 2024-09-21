@@ -123,7 +123,7 @@ const SuccessPopup = ({ onClose }) => {
               />
             </div>
           </div>
-          <img src={greenCheck} height="100px" />
+          <img src={greenCheck} height="60px" />
           <h3>Conversion successful!</h3>
 
           <div className={classes.btnContainer}>

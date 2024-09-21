@@ -479,6 +479,14 @@ const header_data = [
             name: 'Elite Club',
             href: 'https://docs.google.com/presentation/d/1KdEK2hYxPFRpqeavjd2iol4lCErRZq-_xbURg2bFnAg/edit#slide=id.g2a028cbc650_0_0',
           },
+          {
+            name: 'Back to Community',
+            href: 'https://indexx.ai/back-to-community',
+          },
+          {
+            name: 'Testimonials',
+            href: 'https://www.youtube.com/watch?v=9ULdWShBz3k',
+          },
         ],
       },
       {

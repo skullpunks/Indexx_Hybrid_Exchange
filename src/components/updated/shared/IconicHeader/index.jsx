@@ -22,6 +22,14 @@ import darkModeConvert from '../../../../assets/updated/iconicHeader/darkModeCon
 import lightModeConvert from '../../../../assets/updated/iconicHeader/lightModeConvert.png';
 import yellowModeConvert from '../../../../assets/updated/iconicHeader/yellow convert.svg';
 
+import darkModeCrypto from '../../../../assets/updated/iconicHeader/crypto Dark.svg';
+import lightModeCrypto from '../../../../assets/updated/iconicHeader/crypto white.svg';
+import yellowModeCrypto from '../../../../assets/updated/iconicHeader/crypto yellow.svg';
+
+import darkModeMarket from '../../../../assets/updated/iconicHeader/market icon Dark.svg';
+import lightModeMarket from '../../../../assets/updated/iconicHeader/market icon white.svg';
+import yellowModeMarket from '../../../../assets/updated/iconicHeader/market yellow.svg';
+
 import tokenHive from '../../../../assets/updated/iconicHeader/token_hive.svg';
 import stockTokenHive from '../../../../assets/updated/iconicHeader/stock_token_hive.svg';
 import etfHive from '../../../../assets/updated/iconicHeader/etf_hive.svg';
@@ -34,11 +42,11 @@ import { checkByemail } from '../../../../services/api';
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
-  width: '130px',
+  width: '120px',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
-  margin: '0 10px',
+  margin: '0 5px',
   padding: '12px 16px',
   display: 'flex',
   flexDirection: 'column',
@@ -84,11 +92,11 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   color: '#FEBA00',
   minWidth: 0,
-  width: '130px',
+  width: '110px',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
-  margin: '0 10px',
+  margin: '0 5px',
   padding: '12px 16px',
   display: 'flex',
   flexDirection: 'column',
@@ -149,9 +157,9 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   const tabsData = [
     {
-      label: 'Tokens',
-      light: userType === 'Indexx Exchange' ? tokenLight : tokenHive,
-      dark: userType === 'Indexx Exchange' ? tokenDark : tokenHive,
+      label: 'Crypto',
+      light: userType === 'Indexx Exchange' ? darkModeCrypto : yellowModeCrypto,
+      dark: userType === 'Indexx Exchange' ? lightModeCrypto : yellowModeCrypto,
       path: '/update/home',
       search: 'buyToken=INEX',
     },
@@ -162,6 +170,20 @@ export default function IconicHeader({ selectedTab, onChange }) {
       dark:
         userType === 'Indexx Exchange' ? darkModeConvert : yellowModeConvert,
       path: '/convert',
+      search: '',
+    },
+    {
+      label: 'xTokens',
+      light: userType === 'Indexx Exchange' ? tokenLight : tokenHive,
+      dark: userType === 'Indexx Exchange' ? tokenDark : tokenHive,
+      path: 'https://indexx.ai/indexx-exchange/token-details',
+      search: '',
+    },
+    {
+      label: 'Markets',
+      light: userType === 'Indexx Exchange' ? darkModeMarket : yellowModeMarket,
+      dark: userType === 'Indexx Exchange' ? lightModeMarket : yellowModeMarket,
+      path: 'https://indexx.ai/indexx-exchange/markets',
       search: '',
     },
     // {
@@ -252,7 +274,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1000px';
   } else {
-    maxWidthTabContainer = '400px';
+    maxWidthTabContainer = '500px';
   }
 
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;

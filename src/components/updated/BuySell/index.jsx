@@ -34,7 +34,7 @@ const BuySell = () => {
   const navigate = useNavigate();
   let defaultToken = searchParams.get('buyToken') || 'INEX';
   const [receiveToken, setReceiveToken] = useState(defaultToken);
-  const [selectedTab, setSelectedTab] = useState('Tokens');
+  const [selectedTab, setSelectedTab] = useState('Crypto');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const defaultSignInToken = searchParams.get('signInToken');
@@ -65,7 +65,7 @@ const BuySell = () => {
     const orderId = searchParams.get('orderId');
     const redirectFlag = localStorage.getItem('redirected');
 
-    console.log("type", type)
+    console.log('type', type);
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
         if (res.status === 200) {
@@ -81,9 +81,9 @@ const BuySell = () => {
         if (res.status === 200) {
           let orderData = res.data.data;
           if (
-            (orderData?.orderType === 'Buy' ||
+            orderData?.orderType === 'Buy' ||
             orderData?.orderType === 'Sell' ||
-            orderData?.orderType === 'Convert')
+            orderData?.orderType === 'Convert'
           ) {
             setPopupMessage(
               `${orderData?.orderType} Order processed successfully`
@@ -98,7 +98,7 @@ const BuySell = () => {
       });
     } else if (type === 'tygapay') {
       let email = localStorage.getItem('email');
-      console.log(email)
+      console.log(email);
       getOrderDetails(email, String(orderId)).then((res) => {
         //setOrderData(order.data);
         if (res.status === 200) {
