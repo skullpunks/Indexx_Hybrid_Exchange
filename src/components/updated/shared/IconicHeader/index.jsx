@@ -258,12 +258,19 @@ export default function IconicHeader({ selectedTab, onChange }) {
   const handleChange = (event, newValue) => {
     const label = event.currentTarget.innerText;
     const selectedTabData = tabsData.find((tab) => tab.label === label);
+
     if (selectedTabData) {
-      navigate(
-        `${selectedTabData.path}${
-          selectedTabData.search ? '?' + selectedTabData.search : ''
-        }`
-      );
+      if (selectedTabData.path.startsWith('http')) {
+        // If the path is an external URL, open it in a new tab
+        window.open(selectedTabData.path, '_blank');
+      } else {
+        // Navigate to internal paths
+        navigate(
+          `${selectedTabData.path}${
+            selectedTabData.search ? '?' + selectedTabData.search : ''
+          }`
+        );
+      }
       onChange(event, label);
     }
   };
