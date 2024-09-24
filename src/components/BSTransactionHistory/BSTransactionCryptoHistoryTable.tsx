@@ -46,6 +46,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
   const [txListFilter, setTxListFilter] = useState([]) as any;
   const [, copy] = useCopyToClipboard();
   const [valueInput, setValueInput] = useState('');
+  const [transactionTypes, setTransactionTypes] = useState<string[]>([]);
+  const [assets, setAssets] = useState<string[]>([]);
   const theme = useTheme();
 
   const calculateTransactionFees = (
@@ -195,28 +197,32 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
 
       const res = await transactionList(decodedToken?.email, '');
       const results = res.data;
-      let finalArr = [];
-      for (let i = 0; i < results.length; i++) {
-        if (!results[i].transactionType?.includes('FIAT')) {
-          finalArr.push(results[i]);
-        }
-      }
 
-      const transactionsWithNotes = finalArr;
+      const uniqueTypes = new Set();
+      const uniqueAssets = new Set();
 
-      // Sort transactions by time in descending order
-      transactionsWithNotes.sort(
-        (a, b) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf()
+      const finalArr = results.filter(
+        (transaction: any) => !transaction.transactionType?.includes('FIAT')
       );
 
-      setTxList(transactionsWithNotes);
-      setTxListFilter(transactionsWithNotes);
+      finalArr.forEach((transaction:any) => {
+        uniqueTypes.add(transaction.transactionType);
+        uniqueAssets.add(transaction.currencyRef);
+      });
+
+      setTransactionTypes(Array.from(uniqueTypes) as string[]);
+      setAssets(Array.from(uniqueAssets) as string[]);
+      
+
+      finalArr.sort((a:any, b:any) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf());
+      setTxList(finalArr);
+      setTxListFilter(finalArr);
     };
 
     fetchData();
   }, []);
 
-  const handleChangeTime = (el: any) => {
+  const handleChangeTime0 = (el: any) => {
     const value = el.target.value;
     const pastDate = moment().subtract(+value, 'days').format('YYYY-MM-DD');
     if (!isNaN(+value)) {
@@ -274,7 +280,20 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeStatus = (el: any) => {
+  const handleChangeTime = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      time: value,
+    }));
+  
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      time: value,
+    });
+  };
+  const handleChangeStatus0 = (el: any) => {
     const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
@@ -335,12 +354,27 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeType = (el: any) => {
+  const handleChangeStatus = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      status: value,
+    }));
+  
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      status: value,
+    });
+  };
+
+  const handleChangeType0 = (el: any) => {
     const value = el.target.value;
     console.log(value, 'value');
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
+      console.log("pastDate", pastDate)
     if (value !== 'all') {
       setSelection({
         type: value,
@@ -393,7 +427,22 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
-  const handleChangeAsset = (el: any) => {
+  const handleChangeType = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      type: value,
+    }));
+  
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      type: value,
+    });
+  };
+  
+
+  const handleChangeAsset0 = (el: any) => {
     const value = el.target.value;
     const pastDate = moment()
       .subtract(+selection.time, 'days')
@@ -450,14 +499,66 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     }
   };
 
+
+  const handleChangeAsset = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      asset: value, // Correctly updating the asset field, not type
+    }));
+  
+    // Apply the filter after the asset is changed
+    filterTransactions({
+      ...selection,
+      asset: value,
+    });
+  };
+
+  
   const getData = (current: number, pageSize: number) => {
     const xx =
       txListFilter &&
       txListFilter.slice((current - 1) * pageSize, current * pageSize);
+      console.log("xx",xx)
     return xx;
   };
 
-  const onChageSearch = (e: any) => {
+  const filterTransactions = (filterCriteria: any) => {
+    const filteredData = txList.filter((data: any) => {
+      const pastDate =
+        filterCriteria.time !== 'all'
+          ? moment().subtract(+filterCriteria.time, 'days').format('YYYY-MM-DD')
+          : null;
+      const valueDate = moment(data.created).format('YYYY-MM-DD');
+  
+      const assetMatches =
+        filterCriteria.asset === 'all' ||
+        data.currencyRef?.toLowerCase() === filterCriteria.asset?.toLowerCase();
+  
+      const timeMatches =
+        filterCriteria.time === 'all' ||
+        (pastDate && moment(pastDate).isSameOrBefore(valueDate));
+  
+      const typeMatches =
+        filterCriteria.type === 'all' ||
+        data.transactionType?.toLowerCase() === filterCriteria.type?.toLowerCase();
+  
+      const statusMatches =
+        filterCriteria.status === 'all' ||
+        data.status?.toLowerCase() === filterCriteria.status?.toLowerCase();
+  
+      const txHashMatches =
+        !filterCriteria.transactionHash ||
+        data.txId?.toLowerCase().includes(filterCriteria.transactionHash);
+  
+      return assetMatches && timeMatches && typeMatches && statusMatches && txHashMatches;
+    });
+  
+    // Update the filtered transaction list
+    setTxListFilter(filteredData);
+  };
+
+  const onChageSearch0 = (e: any) => {
     let val = e.currentTarget.value;
     setValueInput(val);
     setSelection({
@@ -489,6 +590,23 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     setTxListFilter(filterDate);
   };
 
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value.toLowerCase();
+    setValueInput(searchValue);
+  
+    // Update the search in the selection state
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      transactionHash: searchValue,
+    }));
+  
+    // Apply the filter after updating the search value
+    filterTransactions({
+      ...selection,
+      transactionHash: searchValue,
+    });
+  };
+
   const MyPagination = ({ total, onChange, current }: any) => {
     return (
       <Pagination
@@ -514,14 +632,16 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         <div className="filter-item">
           <label>Type</label> <br />
           <CustomSelectBox
-            items={[
-              { name: 'All', value: 'all' },
-              { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
-              { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
-              { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
-            ]}
+            // items={[
+            //   { name: 'All', value: 'all' },
+            //   { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
+            //   { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
+            //   { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
+            // ]}
+            items={transactionTypes.map((type) => ({ name: type, value: type }))}
             value={selection.type}
             onChange={handleChangeType}
+            //onChange={(e:any) => handleChangeFilter('type', e.target.value)}
             hasborder
             type={undefined}
             isCurrency={undefined}
@@ -550,19 +670,20 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         <div className="filter-item">
           <label>Asset</label> <br />
           <CustomSelectBox
-            items={[
-              { name: 'All', value: 'all' },
-              { name: 'IN500 Indexx 500', value: 'IN500' },
-              { name: 'INXC Indexx Crypto', value: 'INXC' },
-              { name: 'INEX Indexx Exchange', value: 'INEX' },
-              { name: 'IUSD+ Indexx USD+', value: 'IUSD+' },
-              { name: 'INXP Indexx Phoenix', value: 'INXP' },
-              { name: 'BNB Binance', value: 'BNB' },
-              { name: 'FTT FTX Token', value: 'FTT' },
-              { name: 'ETH Ethereum', value: 'ETH' },
-              { name: 'BTC Bitcoin', value: 'BTC' },
-              { name: 'LTC Litecoin', value: 'LTC' },
-            ]}
+            // items={[
+            //   { name: 'All', value: 'all' },
+            //   { name: 'IN500 Indexx 500', value: 'IN500' },
+            //   { name: 'INXC Indexx Crypto', value: 'INXC' },
+            //   { name: 'INEX Indexx Exchange', value: 'INEX' },
+            //   { name: 'IUSD+ Indexx USD+', value: 'IUSD+' },
+            //   { name: 'INXP Indexx Phoenix', value: 'INXP' },
+            //   { name: 'BNB Binance', value: 'BNB' },
+            //   { name: 'FTT FTX Token', value: 'FTT' },
+            //   { name: 'ETH Ethereum', value: 'ETH' },
+            //   { name: 'BTC Bitcoin', value: 'BTC' },
+            //   { name: 'LTC Litecoin', value: 'LTC' },
+            // ]}
+            items={assets.map((type) => ({ name: type, value: type }))}
             value={selection.asset}
             onChange={handleChangeAsset}
             hasborder
@@ -596,7 +717,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             placeholder="Search Transaction hash"
             style={{ height: '55px', marginTop: '0px' }}
             value={selection.transactionHash}
-            onChange={onChageSearch}
+            onChange={onChangeSearch}
             maxLength={50}
             type={undefined}
             label={undefined}
@@ -630,6 +751,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
                 time: 'all',
                 transactionHash: '',
               });
+               // Reset the filtered transaction list to show all data
+              setTxListFilter(txList); // Reset to the full list of transactions
             }}
           >
             Reset

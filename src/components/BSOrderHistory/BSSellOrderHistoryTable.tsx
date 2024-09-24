@@ -155,217 +155,103 @@ const BSSellOrderHistoryTable: React.FC = () => {
     },
   ];
 
+  const [assets, setAssets] = useState<string[]>([]);
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken: any = decodeJWT(String(token)) as any;
     getUserOrders(decodedToken?.email).then((res) => {
       const results = res.data;
       let finalArr = [];
+      const uniqueAssets = new Set();
+
       for (let i = 0; i < results.length; i++) {
         if (
-          results[i].orderType?.includes('Buy') ||
-          results[i].orderType?.includes('Convert')
+          results[i].orderType?.includes('Sell') ||
+          results[i].orderType?.includes('Buy')
         ) {
         } else {
           finalArr.push(results[i]);
         }
       }
+
+      finalArr.forEach((orders: any) => {
+        uniqueAssets.add(orders.breakdown.outCurrencyName);
+      });
+
+      setAssets(Array.from(uniqueAssets) as string[]);
+      // Sort Orders by time in descending order
+      finalArr.sort(
+        (a, b) => moment(b.created).valueOf() - moment(a.created).valueOf()
+      );
       setOrderList(finalArr);
       setOrderTxListFilter(finalArr);
       setLoadings(false);
     });
   }, []);
 
+  // Unified filter function
+  const applyFilters = (updatedSelection: any) => {
+    const { asset, status, time, orderId } = updatedSelection;
+    const pastDate =
+      time !== 'all' ? moment().subtract(+time, 'days').format('YYYY-MM-DD') : null;
+
+    const filteredData = orderList.filter((data: any) => {
+      const valueDate = moment(data.created).format('YYYY-MM-DD');
+
+      const assetMatches =
+        asset === 'all' || data.breakdown.outCurrencyName?.toLowerCase() === asset.toLowerCase();
+
+      const timeMatches = time === 'all' || moment(pastDate).isSameOrBefore(valueDate);
+
+      const statusMatches = status === 'all' || data.status?.toLowerCase() === status.toLowerCase();
+
+      const orderIdMatches =
+        !orderId || data.orderId?.toLowerCase().includes(orderId.toLowerCase());
+
+      return assetMatches && timeMatches && statusMatches && orderIdMatches;
+    });
+
+    setOrderTxListFilter(filteredData);
+  };
+
+  // Individual filter handlers
   const handleChangeTime = (el: any) => {
     const value = el.target.value;
-    const pastDate = moment().subtract(+value, 'days').format('YYYY-MM-DD');
-
-    if (!isNaN(+value)) {
-      setSelection({
-        asset: selection.asset,
-        status: selection.status,
-        time: value,
-        orderId: selection.orderId,
-      });
-      const txListFilterData = orderList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
-        return (
-          moment(pastDate).isSameOrBefore(valueDate) &&
-          (!selection.status ||
-            data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.asset ||
-            data.breakdown.inCurrenyName?.toLowerCase() ===
-              selection.asset?.toLowerCase())
-        );
-      });
-      setOrderTxListFilter(txListFilterData);
-    } else {
-      setSelection({
-        asset: selection.asset,
-        status: selection.status,
-        time: 'all',
-        orderId: selection.orderId,
-      });
-      const txListFilterData = orderList.filter((data: any) => {
-        return (
-          (!selection.status ||
-            data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.asset ||
-            data.breakdown.inCurrenyName?.toLowerCase() ===
-              selection.asset?.toLowerCase())
-        );
-      });
-      setOrderTxListFilter(txListFilterData);
-    }
+    setSelection((prevSelection) => {
+      const updatedSelection = { ...prevSelection, time: value };
+      applyFilters(updatedSelection); // Apply filters after updating selection
+      return updatedSelection;
+    });
   };
+
   const handleChangeStatus = (el: any) => {
     const value = el.target.value;
-    const pastDate = moment()
-      .subtract(+selection.time, 'days')
-      .format('YYYY-MM-DD');
-
-    if (value !== 'all') {
-      setSelection({
-        asset: selection.asset,
-        status: value,
-        time: selection.time,
-        orderId: selection.orderId,
-      });
-
-      const txListFilterData = orderList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
-
-        return (
-          data.status?.toLowerCase() === value?.toLowerCase() &&
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.asset ||
-            data.breakdown.inCurrenyName?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
-          (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-        );
-      });
-      setOrderTxListFilter(txListFilterData);
-    } else {
-      setSelection({
-        asset: selection.asset,
-        status: 'all',
-        time: selection.time,
-        orderId: selection.orderId,
-      });
-      const txListFilterData = orderList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
-
-        return (
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.asset ||
-            data.breakdown.inCurrenyName?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
-          (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-        );
-
-        // data.status?.toLowerCase() === value?.toLowerCase()
-      });
-      setOrderTxListFilter(txListFilterData);
-    }
+    setSelection((prevSelection) => {
+      const updatedSelection = { ...prevSelection, status: value };
+      applyFilters(updatedSelection); // Apply filters after updating selection
+      return updatedSelection;
+    });
   };
 
   const handleChangeAsset = (el: any) => {
     const value = el.target.value;
-    const pastDate = moment()
-      .subtract(+selection.time, 'days')
-      .format('YYYY-MM-DD');
-
-    if (value !== 'all') {
-      setSelection({
-        asset: value,
-        status: selection.status,
-        time: selection.time,
-        orderId: selection.orderId,
-      });
-      const txListFilterData = orderList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
-
-        return (
-          data.breakdown.inCurrenyName?.toLowerCase() ===
-            value?.toLowerCase() &&
-          (!selection.status ||
-            data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-        );
-      });
-      setOrderTxListFilter(txListFilterData);
-    } else {
-      setSelection({
-        asset: 'all',
-        status: selection.status,
-        time: selection.time,
-        orderId: selection.orderId,
-      });
-      const txListFilterData = orderList.filter((data: any) => {
-        let valueDate = moment(data.created).format('YYYY-MM-DD');
-
-        return (
-          (!selection.status ||
-            data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
-          (!selection.orderId ||
-            data.orderId
-              ?.toLowerCase()
-              .includes(selection.orderId?.toLowerCase())) &&
-          (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-        );
-
-        // data.status?.toLowerCase() === value?.toLowerCase()
-      });
-      setOrderTxListFilter(txListFilterData);
-    }
+    setSelection((prevSelection) => {
+      const updatedSelection = { ...prevSelection, asset: value };
+      applyFilters(updatedSelection); // Apply filters after updating selection
+      return updatedSelection;
+    });
   };
 
-  const onChageSearch = (e: any) => {
-    let val = e.currentTarget.value;
-    setValueInput(val);
-    const pastDate = moment()
-      .subtract(+selection.time, 'days')
-      .format('YYYY-MM-DD');
-
-    setSelection({
-      asset: selection.asset,
-      status: selection.status,
-      time: selection.time,
-      orderId: val,
+  const onChangeSearch = (e: any) => {
+    const val = e.currentTarget.value;
+    setSelection((prevSelection) => {
+      const updatedSelection = { ...prevSelection, orderId: val };
+      applyFilters(updatedSelection); // Apply filters after updating selection
+      return updatedSelection;
     });
-    const filterDate = orderList?.filter((data: any) => {
-      let valueDate = moment(data.created).format('YYYY-MM-DD');
-
-      return (
-        data.orderId?.toLowerCase().includes(val?.toLowerCase()) &&
-        (!selection.status ||
-          data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
-        (!selection.asset ||
-          data.breakdown.inCurrenyName?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
-        (!selection.time || moment(pastDate).isSameOrBefore(valueDate))
-      );
-    });
-    setOrderTxListFilter(filterDate);
   };
+
 
   const getData = (current: number, pageSize: number) => {
     // Normally you should get the data from the server
@@ -418,19 +304,7 @@ const BSSellOrderHistoryTable: React.FC = () => {
         <div className="filter-item">
           <label>Asset</label> <br />
           <CustomSelectBox
-            items={[
-              { name: 'All', value: 'all' },
-              { name: 'IN500 Indexx 500', value: 'IN500' },
-              { name: 'INXC Indexx Crypto', value: 'INXC' },
-              { name: 'INEX Indexx Exchange', value: 'INEX' },
-              { name: 'IUSD+ Indexx USD+', value: 'IUSD+' },
-              { name: 'INXP Indexx Phoenix', value: 'INXP' },
-              { name: 'BNB Binance', value: 'BNB' },
-              { name: 'FTT FTX Token', value: 'FTT' },
-              { name: 'ETH Ethereum', value: 'ETH' },
-              { name: 'BTC Bitcoin', value: 'BTC' },
-              { name: 'LTC Litecoin', value: 'LTC' },
-            ]}
+            items={assets.map((type) => ({ name: type, value: type }))}
             value={selection.asset}
             onChange={handleChangeAsset}
             hasborder
@@ -477,10 +351,10 @@ const BSSellOrderHistoryTable: React.FC = () => {
           <label>Order Id</label> <br />
           <InputField
             size="large"
-            placeholder="Search Transaction hash"
+            placeholder="Search Order Id"
             style={{ height: '55px', marginTop: '0px' }}
             value={selection.orderId}
-            onChange={onChageSearch}
+            onChange={onChangeSearch}
             maxLength={50}
             type={undefined}
             label={undefined}

@@ -31,10 +31,10 @@ interface DataType {
 
 const BSTransactionHistoryTable: React.FC = () => {
   const [selection, setSelection] = useState({
-    type: '',
-    asset: '',
-    status: '',
-    time: '30',
+    type: 'all',
+    asset: 'all',
+    status: 'all',
+    time: 'all',
     transactionHash: '',
   });
   const [txList, setTxList] = useState() as any;
@@ -46,6 +46,9 @@ const BSTransactionHistoryTable: React.FC = () => {
   const pageSize = 10;
   const [current, setCurrent] = useState(1);
   const [copiedValue, copy] = useCopyToClipboard();
+  const [transactionTypes, setTransactionTypes] = useState<string[]>([]);
+  const [assets, setAssets] = useState<string[]>([]);
+  const [valueInput, setValueInput] = useState('');
 
   const formatBeneficiaryAddress0 = (address: string) => {
     try {
@@ -71,11 +74,9 @@ const BSTransactionHistoryTable: React.FC = () => {
           </div>
           <div>
             <strong>Address: </strong>
-            {`${parsedAddress.addressLine1 || 'NA'}, ${
-              parsedAddress.city || 'NA'
-            }, ${parsedAddress.state || 'NA'}, ${
-              parsedAddress.country || 'NA'
-            }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
+            {`${parsedAddress.addressLine1 || 'NA'}, ${parsedAddress.city || 'NA'
+              }, ${parsedAddress.state || 'NA'}, ${parsedAddress.country || 'NA'
+              }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
           </div>
         </>
       );
@@ -263,6 +264,18 @@ const BSTransactionHistoryTable: React.FC = () => {
         } else {
         }
       }
+      const uniqueTypes = new Set();
+      const uniqueAssets = new Set();
+
+
+      finalArr.forEach((transaction: any) => {
+        uniqueTypes.add(transaction.transactionType);
+        uniqueAssets.add(transaction.currencyRef);
+      });
+
+      setTransactionTypes(Array.from(uniqueTypes) as string[]);
+      setAssets(Array.from(uniqueAssets) as string[]);
+
       // Sort transactions by time in descending order
       finalArr.sort(
         (a, b) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf()
@@ -272,7 +285,7 @@ const BSTransactionHistoryTable: React.FC = () => {
     });
   }, []);
 
-  const handleChangeTime = (value: string) => {
+  const handleChangeTime0 = (value: string) => {
     const pastDate = moment().subtract(+value, 'days').format('YYYY-MM-DD');
     if (!isNaN(+value)) {
       setSelection({
@@ -288,10 +301,10 @@ const BSTransactionHistoryTable: React.FC = () => {
           moment(pastDate).isSameOrBefore(valueDate) &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -313,10 +326,10 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -328,7 +341,22 @@ const BSTransactionHistoryTable: React.FC = () => {
       setTxListFilter(txListFilterData);
     }
   };
-  const handleChangeStatus = (value: string) => {
+
+  const handleChangeTime = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      time: value,
+    }));
+  
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      time: value,
+    });
+  };
+
+  const handleChangeStatus0 = (value: string) => {
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -348,11 +376,11 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -374,11 +402,11 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -388,7 +416,22 @@ const BSTransactionHistoryTable: React.FC = () => {
       setTxListFilter(txListFilterData);
     }
   };
-  const handleChangeType = (value: string) => {
+
+  const handleChangeStatus = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      status: value,
+    }));
+  
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      status: value,
+    });
+  };
+
+  const handleChangeType0 = (value: string) => {
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -408,7 +451,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.transactionType?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -435,7 +478,7 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-              selection.asset?.toLowerCase()) &&
+            selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -448,7 +491,22 @@ const BSTransactionHistoryTable: React.FC = () => {
       setTxListFilter(txListFilterData);
     }
   };
-  const handleChangeAsset = (value: string) => {
+
+  const handleChangeType = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      type: value,
+    }));
+
+    // Apply the filter after the type is changed
+    filterTransactions({
+      ...selection,
+      type: value,
+    });
+  };
+
+  const handleChangeAsset0 = (value: string) => {
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
@@ -468,7 +526,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -493,7 +551,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-              selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -504,6 +562,75 @@ const BSTransactionHistoryTable: React.FC = () => {
       });
       setTxListFilter(txListFilterData);
     }
+  };
+
+
+  const handleChangeAsset = (el: any) => {
+    const value = el.target.value;
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      asset: value, // Correctly updating the asset field, not type
+    }));
+  
+    // Apply the filter after the asset is changed
+    filterTransactions({
+      ...selection,
+      asset: value,
+    });
+  };
+
+  const filterTransactions = (filterCriteria: any) => {
+    const filteredData = txList.filter((data: any) => {
+      const pastDate =
+        filterCriteria.time !== 'all'
+          ? moment().subtract(+filterCriteria.time, 'days').format('YYYY-MM-DD')
+          : null;
+      const valueDate = moment(data.created).format('YYYY-MM-DD');
+
+      // Filter conditions based on the selected criteria
+      const assetMatches =
+        filterCriteria.asset === 'all' ||
+        data.currencyRef?.toLowerCase() === filterCriteria.asset?.toLowerCase();
+
+      const timeMatches =
+        filterCriteria.time === 'all' ||
+        (pastDate && moment(pastDate).isSameOrBefore(valueDate));
+
+      const typeMatches =
+        filterCriteria.type === 'all' ||
+        data.transactionType?.toLowerCase() === filterCriteria.type?.toLowerCase();
+
+      const statusMatches =
+        filterCriteria.status === 'all' ||
+        data.status?.toLowerCase() === filterCriteria.status?.toLowerCase();
+
+      const txHashMatches =
+        !filterCriteria.transactionHash ||
+        data.txId?.toLowerCase().includes(filterCriteria.transactionHash?.toLowerCase());
+
+      return assetMatches && timeMatches && typeMatches && statusMatches && txHashMatches;
+    });
+
+    console.log('filteredData', filteredData); // Debugging filtered results
+    setTxListFilter(filteredData);
+  };
+
+
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value.toLowerCase();
+    setValueInput(searchValue);
+  
+    // Update the search in the selection state
+    setSelection((prevSelection) => ({
+      ...prevSelection,
+      transactionHash: searchValue,
+    }));
+  
+    // Apply the filter after updating the search value
+    filterTransactions({
+      ...selection,
+      transactionHash: searchValue,
+    });
   };
 
   const handleSearchHashId = (value: string) => {
@@ -553,13 +680,14 @@ const BSTransactionHistoryTable: React.FC = () => {
         <div className="filter-item">
           <label>Type</label> <br />
           <CustomSelectBox
-            items={[
-              { name: 'All', value: 'all' },
-              { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
-              { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
-              { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
-            ]}
-            value={'all'}
+            // items={[
+            //   { name: 'All', value: 'all' },
+            //   { name: 'Deposit', value: 'DEPOSIT_CYRPTO' },
+            //   { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
+            //   { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
+            // ]}
+            items={transactionTypes.map((type) => ({ name: type, value: type }))}
+            value={selection.type}
             onChange={handleChangeType}
             hasborder
             type={undefined}
@@ -581,7 +709,7 @@ const BSTransactionHistoryTable: React.FC = () => {
               { name: 'Past 30 days', value: '30' },
               { name: 'Past 90 days', value: '90' },
             ]}
-            value={'30'}
+            value={selection.time}
             onChange={handleChangeTime}
             hasborder
             type={undefined}
@@ -598,11 +726,12 @@ const BSTransactionHistoryTable: React.FC = () => {
         <div className="filter-item">
           <label>Asset</label> <br />
           <CustomSelectBox
-            items={[
-              { name: 'All', value: 'all' },
+            // items={[
+            //   { name: 'All', value: 'all' },
 
-              { name: 'USD', value: 'USD' },
-            ]}
+            //   { name: 'USD', value: 'USD' },
+            // ]}
+            items={assets.map((type) => ({ name: type, value: type }))}
             value={'all'}
             onChange={handleChangeAsset}
             hasborder
@@ -623,7 +752,7 @@ const BSTransactionHistoryTable: React.FC = () => {
               { name: 'Completed', value: 'Completed' },
               { name: 'Pending', value: 'Pending' },
             ]}
-            value={'all'}
+            value={selection.status}
             onChange={handleChangeStatus}
             hasborder
             type={undefined}
@@ -642,8 +771,8 @@ const BSTransactionHistoryTable: React.FC = () => {
             size="large"
             placeholder="Search Transaction hash"
             style={{ height: '55px', marginTop: '0px' }}
-            value={''}
-            onChange={() => {}}
+            value={selection.transactionHash}
+            onChange={onChangeSearch}
             maxLength={50}
             type={undefined}
             label={undefined}
@@ -675,6 +804,18 @@ const BSTransactionHistoryTable: React.FC = () => {
               fontSize: '16px',
               width: 'fit-content',
               marginBottom: '10px',
+            }}
+
+            onClick={() => {
+              setSelection({
+                type: 'all',
+                asset: 'all',
+                status: 'all',
+                time: 'all',
+                transactionHash: '',
+              });
+               // Reset the filtered transaction list to show all data
+              setTxListFilter(txList); // Reset to the full list of transactions
             }}
           >
             Reset
