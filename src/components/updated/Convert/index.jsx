@@ -16,6 +16,7 @@ import {
   confirmConvertOrder,
   createConvertOrder,
   decodeJWT,
+  getAppSettings,
   getCoinPriceByName,
   getUserWallets,
 } from '../../../services/api';
@@ -121,6 +122,8 @@ const ConvertCrypto = () => {
   const [fromTokenImage, setFromTokenImage] = useState(Inex); // Default image
   const [toTokenImage, setToTokenImage] = useState(Inex); // Default image
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
+  let appSettingArr = [];
+
   const createProcessOrder = async () => {
     setLoading(true); // Set loading true when API call starts
     try {
@@ -255,11 +258,37 @@ const ConvertCrypto = () => {
     };
 
     fetchUserWallets();
+    getAllSetting();
   }, [fromToken, toToken]);
+
+  const getAllSetting = async () => {
+    const res = await getAppSettings();
+    appSettingArr = res.data;
+    console.log('fromToken', fromToken.title);
+    if (
+      fromToken.title === 'INEX' ||
+      fromToken.title === 'IUSD+' ||
+      fromToken.title === 'IN500' ||
+      fromToken.title === 'INXC' ||
+      fromToken.title === 'WIBS' ||
+      fromToken.title === 'daCrazy'
+    ) {
+      let adminFees = appSettingArr.find(
+        (item) => item.key === 'IndexxTokensAdminFees'
+      );
+      setAdminFee(adminFees.value);
+      console.log(adminFees.value, 'adminFees.value');
+    } else {
+      let adminFees = appSettingArr.find((item) => item.key === 'AdminFees');
+      setAdminFee(adminFees.value);
+    }
+    return;
+  };
 
   // Fetch conversion rate when token changes
   useEffect(() => {
     fetchConversionRate();
+    getAllSetting();
   }, [fromToken, toToken]);
 
   // Handle From Amount Change
@@ -267,7 +296,9 @@ const ConvertCrypto = () => {
     setAmount(value);
     if (finalRate) {
       const calculatedToAmount = (value * finalRate).toFixed(2);
-      setReceiveAmount(calculatedToAmount);
+      setReceiveAmount(
+        (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
+      );
     }
   };
 
@@ -280,16 +311,19 @@ const ConvertCrypto = () => {
     }
   };
 
-  // Handle token swapping
   const handleSwapTokens = () => {
     const tempToken = fromToken;
     setFromToken(toToken);
     setToToken(tempToken);
+    
+    // Recalculate the amounts after swap
+    const recalculatedAmount = (amount * finalRate).toFixed(2);
     setAmount('');
     setReceiveAmount('');
+    setAmount(recalculatedAmount); // Reset the 'from' amount after swap
     fetchConversionRate();
   };
-
+  
   // Fetch token image paths dynamically based on the selected token
   const getImage = (tokenImage) => {
     try {
@@ -304,6 +338,13 @@ const ConvertCrypto = () => {
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setFromBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'fromToken'
     setFromTokenImage(getImage(token.image)); // Set the image when token changes
+    // Recalculate the amount when token changes
+    if (finalRate) {
+      const calculatedToAmount = (amount * finalRate).toFixed(2);
+      setReceiveAmount(
+        (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
+      );
+    }
   };
 
   const handlePreviewConversion = () => {
@@ -317,8 +358,15 @@ const ConvertCrypto = () => {
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setToBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'toToken'
     setToTokenImage(getImage(token.image)); // Set the image when token changes
+    // Recalculate the amount when token changes
+    if (finalRate) {
+      const calculatedToAmount = (amount * finalRate).toFixed(2);
+      setReceiveAmount(
+        (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
+      );
+    }
   };
-
+  
   return (
     <div className={classes.Container}>
       <div className={classes.header}>
@@ -345,6 +393,7 @@ const ConvertCrypto = () => {
               balance={fromBalance} // Pass the 'fromToken' balance to the field
               defaultReceiveToken={fromToken} // Pass default token for "From"
               amount={amount} // From amount
+              rate={rateData1}
             />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <ImportExportIcon
@@ -365,6 +414,7 @@ const ConvertCrypto = () => {
               onSelectToken={handleToTokenChange}
               balance={toBalance}
               defaultReceiveToken={toToken}
+              rate={rateData2}
             />
             <div style={{ margin: '25px 0px' }}></div>
             {amount && (
@@ -429,6 +479,7 @@ const ConvertCrypto = () => {
           rateData2={rateData2}
           createProcessOrder={createProcessOrder}
           insufficientBalance={fromBalance < Number(amount)} // Check for insufficient balance
+          adminFee={adminFee}
         />
       )}
       {openSuccessPopup && (
