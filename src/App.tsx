@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import { Navigate, Outlet } from 'react-router-dom';
 // import Header from "./components/Header/Header";
 import Home from './components/Home/Home';
@@ -150,7 +150,13 @@ import SendCardPage from './pages/Redeem/SendCard';
 import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
 import PaypalPartnershipPage from './pages/PaypalPartnership';
 import ConvertPage from './pages/Convert';
+import NewAdvancedRealTimeChartComponent from './components/Graphs/NewTradingView';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
+
+const TradingViewPage = () => {
+  const { coin } = useParams<{ coin: string }>(); // extract the coin parameter from the URL
+  return <NewAdvancedRealTimeChartComponent coin={String(coin)} />
+};
 
 function App() {
   const theme = useTheme();
@@ -588,6 +594,10 @@ function App() {
             <Route
               path="/indexx-exchange/trade-to-earn"
               element={<TradeToEarn />}
+            />
+             <Route
+              path="/indexx-exchange/trading-view/:coin"
+              element={<TradingViewPage />}
             />
             <Route
               path="/indexx-exchange/reward-center"

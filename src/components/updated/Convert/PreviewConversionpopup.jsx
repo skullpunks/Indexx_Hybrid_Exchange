@@ -196,6 +196,7 @@ const PreviewConversionpopup = ({
   rateData2,
   insufficientBalance,
   createProcessOrder,
+  adminFee
 }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -329,7 +330,7 @@ const PreviewConversionpopup = ({
               <span style={{ color: theme.palette.text.secondary }}>
                 Transaction Fees
               </span>
-              <span>0 {toToken.title}</span>
+              <span>{adminFee}%</span>
             </div>
           </div>
           {insufficientBalance && (

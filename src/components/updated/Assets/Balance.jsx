@@ -135,6 +135,10 @@ const BalanceOverview = () => {
             }
           }
 
+          if(wallet.coinSymbol === 'USD' && wallet.coinBalance > 0) {
+            totalBalInUSD += wallet.coinBalance
+          }
+
           if (stakedBalance > 0 && !isNaN(price)) {
             totalStakedBalInUSD += stakedBalance * price;
           }

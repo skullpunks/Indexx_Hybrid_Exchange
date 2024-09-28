@@ -191,6 +191,7 @@ const CustomTextField = ({
   fixedToken,
   loggedIn,
   defaultReceiveToken,
+  rate,
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -380,7 +381,17 @@ const CustomTextField = ({
             }}
           />
 
-          <span className={classes.approx}> ≈ 0.01</span>
+          <span className={classes.approx}>
+            {' '}
+            ≈$
+            {rate < 0.001
+              ? label === 'From'
+                ? rate.toFixed(5) * userAmount
+                : rate.toFixed(5) * amount
+              : label === 'From'
+              ? rate.toFixed(2) * userAmount
+              : rate.toFixed(2) * amount}
+          </span>
         </FormControl>
       </Box>
       {/* <div style={{ position: 'relative', width: '100%' }}>
