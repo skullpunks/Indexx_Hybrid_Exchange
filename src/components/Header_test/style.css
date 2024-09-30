@@ -253,7 +253,7 @@ nav .wrapper {
   color: white !important;
   font-size: 13px !important;
 }
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1310px) {
   nav .wrapper {
     padding: 0 30px;
   }
