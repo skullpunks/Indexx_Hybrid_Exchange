@@ -90,6 +90,7 @@ const BalanceOverview = () => {
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   const [totalStakedBalanceInUSD, setTotalStakedBalanceInUSD] = useState(0); // State for staked balance
   const [isLoading, setIsLoading] = useState(true);
+  const [visibleTotalBalance, setVisibleTotalBalance] = useState(false);
 
   const handleToggleVisibility = () => {
     setVisible(!visible);
@@ -97,6 +98,9 @@ const BalanceOverview = () => {
 
   const handleToggleStakingVisibility = () => {
     setVisibleStaking(!visibleStaking);
+  };
+  const handleToggleTotalBalanceVisibility = () => {
+    setVisibleTotalBalance(!visibleTotalBalance);
   };
   useEffect(() => {
     const fetchUserWallets = async () => {
@@ -135,8 +139,8 @@ const BalanceOverview = () => {
             }
           }
 
-          if(wallet.coinSymbol === 'USD' && wallet.coinBalance > 0) {
-            totalBalInUSD += wallet.coinBalance
+          if (wallet.coinSymbol === 'USD' && wallet.coinBalance > 0) {
+            totalBalInUSD += wallet.coinBalance;
           }
 
           if (stakedBalance > 0 && !isNaN(price)) {
@@ -154,7 +158,7 @@ const BalanceOverview = () => {
         console.log('Final totalPrevBalInUSD', totalPrevBalInUSD);
         if (totalPrevBalInUSD > 0) {
           pnlValue = totalBalInUSD - totalPrevBalInUSD;
-          console.log(pnlValue)
+          console.log(pnlValue);
           pnlPercentage = (pnlValue / totalPrevBalInUSD) * 100;
         }
 
@@ -226,6 +230,28 @@ const BalanceOverview = () => {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               }).format(totalStakedBalanceInUSD)}`}
+        </Typography>
+      </Box>
+      <Box className={classes.balanceSectionWrapper}>
+        <Box className={classes.header}>
+          <Typography variant="h6">Total Balance</Typography>
+          <div
+            className={classes.eyeIcon}
+            onClick={handleToggleTotalBalanceVisibility}
+            size="small"
+            style={{ cursor: 'pointer' }}
+          >
+            {visibleTotalBalance ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </div>
+        </Box>
+        <Typography className={classes.hiddenBalance}>
+          $
+          {visibleTotalBalance
+            ? '*******'
+            : `${new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(totalBalanceInUSD + totalStakedBalanceInUSD)}`}
         </Typography>
       </Box>
       <Box className={classes.buttonContainer}>
