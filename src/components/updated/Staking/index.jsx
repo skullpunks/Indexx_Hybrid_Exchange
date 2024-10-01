@@ -53,14 +53,7 @@ const Staking = () => {
       <div className={classes.container}>
         <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
         <StakingTop onStakeSuccess={handleRefresh} />
-        <StakingBottom refresh={refresh}/>
-      </div>
-      <div className={classes.subscribeWrapper}>
-        <p>Indexx Affiliiate Program</p>
-        <GenericButton
-          text={'Join Now'}
-          styles={{ width: 'fit-content', marginTop: '10px' }}
-        />
+        <StakingBottom refresh={refresh} />
       </div>
     </>
   );
