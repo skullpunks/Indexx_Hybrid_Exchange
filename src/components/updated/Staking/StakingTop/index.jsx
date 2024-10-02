@@ -5,11 +5,20 @@ import InputField from '../../shared/TextField';
 import iusd from '../../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../../shared/Button';
 import SingleSelectPlaceholder from '../CustomSelect';
-import { baseURL, decodeJWT, getUserWallets, loginWithToken, stakeCoin } from '../../../../services/api';
+import {
+  baseURL,
+  calculateStakeReward,
+  decodeJWT,
+  getUserWallets,
+  loginWithToken,
+  stakeCoin,
+} from '../../../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import tokensList from '../../../../utils/Tokens.json';
 import Inex from '../../../../assets/updated/buySell/INEX.svg';
 import { title } from 'process';
+import SuccessPopup from './SuccessfulStakingPopup';
+import ErrorPopup from './ErrorStakingPopup';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -180,7 +189,7 @@ const StakingTop = ({ onStakeSuccess }) => {
   const [allWallets, setAllWallets] = useState();
   const [tokenType, setTokenType] = useState('Tokens');
   const [calcAmt, setcalcAmt] = useState('');
-  const [amt, setAmt] = useState('');
+  const [amt, setAmt] = useState(0);
   const [type, setType] = useState('Short');
   const [isVisible, setIsVisible] = useState(true);
   const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
@@ -193,27 +202,43 @@ const StakingTop = ({ onStakeSuccess }) => {
   const [finalAmount, setFinalAmount] = useState(0);
   const [error, setError] = useState('');
   const [loadings, setLoadings] = useState(false);
-
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const theme = useTheme();
   const [searchParams] = useSearchParams();
   const [activeButton, setActiveButton] = useState('6 Months');
   const defaultSignInToken = searchParams.get('signInToken');
 
-  const handleButtonClick = (button) => {
+  const handleButtonClick = async (button) => {
     setActiveButton(button);
     console.log('Button', button);
     if (button === '1 Year') {
-      setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+      let result = await calculateStakeReward(
+        amt ?? 0,
+        selectedToken.title,
+        'Long',
+        selectedToken.stakingPercentage1year
+      );
+      console.log('result', result);
+      setRewards(result?.data?.finalAmount ?? 0);
       setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year / 100));
       setType('Long');
     } else if (button === '6 Months') {
-      setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+      let result = await calculateStakeReward(
+        amt ?? 0,
+        selectedToken.title,
+        'Short',
+        selectedToken.stakingPercentage6months
+      );
+      console.log('result', result);
+      setRewards(result?.data?.finalAmount ?? 0);
       setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
       setType('Short');
     }
   };
 
-  const handleTokenSelect = (token) => {
+  const handleTokenSelect = async (token) => {
     console.log('I am here', token);
     if (
       token === 'Stock Tokens' ||
@@ -241,26 +266,54 @@ const StakingTop = ({ onStakeSuccess }) => {
       console.log('findTokenBal', findTokenBal);
       if (findTokenBal) {
         setSelectedTokenBalance(findTokenBal.coinBalance);
-        if (type === '1 Year') {
-          setRewards(amt * (selectedToken.stakingPercentage1year / 100));
+        // Check for insufficient balance after token change
+        if (amt > findTokenBal.coinBalance) {
+          setError(
+            `Insufficient balance available to stake. Please buy ${findToken.title} or deposit ${findToken.title}.`
+          );
+        } else {
+          setError(''); // Clear error if balance is sufficient
+        }
+        console.log('type', type, findToken.title);
+        console.log('long', type, findToken.stakingPercentage1year);
+        console.log('short', type, findToken.stakingPercentage6months);
+        if (type === '1 Year' || type === 'Long') {
+          let result = await calculateStakeReward(
+            amt ?? 0,
+            findToken.title,
+            'Long',
+            findToken.stakingPercentage6months
+          );
+          console.log('result', result);
+        setRewards(result?.data?.finalAmount ?? 0);
           setFinalAmount(
             amt * (1 + selectedToken.stakingPercentage1year / 100)
           );
-        } else if (type === '6 Months') {
-          setRewards(amt * (selectedToken.stakingPercentage6months / 100));
+        } else if (type === '6 Months' || type === 'Short') {
+          let result = await calculateStakeReward(
+            amt ?? 0,
+            findToken.title,
+            'Short',
+            findToken.stakingPercentage6months
+          );
+          console.log('result', result);
+        setRewards(result?.data?.finalAmount ?? 0);
           setFinalAmount(
             amt * (1 + selectedToken.stakingPercentage6months / 100)
           );
         }
       } else {
         setSelectedTokenBalance(0); // or any default value you prefer
+        setError(
+          `Insufficient balance available to stake. Please buy ${findToken.title} or deposit ${findToken.title}.`
+        );
       }
     }
   };
 
   useEffect(() => {
     const redirectFlag = localStorage.getItem('redirected');
-    
+
     if (defaultSignInToken && !redirectFlag) {
       console.log('I am here ', defaultSignInToken);
       checkLogin(defaultSignInToken);
@@ -352,10 +405,23 @@ const StakingTop = ({ onStakeSuccess }) => {
         type,
         percentage
       );
+      console.log(res);
       if (res.status === 200) {
         setLoadings(false);
+        setShowSuccessPopup(true); // Show success popup
         onStakeSuccess();
         setAmt('');
+        setRewards(0);
+        // Re-fetch the updated wallet balances after staking
+        await getAllUserWallet();
+      } else {
+        setLoadings(false);
+        setShowErrorPopup(true); // Show success popup
+        setErrorMessage(res.message);
+        setAmt('');
+        setRewards(0);
+        // Re-fetch the updated wallet balances after staking
+        await getAllUserWallet();
       }
     } catch (err) {
       setLoadings(false);
@@ -388,7 +454,7 @@ const StakingTop = ({ onStakeSuccess }) => {
             type="text"
             placeholder="Enter Amount"
             value={amt}
-            onChange={(e) => {
+            onChange={async (e) => {
               const inputAmt = e.target.value;
               console.log('I am here', inputAmt);
               setAmt(inputAmt);
@@ -417,19 +483,25 @@ const StakingTop = ({ onStakeSuccess }) => {
                   setError('');
                   console.log('type', type);
                   if (type === 'Long') {
-                    setRewards(
-                      inputAmt *
-                        (selectedToken?.stakingPercentage1year / 100) ?? 0
+                    let result = await calculateStakeReward(
+                      inputAmt,
+                      selectedToken.title,
+                      'Long',
+                      selectedToken.stakingPercentage6months
                     );
+                  setRewards(result?.data?.finalAmount ?? 0);
                     setFinalAmount(
                       inputAmt *
                         (1 + selectedToken?.stakingPercentage1year / 100 ?? 0)
                     );
                   } else if (type === 'Short') {
-                    setRewards(
-                      inputAmt *
-                        (selectedToken?.stakingPercentage6months / 100) ?? 0
+                    let result = await calculateStakeReward(
+                      inputAmt,
+                      selectedToken.title,
+                      'Short',
+                      selectedToken.stakingPercentage6months
                     );
+                  setRewards(result?.data?.finalAmount ?? 0);
                     setFinalAmount(
                       inputAmt *
                         (1 + selectedToken?.stakingPercentage6months / 100 ?? 0)
@@ -481,7 +553,7 @@ const StakingTop = ({ onStakeSuccess }) => {
           <div className={classes.fullWidthButton}>
             <GenericButton
               text="Stake"
-              disabled={loadings}
+              disabled={loadings || !!error} // Disable button if loading or if there is an error
               loading={loadings}
               onClick={submitStake}
             />
@@ -519,18 +591,28 @@ const StakingTop = ({ onStakeSuccess }) => {
         </div>
         <InputField
           label=""
-          type="text"
+          type="number"
           placeholder="Enter Amount"
           value={calcAmt}
-          onChange={(e) => {
+          onChange={async(e) => {
             setcalcAmt(e.target.value);
+            let result1 = await calculateStakeReward(
+              Number(e.target.value),
+              selectedToken.title,
+              'Short',
+              selectedToken.stakingPercentage6months
+            );
+            let result2 = await calculateStakeReward(
+              Number(e.target.value),
+              selectedToken.title,
+              'Long',
+              selectedToken.stakingPercentage1year
+            );
             setSixMonthReward(
-              Number(e.target.value) *
-                (selectedToken?.stakingPercentage6months / 100) ?? 0
+              result1.data.finalAmount ?? 0
             );
             setOneYearReward(
-              Number(e.target.value) *
-                (selectedToken?.stakingPercentage1year / 100) ?? 0
+              result2.data.finalAmount ?? 0
             );
           }}
           endAdornment={
@@ -582,6 +664,15 @@ const StakingTop = ({ onStakeSuccess }) => {
           ))}
         </div>
       </div>
+      {showSuccessPopup && (
+        <SuccessPopup onClose={() => setShowSuccessPopup(false)} />
+      )}
+      {showErrorPopup && (
+        <ErrorPopup
+          onClose={() => setShowErrorPopup(false)}
+          message={errorMessage}
+        />
+      )}
     </div>
   );
 };

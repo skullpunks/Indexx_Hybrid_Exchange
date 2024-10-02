@@ -162,12 +162,30 @@ const ConvertCrypto = () => {
       setLoading(false);
       setOpenSuccessPopup(true);
       setLoading(false);
-      OpenNotification(
-        'error',
-        'Failed to Process Convert Order. Please check balance on the wallet'
-      );
+      // After successful conversion, re-fetch user wallet balances and conversion rates
+      await fetchUserWallets(); // Fetch updated wallet balances
+      await fetchConversionRate(); // Fetch updated conversion rates
     }
   };
+
+  const fetchUserWallets = async () => {
+    const token = localStorage.getItem('access_token');
+    const decodedToken = decodeJWT(String(token)); // Decode JWT
+  
+    const userWallets = await getUserWallets(decodedToken?.email);
+    setUsersWallets(userWallets.data);
+    setFromBalance(
+      formatBalance(
+        userWallets.data.find((x) => x.coinSymbol === fromToken.title)?.coinBalance || 0
+      )
+    );
+    setToBalance(
+      formatBalance(
+        userWallets.data.find((x) => x.coinSymbol === toToken.title)?.coinBalance || 0
+      )
+    );
+  };
+  
 
   // Fetch prices and calculate conversion rate
   const fetchConversionRate = async () => {
@@ -315,7 +333,7 @@ const ConvertCrypto = () => {
     const tempToken = fromToken;
     setFromToken(toToken);
     setToToken(tempToken);
-    
+
     // Recalculate the amounts after swap
     const recalculatedAmount = (amount * finalRate).toFixed(2);
     setAmount('');
@@ -323,7 +341,7 @@ const ConvertCrypto = () => {
     setAmount(recalculatedAmount); // Reset the 'from' amount after swap
     fetchConversionRate();
   };
-  
+
   // Fetch token image paths dynamically based on the selected token
   const getImage = (tokenImage) => {
     try {
@@ -366,7 +384,7 @@ const ConvertCrypto = () => {
       );
     }
   };
-  
+
   return (
     <div className={classes.Container}>
       <div className={classes.header}>

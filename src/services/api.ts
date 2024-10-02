@@ -1989,7 +1989,29 @@ export const stakeCoin = async (
     });
     return result.data;
   } catch (err: any) {
-    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log('FAILED: unable to perform API request (stakeCoin)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const calculateStakeReward = async (
+  amount: number = 0,
+  coin: string,
+  type: string,
+  percentage: number
+) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/calculateStake`, {
+      amount: amount,
+      coin: coin,
+      type: type,
+      percentage: percentage,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (calculateStake)');
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
