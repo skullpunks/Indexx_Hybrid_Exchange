@@ -104,7 +104,7 @@ const ConvertCrypto = () => {
   const theme = useTheme();
   const [fromToken, setFromToken] = useState({ title: 'INEX', image: 'INEX' }); // Default to INEX
   const [toToken, setToToken] = useState({ title: 'IUSD+', image: 'IUSD+' });
-  const [fromBalance, setFromBalance] = useState(0);
+  const [fromBalance, setFromBalance] = useState();
   const [toBalance, setToBalance] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [showCoinsDropdown, setShowCoinsDropdown] = useState(false);
@@ -124,11 +124,53 @@ const ConvertCrypto = () => {
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
   let appSettingArr = [];
 
+  // Utility function to check if a token is an Indexx token
+  const isIndexxToken = (tokenTitle) => {
+    const indexxTokens = [
+      'IN500',
+      'INEX',
+      'INXC',
+      'IUSD+',
+      'ALCRYP',
+      'AMZN',
+      'APPL',
+      'WIBS',
+      'BCM',
+      'CRYC10',
+      'EQSTK',
+      'GOOGL',
+      'INDXXF',
+      'META',
+      'DaCrazy',
+      'MSFT',
+      'NVDA',
+      'PEP',
+      'SNP500',
+      'TSLA',
+      'TOB',
+    ];
+    return indexxTokens.includes(tokenTitle);
+  };
+
   const createProcessOrder = async () => {
     setLoading(true); // Set loading true when API call starts
     try {
       const basecoin = fromToken.title;
       const quotecoin = toToken.title;
+
+      // Check for disallowed selling of Indexx Tokens
+      if (
+        isIndexxToken(String(basecoin)) &&
+        !isIndexxToken(String(quotecoin))
+      ) {
+        //alert("Selling of Indexx tokens is not allowed.");
+        OpenNotification(
+          'error',
+          'Feature of Converting Indexx tokens is coming soon.'
+        );
+        return;
+      }
+
       let res = await createConvertOrder(
         basecoin,
         quotecoin,
@@ -171,21 +213,22 @@ const ConvertCrypto = () => {
   const fetchUserWallets = async () => {
     const token = localStorage.getItem('access_token');
     const decodedToken = decodeJWT(String(token)); // Decode JWT
-  
+
     const userWallets = await getUserWallets(decodedToken?.email);
     setUsersWallets(userWallets.data);
     setFromBalance(
       formatBalance(
-        userWallets.data.find((x) => x.coinSymbol === fromToken.title)?.coinBalance || 0
+        userWallets.data.find((x) => x.coinSymbol === fromToken.title)
+          ?.coinBalance || 0
       )
     );
     setToBalance(
       formatBalance(
-        userWallets.data.find((x) => x.coinSymbol === toToken.title)?.coinBalance || 0
+        userWallets.data.find((x) => x.coinSymbol === toToken.title)
+          ?.coinBalance || 0
       )
     );
   };
-  
 
   // Fetch prices and calculate conversion rate
   const fetchConversionRate = async () => {
@@ -198,6 +241,13 @@ const ConvertCrypto = () => {
       const rate =
         fromTokenPrice.data.results.data / toTokenPrice.data.results.data;
       setFinalRate(rate);
+      // Recalculate the amounts based on the new rates
+      if (amount) {
+        const calculatedToAmount = (amount * rate).toFixed(2);
+        setReceiveAmount(
+          (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
+        );
+      }
     } catch (error) {
       console.error('Error fetching prices:', error);
     } finally {
@@ -289,7 +339,7 @@ const ConvertCrypto = () => {
       fromToken.title === 'IN500' ||
       fromToken.title === 'INXC' ||
       fromToken.title === 'WIBS' ||
-      fromToken.title === 'daCrazy'
+      fromToken.title === 'DaCrazy'
     ) {
       let adminFees = appSettingArr.find(
         (item) => item.key === 'IndexxTokensAdminFees'
@@ -333,13 +383,9 @@ const ConvertCrypto = () => {
     const tempToken = fromToken;
     setFromToken(toToken);
     setToToken(tempToken);
-
-    // Recalculate the amounts after swap
-    const recalculatedAmount = (amount * finalRate).toFixed(2);
     setAmount('');
     setReceiveAmount('');
-    setAmount(recalculatedAmount); // Reset the 'from' amount after swap
-    fetchConversionRate();
+    //fetchConversionRate();
   };
 
   // Fetch token image paths dynamically based on the selected token
@@ -356,13 +402,14 @@ const ConvertCrypto = () => {
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setFromBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'fromToken'
     setFromTokenImage(getImage(token.image)); // Set the image when token changes
-    // Recalculate the amount when token changes
-    if (finalRate) {
+     // Recalculate the amount when token changes
+     if (finalRate) {
       const calculatedToAmount = (amount * finalRate).toFixed(2);
       setReceiveAmount(
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
       );
     }
+    //fetchConversionRate(); // Fetch new rates based on the new token
   };
 
   const handlePreviewConversion = () => {
@@ -383,6 +430,7 @@ const ConvertCrypto = () => {
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
       );
     }
+    //fetchConversionRate(); // Fetch new rates based on the new token
   };
 
   return (
@@ -496,7 +544,7 @@ const ConvertCrypto = () => {
           rateData1={rateData1}
           rateData2={rateData2}
           createProcessOrder={createProcessOrder}
-          insufficientBalance={fromBalance < Number(amount)} // Check for insufficient balance
+          insufficientBalance={Number(fromBalance?.replace(/,/g, '') ?? 0) < Number(amount)}
           adminFee={adminFee}
         />
       )}
