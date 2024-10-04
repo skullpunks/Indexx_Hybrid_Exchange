@@ -153,7 +153,17 @@ export async function fetchCryptoData(subTitle: string) {
 }
 
 export function formatReadableDate(isoDate: string) {
+  if (!isoDate) {
+    return "N/A";
+  }
+
   const date = new Date(isoDate);
+  
+  // Check if the date is invalid
+  if (isNaN(date.getTime())) {
+    return "N/A";
+  }
+
   return date.toLocaleString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -163,6 +173,7 @@ export function formatReadableDate(isoDate: string) {
     hour12: true,
   });
 }
+
 
 export const signupAPI = async (
   email: string,

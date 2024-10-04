@@ -263,6 +263,7 @@ const CaptainDash = () => {
         const userType = localStorage.getItem('userType') || undefined;
         const username = localStorage.getItem('username') || undefined;
 
+
         setUserType(userType);
 
         if (userType === 'CaptainBee' && username) {
@@ -638,7 +639,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         Next Billing Date:{' '}
                         {formatReadableDate(
                           subscription?.paypalSubscriptionDetails?.billing_info
-                            ?.next_billing_time || subscription?.nextPaymentDate
+                            ?.next_billing_time || subscription?.nextPaymentDate || 'NA'
                         )}
                       </div>
                       {/* <div>

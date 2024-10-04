@@ -4,7 +4,7 @@ import '../IndexxSwap/IndexxSwap.css';
 import { BSProvider } from '../../utils/SwapContext';
 import BuySellMain from './BuySellMain';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { decodeJWT, getCaptainBeeStatics, loginWithToken } from '../../services/api';
+import { decodeJWT, getCaptainBeeByEmail, getCaptainBeeStatics, loginWithToken } from '../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const BuySell = () => {
@@ -38,6 +38,10 @@ const BuySell = () => {
         localStorage.setItem('refresh_token', res.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('redirected', 'true'); // Set flag
+        let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+        console.log(resObj2);
+        let username = resObj2?.data.Username;
+        localStorage.setItem('username', username);
         window.location.reload();
         // if (searchParams.get('buyToken')) {
         //   navigate(`/update/home?buyToken=${defaultToken}`);

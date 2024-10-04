@@ -243,7 +243,7 @@ const ConvertCrypto = () => {
       setFinalRate(rate);
       // Recalculate the amounts based on the new rates
       if (amount) {
-        const calculatedToAmount = (amount * rate).toFixed(2);
+        const calculatedToAmount = (amount * rate).toFixed(8);
         setReceiveAmount(
           (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
         );
@@ -288,7 +288,7 @@ const ConvertCrypto = () => {
 
   // Function to format the balance based on its value
   const formatBalance = (balance) => {
-    if (balance < 0.001) {
+    if (balance < 0.0001) {
       // Format to 5 or 6 decimal places if balance is less than 0.001
       return balance.toLocaleString('en-US', {
         minimumFractionDigits: 5,
@@ -363,7 +363,7 @@ const ConvertCrypto = () => {
   const handleFromAmountChange = (value) => {
     setAmount(value);
     if (finalRate) {
-      const calculatedToAmount = (value * finalRate).toFixed(2);
+      const calculatedToAmount = (value * finalRate).toFixed(8);
       setReceiveAmount(
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
       );
@@ -404,7 +404,7 @@ const ConvertCrypto = () => {
     setFromTokenImage(getImage(token.image)); // Set the image when token changes
      // Recalculate the amount when token changes
      if (finalRate) {
-      const calculatedToAmount = (amount * finalRate).toFixed(2);
+      const calculatedToAmount = (amount * finalRate).toFixed(8);
       setReceiveAmount(
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
       );
@@ -425,7 +425,7 @@ const ConvertCrypto = () => {
     setToTokenImage(getImage(token.image)); // Set the image when token changes
     // Recalculate the amount when token changes
     if (finalRate) {
-      const calculatedToAmount = (amount * finalRate).toFixed(2);
+      const calculatedToAmount = (amount * finalRate).toFixed(8);
       setReceiveAmount(
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
       );

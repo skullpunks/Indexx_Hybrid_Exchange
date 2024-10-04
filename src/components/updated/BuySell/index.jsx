@@ -14,6 +14,7 @@ import {
   getUserDetails,
   loginWithToken,
   getOrderDetails,
+  getCaptainBeeByEmail,
 } from '../../../services/api';
 import Popup from './Popup';
 import tokens from '../../../utils/Tokens.json';
@@ -136,6 +137,11 @@ const BuySell = () => {
         localStorage.setItem('refresh_token', res.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('redirected', 'true'); // Set flag
+        let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+        console.log(resObj2);
+        let username = resObj2?.data.Username;
+        localStorage.setItem('username', username);
+        debugger;
         window.location.reload();
         if (searchParams.get('buyToken')) {
           navigate(`/update/home?buyToken=${defaultToken}`);
