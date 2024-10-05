@@ -35,6 +35,7 @@ import TeamCaptainDashIndividual from '../TeamCaptainBees/TeamCaptainDashIndivid
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 import loadingGif from '../../../../assets/beeloade.gif';
+import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
 
 const BeeDash = () => {
   const { id, userType } = useParams();
@@ -92,7 +93,9 @@ const BeeDash = () => {
 
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader />
+
       {isLoading && (
         <div
           style={{

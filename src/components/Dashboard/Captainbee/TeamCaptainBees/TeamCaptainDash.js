@@ -33,6 +33,7 @@ import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
+import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
 
 const TeamCaptainDash = () => {
   const [userType, setUserType] = useState('');
@@ -338,10 +339,20 @@ const TeamCaptainDash = () => {
       </div>
     </Grid>
   );
+  const [selectedTab, setSelectedTab] = useState('My Colony');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
+
       {userType === 'CaptainBee' ? (
         <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
           {/* {---} */}

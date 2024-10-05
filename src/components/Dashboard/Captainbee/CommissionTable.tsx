@@ -3,7 +3,12 @@ import { TableProps } from 'antd/es/table';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'
-import { commissionList, decodeJWT, getCaptainBeeStatics, getUserWallets } from '../../../services/api'
+import {
+  commissionList,
+  decodeJWT,
+  getCaptainBeeStatics,
+  getUserWallets,
+} from '../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
@@ -19,13 +24,12 @@ interface DataType {
   finalCommissionAmountInINEX: number;
   commissionPercentage: number;
   orderAmount: number;
-  name?: string;  // Added this based on the response
+  name?: string; // Added this based on the response
 }
 
 type CommissionTableProps = {
   leaderEmail: string;
 };
-
 
 const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   const onChange: TableProps<DataType>['onChange'] = (
@@ -33,7 +37,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     filters,
     sorter,
     extra
-  ) => { };
+  ) => {};
 
   const { id } = useParams();
 
@@ -43,9 +47,10 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     {
       dataIndex: 'beeType',
       title: 'Type',
-      sorter: (a, b) => (a.beeType || "Captain").localeCompare(b.beeType || "Captain"),
+      sorter: (a, b) =>
+        (a.beeType || 'Captain').localeCompare(b.beeType || 'Captain'),
       render: (_, record) => {
-        return record.beeType ? record.beeType : "Captain";
+        return record.beeType ? record.beeType : 'Captain';
       },
     },
     {
@@ -65,7 +70,8 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     {
       dataIndex: 'created',
       title: 'Date',
-      sorter: (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime(),
+      sorter: (a, b) =>
+        new Date(a.created).getTime() - new Date(b.created).getTime(),
       render: (_, record) => {
         return new Date(record.created).toLocaleDateString();
       },
@@ -75,23 +81,30 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       dataIndex: 'rank',
       sorter: (a, b) => a.rank.localeCompare(b.rank),
       render: (_, record) => {
-        return record.rank;  // Adjusted based on actual rank data
+        return record.rank; // Adjusted based on actual rank data
       },
     },
     {
       title: 'Commission',
       dataIndex: 'finalCommissionAmountInUSD',
-      sorter: (a, b) => a.finalCommissionAmountInUSD - b.finalCommissionAmountInUSD,
+      sorter: (a, b) =>
+        a.finalCommissionAmountInUSD - b.finalCommissionAmountInUSD,
       //render: (_, record) => formatCurrency(record.finalCommissionAmountInUSD),
       render: (_, record) => {
         // Assuming you want to format it as "USD: $amount, INEX: $amount"
-        return `USD: $${record.finalCommissionAmountInUSD.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })} + INEX: ${record.finalCommissionAmountInINEX.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}`;
+        return `USD: $${record.finalCommissionAmountInUSD.toLocaleString(
+          'en-US',
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }
+        )} + INEX: ${record.finalCommissionAmountInINEX.toLocaleString(
+          'en-US',
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }
+        )}`;
       },
     },
     {
@@ -102,17 +115,20 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
         return typeof record.commissionPercentage === 'number'
           ? record.commissionPercentage.toFixed(2) + '%'
           : '0.00%';
-      }
+      },
     },
     {
       title: 'Order Total',
       dataIndex: 'orderAmount',
       sorter: (a, b) => a.orderAmount - b.orderAmount,
       render: (_, record) => {
-        return "$" + parseFloat(String(record.orderAmount)).toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+        return (
+          '$' +
+          parseFloat(String(record.orderAmount)).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
       },
     },
   ];
@@ -137,14 +153,13 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     };
     commissionPercentage: number;
     rank: string;
-  };
-
+  }
 
   // Provide a fallback for the currency formatting
   const formatCurrency = (amount: number | undefined) => {
     // Handle undefined amounts by returning a default string
     if (typeof amount === 'undefined') {
-      return "$0.00";
+      return '$0.00';
     }
     return `$${amount.toLocaleString('en-US', {
       minimumFractionDigits: 2,
@@ -156,33 +171,53 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     {
       dataIndex: 'totalCommissionEarned',
       title: 'Commission Earned',
-      align: "center",
+      align: 'center',
       render: (_, record) => {
-        const totalEarnedUSD = (record.totalCommissionEarned?.amountInUSD || 0) + (record.totalHoneyBeeCommissionEarned?.amountInUSD || 0);
-        const totalEarnedINEX = (record.totalCommissionEarned?.amountInINEX || 0) + (record.totalHoneyBeeCommissionEarned?.amountInINEX || 0);
-        return `${formatCurrency(totalEarnedUSD)} / INEX: ${formatCurrency(totalEarnedINEX)}`;
+        const totalEarnedUSD =
+          (record.totalCommissionEarned?.amountInUSD || 0) +
+          (record.totalHoneyBeeCommissionEarned?.amountInUSD || 0);
+        const totalEarnedINEX =
+          (record.totalCommissionEarned?.amountInINEX || 0) +
+          (record.totalHoneyBeeCommissionEarned?.amountInINEX || 0);
+        return `${formatCurrency(totalEarnedUSD)} / INEX: ${formatCurrency(
+          totalEarnedINEX
+        )}`;
       },
     },
     {
       dataIndex: 'totalCommissionToBePaid',
       title: 'Commission Due',
-      align: "center",
+      align: 'center',
       render: (_, record) => {
-        const totalDueUSD = (record.totalCommissionToBePaid?.amountInUSD || 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInUSD || 0);
-        const totalDueINEX = (record.totalCommissionToBePaid?.amountInINEX || 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInINEX || 0);
-        return `${formatCurrency(totalDueUSD)} / INEX: ${formatCurrency(totalDueINEX)}`;
+        const totalDueUSD =
+          (record.totalCommissionToBePaid?.amountInUSD || 0) +
+          (record.totalHoneyBeeCommissionToBePaid?.amountInUSD || 0);
+        const totalDueINEX =
+          (record.totalCommissionToBePaid?.amountInINEX || 0) +
+          (record.totalHoneyBeeCommissionToBePaid?.amountInINEX || 0);
+        return `${formatCurrency(totalDueUSD)} / INEX: ${formatCurrency(
+          totalDueINEX
+        )}`;
       },
     },
     {
       dataIndex: 'commissionPaid',
       title: 'Commission Paid',
-      align: "center",
+      align: 'center',
       render: (_, record) => {
         // Calculate the total earned and due for both USD and INEX
-        const totalEarnedUSD = (record.totalCommissionEarned?.amountInUSD ?? 0) + (record.totalHoneyBeeCommissionEarned?.amountInUSD ?? 0);
-        const totalEarnedINEX = (record.totalCommissionEarned?.amountInINEX ?? 0) + (record.totalHoneyBeeCommissionEarned?.amountInINEX ?? 0);
-        const totalDueUSD = (record.totalCommissionToBePaid?.amountInUSD ?? 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInUSD ?? 0);
-        const totalDueINEX = (record.totalCommissionToBePaid?.amountInINEX ?? 0) + (record.totalHoneyBeeCommissionToBePaid?.amountInINEX ?? 0);
+        const totalEarnedUSD =
+          (record.totalCommissionEarned?.amountInUSD ?? 0) +
+          (record.totalHoneyBeeCommissionEarned?.amountInUSD ?? 0);
+        const totalEarnedINEX =
+          (record.totalCommissionEarned?.amountInINEX ?? 0) +
+          (record.totalHoneyBeeCommissionEarned?.amountInINEX ?? 0);
+        const totalDueUSD =
+          (record.totalCommissionToBePaid?.amountInUSD ?? 0) +
+          (record.totalHoneyBeeCommissionToBePaid?.amountInUSD ?? 0);
+        const totalDueINEX =
+          (record.totalCommissionToBePaid?.amountInINEX ?? 0) +
+          (record.totalHoneyBeeCommissionToBePaid?.amountInINEX ?? 0);
 
         // Calculate the total commission paid for both USD and INEX
         const paidUSD = totalEarnedUSD - totalDueUSD;
@@ -194,7 +229,7 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     {
       dataIndex: 'commissionPercentage',
       title: 'Commission Percentage',
-      align: "center",
+      align: 'center',
       render: (_, record) => {
         return typeof record?.commissionPercentage === 'number'
           ? record?.commissionPercentage.toFixed(2) + '%'
@@ -203,7 +238,9 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     },
   ];
 
-  const [selectedDateRange, setSelectedDateRange] = useState<[Moment | null, Moment | null]>([null, null]);
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    [Moment | null, Moment | null]
+  >([null, null]);
   const handleDateChange = (dates: any) => {
     setSelectedDateRange(dates);
     console.log('Selected Date Range:', dates);
@@ -212,19 +249,20 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   const filterDataByDate = (data: DataType[]): DataType[] => {
     return selectedDateRange
       ? data.filter((record) => {
-        const recordDate = new Date(record.created);
-        const startDate = selectedDateRange[0]?.startOf('day').toDate(); // Convert Moment to Date
-        const endDate = selectedDateRange[1]?.endOf('day').toDate(); // Convert Moment to Date
-        return startDate && endDate
-          ? recordDate >= startDate && recordDate <= endDate
-          : true;
-      })
+          const recordDate = new Date(record.created);
+          const startDate = selectedDateRange[0]?.startOf('day').toDate(); // Convert Moment to Date
+          const endDate = selectedDateRange[1]?.endOf('day').toDate(); // Convert Moment to Date
+          return startDate && endDate
+            ? recordDate >= startDate && recordDate <= endDate
+            : true;
+        })
       : data;
   };
 
-
   const [sortedData, setSortedData] = useState<DataType[]>([]);
-  const [commissionPaidData, setCommissionPaidData] = useState<CommissionDataType[]>([]);
+  const [commissionPaidData, setCommissionPaidData] = useState<
+    CommissionDataType[]
+  >([]);
   const pageSize = 10;
   const [current, setCurrent] = useState(1);
 
@@ -235,21 +273,23 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   useEffect(() => {
     if (id) {
       getCaptainBeeStatics(String(id)).then((data) => {
-        console.log("Data2", data?.data?.userFullData?.email);
+        console.log('Data2', data?.data?.userFullData?.email);
         setCaptainbeeEmail(data?.data?.userFullData?.email);
       });
     }
-  }, [captainbeesEmail])
+  }, [captainbeesEmail]);
 
   const getCommissionHistory = async () => {
     if (id) {
       let idResults = await getCaptainBeeStatics(String(id));
-      let userEmail = (idResults?.data?.userFullData?.email);
+      let userEmail = idResults?.data?.userFullData?.email;
       let commissionHistory = await commissionList(userEmail);
       const results = commissionHistory?.data?.getAllCommissionRecordsData;
       const reversedResults = [...results].reverse(); // Create a copy and reverse the order
       // Set default values if the fetch returns undefined
-      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setCommissionPaidData(
+        commissionHistory?.data?.commissionPaidAndDueData || []
+      );
       setSortedData(reversedResults || []);
     } else if (leaderEmail === undefined || leaderEmail === null) {
       let access_token = String(localStorage.getItem('access_token'));
@@ -257,16 +297,20 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
       let commissionHistory = await commissionList(decoded.email);
       const results = commissionHistory?.data?.getAllCommissionRecordsData;
       const reversedResults = [...results].reverse(); // Create a copy and reverse the order
-      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setCommissionPaidData(
+        commissionHistory?.data?.commissionPaidAndDueData || []
+      );
       setSortedData(reversedResults || []);
     } else {
       let commissionHistory = await commissionList(leaderEmail);
       const results = commissionHistory?.data?.getAllCommissionRecordsData;
       const reversedResults = [...results].reverse(); // Create a copy and reverse the order
-      setCommissionPaidData(commissionHistory?.data?.commissionPaidAndDueData || []);
+      setCommissionPaidData(
+        commissionHistory?.data?.commissionPaidAndDueData || []
+      );
       setSortedData(reversedResults || []);
     }
-  }
+  };
 
   // const getData = (current: number, pageSize: number) => {
   //   // Normally you should get the data from the server
@@ -281,7 +325,8 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
     // Normally you should get the data from the server
     const filteredData = filterDataByDate(sortedData);
     const paginatedData =
-      filteredData && filteredData.slice((current - 1) * pageSize, current * pageSize);
+      filteredData &&
+      filteredData.slice((current - 1) * pageSize, current * pageSize);
 
     return paginatedData;
   };
@@ -302,11 +347,11 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
   //   );
   // };
 
-  const MyPagination: React.FC<{ total: number; onChange: (page: number) => void; current: number }> = ({
-    total,
-    onChange,
-    current,
-  }) => {
+  const MyPagination: React.FC<{
+    total: number;
+    onChange: (page: number) => void;
+    current: number;
+  }> = ({ total, onChange, current }) => {
     const totalPageCount = Math.ceil(total / pageSize);
 
     return (
@@ -325,7 +370,6 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
 
   const navigate = useNavigate();
 
-
   const disabledDate = (current: Moment) => {
     return current && current > moment().endOf('day');
   };
@@ -336,14 +380,15 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
 
   return (
     <div>
-      <div
-        className="font_17x fw-bold pt-3 d-flex justify-content-center" style={{ color: "#393939" }}>
+      <div className="font_17x fw-bold pt-3 d-flex mt-4 mb-4">
         Affiliate Report / Commission Report
       </div>
-      <div className='d-flex mt-2' style={{ gap: 10 }}>
-        <div className='d-flex flex-direction-column w-50' style={{ color: "#333336" }}>
-          Date Range
-          <RangePicker disabledDate={disabledDate} style={{ height: "40px" }}
+      <div className="d-flex mt-2" style={{ gap: 10 }}>
+        <div className="d-flex flex-direction-column w-50 ">
+          <span className="mb-3">Date Range</span>
+          <RangePicker
+            disabledDate={disabledDate}
+            style={{ height: '40px' }}
             onChange={handleDateChange}
             // className="createDateRangePicker"
             // dropdownClassName= "createDateRangePicker"
@@ -351,27 +396,36 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
             dropdownClassName="createDateRangePicker dark-mode"
           />
         </div>
-        <div className='d-flex w-50 align-items-end'>
-          <Button className='margin-r-1x com-btn ' onClick={() => navigate("/indexx-exchange/buy-sell/withdraw-crypto")}>
+        <div className="d-flex w-50 align-items-end">
+          <Button
+            className="margin-r-1x com-btn "
+            style={{ borderRadius: '10px' }}
+            onClick={() =>
+              navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+            }
+          >
             Withdraw INEX
           </Button>
-          <Button className='com-btn' onClick={() => navigate("/withdraw-add-information")}>
+          <Button
+            className="com-btn"
+            style={{ borderRadius: '10px' }}
+            onClick={() => navigate('/withdraw-add-information')}
+          >
             Withdraw USD
           </Button>
-
         </div>
       </div>
       <div className="margin-b-2x pt-3">
         <Table<CommissionDataType>
           className="custom_table"
-          style={{ maxWidth: "94vw" }}
+          style={{ maxWidth: '94vw' }}
           columns={topcolumns}
           dataSource={commissionPaidData}
           scroll={{ x: true }}
         />
         <Table
           className="custom_table"
-          style={{ maxWidth: "94vw" }}
+          style={{ maxWidth: '94vw' }}
           columns={columns}
           dataSource={getData(current, pageSize)}
           onChange={onChange}
@@ -382,7 +436,11 @@ const CommissionTable: React.FC<CommissionTableProps> = ({ leaderEmail }) => {
           current={current}
           onChange={setCurrent}
         /> */}
-        <MyPagination total={filterDataByDate(sortedData).length} onChange={handlePaginationChange} current={current} />
+        <MyPagination
+          total={filterDataByDate(sortedData).length}
+          onChange={handlePaginationChange}
+          current={current}
+        />
       </div>
     </div>
   );

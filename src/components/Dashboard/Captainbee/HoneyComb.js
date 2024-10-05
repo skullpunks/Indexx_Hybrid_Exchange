@@ -63,6 +63,7 @@ import loadingGif from '../../../assets/beeloade.gif';
 import { StyledMenu } from './StyledMenu/StyledMenu';
 import EditPost from '../../BuySell/Notification/EditPost';
 import DeletePost from '../../BuySell/Notification/DeletePost';
+import HiveDashboardIconicHeader from './SubHeader/HiveDashboardIconicHeader';
 
 const HoneyComb = () => {
   const [text, settext] = useState();
@@ -219,10 +220,19 @@ const HoneyComb = () => {
   const handleCloseSortMenu = () => {
     setSortAnchorEl(null);
   };
+  const [selectedTab, setSelectedTab] = useState('Honeycomb');
 
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
+
       {isLoading && (
         <div
           style={{

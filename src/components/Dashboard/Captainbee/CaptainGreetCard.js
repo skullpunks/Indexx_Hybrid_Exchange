@@ -77,6 +77,7 @@ import { GreetData } from '../GreetData';
 import GreetLandscape from '../../BuySell/Notification/GreetLandscape';
 import GreetPortrait from '../../BuySell/Notification/GreetPortrait';
 import ReadOnlyCalendar from './EventCalendar/ReadOnlyCalendar';
+import HiveDashboardIconicHeader from './SubHeader/HiveDashboardIconicHeader';
 let appSettingArr = [];
 let priceData = {};
 
@@ -461,10 +462,18 @@ const CaptainGreetCard = () => {
       }
     }
   };
+  const [selectedTab, setSelectedTab] = useState('Greeting Cards');
 
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
       {isLoading && (
         <div
           style={{

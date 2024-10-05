@@ -39,7 +39,7 @@ const SubHeader = () => {
           style={{
             display: 'flex',
             background: '#FFB300',
-            flexWrap: 'wrap',
+            overflowX: 'auto',
             gap: '5px',
             justifyContent: 'flex-start',
             paddingTop: `${isMobile ? '25px' : '0'}`,

@@ -1,21 +1,23 @@
-import React from 'react'
+import React from 'react';
 // import Footer from '../Footer/Footer';
 // import { useSearchParams } from "react-router-dom";
 // import fortuneLadyCoin from "../../assets/arts/fortuneLadyCoin.png";
 // import careersIcon from "../../assets/arts/careersIcon.png";
-import honeycomb from "../../assets/hive-dashboard/honeycomb.svg";
+import honeycomb from '../../assets/hive-dashboard/honeycomb.svg';
 import SubHeader from '../Dashboard/Captainbee/SubHeader/SubHeader';
+import HiveDashboardIconicHeader from '../Dashboard/Captainbee/SubHeader/HiveDashboardIconicHeader';
 
 const HoneyCombComingSoon = () => {
-    // const [searchParams, setSearchParams] = useSearchParams();
-    // let pageName = searchParams.get("page");
-    // 
-    return (
-        <>
-            <SubHeader/>
-            <div className='hive-container'>
-                <img src={honeycomb} alt='comingsoon'/>
-                {/* {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // let pageName = searchParams.get("page");
+  //
+  return (
+    <>
+      <HiveDashboardIconicHeader selectedTab={undefined} onChange={undefined} />
+      {/* <SubHeader/> */}
+      <div className="hive-container">
+        <img src={honeycomb} alt="comingsoon" />
+        {/* {pageName === "Careers" ? <img src={careersIcon} className="pt-5" alt="Coming soon art" width="400" />
                     :
                     <img src={fortuneLadyCoin} className="pt-5" alt="Coming soon art" width="400" />
                 }
@@ -28,11 +30,11 @@ const HoneyCombComingSoon = () => {
                     :
                     <></>
                 } */}
-            </div>
+      </div>
 
-            {/* <Footer /> */}
-        </>
-    )
-}
+      {/* <Footer /> */}
+    </>
+  );
+};
 
-export default HoneyCombComingSoon
+export default HoneyCombComingSoon;

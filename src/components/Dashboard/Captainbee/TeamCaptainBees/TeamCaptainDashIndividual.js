@@ -59,6 +59,7 @@ import { useParams } from 'react-router-dom';
 import { RankData } from '../../RankData';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
+import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
 
 const TeamCaptainDashIndividual = () => {
   const { id } = useParams();
@@ -163,7 +164,9 @@ const TeamCaptainDashIndividual = () => {
 
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader />
+
       {isLoading ? (
         <div
           style={{

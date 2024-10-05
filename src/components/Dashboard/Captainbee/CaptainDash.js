@@ -50,7 +50,14 @@ import { RankData } from '../RankData';
 
 import SubHeader from './SubHeader/SubHeader';
 import './CaptainDash.css';
-import { Box, MenuItem, Select, Typography, Rating } from '@mui/material';
+import {
+  Box,
+  MenuItem,
+  Select,
+  Typography,
+  Rating,
+  ButtonBase,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import {
@@ -68,50 +75,39 @@ import {
   createMonthlyINEXOrderNonPaypal,
 } from '../../../services/api';
 import BeeDash2 from '../Honeybee/MyBees/BeeDash2';
-import { useTheme } from '@emotion/react';
+
 import { useMediaQuery } from '@mui/material';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CommissionTable from './CommissionTable';
 import { Button } from 'antd';
 import SubscriptionPaymentOptions from '../../BuySell/Notification/SubscriptionPaymentOptions';
+import { useTheme } from '@mui/material/styles';
+import GenericButton from '../../updated/shared/Button';
+import { makeStyles } from '@mui/styles';
+import HiveDashboardIconicHeader from './SubHeader/HiveDashboardIconicHeader';
+
 let appSettingArr = [];
 let priceData = {};
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    fontSize: '13px !important',
+    lineHeight: '10px !important',
+    padding: '0px 12px !important',
+    height: '28px !important',
+    background: `${theme.palette.divider} !important`,
+    color: `${theme.palette.text.primary} !important`,
+  },
+}));
+
 const CaptainDash = () => {
+  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
-  // const [platform, setPlatform] = useState('Exchange');
-  // const [Order, setOrder] = useState('buysell');
-  // const [selectedDate, setSelectedDate] = useState('aug-sept');
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [rankPhoto, setRankPhoto] = useState();
-  // const [platformCapt, setPlatformCapt] = useState('Exchange');
-  // const [OrderCapt, setOrderCapt] = useState('buysell');
-  // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
-  const [userType, setUserType] = useState('');
-  // const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  // const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  // const xLabels = [
-  //   'Page A',
-  //   'Page B',
-  //   'Page C',
-  //   'Page D',
-  //   'Page E',
-  //   'Page F',
-  //   'Page G',
-  // ];
 
-  // const uDataCapt = [4500, 2000, 2500, 2780, 5890, 2390, 3490];
-  // const pDataCapt = [2400, 1398, 5800, 3908, 4100, 3800, 4300];
-  // const xLabelsCapt = [
-  //   'Page A',
-  //   'Page B',
-  //   'Page C',
-  //   'Page D',
-  //   'Page E',
-  //   'Page F',
-  //   'Page G',
-  // ];
+  const [userType, setUserType] = useState('');
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
@@ -373,17 +369,6 @@ const CaptainDash = () => {
     }
   };
 
-  /*
-   basecoin: string,
-  quotecoin: string,
-  amount: number,
-  outAmount: number,
-  paymentMethodUsed: string,
-  price?: number,
-  email?: string,
-  isHoneyBeeOrder: boolean = false
-  */
-
   const createSubscriptionOrderForZelleAndWire = async (paymentMethod) => {
     setLoadings(true);
     //await getPricesData();
@@ -416,10 +401,18 @@ const CaptainDash = () => {
       return null;
     }
   };
+  const [selectedTab, setSelectedTab] = useState('Hive Dashboard');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <>
-      <SubHeader />
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
       {isLoading && (
         <div
           style={{
@@ -428,7 +421,7 @@ const CaptainDash = () => {
             left: 0,
             width: '100%',
             height: '100%',
-            // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+
             backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
@@ -440,7 +433,11 @@ const CaptainDash = () => {
         >
           <img src={loadingGif} alt="Loading" />
           <p
-            style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
+            style={{
+              marginTop: '10px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+            }}
           >
             Please wait while Hive Dashboard is loading
             <span className="dots-animation"></span>
@@ -449,477 +446,329 @@ const CaptainDash = () => {
       )}
 
       {!isLoading && userType === 'CaptainBee' ? (
-        <div style={{ paddingTop: `${isMobile ? '390px' : '220px'}` }}>
+        <div
+          className="hive-container"
+          style={{
+            padding: '20px',
+            maxWidth: '1440px',
+            width: '100%',
+            margin: 'auto',
+            marginTop: '50px',
+          }}
+        >
           <div
-            className="font_20x fw-bold justify-content-center d-flex"
-            style={{ marginLeft: `${isMobile ? '0' : '-535px'}` }}
+            className="d-flex  gap-5"
+            style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
           >
-            <img
-              src={theme === 'dark' ? waggle_dark : waggle}
-              alt=""
-              width={'46px'}
-            />
-            &nbsp;&nbsp;&nbsp; Hive Dashboard
-          </div>
-          <div className="hive-container">
             <div
-              className="d-flex justify-content-center"
-              // style={{ width: '74%', maxWidth: '1140px' }}
-              style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
+              className="d-flex flex-direction-column"
+              style={{ flex: '0 0 25%' }}
             >
-              <div
-                className="d-flex flex-direction-column mt-1"
-                style={{ width: `${isMobile ? '100%' : '258px'}` }}
-              >
-                <div className="d-flex  flex-direction-column align-items-center">
-                  <div
-                    style={{
-                      width: '193px',
-                      height: '193px',
-                      backgroundImage: `url(${frame})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center',
-                      position: 'relative',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      // border:"none"
-                    }}
-                  >
-                    <div className="hexagon">
-                      <img
-                        alt=""
-                        src={
-                          staticsData?.affiliateUserProfile?.photoIdFileurl !==
-                            undefined
-                            ? staticsData?.affiliateUserProfile?.photoIdFileurl
-                            : dummy
-                        }
-                        width={'63px'}
-                        height={'66px'}
-                        ml={'-6px'}
-                        border={'none'}
-                      />
-                    </div>
-
+              <div className="d-flex  flex-direction-column align-items-center">
+                <div
+                  style={{
+                    width: '193px',
+                    height: '193px',
+                    backgroundImage: `url(${frame})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    // border:"none"
+                  }}
+                >
+                  <div className="hexagon">
                     <img
                       alt=""
-                      src={rankPhoto}
-                      style={{
-                        position: 'absolute',
-                        bottom: '-25px',
-                        right: '17px',
-                        width: '79px',
-                        height: '81px',
-                      }}
+                      src={
+                        staticsData?.affiliateUserProfile?.photoIdFileurl !==
+                        undefined
+                          ? staticsData?.affiliateUserProfile?.photoIdFileurl
+                          : dummy
+                      }
+                      width={'63px'}
+                      height={'66px'}
+                      ml={'-6px'}
+                      border={'none'}
                     />
                   </div>
+
+                  <img
+                    alt=""
+                    src={rankPhoto}
+                    style={{
+                      position: 'absolute',
+                      bottom: '-25px',
+                      right: '17px',
+                      width: '79px',
+                      height: '81px',
+                    }}
+                  />
                 </div>
-                <div
-                  className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
-                  style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
-                >
-                  Captain Bee {staticsData?.affiliateUserProfile?.accname}
+              </div>
+              <div
+                className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
+                style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
+              >
+                Captain Bee {staticsData?.affiliateUserProfile?.accname}
+              </div>
+              {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
+                <div className="justify-content-center d-flex">
+                  <img
+                    src={powerPackPhoto}
+                    alt="pack"
+                    width={isMobile ? '45%' : '80%'}
+                  />
                 </div>
-                {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
-                  <div className="justify-content-center d-flex">
-                    <img
-                      src={powerPackPhoto}
-                      alt="pack"
-                      width={isMobile ? '45%' : '80%'}
-                    />
+              ) : (
+                <div className="justify-content-center d-flex flex-direction-column">
+                  Please purchase the powerpack from the below URL: <br />
+                  <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
+                    Power Pack Purchase
+                  </a>
+                </div>
+              )}
+              <div className="align-items-start">
+                {!checkSubscription ? (
+                  // Display Subscribe Button
+                  <div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_15x">
+                      Subscribe to your $300 monthly INEX investment today
+                    </div>
+                    <div
+                      className="d-flex gap-3"
+                      style={{ width: '100%', marginTop: '10px' }}
+                    >
+                      <div style={{ display: 'flex' }}>
+                        <GenericButton
+                          className={classes.button}
+                          IconComponent={
+                            <img
+                              src={info}
+                              style={{
+                                filter: 'invert(1)',
+                                marginLeft: '6px',
+                                marginTop: '-3px',
+                              }}
+                              alt="info"
+                            />
+                          }
+                        />
+                      </div>
+                      <GenericButton
+                        loading={loadings}
+                        // onClick={handleCreateSubscription}
+                        className={classes.button}
+                        text={!loadingsubs ? 'Subscribe' : 'Loading...'}
+                        onClick={() => {
+                          setIsModalOpen2(true);
+                          //createNewBuyOrder(card);
+                        }}
+                      />
+                    </div>
                   </div>
                 ) : (
-                  <div
-                    className="justify-content-center d-flex flex-direction-column"
-                    style={{ marginLeft: `${isMobile ? '40px' : 0}` }}
-                  >
-                    Please purchase the powerpack from the below URL: <br />
-                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                      Power Pack Purchase
-                    </a>
+                  <div className="d-flex flex-direction-column align-items-start mt-5">
+                    <div className="font_20x">
+                      $300 INEX Subscription Details
+                      <BootstrapTooltip
+                        title="Captain Bee Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                        sx={{ width: '20%' }}
+                      >
+                        <InfoOutlinedIcon
+                          sx={{
+                            fontSize: '18px',
+                            color: 'var(--body_color)',
+                            mb: 0.5,
+                            ml: 0.8,
+                          }}
+                        />
+                      </BootstrapTooltip>
+                    </div>
+
+                    <div className="font_13x mt-3">
+                      Subscription ID:{' '}
+                      {subscription?.paypalSubscriptionDetails?.id ||
+                        subscription?.orderId}
+                    </div>
+                    <div className="font_13x">
+                      Status:{' '}
+                      {subscription?.paypalSubscriptionDetails?.status ||
+                        subscription?.paymentStatus}
+                    </div>
+                    <div className="font_13x">
+                      Next Billing Date:{' '}
+                      {formatReadableDate(
+                        subscription?.paypalSubscriptionDetails?.billing_info
+                          ?.next_billing_time || subscription?.nextPaymentDate
+                      )}
+                    </div>
                   </div>
                 )}
-                <div
-                  className="align-items-start"
-                  style={{ marginLeft: `${isMobile ? '40px' : '0px'}` }}
-                >
-                  {!checkSubscription ? (
-                    // Display Subscribe Button
-                    <div className="d-flex flex-direction-column align-items-start mt-5">
-                      <div className="font_15x">
-                        Subscribe to your $300 monthly INEX investment today
-                      </div>
-                      <div
-                        className="d-flex align-items-start gap-2"
-                        style={{ width: '100%' }}
-                      >
-                        <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
-                          sx={{ width: '20%' }}
-                        >
-                          <Button
-                            className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                            style={{
-                              width: 'auto',
-                              height: 'auto',
-                              color: '#393939',
-                              display: 'flex',
-                              alignItems: 'center',
-                              paddingBlock: '9.5px',
-                            }}
-                          >
-                            <img src={info} alt="info" />
-                          </Button>
-                        </BootstrapTooltip>
-                        <Button
-                          loading={loadings}
-                          type="primary"
-                          className="atn-btn atn-btn-round atn-btn-hover hive-btn mt-3"
-                          // onClick={handleCreateSubscription}
-                          onClick={() => {
-                            setIsModalOpen2(true);
-                            //createNewBuyOrder(card);
-                          }}
-                          style={{
-                            width: `${isMobile ? '70%' : '80%'}`,
-                            height: 'auto',
-                            color: '#393939',
-                          }}
-                        >
-                          {!loadingsubs ? 'Subscribe' : 'Loading...'}
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="d-flex flex-direction-column align-items-start mt-5">
-                      <div className="font_20x">
-                        $300 INEX Subscription Details
-                        <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
-                          sx={{ width: '20%' }}
-                        >
-                          <InfoOutlinedIcon
-                            sx={{
-                              fontSize: '18px',
-                              color: 'var(--body_color)',
-                              mb: 0.5,
-                              ml: 0.8,
-                            }}
-                          />
-                        </BootstrapTooltip>
-                      </div>
-                      {/* <div className="font_13x mt-3">
-                        Subscription ID: {subscription?.paypalSubscriptionDetails?.id}
-                      </div>
-                      <div className="font_13x">
-                        Status: {subscription?.paypalSubscriptionDetails?.status}
-                      </div>
-                      <div className="font_13x">
-                        Next Billing Date: {formatReadableDate(subscription?.paypalSubscriptionDetails?.billing_info.next_billing_time)}
-                      </div> */}
+              </div>
 
-                      <div className="font_13x mt-3">
-                        Subscription ID:{' '}
-                        {subscription?.paypalSubscriptionDetails?.id ||
-                          subscription?.orderId}
-                      </div>
-                      <div className="font_13x">
-                        Status:{' '}
-                        {subscription?.paypalSubscriptionDetails?.status ||
-                          subscription?.paymentStatus}
-                      </div>
-                      <div className="font_13x">
-                        Next Billing Date:{' '}
-                        {formatReadableDate(
-                          subscription?.paypalSubscriptionDetails?.billing_info
-                            ?.next_billing_time || subscription?.nextPaymentDate
-                        )}
-                      </div>
-                      {/* <div>
-                      <Button
-                        type="danger"
-                        className="atn-btn atn-btn-round atn-btn-hover mt-3"
-                        onClick={handleCancelSubscription}
-
-                      >
-                        Cancel Subscription
-                      </Button>
-                    </div> */}
-                    </div>
-                  )}
-                </div>
-
-                <div
-                  className="align-items-start lh_32x"
-                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
-                >
-                  {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
-                  <div className="fw-bold">Bio :</div>
-                  {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
-                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
-                  in indexx hive`}
-                </div> */}
-                  <div className="font_13x d-flex align-items-center mt-4">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={man_dark} className="me-1" />
-                    ) : (
-                      <img alt="man" src={man} className="me-1" />
-                    )}
-                    @{staticsData?.affiliateUserProfile?.Username}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={pin_dark} className="me-2" />
-                    ) : (
-                      <img alt="man" src={pin} className="me-2" />
-                    )}
-                    {staticsData?.affiliateUserProfile?.country}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={house_dark} className="me-1" />
-                    ) : (
-                      <img alt="man" src={house} className="me-1" />
-                    )}
-                    {staticsData?.affiliateUserProfile?.city}
-                  </div>
-                  <div className="font_13x d-flex align-items-center">
-                    {theme === 'dark' ? (
-                      <img alt="man" src={clock_dark} className="me-1" />
-                    ) : (
-                      <img alt="man" src={clock} className="me-1" />
-                    )}
-                    {staticsData?.formatedAccountCreationDate}
-                  </div>
-                  {staticsData?.affiliateUserProfile?.isPhonePublic && (
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={phone_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={phone} className="me-2" />
-                      )}
-                      {String(
-                        `(${staticsData?.affiliateUserProfile?.Phone.slice(
-                          0,
-                          3
-                        )}) ${staticsData?.affiliateUserProfile?.Phone.slice(
-                          3,
-                          6
-                        )}-${staticsData?.affiliateUserProfile?.Phone.slice(6)}`
-                      )}
-                    </div>
-                  )}
-                  {staticsData?.affiliateUserProfile?.isEmailPublic && (
-                    <div className="font_13x d-flex align-items-center">
-                      {theme === 'dark' ? (
-                        <img alt="man" src={email_dark} className="me-2" />
-                      ) : (
-                        <img alt="man" src={email} className="me-2" />
-                      )}
-                      {staticsData?.affiliateUserProfile?.Email}
-                    </div>
-                  )}
-                </div>
-
-                <div
-                  className="align-items-start lh_32x mt-4"
-                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
-                >
-                  <a
-                    href={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.discord
-                        ? staticsData?.affiliateUserProfile?.socialMediaLink
+              <div
+                className="align-items-start lh_32x mt-4"
+                style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+              >
+                <a
+                  href={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.discord
+                      ? staticsData?.affiliateUserProfile?.socialMediaLink
                           ?.discord
-                        : '#'
-                    }
-                    target={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.discord
-                        ? '_blank'
-                        : '_self'
-                    }
-                    rel="noopener noreferrer"
-                  >
-                    {theme === 'dark' ? (
-                      <img alt="man" src={discord_dark} className="me-3" />
-                    ) : (
-                      <img alt="Discord" src={discord} className="me-3" />
-                    )}
-                  </a>
-                  <a
-                    href={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.instagram
-                        ? staticsData?.affiliateUserProfile?.socialMediaLink
-                          ?.instagram
-                        : '#'
-                    }
-                    target={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.instagram
-                        ? '_blank'
-                        : '_self'
-                    }
-                    rel="noopener noreferrer"
-                  >
-                    {theme === 'dark' ? (
-                      <img alt="man" src={insta_dark} className="me-3" />
-                    ) : (
-                      <img alt="Instagram" src={insta} className="me-3" />
-                    )}
-                  </a>
-                  <a
-                    href={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.linkedin
-                        ? staticsData?.affiliateUserProfile?.socialMediaLink
-                          ?.linkedin
-                        : '#'
-                    }
-                    target={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.linkedin
-                        ? '_blank'
-                        : '_self'
-                    }
-                    rel="noopener noreferrer"
-                  >
-                    {theme === 'dark' ? (
-                      <img alt="man" src={linkedin_dark} className="me-3" />
-                    ) : (
-                      <img alt="LinkedIn" src={linkedin} className="me-3" />
-                    )}
-                  </a>
-                  <a
-                    href={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.twitter
-                        ? staticsData?.affiliateUserProfile?.socialMediaLink
-                          ?.twitter
-                        : '#'
-                    }
-                    target={
-                      staticsData?.affiliateUserProfile?.socialMediaLink
-                        ?.twitter
-                        ? '_blank'
-                        : '_self'
-                    }
-                    rel="noopener noreferrer"
-                  >
-                    {theme === 'dark' ? (
-                      <img alt="man" src={twitter_dark} />
-                    ) : (
-                      <img alt="Twitter" src={twitter} />
-                    )}
-                  </a>
-                </div>
-
-                <div
-                  className="d-flex flex-direction-column align-items-start mt-5"
-                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
+                      : '#'
+                  }
+                  target={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.discord
+                      ? '_blank'
+                      : '_self'
+                  }
+                  rel="noopener noreferrer"
                 >
-                  <div>
-                    <span className="fw-bold">Invite Honey Bee :</span>
-                    <br />
-                    {staticsData?.userFullData?.referralCode}
-                    <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() =>
-                        copyClick(
-                          baseCEXURL +
+                  {theme === 'dark' ? (
+                    <img alt="man" src={discord_dark} className="me-3" />
+                  ) : (
+                    <img alt="Discord" src={discord} className="me-3" />
+                  )}
+                </a>
+                <a
+                  href={
+                    staticsData?.affiliateUserProfile?.socialMediaLink
+                      ?.instagram
+                      ? staticsData?.affiliateUserProfile?.socialMediaLink
+                          ?.instagram
+                      : '#'
+                  }
+                  target={
+                    staticsData?.affiliateUserProfile?.socialMediaLink
+                      ?.instagram
+                      ? '_blank'
+                      : '_self'
+                  }
+                  rel="noopener noreferrer"
+                >
+                  {theme === 'dark' ? (
+                    <img alt="man" src={insta_dark} className="me-3" />
+                  ) : (
+                    <img alt="Instagram" src={insta} className="me-3" />
+                  )}
+                </a>
+                <a
+                  href={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin
+                      ? staticsData?.affiliateUserProfile?.socialMediaLink
+                          ?.linkedin
+                      : '#'
+                  }
+                  target={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.linkedin
+                      ? '_blank'
+                      : '_self'
+                  }
+                  rel="noopener noreferrer"
+                >
+                  {theme === 'dark' ? (
+                    <img alt="man" src={linkedin_dark} className="me-3" />
+                  ) : (
+                    <img alt="LinkedIn" src={linkedin} className="me-3" />
+                  )}
+                </a>
+                <a
+                  href={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.twitter
+                      ? staticsData?.affiliateUserProfile?.socialMediaLink
+                          ?.twitter
+                      : '#'
+                  }
+                  target={
+                    staticsData?.affiliateUserProfile?.socialMediaLink?.twitter
+                      ? '_blank'
+                      : '_self'
+                  }
+                  rel="noopener noreferrer"
+                >
+                  {theme === 'dark' ? (
+                    <img alt="man" src={twitter_dark} />
+                  ) : (
+                    <img alt="Twitter" src={twitter} />
+                  )}
+                </a>
+              </div>
+
+              <div className="d-flex flex-direction-column align-items-start mt-5">
+                <div>
+                  <span className="fw-bold">Invite Crypto Bee :</span>
+                  <br />
+                  {staticsData?.userFullData?.referralCode}
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() =>
+                      copyClick(
+                        baseCEXURL +
                           '/indexx-exchange/buy-sell/get-started-honeybee?referral=' +
                           staticsData?.userFullData?.referralCode
-                        )
-                      }
-                      style={{
-                        cursor: 'pointer',
-                        marginBottom: '4px',
-                        marginLeft: '5px',
-                      }}
-                    />
-                  </div>
-                  <br />
-                  <div>
-                    <span className="fw-bold">Invite Captain Bee :</span>
-                    <br />
-                    {staticsData?.userFullData?.referralCode}
-                    <ContentCopyIcon
-                      fontSize="13px"
-                      onClick={() =>
-                        copyClick(
-                          baseHiveURL +
-                          '/sign-up?referral=' +
-                          staticsData?.userFullData?.referralCode
-                        )
-                      }
-                      style={{
-                        cursor: 'pointer',
-                        marginBottom: '4px',
-                        marginLeft: '5px',
-                      }}
-                    />
-                  </div>
+                      )
+                    }
+                    style={{
+                      cursor: 'pointer',
+                      marginBottom: '4px',
+                    }}
+                  />
                 </div>
 
-                <div
-                  className="d-flex  flex-direction-column align-items-start mt-5"
-                  style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
-                >
-                  <div className="font_13x ">Your Rating</div>
-                  <div className="mt-4">
-                    <Rating name="read-only" value={4} readOnly size="large" />
-                  </div>
-                  <div className="font_40x mt-3">95%</div>
+                <div>
+                  <span className="fw-bold">Invite Captain Bee :</span>
+                  <br />
+                  {staticsData?.userFullData?.referralCode}
+                  <ContentCopyIcon
+                    fontSize="13px"
+                    onClick={() =>
+                      copyClick(
+                        baseHiveURL +
+                          '/sign-up?referral=' +
+                          staticsData?.userFullData?.referralCode
+                      )
+                    }
+                    style={{
+                      cursor: 'pointer',
+                      marginBottom: '4px',
+                    }}
+                  />
                 </div>
-                {/* 
-                {timeRemaining?.days &&
-                <div className="d-flex flex-direction-column align-items-start mt-5" style={{ marginLeft: `${isMobile ? "65px" : "0px"}` }}>
-                  <div className="font_13x ">
-                    Next Monthly INEX Order Deadline
-                  </div>
-                  <div className="font_20x mt-3">
-                    {staticsData?.nextPurchaseDate}
-                  </div>
+              </div>
+
+              <div className="d-flex  flex-direction-column align-items-start mt-5">
+                <div className="font_13x ">Your Rating</div>
+                <div className="mt-4">
+                  <Rating name="read-only" value={4} readOnly size="large" />
                 </div>
-                } */}
-                {/* <div className="font_20x mt-3">
-                    {timeRemaining?.days > 0 ? "Time Remaining:" : ""}
-                    <br />
-                    {timeRemaining?.days > 0 && `${timeRemaining.days} days `}
-                    {timeRemaining?.days > 0 ? `${timeRemaining?.hours} h` `${timeRemaining.minutes} m` `${timeRemaining.seconds} s` : ""}
-                  </div> */}
-                {/* {timeRemaining?.days < 15 && (
-                    <div>
-                      <Button
-                        type="primary"
-                        className="atn-btn atn-btn-round atn-btn-hover"
-                        block
-                        onClick={() => createNewBuyOrder()}
-                        loading={loadings}
-                      >
-                        Buy 300 INEX now
-                      </Button>
-                    </div>
-                  )} */}
-                {/* </div> */}
+                <div className="font_40x mt-3">95%</div>
+              </div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div className="font_20x fw-bold d-flex gap-3 mb-3">
+                <img
+                  src={theme === 'dark' ? waggle_dark : waggle}
+                  alt=""
+                  width={'46px'}
+                />
+                Hive Dashboard
               </div>
               <div
                 className="side-container"
-                style={{ marginTop: `${isMobile ? '65px' : '0px'}` }}
+                style={{ background: theme === 'dark' ? '#2B3139' : '#efefef' }}
               >
                 <Box
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
-                    mt: 2,
                   }}
                 >
                   <Box
@@ -927,7 +776,6 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       display: 'flex',
                       flexDirection: `${isMobile ? 'column' : 'row'}`,
                       gap: isMobile ? 4 : 2,
-                      mt: 2,
                     }}
                   >
                     <Box
@@ -935,7 +783,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: `${isMobile ? '100%' : '50%'}`,
+                        flex: 1,
                       }}
                     >
                       <Typography
@@ -944,189 +792,40 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         fontSize={'15px'}
                         fontWeight={700}
                         textAlign={'left'}
-                        mx={'auto'}
                         mb={2}
-                        sx={{
-                          color: '#393939',
-                        }}
                       >
-                        My Honey Bee Statistics
+                        My Crypto Bee Statistics
                       </Typography>
-                      {/* <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '31%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Platforms
-                          </Typography>
-                          <Select
-                            value={platform}
-                            onChange={(e) => {
-                              setPlatform(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="Exchange" value="Exchange">
-                              Indexx Exchange
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '29%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Type of Order
-                          </Typography>
-                          <Select
-                            value={Order}
-                            onChange={(e) => {
-                              setOrder(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="buysell" value="buysell">
-                              Buy & Sell
-                            </MenuItem>
-                            <MenuItem key="Convert" value="Convert">
-                              Convert
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '40%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Date Range
-                          </Typography>
 
-                          <Select
-                            value={selectedDate}
-                            onChange={(e) => {
-                              setSelectedDate(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="aug-sept" value="aug-sept">
-                              August-September
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
                           gap: 2,
+
+                          flex: 1,
                         }}
                       >
                         <Box
                           sx={{
-                            width: '50%',
+                            width: '100%',
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: isMobile ? 1 : 2,
-                            py: 1,
+                            p: 3,
                             aspectRatio: 1,
+                            borderRadius: '10px',
                           }}
                         >
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
                           >
-                            Total Honey Bees
+                            Total Crypto Bees
                           </Typography>
                           <Typography
                             variant="text"
@@ -1155,23 +854,23 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Box>
                         <Box
                           sx={{
-                            width: '50%',
+                            width: '100%',
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: isMobile ? 1 : 2,
-                            py: 1,
+                            p: 3,
                             aspectRatio: 1,
+                            borderRadius: '10px',
                           }}
                         >
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             Total Commision Earned in USD
                           </Typography>
@@ -1179,27 +878,28 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
-                            textAlign={'left'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             $
                             {staticsData?.affiliateHoneyBeeUserTotalEarnings
                               ?.amountInUSD
                               ? parseFloat(
-                                staticsData
-                                  ?.affiliateHoneyBeeUserTotalEarnings
-                                  ?.amountInUSD
-                              ).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
+                                  staticsData
+                                    ?.affiliateHoneyBeeUserTotalEarnings
+                                    ?.amountInUSD
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                               : '0.00'}
                           </Typography>
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             Total Commision Earned in INEX
                           </Typography>
@@ -1207,18 +907,19 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
-                            textAlign={'left'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             {staticsData?.affiliateHoneyBeeUserTotalEarnings
                               ?.amountInINEX
                               ? parseFloat(
-                                staticsData
-                                  ?.affiliateHoneyBeeUserTotalEarnings
-                                  ?.amountInINEX
-                              ).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
+                                  staticsData
+                                    ?.affiliateHoneyBeeUserTotalEarnings
+                                    ?.amountInINEX
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                               : '0.00'}
                             <span className="font_17x">INEX</span>
                           </Typography>
@@ -1226,7 +927,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={'22px'}
                             fontWeight={400}
-                            textAlign={'left'}
+                            textAlign={'center'}
                             color={'#FFB300'}
                             sx={{
                               display: 'flex',
@@ -1240,22 +941,6 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           </Typography>
                         </Box>
                       </Box>
-                      {/* <Box
-                      sx={{
-                        background: 'var(--body_background)',
-                        width: "100%",
-                      }}
-                    >
-                      <LineChart
-                        width={572}
-                        height={429}
-                        series={[
-                          { data: pData, label: 'pv' },
-                          { data: uData, label: 'uv' },
-                        ]}
-                        xAxis={[{ scaleType: 'point', data: xLabels }]}
-                      />
-                    </Box> */}
                     </Box>
 
                     <Box
@@ -1263,7 +948,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        width: `${isMobile ? '100%' : '50%'}`,
+                        flex: 1,
                       }}
                     >
                       <Typography
@@ -1272,187 +957,37 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         fontSize={'15px'}
                         fontWeight={700}
                         textAlign={'left'}
-                        mx={'auto'}
                         mb={2}
-                        sx={{
-                          color: '#393939',
-                        }}
                       >
                         My Captain Bee Statistics
                       </Typography>
-                      {/* <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '31%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Platforms
-                          </Typography>
-                          <Select
-                            value={platformCapt}
-                            onChange={(e) => {
-                              setPlatformCapt(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="Exchange" value="Exchange">
-                              Indexx Exchange
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '29%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Type of Order
-                          </Typography>
-                          <Select
-                            value={OrderCapt}
-                            onChange={(e) => {
-                              setOrderCapt(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="buysell" value="buysell">
-                              Buy & Sell
-                            </MenuItem>
-                            <MenuItem key="Convert" value="Convert">
-                              Convert
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            width: '40%',
-                            background: 'var(--body_background)',
-                            pl: 1,
-                            pt: 0.4,
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={'12px'}
-                            fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            Date Range
-                          </Typography>
 
-                          <Select
-                            value={selectedDateCapt}
-                            onChange={(e) => {
-                              setSelectedDateCapt(e.target.value);
-                            }}
-                            variant="standard"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{
-                              width: '100%',
-                              borderRadius: 0,
-                              background: 'var(--body_background)',
-                              color: "var(--body_color)",
-                              border: 'none',
-                              outline: 'none',
-                              padding: 0,
-                              fontSize: '12px',
-                            }}
-                            size="small"
-                            disableUnderline
-                          >
-                            <MenuItem key="aug-sept" value="aug-sept">
-                              August-September
-                            </MenuItem>
-                          </Select>
-                        </Box>
-                      </Box> */}
                       <Box
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
                           gap: 2,
+                          flex: 1,
                         }}
                       >
                         <Box
                           sx={{
-                            width: '50%',
+                            width: '100%',
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: isMobile ? 1 : 2,
-                            py: 1,
+                            p: 3,
                             aspectRatio: 1,
+                            borderRadius: '10px',
                           }}
                         >
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
                           >
                             Total Team Captain Bees
                           </Typography>
@@ -1460,7 +995,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={isMobile ? '25px' : '70px'}
                             // fontWeight={600}
-                            textAlign={'left'}
+                            textAlign={'center'}
                           >
                             {staticsData?.captainsCount}
                           </Typography>
@@ -1468,7 +1003,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={'22px'}
                             fontWeight={400}
-                            textAlign={'left'}
+                            textAlign={'center'}
                             color={'#FFB300'}
                             sx={{
                               display: 'flex',
@@ -1483,23 +1018,23 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Box>
                         <Box
                           sx={{
-                            width: '50%',
+                            width: '100%',
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            px: isMobile ? 1 : 2,
-                            py: 1,
+                            p: 3,
                             aspectRatio: 1,
+                            borderRadius: '10px',
                           }}
                         >
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             Total Commision Earned in USD
                           </Typography>
@@ -1507,26 +1042,27 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
-                            textAlign={'left'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             $
                             {staticsData?.affiliateUserTotalEarnings
                               ?.amountInUSD
                               ? parseFloat(
-                                staticsData?.affiliateUserTotalEarnings
-                                  ?.amountInUSD
-                              ).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
+                                  staticsData?.affiliateUserTotalEarnings
+                                    ?.amountInUSD
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                               : '0.00'}
                           </Typography>
                           <Typography
                             variant="text"
                             fontSize={isMobile ? '10px' : '12px'}
                             fontWeight={600}
-                            textAlign={'left'}
-                            alignSelf={'flex-start'}
+                            textAlign={'center'}
+                            mb={2}
                           >
                             Total Commision Earned in INEX
                           </Typography>
@@ -1534,17 +1070,17 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={isMobile ? '25px' : '40px'}
                             // fontWeight={600}
-                            textAlign={'left'}
+                            textAlign={'center'}
                           >
                             {staticsData?.affiliateUserTotalEarnings
                               ?.amountInINEX
                               ? parseFloat(
-                                staticsData?.affiliateUserTotalEarnings
-                                  ?.amountInINEX
-                              ).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
+                                  staticsData?.affiliateUserTotalEarnings
+                                    ?.amountInINEX
+                                ).toLocaleString('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })
                               : '0.00'}{' '}
                             <span className="font_17x">INEX</span>
                           </Typography>
@@ -1552,7 +1088,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             variant="text"
                             fontSize={'22px'}
                             fontWeight={400}
-                            textAlign={'left'}
+                            textAlign={'center'}
                             color={'#FFB300'}
                             sx={{
                               display: 'flex',
@@ -1564,26 +1100,10 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             <img alt="up" src={arrow} />{' '}
                             {staticsData?.ordersCount ? '20%' : '0%'}
                           </Typography>
-                        </Box >
-                      </Box >
-                      {/* <Box
-                      sx={{
-                        background: 'var(--body_background)',
-                        width: "100%",
-                      }}
-                    >
-                      <LineChart
-                        width={572}
-                        height={429}
-                        series={[
-                          { data: pDataCapt, label: 'pv' },
-                          { data: uDataCapt, label: 'uv' },
-                        ]}
-                        xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
-                      />
-                    </Box> */}
-                    </Box >
-                  </Box >
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
 
                   <Box>
                     <CommissionTable />

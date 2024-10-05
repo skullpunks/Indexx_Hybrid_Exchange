@@ -5,38 +5,45 @@ import frame from '../../../../assets/hive-dashboard/beeframe-2.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Grid, Button } from '@mui/material';
 import { getCaptainBeeStatics, baseCEXURL } from '../../../../services/api';
-import HoneyBeeComingSoon from "../../../../components/ComingSoon/HoneyBeeComingSoon";
+import HoneyBeeComingSoon from '../../../../components/ComingSoon/HoneyBeeComingSoon';
 import NodeGraph from '../../graph';
 import FlowDiagram2 from '../../graph';
 import FlowDiagram from '../../reactFlow';
-import man from "../../../../assets/hive-dashboard/empty_man_frame.png";
+import man from '../../../../assets/hive-dashboard/empty_man_frame.png';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
+import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
 
 const MyBees = () => {
   const [staticsData, setStaticsData] = useState();
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
     setUserType(userType);
 
-    if (userType === "CaptainBee") {
+    if (userType === 'CaptainBee') {
       if (username) {
         getCaptainBeeStatics(username).then((data) => {
           setStaticsData(data.data);
         });
       }
     }
-  }, [])
+  }, []);
 
   // Define a function to render a single Honey Bee box.
   const renderHoneyBeeBox = (item) => (
-    <Grid item xs={1} sm={6} md={3} >
+    <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
           <div
@@ -56,10 +63,7 @@ const MyBees = () => {
               // border:"none"
             }}
           >
-            <div
-              className="bee-hexagon"
-              style={{ marginBottom: '7px' }}
-            >
+            <div className="bee-hexagon" style={{ marginBottom: '7px' }}>
               <img
                 alt=""
                 src={item?.profilePic === undefined ? dummy : item?.profilePic}
@@ -74,28 +78,26 @@ const MyBees = () => {
           <Box
             className=" d-flex justify-content-center"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
+              border: '1.5px solid #E1E1E1',
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
               width: '311px',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 backgroundColor: '#FFB300',
                 borderColor: '#FFB300',
               },
             }}
           >
+            <div className="font_15x d-flex align-items-center">Honey Bee</div>
             <div className="font_15x d-flex align-items-center">
-              Honey Bee
-            </div>
-            <div className="font_15x d-flex align-items-center">
-              {item.username} 
+              {item.username}
               {/* ({ item?.firstName + " " + item?.lastName}) */}
             </div>
           </Box>
@@ -119,7 +121,7 @@ const MyBees = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 backgroundColor: '#FFB300',
                 borderColor: '#FFB300',
@@ -147,7 +149,7 @@ const MyBees = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               ml: 0.3,
               '&:hover': {
                 backgroundColor: '#FFB300',
@@ -174,27 +176,29 @@ const MyBees = () => {
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
         <div className="d-flex align-items-center">
-          <img src={man} alt="man" style={{ zIndex: 1, width: "80px", height: "80px" }} />
+          <img
+            src={man}
+            alt="man"
+            style={{ zIndex: 1, width: '80px', height: '80px' }}
+          />
 
           <Box
             className=" d-flex justify-content-center"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "baseline",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: "1.5px solid #E1E1E1",
+              border: '1.5px solid #E1E1E1',
               height: '50px',
               marginLeft: '-35px',
               pl: 4,
               width: '311px',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
             }}
           >
-            <div className="font_15x d-flex align-items-center">
-              Honey Bee
-            </div>
+            <div className="font_15x d-flex align-items-center">Honey Bee</div>
             <div className="font_15x d-flex align-items-center">
               {/* You can add any placeholder text here */}
             </div>
@@ -218,7 +222,7 @@ const MyBees = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               '&:hover': {
                 borderColor: '#E1E1E1', // Grey border color
                 boxShadow: 'none',
@@ -242,7 +246,7 @@ const MyBees = () => {
               textTransform: 'none',
               fontSize: '10px',
               boxShadow: 'none',
-              transition: "0.3s ease-in-out",
+              transition: '0.3s ease-in-out',
               ml: 0.3,
               '&:hover': {
                 borderColor: '#E1E1E1', // Grey border color
@@ -257,28 +261,49 @@ const MyBees = () => {
     </Grid>
   );
 
+  const [selectedTab, setSelectedTab] = useState('My Crypto Bees');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   return (
     <>
-      <SubHeader />
-      {userType === "CaptainBee" ?
-        (<div style={{ paddingTop: `${isMobile ? "250px" : "220px"}` }}>
-          <div className='font_20x  justify-content-center text-align-center d-flex mb-2' >
-            <div style={{ width: `${isMobile ? "95%" : "30%"}`, textAlign: "center" }}>
-              {availableBeesCount === 0 ? <>
-                Please invite the Honey Bees using this {" "}
-                <a href={`${baseCEXURL +
-                  "/indexx-exchange/buy-sell/get-started-honeybee?referral=" +
-                  staticsData?.userFullData?.referralCode
-                  }`}
-                  className='hive_link'>
-                  referral link
-                </a>
-                {" "} to guide them.
-              </>
-                :
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
+
+      {userType === 'CaptainBee' ? (
+        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+          <div className="font_20x  justify-content-center text-align-center d-flex mb-2">
+            <div
+              style={{
+                width: `${isMobile ? '95%' : '30%'}`,
+                textAlign: 'center',
+              }}
+            >
+              {availableBeesCount === 0 ? (
                 <>
-                  These are the Honey Bees that are part of your Colony. Select one to guide them
-                </>}
+                  Please invite the Honey Bees using this{' '}
+                  <a
+                    href={`${
+                      baseCEXURL +
+                      '/indexx-exchange/buy-sell/get-started-honeybee?referral=' +
+                      staticsData?.userFullData?.referralCode
+                    }`}
+                    className="hive_link"
+                  >
+                    referral link
+                  </a>{' '}
+                  to guide them.
+                </>
+              ) : (
+                <>
+                  These are the Honey Bees that are part of your Colony. Select
+                  one to guide them
+                </>
+              )}
             </div>
           </div>
           <div className="hive-container d-flex">
@@ -286,7 +311,7 @@ const MyBees = () => {
               sx={{
                 width: '73%',
                 display: 'flex',
-                flexDirection: `${isMobile ? "column" : "row"}`,
+                flexDirection: `${isMobile ? 'column' : 'row'}`,
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 2,
@@ -296,27 +321,26 @@ const MyBees = () => {
                 container
                 columns={{ xs: 1, sm: 12, md: 9 }}
                 spacing={{ xs: 12, md: 2 }}
-                maxWidth={"1150px"}
+                maxWidth={'1150px'}
                 rowSpacing={12}
               >
                 {staticsData?.honeyBeesRegisteredData?.map(renderHoneyBeeBox)}
                 {/* Render empty gray boxes to fill the remaining slots first */}
-                {Array.from({ length: emptyBoxesCount }, (_, index) => (
+                {Array.from({ length: emptyBoxesCount }, (_, index) =>
                   renderEmptyHoneyBeeBox(index)
-                ))}
+                )}
               </Grid>
-
             </Box>
           </div>
           {/* {---} */}
 
-          <div>
-            {/* <FlowDiagram /> */}
-          </div>
-        </div>) :
-        <><HoneyBeeComingSoon />
+          <div>{/* <FlowDiagram /> */}</div>
+        </div>
+      ) : (
+        <>
+          <HoneyBeeComingSoon />
         </>
-      }
+      )}
     </>
   );
 };

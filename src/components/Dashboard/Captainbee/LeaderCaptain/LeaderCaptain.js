@@ -57,6 +57,7 @@ import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { RankData } from '../../RankData';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
+import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
 
 const LeaderCaptain = () => {
   const [captainBeeData, setRefferedUserData] = useState();
@@ -153,10 +154,20 @@ const LeaderCaptain = () => {
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
+  const [selectedTab, setSelectedTab] = useState('My Captain Bee');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <>
-      <SubHeader />
+      {/* <SubHeader /> */}
+      <HiveDashboardIconicHeader
+        selectedTab={selectedTab}
+        onChange={handleTabChange}
+      />
+
       {isLoading && (
         <div
           style={{
