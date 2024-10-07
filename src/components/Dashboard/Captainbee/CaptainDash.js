@@ -606,7 +606,9 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       Next Billing Date:{' '}
                       {formatReadableDate(
                         subscription?.paypalSubscriptionDetails?.billing_info
-                          ?.next_billing_time || subscription?.nextPaymentDate
+                          ?.next_billing_time ||
+                          subscription?.nextPaymentDate ||
+                          'NA'
                       )}
                     </div>
                   </div>
