@@ -2266,52 +2266,41 @@ export const getIndexxMediumBlogs = async () => {
 };
 
 // Encrypt a string
-export function encrypt(text: string) {
-  let iv = crypto.randomBytes(16);
-  console.log('secretKey', secretKey);
-  console.log('text', text);
-  let secretKey1 = crypto.randomBytes(32).toString('hex');
+// export function encrypt0(text: string) {
+//   let iv = crypto.randomBytes(16);
+//   console.log('secretKey', secretKey);
+//   console.log('text', text);
+//   let secretKey1 = crypto.randomBytes(32).toString('hex');
 
-  const cipher = crypto.createCipheriv('aes-256-cbc', secretKey1, iv);
+//   const cipher = crypto.createCipheriv('aes-256-ccm', secretKey1, iv);
+//   let encrypted = cipher.update(text, 'utf8', 'hex');
+//   encrypted += cipher.final('hex');
+//   return encrypted;
+// }
+
+
+export function encrypt(text: string) {
+  const iv = crypto.randomBytes(16); // Initialization vector
+  const secretKey = crypto.randomBytes(32); // Generate a 256-bit key
+
+  // Convert Buffer to Uint8Array to match the expected BinaryLike type
+  const ivUint8Array = new Uint8Array(iv);
+  const secretKeyUint8Array = new Uint8Array(secretKey);
+
+  // Use 'aes-256-gcm' instead of 'aes-256-ccm'
+  const cipher = crypto.createCipheriv('aes-256-gcm', secretKeyUint8Array, ivUint8Array);
+
   let encrypted = cipher.update(text, 'utf8', 'hex');
   encrypted += cipher.final('hex');
-  return encrypted;
-}
 
-// Decrypt an encrypted string
-export function decrypt(encryptedText: string) {
-  let iv = crypto.randomBytes(16);
-  const decipher = crypto.createDecipheriv('aes-256-cbc', secretKey, iv);
-  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
-}
+  // Include authentication tag to ensure the integrity of the encrypted data
+  const authTag = cipher.getAuthTag().toString('hex');
 
-export function encryptData(data: any) {
-  const iv = crypto.randomBytes(16);
-  const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
-  const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-  let encrypted = cipher.update(data, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return iv.toString('base64') + ':' + encrypted;
-}
-
-export function decryptData(encryptedText: any) {
-  try {
-    const textParts = encryptedText.split(':');
-    const iv = Buffer.from(textParts.shift(), 'base64');
-    const encryptedData = Buffer.from(textParts.join(':'), 'base64');
-    const key = crypto.pbkdf2Sync(secret, salt, rounds, keySize, 'sha512');
-    const decipher = crypto.createDecipheriv(algorithm, key, iv); // Use the parsed IV
-
-    let decrypted = decipher.update(encryptedData);
-    decrypted = Buffer.concat([decipher.final()]);
-
-    return decrypted.toString('utf8');
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
+  return {
+    encryptedData: encrypted,
+    iv: iv.toString('hex'),
+    authTag
+  };
 }
 
 //const Cryptr = require('cryptr');
