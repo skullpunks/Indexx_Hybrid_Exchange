@@ -168,7 +168,7 @@ const BSSellOrderHistoryTable: React.FC = () => {
       for (let i = 0; i < results.length; i++) {
         if (
           results[i].orderType?.includes('Sell') ||
-          results[i].orderType?.includes('Buy')
+          results[i].orderType?.includes('Convert')
         ) {
         } else {
           finalArr.push(results[i]);
