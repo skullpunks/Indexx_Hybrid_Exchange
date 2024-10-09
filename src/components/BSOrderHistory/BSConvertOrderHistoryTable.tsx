@@ -150,7 +150,7 @@ const BSConvertOrderHistoryTable: React.FC = () => {
       title: 'Exchange Fees',
       key: 'exchangeFees',
       dataIndex: 'exchangeFees',
-      // responsive: ["sm"],
+      render: (text) => <span>{text} %</span>,
     },
   ];
   const [assets, setAssets] = useState<string[]>([]);
