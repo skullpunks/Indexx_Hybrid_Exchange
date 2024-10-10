@@ -155,7 +155,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       //setOrder(res.data);
       if (setBSvalue && BSvalue) {
         setBSvalue({ ...BSvalue, orderId: String(res?.data?.orderId) || '' });
-        setBSvalue({ ...BSvalue, orderType: 'Sell' || '' });
+        setBSvalue({ ...BSvalue, orderType: 'Sell' });
         setBSvalue({ ...BSvalue, fromTitle: filteredFromArray[0].title });
         await processSellOrder(res.data);
       }

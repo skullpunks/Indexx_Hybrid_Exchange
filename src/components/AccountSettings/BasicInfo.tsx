@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import AdvanceVerfication from '../../assets/arts/AdvanceVerfication.svg';
 import BasicVerfication from '../../assets/arts/BasicVerfication.svg';
 import HiveVerfication from '../../assets/arts/new_arts/3 dots.svg';
-import { decodeJWT, getUserDetails, resendEmailCode } from '../../services/api';
+import { decodeJWT, getUserDetails, sendOtp } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
 
   const resendEmail = async () => {
     setLoadings(true);
-    let res = await resendEmailCode(email);
+    let res = await sendOtp(email);
     if (res.status === 200) {
       OpenNotification('success', res.data);
       setLoadings(false);
