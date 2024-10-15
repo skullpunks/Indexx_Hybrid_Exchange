@@ -326,27 +326,27 @@ const BuySellTabs = ({
     }
   }, []);
 
-    // Fetch user wallets and USD balance
-    useEffect(() => {
-      const fetchUserWallets = async () => {
-        const token = localStorage.getItem('access_token');
-        const decodedToken = decodeJWT(String(token)); // Decode JWT
-  
-        const userWallets = await getUserWallets(decodedToken?.email);
-        setUsersWallets(userWallets.data);
-  
-        // Find USD coin balance and format it
-        setUsdBalance(
-          formatBalance(
-            userWallets.data.find((x) => x.coinSymbol === 'USD')?.coinBalance || 0
-          )
-        );
-      };
-  
-      fetchUserWallets();
-    }, []);
+  // Fetch user wallets and USD balance
+  useEffect(() => {
+    const fetchUserWallets = async () => {
+      const token = localStorage.getItem('access_token');
+      const decodedToken = decodeJWT(String(token)); // Decode JWT
 
-    // Format the balance based on its value
+      const userWallets = await getUserWallets(decodedToken?.email);
+      setUsersWallets(userWallets.data);
+
+      // Find USD coin balance and format it
+      setUsdBalance(
+        formatBalance(
+          userWallets.data.find((x) => x.coinSymbol === 'USD')?.coinBalance || 0
+        )
+      );
+    };
+
+    fetchUserWallets();
+  }, []);
+
+  // Format the balance based on its value
   const formatBalance = (balance) => {
     if (balance < 0.001) {
       return balance.toLocaleString('en-US', {
@@ -541,10 +541,14 @@ const BuySellTabs = ({
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
-        if(usdBalance > 0 && usdBalance >= spendAmount) {
-        await createNewBuyOrder(paymentMethod);
+        // Ensure usdBalance and spendAmount are numbers by removing commas and converting them
+        const usdBalanceNumber = parseFloat(usdBalance.replace(/,/g, '')); // Removes commas and converts to number
+        const spendAmountNumber = parseFloat(spendAmount.replace(/,/g, '')); // Removes commas (if any) and converts to number
+
+        if (usdBalanceNumber > 0 && usdBalanceNumber >= spendAmountNumber) {
+          await createNewBuyOrder(paymentMethod);
         } else {
-          console.log('Insufficient Balance')
+          console.log('Insufficient Balance');
           setGeneralMessage('Insufficient Balance');
           setIsModalOpen(true);
           return;
