@@ -156,6 +156,8 @@ export default function IconicHeader({ selectedTab, onChange }) {
           setLoading(false);
         })
         .catch((err) => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, []);
 
