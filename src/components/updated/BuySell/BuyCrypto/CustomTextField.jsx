@@ -18,7 +18,8 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import smbannerlight from '../../../../assets/updated/buySell/Early fall light.svg';
 import smbannerDark from '../../../../assets/updated/buySell/Early fall Dark.svg';
 
-import smbannerDaCrazy from '../../../../assets/updated/buySell/Small Banner Da Crazy.svg';
+import smbannerDaCrazyLightMode from '../../../../assets/updated/buySell/smBannerDaCrazyLightMode.png';
+import smbannerDaCrazyDarkMode from '../../../../assets/updated/buySell/smBannerDaCrazyDarkMode.png';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -469,7 +470,11 @@ const CustomTextField = ({
         )}
         {selectedToken.title === 'DaCrazy' && type === 'buy' && (
           <img
-            src={smbannerDaCrazy}
+            src={
+              theme.palette.mode === 'dark'
+                ? smbannerDaCrazyDarkMode
+                : smbannerDaCrazyLightMode
+            }
             style={{
               marginBottom: loggedIn ? '-20px' : '-40px',
               width: '100%',

@@ -143,15 +143,19 @@ export default function IconicHeader({ selectedTab, onChange }) {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userType, setUserType] = React.useState('Indexx Exchange');
+  const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
     const email = localStorage.getItem('email');
     setIsLoggedIn(!!email);
     if (email) {
-      checkByemail(String(email)).then((res) => {
-        if (res && res.userType) {
-          setUserType(res.userType);
-        }
-      });
+      checkByemail(String(email))
+        .then((res) => {
+          if (res && res.userType) {
+            setUserType(res.userType);
+          }
+          setLoading(false);
+        })
+        .catch((err) => setLoading(false));
     }
   }, []);
 
@@ -183,7 +187,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Markets',
       light: userType === 'Indexx Exchange' ? darkModeMarket : yellowModeMarket,
       dark: userType === 'Indexx Exchange' ? lightModeMarket : yellowModeMarket,
-      path: 'https://indexx.ai/indexx-exchange/markets',
+      path: '/indexx-exchange/market-data',
       search: '',
     },
     // {
@@ -295,36 +299,40 @@ export default function IconicHeader({ selectedTab, onChange }) {
         margin: '20px auto 50px auto',
       }}
     >
-      <Tabs
-        value={selectedTab}
-        onChange={handleChange}
-        centered={!isLoggedIn}
-        variant="scrollable"
-        scrollButtons={false}
-        sx={{
-          width: '100%',
-          background: 'none',
-          '& .MuiTabs-indicator': {
-            display: 'none',
-          },
-        }}
-      >
-        {tabsData.map((tab, index) => (
-          <TabView
-            key={index}
-            icon={
-              <img
-                src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
-                style={{ height: '25px', marginBottom: '0px' }}
-              />
-            }
-            iconPosition="top"
-            label={tab.label}
-            disableRipple
-            className={selectedTab === tab.label ? 'active' : ''}
-          />
-        ))}
-      </Tabs>
+      {loading ? (
+        ''
+      ) : (
+        <Tabs
+          value={selectedTab}
+          onChange={handleChange}
+          centered={!isLoggedIn}
+          variant="scrollable"
+          scrollButtons={false}
+          sx={{
+            width: '100%',
+            background: 'none',
+            '& .MuiTabs-indicator': {
+              display: 'none',
+            },
+          }}
+        >
+          {tabsData.map((tab, index) => (
+            <TabView
+              key={index}
+              icon={
+                <img
+                  src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
+                  style={{ height: '25px', marginBottom: '0px' }}
+                />
+              }
+              iconPosition="top"
+              label={tab.label}
+              disableRipple
+              className={selectedTab === tab.label ? 'active' : ''}
+            />
+          ))}
+        </Tabs>
+      )}
     </Box>
   );
 }

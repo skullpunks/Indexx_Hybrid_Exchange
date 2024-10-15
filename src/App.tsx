@@ -151,11 +151,12 @@ import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
 import PaypalPartnershipPage from './pages/PaypalPartnership';
 import ConvertPage from './pages/Convert';
 import NewAdvancedRealTimeChartComponent from './components/Graphs/NewTradingView';
+import MarketsPage from './pages/Markets';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
   const { coin } = useParams<{ coin: string }>(); // extract the coin parameter from the URL
-  return <NewAdvancedRealTimeChartComponent coin={String(coin)} />
+  return <NewAdvancedRealTimeChartComponent coin={String(coin)} />;
 };
 
 function App() {
@@ -242,6 +243,10 @@ function App() {
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route
+                path="/indexx-exchange/market-data"
+                element={<MarketsPage />}
+              />
               {/* <Route
                 path="/paypal-partnership-with-indexx"
                 element={<PaypalPartnershipPage />}
@@ -595,7 +600,7 @@ function App() {
               path="/indexx-exchange/trade-to-earn"
               element={<TradeToEarn />}
             />
-             <Route
+            <Route
               path="/indexx-exchange/trading-view/:coin"
               element={<TradingViewPage />}
             />

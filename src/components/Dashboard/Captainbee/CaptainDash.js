@@ -785,7 +785,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        flex: 1,
+                        flex: '0 0 50%',
                       }}
                     >
                       <Typography
@@ -804,13 +804,13 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           display: 'flex',
                           flexDirection: 'row',
                           gap: 2,
-
-                          flex: 1,
+                          width: '100%',
                         }}
                       >
                         <Box
                           sx={{
-                            width: '100%',
+                            flex: 1,
+
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
@@ -856,7 +856,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Box>
                         <Box
                           sx={{
-                            width: '100%',
+                            flex: 1,
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
@@ -950,7 +950,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2,
-                        flex: 1,
+                        flex: '0 0 50%',
                       }}
                     >
                       <Typography
@@ -968,13 +968,14 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
+
                           gap: 2,
                           flex: 1,
                         }}
                       >
                         <Box
                           sx={{
-                            width: '100%',
+                            flex: 1,
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',
@@ -1020,7 +1021,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         </Box>
                         <Box
                           sx={{
-                            width: '100%',
+                            flex: 1,
+
                             background: 'var(--body_background)',
                             display: 'flex',
                             flexDirection: 'column',

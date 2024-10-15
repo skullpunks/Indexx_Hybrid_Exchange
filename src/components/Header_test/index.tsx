@@ -100,7 +100,9 @@ const HeaderTest = () => {
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState();
+  const [profileLoading, setProfileLoading] = useState(true);
   const [url, setUrl] = useState('');
   const [loginUserType, setLoginUserType] = useState<any>();
   const [haspowerpack, setHaspowerpack] = useState(false);
@@ -158,6 +160,7 @@ const HeaderTest = () => {
 
       let getUserType = await checkByemail(String(email));
       userType = getUserType.userType;
+
       const accessToken =
         localStorage.getItem('access_token') !== undefined
           ? String(localStorage.getItem('access_token'))
@@ -170,9 +173,12 @@ const HeaderTest = () => {
           username = resObj?.data.Username;
         }
         setisCaptain(true);
+        setLoading(false);
+
         if (username) {
           getCaptainBeeStatics(String(username)).then((data) => {
             setUserProfile(data?.data?.affiliateUserProfile?.photoIdFileurl);
+            setProfileLoading(false);
             console.log(
               'index header',
               data?.data?.affiliateUserProfile?.photoIdFileurl
@@ -189,11 +195,12 @@ const HeaderTest = () => {
         }
       } else {
         setisCaptain(false);
-
+        setLoading(false);
         getHoneyUserDetails(String(user)).then((data) => {
           setHoneybeeCreateDate(data.data.accountCreationDate);
           setHoneyBeeData(data?.data?._doc);
           setUserProfile(data?.data?._doc?.profilePic);
+          setProfileLoading(false);
         });
       }
     }
@@ -784,7 +791,7 @@ const HeaderTest = () => {
                           }
                           onMouseLeave={() => updateBackDropVisibility('leave')}
                         >
-                          {!isMobile && isAuthenticated && (
+                          {!isMobile && isAuthenticated && !loading && (
                             <div
                               style={{
                                 marginBottom: '-23px',
@@ -795,8 +802,8 @@ const HeaderTest = () => {
                             >
                               <div
                                 style={{
-                                  width: isCaptain ? '60px' : '50px',
-                                  height: isCaptain ? '80px' : '60px',
+                                  width: isCaptain ? '50px' : '50px',
+                                  height: isCaptain ? '70px' : '60px',
                                   backgroundImage: `url(${
                                     isCaptain === true ? frame : beeframe
                                   })`,
@@ -814,23 +821,25 @@ const HeaderTest = () => {
                                   // border:"none"
                                 }}
                               >
-                                <div
-                                  className={
-                                    isCaptain ? 'bee-hexagon' : 'elipse-img'
-                                  }
-                                  style={{
-                                    marginBottom: `${
-                                      isCaptain === true ? 0 : '7px'
-                                    }`,
-                                  }}
-                                >
-                                  <img
-                                    alt=""
-                                    src={userProfile ? userProfile : dummy}
-                                    width={'63px'}
-                                    height={'75px'}
-                                  />
-                                </div>
+                                {!profileLoading && (
+                                  <div
+                                    className={
+                                      isCaptain ? 'bee-hexagon' : 'elipse-img'
+                                    }
+                                    style={{
+                                      marginBottom: `${
+                                        isCaptain === true ? 0 : '7px'
+                                      }`,
+                                    }}
+                                  >
+                                    <img
+                                      alt=""
+                                      src={userProfile ? userProfile : dummy}
+                                      width={'63px'}
+                                      height={'75px'}
+                                    />
+                                  </div>
+                                )}
                               </div>
                             </div>
                           )}

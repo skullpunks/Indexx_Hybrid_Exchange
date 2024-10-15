@@ -166,7 +166,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
             icon={
               <img
                 src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
-                style={{ height: '25px', marginBottom: '0px' }}
+                style={{ height: '35px', marginBottom: '-5px' }}
               />
             }
             iconPosition="top"

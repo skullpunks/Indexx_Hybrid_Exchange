@@ -164,7 +164,7 @@ const header_data = [
         links: [
           {
             name: 'Redeem Gift Cards',
-            href: '#',
+            href: 'https://cex.indexx.ai/redeem',
           },
           {
             name: 'Be part of Elite Club',
@@ -177,16 +177,8 @@ const header_data = [
         mainList: false,
         links: [
           {
-            name: 'How to redeem discount?',
-            href: '#',
-          },
-          {
-            name: 'What are XNFTs?',
-            href: 'https://xnft.indexx.ai/',
-          },
-          {
-            name: 'Benefits of Membership',
-            href: `${baseCEXURL}indexx-exchange/elite-club`,
+            name: 'How to redeem gifts?',
+            href: 'https://cex.indexx.ai/redeem',
           },
         ],
       },
