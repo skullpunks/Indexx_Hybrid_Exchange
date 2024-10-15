@@ -58,11 +58,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
   ) => {
     if (type === 'Create Gift') {
       return 'N/A';
-    } else if (type === 'SEND_CRYPTO' || type === "INVESTMENT") {
+    } else if (type === 'SEND_CRYPTO' || type === "INVESTMENT" || type === 'PURCHASED_COINS' ) {
       if (asset === 'INEX' || asset === 'IN500' || asset === 'IUSD+' || asset === 'WIBS' || asset === 'daCrazy') {
-        return `${(1).toFixed(2)} %`;
+        return `${(1)} %`;
       } else {
-        return `${(3).toFixed(2)} %`;
+        return `${(3)} %`;
       }
     }
     return 'N/A';

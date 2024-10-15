@@ -13,7 +13,9 @@ import {
   confirmSellOrder,
   createBuyOrder,
   createSellOrder,
+  decodeJWT,
   getHoneyBeeDataByUsername,
+  getUserWallets,
 } from '../../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
@@ -195,6 +197,9 @@ const BuySellTabs = ({
   const [paymentMethodError, setPaymentMethodError] = useState('');
   const [openErrorPopup, setOpenErrorPopup] = useState(false);
   const navigate = useNavigate();
+  const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
+  const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
+
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
@@ -320,6 +325,41 @@ const BuySellTabs = ({
       });
     }
   }, []);
+
+    // Fetch user wallets and USD balance
+    useEffect(() => {
+      const fetchUserWallets = async () => {
+        const token = localStorage.getItem('access_token');
+        const decodedToken = decodeJWT(String(token)); // Decode JWT
+  
+        const userWallets = await getUserWallets(decodedToken?.email);
+        setUsersWallets(userWallets.data);
+  
+        // Find USD coin balance and format it
+        setUsdBalance(
+          formatBalance(
+            userWallets.data.find((x) => x.coinSymbol === 'USD')?.coinBalance || 0
+          )
+        );
+      };
+  
+      fetchUserWallets();
+    }, []);
+
+    // Format the balance based on its value
+  const formatBalance = (balance) => {
+    if (balance < 0.001) {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 5,
+        maximumFractionDigits: 6,
+      });
+    } else {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+  };
 
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
   const createNewBuyOrder = async (paymentMethod) => {
@@ -501,7 +541,14 @@ const BuySellTabs = ({
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
+        if(usdBalance > 0 && usdBalance >= spendAmount) {
         await createNewBuyOrder(paymentMethod);
+        } else {
+          console.log('Insufficient Balance')
+          setGeneralMessage('Insufficient Balance');
+          setIsModalOpen(true);
+          return;
+        }
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();
       } else if (

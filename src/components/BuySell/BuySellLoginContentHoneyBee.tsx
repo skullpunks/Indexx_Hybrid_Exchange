@@ -10,7 +10,6 @@ import {
   getUserDetails,
   baseURL,
   encrypt,
-  encryptData,
 } from '../../services/api';
 import {
   CheckCircleFilled,
