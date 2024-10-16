@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -11,10 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
-import Inex from '../../../assets/updated/buySell/INEX.svg';
-import in500 from '../../../assets/token-icons/IN500_logo.png';
-import inxc from '../../../assets/token-icons/INXC_logo.png';
-import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
+import { CircularProgress } from '@mui/material';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -31,90 +28,243 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Dummy data for Name, Price, and Change columns
-const dummyRecords = [
-  {
-    id: '1',
-    name: 'INEX',
-    price: 50,
-    change: 2.5,
-  },
-  {
-    id: '2',
-    name: 'IN500',
-    price: 10,
-    change: -1.2,
-  },
-  {
-    id: '3',
-    name: 'INXC',
-    price: 25,
-    change: 0.8,
-  },
-  {
-    id: '4',
-    name: 'IUSD+',
-    price: 1,
-    change: 0.0,
-  },
-];
-
-// Function to get the coin's image
-const getImage = (image) => {
+const getImage = (symbol) => {
   try {
-    if (image === 'INEX') {
-      return Inex;
-    } else if (image === 'IN500') {
-      return in500;
-    } else if (image === 'INXC') {
-      return inxc;
-    } else if (image === 'IUSD+') {
-      return iusdp;
-    } else {
-      return require(`../../../assets/token-icons/${image}.png`).default;
-    }
+    return require(`../../../assets/token-icons/${symbol}.png`).default;
   } catch (error) {
-    return Inex;
+    return require('../../../assets/updated/buySell/INEX.svg').default;
   }
 };
 
-export default function EnhancedTable({ searchQuery, hideAssets }) {
+const EnhancedTable = ({
+  searchQuery,
+  hideAssets,
+  marketType,
+  data = [],
+  isLoading,
+}) => {
   const classes = useStyles();
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulating data fetching by using dummy records
-    setLoading(true);
-    setRows(dummyRecords);
-    setLoading(false);
-  }, []);
 
   const filteredRows = useMemo(() => {
-    return rows.filter((row) => {
-      const matchesSearchQuery = row.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+    if (Array.isArray(data)) {
+      return data
+        .filter((row) =>
+          row.Name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .slice(0, 10); // Limit to 10 results
+    }
+    return [];
+  }, [data, searchQuery]);
 
-      return matchesSearchQuery;
-    });
-  }, [rows, searchQuery]);
+  const handleRowClick = (Symbol) => {
+    const restrictedSymbols = [
+      'INEX',
+      'WIBS',
+      'INXC',
+      'IN500',
+      'IUSD+',
+      'DaCrazy',
+    ];
 
-  const handleRowClick = (row) => {
-    console.log(`Row clicked: ${row.name}`);
-    window.location.href = '/indexx-exchange/trading-view/BTC';
-    // Add your click functionality here
+    if (restrictedSymbols.includes(Symbol)) {
+      // Do nothing if the symbol is in the restricted list
+      console.log(`No redirect for token: ${Symbol}`);
+      return;
+    }
+
+    console.log(`Row clicked: ${Symbol}`);
+    window.location.href = `/indexx-exchange/trading-view/${Symbol}`;
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
+  const renderRowForMarketType = (row, index) => {
+    const showCoinImage = marketType === 'Crypto'; // Show image only for "Crypto"
+
+    switch (marketType) {
+      case 'BTC Market':
+      case 'ETH Market':
+      case 'BNB Market':
+      case 'USDT Market':
+        return (
+          <TableRow
+            key={row.Name}
+            className={classes.hoverRow}
+            sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+            onClick={() => handleRowClick(row.Symbol)}
+          >
+            <TableCell sx={{ borderBottom: 'none !important' }}>
+              {showCoinImage ? (
+                <div className={classes.avatarCell}>
+                  <Avatar alt={row.Name} src={getImage(row.Symbol)} />{' '}
+                  {row.Symbol}
+                </div>
+              ) : (
+                `${row.Symbol}/${marketType.split(' ')[0]}`
+              )}
+            </TableCell>
+            <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+              {marketType === 'BTC Market'
+                ? `${Number(row.BTCPrice).toFixed(7)} BTC`
+                : marketType === 'ETH Market'
+                ? `${Number(row.ETHPrice).toFixed(7)} ETH`
+                : marketType === 'BNB Market'
+                ? `${Number(row.BNBPrice).toFixed(7)} BNB`
+                : `${Number(row.IUSDPrice).toFixed(7)} USDT`}
+            </TableCell>
+            <TableCell
+              align="right"
+              className={row.Change >= 0 ? classes.greenText : classes.redText}
+              sx={{ borderBottom: 'none !important' }}
+            >
+              {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+            </TableCell>
+          </TableRow>
+        );
+      case 'All Market':
+        return (
+          <>
+            <TableRow
+              key={`${row.Name}-USD`}
+              className={classes.hoverRow}
+              sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+              onClick={() => handleRowClick(row.Symbol)}
+            >
+              <TableCell sx={{ borderBottom: 'none !important' }}>
+                {row.Symbol}/USD
+              </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                {Number(row.Price).toFixed(7)} USD
+              </TableCell>
+              <TableCell
+                align="right"
+                className={
+                  row.Change >= 0 ? classes.greenText : classes.redText
+                }
+                sx={{ borderBottom: 'none !important' }}
+              >
+                {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={`${row.Name}-BTC`}
+              className={classes.hoverRow}
+              sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+              onClick={() => handleRowClick(row.Symbol)}
+            >
+              <TableCell sx={{ borderBottom: 'none !important' }}>
+                {row.Symbol}/BTC
+              </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                {Number(row.BTCPrice).toFixed(7)} BTC
+              </TableCell>
+              <TableCell
+                align="right"
+                className={
+                  row.Change >= 0 ? classes.greenText : classes.redText
+                }
+                sx={{ borderBottom: 'none !important' }}
+              >
+                {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={`${row.Name}-ETH`}
+              className={classes.hoverRow}
+              sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+              onClick={() => handleRowClick(row.Symbol)}
+            >
+              <TableCell sx={{ borderBottom: 'none !important' }}>
+                {row.Symbol}/ETH
+              </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                {Number(row.ETHPrice).toFixed(7)} ETH
+              </TableCell>
+              <TableCell
+                align="right"
+                className={
+                  row.Change >= 0 ? classes.greenText : classes.redText
+                }
+                sx={{ borderBottom: 'none !important' }}
+              >
+                {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={`${row.Name}-BNB`}
+              className={classes.hoverRow}
+              sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+              onClick={() => handleRowClick(row.Symbol)}
+            >
+              <TableCell sx={{ borderBottom: 'none !important' }}>
+                {row.Symbol}/BNB
+              </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                {Number(row.BNBPrice).toFixed(7)} BNB
+              </TableCell>
+              <TableCell
+                align="right"
+                className={
+                  row.Change >= 0 ? classes.greenText : classes.redText
+                }
+                sx={{ borderBottom: 'none !important' }}
+              >
+                {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+              </TableCell>
+            </TableRow>
+          </>
+        );
+      case 'Crypto':
+        return (
+          <TableRow
+            key={row.Symbol}
+            className={classes.hoverRow}
+            sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
+            onClick={() => handleRowClick(row.Symbol)}
+          >
+            <TableCell
+              sx={{
+                borderBottom: 'none !important',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar
+                alt={row.Symbol}
+                src={getImage(row.Symbol)}
+                sx={{ marginRight: '8px' }}
+              />{' '}
+              {/* Add margin to separate the avatar from the symbol */}
+              {row.Symbol}
+            </TableCell>
+
+            <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+              {Number(row.Price).toFixed(7)} USD
+            </TableCell>
+            <TableCell
+              align="right"
+              className={row.Change >= 0 ? classes.greenText : classes.redText}
+              sx={{ borderBottom: 'none !important' }}
+            >
+              {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
+            </TableCell>
+          </TableRow>
+        );
+      default:
+        return null;
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className={classes.loading}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <TableContainer>
         <Table sx={{ minWidth: 350 }} aria-labelledby="tableTitle">
-          {/* Table Headings */}
           <TableHead>
             <TableRow>
               <TableCell sx={{ borderBottom: 'none !important' }}>
@@ -129,64 +279,20 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRows?.map((row) => (
-              <TableRow
-                key={row.id}
-                onClick={() => handleRowClick(row)}
-                className={classes.hoverRow}
-                role="checkbox"
-                tabIndex={-1}
-                sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-              >
-                <TableCell
-                  component="th"
-                  scope="row"
-                  padding="none"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  <ListItem
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      //   paddingLeft: 0,
-                      '&:hover': {
-                        background: 'transparent !important',
-                      },
-                    }}
-                  >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <Avatar alt={`${row.name}`} src={getImage(row.name)} />
-                      </Avatar>
-                    </ListItemAvatar>
-                    {row.name}
-                  </ListItem>
-                </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  ${row.price}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  className={
-                    row.change >= 0 ? classes.greenText : classes.redText
-                  }
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {row.change >= 0 ? `+${row.change}%` : `${row.change}%`}
-                </TableCell>
-              </TableRow>
-            ))}
+            {filteredRows.map((row) => renderRowForMarketType(row))}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
   );
-}
+};
 
 EnhancedTable.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   hideAssets: PropTypes.bool.isRequired,
+  marketType: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired, // Now using real data passed as prop
+  isLoading: PropTypes.bool.isRequired, // Prop for loader state
 };
+
+export default EnhancedTable;
