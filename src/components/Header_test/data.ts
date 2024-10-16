@@ -76,12 +76,8 @@ const header_data = [
             href: '/indexx-exchange/buy-sell/staking',
           },
           {
-            name: 'Tokens',
-            href: '/',
-          },
-          {
-            name: 'Wallstreet',
-            href: '/',
+            name: 'xTokens',
+            href: 'https://indexx.ai/indexx-exchange/token-details',
           },
         ],
       },
@@ -139,10 +135,6 @@ const header_data = [
           {
             name: 'Greeting',
             href: 'https://shop.indexx.ai/?category=greeting',
-          },
-          {
-            name: 'Carnival',
-            href: 'https://shop.indexx.ai/?category=carnival',
           },
           {
             name: 'Hive Pack',
