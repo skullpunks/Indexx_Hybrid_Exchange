@@ -75,10 +75,6 @@ const header_data = [
             name: 'Staking',
             href: '/indexx-exchange/buy-sell/staking',
           },
-          {
-            name: 'xTokens',
-            href: 'https://indexx.ai/indexx-exchange/token-details',
-          },
         ],
       },
       {
@@ -142,11 +138,7 @@ const header_data = [
           },
           {
             name: 'Create Gift',
-            href: 'https://cex.indexx.ai/redeem/create-card',
-          },
-          {
-            name: 'XMarket',
-            href: 'https://xnftmarketplace.indexx.ai/collections/bitcoin-xnft/1',
+            href: '/redeem/create-card',
           },
         ],
       },
@@ -156,11 +148,7 @@ const header_data = [
         links: [
           {
             name: 'Redeem Gift Cards',
-            href: 'https://cex.indexx.ai/redeem',
-          },
-          {
-            name: 'Be part of Elite Club',
-            href: `${baseCEXURL}/indexx-exchange/elite-club`,
+            href: '/redeem',
           },
         ],
       },
@@ -170,7 +158,7 @@ const header_data = [
         links: [
           {
             name: 'How to redeem gifts?',
-            href: 'https://cex.indexx.ai/redeem',
+            href: '/redeem',
           },
         ],
       },
@@ -258,7 +246,7 @@ const header_data = [
             href: 'https://hive.indexx.ai/bees',
           },
           {
-            name: 'Honey Bee',
+            name: 'Crypto Bee',
             href: 'https://hive.indexx.ai/honey-bees',
           },
         ],
@@ -271,7 +259,7 @@ const header_data = [
             href: 'https://hive.indexx.ai/sign-up',
           },
           {
-            name: 'Sign Up as Honey Bee',
+            name: 'Sign Up as Crypto Bee',
             href: '/indexx-exchange/buy-sell/get-started-honeybee',
           },
         ],
@@ -305,7 +293,7 @@ const header_data = [
         links: [
           {
             name: 'Buy Token',
-            href: 'https://cex.indexx.ai/update/home',
+            href: '/update/home',
           },
           {
             name: 'INEX',
@@ -332,8 +320,8 @@ const header_data = [
             href: 'https://sorekt.wtf/',
           },
           {
-            name: 'Who is Satoshi',
-            href: 'https://whoissatoshi.wtf',
+            name: 'Who is bitcoin Satoshi',
+            href: 'https://whoisbitcoinsatoshi.wtf/',
           },
         ],
       },
@@ -341,16 +329,12 @@ const header_data = [
         heading: 'Quick Links',
         links: [
           {
-            name: 'Get discounts',
-            href: 'https://indexx.ai/discount-shop',
-          },
-          {
             name: 'Get Gift Cards',
-            href: 'https://indexxgifts.com/',
+            href: 'https://shop.indexx.ai/?category=gift',
           },
           {
             name: 'Sign up on Exchange',
-            href: '/indexx-exchange/buy-sell/get-started',
+            href: 'https://indexx.ai/auth/signup-email',
           },
         ],
       },
@@ -396,11 +380,11 @@ const header_data = [
         links: [
           {
             name: 'Log in',
-            href: 'https://academy.indexx.ai/authentication/',
+            href: 'https://indexx.ai/auth/login',
           },
           {
             name: 'Register',
-            href: 'https://academy.indexx.ai/authentication/',
+            href: 'https://indexx.ai/auth/signup-email',
           },
         ],
       },
@@ -442,10 +426,6 @@ const header_data = [
           {
             name: 'How it Works',
             href: 'https://indexx.ai/indexx-exchange/how-it-works',
-          },
-          {
-            name: 'Markets',
-            href: 'https://indexx.ai/indexx-exchange/markets',
           },
           {
             name: 'Vlog',
