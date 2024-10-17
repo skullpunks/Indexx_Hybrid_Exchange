@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import {
   Box,
   Typography,
@@ -99,9 +99,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CoinBreakdown = ({ title = 'All' }) => {
+const CoinBreakdown = ({ title = 'All', data, loading }) => {
   const classes = useStyles();
-  const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [hideAssets, setHideAssets] = useState(true);
   const [value, setValue] = useState('Crypto');
@@ -136,7 +135,13 @@ const CoinBreakdown = ({ title = 'All' }) => {
         </div>
       </div>
 
-      <EnhancedTable searchQuery={searchQuery} hideAssets={hideAssets} />
+      <EnhancedTable
+        searchQuery={searchQuery}
+        hideAssets={hideAssets}
+        marketType={value} // Pass the selected market type to the EnhancedTable
+        data={data} 
+        isLoading={loading}
+      />
     </Box>
   );
 };

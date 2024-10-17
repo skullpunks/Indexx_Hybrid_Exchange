@@ -751,6 +751,19 @@ export const getUserWallets = async (email: string) => {
     return e.response.data;
   }
 };
+
+export const getUserInvestments = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/totalInvestment/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (totalInvestment)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getUserTransactionHistory = async (
   email: string,
   fromDate?: string,
@@ -1235,6 +1248,18 @@ export const hotTokenData = async () => {
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (hotTokens)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const newListingData = async () => {
+  try {
+    const result = await API.get('/api/v1/inex/basic/newListing');
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (newListing)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
