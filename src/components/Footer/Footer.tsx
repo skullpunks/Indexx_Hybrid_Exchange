@@ -142,6 +142,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
   const [tokenizedUrls, setTokenizedUrls] = useState({
     defaultUrl: `${baseURL}`,
+    academyUrl: `https://academy.indexx.ai/`,
     exchangeUrl: `${baseURL}/indexx-exchange/nfts`,
     tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details`,
     comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map`,
@@ -160,6 +161,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
     wallStreetUrl: baseWSURL,
     wallStreetCertUrl: `${baseWSURL}/certificate`,
     wallStreetDetailsUrl: `${baseWSURL}/details`,
+    backToCommunity: `${baseURL}/back-to-community`,
+    eliteClub: `${baseURL}/elite-club`,
+    howItWorks: `${baseURL}/how-master-login-works`,
+    testimonial: `https://www.youtube.com/watch?v=9ULdWShBz3k`,
+    whalesclub: `${baseURL}/whales-club`,
     // Add other URLs here as needed
   });
 
@@ -223,6 +229,7 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
 
         setTokenizedUrls({
           defaultUrl: `${baseURL}?signInToken=${token}`,
+          academyUrl: `https://academy.indexx.ai/?signInToken=${token}`,
           exchangeUrl: `${baseURL}/indexx-exchange/nfts?signInToken=${token}`,
           tokenDetailsUrl: `${baseURL}/indexx-exchange/token-details?signInToken=${token}`,
           comingSoonUrl: `${baseURL}/indexx-exchange/coming-soon?page=Site%20Map&signInToken=${token}`,
@@ -241,6 +248,11 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           wallStreetUrl: `${baseWSURL}?signInToken=${token}`,
           wallStreetCertUrl: `${baseWSURL}/certificates?ignInToken=${token}`,
           wallStreetDetailsUrl: `${baseWSURL}/details?signInToken=${token}`,
+          backToCommunity: `${baseURL}/back-to-community?signInToken=${token}`,
+          eliteClub: `${baseURL}/elite-club?signInToken=${token}`,
+          howItWorks: `${baseURL}/how-master-login-works`,
+          testimonial: `https://www.youtube.com/watch?v=9ULdWShBz3k`,
+          whalesclub: `${baseURL}/whales-club?signInToken=${token}`,
 
           // Add other URLs here as needed
         });
@@ -318,11 +330,20 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                   <p className="fw-bold">Platform</p>
                   <p className="footer-text text-left">
                     <a
+                      href={baseAcademyUrl}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Academy
+                      </span>
+                    </a>
+                    <br />
+                    <a
                       href={exchangeUrl}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
-                        Exchange
+                        Exchange / Buy Crypto
                       </span>
                     </a>
                     <br />
@@ -336,38 +357,21 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
+                      href={baseHiveURL}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Hive
+                      </span>
+                    </a>
+                    <br />
+
+                    <a
                       href={baseShopURL}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
                         Shop
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={baseDEXURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Swap
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={tokenizedUrls?.wallStreetUrl}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Wall Street
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={baseMktplaceURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Market
                       </span>
                     </a>
                     <br />
@@ -387,7 +391,17 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
 
                     <a
-                      href={`${baseShopURL}/collections/greeting-cards`}
+                      href={`${baseShopURL}/?category=gift`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Gift Cards
+                      </span>
+                    </a>
+                    <br />
+
+                    <a
+                      href={`${baseShopURL}/?category=greeting`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -395,66 +409,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a>
                     <br />
-                    <a
-                      href={`${tokenizedUrls?.exchangeUrl}`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        NFT
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={`${tokenizedUrls?.wallStreetCertUrl}`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Stock Certificates
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={`${tokenizedUrls?.wallStreetDetailsUrl}`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Stock Tokens
-                      </span>
-                    </a>
-                    <br />
+
                     <a
                       href={`${tokenizedUrls?.tokenDetailsUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
-                        Tokens
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={baseXnftURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        XNFT
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={`${baseXnftURL}/#fiat-cur`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        XUSD
-                      </span>
-                    </a>
-                    <br />
-                    <a
-                      href={`${tokenizedUrls?.bitcoinCmgUrl}`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        $1 Bitcoin
+                        xTokens
                       </span>
                     </a>
                     <br />
@@ -489,16 +450,6 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     >
                       <span className={`${classes.linkHover} link_sty`}>
                         Hive
-                      </span>
-                    </a>
-
-                    <br />
-                    <a
-                      href={`${tokenizedUrls?.tradeToEarnUrl}`}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className={`${classes.linkHover} link_sty`}>
-                        Trade to Earn
                       </span>
                     </a>
 
@@ -561,6 +512,15 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
+                      href={`${tokenizedUrls?.backToCommunity}`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Back to Community
+                      </span>
+                    </a>
+                    <br />
+                    <a
                       href={`${tokenizedUrls?.blogUrl}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
@@ -578,9 +538,28 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a>
                     <br />
-
                     <a
-                      href={`${tokenizedUrls?.howItWorksUrl}`}
+                      href={`${tokenizedUrls?.documentUrl}`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Documents
+                      </span>
+                    </a>
+
+                    <br />
+                    <a
+                      href={`${tokenizedUrls?.eliteClub}`}
+                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
+                    >
+                      <span className={`${classes.linkHover} link_sty`}>
+                        Elite Club
+                      </span>
+                    </a>
+
+                    <br />
+                    <a
+                      href={`${tokenizedUrls?.howItWorks}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
@@ -588,21 +567,13 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                       </span>
                     </a>
                     <br />
-                    {/* <a
-                      href={baseURL}
-                      style={{ color: '#9F9F9F', textDecoration: 'none' }}
-                    >
-                      <span className='link_sty'>
-                      {' '}
-                      Hybrid Exchange{' '}
-                      </span>
-                    </a> */}
+
                     <a
-                      href={`${tokenizedUrls?.marketsUrl}`}
+                      href={`${tokenizedUrls?.testimonial}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
-                        Markets
+                        Testimonials
                       </span>
                     </a>
                     <br />
@@ -617,15 +588,15 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
                     </a>
                     <br />
                     <a
-                      href={`${tokenizedUrls?.documentUrl}`}
+                      href={`${tokenizedUrls?.whalesclub}`}
                       style={{ color: '#9F9F9F', textDecoration: 'none' }}
                     >
                       <span className={`${classes.linkHover} link_sty`}>
-                        Document
+                        Whales Club
                       </span>
                     </a>
-
                     <br />
+
                     <br />
                   </p>
                 </span>
