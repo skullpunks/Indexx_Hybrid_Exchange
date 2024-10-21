@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
   },
   copyrightHover: {
+    fontSize: '12px',
     '& a:hover': {
       color: `${theme.palette.text.secondary} !important`,
     },
