@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
   bidsFullModal: {},
   bnMask: {
-    alignItems: 'center',
     backgroundColor: ' rgba(0, 0, 0, .5)',
     bottom: 0,
     display: 'flex',
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     zIndex: 1200,
     width: '100%',
-    height: '100vh',
+    minheight: '100vh',
   },
   bnTrans: {
     opacity: 0,
@@ -67,13 +66,15 @@ const useStyles = makeStyles((theme) => ({
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
       width: '100%',
+      marginTop: '70px',
     },
   },
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
     alignItems: 'center',
-    padding: '24px',
+    // padding: '24px',
     textAlign: 'center',
     color: `${theme.palette.text.primary} !important`,
     '& h3': {
@@ -103,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     gap: '15px',
     marginTop: '25px',
+    padding: '24px',
   },
   cancelButton: {
     background:
@@ -131,6 +133,27 @@ const useStyles = makeStyles((theme) => ({
     '&:active': {
       background: 'transparent',
       border: `1px solid ${theme.palette.primary.main}`,
+    },
+  },
+  container: {
+    '&::-webkit-scrollbar': {
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important',
+      borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+      display: 'none !important', // Hide the scrollbar track
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important', // Keep the same color on hover
     },
   },
   iconTextContainer: {
@@ -401,6 +424,7 @@ const Popup = ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '100%',
+                padding: '24px',
               }}
             >
               <div></div>
@@ -416,7 +440,16 @@ const Popup = ({
                 />
               </div>
             </div>
-            <Box className={classes.container} style={{ width: '100%' }}>
+            <Box
+              className={classes.container}
+              style={{
+                width: '100%',
+                overflow: 'auto',
+                height: '100%',
+
+                padding: '24px',
+              }}
+            >
               {type === 'Sell' ? (
                 <button
                   className={classes.button}

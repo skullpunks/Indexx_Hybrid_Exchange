@@ -109,7 +109,9 @@
   transform: scale(1.1);
   transition: transform 330ms ease-in-out;
 }
-
+.link_sty {
+  font-size: 12px;
+}
 /* .link_sty:hover {
   color: var(--dark_text);
 } */
