@@ -4,7 +4,12 @@ import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GenericButton from '../shared/Button';
-import { getUserWallets, decodeJWT, baseURL } from '../../../services/api';
+import {
+  getUserWallets,
+  decodeJWT,
+  baseURL,
+  getUserInvestments,
+} from '../../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Define the makeStyles hook
@@ -87,10 +92,14 @@ const BalanceOverview = () => {
   const [visibleStaking, setVisibleStaking] = useState(false);
   const [pnl, setPnl] = useState({ value: 0, percentage: 0 });
   const [pnlClass, setPnlClass] = useState(classes.redText);
+  const [profitClass, setProfitClass] = useState(classes.redText);
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   const [totalStakedBalanceInUSD, setTotalStakedBalanceInUSD] = useState(0); // State for staked balance
+  const [totalInvestment, setTotalInvestment] = useState(0); // State for staked balance
   const [isLoading, setIsLoading] = useState(true);
   const [visibleTotalBalance, setVisibleTotalBalance] = useState(false);
+  const [visibleTotalInvestment, setVisibleTotalInvestment] = useState(false);
+  const [profit, setProfit] = useState({ value: 0, percentage: 0 });
 
   const handleToggleVisibility = () => {
     setVisible(!visible);
@@ -101,6 +110,9 @@ const BalanceOverview = () => {
   };
   const handleToggleTotalBalanceVisibility = () => {
     setVisibleTotalBalance(!visibleTotalBalance);
+  };
+  const handleToggleTotalInvestmentVisibility = () => {
+    setVisibleTotalInvestment(!visibleTotalInvestment);
   };
   useEffect(() => {
     const fetchUserWallets = async () => {
@@ -117,7 +129,9 @@ const BalanceOverview = () => {
         let totalBalInUSD = 0;
         let totalPrevBalInUSD = 0;
         let totalStakedBalInUSD = 0; // Variable for staked balance
-
+        const getInvestments = await getUserInvestments(email);
+        let totalInvestment = getInvestments.data; // Variable for staked balance
+        setTotalInvestment(totalInvestment);
         usersWallet.forEach((wallet) => {
           const balance = Number(wallet.coinBalance);
           const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
@@ -168,6 +182,19 @@ const BalanceOverview = () => {
         });
         // Set the class based on PNL value
         setPnlClass(pnlValue >= 0 ? classes.greenText : classes.redText);
+
+        // Now calculate the profit (Total Balance - Total Investment)
+        const totalBalance = totalBalInUSD + totalStakedBalInUSD;
+        const profitValue = totalBalance - totalInvestment;
+        const profitPercentage =
+          totalInvestment > 0 ? (profitValue / totalInvestment) * 100 : 0;
+
+        setProfit({
+          value: profitValue.toFixed(2),
+          percentage: profitPercentage.toFixed(2),
+        });
+        // Dynamically set the profit class
+        setProfitClass(profitValue >= 0 ? classes.greenText : classes.redText);
       } catch (err) {
       } finally {
         setIsLoading(false);
@@ -208,6 +235,14 @@ const BalanceOverview = () => {
           <span
             className={pnlClass}
           >{`${pnl.value} (${pnl.percentage}%)`}</span>
+        </Typography>
+
+        {/* Profit Section */}
+        <Typography className={classes.pnlText}>
+          Portfolio PNL:{' '}
+          <span className={profitClass}>
+            {`${profit.value} (${profit.percentage}%)`}
+          </span>
         </Typography>
       </Box>
       <Box className={classes.balanceSectionWrapper}>
@@ -252,6 +287,32 @@ const BalanceOverview = () => {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               }).format(totalBalanceInUSD + totalStakedBalanceInUSD)}`}
+        </Typography>
+      </Box>
+      <Box className={classes.balanceSectionWrapper}>
+        <Box className={classes.header}>
+          <Typography variant="h6">Invested Value</Typography>
+          <div
+            className={classes.eyeIcon}
+            onClick={handleToggleTotalInvestmentVisibility}
+            size="small"
+            style={{ cursor: 'pointer' }}
+          >
+            {visibleTotalInvestment ? (
+              <VisibilityOffIcon />
+            ) : (
+              <VisibilityIcon />
+            )}
+          </div>
+        </Box>
+        <Typography className={classes.hiddenBalance}>
+          $
+          {visibleTotalInvestment
+            ? '*******'
+            : `${new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(totalInvestment)}`}
         </Typography>
       </Box>
       <Box className={classes.buttonContainer}>

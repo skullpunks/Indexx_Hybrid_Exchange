@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PaymentMethodSelection = ({
-  label = 'Pay with',
+  label = 'Pay With',
   buttonText = 'Select Transaction Method',
   onClick,
   selectedPaymentMethod,
@@ -66,7 +66,7 @@ const PaymentMethodSelection = ({
   return (
     <Box className={classes.container}>
       <p className={classes.label}>
-        {label}{' '}
+        {type === "Buy" ? label : "Received Method"}{' '}
         {errorMsg && (
           <span style={{ color: 'red', marginLeft: '5px' }}> {errorMsg} </span>
         )}

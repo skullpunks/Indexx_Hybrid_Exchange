@@ -106,6 +106,16 @@ const useStyles = makeStyles((theme) => ({
       color: `${theme.palette.text.primary} !important`,
     },
   },
+  availableContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    paddingLeft: '17px', // Ensure it aligns with input
+  },
+  availableText: {
+    color: theme.palette.text.secondary,
+    fontSize: '14px', // Slightly smaller for "Available" text
+    lineHeight: '1.5', // Adjust for better readability
+  },
   dropDownContainer: {
     zIndex: '111',
 
@@ -192,6 +202,7 @@ const CustomTextField = ({
   fixedToken,
   loggedIn,
   defaultReceiveToken,
+  balance,
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -351,6 +362,29 @@ const CustomTextField = ({
     updatedDefaultToken();
   }, [tokenType, defaultReceiveToken, defaultTokenFromUrl]);
 
+  const formatBalance = (balance) => {
+    if (!balance) return '0';
+
+    const parsedBalance = parseFloat(balance);
+
+    // Coins that need special treatment for small balances
+    const specialCoins = ['BTC', 'BNB', 'ETH', 'LTC'];
+
+    // Check if the balance is very small or one of the special coins
+    if (
+      parsedBalance < 0.00001 ||
+      specialCoins.includes(selectedToken?.title)
+    ) {
+      // Show up to 6 decimal places for these cases
+      return parsedBalance.toFixed(6);
+    }
+
+    // Otherwise, show 2 decimal places if balance is greater than or equal to 1
+    return parsedBalance >= 1
+      ? parsedBalance.toFixed(2)
+      : parsedBalance.toFixed(6);
+  };
+
   return (
     <>
       <Box
@@ -396,6 +430,23 @@ const CustomTextField = ({
             }}
           />
         </FormControl>
+
+        {type === 'sell' && label === 'Spend' && (
+          <div className={classes.availableContainer}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={classes.availableText}
+            >
+              Available:{' '}
+              {formatBalance(
+                balance?.find((x) => x.coinSymbol === selectedToken?.image)
+                  ?.coinBalance
+              )}{' '}
+              {selectedToken?.title}
+            </Typography>
+          </div>
+        )}
       </Box>
       <div style={{ position: 'relative', width: '100%' }}>
         {isOpen && !disableDropdown && (

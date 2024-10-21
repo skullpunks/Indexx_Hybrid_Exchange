@@ -813,6 +813,7 @@ const BuySellTabs = ({
                   disableDropdown={false}
                   loggedIn
                   defaultReceiveToken={defaultSelectedToken}
+                  balance={usersWallets}
                 />
                 <CustomTextField
                   label="Receive"
