@@ -234,14 +234,14 @@ const BalanceOverview = () => {
           Today's PNL:{' '}
           <span
             className={pnlClass}
-          >{`${pnl.value} (${pnl.percentage}%)`}</span>
+          >{`$${pnl.value} (${pnl.percentage}%)`}</span>
         </Typography>
 
         {/* Profit Section */}
         <Typography className={classes.pnlText}>
-          Portfolio PNL:{' '}
+          Portfolio PNL:${' '}
           <span className={profitClass}>
-            {`${profit.value} (${profit.percentage}%)`}
+            {`$${profit.value} (${profit.percentage}%)`}
           </span>
         </Typography>
       </Box>
