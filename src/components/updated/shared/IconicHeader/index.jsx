@@ -283,9 +283,9 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   let maxWidthTabContainer;
   if (isLoggedIn && userType === 'Indexx Exchange') {
-    maxWidthTabContainer = '900px';
-  } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1000px';
+  } else if (isLoggedIn && userType !== 'Indexx Exchange') {
+    maxWidthTabContainer = '1100px';
   } else {
     maxWidthTabContainer = '500px';
   }
@@ -309,12 +309,17 @@ export default function IconicHeader({ selectedTab, onChange }) {
           onChange={handleChange}
           centered={!isLoggedIn}
           variant="scrollable"
-          scrollButtons={false}
+          scrollButtons={'auto'}
           sx={{
             width: '100%',
             background: 'none',
             '& .MuiTabs-indicator': {
               display: 'none',
+            },
+            [theme.breakpoints.down('md')]: {
+              '& .MuiTabs-scrollButtons': {
+                display: 'flex',
+              },
             },
           }}
         >
