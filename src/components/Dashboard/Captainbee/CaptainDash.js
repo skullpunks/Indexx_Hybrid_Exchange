@@ -776,16 +776,14 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: `${isMobile ? 'column' : 'row'}`,
                       gap: isMobile ? 4 : 2,
+                      flexDirection: 'column',
                     }}
                   >
                     <Box
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        flex: '0 0 50%',
+                        display: isMobile ? 'none' : 'flex',
+                        gap: '16px',
                       }}
                     >
                       <Typography
@@ -795,316 +793,294 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         fontWeight={700}
                         textAlign={'left'}
                         mb={2}
+                        sx={{ flex: 1 }}
                       >
                         My Crypto Bee Statistics
                       </Typography>
 
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          gap: 2,
-                          width: '100%',
-                        }}
+                      <Typography
+                        variant="text"
+                        component="p"
+                        fontSize={'15px'}
+                        fontWeight={700}
+                        textAlign={'left'}
+                        mb={2}
+                        sx={{ flex: 1 }}
                       >
-                        <Box
-                          sx={{
-                            flex: 1,
-
-                            background: 'var(--body_background)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            p: 3,
-                            aspectRatio: 1,
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                          >
-                            Total Crypto Bees
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '70px'}
-                            // fontWeight={600}
-                            textAlign={'left'}
-                          >
-                            {staticsData?.honeyBeesCount}
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={'22px'}
-                            fontWeight={400}
-                            textAlign={'left'}
-                            color={'#FFB300'}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'baseline',
-                              verticalAlign: 'bottom',
-                              gap: 1,
-                            }}
-                          >
-                            <img alt="up" src={arrow} />{' '}
-                            {staticsData?.honeyBeesCount ? '30%' : '0%'}
-                          </Typography>
-                        </Box>
-                        <Box
-                          sx={{
-                            flex: 1,
-                            background: 'var(--body_background)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            p: 3,
-                            aspectRatio: 1,
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            Total Commision Earned in USD
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '40px'}
-                            // fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            $
-                            {staticsData?.affiliateHoneyBeeUserTotalEarnings
-                              ?.amountInUSD
-                              ? parseFloat(
-                                  staticsData
-                                    ?.affiliateHoneyBeeUserTotalEarnings
-                                    ?.amountInUSD
-                                ).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
-                              : '0.00'}
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            Total Commision Earned in INEX
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '40px'}
-                            // fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            {staticsData?.affiliateHoneyBeeUserTotalEarnings
-                              ?.amountInINEX
-                              ? parseFloat(
-                                  staticsData
-                                    ?.affiliateHoneyBeeUserTotalEarnings
-                                    ?.amountInINEX
-                                ).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
-                              : '0.00'}
-                            <span className="font_17x">INEX</span>
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={'22px'}
-                            fontWeight={400}
-                            textAlign={'center'}
-                            color={'#FFB300'}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'baseline',
-                              verticalAlign: 'bottom',
-                              gap: 1,
-                            }}
-                          >
-                            <img alt="up" src={arrow} />{' '}
-                            {staticsData?.ordersCount ? '15%' : '0%'}
-                          </Typography>
-                        </Box>
-                      </Box>
+                        My Captain Bee Statistics
+                      </Typography>
                     </Box>
 
                     <Box
                       sx={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: isMobile ? 'column' : 'row',
                         gap: 2,
-                        flex: '0 0 50%',
+                        width: '100%',
+                        flexWrap: 'wrap',
                       }}
                     >
-                      <Typography
-                        variant="text"
-                        component="p"
-                        fontSize={'15px'}
-                        fontWeight={700}
-                        textAlign={'left'}
-                        mb={2}
-                      >
-                        My Captain Bee Statistics
-                      </Typography>
-
                       <Box
                         sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-
-                          gap: 2,
                           flex: 1,
+                          background: 'var(--body_background)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 3,
+                          aspectRatio: 1,
+                          borderRadius: '10px',
                         }}
                       >
-                        <Box
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                        >
+                          Total Crypto Bees
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '70px'}
+                          // fontWeight={600}
+                          textAlign={'left'}
+                        >
+                          {staticsData?.honeyBeesCount}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'left'}
+                          color={'#FFB300'}
                           sx={{
-                            flex: 1,
-                            background: 'var(--body_background)',
                             display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            p: 3,
-                            aspectRatio: 1,
-                            borderRadius: '10px',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
                           }}
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                          >
-                            Total Team Captain Bees
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '70px'}
-                            // fontWeight={600}
-                            textAlign={'center'}
-                          >
-                            {staticsData?.captainsCount}
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={'22px'}
-                            fontWeight={400}
-                            textAlign={'center'}
-                            color={'#FFB300'}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'baseline',
-                              verticalAlign: 'bottom',
-                              gap: 1,
-                            }}
-                          >
-                            <img alt="up" src={arrow} />{' '}
-                            {staticsData?.captainsCount ? '30%' : '0%'}
-                          </Typography>
-                        </Box>
-                        <Box
+                          <img alt="up" src={arrow} />{' '}
+                          {staticsData?.honeyBeesCount ? '30%' : '0%'}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          flex: 1,
+                          background: 'var(--body_background)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 3,
+                          aspectRatio: 1,
+                          borderRadius: '10px',
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          Total Commision Earned in USD
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '40px'}
+                          // fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          $
+                          {staticsData?.affiliateHoneyBeeUserTotalEarnings
+                            ?.amountInUSD
+                            ? parseFloat(
+                                staticsData?.affiliateHoneyBeeUserTotalEarnings
+                                  ?.amountInUSD
+                              ).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : '0.00'}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          Total Commision Earned in INEX
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '40px'}
+                          // fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          {staticsData?.affiliateHoneyBeeUserTotalEarnings
+                            ?.amountInINEX
+                            ? parseFloat(
+                                staticsData?.affiliateHoneyBeeUserTotalEarnings
+                                  ?.amountInINEX
+                              ).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : '0.00'}
+                          <span className="font_17x">INEX</span>
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'center'}
+                          color={'#FFB300'}
                           sx={{
-                            flex: 1,
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
+                          }}
+                        >
+                          <img alt="up" src={arrow} />{' '}
+                          {staticsData?.ordersCount ? '15%' : '0%'}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          flex: 1,
+                          background: 'var(--body_background)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 3,
+                          aspectRatio: 1,
+                          borderRadius: '10px',
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                        >
+                          Total Team Captain Bees
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '70px'}
+                          // fontWeight={600}
+                          textAlign={'center'}
+                        >
+                          {staticsData?.captainsCount}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'center'}
+                          color={'#FFB300'}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
+                          }}
+                        >
+                          <img alt="up" src={arrow} />{' '}
+                          {staticsData?.captainsCount ? '30%' : '0%'}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          flex: 1,
 
-                            background: 'var(--body_background)',
+                          background: 'var(--body_background)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          p: 3,
+                          aspectRatio: 1,
+                          borderRadius: '10px',
+                        }}
+                      >
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          Total Commision Earned in USD
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '40px'}
+                          // fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          $
+                          {staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                            ? parseFloat(
+                                staticsData?.affiliateUserTotalEarnings
+                                  ?.amountInUSD
+                              ).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : '0.00'}
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '10px' : '12px'}
+                          fontWeight={600}
+                          textAlign={'center'}
+                          mb={2}
+                        >
+                          Total Commision Earned in INEX
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={isMobile ? '25px' : '40px'}
+                          // fontWeight={600}
+                          textAlign={'center'}
+                        >
+                          {staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                            ? parseFloat(
+                                staticsData?.affiliateUserTotalEarnings
+                                  ?.amountInINEX
+                              ).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : '0.00'}{' '}
+                          <span className="font_17x">INEX</span>
+                        </Typography>
+                        <Typography
+                          variant="text"
+                          fontSize={'22px'}
+                          fontWeight={400}
+                          textAlign={'center'}
+                          color={'#FFB300'}
+                          sx={{
                             display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            p: 3,
-                            aspectRatio: 1,
-                            borderRadius: '10px',
+                            alignItems: 'baseline',
+                            verticalAlign: 'bottom',
+                            gap: 1,
                           }}
                         >
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            Total Commision Earned in USD
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '40px'}
-                            // fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            $
-                            {staticsData?.affiliateUserTotalEarnings
-                              ?.amountInUSD
-                              ? parseFloat(
-                                  staticsData?.affiliateUserTotalEarnings
-                                    ?.amountInUSD
-                                ).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
-                              : '0.00'}
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '10px' : '12px'}
-                            fontWeight={600}
-                            textAlign={'center'}
-                            mb={2}
-                          >
-                            Total Commision Earned in INEX
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={isMobile ? '25px' : '40px'}
-                            // fontWeight={600}
-                            textAlign={'center'}
-                          >
-                            {staticsData?.affiliateUserTotalEarnings
-                              ?.amountInINEX
-                              ? parseFloat(
-                                  staticsData?.affiliateUserTotalEarnings
-                                    ?.amountInINEX
-                                ).toLocaleString('en-US', {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
-                              : '0.00'}{' '}
-                            <span className="font_17x">INEX</span>
-                          </Typography>
-                          <Typography
-                            variant="text"
-                            fontSize={'22px'}
-                            fontWeight={400}
-                            textAlign={'center'}
-                            color={'#FFB300'}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'baseline',
-                              verticalAlign: 'bottom',
-                              gap: 1,
-                            }}
-                          >
-                            <img alt="up" src={arrow} />{' '}
-                            {staticsData?.ordersCount ? '20%' : '0%'}
-                          </Typography>
-                        </Box>
+                          <img alt="up" src={arrow} />{' '}
+                          {staticsData?.ordersCount ? '20%' : '0%'}
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>

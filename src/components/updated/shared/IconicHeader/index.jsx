@@ -287,7 +287,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1100px';
   } else {
-    maxWidthTabContainer = '500px';
+    maxWidthTabContainer = '550px';
   }
 
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;
@@ -316,9 +316,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
             '& .MuiTabs-indicator': {
               display: 'none',
             },
+
             [theme.breakpoints.down('md')]: {
               '& .MuiTabs-scrollButtons': {
                 display: 'flex',
+              },
+              '& .MuiTabScrollButton-root': {
+                padding: '25px',
               },
             },
           }}

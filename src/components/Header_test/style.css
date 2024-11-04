@@ -314,7 +314,7 @@ nav .wrapper {
     box-shadow: none;
     transition: all 0.3s ease;
   }
-  #Buy\ Crypto:checked ~ .drop-menu,
+  #Buy\ Crypto:checked ~ .mega-box,
   #Lotto:checked ~ .mega-box,
   #Meme:checked ~ .mega-box,
   #Hive:checked ~ .mega-box,

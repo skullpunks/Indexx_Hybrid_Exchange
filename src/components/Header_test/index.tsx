@@ -592,7 +592,8 @@ const HeaderTest = () => {
                           >
                             {isAuthenticated
                               ? userEmail
-                              : element.mainTextDesktop}{' '}
+                              : element.mainTextDesktop}
+                            {element.hasMegaDrop ? ' > ' : ''}
                           </label>
                           {element.hasMegaDrop ? (
                             <div
@@ -674,12 +675,12 @@ const HeaderTest = () => {
                     >
                       {element.mainTextDesktop}
                     </a>
-                    <input type="checkbox" id={element.mainTextDesktop} />
+                    <input type="checkbox" id={element.mainTextMob} />
                     <label
-                      htmlFor={element.mainTextDesktop}
+                      htmlFor={element.mainTextMob}
                       className="mobile-item"
                     >
-                      {element.mainTextMob} {element.hasMegaDrop ? '>' : ''}
+                      {element.mainTextDesktop} {element.hasMegaDrop ? '>' : ''}
                     </label>
                     {element.hasMegaDrop ? (
                       <div
