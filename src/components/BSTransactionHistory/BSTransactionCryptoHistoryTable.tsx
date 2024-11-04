@@ -10,7 +10,6 @@ import CustomSelectBox from './CustomSelect';
 import InputField from '../updated/shared/TextField';
 import GenericButton from '../updated/shared/Button';
 import { useTheme } from '@mui/material';
-import { AnyArn } from 'aws-sdk/clients/groundstation';
 
 const { Option } = Select;
 
@@ -30,6 +29,7 @@ interface DataType {
   notes?: string;
   balance?: number;
   amountInvested?: number | string;
+  rate?: number;
   // Adding balance field
 }
 
@@ -58,7 +58,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
   ) => {
     if (type === 'Create Gift') {
       return 'N/A';
-    } else if (type === 'SEND_CRYPTO' || type === "INVESTMENT" || type === 'PURCHASED_COINS' ) {
+    } else if (type === 'SEND_CRYPTO' || type === "INVESTMENT" || type === 'PURCHASED_COINS') {
       if (asset === 'INEX' || asset === 'IN500' || asset === 'IUSD+' || asset === 'WIBS' || asset === 'daCrazy') {
         return `${(1)} %`;
       } else {
@@ -126,9 +126,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (_, record) => (
         <span>
           ${' '}
-          {(Number(record?.amountInvested) / record?.amount)?.toLocaleString(undefined, {
+          {(record?.rate ?? (Number(record?.amountInvested) / record?.amount))?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
+            maximumFractionDigits: 4,
           })}
         </span>
       ),
@@ -152,7 +152,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (_, record) => (
         <span>
           ${' '}
-          {(Number(record?.amountInvested) - (Number(record?.amountInvested)* 3 /100))?.toLocaleString(undefined, {
+          {(Number(record?.amountInvested) - (Number(record?.amountInvested) * 3 / 100))?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
