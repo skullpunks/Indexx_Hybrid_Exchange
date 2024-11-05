@@ -219,10 +219,20 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
           onChange={handleChange}
           centered={!isLoggedIn}
           variant="scrollable"
-          scrollButtons={false}
+          scrollButtons={'auto'}
           sx={{
             width: '100%',
             background: 'none',
+            [theme.breakpoints.down('md')]: {
+              '& .MuiTabs-scrollButtons': {
+                display: 'flex',
+              },
+              '& .MuiTabScrollButton-root': {
+                padding: '25px',
+                color: 'black',
+                fontSize: '24px',
+              },
+            },
             '& .MuiTabs-indicator': {
               display: 'none',
             },

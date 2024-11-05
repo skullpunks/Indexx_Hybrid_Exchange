@@ -49,7 +49,7 @@ const getAuthenticatedUrl = async (url: any) => {
 const header_data = [
   {
     mainTextDesktop: 'Exchange / Buy Crypto',
-    mainTextMob: 'Exchange / Buy Crypto',
+    mainTextMob: 'Buy Crypto',
     active: true,
     href: '/',
     hasMegaDrop: true,

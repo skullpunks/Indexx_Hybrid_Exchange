@@ -1170,16 +1170,14 @@ const Footer = ({ helpIcon = true, footerArt = 'flipMan' }: FooterProps) => {
           >
             {theme === 'dark' ? (
               <img
-                src={userLogged === 'normal' ? indexText : indexTextyellow}
+                src={indexText}
                 alt="index logo"
                 width={'70px'}
                 className="logo_ind"
               />
             ) : (
               <img
-                src={
-                  userLogged === 'normal' ? indexText_dark : indexTextyellowdark
-                }
+                src={indexText_dark}
                 alt="index logo"
                 width={'70px'}
                 className="logo_ind"
