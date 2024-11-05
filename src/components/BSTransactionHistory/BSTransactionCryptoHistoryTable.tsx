@@ -153,7 +153,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         <span>
           ${' '}
           {(
-           record?.type === 'PowerPack'
+           record?.transactionType === 'PowerPack'
               ? Number(record?.amountInvested)
               : Number(record?.amountInvested) - (Number(record?.amountInvested) * 3 / 100)
           )?.toLocaleString(undefined, {
