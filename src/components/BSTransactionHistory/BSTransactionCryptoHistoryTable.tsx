@@ -152,7 +152,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (_, record) => (
         <span>
           ${' '}
-          {(Number(record?.amountInvested) - (Number(record?.amountInvested) * 3 / 100))?.toLocaleString(undefined, {
+          {(
+           record?.type === 'PowerPack'
+              ? Number(record?.amountInvested)
+              : Number(record?.amountInvested) - (Number(record?.amountInvested) * 3 / 100)
+          )?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
