@@ -107,7 +107,7 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
       search: '',
     },
     {
-      label: 'My Captain Bee',
+      label: 'My Hive Captain',
       light: captainBeeIcon,
       dark: captainBeeIcon,
       path: '/indexx-exchange/dashboard/capt-leader',

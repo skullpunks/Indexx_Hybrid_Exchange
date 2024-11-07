@@ -134,7 +134,7 @@ const AffiliateProgram = () => {
             fontSize: '14px',
           }}
         >
-          Captain Bee
+          Hive Captain
         </Typography>
 
         <Typography
@@ -207,7 +207,7 @@ const AffiliateProgram = () => {
                   textAlign="center"
                   color="black !important"
                 >
-                  Captain Bee
+                  Hive Captain
                 </Typography>
                 <Typography
                   variant="body1"
@@ -280,7 +280,7 @@ const AffiliateProgram = () => {
                     },
                   }}
                 >
-                  Invite a Captain Bee to your colony
+                  Invite a Hive Captain to your colony
                 </Button>
                 {/*  */}
               </Box>

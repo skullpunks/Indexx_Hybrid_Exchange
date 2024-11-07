@@ -154,7 +154,7 @@ const LeaderCaptain = () => {
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
-  const [selectedTab, setSelectedTab] = useState('My Captain Bee');
+  const [selectedTab, setSelectedTab] = useState('My Hive Captain');
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -190,7 +190,7 @@ const LeaderCaptain = () => {
           <p
             style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
           >
-            Please wait while your Captain Bee's profile is loading
+            Please wait while your Hive Captain's profile is loading
             <span className="dots-animation"></span>
           </p>
         </div>
@@ -205,7 +205,7 @@ const LeaderCaptain = () => {
                   textAlign: 'center',
                 }}
               >
-                There are no Leader Captain Bee for you
+                There are no Leader Hive Captain for you
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ const LeaderCaptain = () => {
               >
                 <div style={{ width: `${isMobile ? '100%' : '74%'}` }}>
                   <img src={hat} alt="hat" style={{ marginRight: '10px' }} />
-                  Leader Captain Bee’s Dashboard
+                  Leader Hive Captain’s Dashboard
                 </div>
                 <div
                   className="d-flex justify-content-between"
@@ -258,7 +258,7 @@ const LeaderCaptain = () => {
                       },
                     }}
                   >
-                    Change Leader Captain Bee
+                    Change Leader Hive Captain
                   </Button>
                   <Button
                     variant="outlined"
@@ -280,7 +280,7 @@ const LeaderCaptain = () => {
                       },
                     }}
                   >
-                    Remove Leader Captain Bee
+                    Remove Leader Hive Captain
                   </Button>
                 </div>
               </div>
@@ -393,7 +393,7 @@ const LeaderCaptain = () => {
                     className="font_10x mb-3 lh_32x align-items-start"
                     style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
                   >
-                    Leader Captain Bee of Captain Willie’s Team
+                    Leader Hive Captain of Captain Willie’s Team
                   </div>
                   {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
                     <div className="justify-content-center d-flex">
@@ -577,7 +577,7 @@ const LeaderCaptain = () => {
                       </div>
                       <br />
                       <div>
-                        <span className="fw-bold">Invite Captain Bee :</span>
+                        <span className="fw-bold">Invite Hive Captain :</span>
                         <br />
                         {captainBeeFullData?.referralCode}
                         <ContentCopyIcon

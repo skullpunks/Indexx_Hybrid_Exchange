@@ -36,7 +36,7 @@ interface Props {
 }
 const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   // const BSConfirmConvert: React.FC = () => {
-  // 
+  //
   const navigate = useNavigate();
   const [loadings, setLoadings] = useState<boolean>(false);
   const [rateData1, setRateData1] = useState(0);
@@ -47,9 +47,9 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [, setTaskCenterDetails] = useState() as any;
   const { id } = useParams();
-  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [honeyBeeId, setHoneyBeeId] = useState('');
   const [permissionData, setPermissionData] = useState() as any;
-  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
   const filteredFromArray = initialTokens.filter(function (obj) {
     return obj?.address === BSvalue?.fromToken;
   });
@@ -88,7 +88,6 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
     setRateData2(priceData2.results.data);
 
-
     let finalRate = priceData1.results.data / priceData2.results.data;
 
     setRateData3(finalRate);
@@ -97,11 +96,11 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       finalRate * Number(BSvalue?.amount) * priceData2.results.data
     );
     // let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
-    // 
-    // 
+    //
+    //
     setTotalAmountToPay(
       finalRate * Number(BSvalue?.amount) -
-      (finalRate * Number(BSvalue?.amount) * Number(adminFee)) / 100
+        (finalRate * Number(BSvalue?.amount) * Number(adminFee)) / 100
     );
     return;
   };
@@ -109,7 +108,12 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC') {
+    if (
+      filteredFromArray[0].title === 'INEX' ||
+      filteredFromArray[0].title === 'IUSD+' ||
+      filteredFromArray[0].title === 'IN500' ||
+      filteredFromArray[0].title === 'INXC'
+    ) {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -129,16 +133,17 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     if (id) {
       setHoneyBeeId(String(id));
       getHoneyBeeDataByUsername(String(id)).then((data) => {
-
         setHoneyBeeEmail(data.data.userFullData?.email);
-        let captainbeePermissions = data.data.referredUserData?.data.relationships;
+        let captainbeePermissions =
+          data.data.referredUserData?.data.relationships;
 
+        let c = captainbeePermissions.find(
+          (x: { honeybeeEmail: any }) =>
+            x.honeybeeEmail === data.data.userFullData?.email
+        );
 
-        let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-
-        setPermissionData(c)
+        setPermissionData(c);
       });
-
     }
     getAllSetting();
     getPricesData();
@@ -149,12 +154,12 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       testVal.length < 6
         ? '1.1'
         : testVal.length < 9
-          ? '0.9'
-          : testVal.length < 12
-            ? '0.8'
-            : testVal.length < 15
-              ? '0.6'
-              : '0.4';
+        ? '0.9'
+        : testVal.length < 12
+        ? '0.8'
+        : testVal.length < 15
+        ? '0.6'
+        : '0.4';
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
@@ -166,14 +171,23 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let quotecoin: string = filteredToArray[0].title;
     let res;
     if (id) {
-
-
       if (!permissionData?.permissions?.convert) {
         setLoadings(false);
-        OpenNotification('error', "As Captain bee, Please apply for convert approval from honey bee");
+        OpenNotification(
+          'error',
+          'As Hive Captain, Please apply for convert approval from honey bee'
+        );
         return;
       }
-      res = await createConvertOrder(basecoin, quotecoin, Number(BSvalue?.amount), totalAmountToPay, 0, honeyBeeEmail, true);
+      res = await createConvertOrder(
+        basecoin,
+        quotecoin,
+        Number(BSvalue?.amount),
+        totalAmountToPay,
+        0,
+        honeyBeeEmail,
+        true
+      );
     } else {
       res = await createConvertOrder(
         basecoin,
@@ -190,10 +204,12 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       }
     } else {
       setLoadings(false);
-      OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
+      OpenNotification(
+        'error',
+        'Failed to Process Convert Order. Please check balance on the wallet'
+      );
     }
   };
-
 
   const processConvertOrder = async (order: any) => {
     const res = await confirmConvertOrder(order.user.email, order.orderId);
@@ -202,13 +218,16 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       setLoadings(false);
       OpenNotification('success', 'Successfully Processed Convert Order');
       // setScreenName("BSSellInprogress");
-      if (honeyBeeId === "undefined" || honeyBeeId === "")
-        navigate("/indexx-exchange/buy-sell/convert-in-progress");
+      if (honeyBeeId === 'undefined' || honeyBeeId === '')
+        navigate('/indexx-exchange/buy-sell/convert-in-progress');
       else
         navigate(`/indexx-exchange/buy-sell/convert-in-progress/${honeyBeeId}`);
     } else {
       setLoadings(false);
-      OpenNotification('error', "Failed to Process Convert Order. Please check balance on the wallet");
+      OpenNotification(
+        'error',
+        'Failed to Process Convert Order. Please check balance on the wallet'
+      );
     }
   };
 
@@ -285,8 +304,8 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
           <span>
             {rateData3 < 0.0001
               ? rateData3.toFixed(8)
-              : Math.floor(rateData3 * 10000) / 10000} {filteredToArray[0].title} /{' '}
-            {filteredFromArray[0].title}
+              : Math.floor(rateData3 * 10000) / 10000}{' '}
+            {filteredToArray[0].title} / {filteredFromArray[0].title}
           </span>
         </div>
         <div
@@ -313,7 +332,10 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
                         }}><div>0.00908 ETH</div><div>= $ 11.72</div></div><img src={arrowAddress} alt="arrow icon" style={{}} /></div>
                     </div> */}
         <div className="footer bs_footer_action p-2">
-          <p className="text-center pb-1 pt-1" style={{ color: "var(--body_color)" }}>
+          <p
+            className="text-center pb-1 pt-1"
+            style={{ color: 'var(--body_color)' }}
+          >
             Transaction/Admin Fee: {adminFee || '0.00'} %
           </p>
           {/* {Number(totalAmountToPayInUSD) > 50 && (taskCenterDetails?.tradeToEarnPercentage > 0) &&

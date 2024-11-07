@@ -123,7 +123,7 @@ const SubHeader = () => {
                   }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">My Captain Bee</h5>
+                  <h5 className="card-title">My Hive Captain</h5>
                   <Typography
                     component="p"
                     sx={

@@ -1,17 +1,25 @@
 import { baseCEXURL, baseHiveURL } from '../../../services/api';
 import './GreetLandscape.css';
 
-const GreetLandscape = ({ isVisible, onClose, name, amount, captainName, refCode, type }) => {
+const GreetLandscape = ({
+  isVisible,
+  onClose,
+  name,
+  amount,
+  captainName,
+  refCode,
+  type,
+}) => {
   if (!isVisible) return null;
 
   return (
     <>
       <div class="main-pay-box">
-        <div class="pay-box" style={{width:"866px"}}>
+        <div class="pay-box" style={{ width: '866px' }}>
           <div className="close-button-greetl" onClick={onClose}>
             &times; {/* This is the close button (X) */}
           </div>
-          <div class="main-head">🎄Holiday Cheers from Captain Bee! 🐝🎁</div>
+          <div class="main-head">🎄Holiday Cheers from Hive Captain! 🐝🎁</div>
           <div class="greet-text">
             Dear {name},
             <br />
@@ -19,35 +27,47 @@ const GreetLandscape = ({ isVisible, onClose, name, amount, captainName, refCode
             exclusive festive bonus:
             <br />
             <br />
-            🌟 Register with {" "}
-            {type === 'captainbee' ?
-              <a href={`${baseHiveURL}/sign-up?referral=${refCode}`} className='hive_link'>
-              referral link
+            🌟 Register with{' '}
+            {type === 'captainbee' ? (
+              <a
+                href={`${baseHiveURL}/sign-up?referral=${refCode}`}
+                className="hive_link"
+              >
+                referral link
               </a>
-              :
-              <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${refCode}`} className='hive_link'>
-              referral link
+            ) : (
+              <a
+                href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${refCode}`}
+                className="hive_link"
+              >
+                referral link
               </a>
-              }{" "}
+            )}{' '}
             <br />
-            💰 Instant bonus in your wallet of {" "}
-            <span className='fw-bold'>
-            {amount} {" INEX"}
+            💰 Instant bonus in your wallet of{' '}
+            <span className="fw-bold">
+              {amount} {' INEX'}
             </span>
             <br />
             <br />
             🎊 How to Claim:
             <br />
-            1. Click the {" "}
-            {type === 'captainbee' ?
-              <a href={`${baseHiveURL}/sign-up?referral=${refCode}`} className='hive_link'>
-              link
+            1. Click the{' '}
+            {type === 'captainbee' ? (
+              <a
+                href={`${baseHiveURL}/sign-up?referral=${refCode}`}
+                className="hive_link"
+              >
+                link
               </a>
-              :
-              <a href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${refCode}`} className='hive_link'>
-              link
+            ) : (
+              <a
+                href={`${baseCEXURL}/indexx-exchange/buy-sell/get-started-honeybee?referral=${refCode}`}
+                className="hive_link"
+              >
+                link
               </a>
-              }
+            )}
             <br />
             2. Fill the form
             <br />
@@ -56,14 +76,14 @@ const GreetLandscape = ({ isVisible, onClose, name, amount, captainName, refCode
             <br />
             Enjoy your instant bonus!
             <br />
-            Dive into the hive as a Captain Bee or Honeybee for growth,
+            Dive into the hive as a Hive Captain or Honeybee for growth,
             connections, and perks. Here's to a sweet and successful festive
             season!
             <br />
             <br />
             Best,
             <br />
-            Captain Bee {captainName}
+            Hive Captain {captainName}
             <br />
             Indexx Hive
           </div>

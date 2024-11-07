@@ -274,9 +274,9 @@ const Popup = ({
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from honey bee");
         setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from honey bee'
         );
         setLoadings(false);
         setShowMessagePopup(true);
@@ -332,9 +332,9 @@ const Popup = ({
     console.log('paymentMethod', paymentMethod);
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from honey bee");
         setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from honey bee'
         );
         setLoadings(false);
         setShowMessagePopup(true);

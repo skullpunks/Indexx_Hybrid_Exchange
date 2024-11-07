@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -6,11 +6,14 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon_grey.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
-import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+} from '../../../../services/api';
 import CommissionTable from '../CommissionTable';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 
 const TeamCaptainGrowth = () => {
   const { id } = useParams();
@@ -22,7 +25,7 @@ const TeamCaptainGrowth = () => {
   // const [OrderCapt, setOrderCapt] = useState('buysell');
   // const [selectedDateCapt, setSelectedDateCapt] = useState('aug-sept');
 
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
@@ -51,7 +54,6 @@ const TeamCaptainGrowth = () => {
   //   'Page G',
   // ];
 
-
   const [powerPackPhoto, setPowerPackPhoto] = useState();
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
@@ -61,45 +63,49 @@ const TeamCaptainGrowth = () => {
   const [captainbeesEmail, setCaptainbeeEmail] = useState();
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
 
     setUserType(userType);
-    if (userType === "CaptainBee") {
+    if (userType === 'CaptainBee') {
       if (id) {
         getCaptainBeeStatics(id).then((data) => {
           setStaticsData(data.data);
-          console.log("Data", data?.data);
-          console.log("Data", data?.data.userFullData?.email);
+          console.log('Data', data?.data);
+          console.log('Data', data?.data.userFullData?.email);
           setCaptainbeeEmail(data?.data?.userFullData?.email);
         });
       }
     } else {
-      console.log("I am else")
-
+      console.log('I am else');
     }
-  }, [captainbeesEmail])
+  }, [captainbeesEmail]);
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: '10px' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
-          mt: 2
+          mt: 2,
         }}
       >
-
         <Box
           sx={{
             display: 'flex',
-            flexDirection: `${isMobile ? "column" : "row"}`,
+            flexDirection: `${isMobile ? 'column' : 'row'}`,
             gap: isMobile ? 4 : 2,
-            mt: 2
+            mt: 2,
           }}
         >
           <Box
@@ -107,7 +113,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: `${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? '100%' : '50%'}`,
             }}
           >
             <Typography
@@ -116,12 +122,11 @@ const TeamCaptainGrowth = () => {
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={"auto"}
+              mx={'auto'}
               mb={2}
               sx={{
-                color: "#393939",
+                color: '#393939',
               }}
-
             >
               My Honey Bee Statistics
             </Typography>
@@ -289,7 +294,7 @@ const TeamCaptainGrowth = () => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio: 1
+                  aspectRatio: 1,
                 }}
               >
                 <Typography
@@ -322,7 +327,8 @@ const TeamCaptainGrowth = () => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} /> {staticsData?.honeyBeesCount ? "30%" : "0%"}
+                  <img alt="up" src={arrow} />{' '}
+                  {staticsData?.honeyBeesCount ? '30%' : '0%'}
                 </Typography>
               </Box>
               <Box
@@ -335,7 +341,7 @@ const TeamCaptainGrowth = () => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio: 1
+                  aspectRatio: 1,
                 }}
               >
                 <Typography
@@ -353,13 +359,16 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  ${(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
-                    ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })
-                    : '0.00')
-                  }
+                  $
+                  {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
+                    ? parseFloat(
+                        staticsData?.affiliateHoneyBeeUserTotalEarnings
+                          ?.amountInUSD
+                      ).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : '0.00'}
                 </Typography>
                 <Typography
                   variant="text"
@@ -376,15 +385,16 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  {(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
-                    ? parseFloat(staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })
-                    : '0.00')}
-                  <span className='font_17x'>
-                    INEX
-                  </span>
+                  {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
+                    ? parseFloat(
+                        staticsData?.affiliateHoneyBeeUserTotalEarnings
+                          ?.amountInINEX
+                      ).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : '0.00'}
+                  <span className="font_17x">INEX</span>
                 </Typography>
                 <Typography
                   variant="text"
@@ -399,7 +409,8 @@ const TeamCaptainGrowth = () => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                  <img alt="up" src={arrow} />{' '}
+                  {staticsData?.ordersCount ? '20%' : '0%'}
                 </Typography>
               </Box>
             </Box>
@@ -426,7 +437,7 @@ const TeamCaptainGrowth = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: `${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? '100%' : '50%'}`,
             }}
           >
             <Typography
@@ -435,14 +446,13 @@ const TeamCaptainGrowth = () => {
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={"auto"}
+              mx={'auto'}
               mb={2}
               sx={{
-                color: "#393939",
+                color: '#393939',
               }}
-
             >
-              My Captain Bee Statistics
+              My Hive Captain Statistics
             </Typography>
             {/* <Box
               sx={{
@@ -608,7 +618,7 @@ const TeamCaptainGrowth = () => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio: 1
+                  aspectRatio: 1,
                 }}
               >
                 <Typography
@@ -618,7 +628,7 @@ const TeamCaptainGrowth = () => {
                   textAlign={'left'}
                   alignSelf={'flex-start'}
                 >
-                  Total Team Captain Bees
+                  Total Team Hive Captains
                 </Typography>
                 <Typography
                   variant="text"
@@ -641,7 +651,8 @@ const TeamCaptainGrowth = () => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} /> {staticsData?.captainsCount ? "30%" : "0%"}
+                  <img alt="up" src={arrow} />{' '}
+                  {staticsData?.captainsCount ? '30%' : '0%'}
                 </Typography>
               </Box>
               <Box
@@ -654,7 +665,7 @@ const TeamCaptainGrowth = () => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio: 1
+                  aspectRatio: 1,
                 }}
               >
                 <Typography
@@ -672,13 +683,15 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  ${(staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInUSD).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })
-                    : '0.00')
-                  }
+                  $
+                  {staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                    ? parseFloat(
+                        staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                      ).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : '0.00'}
                 </Typography>
                 <Typography
                   variant="text"
@@ -695,16 +708,15 @@ const TeamCaptainGrowth = () => {
                   // fontWeight={600}
                   textAlign={'left'}
                 >
-                  {(staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                    ? parseFloat(staticsData?.affiliateUserTotalEarnings?.amountInINEX).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })
-                    : '0.00')
-                  }
-                  <span className='font_17x'>
-                    INEX
-                  </span>
+                  {staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                    ? parseFloat(
+                        staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                      ).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : '0.00'}
+                  <span className="font_17x">INEX</span>
                 </Typography>
                 <Typography
                   variant="text"
@@ -719,7 +731,8 @@ const TeamCaptainGrowth = () => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} />  {staticsData?.ordersCount ? "20%" : "0%"}
+                  <img alt="up" src={arrow} />{' '}
+                  {staticsData?.ordersCount ? '20%' : '0%'}
                 </Typography>
               </Box>
             </Box>
@@ -747,7 +760,7 @@ const TeamCaptainGrowth = () => {
         </Box>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default TeamCaptainGrowth
+export default TeamCaptainGrowth;

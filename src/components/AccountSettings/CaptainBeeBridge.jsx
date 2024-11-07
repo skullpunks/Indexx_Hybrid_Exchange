@@ -53,7 +53,7 @@ const CaptainBeeBridge = ({ handleCaptainBee }) => {
   return (
     <div className={classes.Container}>
       <h1 className={classes.heading}>
-        Becoming a captain bee means Guiding/Investing and Earning from your
+        Becoming a Hive Captain means Guiding/Investing and Earning from your
         members.
       </h1>
       <p className={classes.paragraph}>
@@ -71,7 +71,7 @@ const CaptainBeeBridge = ({ handleCaptainBee }) => {
         <div className={classes.logoContainer}>
           <img src={captainBee} alt="Logo 2" className={classes.logo} />
           <GenericButton
-            text="Become a Captain Bee"
+            text="Become a Hive Captain"
             onClick={handleCaptainBee}
             className={classes.customButton}
           />

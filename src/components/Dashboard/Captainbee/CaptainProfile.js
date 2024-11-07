@@ -265,7 +265,7 @@ const CaptainProfile = () => {
                   fontSize={isMobile ? '20px' : '30px'}
                   fontWeight={600}
                 >
-                  Captain Bee Information
+                  Hive Captain Information
                 </Typography>
                 <Box
                   sx={{
@@ -564,7 +564,7 @@ const CaptainProfile = () => {
                     textAlign={'left'}
                     alignSelf={isMobile ? 'normal' : 'baseline'}
                   >
-                    Captain Bee Referral Code
+                    Hive Captain Referral Code
                   </Typography>
                   <TextField
                     variant="outlined"

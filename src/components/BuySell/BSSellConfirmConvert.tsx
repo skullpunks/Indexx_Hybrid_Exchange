@@ -30,14 +30,14 @@ let appSettingArr: any[] = [];
 
 // const BSSellConfirmConvert: React.FC = () => {
 const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
-  // 
+  //
   const navigate = useNavigate();
   const [rateData, setRateData] = useState();
   const [loadings, setLoadings] = useState<boolean>(false);
   const { id } = useParams();
-  const [honeyBeeId, setHoneyBeeId] = useState("");
+  const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
-  const [honeyBeeEmail, setHoneyBeeEmail] = useState("");
+  const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
   const [totalAmountToPay, setTotalAmountToPay] = useState(0);
   const { BSvalue, setBSvalue } = React.useContext(BSContext) as BSContextType;
   const [adminFee, setAdminFees] = useState('');
@@ -53,10 +53,12 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   let priceData: any = {};
 
   const navigateBak = () => {
-    if (honeyBeeId === "undefined" || honeyBeeId === "")
+    if (honeyBeeId === 'undefined' || honeyBeeId === '')
       navigate(`/indexx-exchange/buy-sell?type=sell`);
     else
-      navigate(`/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=sell`);
+      navigate(
+        `/indexx-exchange/buy-sell/for-honeybee/${honeyBeeId}?type=sell`
+      );
     // setScreenName("");
   };
 
@@ -76,16 +78,15 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       testVal.length < 6
         ? '1.1'
         : testVal.length < 9
-          ? '0.9'
-          : testVal.length < 12
-            ? '0.8'
-            : testVal.length < 15
-              ? '0.6'
-              : '0.4';
+        ? '0.9'
+        : testVal.length < 12
+        ? '0.8'
+        : testVal.length < 15
+        ? '0.6'
+        : '0.4';
     let charWidth = testVal.length <= 1 ? 1.1 : 0.9;
     element.style.width = (testVal.length + 1) * charWidth + 'ch';
     element.style.fontSize = charFontSize + 'ch';
-
 
     if (id) {
       setHoneyBeeId(String(id));
@@ -93,14 +94,16 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         setUserData(data.data);
 
         setHoneyBeeEmail(data.data.userFullData?.email);
-        let captainbeePermissions = data.data.referredUserData?.data.relationships;
+        let captainbeePermissions =
+          data.data.referredUserData?.data.relationships;
 
+        let c = captainbeePermissions.find(
+          (x: { honeybeeEmail: any }) =>
+            x.honeybeeEmail === data.data.userFullData?.email
+        );
 
-        let c = captainbeePermissions.find((x: { honeybeeEmail: any; }) => x.honeybeeEmail === data.data.userFullData?.email);
-
-        setPermissionData(c)
+        setPermissionData(c);
       });
-
     }
     getAllSetting();
     getPricesData();
@@ -117,11 +120,9 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     setRateData(priceData);
     let oneUsdValue = await oneUSDHelper(priceData, filteredFromArray[0].title);
 
-
-
     setTotalAmountToPay(
       priceData * Number(BSvalue?.amount) -
-      (priceData * Number(BSvalue?.amount) * Number(adminFee)) / 100
+        (priceData * Number(BSvalue?.amount) * Number(adminFee)) / 100
     );
   };
 
@@ -132,14 +133,23 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
     let amount: number = Number(BSvalue?.amount);
     let res;
     if (id) {
-
-
       if (!permissionData?.permissions?.sell) {
         setLoadings(false);
-        OpenNotification('error', "As Captain bee, Please apply for sell approval from honey bee");
+        OpenNotification(
+          'error',
+          'As Hive Captain, Please apply for sell approval from honey bee'
+        );
         return;
       }
-      res = await createSellOrder(basecoin, quotecoin, amount, totalAmountToPay, 0, honeyBeeEmail, true);
+      res = await createSellOrder(
+        basecoin,
+        quotecoin,
+        amount,
+        totalAmountToPay,
+        0,
+        honeyBeeEmail,
+        true
+      );
     } else {
       res = await createSellOrder(
         basecoin,
@@ -161,7 +171,10 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       }
     } else {
       setLoadings(false);
-      OpenNotification('error', "Failed to Process Sell Order. Please check balance on the wallet");
+      OpenNotification(
+        'error',
+        'Failed to Process Sell Order. Please check balance on the wallet'
+      );
     }
     //getStripePaymentIntent(res.data.orderId, res.data.user.email);
   };
@@ -171,7 +184,10 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
 
     if (basecoin === 'INEX') {
       setLoadings(false);
-      OpenNotification('error', 'Failed to Process Sell Order. INEX token not allowed to sell');
+      OpenNotification(
+        'error',
+        'Failed to Process Sell Order. INEX token not allowed to sell'
+      );
     } else {
       const res = await confirmSellOrder(
         order.user.email,
@@ -183,13 +199,16 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         setLoadings(false);
         OpenNotification('success', 'Successfully Processed Sell Order');
         // setScreenName("BSSellInprogress");
-        if (honeyBeeId === "undefined" || honeyBeeId === "")
-          navigate("/indexx-exchange/buy-sell/sell-in-progress");
+        if (honeyBeeId === 'undefined' || honeyBeeId === '')
+          navigate('/indexx-exchange/buy-sell/sell-in-progress');
         else
           navigate(`/indexx-exchange/buy-sell/sell-in-progress/${honeyBeeId}`);
       } else {
         setLoadings(false);
-        OpenNotification('error', 'Failed to Process Sell Order. INEX token not allowed to sell');
+        OpenNotification(
+          'error',
+          'Failed to Process Sell Order. INEX token not allowed to sell'
+        );
       }
     }
   };
@@ -197,7 +216,13 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   const getAllSetting = async () => {
     const res = await getAppSettings();
     appSettingArr = res.data;
-    if (filteredFromArray[0].title === 'INEX' || filteredFromArray[0].title === 'IUSD+' || filteredFromArray[0].title === 'IN500' || filteredFromArray[0].title === 'INXC' ||  filteredFromArray[0].title === 'WISB') {
+    if (
+      filteredFromArray[0].title === 'INEX' ||
+      filteredFromArray[0].title === 'IUSD+' ||
+      filteredFromArray[0].title === 'IN500' ||
+      filteredFromArray[0].title === 'INXC' ||
+      filteredFromArray[0].title === 'WISB'
+    ) {
       let adminFees = appSettingArr.find(
         (item: any) => item.key === 'IndexxTokensAdminFees'
       );
@@ -216,7 +241,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
   //     let basecoin: string = 'USD';
   //     let amount: number = Number(BSvalue?.amount);
   //     const res = await createSellOrder(basecoin, quotecoin, amount);
-  //     
+  //
 
   //     setScreenName("BSSellInprogress");
   // }
@@ -268,7 +293,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
           <div className="d-flex flex-justify-between">
             <span> Price</span>
             <span className="font_w_800">
-              {rateData} {filteredFromArray[0].title}{' '} / USD
+              {rateData} {filteredFromArray[0].title} / USD
             </span>
           </div>
           <div className="d-flex flex-justify-between">

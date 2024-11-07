@@ -242,7 +242,7 @@ const header_data = [
         mainList: true,
         links: [
           {
-            name: 'Captain Bee',
+            name: 'Hive Captain',
             href: 'https://hive.indexx.ai/bees',
           },
           {
@@ -255,7 +255,7 @@ const header_data = [
         heading: 'Become a member',
         links: [
           {
-            name: 'Register as Caption Bee',
+            name: 'Register as Hive Captain',
             href: 'https://hive.indexx.ai/sign-up',
           },
           {

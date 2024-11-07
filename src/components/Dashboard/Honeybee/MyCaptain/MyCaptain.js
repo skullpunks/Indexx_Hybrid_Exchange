@@ -120,7 +120,7 @@ const MyCaptain = () => {
           <p
             style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
           >
-            Please wait while your Captain Bee's Hive Dashboard is loading
+            Please wait while your Hive Captain's Hive Dashboard is loading
             <span className="dots-animation"></span>
           </p>
         </div>
@@ -134,7 +134,7 @@ const MyCaptain = () => {
             className="font_20x fw-bold justify-content-center d-flex"
             style={{ width: '1200px' }}
           >
-            <div style={{ width: '85%' }}>Your Captain Bee’s Dashboard</div>
+            <div style={{ width: '85%' }}>Your Hive Captain’s Dashboard</div>
             <div
               className="d-flex justify-content-between"
               style={{ width: '29.5%' }}
@@ -159,7 +159,7 @@ const MyCaptain = () => {
                   },
                 }}
               >
-                Change Captain Bee
+                Change Hive Captain
               </Button>
               <Button
                 variant="outlined"
@@ -181,7 +181,7 @@ const MyCaptain = () => {
                   },
                 }}
               >
-                Remove Captain Bee
+                Remove Hive Captain
               </Button>
             </div>
           </div>
@@ -242,7 +242,7 @@ const MyCaptain = () => {
                 </div>
               </div>
               <div className="font_20x align-items-start fw-bold mt-4 mb-3 lh_32x">
-                Captain Bee {captainBeeData?.Username}
+                Hive Captain {captainBeeData?.Username}
               </div>
               <div className="align-items-start lh_32x">
                 <div className="font_13x d-flex align-items-center ">

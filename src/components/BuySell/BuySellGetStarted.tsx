@@ -295,7 +295,7 @@ const BuySellGetStarted: React.FC = () => {
                 onClick={handleClick}
                 className="login_links"
               >
-                Sign up as Captain Bee
+                Sign up as Hive Captain
               </a>
             </div>
             <div className="d-flex justify-center padding-t-2x">
@@ -338,7 +338,7 @@ const BuySellGetStarted: React.FC = () => {
                 <div style={{ fontSize: '20px', textAlign: 'center' }}>
                   Take help from a
                   <br />
-                  Captain Bee now!
+                  Hive Captain now!
                 </div>
 
                 <Image

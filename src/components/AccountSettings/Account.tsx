@@ -97,7 +97,7 @@ const Account = () => {
 
   if (localStorage.getItem('userType') === 'Indexx Exchange') {
     tabsData.push({
-      label: 'Convert to Captain Bee',
+      label: 'Convert to Hive Captain',
       light: convertLight,
       dark: convertDark,
       component: captainBeeForm ? (

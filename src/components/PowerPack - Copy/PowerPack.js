@@ -68,8 +68,8 @@ const PowerPack = ({ type, subType }) => {
             : subType === 'token'
             ? ' Honey Bee Token Pack'
             : subType === 'crypto'
-            ? ' Captain Bee Crypto Pack'
-            : ' Captain Bee Power Pack'}
+            ? ' Hive Captain Crypto Pack'
+            : ' Hive Captain Power Pack'}
         </h3>
       </Box>
 
@@ -86,10 +86,10 @@ const PowerPack = ({ type, subType }) => {
         }}
       >
         To unlock the full potential of earning as a{' '}
-        <b>{type === 'captainBee' ? 'Captain Bee,' : 'Honey Bee,'}</b> you must
+        <b>{type === 'captainBee' ? 'Hive Captain,' : 'Honey Bee,'}</b> you must
         invest in a minimum of the{' '}
         {type === 'captainBee'
-          ? 'Captain Bee Crypto Pack'
+          ? 'Hive Captain Crypto Pack'
           : 'Honey Bee Action Pack'}{' '}
         or a higher tier. This investment is your ticket to financial growth and
         success.
@@ -137,7 +137,7 @@ const PowerPack = ({ type, subType }) => {
             </>
           ))}
         </Grid>
-        <PopupModal open={openPopup} setOpen={setOpenPopup} data={popupData}  />
+        <PopupModal open={openPopup} setOpen={setOpenPopup} data={popupData} />
       </Box>
     </Box>
   );

@@ -130,7 +130,7 @@ const BeeDash = () => {
             style={{ marginLeft: `${isMobile ? '0' : '-429px'}` }}
           >
             {userType === 'CaptainBee'
-              ? 'Captain Bee’s  Hive Dashboard / Captain Bee’s  Dashboard'
+              ? 'Hive Captain’s  Hive Dashboard / Hive Captain’s  Dashboard'
               : 'Honey Bee’s  Hive Dashboard / Honey Bee’s  Dashboard'}
           </div>
           <div className="hive-container">
@@ -222,12 +222,12 @@ const BeeDash = () => {
 
                 <div className="align-items-start lh_32x">
                   <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                    {userType === 'CaptainBee' ? 'Captain Bee' : 'Honey Bee'}{' '}
+                    {userType === 'CaptainBee' ? 'Hive Captain' : 'Honey Bee'}{' '}
                     {id}
                   </div>
                   <div className="font_10x mb-3 lh_32x align-items-start">
                     {userType === 'CaptainBee'
-                      ? 'Captain Bee of Captain'
+                      ? 'Hive Captain of Captain'
                       : 'Honey Bee of Captain'}{' '}
                     {honeyBeeData?.referredUserData?.data2?.Username} Team
                   </div>

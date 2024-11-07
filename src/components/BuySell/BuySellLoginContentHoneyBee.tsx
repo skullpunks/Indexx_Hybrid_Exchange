@@ -18,7 +18,7 @@ import {
 } from '@ant-design/icons';
 import OpenNotification from '../OpenNotification/OpenNotification';
 import { decryptUserkey } from '../../services/helpers';
-import bee from "../../assets/arts/bee color 1.svg";
+import bee from '../../assets/arts/bee color 1.svg';
 
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
@@ -26,17 +26,14 @@ interface Props {
   setScreenName: (value: string | ((prevVar: string) => string)) => void;
 }
 const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
-
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     setLoadings(true);
 
-
     let res = await loginAPI(values.email_or_username, values.password);
 
     if (res.status === 200) {
-
       setLoadings(false);
       OpenNotification('success', 'Login Successful');
       let resObj = await decodeJWT(res.data.access_token);
@@ -47,7 +44,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refresh_token);
       localStorage.setItem('userType', resObj?.userType);
-      localStorage.setItem('userlogged', "honeyb");
+      localStorage.setItem('userlogged', 'honeyb');
       let redirectUrl = window.localStorage.getItem('redirect');
       window.localStorage.removeItem('redirect');
       let userDetails = await getUserDetails(resObj?.email);
@@ -56,14 +53,13 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
         ? navigate(redirectUrl)
         : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
     } else {
-      console.log("res", res?.data)
+      console.log('res', res?.data);
       setLoadings(false);
       OpenNotification('error', res.data.message);
     }
   };
 
   useEffect(() => {
-
     async function loginUser() {
       // Get the URL search parameters
       const urlSearchParams = new URLSearchParams(window.location.search);
@@ -72,13 +68,17 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
       const userKey = urlSearchParams.get('userkey');
       const userType = urlSearchParams.get('usertype');
 
-      if (userEmail && userKey && userEmail !== undefined && userType !== undefined) {
-        let userPassword = (String(userKey));
+      if (
+        userEmail &&
+        userKey &&
+        userEmail !== undefined &&
+        userType !== undefined
+      ) {
+        let userPassword = String(userKey);
         // You can now use userEmail and userKey as needed in your component
         let res = await loginAPI(userEmail, userPassword);
 
         if (res.status === 200) {
-
           setLoadings(false);
           OpenNotification('success', 'Login Successful');
           let resObj = await decodeJWT(res.data.access_token);
@@ -97,29 +97,26 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
             ? navigate(redirectUrl)
             : (window.location.href = '/indexx-exchange/buy-sell'); // navigate("/indexx-exchange/buy-sell")
         } else {
-
           setLoadings(false);
           OpenNotification('error', res.data);
         }
       }
     }
     loginUser();
-
   }, []);
 
   type NotificationType = 'success' | 'info' | 'warning' | 'error';
   const [loadings, setLoadings] = useState<boolean>(false);
-  localStorage.setItem('userlogged', "honeyb");
+  localStorage.setItem('userlogged', 'honeyb');
 
-  const onFinishFailed = (errorInfo: any) => {
-
-  };
+  const onFinishFailed = (errorInfo: any) => {};
   return (
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
       <h1 className="text-center margin-lr-auto top_heading">
-        <img src={bee} alt="bee" style={{ marginLeft: "-10px" }} />
-        HoneyBee Log In</h1>
+        <img src={bee} alt="bee" style={{ marginLeft: '-10px' }} />
+        HoneyBee Log In
+      </h1>
       <div className="text-center margin-lr-auto padding-tb-2x">
         Please make sure you are visiting the correct URL
       </div>
@@ -143,9 +140,13 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
               ]}
             >
               <div className="control-input">
-                <Input placeholder="Email id or Username" className="input_height" />
+                <Input
+                  placeholder="Email id or Username"
+                  className="input_height"
+                />
                 <span className="input_icon">
-                  <img src={Email} alt="emailIcon" /> {/* You might want to consider using a more generic icon now */}
+                  <img src={Email} alt="emailIcon" />{' '}
+                  {/* You might want to consider using a more generic icon now */}
                 </span>
               </div>
             </Form.Item>
@@ -190,7 +191,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
           <Link
             to="/indexx-exchange/buy-sell/get-started-honeybee"
             // style={{ color: '#11be6a' }}
-            className='hive_link'
+            className="hive_link"
           >
             Get Started
           </Link>
@@ -237,12 +238,11 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
             // to="https://hive.indexx.ai/sign-up"
             to="/indexx-exchange/buy-sell/hive-login"
             style={{ color: '#ffb300' }}
-          // onClick={handleClick}
+            // onClick={handleClick}
           >
-
             <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
-              Not a Honey Bee? Login as Captain Bee instead
+              Not a Honey Bee? Login as Hive Captain instead
             </p>
           </Link>
         </div>
