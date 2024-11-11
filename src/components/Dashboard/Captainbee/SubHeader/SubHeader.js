@@ -151,7 +151,7 @@ const SubHeader = () => {
                   style={{ marginTop: '6.5px' }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">My Honey Bees</h5>
+                  <h5 className="card-title">My Hive Members</h5>
                   <Typography
                     component="p"
                     sx={

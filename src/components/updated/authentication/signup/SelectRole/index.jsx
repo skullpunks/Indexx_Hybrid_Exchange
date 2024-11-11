@@ -136,7 +136,7 @@ const SelectRole = ({ email, password, referralId }) => {
             </MenuItem>
             <MenuItem value={10}>Normal User</MenuItem>
             <MenuItem value={20}>Hive Captain</MenuItem>
-            <MenuItem value={30}>Honey Bee</MenuItem>
+            <MenuItem value={30}>Hive Member</MenuItem>
           </Select>
         </FormControl>
       </div>

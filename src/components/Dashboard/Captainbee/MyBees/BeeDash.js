@@ -118,7 +118,7 @@ const BeeDash = () => {
           <p
             style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
           >
-            Please wait while your Honey Bee's Hive Dashboard is loading
+            Please wait while your Hive Member's Hive Dashboard is loading
             <span className="dots-animation"></span>
           </p>
         </div>
@@ -131,7 +131,7 @@ const BeeDash = () => {
           >
             {userType === 'CaptainBee'
               ? 'Hive Captain’s  Hive Dashboard / Hive Captain’s  Dashboard'
-              : 'Honey Bee’s  Hive Dashboard / Honey Bee’s  Dashboard'}
+              : 'Hive Member’s  Hive Dashboard / Hive Member’s  Dashboard'}
           </div>
           <div className="hive-container">
             <div
@@ -222,13 +222,13 @@ const BeeDash = () => {
 
                 <div className="align-items-start lh_32x">
                   <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                    {userType === 'CaptainBee' ? 'Hive Captain' : 'Honey Bee'}{' '}
+                    {userType === 'CaptainBee' ? 'Hive Captain' : 'Hive Member'}{' '}
                     {id}
                   </div>
                   <div className="font_10x mb-3 lh_32x align-items-start">
                     {userType === 'CaptainBee'
                       ? 'Hive Captain of Captain'
-                      : 'Honey Bee of Captain'}{' '}
+                      : 'Hive Member of Captain'}{' '}
                     {honeyBeeData?.referredUserData?.data2?.Username} Team
                   </div>
                   <div className="font_13x d-flex align-items-center ">

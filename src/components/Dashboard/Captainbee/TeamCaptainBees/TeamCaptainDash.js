@@ -113,7 +113,7 @@ const TeamCaptainDash = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
-  // Define a function to render a single Honey Bee box.
+  // Define a function to render a single Hive Member box.
   const renderHoneyBeeBox = (item) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -246,7 +246,7 @@ const TeamCaptainDash = () => {
     staticsData?.captainBeeRegisteredRequiredData?.length || 0;
   const emptyBoxesCount = Math.max(6 - availableBeesCount, 0);
 
-  // Define a function to render an empty Honey Bee box with the same styling as available users.
+  // Define a function to render an empty Hive Member box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -568,7 +568,7 @@ const TeamCaptainDash = () => {
 
                 <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
                   <div>
-                    Invite Honey Bee : {staticsData?.userFullData?.referralCode}
+                    Invite Hive Member : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(staticsData?.userFullData?.referralCode)}

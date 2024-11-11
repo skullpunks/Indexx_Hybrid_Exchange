@@ -175,7 +175,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         setLoadings(false);
         OpenNotification(
           'error',
-          'As Hive Captain, Please apply for convert approval from honey bee'
+          'As Hive Captain, Please apply for convert approval from Hive Member'
         );
         return;
       }

@@ -433,7 +433,7 @@ const TeamCaptainDashIndividual = () => {
 
                   <div className="d-flex flex-direction-column align-items-start mt-5">
                     <div>
-                      <span className="fw-bold">Invite Honey Bee :</span>
+                      <span className="fw-bold">Invite Hive Member :</span>
                       <br />
                       {staticsData?.userFullData?.referralCode}
                       <ContentCopyIcon

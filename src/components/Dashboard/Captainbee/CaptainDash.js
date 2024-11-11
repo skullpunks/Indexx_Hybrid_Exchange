@@ -705,7 +705,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
 
               <div className="d-flex flex-direction-column align-items-start mt-5">
                 <div>
-                  <span className="fw-bold">Invite Crypto Bee :</span>
+                  <span className="fw-bold">Invite Hive Member :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -795,7 +795,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         mb={2}
                         sx={{ flex: 1 }}
                       >
-                        My Crypto Bee Statistics
+                        My Hive Member Statistics
                       </Typography>
 
                       <Typography
@@ -839,7 +839,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           fontWeight={600}
                           textAlign={'center'}
                         >
-                          Total Crypto Bees
+                          Total Hive Members
                         </Typography>
                         <Typography
                           variant="text"

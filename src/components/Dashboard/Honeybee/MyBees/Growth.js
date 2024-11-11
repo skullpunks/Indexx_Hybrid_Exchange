@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
@@ -6,13 +6,16 @@ import comingsoon from '../../../../assets/hive-dashboard/comingsoon_grey.svg';
 
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
-import { getCaptainBeeStatics, getHoneyUserDetails } from '../../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+} from '../../../../services/api';
 
 const Growth = () => {
   const [platform, setPlatform] = useState('Exchange');
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
@@ -32,11 +35,20 @@ const Growth = () => {
   ];
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
 
-    if (userType === "CaptainBee") {
+    if (userType === 'CaptainBee') {
       if (username) {
         getCaptainBeeStatics(username).then((data) => {
           setStaticsData(data.data);
@@ -48,18 +60,18 @@ const Growth = () => {
         setEmail(data.data?._doc?.email);
         setCaptainbeeOrders(data?.data?.totalOrders?.length);
         setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
+      });
     }
-  }, [])
+  }, []);
 
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: '10px' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'row',
           gap: 2,
-          mt: 2
+          mt: 2,
         }}
       >
         <Box
@@ -248,7 +260,7 @@ const Growth = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 p: 1,
-                aspectRatio: 1
+                aspectRatio: 1,
               }}
             >
               <Typography
@@ -256,9 +268,9 @@ const Growth = () => {
                 fontSize={'12px'}
                 fontWeight={600}
                 textAlign={'left'}
-                pr={"50%"}
+                pr={'50%'}
               >
-                Total Honey Bees/Users
+                Total Hive Members/Users
               </Typography>
               <Typography
                 variant="text"
@@ -266,7 +278,9 @@ const Growth = () => {
                 fontWeight={600}
                 textAlign={'left'}
               >
-                {userData?.relationships?.length > 0 ? userData?.relationships?.length : 0}
+                {userData?.relationships?.length > 0
+                  ? userData?.relationships?.length
+                  : 0}
               </Typography>
               <Typography
                 variant="text"
@@ -281,7 +295,8 @@ const Growth = () => {
                   gap: 1,
                 }}
               >
-                <img alt="up" src={arrow} /> {userData?.relationships?.length > 0 ? "30%" : "0%"}
+                <img alt="up" src={arrow} />{' '}
+                {userData?.relationships?.length > 0 ? '30%' : '0%'}
               </Typography>
             </Box>
             <Box
@@ -293,7 +308,7 @@ const Growth = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 p: 1,
-                aspectRatio: 1
+                aspectRatio: 1,
               }}
             >
               <Typography
@@ -301,7 +316,7 @@ const Growth = () => {
                 fontSize={'12px'}
                 fontWeight={600}
                 textAlign={'left'}
-                pr={"70%"}
+                pr={'70%'}
               >
                 Total Orders
               </Typography>
@@ -326,14 +341,15 @@ const Growth = () => {
                   gap: 1,
                 }}
               >
-                <img alt="up" src={arrow} /> {userData?.relationships?.length > 0 ? "20%" : "0%"}
+                <img alt="up" src={arrow} />{' '}
+                {userData?.relationships?.length > 0 ? '20%' : '0%'}
               </Typography>
             </Box>
           </Box>
           <Box
             sx={{
               background: 'white',
-              width: "100%",
+              width: '100%',
             }}
           >
             <LineChart
@@ -348,15 +364,10 @@ const Growth = () => {
           </Box>
         </Box>
 
-        <Box
-          component="img"
-          alt="comingsoon"
-          src={comingsoon}
-          width={'50%'}
-        />
+        <Box component="img" alt="comingsoon" src={comingsoon} width={'50%'} />
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default Growth
+export default Growth;

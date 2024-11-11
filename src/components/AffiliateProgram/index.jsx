@@ -302,7 +302,7 @@ const AffiliateProgram = () => {
                   textAlign="center"
                   color="black !important"
                 >
-                  Honey Bee
+                  Hive Member
                 </Typography>
                 <Typography
                   variant="body1"
@@ -375,7 +375,7 @@ const AffiliateProgram = () => {
                     },
                   }}
                 >
-                  Invite a Honey Bee to your colony
+                  Invite a Hive Member to your colony
                 </Button>
                 {/*  */}
               </Box>

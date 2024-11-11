@@ -302,10 +302,10 @@ const BeeDash2 = () => {
               </div>
               <div className="align-items-start">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                  Honey Bee {honeyBeeData?.username}
+                  Hive Member {honeyBeeData?.username}
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
-                  Honey Bee of Captain{' '}
+                  Hive Member of Captain{' '}
                   {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
                 <div

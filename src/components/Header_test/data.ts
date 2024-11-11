@@ -246,7 +246,7 @@ const header_data = [
             href: 'https://hive.indexx.ai/bees',
           },
           {
-            name: 'Crypto Bee',
+            name: 'Hive Member',
             href: 'https://hive.indexx.ai/honey-bees',
           },
         ],
@@ -259,7 +259,7 @@ const header_data = [
             href: 'https://hive.indexx.ai/sign-up',
           },
           {
-            name: 'Sign Up as Crypto Bee',
+            name: 'Sign Up as Hive Member',
             href: '/indexx-exchange/buy-sell/get-started-honeybee',
           },
         ],

@@ -261,7 +261,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
           className="text-center margin-lr-auto font_30x"
           style={{ marginTop: '-8px' }}
         >
-          Login as Honey Bee
+          Login as Hive Member
         </h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -380,7 +380,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
             >
               <p style={{ fontSize: 15 }} className="hive_link">
                 {' '}
-                Sign up for Honey Bee
+                Sign up for Hive Member
               </p>
             </Link>
           </div>

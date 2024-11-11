@@ -531,7 +531,7 @@ const CaptainProfile = () => {
                     textAlign={'left'}
                     alignSelf={isMobile ? 'normal' : 'baseline'}
                   >
-                    Honey Bee Referral Code
+                    Hive Member Referral Code
                   </Typography>
                   <TextField
                     variant="outlined"

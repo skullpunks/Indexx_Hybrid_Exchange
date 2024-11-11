@@ -128,7 +128,7 @@ const TeamCaptainGrowth = () => {
                 color: '#393939',
               }}
             >
-              My Honey Bee Statistics
+              My Hive Member Statistics
             </Typography>
             {/* <Box
               sx={{
@@ -304,7 +304,7 @@ const TeamCaptainGrowth = () => {
                   textAlign={'left'}
                   alignSelf={'flex-start'}
                 >
-                  Total Honey Bees
+                  Total Hive Members
                 </Typography>
                 <Typography
                   variant="text"

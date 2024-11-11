@@ -116,7 +116,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                 color: '#393939',
               }}
             >
-              My Honey Bee Statistics
+              My Hive Member Statistics
             </Typography>
             {/* <Box
               sx={{
@@ -294,7 +294,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   textAlign={'left'}
                   alignSelf={'flex-start'}
                 >
-                  Total Honey Bees
+                  Total Hive Members
                 </Typography>
                 <Typography
                   variant="text"

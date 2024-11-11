@@ -398,13 +398,13 @@ export const HoneyBeeActionData = [
     percentage: '200% ',
     type: 'Action Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Master offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Master offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Master',
     subPara1:
-      'Honey Bees can access educational resources through the Action Master section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Master section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Master Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
 
   {
@@ -416,13 +416,13 @@ export const HoneyBeeActionData = [
     percentage: '180%',
     type: 'Action Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Master offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Master offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Pro',
     subPara1:
-      'Honey Bees can access educational resources through the Action Pro section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Pro section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Pro Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -433,13 +433,13 @@ export const HoneyBeeActionData = [
     percentage: '160%',
     type: 'Action Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Excel offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Excel offer opportunities for investment and education',
     subHeading1: 'Academy, Action Excel',
     subPara1:
-      'Honey Bees can access educational resources through the Action Excel section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Excel section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: 'Investment, Excel Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -450,13 +450,13 @@ export const HoneyBeeActionData = [
     percentage: '140%',
     type: 'Action Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Prime offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Prime offer opportunities for investment and education',
     subHeading1: 'Academy, Action Prime',
     subPara1:
-      'Honey Bees can access educational resources through the Action Prime section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Prime section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: 'Investment, Prime Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -467,13 +467,13 @@ export const HoneyBeeActionData = [
     percentage: '120%',
     type: 'Action Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Starter offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Starter offer opportunities for investment and education',
     subHeading1: 'Academy, Action Starter',
     subPara1:
-      'Honey Bees can access educational resources through the Action Starter section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Starter section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: 'Investment, Starter Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
 ];
 
@@ -487,13 +487,13 @@ export const HoneyBeeTokenData = [
     percentage: '150%-300%',
     type: 'Token Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Monster offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Monster offer opportunities for investment and education',
     subHeading1: 'Academy, Action Monster',
     subPara1:
-      'Honey Bees can access educational resources through the Action Pack Monster section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Action Pack Monster section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: 'Investment, Monster Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 2,
@@ -504,13 +504,13 @@ export const HoneyBeeTokenData = [
     percentage: '140%-290%',
     type: 'Token Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Extra offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Extra offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Extra',
     subPara1:
-      'Honey Bees can access educational resources through the Token Pack Extra section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Token Pack Extra section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Extra Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -521,13 +521,13 @@ export const HoneyBeeTokenData = [
     percentage: '130%-280%',
     type: 'Token Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Wallet offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Wallet offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Wallet',
     subPara1:
-      'Honey Bees can access educational resources through the Token Pack Wallet section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Token Pack Wallet section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Wallet Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -538,13 +538,13 @@ export const HoneyBeeTokenData = [
     percentage: '120%-270%',
     type: 'Token Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Coin offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Coin offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Coin',
     subPara1:
-      'Honey Bees can access educational resources through the Token Pack Coin section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Token Pack Coin section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Coin Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
   {
     id: 1,
@@ -555,13 +555,13 @@ export const HoneyBeeTokenData = [
     percentage: '110%-200%',
     type: 'Token Pack',
     heading:
-      'Designed for Honey Bees, the Action Pack Digi offer opportunities for investment and education',
+      'Designed for Hive Members, the Action Pack Digi offer opportunities for investment and education',
     subHeading1: '1. Academy, Action Digi',
     subPara1:
-      'Honey Bees can access educational resources through the Token Pack Digi section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
+      'Hive Members can access educational resources through the Token Pack Digi section of our Indexx Academy. Improve your trading skills and knowledge with our curated courses and materials.',
     subHeading2: '2. Investment, Digi Return:',
     subPara2:
-      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Honey Bees may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
+      ' Invest confidently knowing that your funds are managed by our expert algorithms, aimed at maximizing returns. While Hive Members may not participate in the Colony Network, they can still benefit from lucrative returns on their investments.',
   },
 ];
 

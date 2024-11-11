@@ -522,7 +522,7 @@ const HoneyComb = () => {
                 style={{ marginLeft: `${isMobile ? '40px' : '0px'}` }}
               >
                 <div>
-                  <span className="fw-bold">Invite Honey Bee :</span>
+                  <span className="fw-bold">Invite Hive Member :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -613,7 +613,7 @@ const HoneyComb = () => {
                       // pr={"50%"}
                       alignSelf={'flex-start'}
                     >
-                      Total Honey Bees
+                      Total Hive Members
                     </Typography>
                     <Typography
                       variant="text"

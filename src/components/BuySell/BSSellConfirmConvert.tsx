@@ -137,7 +137,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
         setLoadings(false);
         OpenNotification(
           'error',
-          'As Hive Captain, Please apply for sell approval from honey bee'
+          'As Hive Captain, Please apply for sell approval from Hive Member'
         );
         return;
       }

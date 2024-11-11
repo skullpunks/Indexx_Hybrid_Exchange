@@ -852,7 +852,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
                 >
                   <div>
-                    <span className="fw-bold">Invite Honey Bee :</span>
+                    <span className="fw-bold">Invite Hive Member :</span>
                     <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
@@ -1206,7 +1206,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                             Hive Captain
                           </MenuItem>
                           <MenuItem key="honeybee" value="honeybee">
-                            Honey Bee
+                            Hive Member
                           </MenuItem>
                         </Select>
                       </Box>

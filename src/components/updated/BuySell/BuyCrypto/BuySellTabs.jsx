@@ -371,9 +371,9 @@ const BuySellTabs = ({
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setGeneralMessage(
-          'As Hive Captain, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from Hive Member'
         );
         setIsModalOpen(true);
         setLoadings(false);
@@ -440,9 +440,9 @@ const BuySellTabs = ({
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setGeneralMessage(
-          'As Hive Captain, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from Hive Member'
         );
         setIsModalOpen(true);
         setLoadings(false);
@@ -494,9 +494,9 @@ const BuySellTabs = ({
     console.log('paymentMethod', paymentMethod);
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setGeneralMessage(
-          'As Hive Captain, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from Hive Member'
         );
         setIsModalOpen(true);
         setLoadings(false);

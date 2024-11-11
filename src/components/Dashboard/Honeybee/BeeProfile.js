@@ -4,13 +4,14 @@ import dummy from '../../../assets/hive-dashboard/dummy.jpeg';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import BeeHeader from './BeeHeader/BeeHeader';
 import loadingGif from '../../../assets/beeloade.gif';
-import { getCaptainBeeStatics, getHoneyUserDetails, updateHoneyBeeProfile } from '../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+  updateHoneyBeeProfile,
+} from '../../../services/api';
 import AWS from 'aws-sdk';
 import { notification } from 'antd';
-import {
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -26,14 +27,13 @@ const BeeProfile = () => {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [userData, setUserData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const handlePhotoChange = (event) => {
-
     const file = event.target.files[0];
     uploadToS3(file, 'photoId');
   };
@@ -43,7 +43,7 @@ const BeeProfile = () => {
       Bucket: S3_BUCKET,
       Key: file.name,
       Body: file,
-      ContentType: file.type
+      ContentType: file.type,
     };
 
     try {
@@ -53,7 +53,7 @@ const BeeProfile = () => {
 
       setPhoto(url);
     } catch (error) {
-      console.log("Error here", error)
+      console.log('Error here', error);
       alert('Error uploading file:', error);
     }
   };
@@ -62,37 +62,46 @@ const BeeProfile = () => {
     setLoadings(true);
 
     let updateData = {
-      profilePic, lastname, firstname, email
-    }
+      profilePic,
+      lastname,
+      firstname,
+      email,
+    };
     updateHoneyBeeProfile(email, updateData).then((data) => {
-
       if (data.status === 200) {
-
         setLoadings(false);
         OpenNotification('success', 'Profile data updated Successfully');
       } else {
         setLoadings(false);
         OpenNotification('error', 'Failed to updated. Please try again.');
       }
-    }
-    )
-  }
+    });
+  };
 
   useEffect(() => {
     const loadData = async () => {
-      const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-      const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-      const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+      const userType =
+        localStorage.getItem('userType') !== undefined
+          ? String(localStorage.getItem('userType'))
+          : undefined;
+      const username =
+        localStorage.getItem('username') !== undefined
+          ? String(localStorage.getItem('username'))
+          : undefined;
+      const user =
+        localStorage.getItem('user') !== undefined
+          ? String(localStorage.getItem('user'))
+          : undefined;
 
       setUserType(userType);
 
-      if (userType === "CaptainBee") {
+      if (userType === 'CaptainBee') {
         if (username) {
           try {
             const data = await getCaptainBeeStatics(username);
             setStaticsData(data.data);
           } catch (error) {
-            console.error("Error loading CaptainBee statics:", error);
+            console.error('Error loading CaptainBee statics:', error);
           }
         }
       } else {
@@ -104,7 +113,7 @@ const BeeProfile = () => {
           setLastname(data.data?._doc?.lastName);
           setPhoto(data.data?._doc?.profilePic);
         } catch (error) {
-          console.error("Error loading Honey User details:", error);
+          console.error('Error loading Honey User details:', error);
         }
       }
 
@@ -117,7 +126,7 @@ const BeeProfile = () => {
   return (
     <>
       <BeeHeader />
-      {isLoading &&
+      {isLoading && (
         <div
           style={{
             position: 'fixed',
@@ -126,7 +135,7 @@ const BeeProfile = () => {
             width: '100%',
             height: '100%',
             // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            backdropFilter:"blur(8px)",
+            backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -136,13 +145,15 @@ const BeeProfile = () => {
           }}
         >
           <img src={loadingGif} alt="Loading" />
-          <p style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
+          <p
+            style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
+          >
             Please wait while your profile is loading
             <span className="dots-animation"></span>
           </p>
         </div>
-      }
-      <div className="hive-container" style={{ paddingTop: "280px" }}>
+      )}
+      <div className="hive-container" style={{ paddingTop: '280px' }}>
         <div
           className="d-flex flex-direction-column justify-content-center"
           style={{ width: '74%', maxWidth: '1140px' }}
@@ -164,10 +175,10 @@ const BeeProfile = () => {
               // border:"none"
             }}
           >
-            <div className="profile-hexagon" style={{ marginBottom: "16.5px" }}>
+            <div className="profile-hexagon" style={{ marginBottom: '16.5px' }}>
               <img
                 alt=""
-                src={(profilePic !== undefined) ? profilePic : dummy}
+                src={profilePic !== undefined ? profilePic : dummy}
                 width={'63px'}
                 height={'66px'}
                 ml={'-6px'}
@@ -203,7 +214,7 @@ const BeeProfile = () => {
               }}
             >
               <Typography variant="text" fontSize={'30px'} fontWeight={600}>
-                Honey Bee Information
+                Hive Member Information
               </Typography>
               <Box
                 sx={{
@@ -284,10 +295,9 @@ const BeeProfile = () => {
                     setEmail(e.target.value);
                   }}
                 /> */}
-                <Box
-                      sx={{ mb: 2, px:2, width: '64%', fontSize: "15px", }}>
-                      {email}
-                    </Box>
+                <Box sx={{ mb: 2, px: 2, width: '64%', fontSize: '15px' }}>
+                  {email}
+                </Box>
               </Box>
             </Box>
 
@@ -354,7 +364,6 @@ const BeeProfile = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

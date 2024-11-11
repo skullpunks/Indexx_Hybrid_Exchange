@@ -42,7 +42,7 @@ const PowerPackInitial = () => {
         <div onClick={handleHoneyBee} style={{ cursor: 'pointer' }}>
           <img src={hive_honey_bee} />
           <button className="yellow-btn" style={{ marginTop: '20px' }}>
-            Join as Honey Bee
+            Join as Hive Member
           </button>
         </div>
       </section>

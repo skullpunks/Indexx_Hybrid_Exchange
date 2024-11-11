@@ -242,7 +242,7 @@ const BuySellLoginContentHoneyBee: React.FC<Props> = ({ setScreenName }) => {
           >
             <p style={{ color: '#ffb300', fontSize: 15 }}>
               {' '}
-              Not a Honey Bee? Login as Hive Captain instead
+              Not a Hive Member? Login as Hive Captain instead
             </p>
           </Link>
         </div>

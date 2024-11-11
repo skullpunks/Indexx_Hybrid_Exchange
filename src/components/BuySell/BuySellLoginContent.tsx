@@ -211,7 +211,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           to="/indexx-exchange/buy-sell/login-honeybee"
           className="login_links  "
         >
-          Login as Honey Bee
+          Login as Hive Member
         </Link>
         <br />
         <p

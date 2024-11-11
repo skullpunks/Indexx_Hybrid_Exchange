@@ -261,7 +261,7 @@ const BuySellGetStarted: React.FC = () => {
                 to="/indexx-exchange/buy-sell/get-started-honeybee"
                 className="login_links"
               >
-                Sign up as Honey Bee
+                Sign up as Hive Member
               </Link>
               <br />
               <p
