@@ -3,10 +3,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 
 import { useEffect, useState } from 'react';
-import { getHoneyBeePermissions, updatePermissionsByHoneyBee } from '../../../../services/api';
+import {
+  getHoneyBeePermissions,
+  updatePermissionsByHoneyBee,
+} from '../../../../services/api';
 import { IOSSwitch } from '../../../IOSSwitch/IOSSwitch';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
-
 
 const GivePermissions = () => {
   const [, setPermissionsData] = useState();
@@ -19,44 +21,56 @@ const GivePermissions = () => {
   const savePermissions = async () => {
     try {
       setLoadings(true);
-      const res = await updatePermissionsByHoneyBee(email, convertPermissionData, buyPermissionData, sellPermissionData);
+      const res = await updatePermissionsByHoneyBee(
+        email,
+        convertPermissionData,
+        buyPermissionData,
+        sellPermissionData
+      );
       if (res.status === 200) {
         setLoadings(false);
-        OpenNotification('success', "Permissions updated successfully");
+        OpenNotification('success', 'Permissions updated successfully');
       } else {
         setLoadings(false);
-        OpenNotification('error', "Failed to update permissions");
+        OpenNotification('error', 'Failed to update permissions');
       }
     } catch (err) {
       console.log(err);
     }
     //
-  }
+  };
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    
-    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    setEmail(email);
-    
-    getHoneyBeePermissions(email).then((data) => {
-      
-      
-      setPermissionsData(data.data);
-      setBuyPermissionsData(data.data.permissions.buy)
-      setSellPermissionsData(data.data.permissions.sell)
-      setConvertPermissionsData(data.data.permissions.convert)
-    })
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
 
+    const email =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
+    setEmail(email);
+
+    getHoneyBeePermissions(email).then((data) => {
+      setPermissionsData(data.data);
+      setBuyPermissionsData(data.data.permissions.buy);
+      setSellPermissionsData(data.data.permissions.sell);
+      setConvertPermissionsData(data.data.permissions.convert);
+    });
   }, []);
 
   return (
     <div>
-      <div className='pt-2' style={{ background: "#FFB300" }}></div>
-      <div className="px-5 pt-4 pb-5" style={{ background: "white" }}>
+      <div className="pt-2" style={{ background: '#FFB300' }}></div>
+      <div className="px-5 pt-4 pb-5" style={{ background: 'white' }}>
         <div className="font_15x fw-bold">
-          You can give permissions to Buy/Sell/Convert to your CaptainBee Willie here.
+          You can give permissions to Buy/Sell/Convert to your CaptainBee Willie
+          here.
         </div>
         <div
           className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
@@ -68,23 +82,24 @@ const GivePermissions = () => {
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
-                Enable Captain Bee to Buy
+                Enable Hive Captain to Buy
               </Typography>
             </div>
             <div>
               <FormGroup>
                 <FormControlLabel
-                  control={<IOSSwitch sx={{ m: 1 }} checked={buyPermissionData}  />}
+                  control={
+                    <IOSSwitch sx={{ m: 1 }} checked={buyPermissionData} />
+                  }
                   value={buyPermissionData}
                   onChange={(e) => {
-                    
                     if (!buyPermissionData && e.target.checked === true) {
-                      setBuyPermissionsData(true)
+                      setBuyPermissionsData(true);
                     } else {
-                      setBuyPermissionsData(false)
+                      setBuyPermissionsData(false);
                     }
                   }}
-                // label="Buy"
+                  // label="Buy"
                 />
               </FormGroup>
             </div>
@@ -96,22 +111,23 @@ const GivePermissions = () => {
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
-                Enable Captain Bee to Sell
+                Enable Hive Captain to Sell
               </Typography>
             </div>
             <div>
               <FormGroup>
                 <FormControlLabel
-                  control={<IOSSwitch sx={{ m: 1 }} checked={sellPermissionData}  />}
+                  control={
+                    <IOSSwitch sx={{ m: 1 }} checked={sellPermissionData} />
+                  }
                   onChange={(e) => {
-                    
                     if (!sellPermissionData && e.target.checked === true) {
-                      setSellPermissionsData(true)
+                      setSellPermissionsData(true);
                     } else {
-                      setSellPermissionsData(false)
+                      setSellPermissionsData(false);
                     }
                   }}
-                // label="Buy"
+                  // label="Buy"
                 />
               </FormGroup>
             </div>
@@ -123,22 +139,23 @@ const GivePermissions = () => {
           >
             <div>
               <Typography variant="text" component="p" fontSize={'15px'}>
-                Enable Captain Bee to Convert
+                Enable Hive Captain to Convert
               </Typography>
             </div>
             <div>
               <FormGroup>
                 <FormControlLabel
-                  control={<IOSSwitch sx={{ m: 1 }} checked={convertPermissionData}  />}
+                  control={
+                    <IOSSwitch sx={{ m: 1 }} checked={convertPermissionData} />
+                  }
                   onChange={(e) => {
-                    
                     if (!convertPermissionData && e.target.checked === true) {
-                      setConvertPermissionsData(true)
+                      setConvertPermissionsData(true);
                     } else {
-                      setConvertPermissionsData(false)
+                      setConvertPermissionsData(false);
                     }
                   }}
-                // label="Buy"
+                  // label="Buy"
                 />
               </FormGroup>
             </div>
@@ -178,7 +195,6 @@ const GivePermissions = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

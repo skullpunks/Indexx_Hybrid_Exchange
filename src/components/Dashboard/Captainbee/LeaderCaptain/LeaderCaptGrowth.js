@@ -9,13 +9,12 @@ import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
 // import CommissionTable from '../CommissionTable';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery} from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 
 const LeaderCaptGrowth = ({ leaderEmail }) => {
   const [platform, setPlatform] = useState('Exchange');
   const [Order, setOrder] = useState('buysell');
   const [selectedDate, setSelectedDate] = useState('aug-sept');
-
 
   const [platformCapt, setPlatformCapt] = useState('Exchange');
   const [OrderCapt, setOrderCapt] = useState('buysell');
@@ -56,39 +55,45 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
 
-    const email = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    const email =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
     setEmail(email);
-    setMyLeaderEmail(leaderEmail)
+    setMyLeaderEmail(leaderEmail);
     getReferredUserDetails(email).then((data) => {
-
-      setRefferedUserData(data?.data?.refferedUserAffilateData)
-      console.log("data in growth", data?.data.refferedUserAffilateData);
+      setRefferedUserData(data?.data?.refferedUserAffilateData);
+      console.log('data in growth', data?.data.refferedUserAffilateData);
       setCaptainbeeCreateDate(data.data.accountCreationDate);
       setCaptainbeeOrders(data.data.totalOrder);
       setCaptainbeeUsers(data.data.honeyBeesCount);
-    })
-
+    });
   }, []);
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: '10px' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
-          mt: 2
+          mt: 2,
         }}
       >
-
         <Box
           sx={{
             display: 'flex',
-            flexDirection: `${isMobile ? "column" : "row"}`,
+            flexDirection: `${isMobile ? 'column' : 'row'}`,
             gap: isMobile ? 4 : 2,
-            mt: 2
+            mt: 2,
           }}
         >
           <Box
@@ -96,7 +101,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width:`${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? '100%' : '50%'}`,
             }}
           >
             <Typography
@@ -105,14 +110,13 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={"auto"}
+              mx={'auto'}
               mb={2}
               sx={{
-                color: "#393939",
+                color: '#393939',
               }}
-
             >
-              My Honey Bee Statistics
+              My Hive Member Statistics
             </Typography>
             {/* <Box
               sx={{
@@ -280,7 +284,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio:3
+                  aspectRatio: 3,
                 }}
               >
                 <Typography
@@ -290,7 +294,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   textAlign={'left'}
                   alignSelf={'flex-start'}
                 >
-                  Total Honey Bees
+                  Total Hive Members
                 </Typography>
                 <Typography
                   variant="text"
@@ -386,7 +390,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width:`${isMobile ? "100%" : "50%"}`,
+              width: `${isMobile ? '100%' : '50%'}`,
             }}
           >
             <Typography
@@ -395,14 +399,13 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={"auto"}
+              mx={'auto'}
               mb={2}
               sx={{
-                color: "#393939",
+                color: '#393939',
               }}
-
             >
-              My Captain Bee Statistics
+              My Hive Captain Statistics
             </Typography>
             {/* <Box
               sx={{
@@ -569,7 +572,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   alignItems: 'center',
                   px: isMobile ? 1 : 2,
                   py: 1,
-                  aspectRatio:3
+                  aspectRatio: 3,
                 }}
               >
                 <Typography
@@ -579,7 +582,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                   textAlign={'left'}
                   alignSelf={'flex-start'}
                 >
-                  Total Team Captain Bees
+                  Total Team Hive Captains
                 </Typography>
                 <Typography
                   variant="text"
@@ -602,7 +605,7 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
                     gap: 1,
                   }}
                 >
-                  <img alt="up" src={arrow} /> {"30%"}
+                  <img alt="up" src={arrow} /> {'30%'}
                 </Typography>
               </Box>
               {/* <Box
@@ -675,9 +678,8 @@ const LeaderCaptGrowth = ({ leaderEmail }) => {
           <CommissionTable leaderEmail={myleaderEmail} />
         </Box> */}
       </Box>
-
     </div>
-  )
-}
+  );
+};
 
-export default LeaderCaptGrowth
+export default LeaderCaptGrowth;

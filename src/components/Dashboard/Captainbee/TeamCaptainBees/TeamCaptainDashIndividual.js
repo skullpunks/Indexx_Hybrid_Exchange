@@ -189,7 +189,7 @@ const TeamCaptainDashIndividual = () => {
           <p
             style={{ marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}
           >
-            Please wait while your Team Captain Bee's Hive Dashboard is loading
+            Please wait while your Team Hive Captain's Hive Dashboard is loading
             <span className="dots-animation"></span>
           </p>
         </div>
@@ -202,7 +202,7 @@ const TeamCaptainDashIndividual = () => {
               textAlign: `${isMobile ? 'center' : ''}`,
             }}
           >
-            Team Captain Bee's Hive Dashboard / Dashboard
+            Team Hive Captain's Hive Dashboard / Dashboard
           </div>
           <div className="hive-container">
             <div
@@ -260,11 +260,11 @@ const TeamCaptainDashIndividual = () => {
                 </div>
                 <div className="align-items-start lh_32x">
                   <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                    Team Captain Bee{' '}
+                    Team Hive Captain{' '}
                     {staticsData?.affiliateUserProfile?.Username}
                   </div>
                   <div className="font_10x mb-3 lh_32x align-items-start">
-                    Captain Bee of Captain{' '}
+                    Hive Captain of Captain{' '}
                     {captainBeeData?.refferedUserAffilateData?.Username} Team
                   </div>
                   {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
@@ -433,7 +433,7 @@ const TeamCaptainDashIndividual = () => {
 
                   <div className="d-flex flex-direction-column align-items-start mt-5">
                     <div>
-                      <span className="fw-bold">Invite Honey Bee :</span>
+                      <span className="fw-bold">Invite Hive Member :</span>
                       <br />
                       {staticsData?.userFullData?.referralCode}
                       <ContentCopyIcon
@@ -454,7 +454,7 @@ const TeamCaptainDashIndividual = () => {
                     </div>
                     <br />
                     <div>
-                      <span className="fw-bold">Invite Captain Bee :</span>
+                      <span className="fw-bold">Invite Hive Captain :</span>
                       <br />
                       {staticsData?.userFullData?.referralCode}
                       <ContentCopyIcon

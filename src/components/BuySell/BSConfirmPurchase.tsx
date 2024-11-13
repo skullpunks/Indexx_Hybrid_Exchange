@@ -141,10 +141,10 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     let res;
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setIsModalOpen(true);
         setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from Hive Member'
         );
         setLoadings(false);
         return;
@@ -205,10 +205,10 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
     console.log('paymentMethod', paymentMethod);
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Captain bee, Please apply for buy approval from honey bee");
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setIsModalOpen(true);
         setMessage(
-          'As Captain bee, Please apply for buy approval from honey bee'
+          'As Hive Captain, Please apply for buy approval from Hive Member'
         );
         setLoadings(false);
         return;

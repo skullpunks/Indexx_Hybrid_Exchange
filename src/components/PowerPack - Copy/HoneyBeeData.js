@@ -73,7 +73,7 @@ export const HoneyPackData = [
       'Free Lotto Tickets: $10,000',
       'Indexx Hive Membership',
     ],
-    level: 'Captain Bee',
+    level: 'Hive Captain',
     flip: true,
   },
   {
@@ -108,7 +108,7 @@ export const HoneyPackData = [
       'Free Lotto Tickets: $5,000',
       'Indexx Hive Membership',
     ],
-    level: 'Captain Bee',
+    level: 'Hive Captain',
     flip: true,
   },
   {
@@ -142,7 +142,7 @@ export const HoneyPackData = [
       'Free Lotto Tickets: $2,000',
       'Indexx Hive Membership',
     ],
-    level: 'Captain Bee',
+    level: 'Hive Captain',
     flip: true,
   },
   {
@@ -177,7 +177,7 @@ export const HoneyPackData = [
       'Free Lotto Tickets: $1,000',
       'Indexx Hive Membership',
     ],
-    level: 'Captain Bee',
+    level: 'Hive Captain',
     flip: true,
   },
   {
@@ -212,7 +212,7 @@ export const HoneyPackData = [
       'Free Lotto Tickets: $500',
       'Indexx Hive Membership',
     ],
-    level: 'Captain Bee',
+    level: 'Hive Captain',
     flip: true,
   },
 ];

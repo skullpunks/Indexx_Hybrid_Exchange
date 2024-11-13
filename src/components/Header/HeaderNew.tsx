@@ -50,7 +50,7 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   localStorage.removeItem('email');
   localStorage.clear(); //clear all localstorage
   console.log(userType);
-  
+
   window.location.href = `${baseURL}/auth/login?action=Logout`;
   // if (userType === 'CaptainBee') {
   //   window.location.href = '/indexx-exchange/buy-sell/hive-login';
@@ -59,7 +59,6 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
   // } else {
   //   window.location.href = `${baseURL}/auth/login?action=Logout`;
   // }
-  
 };
 
 const Links = [
@@ -1098,7 +1097,7 @@ const HeaderNew = () => {
           //                     href={`${baseHiveURL}/sign-up`}
           //                     className="action-link-style"
           //                   >
-          //                     Captain Bee Sign Up
+          //                     Hive Captain Sign Up
           //                   </a>
           //                 </NavDropdown.Item>
           //                 <NavDropdown.Item

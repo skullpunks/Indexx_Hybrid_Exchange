@@ -565,7 +565,7 @@ const CaptainGreetCard = () => {
                   className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
                   style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
                 >
-                  Captain Bee {staticsData?.affiliateUserProfile?.accname}
+                  Hive Captain {staticsData?.affiliateUserProfile?.accname}
                 </div>
                 {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
                   <div className="justify-content-center d-flex">
@@ -600,8 +600,8 @@ const CaptainGreetCard = () => {
                         style={{ width: '100%' }}
                       >
                         <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          title="Hive Captain Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Hive Captain status and associated commissions. Stay at the top – don't forget to pay your dues!"
                           sx={{ width: '20%' }}
                         >
                           <Button
@@ -638,8 +638,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       <div className="font_20x">
                         $300 INEX Subscription Details
                         <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          title="Hive Captain Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Hive Captain status and associated commissions. Stay at the top – don't forget to pay your dues!"
                           sx={{ width: '20%' }}
                         >
                           <InfoOutlinedIcon
@@ -688,7 +688,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   {/* <div className="d-flex flex-direction-column align-items-start mt-4" style={{fontsixe:`${isMobile ? "12px": "17px"}`}}>
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio ? staticsData?.affiliateUserProfile?.PublicBio :
-                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
+                    `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best Hive Captain to ever exist
                   in indexx hive`}
                 </div> */}
                   <div className="font_13x d-flex align-items-center mt-4">
@@ -852,7 +852,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   style={{ marginLeft: `${isMobile ? '65px' : '0px'}` }}
                 >
                   <div>
-                    <span className="fw-bold">Invite Honey Bee :</span>
+                    <span className="fw-bold">Invite Hive Member :</span>
                     <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
@@ -873,7 +873,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                   </div>
                   <br />
                   <div>
-                    <span className="fw-bold">Invite Captain Bee :</span>
+                    <span className="fw-bold">Invite Hive Captain :</span>
                     <br />
                     {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
@@ -985,7 +985,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       textAlign={'left'}
                       mb={2}
                     >
-                      Each Captain Bee gets 10 Greeting Cards to Share with
+                      Each Hive Captain gets 10 Greeting Cards to Share with
                       people to invite them to their colony as honeybees or
                       captainbees
                     </Typography>
@@ -1203,10 +1203,10 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           disableUnderline
                         >
                           <MenuItem key="captainbee" value="captainbee">
-                            Captain Bee
+                            Hive Captain
                           </MenuItem>
                           <MenuItem key="honeybee" value="honeybee">
-                            Honey Bee
+                            Hive Member
                           </MenuItem>
                         </Select>
                       </Box>
@@ -1353,7 +1353,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       overflow={'auto'}
                     >
                       <span className="fw-bold">
-                        Subject: 🎄Holiday Cheers from Captain Bee! 🐝🎁
+                        Subject: 🎄Holiday Cheers from Hive Captain! 🐝🎁
                       </span>
                       <br />
                       Dear {recName},
@@ -1412,7 +1412,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       <br />
                       Enjoy your instant bonus!
                       <br />
-                      Dive into the hive as a Captain Bee or Honeybee for
+                      Dive into the hive as a Hive Captain or Honeybee for
                       growth, connections, and perks. Here's to a sweet and
                       successful festive season!
                       <br />
@@ -1425,7 +1425,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       <br />
                       Best,
                       <br />
-                      Captain Bee {staticsData?.affiliateUserProfile?.accname},
+                      Hive Captain {staticsData?.affiliateUserProfile?.accname},
                       <br />
                       Indexx Hive
                     </Typography>

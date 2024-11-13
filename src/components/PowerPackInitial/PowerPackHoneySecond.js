@@ -21,7 +21,7 @@ const PowerPackCaptionSecond = () => {
       <CustomizedSteppers step={1} />
 
       <section className="indexx_hive_membership_root">
-        <h2>Hive Pack of Honey Bee</h2>
+        <h2>Hive Pack of Hive Member</h2>
         <h4>Thrive with Crypto Financial Transformation</h4>
         <p>
           Hive Packs are comprehensive investment bundles by Indexx Hive,
@@ -46,7 +46,7 @@ const PowerPackCaptionSecond = () => {
             Choose Action Pack
           </button>
           <p>
-            Tailored for Honey Bee members, providing strategic insights and
+            Tailored for Hive Member members, providing strategic insights and
             investment opportunities.
           </p>
         </div>

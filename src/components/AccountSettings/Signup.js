@@ -411,7 +411,7 @@ const Signup = () => {
       confirmpass.trim(),
       isChecked,
       Captain
-    )
+    );
     if (
       firstname.trim() === '' ||
       lastname.trim() === '' ||
@@ -589,7 +589,7 @@ const Signup = () => {
             fontSize={isMobile ? '20px' : '30px'}
             fontWeight={600}
           >
-            Captain Bee Information
+            Hive Captain Information
           </Typography>
 
           <Box
@@ -798,12 +798,12 @@ const Signup = () => {
               fontWeight={400}
               textAlign={'left'}
             >
-              Select your Captain Bee
+              Select your Hive Captain
             </Typography>
             <div style={{ margin: '15px' }}></div>
             <CustomSelectBox
               items={items}
-              type="Select Captain Bee"
+              type="Select Hive Captain"
               onChange={handleCaptainChange}
               value={Captain}
               isCurrency={false}

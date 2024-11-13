@@ -105,7 +105,7 @@ const Header = () => {
   const vipLevel =
     userType === 'HoneyUser' ? userDetails.vipLevel : userDetails?.rank;
   const userTypeText =
-    userType === 'HoneyUser' ? userDetails.userType : 'Captain Bee';
+    userType === 'HoneyUser' ? userDetails.userType : 'Hive Captain';
 
   return (
     <Box className={classes.container}>

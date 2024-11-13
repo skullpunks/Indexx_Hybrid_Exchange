@@ -122,7 +122,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
           <img src={hat} alt="noramluser" />
         </h3>
         <h1 className="text-center margin-lr-auto font_30x">
-          Login as Captain Bee
+          Login as Hive Captain
         </h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -246,7 +246,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
             >
               <p style={{ color: '#ffb300', fontSize: 15 }}>
                 {' '}
-                Sign up for Captain Bee
+                Sign up for Hive Captain
               </p>
             </Link>
           </div>
@@ -261,7 +261,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
           className="text-center margin-lr-auto font_30x"
           style={{ marginTop: '-8px' }}
         >
-          Login as Honey Bee
+          Login as Hive Member
         </h1>
         <div className="text-center margin-lr-auto padding-tb-2x">
           Please make sure you are visiting the correct URL
@@ -380,7 +380,7 @@ const BuySellAllLoginContent: React.FC<Props> = ({ setScreenName }) => {
             >
               <p style={{ fontSize: 15 }} className="hive_link">
                 {' '}
-                Sign up for Honey Bee
+                Sign up for Hive Member
               </p>
             </Link>
           </div>

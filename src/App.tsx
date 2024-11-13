@@ -381,7 +381,7 @@ function App() {
                 element={<CaptainGreetCard />}
               />
 
-              {/* Routes for Honey Bee DashBoard   */}
+              {/* Routes for Hive Member DashBoard   */}
               <Route
                 path="/indexx-exchange/bee-dashboard"
                 element={<BeeDash2 />}

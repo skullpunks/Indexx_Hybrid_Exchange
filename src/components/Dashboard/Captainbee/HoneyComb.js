@@ -265,7 +265,7 @@ const HoneyComb = () => {
           className="fw-bold justify-content-center d-flex"
           style={{ fontSize: `${isMobile ? '18px' : '32px'}` }}
         >
-          Captain Bee {staticsData?.affiliateUserProfile?.accname} Public
+          Hive Captain {staticsData?.affiliateUserProfile?.accname} Public
           Profile
         </div>
         <div className="hive-container">
@@ -332,7 +332,7 @@ const HoneyComb = () => {
                 className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
                 style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
               >
-                Captain Bee {staticsData?.affiliateUserProfile?.accname}
+                Hive Captain {staticsData?.affiliateUserProfile?.accname}
               </div>
               {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
                 <div className="justify-content-center d-flex">
@@ -364,7 +364,7 @@ const HoneyComb = () => {
                   <div className="fw-bold">Bio :</div>
                   {staticsData?.affiliateUserProfile?.PublicBio
                     ? staticsData?.affiliateUserProfile?.PublicBio
-                    : `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best captain bee to ever exist
+                    : `My name is ${staticsData?.affiliateUserProfile?.accname} and I am the best Hive Captain to ever exist
                   in indexx hive`}
                 </div>
 
@@ -522,7 +522,7 @@ const HoneyComb = () => {
                 style={{ marginLeft: `${isMobile ? '40px' : '0px'}` }}
               >
                 <div>
-                  <span className="fw-bold">Invite Honey Bee :</span>
+                  <span className="fw-bold">Invite Hive Member :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -543,7 +543,7 @@ const HoneyComb = () => {
                 </div>
                 <br />
                 <div>
-                  <span className="fw-bold">Invite Captain Bee :</span>
+                  <span className="fw-bold">Invite Hive Captain :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -613,7 +613,7 @@ const HoneyComb = () => {
                       // pr={"50%"}
                       alignSelf={'flex-start'}
                     >
-                      Total Honey Bees
+                      Total Hive Members
                     </Typography>
                     <Typography
                       variant="text"
@@ -663,7 +663,7 @@ const HoneyComb = () => {
                       // pr={"70%"}
                       alignSelf={'flex-start'}
                     >
-                      Total Captain Bee's Colonys
+                      Total Hive Captain's Colonys
                     </Typography>
                     <Typography
                       variant="text"
@@ -897,7 +897,7 @@ const HoneyComb = () => {
                           }}
                         >
                           <div className="font_15x d-flex align-items-center">
-                            Captain Bee{' '}
+                            Hive Captain{' '}
                             {staticsData?.affiliateUserProfile?.accname}
                           </div>
                           <div className="font_10x d-flex align-items-center">

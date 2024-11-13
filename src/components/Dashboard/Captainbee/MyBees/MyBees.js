@@ -41,7 +41,7 @@ const MyBees = () => {
     }
   }, []);
 
-  // Define a function to render a single Honey Bee box.
+  // Define a function to render a single Hive Member box.
   const renderHoneyBeeBox = (item) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -95,7 +95,9 @@ const MyBees = () => {
               },
             }}
           >
-            <div className="font_15x d-flex align-items-center">Honey Bee</div>
+            <div className="font_15x d-flex align-items-center">
+              Hive Member
+            </div>
             <div className="font_15x d-flex align-items-center">
               {item.username}
               {/* ({ item?.firstName + " " + item?.lastName}) */}
@@ -171,7 +173,7 @@ const MyBees = () => {
   const availableBeesCount = staticsData?.honeyBeesRegisteredData?.length || 0;
   const emptyBoxesCount = Math.max(6 - availableBeesCount, 0);
 
-  // Define a function to render an empty Honey Bee box with the same styling as available users.
+  // Define a function to render an empty Hive Member box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -198,7 +200,9 @@ const MyBees = () => {
               transition: '0.3s ease-in-out',
             }}
           >
-            <div className="font_15x d-flex align-items-center">Honey Bee</div>
+            <div className="font_15x d-flex align-items-center">
+              Hive Member
+            </div>
             <div className="font_15x d-flex align-items-center">
               {/* You can add any placeholder text here */}
             </div>
@@ -261,7 +265,7 @@ const MyBees = () => {
     </Grid>
   );
 
-  const [selectedTab, setSelectedTab] = useState('My Crypto Bees');
+  const [selectedTab, setSelectedTab] = useState('My Hive Members');
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -285,7 +289,7 @@ const MyBees = () => {
             >
               {availableBeesCount === 0 ? (
                 <>
-                  Please invite the Honey Bees using this{' '}
+                  Please invite the Hive Members using this{' '}
                   <a
                     href={`${
                       baseCEXURL +
@@ -300,8 +304,8 @@ const MyBees = () => {
                 </>
               ) : (
                 <>
-                  These are the Honey Bees that are part of your Colony. Select
-                  one to guide them
+                  These are the Hive Members that are part of your Colony.
+                  Select one to guide them
                 </>
               )}
             </div>

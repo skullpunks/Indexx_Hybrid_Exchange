@@ -61,7 +61,7 @@ const BeeHeader = () => {
               <div className="card">
                 <img src={hat} className="card-img-top" alt="..." />
                 <div className="card-body">
-                  <h5 className="card-title">My Captain Bee</h5>
+                  <h5 className="card-title">My Hive Captain</h5>
                   <Typography
                     component="p"
                     style={

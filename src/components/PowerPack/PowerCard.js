@@ -76,7 +76,7 @@ const PowerCard = ({ card, type }) => {
         powerPackAmount,
         discountCode
       );
-      
+
       let res = await createPowerPackOrder(
         purchasedProduct,
         paymentMethodUsed,
@@ -200,7 +200,7 @@ const PowerCard = ({ card, type }) => {
                 padding: '20px',
                 position: 'relative', // Add this style
                 // border:
-                //   card.level === 'Captain Bee' ? 'none' : '1px solid #A1A1A1',
+                //   card.level === 'Hive Captain' ? 'none' : '1px solid #A1A1A1',
                 border:
                   type === 'captainBee'
                     ? '1px solid #A1A1A1'
@@ -209,7 +209,7 @@ const PowerCard = ({ card, type }) => {
                 backgroundColor: type === 'captainBee' ? '#FFB300' : '#8EDF78',
               }}
               // className={
-              //   card.level === 'Captain Bee'
+              //   card.level === 'Hive Captain'
               //     ? 'highlighted-captain-bee-card'
               //     : ''
               // }
@@ -250,7 +250,7 @@ const PowerCard = ({ card, type }) => {
                 mb={2}
                 style={{
                   // color: `${
-                  //   card.level === 'Captain Bee' ? '#FFB300' : 'inherit'
+                  //   card.level === 'Hive Captain' ? '#FFB300' : 'inherit'
                   // }`,
                   color: 'inherit',
                 }}
@@ -301,7 +301,7 @@ const PowerCard = ({ card, type }) => {
                   lineHeight={'22.8px'}
                   my={1}
                 >
-                  {card.level === 'Captain Bee'
+                  {card.level === 'Hive Captain'
                     ? Indexx Hive ${card.level} Level
                     : '\u00A0'}
                 </Typography> */}
@@ -369,7 +369,7 @@ const PowerCard = ({ card, type }) => {
                   </Typography>
                 ))} */}
 
-              {/* {card.level === "Captain Bee" ?
+              {/* {card.level === "Hive Captain" ?
                                 <>
                                     <Typography variant="text" component="p" fontSize={"13px"} fontWeight={200} style={{ color: "#FFB300" }}>
                                         {card.level} Level

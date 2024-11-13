@@ -65,9 +65,9 @@ const PowerPack = ({ type }) => {
           lineHeight: '1.5',
         }}
       >
-        To unlock the full potential of earning as a "Captain Bee," you must
-        invest in a minimum of the Captain Bee Power Pack or a higher tier. This
-        investment is your ticket to financial growth and success.
+        To unlock the full potential of earning as a "Hive Captain," you must
+        invest in a minimum of the Hive Captain Power Pack or a higher tier.
+        This investment is your ticket to financial growth and success.
       </Typography>
       <Box sx={{ mt: 5, width: '80%', mx: 'auto', maxWidth: '1300px' }}>
         <Grid

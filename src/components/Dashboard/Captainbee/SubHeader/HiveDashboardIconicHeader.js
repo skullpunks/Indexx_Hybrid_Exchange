@@ -28,7 +28,7 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   color: '#000',
   minWidth: 0,
-  width: '135px',
+  width: '145px',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
@@ -107,14 +107,14 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
       search: '',
     },
     {
-      label: 'My Captain Bee',
+      label: 'My Hive Captain',
       light: captainBeeIcon,
       dark: captainBeeIcon,
       path: '/indexx-exchange/dashboard/capt-leader',
       search: '',
     },
     {
-      label: 'My Crypto Bees',
+      label: 'My Hive Members',
       light: crytoBeeIcon,
       dark: crytoBeeIcon,
       path: '/indexx-exchange/dashboard/capt-mybees',
@@ -198,7 +198,7 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
     }
   };
 
-  let maxWidthTabContainer = '1340px';
+  let maxWidthTabContainer = '1440px';
 
   const TabView = CustomTabHive;
   return (

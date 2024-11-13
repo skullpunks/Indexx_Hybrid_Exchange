@@ -172,7 +172,7 @@ const BuySellLoginContentHive = () => {
           <h2 className={classes.logoText}>Hive Exchange</h2>
         </div>
 
-        <h3 className={classes.loginText}>Captain Bee Log in</h3>
+        <h3 className={classes.loginText}>Hive Captain Log in</h3>
         <Form onFinish={onFinish} autoComplete="off" layout="vertical">
           <div style={{ margin: '10px auto' }}>
             <Form.Item
@@ -265,7 +265,7 @@ const BuySellLoginContentHive = () => {
         <div style={{ margin: '10px auto' }}></div>
         <Divider>or</Divider>
         <GenericButton
-          text="Signup as Captain Bee"
+          text="Signup as Hive Captain"
           className={classes.socialButton}
           onClick={() =>
             (window.location.href = 'https://hive.indexx.ai/sign-up')

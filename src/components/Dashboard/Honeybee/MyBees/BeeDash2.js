@@ -302,10 +302,10 @@ const BeeDash2 = () => {
               </div>
               <div className="align-items-start">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                  Honey Bee {honeyBeeData?.username}
+                  Hive Member {honeyBeeData?.username}
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
-                  Honey Bee of Captain{' '}
+                  Hive Member of Captain{' '}
                   {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
                 <div
@@ -323,8 +323,8 @@ const BeeDash2 = () => {
                         style={{ width: '100%' }}
                       >
                         <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          title="Hive Captain Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Hive Captain status and associated commissions. Stay at the top – don't forget to pay your dues!"
                           sx={{ width: '20%' }}
                         >
                           <Button
@@ -361,8 +361,8 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                       <div className="font_20x">
                         $150 INEX Subscription Details
                         <BootstrapTooltip
-                          title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                          title="Hive Captain Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Hive Captain status and associated commissions. Stay at the top – don't forget to pay your dues!"
                           sx={{ width: '20%' }}
                         >
                           <InfoOutlinedIcon

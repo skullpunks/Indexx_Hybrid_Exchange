@@ -515,7 +515,7 @@ const CaptainDash = () => {
                 className="font_20x fw-bold mt-4 mb-4 lh_32x d-flex"
                 style={{ justifyContent: `${isMobile ? 'center' : 'start'}` }}
               >
-                Captain Bee {staticsData?.affiliateUserProfile?.accname}
+                Hive Captain {staticsData?.affiliateUserProfile?.accname}
               </div>
               {powerPackPhoto !== undefined && powerPackPhoto !== '' ? (
                 <div className="justify-content-center d-flex">
@@ -577,8 +577,8 @@ const CaptainDash = () => {
                     <div className="font_20x">
                       $300 INEX Subscription Details
                       <BootstrapTooltip
-                        title="Captain Bee Subscription Fees: 
-Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Captain Bee status and associated commissions. Stay at the top – don't forget to pay your dues!"
+                        title="Hive Captain Subscription Fees: 
+Ensure your elite rank and commission earnings by subscribing monthly. Failure to pay on time leads to demotion, lowering your Hive Captain status and associated commissions. Stay at the top – don't forget to pay your dues!"
                         sx={{ width: '20%' }}
                       >
                         <InfoOutlinedIcon
@@ -705,7 +705,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
 
               <div className="d-flex flex-direction-column align-items-start mt-5">
                 <div>
-                  <span className="fw-bold">Invite Crypto Bee :</span>
+                  <span className="fw-bold">Invite Hive Member :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -725,7 +725,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                 </div>
 
                 <div>
-                  <span className="fw-bold">Invite Captain Bee :</span>
+                  <span className="fw-bold">Invite Hive Captain :</span>
                   <br />
                   {staticsData?.userFullData?.referralCode}
                   <ContentCopyIcon
@@ -795,7 +795,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         mb={2}
                         sx={{ flex: 1 }}
                       >
-                        My Crypto Bee Statistics
+                        My Hive Member Statistics
                       </Typography>
 
                       <Typography
@@ -807,7 +807,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                         mb={2}
                         sx={{ flex: 1 }}
                       >
-                        My Captain Bee Statistics
+                        My Hive Captain Statistics
                       </Typography>
                     </Box>
 
@@ -839,7 +839,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           fontWeight={600}
                           textAlign={'center'}
                         >
-                          Total Crypto Bees
+                          Total Hive Members
                         </Typography>
                         <Typography
                           variant="text"
@@ -971,7 +971,7 @@ Ensure your elite rank and commission earnings by subscribing monthly. Failure t
                           fontWeight={600}
                           textAlign={'center'}
                         >
-                          Total Team Captain Bees
+                          Total Team Hive Captains
                         </Typography>
                         <Typography
                           variant="text"

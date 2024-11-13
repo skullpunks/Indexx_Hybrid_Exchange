@@ -36,13 +36,13 @@ const PowerPackInitial = () => {
         <div onClick={handleCaptionBee} style={{ cursor: 'pointer' }}>
           <img src={hive_caption_bee} />
           <button className="orange-btn" style={{ marginTop: '20px' }}>
-            Join as Captain Bee
+            Join as Hive Captain
           </button>
         </div>
         <div onClick={handleHoneyBee} style={{ cursor: 'pointer' }}>
           <img src={hive_honey_bee} />
           <button className="yellow-btn" style={{ marginTop: '20px' }}>
-            Join as Honey Bee
+            Join as Hive Member
           </button>
         </div>
       </section>

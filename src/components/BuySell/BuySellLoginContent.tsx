@@ -105,7 +105,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
   const [loadings, setLoadings] = useState<boolean>(false);
   localStorage.setItem('userlogged', 'normal');
 
-  const onFinishFailed = (errorInfo: any) => { };
+  const onFinishFailed = (errorInfo: any) => {};
   return (
     // <div className="">
     <div className="d-flex flex-direction-column col-md-12 responsive_container flex-align-center">
@@ -211,7 +211,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           to="/indexx-exchange/buy-sell/login-honeybee"
           className="login_links  "
         >
-          Login as Honey Bee
+          Login as Hive Member
         </Link>
         <br />
         <p
@@ -241,7 +241,7 @@ const BuySellLoginContent: React.FC<Props> = ({ setScreenName }) => {
           </span>
         </p>
         <Link to="/indexx-exchange/buy-sell/hive-login" className="login_links">
-          Login as Captain Bee
+          Login as Hive Captain
         </Link>
         <br />
 

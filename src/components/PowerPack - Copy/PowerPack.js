@@ -64,12 +64,12 @@ const PowerPack = ({ type, subType }) => {
         >
           Indexx Hive
           {subType === 'action'
-            ? ' Honey Bee Action Pack'
+            ? ' Hive Member Action Pack'
             : subType === 'token'
-            ? ' Honey Bee Token Pack'
+            ? ' Hive Member Token Pack'
             : subType === 'crypto'
-            ? ' Captain Bee Crypto Pack'
-            : ' Captain Bee Power Pack'}
+            ? ' Hive Captain Crypto Pack'
+            : ' Hive Captain Power Pack'}
         </h3>
       </Box>
 
@@ -86,11 +86,11 @@ const PowerPack = ({ type, subType }) => {
         }}
       >
         To unlock the full potential of earning as a{' '}
-        <b>{type === 'captainBee' ? 'Captain Bee,' : 'Honey Bee,'}</b> you must
-        invest in a minimum of the{' '}
+        <b>{type === 'captainBee' ? 'Hive Captain,' : 'Hive Member,'}</b> you
+        must invest in a minimum of the{' '}
         {type === 'captainBee'
-          ? 'Captain Bee Crypto Pack'
-          : 'Honey Bee Action Pack'}{' '}
+          ? 'Hive Captain Crypto Pack'
+          : 'Hive Member Action Pack'}{' '}
         or a higher tier. This investment is your ticket to financial growth and
         success.
       </Typography>
@@ -137,7 +137,7 @@ const PowerPack = ({ type, subType }) => {
             </>
           ))}
         </Grid>
-        <PopupModal open={openPopup} setOpen={setOpenPopup} data={popupData}  />
+        <PopupModal open={openPopup} setOpen={setOpenPopup} data={popupData} />
       </Box>
     </Box>
   );

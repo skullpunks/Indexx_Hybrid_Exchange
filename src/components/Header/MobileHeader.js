@@ -416,7 +416,7 @@ const MobileHeader = () => {
           name: 'Sign up as an Afilliate',
           url: 'https://register.affiliate.indexx.ai/about',
         },
-        { name: 'Captain Bee Sign Up', url: `${baseHiveURL}/sign-up` },
+        { name: 'Hive Captain Sign Up', url: `${baseHiveURL}/sign-up` },
         { name: 'Honeycomb Build Up', url: '/indexx-exchange/coming-soon' },
         // {
         //   name: 'Trade to Earn Sign Up',

@@ -113,7 +113,7 @@ const TeamCaptainDash = () => {
     OpenNotification('success', 'Copied Successfully!');
   };
 
-  // Define a function to render a single Honey Bee box.
+  // Define a function to render a single Hive Member box.
   const renderHoneyBeeBox = (item) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -246,7 +246,7 @@ const TeamCaptainDash = () => {
     staticsData?.captainBeeRegisteredRequiredData?.length || 0;
   const emptyBoxesCount = Math.max(6 - availableBeesCount, 0);
 
-  // Define a function to render an empty Honey Bee box with the same styling as available users.
+  // Define a function to render an empty Hive Member box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
     <Grid item xs={1} sm={6} md={3}>
       <div className="d-flex flex-direction-column align-items-center">
@@ -275,7 +275,7 @@ const TeamCaptainDash = () => {
             }}
           >
             <div className="font_15x d-flex align-items-center">
-              Captain Bee
+              Hive Captain
             </div>
             <div className="font_15x d-flex align-items-center">
               {/* You can add any placeholder text here */}
@@ -365,7 +365,7 @@ const TeamCaptainDash = () => {
             >
               {availableBeesCount === 0 ? (
                 <>
-                  Please invite the Captain Bees using this{' '}
+                  Please invite the Hive Captains using this{' '}
                   <a
                     href={`${
                       baseHiveURL +
@@ -380,7 +380,7 @@ const TeamCaptainDash = () => {
                 </>
               ) : (
                 <>
-                  These are the Captain Bees that are part of your Hex Colony.
+                  These are the Hive Captains that are part of your Hex Colony.
                   Select one to guide them
                 </>
               )}
@@ -424,7 +424,7 @@ const TeamCaptainDash = () => {
       {/* <div style={{ paddingTop: "220px" }}>
         <div className='font_20x fw-bold justify-content-center d-flex' style={{ marginLeft: "-630px" }}>
  
-          Team Captain Bee {staticsData?.affiliateUserProfile?.accname} Dashboard
+          Team Hive Captain {staticsData?.affiliateUserProfile?.accname} Dashboard
         </div>
         <div className="hive-container">
           <div
@@ -461,11 +461,11 @@ const TeamCaptainDash = () => {
               </div>
               <div className="align-items-start lh_32x">
                 <div className="font_20x fw-bold align-items-start mt-4 lh_32x">
-                  Team Captain Bee {staticsData?.affiliateUserProfile?.Username}
+                  Team Hive Captain {staticsData?.affiliateUserProfile?.Username}
 
                 </div>
                 <div className="font_10x mb-3 lh_32x align-items-start">
-                  Captain Bee of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
+                  Hive Captain of Captain {captainBeeData?.refferedUserAffilateData?.Username} Team
                 </div>
                 {(powerPackPhoto !== undefined && powerPackPhoto !== "") ?
                   (<div className="justify-content-center d-flex">
@@ -568,7 +568,7 @@ const TeamCaptainDash = () => {
 
                 <div className="d-flex flex-direction-column align-items-start lh_32x mt-5">
                   <div>
-                    Invite Honey Bee : {staticsData?.userFullData?.referralCode}
+                    Invite Hive Member : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(staticsData?.userFullData?.referralCode)}
@@ -576,7 +576,7 @@ const TeamCaptainDash = () => {
                     />
                   </div>
                   <div>
-                    Invite Captain Bee : {staticsData?.userFullData?.referralCode}
+                    Invite Hive Captain : {staticsData?.userFullData?.referralCode}
                     <ContentCopyIcon
                       fontSize="13px"
                       onClick={() => copyClick(staticsData?.userFullData?.referralCode)}

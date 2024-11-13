@@ -74,7 +74,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
         powerPackAmount,
         discountCode
       );
-      
+
       let res = await createPowerPackOrder(
         purchasedProduct,
         paymentMethodUsed,
@@ -230,7 +230,7 @@ const PowerCard = ({ card, type, subType, setPopup, setPopupData }) => {
               backgroundColor: type === 'captainBee' ? '#FFB300' : '#8EDF78',
             }}
             // className={
-            //   card.level === 'Captain Bee'
+            //   card.level === 'Hive Captain'
             //     ? 'highlighted-captain-bee-card'
             //     : ''
             // }
