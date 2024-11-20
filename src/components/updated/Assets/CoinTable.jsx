@@ -433,7 +433,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     sx={{
                       borderBottom: 'none !important',
                       ...(isHighlighted && {
-                        borderBottom: '4px solid orange', // Apply orange line
+                        borderBottom: '1px solid orange', // Apply orange line
                       }),
                     }}
                   >
