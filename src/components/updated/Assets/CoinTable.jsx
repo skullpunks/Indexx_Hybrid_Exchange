@@ -162,7 +162,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     'WIBS',
     'BTC',
   ];
-  const smartCryptoCoins = [];
+  const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
 
   const calculateTodayPNL = (item) => {
     const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS', 'DaCrazy'];
@@ -237,17 +237,24 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             };
           }
 
-          // Check if the notes start with the desired phrases
+          //Check if the notes start with the desired phrases
           const hasSmartCryptoNote =
             item.notes.startsWith('Smart Crypto Surge') ||
             item.notes.startsWith('Smart Crypto Ripple') ||
             item.notes.startsWith('Smart Crypto Wave');
 
-          if (hasSmartCryptoNote) {
-            smartCryptoCoins.push(item); // Push to the smartCryptoCoins array
-          }
+          // if (hasSmartCryptoNote) {
+          //   smartCryptoCoins.push(item); // Push to the smartCryptoCoins array
+          // }
 
-          console.log('smartCryptoCoins', smartCryptoCoins);
+          // Filter and update smartCryptoCoins state
+          const newSmartCryptoCoins = userWallets.data.filter(
+            (item) =>
+              item.notes.startsWith('Smart Crypto Surge') ||
+              item.notes.startsWith('Smart Crypto Ripple') ||
+              item.notes.startsWith('Smart Crypto Wave')
+          );
+          setSmartCryptoCoins(newSmartCryptoCoins);
           return {
             id: item.coinName,
             coin: item.coinSymbol,
@@ -339,9 +346,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
 
     // Add BTC twice if it is in smartCryptoCoins
     if (smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC')) {
-      console.log("")
+      console.log('');
       const btcRow = finalRows.find((row) => row.coin === 'BTC');
-      console.log("btcRow", btcRow)
+      console.log('btcRow', btcRow);
       if (btcRow) {
         // Duplicate BTC row in the final list
         finalRows.push(btcRow);
@@ -376,6 +383,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   const firstSmartCryptoRowIndex = visibleRows.findIndex(
     (row) => row.hasSmartCryptoNote
   );
+  console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
   const lastSmartCryptoRowIndex = visibleRows
     .slice()
     .reverse()
@@ -386,7 +394,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       ? -1
       : visibleRows.length - 1 - lastSmartCryptoRowIndex;
 
-  console.log('smartCryptoCoins', smartCryptoCoins);
+  console.log('visibleRows', visibleRows);
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <TableContainer>
@@ -405,27 +413,54 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             {visibleRows?.map((row, index) => {
               // Apply orange line between the first and last smart crypto rows
               const isHighlighted =
-                (index === firstSmartCryptoRowIndex ||
+                (index === firstSmartCryptoRowIndex  ||
                   index === lastSmartCryptoIndexAdjusted) &&
                 row.hasSmartCryptoNote;
               return (
                 <>
                   {/* Add text row after the firstSmartCryptoRowIndex */}
-                  {index === firstSmartCryptoRowIndex + 1 && (
-                    <TableRow>
-                      <TableCell
-                        colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
-                        sx={{
-                          borderBottom: 'none',
-                          fontWeight: 'bold',
-                          color: 'orange',
-                          textAlign: 'center',
-                        }}
-                      >
-                        Smart Crypto Ripple/Wave/Surge
-                      </TableCell>
-                    </TableRow>
-                  )}
+                  {index === firstSmartCryptoRowIndex + 1 &&
+                    row.hasSmartCryptoNote && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            color: 'orange',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {/* Dynamically render text based on notes */}
+                          {(() => {
+                            // Extract the manager's name and type from the notes
+                            const notes = row.notes || '';
+                            let managerCode = '';
+                            let cryptoType = '';
+
+                            if (notes.includes('Omkar')) {
+                              managerCode = '001';
+                            } else if (notes.includes('Kashir')) {
+                              managerCode = '003';
+                            } else if (notes.includes('Issa')) {
+                              managerCode = '002';
+                            }
+
+                            if (notes.includes('Ripple')) {
+                              cryptoType = 'Ripple';
+                            } else if (notes.includes('Wave')) {
+                              cryptoType = 'Wave';
+                            } else if (notes.includes('Surge')) {
+                              cryptoType = 'Surge';
+                            }
+
+                            // Combine the dynamic parts into the final string
+                            return `Smart Crypto ${cryptoType} ${managerCode}`;
+                          })()}
+                        </TableCell>
+                      </TableRow>
+                    )}
+
                   <TableRow
                     role="checkbox"
                     tabIndex={-1}
