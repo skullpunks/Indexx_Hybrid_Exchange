@@ -752,6 +752,20 @@ export const getUserWallets = async (email: string) => {
   }
 };
 
+
+export const getSmartCryptoPackages = async () => {
+  try {
+      const result = await API.get(
+          `/api/v1/inex/basic/getsmartpackages`
+      );
+      if (result.status === 200) return result.data;
+      else return result.data;
+  } catch  (e: any) {
+      return e.response.data;
+  }
+};
+
+
 export const getUserInvestments = async (email: string) => {
   try {
     const result = await API.get(`/api/v1/inex/user/totalInvestment/${email}`);

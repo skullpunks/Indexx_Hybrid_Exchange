@@ -193,13 +193,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/market-data',
       search: '',
     },
-    {
-      label: 'Smart Crypto',
-      light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-      dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-      path: '/smart-crypto',
-      search: '',
-    },
+    // {
+    //   label: 'Smart Crypto',
+    //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   path: '/smart-crypto',
+    //   search: '',
+    // },
     // {
     //   label: 'Stock Tokens',
     //   light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,

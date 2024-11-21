@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IconicHeader from '../shared/IconicHeader';
 import { makeStyles } from '@mui/styles';
 import SmartCryptoTabs from './IconicHeader';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import GenericButton from '../shared/Button';
+import { getSmartCryptoPackages } from '../../../services/api';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -85,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0px 0px 5px',
   },
   imgGroup: {},
-  buttonContaienr: {
+  buttonContainer: {
     display: 'flex',
     gap: '10px',
   },
@@ -103,11 +105,62 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SmartCrypto = () => {
-  const [selectedTab, setSelectedTab] = useState('Smart Crypto');
+  const [selectedTab, setSelectedTab] = useState('All');
   const classes = useStyles();
+  const [packagesData, setPackagesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getSmartCryptoPackages();
+         // Sort by subTitle (assuming subTitle is a string)
+         const sortedData = (response.data || []).sort((a, b) =>
+          a.subTitle.localeCompare(b.subTitle)
+        );
+
+        setPackagesData(sortedData);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const filteredPackages =
+    selectedTab === 'All'
+      ? packagesData
+      : packagesData.filter((pkg) => pkg.portfolioName.includes(selectedTab));
+
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
+
+  // Dynamic Content Based on Selected Tab
+  const portfolioName =
+    selectedTab === 'All'
+      ? 'Smart Crypto Plans'
+      : `Smart Crypto ${selectedTab}`;
+
+  const description =
+    selectedTab === 'All'
+      ? 'Diversify your crypto holding by minimizing risk while maximizing exposure.'
+      : packagesData.find((pkg) => pkg.portfolioName.includes(selectedTab))
+          .description;
 
   return (
     <div className={classes.Container}>
@@ -121,84 +174,60 @@ const SmartCrypto = () => {
         </div>
 
         <div>
-          <SmartCryptoTabs />
+          <SmartCryptoTabs
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+          />
         </div>
 
         <div className={classes.descriptionWrapper}>
           <div>
             {/* <img src={}/> */}
-            <h4>Ripple Plan</h4>
+            <h4>{portfolioName}</h4>
           </div>
 
-          <p>
-            Diversify your crypto holding by minimizing risk while maximizing
-            exposure.
-          </p>
+          <p>{description}</p>
         </div>
 
         <div className={classes.cardWrapper}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((curr) => (
-            <div className={classes.cardContainer}>
-              <h3>Shiny Tokens in Meme</h3>
-
-              <div className={classes.flexContainer}>
-                <div className={classes.assetContainer}>
-                  {' '}
-                  <p className={classes.assetsText}>Assets</p>
-                  <div className={classes.imgGroup}>
-                    <AvatarGroup
-                      max={4}
-                      sx={{
-                        '& .MuiAvatar-root': {
-                          width: 32,
-                          height: 32,
-                          fontSize: 14,
-                        },
-                      }}
-                    >
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="/static/images/avatar/1.jpg"
-                      />
-                      <Avatar
-                        alt="Travis Howard"
-                        src="/static/images/avatar/2.jpg"
-                      />
-                      <Avatar
-                        alt="Cindy Baker"
-                        src="/static/images/avatar/3.jpg"
-                      />
-                      <Avatar
-                        alt="Agnes Walker"
-                        src="/static/images/avatar/4.jpg"
-                      />
-                      <Avatar
-                        alt="Trevor Henderson"
-                        src="/static/images/avatar/5.jpg"
-                      />
+          {loading ? (
+            <p>Loading...</p>
+          ) : filteredPackages.length > 0 ? (
+            filteredPackages.map((pkg) => (
+              <div key={pkg._id} className={classes.cardContainer}>
+                <h3>
+                  {pkg.portfolioName} ({pkg?.subTitle})
+                </h3>
+                <p>{pkg.description}</p>
+                <div className={classes.flexContainer}>
+                  <div>
+                    <p>Assets</p>
+                    <AvatarGroup max={4}>
+                      {pkg.cryptocurrencies.map((crypto) => (
+                        <Avatar
+                          key={crypto._id}
+                          alt={crypto.name}
+                          src={getImage(crypto?.token)}
+                        />
+                      ))}
                     </AvatarGroup>
                   </div>
                 </div>
-                <div className={classes.transactionContainer}>
-                  <p className={classes.assetsText}> No. of Transactions</p>
-                  <p>
-                    {' '}
-                    <span className={classes.count}>1</span> L30D
-                  </p>
+                <div className={classes.buttonContainer}>
+                  <GenericButton
+                    text="View Allocation"
+                    className={classes.greyButton}
+                  />
+                  <GenericButton
+                    text="Create a Plan"
+                    className={classes.yellowButton}
+                  />
                 </div>
               </div>
-              <div className={classes.buttonContaienr}>
-                <GenericButton
-                  text={'View Allocation'}
-                  className={classes.greyButton}
-                />
-                <GenericButton
-                  text={'Create a plan'}
-                  className={classes.yellowButton}
-                />
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No packages found.</p>
+          )}
         </div>
       </div>
     </div>
