@@ -7,7 +7,9 @@
 }
 
 .custom-select .ant-select-dropdown-menu-item:hover {
-  background-color: var(--dropdown-hover); /* Set your desired hover background color */
+  background-color: var(
+    --dropdown-hover
+  ); /* Set your desired hover background color */
   color: white; /* Set your desired hover text color */
 }
 
@@ -104,15 +106,14 @@
   top: 10px;
 }
 
-.small-btn{
+.small-btn {
   width: auto;
   height: 25px;
   padding: 1px 7px 0px 40px !important;
   /* padding: 4px 15px 6px 40px !important; */
 }
 
-.small-btn:hover
-{
+.small-btn:hover {
   width: auto;
   height: 25px;
   padding: 0px 20px 0px 35px !important;
@@ -120,41 +121,40 @@
 
 .ant-checkbox-inner,
 .ant-input-affix-wrapper,
-.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper, .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
+.ant-input-affix-wrapper-status-error:not(
+    .ant-input-affix-wrapper-disabled
+  ):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+.ant-input-affix-wrapper-status-error:not(
+    .ant-input-affix-wrapper-disabled
+  ):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
 .ant-input {
-  background-color: var(--body_background) ;
+  background-color: var(--body_background);
   border-color: var(--border-color);
   color: var(--body_color);
 }
 
-.ant-input-password-icon.anticon{
+.ant-input-password-icon.anticon {
   color: var(--body_color);
 }
-.custom_table 
-.ant-table-tbody 
-.ant-table-cell
-{
+.custom_table .ant-table-tbody .ant-table-cell {
   background-color: var(--body_background);
   color: var(--body_color);
   border-color: var(--border-color);
 }
 
-.custom_table 
-.ant-table-thead > tr > th {
+.custom_table .ant-table-thead > tr > th {
   background-color: var(--body_background);
   color: var(--body_color);
   border-color: var(--border-color);
 }
 
-.custom_table 
-.ant-table-thead > tr > th:hover {
+.custom_table .ant-table-thead > tr > th:hover {
   background-color: var(--disabled-btn);
   color: var(--body_color);
   border-color: var(--border-color);
 }
 
-.custom_table 
-.ant-table-cell-row-hover{
+.custom_table .ant-table-cell-row-hover {
   background-color: var(--disabled-btn) !important;
   color: var(--body_color);
   border-color: var(--border-color);
@@ -178,8 +178,4 @@
   h1 {
     font-size: 25px;
   }
-}
-
-.wallet-bee h1, .wallet-bee h2 {
-  color: #393939 !important;
 }

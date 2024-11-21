@@ -1,18 +1,18 @@
 .capt-tabs .ant-tabs-tab {
-    padding: 0;
-    color: white;
+  padding: 0;
+  color: white;
 }
 
 .capt-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
 .ant-tabs-tab-btn:focus {
-    padding: 0;
-    color: #393939;
+  padding: 0;
+  color: #c2bebe;
 }
 
 .capt-tabs .ant-tabs-ink-bar {
-    display: none;
-  }
+  display: none;
+}
 
-  .capt-tabs .ant-tabs-top > .ant-tabs-nav::before{
-    display: none;
-  }
+.capt-tabs .ant-tabs-top > .ant-tabs-nav::before {
+  display: none;
+}

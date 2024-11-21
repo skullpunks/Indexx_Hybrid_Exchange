@@ -532,8 +532,8 @@ const HeaderTest = () => {
                             >
                               <div
                                 style={{
-                                  width: isCaptain ? '60px' : '50px',
-                                  height: isCaptain ? '80px' : '60px',
+                                  width: isCaptain ? '40px' : '50px',
+                                  height: isCaptain ? '40px' : '60px',
                                   backgroundImage: `url(${
                                     isCaptain === true ? frame : beeframe
                                   })`,
@@ -828,6 +828,8 @@ const HeaderTest = () => {
                                       isCaptain ? 'bee-hexagon' : 'elipse-img'
                                     }
                                     style={{
+                                      width: '40px',
+                                      height: '40px',
                                       marginBottom: `${
                                         isCaptain === true ? 0 : '7px'
                                       }`,

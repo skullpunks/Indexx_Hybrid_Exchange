@@ -37,6 +37,7 @@ import stakingHive from '../../../../assets/updated/iconicHeader/staking_hive.sv
 import giftHive from '../../../../assets/updated/iconicHeader/gift_hive.svg';
 import assetHive from '../../../../assets/updated/iconicHeader/asset_wallet_hive.svg';
 import hiveHive from '../../../../assets/updated/iconicHeader/hive_hive.svg';
+import smartCrypto from '../../../../assets/updated/smartCrypto/smartCryptoLogo.png';
 import { checkByemail } from '../../../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
@@ -92,7 +93,7 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   color: '#FEBA00',
   minWidth: 0,
-  width: '110px',
+  width: '120px',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
@@ -192,6 +193,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/market-data',
       search: '',
     },
+    {
+      label: 'Smart Crypto',
+      light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+      dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+      path: '/smart-crypto',
+      search: '',
+    },
     // {
     //   label: 'Stock Tokens',
     //   light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,
@@ -285,7 +293,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   if (isLoggedIn && userType === 'Indexx Exchange') {
     maxWidthTabContainer = '1000px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
-    maxWidthTabContainer = '1100px';
+    maxWidthTabContainer = '1200px';
   } else {
     maxWidthTabContainer = '550px';
   }

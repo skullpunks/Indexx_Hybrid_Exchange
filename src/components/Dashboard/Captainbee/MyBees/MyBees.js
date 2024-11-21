@@ -43,14 +43,17 @@ const MyBees = () => {
 
   // Define a function to render a single Hive Member box.
   const renderHoneyBeeBox = (item) => (
-    <Grid item xs={1} sm={6} md={3}>
+    <Grid item sx={{ flex: 1 }}>
       <div className="d-flex flex-direction-column align-items-center">
-        <div className="d-flex align-items-center">
+        <div
+          className="d-flex align-items-center"
+          style={{ justifyContent: 'flex-start', gap: '10px', width: '100%' }}
+        >
           <div
             style={{
               width: '80px',
               height: '80px',
-              backgroundImage: `url(${frame})`,
+              // backgroundImage: `url(${frame})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               backgroundPosition: 'center',
@@ -63,6 +66,16 @@ const MyBees = () => {
               // border:"none"
             }}
           >
+            <div
+              style={{
+                width: '80px',
+                height: '80px',
+                position: 'absolute',
+                zIndex: '1',
+              }}
+            >
+              <img src={frame} style={{ width: '100%', height: '100%' }} />
+            </div>
             <div className="bee-hexagon" style={{ marginBottom: '7px' }}>
               <img
                 alt=""
@@ -83,16 +96,7 @@ const MyBees = () => {
               justifyContent: 'center',
               alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: '1.5px solid #E1E1E1',
-              height: '50px',
-              marginLeft: '-35px',
-              pl: 4,
-              width: '311px',
               transition: '0.3s ease-in-out',
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-              },
             }}
           >
             <div className="font_15x d-flex align-items-center">
@@ -106,7 +110,7 @@ const MyBees = () => {
         </div>
         <div
           className="d-flex align-items-center justify-content-start mt-1"
-          style={{ marginLeft: '14px' }}
+          style={{ flex: 1, width: '100%', gap: '10px' }}
         >
           <Button
             variant="outlined"
@@ -118,10 +122,10 @@ const MyBees = () => {
               borderColor: '#FFB300',
               borderRadius: '2px',
               color: 'var(--body_color)',
-              width: '170px',
+              flex: 1,
               height: '32px',
               textTransform: 'none',
-              fontSize: '10px',
+              fontSize: '12px',
               boxShadow: 'none',
               transition: '0.3s ease-in-out',
               '&:hover': {
@@ -145,14 +149,15 @@ const MyBees = () => {
               borderColor: '#FFB300',
               borderRadius: '2px',
               color: 'var(--body_color)',
+              flex: 1,
               // color: '#282828',
-              width: '170px',
+
               height: '32px',
               textTransform: 'none',
-              fontSize: '10px',
+              fontSize: '12px',
               boxShadow: 'none',
               transition: '0.3s ease-in-out',
-              ml: 0.3,
+
               '&:hover': {
                 backgroundColor: '#FFB300',
                 borderColor: '#FFB300',
@@ -175,9 +180,12 @@ const MyBees = () => {
 
   // Define a function to render an empty Hive Member box with the same styling as available users.
   const renderEmptyHoneyBeeBox = (index) => (
-    <Grid item xs={1} sm={6} md={3}>
+    <Grid item sx={{ flex: 1 }}>
       <div className="d-flex flex-direction-column align-items-center">
-        <div className="d-flex align-items-center">
+        <div
+          className="d-flex"
+          style={{ justifyContent: 'flex-start', gap: '10px', width: '100%' }}
+        >
           <img
             src={man}
             alt="man"
@@ -192,11 +200,7 @@ const MyBees = () => {
               justifyContent: 'center',
               alignItems: 'baseline',
               backgroundColor: 'transparent',
-              border: '1.5px solid #E1E1E1',
               height: '50px',
-              marginLeft: '-35px',
-              pl: 4,
-              width: '311px',
               transition: '0.3s ease-in-out',
             }}
           >
@@ -210,7 +214,7 @@ const MyBees = () => {
         </div>
         <div
           className="d-flex align-items-center justify-content-start mt-1"
-          style={{ marginLeft: '14px' }}
+          style={{ width: '100%', gap: '10px' }}
         >
           <Button
             variant="outlined"
@@ -221,10 +225,10 @@ const MyBees = () => {
               borderColor: '#E1E1E1', // Grey border color
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
-              width: '170px',
+              flex: 1,
               height: '32px',
               textTransform: 'none',
-              fontSize: '10px',
+              fontSize: '12px',
               boxShadow: 'none',
               transition: '0.3s ease-in-out',
               '&:hover': {
@@ -244,14 +248,13 @@ const MyBees = () => {
               borderColor: '#E1E1E1', // Grey border color
               borderRadius: '2px',
               color: '#E1E1E1', // Grey text color
-              // color: '#282828',
-              width: '170px',
+              flex: 1,
               height: '32px',
               textTransform: 'none',
-              fontSize: '10px',
+              fontSize: '12px',
               boxShadow: 'none',
               transition: '0.3s ease-in-out',
-              ml: 0.3,
+
               '&:hover': {
                 borderColor: '#E1E1E1', // Grey border color
                 boxShadow: 'none',
@@ -279,12 +282,15 @@ const MyBees = () => {
       />
 
       {userType === 'CaptainBee' ? (
-        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+        <div style={{}}>
           <div className="font_20x  justify-content-center text-align-center d-flex mb-2">
             <div
               style={{
-                width: `${isMobile ? '95%' : '30%'}`,
                 textAlign: 'center',
+                marginTop: '100px',
+                maxWidth: '500px',
+                width: '100%',
+                padding: '20px',
               }}
             >
               {availableBeesCount === 0 ? (
@@ -313,27 +319,39 @@ const MyBees = () => {
           <div className="hive-container d-flex">
             <Box
               sx={{
-                width: '73%',
-                display: 'flex',
-                flexDirection: `${isMobile ? 'column' : 'row'}`,
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 2,
+                maxWidth: '1140px',
+                width: '100%',
+                margin: 'auto',
+                padding: '20px',
               }}
             >
-              <Grid
-                container
-                columns={{ xs: 1, sm: 12, md: 9 }}
-                spacing={{ xs: 12, md: 2 }}
-                maxWidth={'1150px'}
-                rowSpacing={12}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '40px',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}
               >
                 {staticsData?.honeyBeesRegisteredData?.map(renderHoneyBeeBox)}
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '40px',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  flexWrap: 'wrap',
+                  marginTop: '100px',
+                  justifyContent: 'center',
+                }}
+              >
                 {/* Render empty gray boxes to fill the remaining slots first */}
                 {Array.from({ length: emptyBoxesCount }, (_, index) =>
                   renderEmptyHoneyBeeBox(index)
                 )}
-              </Grid>
+              </div>
             </Box>
           </div>
           {/* {---} */}

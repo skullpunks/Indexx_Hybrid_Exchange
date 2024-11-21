@@ -58,11 +58,21 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
   ) => {
     if (type === 'Create Gift') {
       return 'N/A';
-    } else if (type === 'SEND_CRYPTO' || type === "INVESTMENT" || type === 'PURCHASED_COINS') {
-      if (asset === 'INEX' || asset === 'IN500' || asset === 'IUSD+' || asset === 'WIBS' || asset === 'daCrazy') {
-        return `${(1)} %`;
+    } else if (
+      type === 'SEND_CRYPTO' ||
+      type === 'INVESTMENT' ||
+      type === 'PURCHASED_COINS'
+    ) {
+      if (
+        asset === 'INEX' ||
+        asset === 'IN500' ||
+        asset === 'IUSD+' ||
+        asset === 'WIBS' ||
+        asset === 'daCrazy'
+      ) {
+        return `${1} %`;
       } else {
-        return `${(3)} %`;
+        return `${3} %`;
       }
     }
     return 'N/A';
@@ -92,8 +102,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           {text === 'GIFT_COINS'
             ? 'Gift'
             : text === 'PURCHASED_COINS'
-              ? 'Buy'
-              : text}
+            ? 'Buy'
+            : text}
         </span>
       ),
     },
@@ -113,9 +123,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           {record.amount.toLocaleString()} / $
           {record.balance
             ? record.balance.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
             : 'N/A'}
         </span>
       ),
@@ -126,7 +136,9 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (_, record) => (
         <span>
           ${' '}
-          {(record?.rate ?? (Number(record?.amountInvested) / record?.amount))?.toLocaleString(undefined, {
+          {(
+            record?.rate ?? Number(record?.amountInvested) / record?.amount
+          )?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 4,
           })}
@@ -152,10 +164,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       render: (_, record) => (
         <span>
           ${' '}
-          {(
-           record?.transactionType === 'PowerPack'
-              ? Number(record?.amountInvested)
-              : Number(record?.amountInvested) - (Number(record?.amountInvested) * 3 / 100)
+          {(record?.transactionType === 'PowerPack'
+            ? Number(record?.amountInvested)
+            : Number(record?.amountInvested) -
+              (Number(record?.amountInvested) * 3) / 100
           )?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -244,8 +256,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       setTransactionTypes(Array.from(uniqueTypes) as string[]);
       setAssets(Array.from(uniqueAssets) as string[]);
 
-
-      finalArr.sort((a: any, b: any) => moment(b.txDate).valueOf() - moment(a.txDate).valueOf());
+      finalArr.sort(
+        (a: any, b: any) =>
+          moment(b.txDate).valueOf() - moment(a.txDate).valueOf()
+      );
       setTxList(finalArr);
       setTxListFilter(finalArr);
     };
@@ -270,10 +284,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           moment(pastDate).isSameOrBefore(valueDate) &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -295,10 +309,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -343,11 +357,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -368,11 +382,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -405,7 +419,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     const pastDate = moment()
       .subtract(+selection.time, 'days')
       .format('YYYY-MM-DD');
-    console.log("pastDate", pastDate)
+    console.log('pastDate', pastDate);
     if (value !== 'all') {
       setSelection({
         type: value,
@@ -420,7 +434,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           data.transactionType?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -444,7 +458,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -472,7 +486,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     });
   };
 
-
   const handleChangeAsset0 = (el: any) => {
     const value = el.target.value;
     const pastDate = moment()
@@ -493,7 +506,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -517,7 +530,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -529,7 +542,6 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
       setTxListFilter(txListFilterData);
     }
   };
-
 
   const handleChangeAsset = (el: any) => {
     const value = el.target.value;
@@ -545,12 +557,11 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
     });
   };
 
-
   const getData = (current: number, pageSize: number) => {
     const xx =
       txListFilter &&
       txListFilter.slice((current - 1) * pageSize, current * pageSize);
-    console.log("xx", xx)
+    console.log('xx', xx);
     return xx;
   };
 
@@ -572,7 +583,8 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
 
       const typeMatches =
         filterCriteria.type === 'all' ||
-        data.transactionType?.toLowerCase() === filterCriteria.type?.toLowerCase();
+        data.transactionType?.toLowerCase() ===
+          filterCriteria.type?.toLowerCase();
 
       const statusMatches =
         filterCriteria.status === 'all' ||
@@ -582,7 +594,13 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         !filterCriteria.transactionHash ||
         data.txId?.toLowerCase().includes(filterCriteria.transactionHash);
 
-      return assetMatches && timeMatches && typeMatches && statusMatches && txHashMatches;
+      return (
+        assetMatches &&
+        timeMatches &&
+        typeMatches &&
+        statusMatches &&
+        txHashMatches
+      );
     });
 
     // Update the filtered transaction list
@@ -613,7 +631,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
         (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
         (!selection.type ||
           data.transactionType?.toLowerCase() ===
-          selection.type?.toLowerCase()) &&
+            selection.type?.toLowerCase()) &&
         (!selection.status ||
           data.status?.toLowerCase() === selection.status?.toLowerCase())
       );
@@ -669,7 +687,10 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             //   { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
             //   { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
             // ]}
-            items={transactionTypes.map((type) => ({ name: type, value: type }))}
+            items={transactionTypes.map((type) => ({
+              name: type,
+              value: type,
+            }))}
             value={selection.type}
             onChange={handleChangeType}
             //onChange={(e:any) => handleChangeFilter('type', e.target.value)}

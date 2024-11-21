@@ -199,7 +199,7 @@ const CaptainProfile = () => {
         </div>
       )}
       {userType === 'CaptainBee' ? (
-        <div className="hive-container" style={{ paddingTop: '280px' }}>
+        <div className="hive-container" style={{ paddingTop: '20px' }}>
           <div
             className="d-flex flex-direction-column justify-content-center"
             style={{ width: `${isMobile ? '90%' : '74%'}`, maxWidth: '1140px' }}
@@ -208,7 +208,7 @@ const CaptainProfile = () => {
               style={{
                 width: '238px',
                 height: '238px',
-                backgroundImage: `url(${frame})`,
+                // backgroundImage: `url(${frame})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
@@ -221,6 +221,16 @@ const CaptainProfile = () => {
                 // border:"none"
               }}
             >
+              <div
+                style={{
+                  width: '238px',
+                  height: '238px',
+                  position: 'absolute',
+                  zIndex: '1',
+                }}
+              >
+                <img src={frame} style={{ width: '100%', height: '100%' }} />
+              </div>
               <div className="profile-hexagon">
                 <img
                   alt=""

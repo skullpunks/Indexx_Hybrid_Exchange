@@ -91,10 +91,16 @@ const BeeDash = () => {
     };
   }, []);
 
+  const [selectedTab, setSelectedTab] = useState('My Hive Members');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <>
       {/* <SubHeader /> */}
-      <HiveDashboardIconicHeader />
+      {/* <HiveDashboardIconicHeader /> */}
 
       {isLoading && (
         <div
@@ -124,31 +130,35 @@ const BeeDash = () => {
         </div>
       )}
       {userType === 'HoneyBee' ? (
-        <div style={{ paddingTop: `${isMobile ? '250px' : '220px'}` }}>
+        <>
+          <HiveDashboardIconicHeader
+            selectedTab={selectedTab}
+            onChange={handleTabChange}
+          />
           <div
-            className="font_20x fw-bold justify-content-center d-flex"
-            style={{ marginLeft: `${isMobile ? '0' : '-429px'}` }}
+            className="hive-container"
+            style={{
+              padding: '20px',
+              maxWidth: '1440px',
+              width: '100%',
+              margin: 'auto',
+              marginTop: '50px',
+            }}
           >
-            {userType === 'CaptainBee'
-              ? 'Hive Captain’s  Hive Dashboard / Hive Captain’s  Dashboard'
-              : 'Hive Member’s  Hive Dashboard / Hive Member’s  Dashboard'}
-          </div>
-          <div className="hive-container">
             <div
-              className="d-flex justify-content-center"
-              // style={{ width: '86%', maxWidth: '1140px' }}
+              className="d-flex  gap-5"
               style={{ flexDirection: `${isMobile ? 'column' : 'row'}` }}
             >
               <div
-                className="d-flex flex-direction-column align-items-center mt-1"
-                style={{ width: `${isMobile ? '100%' : '280px'}` }}
+                className="d-flex flex-direction-column"
+                style={{ width: !isMobile ? '300px' : '100%' }}
               >
                 <div className="d-flex  flex-direction-row align-items-center">
                   <div
                     style={{
                       width: '193px',
                       height: '193px',
-                      backgroundImage: `url(${framecapt})`,
+                      // backgroundImage: `url(${framecapt})`,
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'contain',
                       backgroundPosition: 'center',
@@ -162,6 +172,19 @@ const BeeDash = () => {
                       marginTop: '-15px',
                     }}
                   >
+                    <div
+                      style={{
+                        width: '193px',
+                        height: '193px',
+                        position: 'absolute',
+                        zIndex: '1',
+                      }}
+                    >
+                      <img
+                        src={frame}
+                        style={{ width: '100%', height: '100%' }}
+                      />
+                    </div>
                     <div className="hexagon">
                       <img
                         alt=""
@@ -269,15 +292,24 @@ const BeeDash = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className="honeybee-container"
-                style={{ marginTop: `${isMobile ? '65px' : '0px'}` }}
-              >
-                <BeeTabs honeyBeeEmail={honeyBeeEmail} />
+              <div style={{ width: !isMobile ? 'calc(100% - 300px)' : '100%' }}>
+                <div className="font_20x fw-bold d-flex gap-3 mb-3">
+                  {userType === 'CaptainBee'
+                    ? 'Hive Captain’s  Hive Dashboard / Hive Captain’s  Dashboard'
+                    : 'Hive Member’s  Hive Dashboard / Hive Member’s  Dashboard'}
+                </div>
+                <div
+                  className="side-container"
+                  style={{
+                    background: theme === 'dark' ? '#2B3139' : '#efefef',
+                  }}
+                >
+                  <BeeTabs honeyBeeEmail={honeyBeeEmail} />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <TeamCaptainDashIndividual />
       )}

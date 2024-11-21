@@ -469,7 +469,7 @@ const CaptainDash = () => {
                   style={{
                     width: '193px',
                     height: '193px',
-                    backgroundImage: `url(${frame})`,
+                    // backgroundImage: `url(${frame})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
@@ -482,6 +482,19 @@ const CaptainDash = () => {
                     // border:"none"
                   }}
                 >
+                  <div
+                    style={{
+                      width: '193px',
+                      height: '193px',
+                      position: 'absolute',
+                      zIndex: '1',
+                    }}
+                  >
+                    <img
+                      src={frame}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
                   <div className="hexagon">
                     <img
                       alt=""
@@ -502,6 +515,7 @@ const CaptainDash = () => {
                     alt=""
                     src={rankPhoto}
                     style={{
+                      zIndex: '2',
                       position: 'absolute',
                       bottom: '-25px',
                       right: '17px',

@@ -519,7 +519,7 @@ const CaptainGreetCard = () => {
                     style={{
                       width: '193px',
                       height: '193px',
-                      backgroundImage: `url(${frame})`,
+                      // backgroundImage: `url(${frame})`,
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'contain',
                       backgroundPosition: 'center',
@@ -532,6 +532,19 @@ const CaptainGreetCard = () => {
                       // border:"none"
                     }}
                   >
+                    <div
+                      style={{
+                        width: '193px',
+                        height: '193px',
+                        position: 'absolute',
+                        zIndex: '1',
+                      }}
+                    >
+                      <img
+                        src={frame}
+                        style={{ width: '100%', height: '100%' }}
+                      />
+                    </div>
                     <div className="hexagon">
                       <img
                         alt=""
@@ -557,6 +570,7 @@ const CaptainGreetCard = () => {
                         right: '17px',
                         width: '79px',
                         height: '81px',
+                        zIndex: '2',
                       }}
                     />
                   </div>

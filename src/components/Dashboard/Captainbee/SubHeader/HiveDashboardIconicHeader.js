@@ -127,28 +127,21 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/dashboard/capt-profile',
       search: '',
     },
-    {
-      label: 'Honeycomb',
-      light: honeyCombIcon,
-      dark: honeyCombIcon,
-      path: '/indexx-exchange/dashboard/honeycomb',
-      search: '',
-    },
 
-    {
-      label: 'Greeting Cards',
-      light: greetingCard,
-      dark: greetingCard,
-      path: '/indexx-exchange/dashboard/capt-greet',
-      search: '',
-    },
-    {
-      label: 'Resources',
-      light: resourcesIcon,
-      dark: resourcesIcon,
-      path: '/indexx-exchange/dashboard/capt-resource-mkt',
-      search: '',
-    },
+    // {
+    //   label: 'Greeting Cards',
+    //   light: greetingCard,
+    //   dark: greetingCard,
+    //   path: '/indexx-exchange/dashboard/capt-greet',
+    //   search: '',
+    // },
+    // {
+    //   label: 'Resources',
+    //   light: resourcesIcon,
+    //   dark: resourcesIcon,
+    //   path: '/indexx-exchange/dashboard/capt-resource-mkt',
+    //   search: '',
+    // },
     {
       label: 'Exchange',
       light: exchangeIcon,
@@ -198,7 +191,7 @@ export default function HiveDashboardIconicHeader({ selectedTab, onChange }) {
     }
   };
 
-  let maxWidthTabContainer = '1440px';
+  let maxWidthTabContainer = '1000px';
 
   const TabView = CustomTabHive;
   return (

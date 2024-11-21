@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
-import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+  getReferredUserDetails,
+} from '../../../../services/api';
 
 const Permissions = () => {
-
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
@@ -15,46 +18,52 @@ const Permissions = () => {
   const [permissionData, setPermissionData] = useState();
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
-    
+    const userType =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
+
     setUserType(userType);
-    if (userType === "CaptainBee") {
+    if (userType === 'CaptainBee') {
       if (username) {
-      getCaptainBeeStatics(username).then((data) => {        
-        setStaticsData(data.data);
-      });
-    }
+        getCaptainBeeStatics(username).then((data) => {
+          setStaticsData(data.data);
+        });
+      }
     } else {
-      
       getHoneyUserDetails(user).then((data) => {
-        
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
-      })
+      });
 
       getReferredUserDetails(user).then((data) => {
-        
-        setRefferedUserData(data.data)
-        
+        setRefferedUserData(data.data);
+
         let captainbeePermissions = data.data.referredUserData?.relationships;
-        
-        
-        let c = captainbeePermissions.find(x => x.honeybeeEmail === user);
-        
-        setPermissionData(c)
+
+        let c = captainbeePermissions.find((x) => x.honeybeeEmail === user);
+
+        setPermissionData(c);
         setCaptainbeeCreateDate(data.data.accountCreationDate);
         setCaptainbeeOrders(data.data.totalOrder);
         setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
+      });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="pt-5">
       <div className="font_15x fw-bold">
-        Permissions given by honeybee  {honeyBeeData?.username} to captainbee {captainBeeData?.refferedUserAffilateData?.Username}
+        Permissions given by Hive Member {honeyBeeData?.username} to Hive
+        Captain {captainBeeData?.refferedUserAffilateData?.Username}
       </div>
       <div
         className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
@@ -79,7 +88,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: '217px',
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -90,7 +99,7 @@ const Permissions = () => {
                 },
               }}
             >
-              {permissionData?.permissions?.buy ? "Approved" : "Declined"}
+              {permissionData?.permissions?.buy ? 'Approved' : 'Declined'}
             </Button>
           </div>
         </div>
@@ -114,7 +123,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: '217px',
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -125,7 +134,7 @@ const Permissions = () => {
                 },
               }}
             >
-              {permissionData?.permissions?.sell ? "Approved" : "Declined"}
+              {permissionData?.permissions?.sell ? 'Approved' : 'Declined'}
             </Button>
           </div>
         </div>
@@ -149,7 +158,7 @@ const Permissions = () => {
                 borderRadius: '2px',
                 color: '#282828',
                 height: '40px',
-                width:"217px",
+                width: '217px',
                 px: 8,
                 textTransform: 'none',
                 fontSize: '15px',
@@ -160,7 +169,7 @@ const Permissions = () => {
                 },
               }}
             >
-              {permissionData?.permissions?.convert ? "Approved" : "Declined"}
+              {permissionData?.permissions?.convert ? 'Approved' : 'Declined'}
             </Button>
           </div>
         </div>

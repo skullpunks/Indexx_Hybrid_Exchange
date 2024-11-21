@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
-import { getCaptainBeeStatics, getHoneyUserDetails, getReferredUserDetails } from '../../../../services/api';
+import {
+  getCaptainBeeStatics,
+  getHoneyUserDetails,
+  getReferredUserDetails,
+} from '../../../../services/api';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material';
 
 const TeamCaptainPermissions = ({ email }) => {
-
-  const [userType1, setUserType] = useState("");
+  const [userType1, setUserType] = useState('');
   const [staticsData, setStaticsData] = useState();
   const [honeyBeeData, setHoneyBeeData] = useState();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
@@ -20,9 +23,18 @@ const TeamCaptainPermissions = ({ email }) => {
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
   useEffect(() => {
-    const userTypel = localStorage.getItem("userType") !== undefined ? String(localStorage.getItem("userType")) : undefined;
-    const username = localStorage.getItem("username") !== undefined ? String(localStorage.getItem("username")) : undefined;
-    const user = localStorage.getItem("user") !== undefined ? String(localStorage.getItem("user")) : undefined;
+    const userTypel =
+      localStorage.getItem('userType') !== undefined
+        ? String(localStorage.getItem('userType'))
+        : undefined;
+    const username =
+      localStorage.getItem('username') !== undefined
+        ? String(localStorage.getItem('username'))
+        : undefined;
+    const user =
+      localStorage.getItem('user') !== undefined
+        ? String(localStorage.getItem('user'))
+        : undefined;
 
     setUserType(userTypel);
     // if (id && userType) {
@@ -31,52 +43,55 @@ const TeamCaptainPermissions = ({ email }) => {
     //     console.log("in else if in persmssopn",data?.data)
     //   });
     // }
-    // else 
-    if (userTypel === "CaptainBee") {
+    // else
+    if (userTypel === 'CaptainBee') {
       if (username) {
         getCaptainBeeStatics(username).then((data) => {
           setStaticsData(data.data);
-          console.log("in else if in persmssopn", data?.data)
-          let captainbeePermissions = data?.data?.captainBeeRegisteredRequiredData;
+          console.log('in else if in persmssopn', data?.data);
+          let captainbeePermissions =
+            data?.data?.captainBeeRegisteredRequiredData;
 
-          let c = captainbeePermissions.find(x => x.username === id);
-          console.log("captainbeePermissions", captainbeePermissions, c)
+          let c = captainbeePermissions.find((x) => x.username === id);
+          console.log('captainbeePermissions', captainbeePermissions, c);
 
-          setPermissionData(c)
+          setPermissionData(c);
         });
       }
     } else {
-
       getHoneyUserDetails(user).then((data) => {
-
         setHoneybeeCreateDate(data.data.accountCreationDate);
         setHoneyBeeData(data?.data?._doc);
-      })
+      });
 
       getReferredUserDetails(user).then((data) => {
-
-        setRefferedUserData(data.data)
+        setRefferedUserData(data.data);
 
         let captainbeePermissions = data.data.referredUserData?.relationships;
 
+        let c = captainbeePermissions.find((x) => x.honeybeeEmail === user);
 
-        let c = captainbeePermissions.find(x => x.honeybeeEmail === user);
-
-        setPermissionData(c)
+        setPermissionData(c);
         setCaptainbeeCreateDate(data.data.accountCreationDate);
         setCaptainbeeOrders(data.data.totalOrder);
         setCaptainbeeUsers(data.data.honeyBeesCount);
-      })
+      });
     }
-  }, [])
+  }, []);
 
   return (
-    <div >
-      <div className='pt-2' style={{ background: "#FFB300" }}></div>
-      <div className="pt-4 pb-5" style={{ background: "var(--body_background)", paddingInline: `${isMobile ? '20px' : '45px'}` }}>
-
+    <div>
+      <div
+        className="pt-4 pb-5"
+        style={{
+          marginTop: '30px',
+          background: 'var(--body_background)',
+          paddingInline: `${isMobile ? '20px' : '45px'}`,
+        }}
+      >
         <div className="font_15x fw-bold">
-          Permissions given by TEAM CaptainBee {permissionData?.username} to  LEADER captainbee {staticsData?.affiliateUserProfile?.Username}
+          Permissions given by TEAM Hive Captain {permissionData?.username} to
+          LEADER Hive Captain {staticsData?.affiliateUserProfile?.Username}
         </div>
         <div
           className="d-flex justify-content-center flex-direction-column align-items-center  mt-5"
@@ -112,7 +127,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   },
                 }}
               >
-                {permissionData?.permissions?.buy ? "Approved" : "Declined"}
+                {permissionData?.permissions?.buy ? 'Approved' : 'Declined'}
               </Button>
             </div>
           </div>
@@ -147,7 +162,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   },
                 }}
               >
-                {permissionData?.permissions?.sell ? "Approved" : "Declined"}
+                {permissionData?.permissions?.sell ? 'Approved' : 'Declined'}
               </Button>
             </div>
           </div>
@@ -182,7 +197,7 @@ const TeamCaptainPermissions = ({ email }) => {
                   },
                 }}
               >
-                {permissionData?.permissions?.convert ? "Approved" : "Declined"}
+                {permissionData?.permissions?.convert ? 'Approved' : 'Declined'}
               </Button>
             </div>
           </div>

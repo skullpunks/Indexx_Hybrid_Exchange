@@ -103,17 +103,15 @@ const TeamCaptainGrowth = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: `${isMobile ? 'column' : 'row'}`,
             gap: isMobile ? 4 : 2,
-            mt: 2,
+            flexDirection: 'column',
+            padding: '10px',
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              width: `${isMobile ? '100%' : '50%'}`,
+              display: isMobile ? 'none' : 'flex',
+              gap: '16px',
             }}
           >
             <Typography
@@ -122,636 +120,290 @@ const TeamCaptainGrowth = () => {
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={'auto'}
               mb={2}
-              sx={{
-                color: '#393939',
-              }}
+              sx={{ flex: 1 }}
             >
               My Hive Member Statistics
             </Typography>
-            {/* <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 1,
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '31%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Platforms
-                </Typography>
-                <Select
-                  value={platform}
-                  onChange={(e) => {
-                    setPlatform(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="Exchange" value="Exchange">
-                    Indexx Exchange
-                  </MenuItem>
-                </Select>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '29%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Type of Order
-                </Typography>
-                <Select
-                  value={Order}
-                  onChange={(e) => {
-                    setOrder(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="buysell" value="buysell">
-                    Buy & Sell
-                  </MenuItem>
-                  <MenuItem key="Convert" value="Convert">
-                    Convert
-                  </MenuItem>
-                </Select>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '40%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Date Range
-                </Typography>
-
-                <Select
-                  value={selectedDate}
-                  onChange={(e) => {
-                    setSelectedDate(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="aug-sept" value="aug-sept">
-                    August-September
-                  </MenuItem>
-                </Select>
-              </Box>
-            </Box> */}
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 2,
-              }}
-            >
-              <Box
-                sx={{
-                  width: '50%',
-                  background: 'var(--body_background)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  px: isMobile ? 1 : 2,
-                  py: 1,
-                  aspectRatio: 1,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Hive Members
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '70px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  {staticsData?.honeyBeesCount}
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'22px'}
-                  fontWeight={400}
-                  textAlign={'left'}
-                  color={'#FFB300'}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    verticalAlign: 'bottom',
-                    gap: 1,
-                  }}
-                >
-                  <img alt="up" src={arrow} />{' '}
-                  {staticsData?.honeyBeesCount ? '30%' : '0%'}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  width: '50%',
-                  background: 'var(--body_background)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  px: isMobile ? 1 : 2,
-                  py: 1,
-                  aspectRatio: 1,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Commision Earned in USD
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '40px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  $
-                  {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
-                    ? parseFloat(
-                        staticsData?.affiliateHoneyBeeUserTotalEarnings
-                          ?.amountInUSD
-                      ).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : '0.00'}
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Commision Earned in INEX
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '40px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
-                    ? parseFloat(
-                        staticsData?.affiliateHoneyBeeUserTotalEarnings
-                          ?.amountInINEX
-                      ).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : '0.00'}
-                  <span className="font_17x">INEX</span>
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'22px'}
-                  fontWeight={400}
-                  textAlign={'left'}
-                  color={'#FFB300'}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    verticalAlign: 'bottom',
-                    gap: 1,
-                  }}
-                >
-                  <img alt="up" src={arrow} />{' '}
-                  {staticsData?.ordersCount ? '20%' : '0%'}
-                </Typography>
-              </Box>
-            </Box>
-            {/* <Box
-                    sx={{
-                      background: 'var(--body_background)',
-                      width:"100%",
-                    }}
-                  >
-                    <LineChart
-                      width={572}
-                      height={429}
-                      series={[
-                        { data: pData, label: 'pv' },
-                        { data: uData, label: 'uv' },
-                      ]}
-                      xAxis={[{ scaleType: 'point', data: xLabels }]}
-                    />
-                  </Box> */}
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              width: `${isMobile ? '100%' : '50%'}`,
-            }}
-          >
             <Typography
               variant="text"
               component="p"
               fontSize={'15px'}
               fontWeight={700}
               textAlign={'left'}
-              mx={'auto'}
               mb={2}
-              sx={{
-                color: '#393939',
-              }}
+              sx={{ flex: 1 }}
             >
               My Hive Captain Statistics
             </Typography>
-            {/* <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 1,
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '31%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Platforms
-                </Typography>
-                <Select
-                  value={platformCapt}
-                  onChange={(e) => {
-                    setPlatformCapt(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="Exchange" value="Exchange">
-                    Indexx Exchange
-                  </MenuItem>
-                </Select>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '29%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Type of Order
-                </Typography>
-                <Select
-                  value={OrderCapt}
-                  onChange={(e) => {
-                    setOrderCapt(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="buysell" value="buysell">
-                    Buy & Sell
-                  </MenuItem>
-                  <MenuItem key="Convert" value="Convert">
-                    Convert
-                  </MenuItem>
-                </Select>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'baseline',
-                  width: '40%',
-                  background: 'var(--body_background)',
-                  pl: 1,
-                  pt: 0.4,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={'12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                >
-                  Date Range
-                </Typography>
-
-                <Select
-                  value={selectedDateCapt}
-                  onChange={(e) => {
-                    setSelectedDateCapt(e.target.value);
-                  }}
-                  variant="standard"
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    width: '100%',
-                    borderRadius: 0,
-                    background: 'var(--body_background)',
-                    color: "var(--body_color)",
-                    border: 'none',
-                    outline: 'none',
-                    padding: 0,
-                    fontSize: '12px',
-                  }}
-                  size="small"
-                  disableUnderline
-                >
-                  <MenuItem key="aug-sept" value="aug-sept">
-                    August-September
-                  </MenuItem>
-                </Select>
-              </Box>
-            </Box> */}
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: 2,
+              width: '100%',
+              flexWrap: 'wrap',
+            }}
+          >
             <Box
               sx={{
+                flex: 1,
+                background: 'var(--body_background)',
                 display: 'flex',
-                flexDirection: 'row',
-                gap: 2,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 3,
+                aspectRatio: 1,
+                borderRadius: '10px',
               }}
             >
-              <Box
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+              >
+                Total Hive Members
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '70px'}
+                // fontWeight={600}
+                textAlign={'left'}
+              >
+                {staticsData?.honeyBeesCount}
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={'22px'}
+                fontWeight={400}
+                textAlign={'left'}
+                color={'#FFB300'}
                 sx={{
-                  width: '50%',
-                  background: 'var(--body_background)',
                   display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  px: isMobile ? 1 : 2,
-                  py: 1,
-                  aspectRatio: 1,
+                  alignItems: 'baseline',
+                  verticalAlign: 'bottom',
+                  gap: 1,
                 }}
               >
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Team Hive Captains
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '70px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  {staticsData?.captainsCount}
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'22px'}
-                  fontWeight={400}
-                  textAlign={'left'}
-                  color={'#FFB300'}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    verticalAlign: 'bottom',
-                    gap: 1,
-                  }}
-                >
-                  <img alt="up" src={arrow} />{' '}
-                  {staticsData?.captainsCount ? '30%' : '0%'}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  width: '50%',
-                  background: 'var(--body_background)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  px: isMobile ? 1 : 2,
-                  py: 1,
-                  aspectRatio: 1,
-                }}
-              >
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Commision Earned in USD
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '40px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  $
-                  {staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                    ? parseFloat(
-                        staticsData?.affiliateUserTotalEarnings?.amountInUSD
-                      ).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : '0.00'}
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '10px' : '12px'}
-                  fontWeight={600}
-                  textAlign={'left'}
-                  alignSelf={'flex-start'}
-                >
-                  Total Commision Earned in INEX
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={isMobile ? '25px' : '40px'}
-                  // fontWeight={600}
-                  textAlign={'left'}
-                >
-                  {staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                    ? parseFloat(
-                        staticsData?.affiliateUserTotalEarnings?.amountInINEX
-                      ).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : '0.00'}
-                  <span className="font_17x">INEX</span>
-                </Typography>
-                <Typography
-                  variant="text"
-                  fontSize={'22px'}
-                  fontWeight={400}
-                  textAlign={'left'}
-                  color={'#FFB300'}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    verticalAlign: 'bottom',
-                    gap: 1,
-                  }}
-                >
-                  <img alt="up" src={arrow} />{' '}
-                  {staticsData?.ordersCount ? '20%' : '0%'}
-                </Typography>
-              </Box>
+                <img alt="up" src={arrow} />{' '}
+                {staticsData?.honeyBeesCount ? '30%' : '0%'}
+              </Typography>
             </Box>
-            {/* <Box
-                    sx={{
-                      background: 'var(--body_background)',
-                      width:"100%",
-                    }}
-                  >
-                    <LineChart
-                      width={572}
-                      height={429}
-                      series={[
-                        { data: pDataCapt, label: 'pv' },
-                        { data: uDataCapt, label: 'uv' },
-                      ]}
-                      xAxis={[{ scaleType: 'point', data: xLabelsCapt }]}
-                    />
-                  </Box> */}
+            <Box
+              sx={{
+                flex: 1,
+                background: 'var(--body_background)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 3,
+                aspectRatio: 1,
+                borderRadius: '10px',
+              }}
+            >
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                Total Commision Earned in USD
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '40px'}
+                // fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                $
+                {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInUSD
+                  ? parseFloat(
+                      staticsData?.affiliateHoneyBeeUserTotalEarnings
+                        ?.amountInUSD
+                    ).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  : '0.00'}
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                Total Commision Earned in INEX
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '40px'}
+                // fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                {staticsData?.affiliateHoneyBeeUserTotalEarnings?.amountInINEX
+                  ? parseFloat(
+                      staticsData?.affiliateHoneyBeeUserTotalEarnings
+                        ?.amountInINEX
+                    ).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  : '0.00'}
+                <span className="font_17x">INEX</span>
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={'22px'}
+                fontWeight={400}
+                textAlign={'center'}
+                color={'#FFB300'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  verticalAlign: 'bottom',
+                  gap: 1,
+                }}
+              >
+                <img alt="up" src={arrow} />{' '}
+                {staticsData?.ordersCount ? '20%' : '0%'}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                flex: 1,
+                background: 'var(--body_background)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 3,
+                aspectRatio: 1,
+                borderRadius: '10px',
+              }}
+            >
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+              >
+                Total Team Hive Captains
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '70px'}
+                // fontWeight={600}
+                textAlign={'center'}
+              >
+                {staticsData?.captainsCount}
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={'22px'}
+                fontWeight={400}
+                textAlign={'center'}
+                color={'#FFB300'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  verticalAlign: 'bottom',
+                  gap: 1,
+                }}
+              >
+                <img alt="up" src={arrow} />{' '}
+                {staticsData?.captainsCount ? '30%' : '0%'}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                flex: 1,
+
+                background: 'var(--body_background)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 3,
+                aspectRatio: 1,
+                borderRadius: '10px',
+              }}
+            >
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                Total Commision Earned in USD
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '40px'}
+                // fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                $
+                {staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                  ? parseFloat(
+                      staticsData?.affiliateUserTotalEarnings?.amountInUSD
+                    ).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  : '0.00'}
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '10px' : '12px'}
+                fontWeight={600}
+                textAlign={'center'}
+                mb={2}
+              >
+                Total Commision Earned in INEX
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={isMobile ? '25px' : '40px'}
+                // fontWeight={600}
+                textAlign={'center'}
+              >
+                {staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                  ? parseFloat(
+                      staticsData?.affiliateUserTotalEarnings?.amountInINEX
+                    ).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  : '0.00'}
+                <span className="font_17x">INEX</span>
+              </Typography>
+              <Typography
+                variant="text"
+                fontSize={'22px'}
+                fontWeight={400}
+                textAlign={'center'}
+                color={'#FFB300'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  verticalAlign: 'bottom',
+                  gap: 1,
+                }}
+              >
+                <img alt="up" src={arrow} />{' '}
+                {staticsData?.ordersCount ? '20%' : '0%'}
+              </Typography>
+            </Box>
           </Box>
         </Box>
 
