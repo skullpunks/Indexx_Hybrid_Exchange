@@ -153,6 +153,17 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   const [dense, setDense] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
+  const preferredOrder = [
+    'INEX',
+    'INXC',
+    'IN500',
+    'DaCrazy',
+    'IUSD+',
+    'WIBS',
+    'BTC',
+  ];
+  const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
+
   const calculateTodayPNL = (item) => {
     const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS', 'DaCrazy'];
     if (fixedTokens.includes(item.coinSymbol)) {
@@ -226,6 +237,24 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             };
           }
 
+          //Check if the notes start with the desired phrases
+          const hasSmartCryptoNote =
+            item.notes.startsWith('Smart Crypto Surge') ||
+            item.notes.startsWith('Smart Crypto Ripple') ||
+            item.notes.startsWith('Smart Crypto Wave');
+
+          // if (hasSmartCryptoNote) {
+          //   smartCryptoCoins.push(item); // Push to the smartCryptoCoins array
+          // }
+
+          // Filter and update smartCryptoCoins state
+          const newSmartCryptoCoins = userWallets.data.filter(
+            (item) =>
+              item.notes.startsWith('Smart Crypto Surge') ||
+              item.notes.startsWith('Smart Crypto Ripple') ||
+              item.notes.startsWith('Smart Crypto Wave')
+          );
+          setSmartCryptoCoins(newSmartCryptoCoins);
           return {
             id: item.coinName,
             coin: item.coinSymbol,
@@ -236,6 +265,8 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             coin_price: item?.coinPrice,
             todayPNL: todayPNL,
             coinNetwork: item.coinNetwork,
+            hasSmartCryptoNote: hasSmartCryptoNote, // Store flag for smart crypto
+            notes: item.notes ? item.notes : '',
           };
         });
 
@@ -256,28 +287,84 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     fetchData();
   }, [navigate]);
 
+  const handleRequestSort0 = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
+  const sortedRows = useMemo(() => {
+    const smartCryptoRows = rows.filter((row) => row.hasSmartCryptoNote); // Filter rows with smart crypto notes
+    const otherRows = rows.filter((row) => !row.hasSmartCryptoNote); // Filter other rows
+    const sortedSmartCryptoRows = stableSort(
+      smartCryptoRows,
+      getComparator(order, orderBy)
+    );
+    const sortedOtherRows = stableSort(
+      otherRows,
+      getComparator(order, orderBy)
+    );
+
+    return [...sortedSmartCryptoRows, ...sortedOtherRows]; // Combine the sorted rows
+  }, [rows, order, orderBy]);
+
   const filteredRows = useMemo(() => {
-    return rows.filter((row) => {
+    // Add a priority rank to each row based on the preferred order array
+    const rowsWithPriority = sortedRows.map((row) => ({
+      ...row,
+      priority: preferredOrder.includes(row.coin)
+        ? preferredOrder.indexOf(row.coin)
+        : preferredOrder.length,
+    }));
+
+    // Sort by priority first, then by the selected order and orderBy
+    const sortedByPriority = stableSort(
+      rowsWithPriority,
+      (a, b) => a.priority - b.priority || getComparator(order, orderBy)(a, b)
+    );
+
+    // If BTC is part of smartCryptoCoins, add it twice
+    const finalRows = sortedByPriority.filter((row) => {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Show all rows when hideAssets is false
-      if (!hideAssets) {
-        return matchesSearchQuery;
-      }
+      if (!hideAssets) return matchesSearchQuery;
 
-      // When hideAssets is true, show rows with amount or staking_balance > 0
       const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
-  }, [rows, searchQuery, hideAssets]);
+    console.log('finalRows, ', finalRows);
+    console.log(smartCryptoCoins);
+    console.log(smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC'));
+
+    // Add BTC twice if it is in smartCryptoCoins
+    if (smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC')) {
+      console.log('');
+      const btcRow = finalRows.find((row) => row.coin === 'BTC');
+      console.log('btcRow', btcRow);
+      if (btcRow) {
+        // Duplicate BTC row in the final list
+        finalRows.push(btcRow);
+      }
+    }
+
+    return finalRows;
+  }, [
+    sortedRows,
+    searchQuery,
+    hideAssets,
+    order,
+    orderBy,
+    preferredOrder,
+    smartCryptoCoins,
+  ]);
 
   const visibleRows = useMemo(
     () => stableSort(filteredRows, getComparator(order, orderBy)),
@@ -292,6 +379,22 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     return <div>Error: {error.message}</div>;
   }
 
+  // Find the first and last smart crypto coin rows based on the `smartCryptoCoins` list
+  const firstSmartCryptoRowIndex = visibleRows.findIndex(
+    (row) => row.hasSmartCryptoNote
+  );
+  console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
+  const lastSmartCryptoRowIndex = visibleRows
+    .slice()
+    .reverse()
+    .findIndex((row) => row.hasSmartCryptoNote);
+
+  const lastSmartCryptoIndexAdjusted =
+    lastSmartCryptoRowIndex === -1
+      ? -1
+      : visibleRows.length - 1 - lastSmartCryptoRowIndex;
+
+  console.log('visibleRows', visibleRows);
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <TableContainer>
@@ -307,98 +410,166 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows?.map((row, index) => (
-              <TableRow role="checkbox" tabIndex={-1} key={row.id}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  padding="none"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  <ListItem
+            {visibleRows?.map((row, index) => {
+              // Apply orange line between the first and last smart crypto rows
+              const isHighlighted =
+                (index === firstSmartCryptoRowIndex  ||
+                  index === lastSmartCryptoIndexAdjusted) &&
+                row.hasSmartCryptoNote;
+              return (
+                <>
+                  {/* Add text row after the firstSmartCryptoRowIndex */}
+                  {index === firstSmartCryptoRowIndex + 1 &&
+                    row.hasSmartCryptoNote && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            color: 'orange',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {/* Dynamically render text based on notes */}
+                          {(() => {
+                            // Extract the manager's name and type from the notes
+                            const notes = row.notes || '';
+                            let managerCode = '';
+                            let cryptoType = '';
+
+                            if (notes.includes('Omkar')) {
+                              managerCode = '001';
+                            } else if (notes.includes('Kashir')) {
+                              managerCode = '003';
+                            } else if (notes.includes('Issa')) {
+                              managerCode = '002';
+                            }
+
+                            if (notes.includes('Ripple')) {
+                              cryptoType = 'Ripple';
+                            } else if (notes.includes('Wave')) {
+                              cryptoType = 'Wave';
+                            } else if (notes.includes('Surge')) {
+                              cryptoType = 'Surge';
+                            }
+
+                            // Combine the dynamic parts into the final string
+                            return `Smart Crypto ${cryptoType} ${managerCode}`;
+                          })()}
+                        </TableCell>
+                      </TableRow>
+                    )}
+
+                  <TableRow
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.id}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      paddingLeft: 0,
-                      '&:hover': {
-                        background: 'transparent !important',
-                      },
+                      borderBottom: 'none !important',
+                      ...(isHighlighted && {
+                        borderBottom: '1px solid orange', // Apply orange line
+                      }),
                     }}
                   >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <Avatar alt={`${row.coin}`} src={getImage(row?.coin)} />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={row.coin}
-                      secondary={`ID: ${row.id}`}
-                    />
-                  </ListItem>
-                </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {new Intl.NumberFormat('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6,
-                  }).format(row.amount)}{' '}
-                  / $
-                  {row.coin === 'USD'
-                    ? row.amount.toLocaleString(undefined, {
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      padding="none"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      <ListItem
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          paddingLeft: 0,
+                          '&:hover': {
+                            background: 'transparent !important',
+                          },
+                        }}
+                      >
+                        <ListItemAvatar>
+                          <Avatar>
+                            <Avatar
+                              alt={`${row.coin}`}
+                              src={getImage(row?.coin)}
+                            />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={row.coin}
+                          secondary={`ID: ${row.id}`}
+                        />
+                      </ListItem>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      {new Intl.NumberFormat('en-US', {
                         minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : (row.amount * row.coin_price).toLocaleString(undefined, {
+                        maximumFractionDigits: 6,
+                      }).format(row.amount)}{' '}
+                      / $
+                      {row.coin === 'USD'
+                        ? row.amount.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })
+                        : (row.amount * row.coin_price).toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      sx={{ borderBottom: 'none !important' }}
+                    >
+                      {new Intl.NumberFormat('en-US', {
                         minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{ borderBottom: 'none !important' }}
-                >
-                  {new Intl.NumberFormat('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6,
-                  }).format(row.staking_balance)}{' '}
-                  / $
-                  {(row.staking_balance * row.coin_price).toLocaleString(
-                    undefined,
-                    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                  )}
-                </TableCell>
+                        maximumFractionDigits: 6,
+                      }).format(row.staking_balance)}{' '}
+                      / $
+                      {(row.staking_balance * row.coin_price).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                      )}
+                    </TableCell>
 
-                {!isMobile && (
-                  <>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                    >
-                      {(row.coin === "WIBS" || row.coin === "DaCrazy")
-                        ? row.coin_price.toFixed(5)
-                        : row.coin_price.toFixed(2)}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ borderBottom: 'none !important' }}
-                      className={
-                        row.todayPNL
-                          ? row.todayPNL.isPositive
-                            ? classes.greenText
-                            : classes.redText
-                          : ''
-                      }
-                    >
-                      {row.todayPNL
-                        ? `${row.todayPNL.value} (${row.todayPNL.percentage}%)`
-                        : '0.00'}
-                    </TableCell>
-                  </>
-                )}
-              </TableRow>
-            ))}
+                    {!isMobile && (
+                      <>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          {row.coin === 'WIBS' || row.coin === 'DaCrazy'
+                            ? row.coin_price.toFixed(5)
+                            : row.coin_price.toFixed(2)}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                          className={
+                            row.todayPNL
+                              ? row.todayPNL.isPositive
+                                ? classes.greenText
+                                : classes.redText
+                              : ''
+                          }
+                        >
+                          {row.todayPNL
+                            ? `${row.todayPNL.value} (${row.todayPNL.percentage}%)`
+                            : '0.00'}
+                        </TableCell>
+                      </>
+                    )}
+                  </TableRow>
+                </>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

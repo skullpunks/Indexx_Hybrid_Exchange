@@ -291,7 +291,7 @@ const BalanceOverview = () => {
       </Box>
       <Box className={classes.balanceSectionWrapper}>
         <Box className={classes.header}>
-          <Typography variant="h6">Invested Value</Typography>
+          <Typography variant="h6">Investment Amount</Typography>
           <div
             className={classes.eyeIcon}
             onClick={handleToggleTotalInvestmentVisibility}
