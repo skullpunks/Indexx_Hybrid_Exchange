@@ -119,6 +119,6 @@
     "prettier": "^2.8.0"
   },
   "resolutions": {
-    "caniuse-lite": "1.0.30001632"
+    "react-scripts/@babel/core": "^7.16.0"
   }
 }
