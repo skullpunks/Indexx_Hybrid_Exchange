@@ -78,8 +78,8 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
@@ -111,6 +111,7 @@
     "@types/lodash.debounce": "^4.0.7",
     "@types/numeral": "^2.0.2",
     "@types/qrcode": "^1.5.0",
+    "netlify-plugin-cache-nextjs": "^1.6.1",
     "prettier": "^2.8.0"
   },
   "resolutions": {
