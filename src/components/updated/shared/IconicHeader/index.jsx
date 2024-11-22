@@ -186,13 +186,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: 'https://indexx.ai/indexx-exchange/token-details',
       search: '',
     },
-    {
-      label: 'Smart Crypto',
-      light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-      dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-      path: '/smart-crypto',
-      search: '',
-    },
+    // {
+    //   label: 'Smart Crypto',
+    //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   path: '/smart-crypto',
+    //   search: '',
+    // },
 
     {
       label: 'Markets',

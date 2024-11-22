@@ -12,6 +12,7 @@ import GenericButton from '../shared/Button';
 import { getSmartCryptoPackages } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import AllocationPopup from './AllocationPopup';
+import CreateAPlanPopup from './CreateAPlan';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -111,9 +112,8 @@ const useStyles = makeStyles((theme) => ({
 const SmartCrypto = () => {
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
   const [selectedInnerTab, setSelectedInnerTab] = useState(0);
-
-  console.log(selectedInnerTab, 'selectedInnerTab');
   const [allocationPopop, setAllocationPopup] = useState(false);
+  const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
   const [filteredPackages, setFilteredPackages] = useState([]);
   const descriptionData = [
     { name: '', description: '', img: '' },
@@ -264,6 +264,7 @@ const SmartCrypto = () => {
                     <GenericButton
                       text="Create a Plan"
                       className={classes.yellowButton}
+                      onClick={() => setCreateAPlanPopup(true)}
                     />
                   </div>
                 </div>
@@ -276,6 +277,10 @@ const SmartCrypto = () => {
       </div>
       {allocationPopop && (
         <AllocationPopup onClose={() => setAllocationPopup(false)} />
+      )}
+
+      {createAPlanPopop && (
+        <CreateAPlanPopup onClose={() => setCreateAPlanPopup(false)} />
       )}
     </>
   );
