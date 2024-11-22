@@ -253,7 +253,7 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
       <div className="card-body ">
         <div className="bs_curreny d-flex position-relative ">
           {/* <div className="bs_curreny_left" style={{ alignItems: "baseline", padding: "50px 20px" }}> */}
-          {/* <span placeholder="0" className="pe-2 color_general font_60x" >{BSvalue?.amount}</span> */}
+          {/* <span className="pe-2 color_general font_60x" >{BSvalue?.amount}</span> */}
           {/* <span className="font_20x" style={{ lineHeight: "60px" }} >{filteredFromArray[0].title}</span> */}
 
           <div

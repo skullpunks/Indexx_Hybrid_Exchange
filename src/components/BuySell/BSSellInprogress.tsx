@@ -39,7 +39,7 @@ const BSSellInprogress: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className="bs_curreny d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ padding: "30px 20px", alignItems: "baseline" }}>
-                        <span placeholder="0" className="font_60x color_general" >{BSvalue?.amount}</span>
+                        <span className="font_60x color_general" >{BSvalue?.amount}</span>
                         <span className="font_20x ps-2" >{BSvalue?.fromTitle}</span>
                     </div>
 

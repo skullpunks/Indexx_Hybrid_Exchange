@@ -78,7 +78,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
 
                 <div className=" d-flex position-relative ">
                     <div className="bs_curreny_left padding-b-2x" style={{ transform: "scale(1)", padding: "35px 20px 0 20px" }}>
-                        <span placeholder="0" className="font_60x " >{BSvalue?.amount}</span>
+                        <span className="font_60x " >{BSvalue?.amount}</span>
                         <span className="font_20x ps-2" style={{ lineHeight: 4 }} >{filteredFromArray[0].title}</span>
                     </div>
                     {/* <div className='swap_Arrow_icon' style={{ position: "absolute", right: "4px", top: "6%" }}>
@@ -87,7 +87,7 @@ const BSConvertInProgress: React.FC<(Props)> = ({ setScreenName }) => {
                 </div>
                 <div className="bs_curreny_left padding-b-2x pe-0" style={{ transform: "scale(1)", paddingBottom: "20px", paddingTop: 0 }}>
 
-                    <span placeholder="0" className="font_20x " > <span className='dummy'>{Math.floor(orderData?.breakdown?.outAmount * 100000) / 100000}</span>  </span>
+                    <span className="font_20x " > <span className='dummy'>{Math.floor(orderData?.breakdown?.outAmount * 100000) / 100000}</span>  </span>
                     <span className="font_20x" style={{
                         color: "var(--conf_purchase)", paddingLeft: 10
                     }} >{filteredToArray[0].title}</span>

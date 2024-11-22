@@ -271,7 +271,7 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
             >
               {BSvalue?.amount}
             </span>
-            {/* <span placeholder="0" className=" " id="input_get_value" style={{ width: "1.2ch" }}>{BSvalue?.amount}</span> */}
+            {/* <span className=" " id="input_get_value" style={{ width: "1.2ch" }}>{BSvalue?.amount}</span> */}
             <span className="font_20x ps-2" style={{ lineHeight: 4 }}>
               {' '}
               {filteredFromArray[0].title}

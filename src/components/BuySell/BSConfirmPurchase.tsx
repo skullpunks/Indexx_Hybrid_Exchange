@@ -364,7 +364,7 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
               >
                 {t_amount ?? BSvalue?.amount}
               </span>
-              {/* <span placeholder="0" id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
+              {/* <span id="input_get_value" style={{ width: "1.2ch" }} className="font_60x color_general padding-l-1x"  >{BSvalue?.amount}</span> */}
             </div>
             {/* <div className='swap_Arrow_icon'>
                         <img src={SwapArrowIcon} alt="ddd" className="hover_icon" style={{ position: "absolute", right: "4px", top: "60%" }} />

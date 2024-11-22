@@ -38,7 +38,7 @@ const BSTractionHistory: React.FC<(Props)> = ({ setScreenName, setToggleChart })
         </div>
         <div className="color_general" style={{ transform: "scale(1)", padding: "10px" }}>
           <span className="font_20x" style={{ lineHeight: 4 }} >$</span>
-          <span placeholder="0" className=" " style={{ fontSize: 60 }} >11.3258</span>
+          <span className=" " style={{ fontSize: 60 }} >11.3258</span>
         </div>
         <div className='d-flex'>
           <Button className='light_button ant-btn ant-btn-dangerous danger_disabled width_auto deposit_btn margin-r-2x'> Deposit </Button>
