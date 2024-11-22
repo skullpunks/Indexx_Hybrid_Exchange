@@ -5,7 +5,7 @@ import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material';
 
-const SmartCryptoTabs = ({ email }) => {
+const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
   const tabsData = [
     {
       label: 'All',
@@ -25,11 +25,10 @@ const SmartCryptoTabs = ({ email }) => {
     },
   ];
 
-  const [selectedTab, setSelectedTab] = useState(0);
   const theme = useTheme();
 
   const handleChange = (e, newValue) => {
-    setSelectedTab(newValue);
+    setSelectedInnerTab(newValue);
   };
 
   // Custom Styled Tabs
@@ -70,7 +69,7 @@ const SmartCryptoTabs = ({ email }) => {
         }}
       >
         <StyledTabs
-          value={selectedTab}
+          value={selectedInnerTab}
           onChange={handleChange}
           aria-label="customized tabs"
         >
