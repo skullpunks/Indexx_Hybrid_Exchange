@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import IconicHeader from '../shared/IconicHeader';
 import { makeStyles } from '@mui/styles';
 import SmartCryptoTabs from './IconicHeader';
+
+import ripple from '../../../assets/updated/smartCrypto/ripple.png';
+import surge from '../../../assets/updated/smartCrypto/surge.png';
+import wave from '../../../assets/updated/smartCrypto/Wave.png';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import GenericButton from '../shared/Button';
 import { getSmartCryptoPackages } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
-
+import AllocationPopup from './AllocationPopup';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -105,7 +109,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SmartCrypto = () => {
-  const [selectedTab, setSelectedTab] = useState('All');
+  const [selectedTab, setSelectedTab] = useState('Smart Crypto');
+  const [selectedInnerTab, setSelectedInnerTab] = useState(0);
+
+  console.log(selectedInnerTab, 'selectedInnerTab');
+  const [allocationPopop, setAllocationPopup] = useState(false);
+  const [filteredPackages, setFilteredPackages] = useState([]);
+  const descriptionData = [
+    { name: '', description: '', img: '' },
+    {
+      name: 'Ripple Plan',
+      img: ripple,
+      description:
+        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+    },
+    {
+      name: 'Surge Plan',
+      description:
+        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      img: surge,
+    },
+    {
+      name: 'Wave Plan',
+      img: wave,
+      description:
+        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+    },
+  ];
   const classes = useStyles();
   const [packagesData, setPackagesData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -119,8 +149,8 @@ const SmartCrypto = () => {
       try {
         setLoading(true);
         const response = await getSmartCryptoPackages();
-         // Sort by subTitle (assuming subTitle is a string)
-         const sortedData = (response.data || []).sort((a, b) =>
+        // Sort by subTitle (assuming subTitle is a string)
+        const sortedData = (response.data || []).sort((a, b) =>
           a.subTitle.localeCompare(b.subTitle)
         );
 
@@ -133,10 +163,21 @@ const SmartCrypto = () => {
     fetchData();
   }, []);
 
-  const filteredPackages =
-    selectedTab === 'All'
-      ? packagesData
-      : packagesData.filter((pkg) => pkg.portfolioName.includes(selectedTab));
+  useEffect(() => {
+    setFilteredPackages(
+      selectedInnerTab === 0
+        ? packagesData
+        : packagesData.filter((pkg) =>
+            pkg.portfolioName.includes(
+              selectedInnerTab === 1
+                ? 'Ripple'
+                : selectedInnerTab === 2
+                ? 'Surge'
+                : 'Wave'
+            )
+          )
+    );
+  }, [selectedInnerTab]);
 
   const getImage = (image) => {
     try {
@@ -151,86 +192,92 @@ const SmartCrypto = () => {
   };
 
   // Dynamic Content Based on Selected Tab
-  const portfolioName =
-    selectedTab === 'All'
-      ? 'Smart Crypto Plans'
-      : `Smart Crypto ${selectedTab}`;
-
-  const description =
-    selectedTab === 'All'
-      ? 'Diversify your crypto holding by minimizing risk while maximizing exposure.'
-      : packagesData.find((pkg) => pkg.portfolioName.includes(selectedTab))
-          .description;
 
   return (
-    <div className={classes.Container}>
-      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
-      <div className={classes.contentContainer}>
-        <div>
+    <>
+      <div className={classes.Container}>
+        <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
+        <div className={classes.contentContainer}>
           <div>
-            <h3>Smart Crypto</h3>
-          </div>
-          <p>#Start growing your assets on Smart Crypto</p>
-        </div>
-
-        <div>
-          <SmartCryptoTabs
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-          />
-        </div>
-
-        <div className={classes.descriptionWrapper}>
-          <div>
-            {/* <img src={}/> */}
-            <h4>{portfolioName}</h4>
+            <div>
+              <h3>Smart Crypto</h3>
+            </div>
+            <p>#Start growing your assets on Smart Crypto</p>
           </div>
 
-          <p>{description}</p>
-        </div>
+          <div>
+            <SmartCryptoTabs
+              setSelectedInnerTab={setSelectedInnerTab}
+              selectedInnerTab={selectedInnerTab}
+            />
+          </div>
 
-        <div className={classes.cardWrapper}>
-          {loading ? (
-            <p>Loading...</p>
-          ) : filteredPackages.length > 0 ? (
-            filteredPackages.map((pkg) => (
-              <div key={pkg._id} className={classes.cardContainer}>
-                <h3>
-                  {pkg.portfolioName} ({pkg?.subTitle})
-                </h3>
-                <p>{pkg.description}</p>
-                <div className={classes.flexContainer}>
-                  <div>
-                    <p>Assets</p>
-                    <AvatarGroup max={4}>
-                      {pkg.cryptocurrencies.map((crypto) => (
-                        <Avatar
-                          key={crypto._id}
-                          alt={crypto.name}
-                          src={getImage(crypto?.token)}
-                        />
-                      ))}
-                    </AvatarGroup>
+          <div className={classes.descriptionWrapper}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                margin: 0,
+                gap: '5px',
+              }}
+            >
+              <img
+                style={{ height: '50px' }}
+                src={descriptionData[selectedInnerTab].img}
+              />
+              <h4>{descriptionData[selectedInnerTab].name}</h4>
+            </div>
+
+            <p>{descriptionData[selectedInnerTab].description}</p>
+          </div>
+
+          <div className={classes.cardWrapper}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : filteredPackages.length > 0 ? (
+              filteredPackages.map((pkg) => (
+                <div key={pkg._id} className={classes.cardContainer}>
+                  <h3>
+                    {pkg.portfolioName} ({pkg?.subTitle})
+                  </h3>
+                  <p>{pkg.description}</p>
+                  <div className={classes.flexContainer}>
+                    <div>
+                      <p>Assets</p>
+                      <AvatarGroup max={4}>
+                        {pkg.cryptocurrencies.map((crypto) => (
+                          <Avatar
+                            key={crypto._id}
+                            alt={crypto.name}
+                            src={getImage(crypto?.token)}
+                          />
+                        ))}
+                      </AvatarGroup>
+                    </div>
+                  </div>
+                  <div className={classes.buttonContainer}>
+                    <GenericButton
+                      text="View Allocation"
+                      className={classes.greyButton}
+                      onClick={() => setAllocationPopup(true)}
+                    />
+                    <GenericButton
+                      text="Create a Plan"
+                      className={classes.yellowButton}
+                    />
                   </div>
                 </div>
-                <div className={classes.buttonContainer}>
-                  <GenericButton
-                    text="View Allocation"
-                    className={classes.greyButton}
-                  />
-                  <GenericButton
-                    text="Create a Plan"
-                    className={classes.yellowButton}
-                  />
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No packages found.</p>
-          )}
+              ))
+            ) : (
+              <p>No packages found.</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {allocationPopop && (
+        <AllocationPopup onClose={() => setAllocationPopup(false)} />
+      )}
+    </>
   );
 };
 

@@ -202,7 +202,7 @@ const CaptainProfile = () => {
         <div className="hive-container" style={{ paddingTop: '20px' }}>
           <div
             className="d-flex flex-direction-column justify-content-center"
-            style={{ width: `${isMobile ? '90%' : '74%'}`, maxWidth: '1140px' }}
+            style={{ width: `100%`, maxWidth: '1140px', margin: 'auto' }}
           >
             <div
               style={{

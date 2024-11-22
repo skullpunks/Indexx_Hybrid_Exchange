@@ -187,12 +187,21 @@ export default function IconicHeader({ selectedTab, onChange }) {
       search: '',
     },
     {
+      label: 'Smart Crypto',
+      light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+      dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+      path: '/smart-crypto',
+      search: '',
+    },
+
+    {
       label: 'Markets',
       light: userType === 'Indexx Exchange' ? darkModeMarket : yellowModeMarket,
       dark: userType === 'Indexx Exchange' ? lightModeMarket : yellowModeMarket,
       path: '/indexx-exchange/market-data',
       search: '',
     },
+
     // {
     //   label: 'Smart Crypto',
     //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
