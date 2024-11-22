@@ -111,8 +111,10 @@ const useStyles = makeStyles((theme) => ({
 const SmartCrypto = () => {
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
   const [selectedInnerTab, setSelectedInnerTab] = useState(0);
-  const [allocationPopop, setAllocationPopup] = useState(false);
 
+  console.log(selectedInnerTab, 'selectedInnerTab');
+  const [allocationPopop, setAllocationPopup] = useState(false);
+  const [filteredPackages, setFilteredPackages] = useState([]);
   const descriptionData = [
     { name: '', description: '', img: '' },
     {
@@ -161,10 +163,21 @@ const SmartCrypto = () => {
     fetchData();
   }, []);
 
-  const filteredPackages =
-    selectedTab === 'All'
-      ? packagesData
-      : packagesData.filter((pkg) => pkg.portfolioName.includes(selectedTab));
+  useEffect(() => {
+    setFilteredPackages(
+      selectedInnerTab === 0
+        ? packagesData
+        : packagesData.filter((pkg) =>
+            pkg.portfolioName.includes(
+              selectedInnerTab === 1
+                ? 'Ripple'
+                : selectedInnerTab === 2
+                ? 'Surge'
+                : 'Wave'
+            )
+          )
+    );
+  }, [selectedInnerTab]);
 
   const getImage = (image) => {
     try {
