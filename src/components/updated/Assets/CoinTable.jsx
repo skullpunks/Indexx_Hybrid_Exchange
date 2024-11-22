@@ -153,15 +153,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   const [dense, setDense] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const preferredOrder = [
-    'INEX',
-    'INXC',
-    'IN500',
-    'DaCrazy',
-    'IUSD+',
-    'WIBS',
-    'BTC',
-  ];
+  const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
 
   const calculateTodayPNL = (item) => {
@@ -340,20 +332,17 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
-    console.log('finalRows, ', finalRows);
-    console.log(smartCryptoCoins);
-    console.log(smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC'));
 
     // Add BTC twice if it is in smartCryptoCoins
-    if (smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC')) {
-      console.log('');
-      const btcRow = finalRows.find((row) => row.coin === 'BTC');
-      console.log('btcRow', btcRow);
-      if (btcRow) {
-        // Duplicate BTC row in the final list
-        finalRows.push(btcRow);
-      }
-    }
+    // if (smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC')) {
+    //   console.log('');
+    //   const btcRow = finalRows.find((row) => row.coin === 'BTC');
+    //   console.log('btcRow', btcRow);
+    //   if (btcRow) {
+    //     // Duplicate BTC row in the final list
+    //     finalRows.push(btcRow);
+    //   }
+    // }
 
     return finalRows;
   }, [
@@ -384,10 +373,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     (row) => row.hasSmartCryptoNote
   );
   console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
-  const lastSmartCryptoRowIndex = visibleRows
-    .slice()
-    .reverse()
-    .findIndex((row) => row.hasSmartCryptoNote);
 
   console.log('visibleRows', visibleRows);
   return (
@@ -432,81 +417,79 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                   ? visibleRows.length - 1 - lastSmartCryptoRowIndex
                   : -1;
 
-              // Determine if the row is first or last for Smart Crypto
-              const isHighlighted =
-                (index === firstSmartCryptoRowIndex ||
-                  index === lastSmartCryptoIndexAdjusted) &&
-                isSmartCryptoNote;
-
+              // Determine if the current row is immediately before or after the orange line
+              const isBeforeSmartCrypto =
+                index === firstSmartCryptoRowIndex - 1;
+              const isAfterLastSmartCrypto =
+                index === lastSmartCryptoIndexAdjusted;
               return (
                 <>
                   {/* Add dynamic text row after the first Smart Crypto row */}
-                  {index === firstSmartCryptoRowIndex + 1 &&
-                    isSmartCryptoNote && (
-                      <TableRow>
-                        <TableCell
-                          colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
-                          sx={{
-                            borderBottom: 'none',
-                            fontWeight: 'bold',
-                            color: 'orange',
-                            textAlign: 'center',
-                          }}
-                        >
-                          {(() => {
-                            // Define mappings for crypto types and managers
-                            const cryptoMappings = [
-                              'xBitcoin Bull-Run',
+                  {index === firstSmartCryptoRowIndex && isSmartCryptoNote && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
+                        sx={{
+                          borderBottom: 'none',
+                          fontWeight: 'bold',
+                          color: 'orange',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {(() => {
+                          // Define mappings for crypto types and managers
+                          const cryptoMappings = [
+                            'xBitcoin Bull-Run',
+                            'Ripple',
+                            'Wave',
+                            'Surge',
+                          ];
+                          const managerMappings = ['Omkar', 'Kashir', 'Issa'];
+
+                          // Extract and process all distinct notes from visibleRows
+                          const distinctNotes = visibleRows
+                            .filter((row) => row.notes) // Ensure rows with valid `notes`
+                            .map((row) => row.notes) // Extract notes field
+                            .map((note) => note.trim()) // Trim whitespace
+                            .filter(
+                              (note, index, self) =>
+                                self.indexOf(note) === index
+                            ); // Filter distinct notes
+
+                          // Format each note
+                          const formattedNotes = distinctNotes.map((note) => {
+                            // Find the crypto type and manager from the note
+                            const cryptoType =
+                              cryptoMappings.find((type) =>
+                                note.includes(type)
+                              ) || 'Unknown Crypto';
+                            const managedBy =
+                              managerMappings.find((manager) =>
+                                note.includes(manager)
+                              ) || 'Unknown Manager';
+
+                            // Determine if it's a Smart Crypto type
+                            const isSmartCrypto = [
                               'Ripple',
                               'Wave',
                               'Surge',
-                            ];
-                            const managerMappings = ['Omkar', 'Kashir', 'Issa'];
+                            ].includes(cryptoType);
+                            const formattedCryptoType = isSmartCrypto
+                              ? `Smart Crypto ${cryptoType}`
+                              : cryptoType;
 
-                            // Extract and process all distinct notes from visibleRows
-                            const distinctNotes = visibleRows
-                              .filter((row) => row.notes) // Ensure rows with valid `notes`
-                              .map((row) => row.notes) // Extract notes field
-                              .map((note) => note.trim()) // Trim whitespace
-                              .filter(
-                                (note, index, self) =>
-                                  self.indexOf(note) === index
-                              ); // Filter distinct notes
+                            // Return formatted string
+                            return `${formattedCryptoType} - ${managedBy}`;
+                          });
 
-                            // Format each note
-                            const formattedNotes = distinctNotes.map((note) => {
-                              // Find the crypto type and manager from the note
-                              const cryptoType =
-                                cryptoMappings.find((type) =>
-                                  note.includes(type)
-                                ) || 'Unknown Crypto';
-                              const managedBy =
-                                managerMappings.find((manager) =>
-                                  note.includes(manager)
-                                ) || 'Unknown Manager';
-
-                              // Determine if it's a Smart Crypto type
-                              const isSmartCrypto = [
-                                'Ripple',
-                                'Wave',
-                                'Surge',
-                              ].includes(cryptoType);
-                              const formattedCryptoType = isSmartCrypto
-                                ? `Smart Crypto ${cryptoType}`
-                                : cryptoType;
-
-                              // Return formatted string
-                              return `${formattedCryptoType} - ${managedBy}`;
-                            });
-
-                            // Join formatted notes with a comma and space
-                            return formattedNotes.length > 0
-                              ? formattedNotes.join(', ')
-                              : 'No valid notes';
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    )}
+                          // Join formatted notes with a comma and space
+                          return formattedNotes.length > 0
+                            ? formattedNotes.join(', ')
+                            : 'No valid notes';
+                        })()}
+                      </TableCell>
+                    </TableRow>
+                  )}
 
                   <TableRow
                     role="checkbox"
@@ -514,8 +497,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                     key={row.id}
                     sx={{
                       borderBottom: 'none !important',
-                      ...(isHighlighted && {
-                        borderBottom: '1px solid orange', // Apply orange line
+                      ...(isBeforeSmartCrypto && {
+                        borderBottom: '1px solid orange', // Apply orange line before first smart crypto row
+                      }),
+                      ...(isAfterLastSmartCrypto && {
+                        borderBottom: '1px solid orange', // Apply orange line after last smart crypto row
                       }),
                     }}
                   >
