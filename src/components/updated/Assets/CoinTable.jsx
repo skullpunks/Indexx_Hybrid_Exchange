@@ -389,11 +389,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     .reverse()
     .findIndex((row) => row.hasSmartCryptoNote);
 
-  const lastSmartCryptoIndexAdjusted =
-    lastSmartCryptoRowIndex === -1
-      ? -1
-      : visibleRows.length - 1 - lastSmartCryptoRowIndex;
-
   console.log('visibleRows', visibleRows);
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
@@ -459,10 +454,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                           }}
                         >
                           {(() => {
-                            // Dynamically render crypto type and manager based on notes
-                            let cryptoType = '';
-                            let managedBy = '';
-
+                            // Define mappings for crypto types and managers
                             const cryptoMappings = [
                               'xBitcoin Bull-Run',
                               'Ripple',
@@ -471,25 +463,46 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                             ];
                             const managerMappings = ['Omkar', 'Kashir', 'Issa'];
 
-                            cryptoType =
-                              cryptoMappings.find((type) =>
-                                notes.includes(type)
-                              ) || 'Unknown Crypto';
-                            managedBy =
-                              managerMappings.find((manager) =>
-                                notes.includes(manager)
-                              ) || 'Unknown Manager';
+                            // Extract and process all distinct notes from visibleRows
+                            const distinctNotes = visibleRows
+                              .filter((row) => row.notes) // Ensure rows with valid `notes`
+                              .map((row) => row.notes) // Extract notes field
+                              .map((note) => note.trim()) // Trim whitespace
+                              .filter(
+                                (note, index, self) =>
+                                  self.indexOf(note) === index
+                              ); // Filter distinct notes
 
-                            const isSmartCrypto = [
-                              'Ripple',
-                              'Wave',
-                              'Surge',
-                            ].includes(cryptoType);
-                            const formattedCryptoType = isSmartCrypto
-                              ? `Smart Crypto ${cryptoType}`
-                              : cryptoType;
+                            // Format each note
+                            const formattedNotes = distinctNotes.map((note) => {
+                              // Find the crypto type and manager from the note
+                              const cryptoType =
+                                cryptoMappings.find((type) =>
+                                  note.includes(type)
+                                ) || 'Unknown Crypto';
+                              const managedBy =
+                                managerMappings.find((manager) =>
+                                  note.includes(manager)
+                                ) || 'Unknown Manager';
 
-                            return `${formattedCryptoType} - ${managedBy}`;
+                              // Determine if it's a Smart Crypto type
+                              const isSmartCrypto = [
+                                'Ripple',
+                                'Wave',
+                                'Surge',
+                              ].includes(cryptoType);
+                              const formattedCryptoType = isSmartCrypto
+                                ? `Smart Crypto ${cryptoType}`
+                                : cryptoType;
+
+                              // Return formatted string
+                              return `${formattedCryptoType} - ${managedBy}`;
+                            });
+
+                            // Join formatted notes with a comma and space
+                            return formattedNotes.length > 0
+                              ? formattedNotes.join(', ')
+                              : 'No valid notes';
                           })()}
                         </TableCell>
                       </TableRow>
