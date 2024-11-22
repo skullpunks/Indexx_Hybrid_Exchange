@@ -3,7 +3,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material';
 
 const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
   const tabsData = [
@@ -24,8 +23,6 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
       value: 'Wave',
     },
   ];
-
-  const theme = useTheme();
 
   const handleChange = (e, newValue) => {
     setSelectedInnerTab(newValue);
@@ -74,7 +71,7 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
           aria-label="customized tabs"
         >
           {tabsData.map((curr, index) => (
-            <StyledTab key={index} label={curr.label} />
+            <StyledTab key={index} label={curr.label} value={curr.value} />
           ))}
         </StyledTabs>
       </Box>

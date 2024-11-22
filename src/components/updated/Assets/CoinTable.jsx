@@ -241,7 +241,10 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
           const hasSmartCryptoNote =
             item.notes.startsWith('Smart Crypto Surge') ||
             item.notes.startsWith('Smart Crypto Ripple') ||
-            item.notes.startsWith('Smart Crypto Wave');
+            item.notes.startsWith('Smart Crypto Wave') ||
+            item.notes.startsWith('xBitcoin Blooming') ||
+            item.notes.startsWith('xBitcoin Rush') ||
+            item.notes.startsWith('xBitcoin Bull-Run');
 
           // if (hasSmartCryptoNote) {
           //   smartCryptoCoins.push(item); // Push to the smartCryptoCoins array
@@ -252,7 +255,10 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             (item) =>
               item.notes.startsWith('Smart Crypto Surge') ||
               item.notes.startsWith('Smart Crypto Ripple') ||
-              item.notes.startsWith('Smart Crypto Wave')
+              item.notes.startsWith('Smart Crypto Wave') ||
+              item.notes.startsWith('xBitcoin Blooming') ||
+              item.notes.startsWith('xBitcoin Rush') ||
+              item.notes.startsWith('xBitcoin Bull-Run')
           );
           setSmartCryptoCoins(newSmartCryptoCoins);
           return {
@@ -286,12 +292,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
 
     fetchData();
   }, [navigate]);
-
-  const handleRequestSort0 = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -413,7 +413,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             {visibleRows?.map((row, index) => {
               // Apply orange line between the first and last smart crypto rows
               const isHighlighted =
-                (index === firstSmartCryptoRowIndex  ||
+                (index === firstSmartCryptoRowIndex ||
                   index === lastSmartCryptoIndexAdjusted) &&
                 row.hasSmartCryptoNote;
               return (
@@ -433,29 +433,34 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                         >
                           {/* Dynamically render text based on notes */}
                           {(() => {
-                            // Extract the manager's name and type from the notes
+                            // Extract notes and initialize variables
                             const notes = row.notes || '';
-                            let managerCode = '';
                             let cryptoType = '';
+                            let managedBy = '';
 
-                            if (notes.includes('Omkar')) {
-                              managerCode = '001';
-                            } else if (notes.includes('Kashir')) {
-                              managerCode = '003';
-                            } else if (notes.includes('Issa')) {
-                              managerCode = '002';
-                            }
+                            // Define possible crypto types and manager names
+                            const cryptoMappings = [
+                              'xBitcoin Bull-Run',
+                              'Ripple',
+                              'Wave',
+                              'Surge',
+                            ];
+                            const managerMappings = ['Omkar', 'Kashir', 'Issa'];
 
-                            if (notes.includes('Ripple')) {
-                              cryptoType = 'Ripple';
-                            } else if (notes.includes('Wave')) {
-                              cryptoType = 'Wave';
-                            } else if (notes.includes('Surge')) {
-                              cryptoType = 'Surge';
-                            }
+                            // Extract crypto type dynamically
+                            cryptoType =
+                              cryptoMappings.find((type) =>
+                                notes.includes(type)
+                              ) || 'Unknown Crypto';
+
+                            // Extract managedBy dynamically
+                            managedBy =
+                              managerMappings.find((manager) =>
+                                notes.includes(manager)
+                              ) || 'Unknown Manager';
 
                             // Combine the dynamic parts into the final string
-                            return `Smart Crypto ${cryptoType} ${managerCode}`;
+                            return `${cryptoType} ${managedBy}`;
                           })()}
                         </TableCell>
                       </TableRow>

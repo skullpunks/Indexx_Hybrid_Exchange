@@ -203,6 +203,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
     },
 
     // {
+    //   label: 'Smart Crypto',
+    //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
+    //   path: '/smart-crypto',
+    //   search: '',
+    // },
+    // {
     //   label: 'Stock Tokens',
     //   light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,
     //   dark: userType === 'Indexx Exchange' ? wallStreetDark : stockTokenHive,
