@@ -197,6 +197,7 @@ const BuySellLoginContentHive = () => {
                 secondaryLabel={undefined}
                 rows={undefined}
                 yellowBorders
+                blueBorders={undefined}
               />
             </Form.Item>
           </div>
@@ -235,6 +236,7 @@ const BuySellLoginContentHive = () => {
                 secondaryLabel={undefined}
                 rows={undefined}
                 yellowBorders
+                blueBorders={undefined}
               />
             </Form.Item>
           </div>

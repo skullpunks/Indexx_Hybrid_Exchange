@@ -427,6 +427,7 @@ const TCaptTransactionCryptoHistoryTable: React.FC<TeamCapTxTableProps> = ({
             secondaryLabel={undefined}
             rows={undefined}
             yellowBorders={undefined}
+            blueBorders={undefined}
           />
         </div>
         <div className="filter-item">

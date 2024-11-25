@@ -91,7 +91,7 @@ const CustomTab = styled(Tab)(({ theme }) => ({
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
-  color: '#FEBA00',
+  color: '#FEBA00 !important',
   minWidth: 0,
   width: '120px',
   [theme.breakpoints.up('sm')]: {

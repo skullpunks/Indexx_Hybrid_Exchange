@@ -353,7 +353,6 @@ const BSConfirmPurchase: React.FC<Props> = ({ setScreenName }) => {
                 $
               </span>
               <span
-                placeholder="0"
                 className="font_60x color_general padding-l-1x"
                 id="input_get_value"
                 style={{

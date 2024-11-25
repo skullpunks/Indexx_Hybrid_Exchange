@@ -127,6 +127,7 @@ const HiveForgotPassword = () => {
                   secondaryLabel={undefined}
                   rows={undefined}
                   yellowBorders={true}
+                  blueBorders={undefined}
                 />
               </div>
             </Form.Item>

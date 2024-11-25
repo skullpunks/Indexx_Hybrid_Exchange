@@ -783,6 +783,7 @@ const BSTransactionCryptoHistoryTable: React.FC = () => {
             secondaryLabel={undefined}
             rows={undefined}
             yellowBorders={undefined}
+            blueBorders={undefined}
           />
         </div>
         <div className="filter-item">

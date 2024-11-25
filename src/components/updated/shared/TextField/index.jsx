@@ -9,7 +9,7 @@ import { makeStyles } from '@mui/styles';
 
 const BootstrapInput = styled(InputBase, {
   shouldForwardProp: (prop) => prop !== 'yellowBorders',
-})(({ theme, yellowBorders }) => ({
+})(({ theme, yellowBorders, blueBorders }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
@@ -22,13 +22,21 @@ const BootstrapInput = styled(InputBase, {
     paddingRight: '15px',
     transition: theme.transitions.create(['border-color', 'background-color']),
     '&:hover': {
-      borderColor: yellowBorders ? '#FFB300' : theme.palette.primary.main,
+      borderColor: yellowBorders
+        ? '#FFB300'
+        : blueBorders
+        ? '#07A6FC'
+        : theme.palette.primary.main,
     },
     '&.Mui-error': {
       borderColor: 'red !important',
     },
     '&.Mui-focused': {
-      borderColor: yellowBorders ? '#FFB300' : theme.palette.primary.main,
+      borderColor: yellowBorders
+        ? '#FFB300'
+        : blueBorders
+        ? '#07A6FC'
+        : theme.palette.primary.main,
     },
   },
   '& .MuiInputBase-input': {
@@ -88,6 +96,7 @@ const InputField = ({
   secondaryLabel,
   rows,
   yellowBorders,
+  blueBorders,
   ...otherProps
 }) => {
   const classes = useStyles();
@@ -102,6 +111,7 @@ const InputField = ({
         type={type === 'textarea' ? 'text' : type}
         defaultValue={defaultValue}
         yellowBorders={yellowBorders}
+        blueBorders={blueBorders}
         id={id}
         startAdornment={startAdornment}
         endAdornment={endAdornment}

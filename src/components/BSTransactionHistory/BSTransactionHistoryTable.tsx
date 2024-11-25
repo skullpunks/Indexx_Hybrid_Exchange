@@ -74,9 +74,11 @@ const BSTransactionHistoryTable: React.FC = () => {
           </div>
           <div>
             <strong>Address: </strong>
-            {`${parsedAddress.addressLine1 || 'NA'}, ${parsedAddress.city || 'NA'
-              }, ${parsedAddress.state || 'NA'}, ${parsedAddress.country || 'NA'
-              }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
+            {`${parsedAddress.addressLine1 || 'NA'}, ${
+              parsedAddress.city || 'NA'
+            }, ${parsedAddress.state || 'NA'}, ${
+              parsedAddress.country || 'NA'
+            }, ZIP: ${parsedAddress.zipCode || 'NA'}`}
           </div>
         </>
       );
@@ -267,7 +269,6 @@ const BSTransactionHistoryTable: React.FC = () => {
       const uniqueTypes = new Set();
       const uniqueAssets = new Set();
 
-
       finalArr.forEach((transaction: any) => {
         uniqueTypes.add(transaction.transactionType);
         uniqueAssets.add(transaction.currencyRef);
@@ -301,10 +302,10 @@ const BSTransactionHistoryTable: React.FC = () => {
           moment(pastDate).isSameOrBefore(valueDate) &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -326,10 +327,10 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -348,7 +349,7 @@ const BSTransactionHistoryTable: React.FC = () => {
       ...prevSelection,
       time: value,
     }));
-  
+
     // Apply the filter after the type is changed
     filterTransactions({
       ...selection,
@@ -376,11 +377,11 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.status?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -402,11 +403,11 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.transactionHash ||
             data.txId
               ?.toLowerCase()
@@ -423,7 +424,7 @@ const BSTransactionHistoryTable: React.FC = () => {
       ...prevSelection,
       status: value,
     }));
-  
+
     // Apply the filter after the type is changed
     filterTransactions({
       ...selection,
@@ -451,7 +452,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           data.transactionType?.toLowerCase() === value?.toLowerCase() &&
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -478,7 +479,7 @@ const BSTransactionHistoryTable: React.FC = () => {
         return (
           (!selection.asset ||
             data.currencyRef?.toLowerCase() ===
-            selection.asset?.toLowerCase()) &&
+              selection.asset?.toLowerCase()) &&
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
@@ -526,7 +527,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -551,7 +552,7 @@ const BSTransactionHistoryTable: React.FC = () => {
           (!selection.time || moment(pastDate).isSameOrBefore(valueDate)) &&
           (!selection.type ||
             data.transactionType?.toLowerCase() ===
-            selection.type?.toLowerCase()) &&
+              selection.type?.toLowerCase()) &&
           (!selection.status ||
             data.status?.toLowerCase() === selection.status?.toLowerCase()) &&
           (!selection.transactionHash ||
@@ -564,14 +565,13 @@ const BSTransactionHistoryTable: React.FC = () => {
     }
   };
 
-
   const handleChangeAsset = (el: any) => {
     const value = el.target.value;
     setSelection((prevSelection) => ({
       ...prevSelection,
       asset: value, // Correctly updating the asset field, not type
     }));
-  
+
     // Apply the filter after the asset is changed
     filterTransactions({
       ...selection,
@@ -598,7 +598,8 @@ const BSTransactionHistoryTable: React.FC = () => {
 
       const typeMatches =
         filterCriteria.type === 'all' ||
-        data.transactionType?.toLowerCase() === filterCriteria.type?.toLowerCase();
+        data.transactionType?.toLowerCase() ===
+          filterCriteria.type?.toLowerCase();
 
       const statusMatches =
         filterCriteria.status === 'all' ||
@@ -606,26 +607,33 @@ const BSTransactionHistoryTable: React.FC = () => {
 
       const txHashMatches =
         !filterCriteria.transactionHash ||
-        data.txId?.toLowerCase().includes(filterCriteria.transactionHash?.toLowerCase());
+        data.txId
+          ?.toLowerCase()
+          .includes(filterCriteria.transactionHash?.toLowerCase());
 
-      return assetMatches && timeMatches && typeMatches && statusMatches && txHashMatches;
+      return (
+        assetMatches &&
+        timeMatches &&
+        typeMatches &&
+        statusMatches &&
+        txHashMatches
+      );
     });
 
     console.log('filteredData', filteredData); // Debugging filtered results
     setTxListFilter(filteredData);
   };
 
-
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value.toLowerCase();
     setValueInput(searchValue);
-  
+
     // Update the search in the selection state
     setSelection((prevSelection) => ({
       ...prevSelection,
       transactionHash: searchValue,
     }));
-  
+
     // Apply the filter after updating the search value
     filterTransactions({
       ...selection,
@@ -686,7 +694,10 @@ const BSTransactionHistoryTable: React.FC = () => {
             //   { name: 'Withdraw', value: 'WITHDRAW_CRYPTO' },
             //   { name: 'Reward Withdraw', value: 'WITHDRAW_REWARDS' },
             // ]}
-            items={transactionTypes.map((type) => ({ name: type, value: type }))}
+            items={transactionTypes.map((type) => ({
+              name: type,
+              value: type,
+            }))}
             value={selection.type}
             onChange={handleChangeType}
             hasborder
@@ -786,6 +797,7 @@ const BSTransactionHistoryTable: React.FC = () => {
             secondaryLabel={undefined}
             rows={undefined}
             yellowBorders={undefined}
+            blueBorders={undefined}
           />
           {/* <AutoComplete
             onSearch={handleSearch}
@@ -805,7 +817,6 @@ const BSTransactionHistoryTable: React.FC = () => {
               width: 'fit-content',
               marginBottom: '10px',
             }}
-
             onClick={() => {
               setSelection({
                 type: 'all',
@@ -814,7 +825,7 @@ const BSTransactionHistoryTable: React.FC = () => {
                 time: 'all',
                 transactionHash: '',
               });
-               // Reset the filtered transaction list to show all data
+              // Reset the filtered transaction list to show all data
               setTxListFilter(txList); // Reset to the full list of transactions
             }}
           >

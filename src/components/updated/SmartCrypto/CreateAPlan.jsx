@@ -103,6 +103,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: `#FEBA00 !important`,
     color: `#000 !important`,
   },
+  blueButton: {
+    backgroundColor: `#07A6FC !important`,
+    color: `#000 !important`,
+  },
   selectTypeContainer: {
     marginBottom: '20px',
     width: '100%',
@@ -165,7 +169,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateAPlanPopup = ({ onClose }) => {
+const CreateAPlanPopup = ({ onClose, category }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState();
   const [planName, setPlanName] = useState('');
@@ -205,6 +209,7 @@ const CreateAPlanPopup = ({ onClose }) => {
           <div style={{ width: '100%' }}>
             <div className={classes.enterAmountContainer}>
               <label>Plan's Name</label>
+
               <InputField
                 placeholder={'Create a plan name here (Optional)'}
                 type="text"
@@ -212,7 +217,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                 onChange={(e) => {
                   setPlanName(e.target.value);
                 }}
-                yellowBorders
+                yellowBorders={category !== 'x-Blue'}
+                blueBorders={category === 'x-Blue'}
                 style={{ marginTop: '0px' }}
               />
             </div>
@@ -224,7 +230,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                   value="0.00" // Set a default or dynamic value here
                   onChange={() => {}} // Add a proper handler if needed
                   disabled
-                  yellowBorders
+                  yellowBorders={category !== 'x-Blue'}
+                  blueBorders={category === 'x-Blue'}
                   className={classes.coinAllocationInput}
                   style={{ marginTop: '0px', marginBottom: '10px' }}
                   startAdornment={
@@ -262,7 +269,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                   value="0.00" // Set a default or dynamic value here
                   onChange={() => {}} // Add a proper handler if needed
                   disabled
-                  yellowBorders
+                  yellowBorders={category !== 'x-Blue'}
+                  blueBorders={category === 'x-Blue'}
                   className={classes.coinAllocationInput}
                   style={{ marginTop: '0px', marginBottom: '10px' }}
                   startAdornment={
@@ -297,7 +305,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                 />
                 <InputField
                   type="text"
-                  yellowBorders
+                  yellowBorders={category !== 'x-Blue'}
+                  blueBorders={category === 'x-Blue'}
                   value="0.00" // Set a default or dynamic value here
                   onChange={() => {}} // Add a proper handler if needed
                   disabled
@@ -335,7 +344,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                 />
                 <InputField
                   type="text"
-                  yellowBorders
+                  yellowBorders={category !== 'x-Blue'}
+                  blueBorders={category === 'x-Blue'}
                   value="0.00" // Set a default or dynamic value here
                   onChange={() => {}} // Add a proper handler if needed
                   disabled
@@ -376,7 +386,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                   value="0.00" // Set a default or dynamic value here
                   onChange={() => {}} // Add a proper handler if needed
                   disabled
-                  yellowBorders
+                  yellowBorders={category !== 'x-Blue'}
+                  blueBorders={category === 'x-Blue'}
                   style={{ marginTop: '0px', marginBottom: '10px' }}
                   className={classes.coinAllocationInput}
                   startAdornment={
@@ -421,7 +432,8 @@ const CreateAPlanPopup = ({ onClose }) => {
                 style={{ marginTop: '0px', marginBottom: '10px' }}
                 value={''}
                 onChange={() => {}}
-                yellowBorders
+                yellowBorders={category !== 'x-Blue'}
+                blueBorders={category === 'x-Blue'}
                 endAdornment={
                   <InputAdornment position="end">USD</InputAdornment>
                 }
@@ -453,7 +465,11 @@ const CreateAPlanPopup = ({ onClose }) => {
             />
             <GenericButton
               text="Create a plan"
-              className={classes.yellowButton}
+              className={
+                category === 'x-Blue'
+                  ? classes.blueButton
+                  : classes.yellowButton
+              }
               onClick={onClose}
             />
           </div>

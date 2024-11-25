@@ -95,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: `#FEBA00 !important`,
     color: `#000 !important`,
   },
+  blueButton: {
+    backgroundColor: `#07A6FC !important`,
+    color: `#000 !important`,
+  },
   coinRoot: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -127,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AllocationPopup = ({ onClose }) => {
+const AllocationPopup = ({ onClose, category }) => {
   const theme = useTheme();
 
   const classes = useStyles();
@@ -180,7 +184,11 @@ const AllocationPopup = ({ onClose }) => {
             />
             <GenericButton
               text="Create a plan"
-              className={classes.yellowButton}
+              className={
+                category === 'x-Blue'
+                  ? classes.blueButton
+                  : classes.yellowButton
+              }
               onClick={onClose}
             />
           </div>

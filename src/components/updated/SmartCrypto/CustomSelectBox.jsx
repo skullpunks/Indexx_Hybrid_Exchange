@@ -129,9 +129,9 @@ export default function CustomSelectBox({
           );
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {type === 'Coin' && selectedItem && (
+              {selectedItem.img && (
                 <img
-                  src={getImage(selectedItem.image)}
+                  src={selectedItem.img}
                   alt={selectedItem.name}
                   style={{ width: '24px', height: '24px', marginRight: '10px' }}
                 />
@@ -158,11 +158,11 @@ export default function CustomSelectBox({
               </MenuItem>
             ))
           : !isCurrency
-          ? items?.map(({ name, value, image }) => (
+          ? items?.map(({ name, value, img }) => (
               <MenuItem key={name} value={value}>
-                {type === 'Coin' && (
+                {img && (
                   <img
-                    src={getImage(image)}
+                    src={img}
                     alt={name}
                     style={{
                       width: '24px',

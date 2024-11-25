@@ -4,7 +4,7 @@ import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
 import comingsoon from '../../../../assets/hive-dashboard/comingsoon_grey.svg';
 
-import { LineChart } from '@mui/x-charts/LineChart';
+// import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import {
   getCaptainBeeStatics,
@@ -352,7 +352,7 @@ const Growth = () => {
               width: '100%',
             }}
           >
-            <LineChart
+            {/* <LineChart
               width={572}
               height={429}
               series={[
@@ -360,7 +360,7 @@ const Growth = () => {
                 { data: uData, label: 'uv' },
               ]}
               xAxis={[{ scaleType: 'point', data: xLabels }]}
-            />
+            /> */}
           </Box>
         </Box>
 

@@ -261,7 +261,6 @@ const BSConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
             style={{ alignItems: 'baseline', padding: '40px 20px' }}
           >
             <span
-              placeholder="0"
               className="pe-2 color_general font_60x"
               id="input_get_value"
               style={{ width: '1.2ch' }}

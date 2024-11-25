@@ -4,8 +4,13 @@ import Tab from '@mui/material/Tab';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 
-const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
-  const tabsData = [
+const SmartCryptoTabs = ({
+  selectedInnerTab,
+  setSelectedInnerTab,
+  backgroundColor,
+  category = 'x-Blue',
+}) => {
+  const tabsXBlueData = [
     {
       label: 'All',
       value: 0,
@@ -20,6 +25,25 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
     },
     {
       label: 'Wave',
+      value: 3,
+    },
+  ];
+
+  const tabsXBitcoinData = [
+    {
+      label: 'All',
+      value: 0,
+    },
+    {
+      label: 'Blooming',
+      value: 1,
+    },
+    {
+      label: 'Rush',
+      value: 2,
+    },
+    {
+      label: 'Bullrun',
       value: 3,
     },
   ];
@@ -45,8 +69,13 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
     fontSize: '18px',
     marginRight: '10px',
     transition: 'background-color 0.3s, color 0.3s',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '14px',
+      padding: '4px 12px',
+      marginRight: '5px',
+    },
     '&.Mui-selected': {
-      backgroundColor: '#FEBA00', // Yellow background for the active tab
+      backgroundColor: backgroundColor ?? '#FEBA00', // Yellow background for the active tab
       color: '#000',
     },
     '&:hover': {
@@ -54,7 +83,7 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
         theme.palette.mode === 'dark' ? 'rgb(43, 49, 57)' : '#F5F5F5', // Light grey background on hover
     },
   }));
-
+  const tabsData = category === 'x-Blue' ? tabsXBlueData : tabsXBitcoinData;
   return (
     <div style={{ width: '100%' }}>
       <Box
@@ -69,6 +98,7 @@ const SmartCryptoTabs = ({ selectedInnerTab, setSelectedInnerTab }) => {
           value={selectedInnerTab}
           onChange={handleChange}
           aria-label="customized tabs"
+          variant="scrollable"
         >
           {tabsData.map((curr, index) => (
             <StyledTab key={index} label={curr.label} value={curr.value} />

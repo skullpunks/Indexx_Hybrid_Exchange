@@ -4,7 +4,7 @@ import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
 
 import comingsoon from '../../../../assets/hive-dashboard/comingsoon.svg';
 
-import { LineChart } from '@mui/x-charts/LineChart';
+// import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, MenuItem, Select, Typography } from '@mui/material';
 import { getReferredUserDetails } from '../../../../services/api';
 // import CommissionTable from '../CommissionTable';

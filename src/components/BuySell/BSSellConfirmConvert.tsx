@@ -264,7 +264,6 @@ const BSSellConfirmConvert: React.FC<Props> = ({ setScreenName }) => {
             style={{ transform: 'scale(1)', padding: '35px 20px' }}
           >
             <span
-              placeholder="0"
               className="color_general font_60x"
               id="input_get_value"
               style={{ width: '1.2ch' }}

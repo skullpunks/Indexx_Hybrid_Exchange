@@ -192,17 +192,22 @@ const BSConvertOrderHistoryTable: React.FC = () => {
   const applyFilters = (updatedSelection: any) => {
     const { asset, status, time, orderId } = updatedSelection;
     const pastDate =
-      time !== 'all' ? moment().subtract(+time, 'days').format('YYYY-MM-DD') : null;
+      time !== 'all'
+        ? moment().subtract(+time, 'days').format('YYYY-MM-DD')
+        : null;
 
     const filteredData = orderList.filter((data: any) => {
       const valueDate = moment(data.created).format('YYYY-MM-DD');
 
       const assetMatches =
-        asset === 'all' || data.breakdown.outCurrencyName?.toLowerCase() === asset.toLowerCase();
+        asset === 'all' ||
+        data.breakdown.outCurrencyName?.toLowerCase() === asset.toLowerCase();
 
-      const timeMatches = time === 'all' || moment(pastDate).isSameOrBefore(valueDate);
+      const timeMatches =
+        time === 'all' || moment(pastDate).isSameOrBefore(valueDate);
 
-      const statusMatches = status === 'all' || data.status?.toLowerCase() === status.toLowerCase();
+      const statusMatches =
+        status === 'all' || data.status?.toLowerCase() === status.toLowerCase();
 
       const orderIdMatches =
         !orderId || data.orderId?.toLowerCase().includes(orderId.toLowerCase());
@@ -365,6 +370,7 @@ const BSConvertOrderHistoryTable: React.FC = () => {
             secondaryLabel={undefined}
             rows={undefined}
             yellowBorders={undefined}
+            blueBorders={undefined}
           />
           {/* <Input size="large" placeholder="Search Order Id" style={{ height: "55px" }} value={valueInput} onChange={onChageSearch} maxLength={50} /> */}
         </div>
@@ -386,7 +392,6 @@ const BSConvertOrderHistoryTable: React.FC = () => {
                 orderId: '',
               });
               setOrderTxListFilter(orderList);
-
             }}
           >
             Reset

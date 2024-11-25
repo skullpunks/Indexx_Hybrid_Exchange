@@ -23,7 +23,7 @@ const keySize = 32;
 const algorithm = 'aes-256-cbc';
 const salt = crypto.createHash('sha1').update(secret).digest('hex');
 export let baseAcademyUrl = '';
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
   baseAPIURL = 'https://api.indexx.ai';
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -154,14 +154,14 @@ export async function fetchCryptoData(subTitle: string) {
 
 export function formatReadableDate(isoDate: string) {
   if (!isoDate) {
-    return "N/A";
+    return 'N/A';
   }
 
   const date = new Date(isoDate);
-  
+
   // Check if the date is invalid
   if (isNaN(date.getTime())) {
-    return "N/A";
+    return 'N/A';
   }
 
   return date.toLocaleString('en-US', {
@@ -173,7 +173,6 @@ export function formatReadableDate(isoDate: string) {
     hour12: true,
   });
 }
-
 
 export const signupAPI = async (
   email: string,
@@ -752,19 +751,15 @@ export const getUserWallets = async (email: string) => {
   }
 };
 
-
 export const getSmartCryptoPackages = async () => {
   try {
-      const result = await API.get(
-          `/api/v1/inex/basic/getsmartpackages`
-      );
-      if (result.status === 200) return result.data;
-      else return result.data;
-  } catch  (e: any) {
-      return e.response.data;
+    const result = await API.get(`/api/v1/inex/basic/getsmartpackages`);
+    if (result.status === 200) return result.data;
+    else return result.data;
+  } catch (e: any) {
+    return e.response.data;
   }
 };
-
 
 export const getUserInvestments = async (email: string) => {
   try {
@@ -2317,7 +2312,6 @@ export const getIndexxMediumBlogs = async () => {
 //   return encrypted;
 // }
 
-
 export function encrypt(text: string) {
   const iv = crypto.randomBytes(16); // Initialization vector
   const secretKey = crypto.randomBytes(32); // Generate a 256-bit key
@@ -2327,7 +2321,11 @@ export function encrypt(text: string) {
   const secretKeyUint8Array = new Uint8Array(secretKey);
 
   // Use 'aes-256-gcm' instead of 'aes-256-ccm'
-  const cipher = crypto.createCipheriv('aes-256-gcm', secretKeyUint8Array, ivUint8Array);
+  const cipher = crypto.createCipheriv(
+    'aes-256-gcm',
+    secretKeyUint8Array,
+    ivUint8Array
+  );
 
   let encrypted = cipher.update(text, 'utf8', 'hex');
   encrypted += cipher.final('hex');
@@ -2338,7 +2336,7 @@ export function encrypt(text: string) {
   return {
     encryptedData: encrypted,
     iv: iv.toString('hex'),
-    authTag
+    authTag,
   };
 }
 
