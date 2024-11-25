@@ -440,6 +440,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                           // Define mappings for crypto types and managers
                           const cryptoMappings = [
                             'xBitcoin Bull-Run',
+                            'xBitcoin Rush',
                             'Ripple',
                             'Wave',
                             'Surge',
