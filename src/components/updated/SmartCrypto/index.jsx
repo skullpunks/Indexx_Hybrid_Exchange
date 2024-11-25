@@ -20,6 +20,7 @@ import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
 import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
 import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
 import AccordionExpandDefault from './Accordion';
+import smartCryptoLogo from '../../../assets/updated/smartCrypto/smartCryptoLogo.png';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -140,6 +141,14 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down('md')]: {
         fontSize: '20px',
       },
+    },
+  },
+  smartCryptoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    '& img': {
+      height: '70px',
     },
   },
 }));
@@ -264,7 +273,8 @@ const SmartCrypto = () => {
         <div className={classes.contentContainer}>
           <div className={classes.flexContainer1}>
             <div>
-              <div>
+              <div className={classes.smartCryptoContainer}>
+                <img src={smartCryptoLogo} />
                 <h3>Smart Crypto</h3>
               </div>
               <p>#Start growing your assets on Smart Crypto</p>
