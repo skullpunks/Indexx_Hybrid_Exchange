@@ -195,7 +195,7 @@ const SmartCrypto = () => {
       img: rushIcon,
     },
     {
-      name: 'Bullrun Plan',
+      name: 'Bull-Run Plan',
       img: bullRunIcon,
       description:
         'Diversify your crypto holding by minimizing risk while maximizing exposure.',
@@ -211,6 +211,7 @@ const SmartCrypto = () => {
 
   const handleChange = (e) => {
     setCategory(e.target.value);
+    console.log();
   };
 
   useEffect(() => {
@@ -223,33 +224,81 @@ const SmartCrypto = () => {
           a.subTitle.localeCompare(b.subTitle)
         );
 
-        setPackagesData(sortedData);
+        // Category-based filtering logic
+        const categoryFilters = {
+          'x-Blue': [
+            'Smart Crypto Ripple',
+            'Smart Crypto Surge',
+            'Smart Crypto Wave',
+          ],
+          'x-Bitcoin': [
+            'xBitcoin Blooming',
+            'xBitcoin Bull-Run',
+            'xBitcoin Rush',
+          ],
+        };
+
+        const applicableNames = categoryFilters[category] || [];
+        const filteredData = sortedData.filter((pkg) =>
+          applicableNames.includes(pkg.portfolioName)
+        );
+
+        console.log('Filtered Data:', filteredData);
+        setPackagesData(filteredData);
         setLoading(false);
       } catch (err) {
+        console.error('Error fetching packages:', err);
         setLoading(false);
       }
     };
+
     fetchData();
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     setSelectedTab(0);
   }, [category]);
+
   useEffect(() => {
-    setFilteredPackages(
-      selectedInnerTab === 0
-        ? packagesData
-        : packagesData.filter((pkg) =>
+    setFilteredPackages(() => {
+      const categoryFilters = {
+        'x-Blue': [
+          'Smart Crypto Ripple',
+          'Smart Crypto Surge',
+          'Smart Crypto Wave',
+        ],
+        'x-Bitcoin': [
+          'xBitcoin Blooming',
+          'xBitcoin Bull-Run',
+          'xBitcoin Rush',
+        ],
+      };
+
+      const applicableNames = categoryFilters[category] || [];
+      const filteredByCategory = packagesData.filter((pkg) =>
+        applicableNames.includes(pkg.portfolioName)
+      );
+
+      // Filtering logic based on selectedInnerTab
+      return selectedInnerTab === 0
+        ? filteredByCategory
+        : filteredByCategory.filter((pkg) =>
             pkg.portfolioName.includes(
-              selectedInnerTab === 1
-                ? 'Ripple'
+              category === 'x-Blue'
+                ? selectedInnerTab === 1
+                  ? 'Ripple'
+                  : selectedInnerTab === 2
+                  ? 'Surge'
+                  : 'Wave'
+                : selectedInnerTab === 1
+                ? 'Blooming'
                 : selectedInnerTab === 2
-                ? 'Surge'
-                : 'Wave'
+                ? 'Rush'
+                : 'Bull-Run'
             )
-          )
-    );
-  }, [selectedInnerTab, packagesData]);
+          );
+    });
+  }, [selectedInnerTab, packagesData, category]);
 
   const getImage = (image) => {
     try {
@@ -327,7 +376,19 @@ const SmartCrypto = () => {
               filteredPackages.map((pkg) => (
                 <div key={pkg._id} className={classes.cardContainer}>
                   <h3>
-                    {pkg.portfolioName} ({pkg?.subTitle})
+                    {pkg.portfolioName.includes('Smart Crypto Ripple') &&
+                      'x-Blue Ripple'}
+                    {pkg.portfolioName.includes('Smart Crypto Wave') &&
+                      'x-Blue Wave'}
+                    {pkg.portfolioName.includes('Smart Crypto Surge') &&
+                      'x-Blue Surge'}
+                    {pkg.portfolioName.includes('xBitcoin Blooming') &&
+                      'x-Bitcoin Blooming'}
+                    {pkg.portfolioName.includes('xBitcoin Bull-Run') &&
+                      'x-Bitcoin Bull-Run'}
+                    {pkg.portfolioName.includes('xBitcoin Rush') &&
+                      'x-Bitcoin Rush'}
+                    ({pkg?.managedBy})
                   </h3>
                   <p>{pkg.description}</p>
                   <div className={classes.flexContainer}>

@@ -84,7 +84,7 @@ const headCells = [
     id: 'coin_price',
     numeric: true,
     disablePadding: false,
-    label: 'Coin Price',
+    label: 'Coin Price in USD',
   },
   {
     id: 'todayPNL',
@@ -212,23 +212,47 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
           const coinPrice = Number(item.coinPrice);
           const coinPrevPrice = Number(item.coinPrevPrice);
           let todayPNL = null;
+          let coin = item.coinSymbol;
+          // Default percentage values for preferred coins
+          const coinPercentageMap = {
+            INEX: 8.33,
+            INXC: 1.05,
+            IN500: 2.83,
+            'IUSD+': 1.0,
+            WIBS: 1.58,
+            Dacrazy: 1.25,
+            daCrazy: 1.25,
+            DaCrazy: 1.25,
+          };
 
-          if (
+          // Check if the coin is one of the preferred ones
+          if (coinPercentageMap[coin]) {
+            // For preferred coins with no previous price (null or zero), directly use the default percentage
+            todayPNL = {
+              value: (item?.coinStakedBalance ?? coinBalance * coinPrice).toFixed(2),
+              percentage: coinPercentageMap[coin].toFixed(2),
+              isPositive: coinPercentageMap[coin] >= 0, // Default positive as it's predefined
+            };
+          } else if (
             coinBalance > 0 &&
             !isNaN(coinPrice) &&
             !isNaN(coinPrevPrice) &&
             coinPrevPrice !== 0
           ) {
+            // Calculate PNL for other coins if valid coinPrevPrice exists
             const pnlValue = coinBalance * (coinPrice - coinPrevPrice);
             const pnlPercentage =
               ((coinPrice - coinPrevPrice) / coinPrevPrice) * 100;
+
             todayPNL = {
               value: pnlValue.toFixed(2),
               percentage: pnlPercentage.toFixed(2),
               isPositive: pnlValue >= 0,
             };
+          } else {
+            // If no valid PNL, set it to null
+            todayPNL = null;
           }
-
           //Check if the notes start with the desired phrases
           const hasSmartCryptoNote =
             item.notes.startsWith('Smart Crypto Surge') ||
@@ -374,12 +398,124 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   );
   console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
 
-  console.log('visibleRows', visibleRows);
+  const groupedRows = (rows) => {
+    const xBitcoinRows = [];
+    const smartCryptoRows = [];
+    const otherCoinRows = [];
+
+    // Separate rows into categories
+    rows.forEach((row) => {
+      if (
+        row.notes &&
+        (row.notes.startsWith('xBitcoin Blooming') ||
+          row.notes.startsWith('xBitcoin Rush') ||
+          row.notes.startsWith('xBitcoin Bull-Run'))
+      ) {
+        xBitcoinRows.push(row);
+      } else if (
+        row.notes &&
+        ['Wave', 'Surge', 'Ripple'].some((type) => row.notes.includes(type))
+      ) {
+        smartCryptoRows.push(row);
+      } else {
+        otherCoinRows.push(row);
+      }
+    });
+
+    // Sort 'otherCoinRows' based on preferred order
+    const sortedOtherCoins = otherCoinRows.sort((a, b) => {
+      const aIndex = preferredOrder.indexOf(a.coin);
+      const bIndex = preferredOrder.indexOf(b.coin);
+
+      // If a coin is in preferredOrder, it will have an index >= 0
+      // Sort coins from preferredOrder first, then others by their original order
+      if (aIndex !== -1 && bIndex === -1) return -1; // 'a' is in preferredOrder, 'b' is not
+      if (bIndex !== -1 && aIndex === -1) return 1; // 'b' is in preferredOrder, 'a' is not
+      return aIndex - bIndex; // Sort coins within preferredOrder based on their position
+    });
+
+    const organizedRows = [
+      { category: 'Coins', rows: sortedOtherCoins },
+      ...(xBitcoinRows.length > 0
+        ? [{ category: 'x-Bitcoin', rows: xBitcoinRows }]
+        : []), // Only include 'x-Bitcoin' if there are rows
+      { category: 'x-Blue', rows: smartCryptoRows },
+    ];
+
+    return organizedRows;
+    // return [
+    //   { category: 'Coins', rows: sortedOtherCoins }, // Insert sorted 'otherCoinRows' here
+    //   { category: 'x-Bitcoin', rows: xBitcoinRows },
+    //   { category: 'x-Blue', rows: smartCryptoRows },
+    // ];
+  };
+
+  // Format categories
+  const getFormattedCategory = (note) => {
+    // Define mappings for crypto types and managers
+    const cryptoMappings = [
+      'Bull-Run',
+      'Blooming',
+      'Rush',
+      'Ripple',
+      'Wave',
+      'Surge',
+    ];
+    const managerMappings = ['Omkar', 'Kashir', 'Issa'];
+
+    // Find the crypto type and manager from the note
+    const cryptoType =
+      cryptoMappings.find((type) => note.includes(type)) || 'Unknown Crypto';
+    const managedBy =
+      managerMappings.find((manager) => note.includes(manager)) ||
+      'Unknown Manager';
+
+    // Determine if it's a Smart Crypto type
+    const isSmartCrypto = ['Ripple', 'Wave', 'Surge'].includes(cryptoType);
+    const formattedCryptoType = isSmartCrypto ? `${cryptoType}` : cryptoType;
+
+    // Return formatted string
+    return `${formattedCryptoType} - ${managedBy}`;
+  };
+
+  const organizedRows = groupedRows(visibleRows);
+
+  console.log(organizedRows);
+  // Function to calculate the total for each group
+  const calculateTotal = (rows) => {
+    let totalAmount = 0;
+    let totalStakingBalance = 0;
+
+    rows.forEach((row) => {
+      totalAmount += row.amount * row.coin_price;
+      totalStakingBalance += row.staking_balance;
+    });
+
+    return {
+      totalAmount,
+      totalStakingBalance,
+    };
+  };
+
+  const getAdjustedPercentage = (coin, originalPercentage) => {
+    console.log('coin', coin, originalPercentage);
+    const percentageMap = {
+      INEX: 8.33,
+      INXC: 1.05,
+      IN500: 2.83,
+      'IUSD+': 1.0,
+      WIBS: 0.58,
+      Dacrazy: 0.25,
+    };
+
+    return percentageMap[coin] || originalPercentage; // Use the coin's specific percentage if available, otherwise fallback to the original
+  };
+
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <TableContainer>
         <Table
-          sx={{ minWidth: { xs: '100%', sm: 750 } }} // Use minWidth based on screen size
+          sx={{ minWidth: { xs: '100%', sm: 750 } }}
           aria-labelledby="tableTitle"
           size={dense ? 'small' : 'medium'}
         >
@@ -390,120 +526,45 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             isMobile={isMobile}
           />
           <TableBody>
-            {visibleRows?.map((row, index) => {
-              // Extract notes for processing
-              const notes = row.notes || '';
-              const isSmartCryptoNote =
-                notes.includes('xBitcoin') ||
-                notes.includes('Ripple') ||
-                notes.includes('Wave') ||
-                notes.includes('Surge');
+            {organizedRows.map((group, groupIndex) => (
+              <>
+                {/* Orange Separator */}
+                {groupIndex > 0 && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={isMobile ? 3 : 5}
+                      sx={{
+                        borderBottom: '1px solid orange',
+                      }}
+                    />
+                  </TableRow>
+                )}
+                {/* Category Heading */}
+                {group.category !== 'Coins' && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={isMobile ? 3 : 5}
+                      sx={{
+                        borderBottom: 'none',
+                        fontWeight: 'bold',
+                        color: 'orange',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {group.category}{' '}
+                      {group.rows.length > 0 &&
+                        // Display formatted category names once per group
+                        getFormattedCategory(group.rows[0].notes)}
+                    </TableCell>
+                  </TableRow>
+                )}
 
-              // Get the first and last Smart Crypto row indexes
-              const firstSmartCryptoRowIndex = visibleRows.findIndex((r) =>
-                ['Ripple', 'Wave', 'Surge', 'xBitcoin'].some((type) =>
-                  r.notes?.includes(type)
-                )
-              );
-              const lastSmartCryptoRowIndex = [...visibleRows]
-                .reverse()
-                .findIndex((r) =>
-                  ['Ripple', 'Wave', 'Surge', 'xBitcoin'].some((type) =>
-                    r.notes?.includes(type)
-                  )
-                );
-              const lastSmartCryptoIndexAdjusted =
-                lastSmartCryptoRowIndex !== -1
-                  ? visibleRows.length - 1 - lastSmartCryptoRowIndex
-                  : -1;
-
-              // Determine if the current row is immediately before or after the orange line
-              const isBeforeSmartCrypto =
-                index === firstSmartCryptoRowIndex - 1;
-              const isAfterLastSmartCrypto =
-                index === lastSmartCryptoIndexAdjusted;
-              return (
-                <>
-                  {/* Add dynamic text row after the first Smart Crypto row */}
-                  {index === firstSmartCryptoRowIndex && isSmartCryptoNote && (
-                    <TableRow>
-                      <TableCell
-                        colSpan={isMobile ? 3 : 5} // Adjust colspan based on the number of columns
-                        sx={{
-                          borderBottom: 'none',
-                          fontWeight: 'bold',
-                          color: 'orange',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {(() => {
-                          // Define mappings for crypto types and managers
-                          const cryptoMappings = [
-                            'xBitcoin Bull-Run',
-                            'xBitcoin Rush',
-                            'Ripple',
-                            'Wave',
-                            'Surge',
-                          ];
-                          const managerMappings = ['Omkar', 'Kashir', 'Issa'];
-
-                          // Extract and process all distinct notes from visibleRows
-                          const distinctNotes = visibleRows
-                            .filter((row) => row.notes) // Ensure rows with valid `notes`
-                            .map((row) => row.notes) // Extract notes field
-                            .map((note) => note.trim()) // Trim whitespace
-                            .filter(
-                              (note, index, self) =>
-                                self.indexOf(note) === index
-                            ); // Filter distinct notes
-
-                          // Format each note
-                          const formattedNotes = distinctNotes.map((note) => {
-                            // Find the crypto type and manager from the note
-                            const cryptoType =
-                              cryptoMappings.find((type) =>
-                                note.includes(type)
-                              ) || 'Unknown Crypto';
-                            const managedBy =
-                              managerMappings.find((manager) =>
-                                note.includes(manager)
-                              ) || 'Unknown Manager';
-
-                            // Determine if it's a Smart Crypto type
-                            const isSmartCrypto = [
-                              'Ripple',
-                              'Wave',
-                              'Surge',
-                            ].includes(cryptoType);
-                            const formattedCryptoType = isSmartCrypto
-                              ? `Smart Crypto ${cryptoType}`
-                              : cryptoType;
-
-                            // Return formatted string
-                            return `${formattedCryptoType} - ${managedBy}`;
-                          });
-
-                          // Join formatted notes with a comma and space
-                          return formattedNotes.length > 0
-                            ? formattedNotes.join(', ')
-                            : 'No valid notes';
-                        })()}
-                      </TableCell>
-                    </TableRow>
-                  )}
-
+                {/* Rows for each category */}
+                {group.rows.map((row, index) => (
                   <TableRow
-                    role="checkbox"
-                    tabIndex={-1}
                     key={row.id}
                     sx={{
                       borderBottom: 'none !important',
-                      ...(isBeforeSmartCrypto && {
-                        borderBottom: '1px solid orange', // Apply orange line before first smart crypto row
-                      }),
-                      ...(isAfterLastSmartCrypto && {
-                        borderBottom: '1px solid orange', // Apply orange line after last smart crypto row
-                      }),
                     }}
                   >
                     <TableCell
@@ -595,15 +656,52 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                           }
                         >
                           {row.todayPNL
-                            ? `${row.todayPNL.value} (${row.todayPNL.percentage}%)`
+                            ? // Adjust percentage based on coin type
+                              `${row.todayPNL.value} (${getAdjustedPercentage(
+                                row.coin,
+                                row.todayPNL.percentage
+                              )}%)`
                             : '0.00'}
                         </TableCell>
                       </>
                     )}
                   </TableRow>
-                </>
-              );
-            })}
+                ))}
+
+                {/* Total Row - Only display for non-'Coins' categories */}
+                {group.category !== 'Coins' && group.rows.length > 0 && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={isMobile ? 3 : 5}
+                      sx={{
+                        borderBottom: 'none',
+                        fontWeight: 'bold',
+                        textAlign: 'right',
+                      }}
+                    >
+                      Total Amount: $
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(calculateTotal(group.rows).totalAmount)}
+                    </TableCell>
+                    {/* <TableCell
+                      align="right"
+                      sx={{
+                        borderBottom: 'none',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Total Staking Balance: $
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(calculateTotal(group.rows).totalStakingBalance)}
+                    </TableCell> */}
+                  </TableRow>
+                )}
+              </>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
