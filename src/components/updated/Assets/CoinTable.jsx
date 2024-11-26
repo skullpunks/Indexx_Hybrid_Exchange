@@ -230,7 +230,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
             // For preferred coins with no previous price (null or zero), directly use the default percentage
             todayPNL = {
               value: (
-                item?.coinStakedBalance * coinPrice ?? coinBalance * coinPrice
+                (item?.coinStakedBalance > 0
+                  ? item?.coinStakedBalance
+                  : item?.coinBalance) * coinPrice
               ).toFixed(2),
               percentage: coinPercentageMap[coin].toFixed(2),
               isPositive: coinPercentageMap[coin] >= 0, // Default positive as it's predefined
