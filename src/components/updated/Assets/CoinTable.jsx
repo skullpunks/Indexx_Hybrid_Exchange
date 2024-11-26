@@ -437,9 +437,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     const organizedRows = [
       { category: 'Coins', rows: sortedOtherCoins },
       ...(xBitcoinRows.length > 0
-        ? [{ category: 'x-Bitcoin', rows: xBitcoinRows }]
+        ? [{ category: 'Smart Crypto x-Bitcoin', rows: xBitcoinRows }]
         : []), // Only include 'x-Bitcoin' if there are rows
-      { category: 'x-Blue', rows: smartCryptoRows },
+      { category: 'Smart Crypto x-Blue', rows: smartCryptoRows },
     ];
 
     return organizedRows;
