@@ -229,7 +229,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
           if (coinPercentageMap[coin]) {
             // For preferred coins with no previous price (null or zero), directly use the default percentage
             todayPNL = {
-              value: (item?.coinStakedBalance ?? coinBalance * coinPrice).toFixed(2),
+              value: (
+                item?.coinStakedBalance ?? coinBalance * coinPrice
+              ).toFixed(2),
               percentage: coinPercentageMap[coin].toFixed(2),
               isPositive: coinPercentageMap[coin] >= 0, // Default positive as it's predefined
             };
@@ -439,7 +441,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       ...(xBitcoinRows.length > 0
         ? [{ category: 'Smart Crypto x-Bitcoin', rows: xBitcoinRows }]
         : []), // Only include 'x-Bitcoin' if there are rows
-      { category: 'Smart Crypto x-Blue', rows: smartCryptoRows },
+      ...(smartCryptoRows.length > 0
+        ? [{ category: 'Smart Crypto x-Blue', rows: smartCryptoRows }]
+        : []), // Only include 'x-Blue' if there are rows
     ];
 
     return organizedRows;
