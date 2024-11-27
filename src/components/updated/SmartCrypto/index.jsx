@@ -158,6 +158,7 @@ const SmartCrypto = () => {
   const [selectedInnerTab, setSelectedInnerTab] = useState(0);
   const [allocationPopop, setAllocationPopup] = useState(false);
   const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
+  const [selectedAllocation, setSelectedAllocation] = useState(null);
   const [filteredPackages, setFilteredPackages] = useState([]);
   const descriptionXBlueData = [
     { name: '', description: '', img: '' },
@@ -312,6 +313,12 @@ const SmartCrypto = () => {
     }
   };
 
+  const handleViewAllocation = (allocationData) => {
+    setSelectedAllocation(allocationData);
+    setAllocationPopup(true);
+  };
+
+  
   // Dynamic Content Based on Selected Tab
   const descriptionData =
     category === 'x-Blue' ? descriptionXBlueData : descriptionxBitcoinData;
@@ -409,7 +416,7 @@ const SmartCrypto = () => {
                     <GenericButton
                       text="View Allocation"
                       className={classes.greyButton}
-                      onClick={() => setAllocationPopup(true)}
+                      onClick={() => handleViewAllocation(pkg)}
                     />
                     <GenericButton
                       text="Create a Plan"
@@ -438,6 +445,7 @@ const SmartCrypto = () => {
         <AllocationPopup
           onClose={() => setAllocationPopup(false)}
           category={category}
+          allocationData={selectedAllocation}
         />
       )}
 

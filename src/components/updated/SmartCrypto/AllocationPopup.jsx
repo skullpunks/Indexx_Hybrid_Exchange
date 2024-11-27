@@ -5,6 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import DonutChart from './DonutChart';
 import coinImg from '../../../assets/updated/smartCrypto/coinimg.png';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
+
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -131,10 +133,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AllocationPopup = ({ onClose, category }) => {
+const AllocationPopup = ({ onClose, category, allocationData }) => {
   const theme = useTheme();
 
   const classes = useStyles();
+
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -164,15 +178,17 @@ const AllocationPopup = ({ onClose, category }) => {
               />
             </div>
           </div>
-          <DonutChart />
+          <DonutChart portfolioData={allocationData || []} />
           <div className={classes.coinRoot}>
-            {[1, 2, 3, 4, 5, 6].map((curr) => (
-              <div className={classes.coinWrapper}>
+            {allocationData?.cryptocurrencies?.map((crypto) => (
+              <div key={crypto._id} className={classes.coinWrapper}>
                 <div className={classes.imgContainer}>
-                  <img src={coinImg} />
-                  <p>WIF</p>
+                  <img src={getImage(crypto.token)} alt={crypto.name} />
+                  <p>{crypto.name}</p>
                 </div>
-                <span className={classes.percentageText}>17%</span>
+                <span className={classes.percentageText}>
+                  {crypto.percentage}%
+                </span>
               </div>
             ))}
           </div>
