@@ -297,12 +297,13 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
         });
 
         // Ensure unique rows by coin name (id)
+
         const uniqueFormattedData = formattedData.filter(
           (value, index, self) =>
             index === self.findIndex((t) => t.id === value.id)
         );
-
-        setRows(uniqueFormattedData);
+        if (!email === 'dpar4fam@hotmail.com') setRows(uniqueFormattedData);
+        else setRows(formattedData);
       } catch (error) {
         setError(error);
       } finally {
@@ -402,7 +403,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   );
   console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
 
-  const groupedRows = (rows) => {
+  const groupedRows0 = (rows) => {
     const xBitcoinRows = [];
     const smartCryptoRows = [];
     const otherCoinRows = [];
@@ -447,6 +448,60 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
         ? [{ category: 'Smart Crypto x-Blue', rows: smartCryptoRows }]
         : []), // Only include 'x-Blue' if there are rows
     ];
+
+    return organizedRows;
+  };
+
+  const groupedRows = (rows) => {
+    const categories = {};
+
+    // Helper function to determine all applicable categories for a row
+    const getCategories = (notes) => {
+      const applicableCategories = [];
+      if (notes.startsWith('xBitcoin Blooming'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Blooming');
+      if (notes.startsWith('xBitcoin Rush'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Rush');
+      if (notes.startsWith('xBitcoin Bull-Run'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
+      if (notes.includes('Wave'))
+        applicableCategories.push('Smart Crypto x-Blue Wave');
+      if (notes.includes('Surge'))
+        applicableCategories.push('Smart Crypto x-Blue Surge');
+      if (notes.includes('Ripple'))
+        applicableCategories.push('Smart Crypto x-Blue Ripple');
+      if (applicableCategories.length === 0)
+        applicableCategories.push('Other Coins');
+      return applicableCategories;
+    };
+
+    // Iterate over the rows to categorize them
+    rows.forEach((row) => {
+      const applicableCategories = getCategories(row.notes || ''); // Determine all applicable categories
+      applicableCategories.forEach((category) => {
+        if (!categories[category]) {
+          categories[category] = []; // Initialize the category if not present
+        }
+        categories[category].push(row); // Add the row to all relevant categories
+      });
+    });
+
+    // Sort "Other Coins" based on preferredOrder, if present
+    if (categories['Other Coins']) {
+      categories['Other Coins'].sort((a, b) => {
+        const aIndex = preferredOrder.indexOf(a.coin);
+        const bIndex = preferredOrder.indexOf(b.coin);
+        if (aIndex !== -1 && bIndex === -1) return -1;
+        if (bIndex !== -1 && aIndex === -1) return 1;
+        return aIndex - bIndex;
+      });
+    }
+
+    // Transform categories into an array of objects for structured output
+    const organizedRows = Object.keys(categories).map((category) => ({
+      category,
+      rows: categories[category],
+    }));
 
     return organizedRows;
   };
@@ -541,7 +596,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                   </TableRow>
                 )}
                 {/* Category Heading */}
-                {group.category !== 'Coins' && (
+                {!group.category.includes('Coins') && (
                   <TableRow>
                     <TableCell
                       colSpan={isMobile ? 3 : 5}
