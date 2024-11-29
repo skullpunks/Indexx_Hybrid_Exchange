@@ -318,6 +318,11 @@ const SmartCrypto = () => {
     setAllocationPopup(true);
   };
 
+  const handleClickBuyPlan = (allocationData) => {
+    setSelectedAllocation(allocationData);
+    setCreateAPlanPopup(true);
+  };
+
   
   // Dynamic Content Based on Selected Tab
   const descriptionData =
@@ -419,13 +424,13 @@ const SmartCrypto = () => {
                       onClick={() => handleViewAllocation(pkg)}
                     />
                     <GenericButton
-                      text="Create a Plan"
+                      text="Buy Plan"
                       className={
                         category === 'x-Blue'
                           ? classes.blueButton
                           : classes.yellowButton
                       }
-                      onClick={() => setCreateAPlanPopup(true)}
+                      onClick={() => handleClickBuyPlan(pkg)}
                     />
                   </div>
                 </div>
@@ -453,6 +458,7 @@ const SmartCrypto = () => {
         <CreateAPlanPopup
           onClose={() => setCreateAPlanPopup(false)}
           category={category}
+          allocationData={selectedAllocation}
         />
       )}
     </>
