@@ -508,6 +508,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
 
   // Format categories
   const getFormattedCategory = (note) => {
+    console.log('notes', note);
     // Define mappings for crypto types and managers
     const cryptoMappings = [
       'Bull-Run',
@@ -529,9 +530,9 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     // Determine if it's a Smart Crypto type
     const isSmartCrypto = ['Ripple', 'Wave', 'Surge'].includes(cryptoType);
     const formattedCryptoType = isSmartCrypto ? `${cryptoType}` : cryptoType;
-
+    console.log('formattedCryptoType', formattedCryptoType);
     // Return formatted string
-    return `${formattedCryptoType} - ${managedBy}`;
+    return ` - ${managedBy}`;
   };
 
   const organizedRows = groupedRows(visibleRows);
