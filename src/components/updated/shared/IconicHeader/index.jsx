@@ -38,6 +38,7 @@ import giftHive from '../../../../assets/updated/iconicHeader/gift_hive.svg';
 import assetHive from '../../../../assets/updated/iconicHeader/asset_wallet_hive.svg';
 import hiveHive from '../../../../assets/updated/iconicHeader/hive_hive.svg';
 import smartCrypto from '../../../../assets/updated/smartCrypto/smartCryptoLogo.png';
+import smartCryptoGreen from '../../../../assets/updated/smartCrypto/green.png';
 import { checkByemail } from '../../../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
@@ -164,7 +165,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   const tabsData = [
     {
-      label: 'Crypto',
+      label: 'Buy & Sell',
       light: userType === 'Indexx Exchange' ? darkModeCrypto : yellowModeCrypto,
       dark: userType === 'Indexx Exchange' ? lightModeCrypto : yellowModeCrypto,
       path: '/update/home',
@@ -186,13 +187,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: 'https://indexx.ai/indexx-exchange/token-details',
       search: '',
     },
-    // {
-    //   label: 'Smart Crypto',
-    //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-    //   dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-    //   path: '/smart-crypto',
-    //   search: '',
-    // },
+    {
+      label: 'Smart Crypto',
+      light: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
+      dark: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
+      path: '/smart-crypto',
+      search: '',
+    },
 
     {
       label: 'Markets',

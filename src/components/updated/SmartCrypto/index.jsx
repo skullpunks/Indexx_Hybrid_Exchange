@@ -259,10 +259,6 @@ const SmartCrypto = () => {
   }, [category]);
 
   useEffect(() => {
-    setSelectedTab(0);
-  }, [category]);
-
-  useEffect(() => {
     setFilteredPackages(() => {
       const categoryFilters = {
         'x-Blue': [
@@ -426,7 +422,7 @@ const SmartCrypto = () => {
                       onClick={() => handleViewAllocation(pkg)}
                     />
                     <GenericButton
-                      text="Buy Plan"
+                      text="Start Plan"
                       className={
                         category === 'x-Blue'
                           ? classes.blueButton
@@ -440,7 +436,7 @@ const SmartCrypto = () => {
             ) : (
               <p>No packages found.</p>
             )}
-            <div className={classes.cardContainer}>
+            {/* <div className={classes.cardContainer}>
               <h3>Can’t find a plan you like?</h3>
               <div className={classes.flexContainer}>
                 <div
@@ -454,9 +450,6 @@ const SmartCrypto = () => {
                     Choose and create your own plan!
                   </p>
                   <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
-                    {/* {pkg.cryptocurrencies.map((crypto) => (
-                  
-                    ))} */}
                     <Avatar />
                     <Avatar />
                     <Avatar />
@@ -481,7 +474,7 @@ const SmartCrypto = () => {
                   onClick={() => setCreateOwnPlan(true)}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

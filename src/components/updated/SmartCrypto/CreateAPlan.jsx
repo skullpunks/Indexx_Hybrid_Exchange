@@ -264,7 +264,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
             }}
           >
             <div style={{ fontSize: '20px', fontWeight: '600' }}>
-              Create your plan
+              Plan Details
             </div>
             <div onClick={onClose} style={{ cursor: 'pointer' }}>
               <CloseIcon
@@ -349,7 +349,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
               onClick={onClose}
             />
             <GenericButton
-              text="Buy plan"
+              text="Start plan"
               className={
                 category === 'x-Blue'
                   ? classes.blueButton

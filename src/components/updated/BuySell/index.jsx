@@ -199,7 +199,7 @@ const BuySell = () => {
 
   return (
     <div className={classes.Container}>
-      <IconicHeader selectedTab={'Crypto'} onChange={handleTabChange} />
+      <IconicHeader selectedTab={'Buy & Sell'} onChange={handleTabChange} />
       <BuyCrypto
         tokenType={'Tokens'}
         onReceiveTokenChange={handleReceiveTokenChange}
