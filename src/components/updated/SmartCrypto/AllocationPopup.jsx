@@ -199,7 +199,7 @@ const AllocationPopup = ({ onClose, category, allocationData }) => {
               onClick={onClose}
             />
             <GenericButton
-              text="Create a plan"
+              text="Buy plan"
               className={
                 category === 'x-Blue'
                   ? classes.blueButton

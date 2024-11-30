@@ -585,7 +585,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
             <div className={classes.enterAmountContainer}>
               <label>Plan's Name</label>
               <InputField
-                placeholder="Create a plan name here (Optional)"
+                placeholder={'Buy a plan name here (Optional)'}
                 type="text"
                 value={reformPlanName(
                   allocationData?.portfolioName,

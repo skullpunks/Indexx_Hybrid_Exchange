@@ -14,13 +14,14 @@ import Inex from '../../../assets/updated/buySell/INEX.svg';
 import AllocationPopup from './AllocationPopup';
 import CreateAPlanPopup from './CreateAPlan';
 import CustomSelectBox from './CustomSelectBox';
-import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
-import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
+
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
 import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
 import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
 import AccordionExpandDefault from './Accordion';
 import smartCryptoLogo from '../../../assets/updated/smartCrypto/smartCryptoLogo.png';
+import CategoryIconicHeader from './CategoryIconicHeader';
+import CreateOwnPlan from './CreateOwnPlan';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardWrapper: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
     gap: '10px',
     flexWrap: 'wrap',
@@ -121,9 +122,10 @@ const useStyles = makeStyles((theme) => ({
   },
   flexContainer1: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     gap: '10px',
+    marginBottom: '50px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       width: '100%',
@@ -160,6 +162,8 @@ const SmartCrypto = () => {
   const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
   const [selectedAllocation, setSelectedAllocation] = useState(null);
   const [filteredPackages, setFilteredPackages] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const descriptionXBlueData = [
     { name: '', description: '', img: '' },
     {
@@ -210,11 +214,9 @@ const SmartCrypto = () => {
     setSelectedTab(newValue);
   };
 
-  const handleChange = (e) => {
-    setCategory(e.target.value);
-    console.log();
-  };
-
+  useEffect(() => {
+    setCategory(selectedCategory === 0 ? 'x-Blue' : 'x-Bitcoin');
+  }, [selectedCategory]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -323,7 +325,6 @@ const SmartCrypto = () => {
     setCreateAPlanPopup(true);
   };
 
-  
   // Dynamic Content Based on Selected Tab
   const descriptionData =
     category === 'x-Blue' ? descriptionXBlueData : descriptionxBitcoinData;
@@ -340,17 +341,17 @@ const SmartCrypto = () => {
               </div>
               <p>#Start growing your assets on Smart Crypto</p>
             </div>
-            <div>
-              <CustomSelectBox
-                items={[
-                  { name: 'x-Blue', value: 'x-Blue', img: xBlueIcon },
-                  { name: 'x-Bitcoin', value: 'x-Bitcoin', img: xBitcoinIcon },
-                ]}
-                value={category}
-                onChange={handleChange}
-                hasborder
-              />
-            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <CategoryIconicHeader
+              selectedTab={selectedCategory}
+              setSelectedTab={setSelectedCategory}
+            />
           </div>
 
           <div>
@@ -361,25 +362,26 @@ const SmartCrypto = () => {
               category={category}
             />
           </div>
+          {selectedInnerTab !== 0 && (
+            <div className={classes.descriptionWrapper}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin: 0,
+                  gap: '5px',
+                }}
+              >
+                <img
+                  style={{ height: '50px' }}
+                  src={descriptionData[selectedInnerTab].img}
+                />
+                <h4>{descriptionData[selectedInnerTab].name}</h4>
+              </div>
 
-          <div className={classes.descriptionWrapper}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                margin: 0,
-                gap: '5px',
-              }}
-            >
-              <img
-                style={{ height: '50px' }}
-                src={descriptionData[selectedInnerTab].img}
-              />
-              <h4>{descriptionData[selectedInnerTab].name}</h4>
+              <p>{descriptionData[selectedInnerTab].description}</p>
             </div>
-
-            <p>{descriptionData[selectedInnerTab].description}</p>
-          </div>
+          )}
 
           <div className={classes.cardWrapper}>
             {loading ? (
@@ -438,6 +440,48 @@ const SmartCrypto = () => {
             ) : (
               <p>No packages found.</p>
             )}
+            <div className={classes.cardContainer}>
+              <h3>Can’t find a plan you like?</h3>
+              <div className={classes.flexContainer}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <p style={{ marginBottom: '10px' }}>
+                    Choose and create your own plan!
+                  </p>
+                  <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
+                    {/* {pkg.cryptocurrencies.map((crypto) => (
+                  
+                    ))} */}
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                  </AvatarGroup>
+                </div>
+              </div>
+              <div className={classes.buttonContainer}>
+                <GenericButton
+                  text="Create your own plan!"
+                  className={
+                    category === 'x-Blue'
+                      ? classes.blueButton
+                      : classes.yellowButton
+                  }
+                  onClick={() => setCreateOwnPlan(true)}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -459,6 +503,12 @@ const SmartCrypto = () => {
           onClose={() => setCreateAPlanPopup(false)}
           category={category}
           allocationData={selectedAllocation}
+        />
+      )}
+      {createOwnPlan && (
+        <CreateOwnPlan
+          onClose={() => setCreateOwnPlan(false)}
+          category={category}
         />
       )}
     </>

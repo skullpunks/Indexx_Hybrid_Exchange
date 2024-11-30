@@ -38,7 +38,7 @@ export default function ThemeContextUpdated({ children }) {
                 divider: '#EAECEF',
                 border: '#EAECEF',
                 background: {
-                  default: '#FCFCFC',
+                  default: '#F4F4F6',
                 },
                 text: {
                   primary: '#1E2329',

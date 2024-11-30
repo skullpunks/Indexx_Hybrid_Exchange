@@ -136,7 +136,6 @@ const TeamCaptainDashIndividual = () => {
     fetchData();
   }, []);
 
-  console.log(isLoading, 'load');
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'dark'
   );
@@ -283,10 +282,8 @@ const TeamCaptainDashIndividual = () => {
                   </div>
                 ) : (
                   <div>
-                    Please purchase the powerpack from the below URL: <br />
-                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                      Power Pack Purchase
-                    </a>
+                    Please purchase the Smart Crypto from the below URL: <br />
+                    <a href={`${baseCEXURL}/smart-crypto`}>Buy Smart Crypto</a>
                   </div>
                 )}
                 <div className="align-items-start lh_32x">

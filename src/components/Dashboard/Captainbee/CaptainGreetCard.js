@@ -594,10 +594,8 @@ const CaptainGreetCard = () => {
                     className="justify-content-center d-flex flex-direction-column"
                     style={{ marginLeft: `${isMobile ? '40px' : 0}` }}
                   >
-                    Please purchase the powerpack from the below URL: <br />
-                    <a href={`${baseCEXURL}/indexx-exchange/power-pack`}>
-                      Power Pack Purchase
-                    </a>
+                    Please purchase the Smart Crypto from the below URL: <br />
+                    <a href={`${baseCEXURL}/smart-crypto`}>Buy Smart Crypto</a>
                   </div>
                 )}
                 <div

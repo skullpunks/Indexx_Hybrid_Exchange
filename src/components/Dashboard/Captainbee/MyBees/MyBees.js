@@ -13,11 +13,37 @@ import man from '../../../../assets/hive-dashboard/empty_man_frame.png';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
+import { makeStyles } from '@mui/styles';
+import { Link } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+  exchangeBtn: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px solid #FFB300',
+    borderRadius: '2px',
+    color: 'var(--body_color)',
+    height: '32px',
+    textTransform: 'none',
+    fontSize: '12px',
+    boxShadow: 'none',
+    transition: '0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#FFB300',
+      borderColor: '#FFB300',
+      boxShadow: 'none',
+      color: 'var(--body_color)',
+      // color: '#282828',
+    },
+  },
+}));
 
 const MyBees = () => {
   const [staticsData, setStaticsData] = useState();
   const [userType, setUserType] = useState('');
-
+  const classes = useStyles();
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
@@ -112,63 +138,19 @@ const MyBees = () => {
           className="d-flex align-items-center justify-content-start mt-1"
           style={{ flex: 1, width: '100%', gap: '10px' }}
         >
-          <Button
+          <Link
             variant="outlined"
-            href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
-            // onClick={handleSubmit}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              color: 'var(--body_color)',
-              flex: 1,
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '12px',
-              boxShadow: 'none',
-              transition: '0.3s ease-in-out',
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                boxShadow: 'none',
-                color: 'var(--body_color)',
-                // color: '#282828',
-              },
-            }}
+            to={`/update/home/?buyToken=INEX&user=${item.username}`}
+            className={classes.exchangeBtn}
           >
             Exchange
-          </Button>
-          <Button
-            variant="outlined"
-            // onClick={handleSubmit}
-            href={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/HoneyBee`}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              color: 'var(--body_color)',
-              flex: 1,
-              // color: '#282828',
-
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '12px',
-              boxShadow: 'none',
-              transition: '0.3s ease-in-out',
-
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                // color: '#282828',
-                color: 'var(--body_color)',
-                boxShadow: 'none',
-              },
-            }}
+          </Link>
+          <Link
+            to={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/HoneyBee`}
+            className={classes.exchangeBtn}
           >
             DashBoard
-          </Button>
+          </Link>
         </div>
       </div>
     </Grid>

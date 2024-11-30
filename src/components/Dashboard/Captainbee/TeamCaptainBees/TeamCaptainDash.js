@@ -2,20 +2,7 @@ import React, { useState, useEffect } from 'react';
 import frame from '../../../../assets/hive-dashboard/frame.svg';
 import dummy from '../../../../assets/hive-dashboard/dummy.jpeg';
 
-import arrow from '../../../../assets/hive-dashboard/Arrow 1.svg';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import greyman from '../../../../assets/hive-dashboard/empty_man_frame.png';
-import { Rating } from '@mui/material';
-
-// import { LocalizationProvider, DatePicker } from '@mui/lab';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import MobileDatePicker from '@mui/lab/MobileDatePicker';
-
-// import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import '../../Captainbee/CaptainDash.css';
 import { Box, Grid, Button } from '@mui/material';
@@ -27,13 +14,37 @@ import {
   getHoneyUserDetails,
   getReferredUserDetails,
 } from '../../../../services/api';
-import SubHeader from '../SubHeader/SubHeader';
-import TeamCaptainTabs from './TeamCaptainTabs';
 import { PackData } from '../../../PowerPack/PackData';
 import OpenNotification from '../../../OpenNotification/OpenNotification';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
 import HiveDashboardIconicHeader from '../SubHeader/HiveDashboardIconicHeader';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  exchangeBtn: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px solid #FFB300',
+    borderRadius: '2px',
+    color: 'var(--body_color)',
+    height: '32px',
+    textTransform: 'none',
+    fontSize: '12px',
+    boxShadow: 'none',
+    transition: '0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#FFB300',
+      borderColor: '#FFB300',
+      boxShadow: 'none',
+      color: 'var(--body_color)',
+      // color: '#282828',
+    },
+  },
+}));
 
 const TeamCaptainDash = () => {
   const [userType, setUserType] = useState('');
@@ -45,6 +56,7 @@ const TeamCaptainDash = () => {
   const [captainbeeCreateDate, setCaptainbeeCreateDate] = useState();
   const [captainbeeOrders, setCaptainbeeOrders] = useState();
   const [captainbeesUsers, setCaptainbeeUsers] = useState();
+  const classes = useStyles();
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down('md'));
 
@@ -191,61 +203,20 @@ const TeamCaptainDash = () => {
           className="d-flex mt-1"
           style={{ flex: 1, width: '100%', gap: '10px' }}
         >
-          <Button
+          <Link
             variant="outlined"
-            href={`/indexx-exchange/buy-sell/for-honeybee/${item.username}`}
-            // onClick={handleSubmit}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              flex: 1,
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              color: 'var(--body_color)',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '12px',
-              boxShadow: 'none',
-              transition: '0.3s ease-in-out',
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                boxShadow: 'none',
-                color: 'var(--body_color)',
-                // color: '#282828',
-              },
-            }}
+            to={`/update/home/?buyToken=INEX&user=${item.username}`}
+            className={classes.exchangeBtn}
           >
             Exchange
-          </Button>
-          <Button
+          </Link>
+          <Link
             variant="outlined"
-            // onClick={handleSubmit}
-            href={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/CaptainBee`}
-            disableTouchRipple
-            // disabled={!isChecked || !isChecked2 || !frontFile || !backFile || !photoIdFile} // Disable if frontFile is null
-            sx={{
-              borderColor: '#FFB300',
-              borderRadius: '2px',
-              flex: 1,
-              color: 'var(--body_color)',
-              height: '32px',
-              textTransform: 'none',
-              fontSize: '12px',
-              boxShadow: 'none',
-              transition: '0.3s ease-in-out',
-              ml: 0.3,
-              '&:hover': {
-                backgroundColor: '#FFB300',
-                borderColor: '#FFB300',
-                // color: '#282828',
-                color: 'var(--body_color)',
-                boxShadow: 'none',
-              },
-            }}
+            to={`/indexx-exchange/dashboard/capt-mybees/${item.username}/1/CaptainBee`}
+            className={classes.exchangeBtn}
           >
             DashBoard
-          </Button>
+          </Link>
         </div>
       </div>
     </Grid>
