@@ -3,8 +3,7 @@ import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { InputAdornment, useTheme } from '@mui/material';
-
-import coinImg from '../../../assets/updated/smartCrypto/coinimg.png';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
 import InputField from '../shared/TextField';
 import CustomSelectBox from './CustomSelectBox';
 const useStyles = makeStyles((theme) => ({
@@ -169,21 +168,94 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateAPlanPopup = ({ onClose, category }) => {
+const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState();
+  const [usdAmount, setUsdAmount] = useState();
   const [planName, setPlanName] = useState('');
+  const classes = useStyles();
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
   };
-  const classes = useStyles();
+
+  const handleAmountChange = (e) => {
+    setUsdAmount(e.target.value);
+  };
+
+  console.log('allocationData', allocationData);
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
+
+  const renderCoinAllocationInputs = () => {
+    return allocationData.cryptocurrencies.map((coin) => (
+      <InputField
+        key={coin._id}
+        type="text"
+        value={coin.percentage} // Display the percentage allocation dynamically
+        disabled
+        yellowBorders={category !== 'x-Blue'}
+        blueBorders={category === 'x-Blue'}
+        className={classes.coinAllocationInput}
+        style={{ marginTop: '0px', marginBottom: '10px' }}
+        startAdornment={
+          <InputAdornment position="start">
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '10px',
+              }}
+            >
+              <img
+                src={getImage(coin.token)}
+                alt={coin.name}
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: '50%',
+                  marginRight: 8,
+                }}
+              />
+              <span>{coin.name}</span>
+            </div>
+          </InputAdornment>
+        }
+        endAdornment={<InputAdornment position="end">%</InputAdornment>}
+        fullWidth
+      />
+    ));
+  };
+
+  const reformPlanName = (name, managedBy) => {
+    if (name.includes('Surge'))
+      return `Smart Crypto x-Blue Surge - ${managedBy}`;
+    if (name.includes('Ripple'))
+      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Wave'))
+      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Blooming'))
+      return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
+    if (name.includes('Rush'))
+      return `Smart Crypto x-Bitcoin Rush - ${managedBy}`;
+    if (name.includes('Bull-Run'))
+      return `Smart Crypto x-Bitcoin Bull-Run - ${managedBy}`;
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
     >
       <div className="bnModalWrap">
         <div className={classes.contentContainer}>
-          {/* <img src={passwordChanged} height="100px" /> */}
           <div
             style={{
               display: 'flex',
@@ -194,7 +266,6 @@ const CreateAPlanPopup = ({ onClose, category }) => {
             <div style={{ fontSize: '20px', fontWeight: '600' }}>
               Create your plan
             </div>
-
             <div onClick={onClose} style={{ cursor: 'pointer' }}>
               <CloseIcon
                 color={theme.palette.text.secondary}
@@ -207,231 +278,42 @@ const CreateAPlanPopup = ({ onClose, category }) => {
             </div>
           </div>
           <div style={{ width: '100%' }}>
+            {/* Plan Name Section */}
             <div className={classes.enterAmountContainer}>
               <label>Plan's Name</label>
-
               <InputField
                 placeholder={'Buy a plan name here (Optional)'}
                 type="text"
-                value={planName}
-                onChange={(e) => {
-                  setPlanName(e.target.value);
-                }}
+                value={reformPlanName(
+                  allocationData?.portfolioName,
+                  allocationData?.managedBy
+                )}
+                //onChange={(e) => setPlanName(e.target.value)}
                 yellowBorders={category !== 'x-Blue'}
                 blueBorders={category === 'x-Blue'}
                 style={{ marginTop: '0px' }}
               />
             </div>
+
+            {/* Coin Allocation Section */}
             <div className={classes.coinAllocationRoot}>
               <label>Coin Allocation</label>
               <div className={classes.inputContainer}>
-                <InputField
-                  type="text"
-                  value="0.00" // Set a default or dynamic value here
-                  onChange={() => {}} // Add a proper handler if needed
-                  disabled
-                  yellowBorders={category !== 'x-Blue'}
-                  blueBorders={category === 'x-Blue'}
-                  className={classes.coinAllocationInput}
-                  style={{ marginTop: '0px', marginBottom: '10px' }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginLeft: '10px',
-                        }}
-                      >
-                        <img
-                          src={coinImg}
-                          alt="icon"
-                          style={{
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            marginRight: 8,
-                          }}
-                        />
-                        <span>Text</span>
-                      </div>
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">%</InputAdornment>
-                  }
-                  // Align text to the right
-
-                  fullWidth
-                />
-                <InputField
-                  type="text"
-                  value="0.00" // Set a default or dynamic value here
-                  onChange={() => {}} // Add a proper handler if needed
-                  disabled
-                  yellowBorders={category !== 'x-Blue'}
-                  blueBorders={category === 'x-Blue'}
-                  className={classes.coinAllocationInput}
-                  style={{ marginTop: '0px', marginBottom: '10px' }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginLeft: '10px',
-                        }}
-                      >
-                        <img
-                          src={coinImg}
-                          alt="icon"
-                          style={{
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            marginRight: 8,
-                          }}
-                        />
-                        <span>Text</span>
-                      </div>
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">%</InputAdornment>
-                  }
-                  // Align text to the right
-
-                  fullWidth
-                />
-                <InputField
-                  type="text"
-                  yellowBorders={category !== 'x-Blue'}
-                  blueBorders={category === 'x-Blue'}
-                  value="0.00" // Set a default or dynamic value here
-                  onChange={() => {}} // Add a proper handler if needed
-                  disabled
-                  className={classes.coinAllocationInput}
-                  style={{ marginTop: '0px', marginBottom: '10px' }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginLeft: '10px',
-                        }}
-                      >
-                        <img
-                          src={coinImg}
-                          alt="icon"
-                          style={{
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            marginRight: 8,
-                          }}
-                        />
-                        <span>Text</span>
-                      </div>
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">%</InputAdornment>
-                  }
-                  // Align text to the right
-
-                  fullWidth
-                />
-                <InputField
-                  type="text"
-                  yellowBorders={category !== 'x-Blue'}
-                  blueBorders={category === 'x-Blue'}
-                  value="0.00" // Set a default or dynamic value here
-                  onChange={() => {}} // Add a proper handler if needed
-                  disabled
-                  className={classes.coinAllocationInput}
-                  style={{ marginTop: '0px', marginBottom: '10px' }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginLeft: '10px',
-                        }}
-                      >
-                        <img
-                          src={coinImg}
-                          alt="icon"
-                          style={{
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            marginRight: 8,
-                          }}
-                        />
-                        <span>Text</span>
-                      </div>
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">%</InputAdornment>
-                  }
-                  // Align text to the right
-
-                  fullWidth
-                />
-                <InputField
-                  type="text"
-                  value="0.00" // Set a default or dynamic value here
-                  onChange={() => {}} // Add a proper handler if needed
-                  disabled
-                  yellowBorders={category !== 'x-Blue'}
-                  blueBorders={category === 'x-Blue'}
-                  style={{ marginTop: '0px', marginBottom: '10px' }}
-                  className={classes.coinAllocationInput}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginLeft: '10px',
-                        }}
-                      >
-                        <img
-                          src={coinImg}
-                          alt="icon"
-                          style={{
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            marginRight: 8,
-                          }}
-                        />
-                        <span>Text</span>
-                      </div>
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">%</InputAdornment>
-                  }
-                  // Align text to the right
-
-                  fullWidth
-                />
+                {renderCoinAllocationInputs()}
               </div>
             </div>
           </div>
+
+          {/* Amount Per Period Section */}
           <div style={{ width: '100%' }}>
             <div className={classes.enterAmountContainer}>
               <label>Amount Per Period</label>
               <InputField
-                placeholder={'The minimum amount is 1 USDT'}
+                placeholder="The minimum amount is 1 USDT"
                 type="text"
                 style={{ marginTop: '0px', marginBottom: '10px' }}
-                value={''}
-                onChange={() => {}}
+                value={usdAmount}
+                onChange={handleAmountChange}
                 yellowBorders={category !== 'x-Blue'}
                 blueBorders={category === 'x-Blue'}
                 endAdornment={
@@ -440,6 +322,8 @@ const CreateAPlanPopup = ({ onClose, category }) => {
               />
             </div>
           </div>
+
+          {/* Payment Method Section */}
           <div className={classes.selectTypeContainer}>
             <label>Select Payment Option</label>
             <CustomSelectBox
@@ -457,6 +341,7 @@ const CreateAPlanPopup = ({ onClose, category }) => {
             />
           </div>
 
+          {/* Action Buttons */}
           <div className={classes.btnContainer}>
             <GenericButton
               className={classes.greyButton}

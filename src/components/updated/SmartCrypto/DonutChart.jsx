@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
 
-const DonutChart = () => {
+const DonutChart = ({ portfolioData }) => {
   const theme = useTheme(); // Access the theme for dynamic styling
 
   const [chartData, setChartData] = useState({
-    series: [30, 40, 20, 10], // Your data values
+    series: [],
     options: {
       chart: {
-        type: 'donut', // Type of chart
+        type: 'donut',
         events: {
           dataPointMouseEnter: (event, chartContext, config) => {
             const label = document.querySelector(
@@ -32,11 +32,11 @@ const DonutChart = () => {
           },
         },
       },
-      labels: ['Category A', 'Category B', 'Category C', 'Category D'], // Labels for the segments
-      colors: ['#FF4560', '#008FFB', '#00E396', '#FEB019'], // Custom segment colors
+      labels: [], // Will be dynamically updated
+      colors: ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C4', '#00D9E9', '#FEB100'], // Define enough colors
       responsive: [
         {
-          breakpoint: 480, // Adjust chart for small screens
+          breakpoint: 480,
           options: {
             chart: {
               width: 300,
@@ -48,7 +48,7 @@ const DonutChart = () => {
         },
       ],
       legend: {
-        position: 'right', // Position of the legend
+        position: 'right',
         formatter: (label, opts) => {
           return `<span id="label-${opts.seriesIndex}" style="cursor: pointer;">${label}</span>`;
         },
@@ -66,28 +66,50 @@ const DonutChart = () => {
               show: false, // Disable inner text of the donut
             },
           },
-          expandOnClick: false, // Disable the expanding effect on click
+          expandOnClick: false,
         },
       },
       stroke: {
-        width: 0, // Remove the inner and outer border
+        width: 0,
       },
       title: {
-        text: undefined, // Remove the chart title
+        text: undefined,
       },
       tooltip: {
-        theme: 'dark', // Tooltip theme for better visibility
+        theme: 'dark',
       },
       states: {
         hover: {
           filter: {
-            type: 'lighten', // Highlight the segment on hover
+            type: 'lighten',
             value: 0.15,
           },
         },
       },
     },
   });
+
+  useEffect(() => {
+    if (portfolioData) {
+      const seriesData = portfolioData.cryptocurrencies.map(
+        (crypto) => crypto.percentage
+      );
+      const labelData = portfolioData.cryptocurrencies.map(
+        (crypto) => crypto.name
+      );
+
+      setChartData((prevData) => ({
+        ...prevData,
+        series: seriesData,
+        options: {
+          ...prevData.options,
+          labels: labelData,
+        },
+      }));
+    }
+  }, [portfolioData]);
+
+  console.log("chartData", chartData)
 
   return (
     <div style={{ marginTop: '20px' }}>

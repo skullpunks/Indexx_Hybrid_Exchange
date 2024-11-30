@@ -43,13 +43,14 @@ const SmartCryptoTabs = ({
       value: 2,
     },
     {
-      label: 'Bullrun',
+      label: 'Bull-Run',
       value: 3,
     },
   ];
 
   const handleChange = (e, newValue) => {
     setSelectedInnerTab(newValue);
+    console.log(newValue)
   };
 
   // Custom Styled Tabs
