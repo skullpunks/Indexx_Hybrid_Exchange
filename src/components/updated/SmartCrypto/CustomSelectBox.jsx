@@ -129,10 +129,10 @@ export default function CustomSelectBox({
           );
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {selectedItem.img && (
+              {selectedItem?.img && (
                 <img
-                  src={selectedItem.img}
-                  alt={selectedItem.name}
+                  src={selectedItem?.img}
+                  alt={selectedItem?.name}
                   style={{ width: '24px', height: '24px', marginRight: '10px' }}
                 />
               )}

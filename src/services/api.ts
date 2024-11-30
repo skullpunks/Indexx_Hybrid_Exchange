@@ -1401,6 +1401,36 @@ export const createBuyOrder = async (
   }
 };
 
+
+export const createBuyOrderForSmartCrypto = async (
+  planName: string,
+  planManagedBy: string,
+  amount: number,
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false,
+  paymentType: string = 'paypal'
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/order/createOrderForSmartCrypto', {
+      planName: planName,
+      planManagedBy: planManagedBy,
+      amount: amount,
+      price: price,
+      orderType: 'SmartCryptoBuy',
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
+      paymentType,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createOrderForSmartCrypto)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const createFiatDepositForOrder = async (
   email: string,
   orderId: string,

@@ -92,7 +92,7 @@ const Final = ({
           className="font_17x"
           style={{ color: theme.palette.text.primary, textAlign: 'center' }}
         >
-          for choosing Indexx for your crypto purchase!
+          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : "Crypto"} purchase!
         </div>
         <div className="font_10x mt-4">
           Our team is diligently verifying your order, and your tokens will be
