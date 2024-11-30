@@ -378,7 +378,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire' ||
+        paymentMethod === 'Wire transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
@@ -641,7 +641,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
                 { name: 'ACH', value: 'ACH' },
                 { name: 'Wire transfer', value: 'Wire transfer' },
                 { name: 'Zelle', value: 'Zelle' },
-                { name: 'TygoPay', value: 'TygoPay' },
+                { name: 'TygaPay', value: 'TygaPay' },
               ]}
               value={paymentMethod}
               onChange={handleChange}
