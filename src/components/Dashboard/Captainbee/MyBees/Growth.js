@@ -52,281 +52,96 @@ const Growth = () => {
       >
         <Box
           sx={{
+            width: '50%',
+            background: 'var(--body_background)',
             display: 'flex',
             flexDirection: 'column',
-            gap: 2,
-            width: `${isMobile ? '100%' : '50%'}`,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 2,
+            aspectRatio: 1,
           }}
         >
-          {/* <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      width: '31%',
-                      background: 'var(--body_background)',
-                      pl: 1,
-                      pt: 0.4,
-                    }}
-                  >
-                    <Typography
-                      variant="text"
-                      fontSize={'12px'}
-                      fontWeight={600}
-                      textAlign={'left'}
-                    >
-                      Platforms
-                    </Typography>
-                    <Select
-                      value={platform}
-                      onChange={(e) => {
-                        setPlatform(e.target.value);
-                      }}
-                      variant="standard"
-                      InputLabelProps={{ shrink: true }}
-                      sx={{
-                        width: '100%',
-                        borderRadius: 0,
-                        background: 'var(--body_background)',
-                        color:"var(--body_color)",
-                        border: 'none',
-                        outline: 'none',
-                        padding: 0,
-                        fontSize: '12px',
-                      }}
-                      size="small"
-                      disableUnderline
-                    >
-                      <MenuItem key="Exchange" value="Exchange">
-                        Indexx Exchange
-                      </MenuItem>
-                    </Select>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      width: '29%',
-                      background: 'var(--body_background)',
-                      pl: 1,
-                      pt: 0.4,
-                    }}
-                  >
-                    <Typography
-                      variant="text"
-                      fontSize={'12px'}
-                      fontWeight={600}
-                      textAlign={'left'}
-                    >
-                      Type of Order
-                    </Typography>
-                    <Select
-                      value={Order}
-                      onChange={(e) => {
-                        setOrder(e.target.value);
-                      }}
-                      variant="standard"
-                      InputLabelProps={{ shrink: true }}
-                      sx={{
-                        width: '100%',
-                        borderRadius: 0,
-                        background: 'var(--body_background)',
-                        color:"var(--body_color)",
-                        border: 'none',
-                        outline: 'none',
-                        padding: 0,
-                        fontSize: '12px',
-                      }}
-                      size="small"
-                      disableUnderline
-                    >
-                      <MenuItem key="buysell" value="buysell">
-                        Buy & Sell
-                      </MenuItem>
-                      <MenuItem key="Convert" value="Convert">
-                        Convert
-                      </MenuItem>
-                    </Select>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      width: '40%',
-                      background: 'var(--body_background)',
-                      pl: 1,
-                      pt: 0.4,
-                    }}
-                  >
-                    <Typography
-                      variant="text"
-                      fontSize={'12px'}
-                      fontWeight={600}
-                      textAlign={'left'}
-                    >
-                      Date Range
-                    </Typography>
-
-                    <Select
-                      value={selectedDate}
-                      onChange={(e) => {
-                        setSelectedDate(e.target.value);
-                      }}
-                      variant="standard"
-                      InputLabelProps={{ shrink: true }}
-                      sx={{
-                        width: '100%',
-                        borderRadius: 0,
-                        background: 'var(--body_background)',
-                        color:"var(--body_color)",
-                        border: 'none',
-                        outline: 'none',
-                        padding: 0,
-                        fontSize: '12px',
-                      }}
-                      size="small"
-                      disableUnderline
-                    >
-                      <MenuItem key="aug-sept" value="aug-sept">
-                        August-September
-                      </MenuItem>
-                    </Select>
-
-                  </Box>
-                </Box> */}
-          <Box
+          <Typography
+            variant="text"
+            fontSize={'12px'}
+            fontWeight={600}
+            textAlign={'center'}
+            alignSelf={'flex-start'}
+          >
+            Total Hive Members/Users
+          </Typography>
+          <Typography
+            variant="text"
+            fontSize={'77px'}
+            fontWeight={600}
+            textAlign={'center'}
+          >
+            0
+          </Typography>
+          <Typography
+            variant="text"
+            fontSize={'22px'}
+            fontWeight={400}
+            textAlign={'center'}
+            color={'#FFB300'}
             sx={{
               display: 'flex',
-              flexDirection: 'row',
-              gap: 2,
+              alignItems: 'baseline',
+              verticalAlign: 'bottom',
+              gap: 1,
             }}
           >
-            <Box
-              sx={{
-                width: '50%',
-                background: 'var(--body_background)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                p: 1,
-                aspectRatio: 1,
-              }}
-            >
-              <Typography
-                variant="text"
-                fontSize={'12px'}
-                fontWeight={600}
-                textAlign={'left'}
-                alignSelf={'flex-start'}
-              >
-                Total Hive Members/Users
-              </Typography>
-              <Typography
-                variant="text"
-                fontSize={'77px'}
-                fontWeight={600}
-                textAlign={'left'}
-              >
-                0
-              </Typography>
-              <Typography
-                variant="text"
-                fontSize={'22px'}
-                fontWeight={400}
-                textAlign={'left'}
-                color={'#FFB300'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  verticalAlign: 'bottom',
-                  gap: 1,
-                }}
-              >
-                <img alt="up" src={arrow} /> 0%
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                width: '50%',
-                background: 'var(--body_background)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                p: 1,
-                aspectRatio: 1,
-              }}
-            >
-              <Typography
-                variant="text"
-                fontSize={'12px'}
-                fontWeight={600}
-                textAlign={'left'}
-                alignSelf={'flex-start'}
-              >
-                Total Orders
-              </Typography>
-              <Typography
-                variant="text"
-                fontSize={'77px'}
-                fontWeight={600}
-                textAlign={'left'}
-              >
-                {userData?.ordersCount}
-              </Typography>
-              <Typography
-                variant="text"
-                fontSize={'22px'}
-                fontWeight={400}
-                textAlign={'left'}
-                color={'#FFB300'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  verticalAlign: 'bottom',
-                  gap: 1,
-                }}
-              >
-                <img alt="up" src={arrow} /> 0%
-              </Typography>
-            </Box>
-          </Box>
-          {/* <Box
-                  sx={{
-                    background: 'var(--body_background)',
-                    color:"var(--body_color)",
-                    width:"100%",
-                  }}
-                >
-                  <LineChart
-                    width={572}
-                    height={429}
-                    series={[
-                      { data: pData, label: 'pv' },
-                      { data: uData, label: 'uv' },
-                    ]}
-                    xAxis={[{ scaleType: 'point', data: xLabels }]}
-                    sx={{
-                      color:"var(--body_color)"
-                    }}
-                  />
-                </Box> */}
+            <img alt="up" src={arrow} /> 0%
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            width: '50%',
+            background: 'var(--body_background)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 2,
+            aspectRatio: 1,
+          }}
+        >
+          <Typography
+            variant="text"
+            fontSize={'12px'}
+            fontWeight={600}
+            textAlign={'center'}
+            alignSelf={'flex-start'}
+          >
+            Total Orders
+          </Typography>
+          <Typography
+            variant="text"
+            fontSize={'77px'}
+            fontWeight={600}
+            textAlign={'center'}
+          >
+            {userData?.ordersCount}
+          </Typography>
+          <Typography
+            variant="text"
+            fontSize={'22px'}
+            fontWeight={400}
+            textAlign={'center'}
+            color={'#FFB300'}
+            sx={{
+              display: 'flex',
+              alignItems: 'baseline',
+              verticalAlign: 'bottom',
+              gap: 1,
+            }}
+          >
+            <img alt="up" src={arrow} /> 0%
+          </Typography>
         </Box>
 
-        <Box component="img" alt="comingsoon" src={comingsoon} width={'50%'} />
+        {/* <Box component="img" alt="comingsoon" src={comingsoon} width={'50%'} /> */}
       </Box>
     </div>
   );

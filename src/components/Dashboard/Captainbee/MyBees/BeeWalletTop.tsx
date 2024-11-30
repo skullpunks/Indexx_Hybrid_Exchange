@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const BeeWalletTop = () => {
+const BeeWalletTop = ({ BeeEmail }: any) => {
   const navigate = useNavigate();
   const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
   let access_token = String(localStorage.getItem('access_token'));
@@ -167,10 +167,6 @@ const BeeWalletTop = () => {
 
   return (
     <>
-      {/* <div className="border-b-1x orange width-100 pt-3 font_15x">
-        <h1 className='font_15x' style={{color:"#393939"}}>Asset Wallet</h1>
-      </div> */}
-
       <div className={classes.balanceContainer}>
         <div style={{ flex: 1 }}>
           <h2 className="font_15x">Estimated Balance</h2>
@@ -198,7 +194,9 @@ const BeeWalletTop = () => {
           {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
           <GenericButton
             text={'Buy Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell/')}
+            onClick={() =>
+              navigate(`/update/home?buyToken=INEX&user=${BeeEmail}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -208,7 +206,9 @@ const BeeWalletTop = () => {
 
           <GenericButton
             text={'Sell Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell?type=sell')}
+            onClick={() =>
+              navigate(`/update/home?buyToken=INEX&user=${BeeEmail}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -218,7 +218,7 @@ const BeeWalletTop = () => {
 
           <GenericButton
             text={'Convert Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell?type=convert')}
+            onClick={() => navigate(`/convert?user=${BeeEmail}`)}
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -229,7 +229,9 @@ const BeeWalletTop = () => {
           {/* <Link to="/indexx-exchange/buy-sell/withdraw-crypto"></Link> */}
           <GenericButton
             text={'Deposit'}
-            onClick={() => navigate('/indexx-exchange/buy-sell/deposit-crypto')}
+            onClick={() =>
+              navigate(`/deposit-crypto-select-coin?user=${BeeEmail}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -240,7 +242,7 @@ const BeeWalletTop = () => {
           <GenericButton
             text={'Withdraw'}
             onClick={() =>
-              navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+              navigate(`/withdraw-crypto-select-coin?user=${BeeEmail}`)
             }
             IconComponent={undefined}
             className={classes.button}
@@ -250,10 +252,6 @@ const BeeWalletTop = () => {
           />
         </div>
       </div>
-
-      {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} className='mt-3 mb-2'>
-                    <img className='padding-l-1x' src={comingSoon} alt="comingSoon" style={{  width:"650px", height:"150px", objectFit: 'cover' }} />
-                </div> */}
     </>
   );
 };

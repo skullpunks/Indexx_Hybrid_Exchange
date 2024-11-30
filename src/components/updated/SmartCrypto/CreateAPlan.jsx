@@ -211,7 +211,7 @@ const CreateAPlanPopup = ({ onClose, category }) => {
               <label>Plan's Name</label>
 
               <InputField
-                placeholder={'Create a plan name here (Optional)'}
+                placeholder={'Buy a plan name here (Optional)'}
                 type="text"
                 value={planName}
                 onChange={(e) => {
@@ -464,7 +464,7 @@ const CreateAPlanPopup = ({ onClose, category }) => {
               onClick={onClose}
             />
             <GenericButton
-              text="Create a plan"
+              text="Buy plan"
               className={
                 category === 'x-Blue'
                   ? classes.blueButton

@@ -245,7 +245,9 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({
           {/* <Button danger type="primary" shape="round" size="large" className="btn_xl buy_sell_button margin-l-3x" onClick={() => navigate("/indexx-exchange/buy-sell/")}>Buy Crypto</Button> */}
           <GenericButton
             text={'Buy Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell/')}
+            onClick={() =>
+              navigate(`/update/home/?buyToken=INEX&user=${email}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -255,7 +257,9 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({
 
           <GenericButton
             text={'Sell Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell?type=sell')}
+            onClick={() =>
+              navigate(`/update/home/?buyToken=INEX&user=${email}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -265,7 +269,7 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({
 
           <GenericButton
             text={'Convert Crypto'}
-            onClick={() => navigate('/indexx-exchange/buy-sell?type=convert')}
+            onClick={() => navigate(`/convert&user=${email}`)}
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -276,7 +280,9 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({
           {/* <Link to="/indexx-exchange/buy-sell/withdraw-crypto"></Link> */}
           <GenericButton
             text={'Deposit'}
-            onClick={() => navigate('/indexx-exchange/buy-sell/deposit-crypto')}
+            onClick={() =>
+              navigate(`/deposit-crypto-select-coin?user=${email}`)
+            }
             IconComponent={undefined}
             className={classes.button}
             styles={undefined}
@@ -287,7 +293,7 @@ const TeamCaptainWalletTop: React.FC<TeamCaptWalletTableProps> = ({
           <GenericButton
             text={'Withdraw'}
             onClick={() =>
-              navigate('/indexx-exchange/buy-sell/withdraw-crypto')
+              navigate(`/withdraw-crypto-select-coin?user=${email}`)
             }
             IconComponent={undefined}
             className={classes.button}
