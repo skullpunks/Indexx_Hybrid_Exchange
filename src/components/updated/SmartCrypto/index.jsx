@@ -22,6 +22,7 @@ import AccordionExpandDefault from './Accordion';
 import smartCryptoLogo from '../../../assets/updated/smartCrypto/smartCryptoLogo.png';
 import CategoryIconicHeader from './CategoryIconicHeader';
 import CreateOwnPlan from './CreateOwnPlan';
+import { useLocation, useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -156,33 +157,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SmartCrypto = () => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const navigate = useNavigate();
+  const categoryValue = params.get('category');
+  const typeValue = params.get('type');
+  const plainId = params.get('plan_id');
+
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
-  const [selectedInnerTab, setSelectedInnerTab] = useState(0);
+  const [selectedInnerTab, setSelectedInnerTab] = useState(
+    typeValue === 'ripple' || typeValue === 'blooming'
+      ? 1
+      : typeValue === 'rush' || typeValue === 'surge'
+      ? 2
+      : typeValue === 'wave' || typeValue === 'bull-run'
+      ? 3
+      : 0
+  );
   const [allocationPopop, setAllocationPopup] = useState(false);
   const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
   const [selectedAllocation, setSelectedAllocation] = useState(null);
   const [filteredPackages, setFilteredPackages] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryValue === 'x-blue' || !categoryValue ? 0 : 1
+  );
+
   const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const descriptionXBlueData = [
     { name: '', description: '', img: '' },
     {
       name: 'Ripple Plan',
       img: ripple,
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'Designed for Less volatility and stable returns.',
     },
     {
       name: 'Surge Plan',
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'Moderate volatility, consistent returns.',
       img: surge,
     },
     {
       name: 'Wave Plan',
       img: wave,
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'High volatility, high rewards. ',
     },
   ];
   const descriptionxBitcoinData = [
@@ -190,20 +206,17 @@ const SmartCrypto = () => {
     {
       name: 'Blooming Plan',
       img: bloomingIcon,
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'Optimized for low volatility and steady performance.',
     },
     {
       name: 'Rush Plan',
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'Moderate volatility, consistent returns.',
       img: rushIcon,
     },
     {
       name: 'Bull-Run Plan',
       img: bullRunIcon,
-      description:
-        'Diversify your crypto holding by minimizing risk while maximizing exposure.',
+      description: 'High volatility, high potential returns.',
     },
   ];
   const classes = useStyles();
@@ -311,6 +324,47 @@ const SmartCrypto = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (plainId) {
+        try {
+          const response = await getSmartCryptoPackages();
+
+          // Sort by subTitle (assuming subTitle is a string)
+          const sortedData = (response.data || []).sort((a, b) =>
+            a.subTitle.localeCompare(b.subTitle)
+          );
+
+          // Category-based filtering logic
+          const categoryFilters = {
+            'x-Blue': [
+              'Smart Crypto Ripple',
+              'Smart Crypto Surge',
+              'Smart Crypto Wave',
+            ],
+            'x-Bitcoin': [
+              'xBitcoin Blooming',
+              'xBitcoin Bull-Run',
+              'xBitcoin Rush',
+            ],
+          };
+
+          const applicableNames = categoryFilters[category] || [];
+          const filteredData = sortedData.filter((pkg) =>
+            applicableNames.includes(pkg.portfolioName)
+          );
+
+          setSelectedAllocation(filteredData.find((el) => el._id === plainId));
+          setCreateAPlanPopup(true);
+        } catch (error) {
+          console.error('Error fetching packages:', error);
+        }
+      }
+    };
+
+    fetchData(); // Call the async function
+  }, [plainId, category]);
+
   const handleViewAllocation = (allocationData) => {
     setSelectedAllocation(allocationData);
     setAllocationPopup(true);
@@ -319,11 +373,25 @@ const SmartCrypto = () => {
   const handleClickBuyPlan = (allocationData) => {
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
+    const params = new URLSearchParams(search);
+    params.set('plan_id', allocationData._id);
+    navigate({ search: params.toString() }, { replace: true });
   };
 
   // Dynamic Content Based on Selected Tab
   const descriptionData =
     category === 'x-Blue' ? descriptionXBlueData : descriptionxBitcoinData;
+
+  const categoryDiscription = {
+    0: 'A stable crypto option with moderate volatility and consistent returns.',
+    1: 'A package with 60% Bitcoin and 40% altcoins, balancing stability with growth potential.',
+  };
+
+  console.log(
+    categoryDiscription[selectedCategory],
+    selectedCategory,
+    'categoryDiscription[selectedCategory]'
+  );
   return (
     <>
       <div className={classes.Container}>
@@ -341,13 +409,21 @@ const SmartCrypto = () => {
           <div
             style={{
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: '35px',
             }}
           >
             <CategoryIconicHeader
               selectedTab={selectedCategory}
-              setSelectedTab={setSelectedCategory}
+              setSelectedTab={(value) => {
+                setSelectedCategory(value);
+                setSelectedInnerTab(0);
+              }}
             />
+
+            <p>{categoryDiscription[selectedCategory]}</p>
           </div>
 
           <div>

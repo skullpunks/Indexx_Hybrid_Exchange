@@ -75,6 +75,10 @@ const header_data = [
             name: 'Staking',
             href: '/indexx-exchange/buy-sell/staking',
           },
+          {
+            name: 'Smart Crypto',
+            href: '/smart-crypto?category=x-blue',
+          },
         ],
       },
       {
