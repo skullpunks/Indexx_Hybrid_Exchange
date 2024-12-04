@@ -302,7 +302,11 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
           (value, index, self) =>
             index === self.findIndex((t) => t.id === value.id)
         );
-        if (!email === 'dpar4fam@hotmail.com') setRows(uniqueFormattedData);
+        if (
+          !email === 'dpar4fam@hotmail.com' ||
+          !email === 'fowlertrucking14@yahoo.com'
+        )
+          setRows(uniqueFormattedData);
         else setRows(formattedData);
       } catch (error) {
         setError(error);
@@ -545,9 +549,10 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
 
     rows.forEach((row) => {
       totalAmount += row.amount * row.coin_price;
-      totalStakingBalance += row.staking_balance;
+      totalStakingBalance += row.staking_balance * row.coin_price;
     });
 
+    console.log(totalAmount, totalStakingBalance);
     return {
       totalAmount,
       totalStakingBalance,
@@ -736,25 +741,24 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
                         textAlign: 'right',
                       }}
                     >
-                      Total Amount: $
+                      Total Crypto Amount in USD: $
                       {new Intl.NumberFormat('en-US', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       }).format(calculateTotal(group.rows).totalAmount)}
+                      <br />
+                      {group.category.includes('Coins') && (
+                        <>
+                          Total Staked Balance in USD: $
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }).format(
+                            calculateTotal(group.rows).totalStakingBalance
+                          )}
+                        </>
+                      )}
                     </TableCell>
-                    {/* <TableCell
-                      align="right"
-                      sx={{
-                        borderBottom: 'none',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      Total Staking Balance: $
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(calculateTotal(group.rows).totalStakingBalance)}
-                    </TableCell> */}
                   </TableRow>
                 )}
               </>
