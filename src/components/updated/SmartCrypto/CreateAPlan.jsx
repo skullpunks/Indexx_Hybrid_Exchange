@@ -177,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   const theme = useTheme();
-  const [paymentMethod, setPaymentMethod] = useState();
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [email, setEmail] = useState('');
   const [usdAmount, setUsdAmount] = useState();
   const [planName, setPlanName] = useState('');
@@ -202,18 +202,16 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
 
   const handleAmountChange = (e) => {
     const value = e.target.value;
-  
+
     // Reset and validate amount dynamically
     if (isNaN(value) || value < 2500) {
       setUsdAmountError(true); // Set error for invalid or less than $2500
     } else {
       setUsdAmountError(false); // Clear error if valid
     }
-  
+
     setUsdAmount(value); // Update state regardless
   };
-  
-
 
   let planManagedBy = allocationData?.managedBy;
   let planType = allocationData?.portfolioName;
@@ -276,7 +274,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   };
 
   const renderCoinAllocationInputs = () => {
-    return allocationData.cryptocurrencies.map((coin) => (
+    return allocationData?.cryptocurrencies.map((coin) => (
       <InputField
         key={coin._id}
         type="text"
@@ -316,6 +314,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   };
 
   const reformPlanName = (name, managedBy) => {
+    if (!name) return;
     if (name.includes('Surge'))
       return `Smart Crypto x-Blue Surge - ${managedBy}`;
     if (name.includes('Ripple'))

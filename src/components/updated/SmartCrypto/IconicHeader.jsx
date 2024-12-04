@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
 const SmartCryptoTabs = ({
   selectedInnerTab,
@@ -10,22 +11,28 @@ const SmartCryptoTabs = ({
   backgroundColor,
   category = 'x-Blue',
 }) => {
+  const navigate = useNavigate();
+
   const tabsXBlueData = [
     {
       label: 'All',
       value: 0,
+      path: '?category=x-blue',
     },
     {
       label: 'Ripple',
       value: 1,
+      path: '?category=x-blue&type=ripple',
     },
     {
       label: 'Surge',
       value: 2,
+      path: '?category=x-blue&type=surge',
     },
     {
       label: 'Wave',
       value: 3,
+      path: '?category=x-blue&type=wave',
     },
   ];
 
@@ -33,24 +40,29 @@ const SmartCryptoTabs = ({
     {
       label: 'All',
       value: 0,
+      path: '?category=x-bitcoin',
     },
     {
       label: 'Blooming',
       value: 1,
+      path: '?category=x-bitcoin&type=blooming',
     },
     {
       label: 'Rush',
       value: 2,
+      path: '?category=x-bitcoin&type=rush',
     },
     {
       label: 'Bull-Run',
       value: 3,
+      path: '?category=x-bitcoin&type=bull-run',
     },
   ];
 
   const handleChange = (e, newValue) => {
     setSelectedInnerTab(newValue);
-    console.log(newValue)
+    const selectedTabData = tabsData.find((tab) => tab.value === newValue);
+    navigate(`${selectedTabData.path}`);
   };
 
   // Custom Styled Tabs

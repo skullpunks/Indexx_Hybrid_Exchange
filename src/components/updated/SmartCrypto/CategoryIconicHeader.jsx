@@ -5,6 +5,7 @@ import { Box, styled, useTheme } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
 import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
@@ -53,25 +54,28 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
 }));
 
 const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
+  const navigate = useNavigate();
   const tabsData = [
     {
       label: 'x-Blue',
       img: xBlueIcon,
       key: 0,
+      path: '?category=x-blue',
     },
     {
       label: 'x-Bitcoin',
       img: xBitcoinIcon,
       key: 1,
+      path: '?category=x-bitcoin',
     },
   ];
-
-  let maxWidthTabContainer = '400px';
 
   const TabView = CustomTabHive;
   const theme = useTheme();
   const handleChange = (e, newValue) => {
     setSelectedTab(newValue);
+    const selectedTabData = tabsData.find((tab) => tab.key === newValue);
+    navigate(`${selectedTabData.path}`);
   };
 
   return (

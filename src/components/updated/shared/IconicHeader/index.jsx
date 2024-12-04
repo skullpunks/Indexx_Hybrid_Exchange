@@ -191,7 +191,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Smart Crypto',
       light: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
       dark: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
-      path: '/smart-crypto',
+      path: '/smart-crypto?category=x-blue',
       search: '',
     },
 
@@ -301,11 +301,11 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   let maxWidthTabContainer;
   if (isLoggedIn && userType === 'Indexx Exchange') {
-    maxWidthTabContainer = '1000px';
+    maxWidthTabContainer = '1200px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1200px';
   } else {
-    maxWidthTabContainer = '550px';
+    maxWidthTabContainer = '700px';
   }
 
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;
