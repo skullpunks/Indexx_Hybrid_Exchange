@@ -1,4 +1,4 @@
-import { useState, useRef, isValidElement } from 'react';
+import { useState, useRef, isValidElement, useEffect } from 'react';
 import {
   Autocomplete,
   Box,
@@ -11,34 +11,40 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import coinImg from '../../../assets/updated/smartCrypto/coinimg.png';
-
-const OPTIONS = [
-  { img: coinImg, name: 'BTC' },
-  { img: coinImg, name: 'ADA' },
-  { img: coinImg, name: 'DOT' },
-  { img: coinImg, name: 'NEAR' },
-  { img: coinImg, name: 'POL' },
-  { img: coinImg, name: 'BTC' },
-  { img: coinImg, name: 'ADA' },
-  { img: coinImg, name: 'DOT' },
-  { img: coinImg, name: 'NEAR' },
-  { img: coinImg, name: 'POL' },
-];
+import Inex from '../../../assets/updated/buySell/INEX.svg';
 
 function PopperReplacement(props) {
   const { children, ...restProps } = props;
   return <Box {...restProps}>{isValidElement(children) ? children : null}</Box>;
 }
 
-export function NewMultiSelect({ values = [], onChange }) {
+export function NewMultiSelect({
+  values = [],
+  onChange,
+  allTokens,
+  selectedTokens = [],
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const [searchValue, setSearchValue] = useState('');
   const inputRef = useRef(null);
-
+  const [options, setOptions] = useState([]);
   const openMenu = (event) => {
     setAnchorEl(event?.currentTarget);
     setTimeout(() => inputRef.current?.focus(), 0);
+  };
+
+  console.log("selectedTokens", selectedTokens)
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
   };
 
   const closeMenu = (e, reason) => {
@@ -48,6 +54,30 @@ export function NewMultiSelect({ values = [], onChange }) {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  useEffect(() => {
+    if (allTokens && allTokens.length > 0) {
+      const generatedOptions = allTokens.map((token) => ({
+        img: getImage(token.image), // Use getImage to dynamically load images
+        name: token.title,
+        fullName: token.subTitle,
+      }));
+      setOptions(generatedOptions);
+    }
+  }, [allTokens]);
+
+  const handleSelectionChange = (event, token) => {
+    console.log('event', event)
+    console.log('token', token)
+    const isSelected = selectedTokens.some(
+      (selected) => selected.name === token.name
+    );
+    const updatedTokens = isSelected
+      ? selectedTokens.filter((selected) => selected.name !== token.name)
+      : [...selectedTokens, token];
+    console.log('Updated Tokens:', updatedTokens);
+    onChange(updatedTokens);
+  };
+  
   return (
     <>
       <Box
@@ -152,44 +182,48 @@ export function NewMultiSelect({ values = [], onChange }) {
               disableClearable
               autoHighlight={false}
               popupIcon={null}
-              options={OPTIONS}
+              options={options}
               value={values}
-              onChange={(event, newValues) => {
-                event.preventDefault();
-                onChange(newValues);
-              }}
+              onChange={handleSelectionChange}
               noOptionsText="No Results Found"
               ListboxComponent={MenuList}
-              renderOption={(props, option, { selected }) => (
-                <ListItem
-                  {...props}
-                  key={option}
-                  sx={{
-                    fontSize: '14px', // Smaller font size for dropdown
-                    padding: '4px 0px', // Adjust padding
-                    '&.MuiListItem-root': {
-                      padding: '7px 0px',
-                    },
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  <Checkbox
-                    style={{
-                      marginRight: '10px',
-                      padding: '0px', // Smaller checkbox size
-                      // Reduce checkbox size
+              renderOption={(props, option) => {
+                const isSelected = selectedTokens.some(
+                  (selected) => selected.name === option.name
+                );
+              
+                return (
+                  <ListItem
+                    {...props}
+                    key={option.name}
+                    sx={{
+                      fontSize: '14px', // Smaller font size for dropdown
+                      padding: '4px 0px', // Adjust padding
+                      '&.MuiListItem-root': {
+                        padding: '7px 0px',
+                      },
+                      textTransform: 'uppercase',
                     }}
-                    checked={selected}
-                  />
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={option.img}
-                      style={{ width: '20px', marginRight: '7px' }}
+                    onClick={(e) => handleSelectionChange(e, option)} // Ensure correct selection behavior
+                  >
+                    <Checkbox
+                      style={{
+                        marginRight: '10px',
+                        padding: '0px', // Smaller checkbox size
+                      }}
+                      checked={isSelected} // Use the determined value
                     />
-                    {option.name}
-                  </div>
-                </ListItem>
-              )}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <img
+                        src={option.img}
+                        style={{ width: '20px', marginRight: '7px' }}
+                        alt={`${option.name} icon`}
+                      />
+                      {option.name}
+                    </div>
+                  </ListItem>
+                );
+              }}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
                   setAnchorEl(null);

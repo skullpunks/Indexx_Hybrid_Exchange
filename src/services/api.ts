@@ -1431,6 +1431,40 @@ export const createBuyOrderForSmartCrypto = async (
   }
 };
 
+
+export const insertNewSmartCryptoPlan = async (
+  portfolioName: string, // Updated field name to match server expectations
+  managedBy: string, // Updated field name to match server expectations
+  totalInvestment: number = 0, // Matches server field
+  cryptocurrencies: Array<{ name: string; percentage: number, token: string }>, // Array of cryptocurrency data
+  createdDate: string, // ISO string for the creation date
+  description?: string, // Optional field
+  title?: string, // Optional field
+  subTitle?: string, // Optional field
+  email?: string,
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/admin/addsmartcryptoportfolio', {
+      portfolioName, // Updated field name
+      totalInvestment, // Matches server field
+      cryptocurrencies, // Array of cryptocurrencies
+      createdDate, // ISO format date
+      description, // Optional description
+      title, // Optional title
+      subTitle, // Optional subtitle
+      managedBy, // Updated field name
+      email: email || localStorage.getItem('user'), // Default to localStorage if email is not provided
+    });
+    return result.data;
+  } catch (e: any) {
+    console.error('FAILED: unable to perform API request (insertNewSmartCryptoPlan)');
+    console.error(e);
+    console.error(e.response?.data);
+    return e.response?.data;
+  }
+};
+
+
 export const createFiatDepositForOrder = async (
   email: string,
   orderId: string,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
 import CloseIcon from '@mui/icons-material/Close';
@@ -15,6 +15,14 @@ import InputField from '../shared/TextField';
 import CustomSelectBox from './CustomSelectBox';
 import { NewMultiSelect } from './MultiSelect';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+  createBuyOrderForSmartCrypto,
+  decodeJWT,
+  getUserWallets,
+  insertNewSmartCryptoPlan,
+} from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -183,13 +191,430 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateOwnPlan = ({ onClose, category }) => {
+const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const theme = useTheme();
+  const [selectedCoins, setSelectedCoins] = useState([]);
+  const [error, setError] = useState('');
+  const [usdAmountError, setUsdAmountError] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState();
+  const [email, setEmail] = useState('');
+  const [usdAmount, setUsdAmount] = useState();
   const [planName, setPlanName] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
+  const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
+  const [planManagedBy, setPlanManagedBy] = useState('');
+  const [permissionData, setPermissionData] = useState();
+  const [generalMessage, setGeneralMessage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [paymentMethodError, setPaymentMethodError] = useState(false);
+
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
   };
+
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    setEmail(email);
+    let planManagedBy = email;
+    setPlanManagedBy(planManagedBy);
+    const user = localStorage.getItem('user');
+    console.log('!!email && !!user', !!email && !!user);
+    setIsLoggedIn(!!email && !!user);
+    setPlanName('');
+  }, []);
+
+  // Fetch user wallets and USD balance
+  useEffect(() => {
+    const fetchUserWallets = async () => {
+      const token = localStorage.getItem('access_token');
+      const decodedToken = decodeJWT(String(token)); // Decode JWT
+
+      const userWallets = await getUserWallets(decodedToken?.email);
+      setUsersWallets(userWallets.data);
+
+      // Find USD coin balance and format it
+      setUsdBalance(
+        formatBalance(
+          userWallets.data.find((x) => x.coinSymbol === 'USD')?.coinBalance || 0
+        )
+      );
+    };
+
+    fetchUserWallets();
+  }, []);
+
+  // Format the balance based on its value
+  const formatBalance = (balance) => {
+    if (balance < 0.001) {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 5,
+        maximumFractionDigits: 6,
+      });
+    } else {
+      return balance.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+  };
+
+  const handleTokenChange = (newValues) => {
+    console.log('Raw New Values:', newValues);
+
+    // Flatten and deduplicate the token array
+    const updatedTokens = Array.isArray(newValues)
+      ? newValues.flat().filter((value, index, self) => {
+          return (
+            value && self.findIndex((v) => v.name === value.name) === index // Ensure uniqueness
+          );
+        })
+      : [];
+
+    console.log('Updated Coins:', updatedTokens);
+
+    // Calculate equal percentages
+    const equalPercentage = updatedTokens.length
+      ? Math.floor(100 / updatedTokens.length)
+      : 0;
+
+    const updatedWithPercentages = updatedTokens.map((coin) => ({
+      ...coin,
+      percentage: equalPercentage,
+    }));
+
+    setSelectedCoins(updatedWithPercentages);
+    setError(''); // Clear any existing error
+  };
+
+  const handlePercentageChange = (index, newPercentage) => {
+    const updatedCoins = [...selectedCoins];
+    updatedCoins[index].percentage = parseFloat(newPercentage) || 0; // Ensure it's a valid number
+    setSelectedCoins(updatedCoins);
+
+    // Validate the total percentage
+    const totalPercentage = updatedCoins.reduce(
+      (sum, coin) => sum + coin.percentage,
+      0
+    );
+
+    if (totalPercentage > 100) {
+      setError(
+        `The sum of allocation is ${totalPercentage}%, must add up to 100%`
+      );
+    } else {
+      setError(''); // Clear the error if the total is valid
+    }
+  };
+
+  const handleRemoveCoin = (index) => {
+    const updatedCoins = selectedCoins.filter((_, i) => i !== index);
+    setSelectedCoins(updatedCoins);
+
+    // Recalculate percentages if coins are removed
+    if (updatedCoins.length > 0) {
+      const equalPercentage = Math.floor(100 / updatedCoins.length);
+      const recalculatedCoins = updatedCoins.map((coin) => ({
+        ...coin,
+        percentage: equalPercentage,
+      }));
+      setSelectedCoins(recalculatedCoins);
+    }
+  };
+
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
+
+  const handleAmountChange = (e) => {
+    const value = e.target.value;
+
+    // Reset and validate amount dynamically
+    if (isNaN(value) || value < 2500) {
+      setUsdAmountError(true); // Set error for invalid or less than $2500
+    } else {
+      setUsdAmountError(false); // Clear error if valid
+    }
+
+    setUsdAmount(value); // Update state regardless
+  };
+
+  const handleSubmit = async () => {
+    setLoadings(true);
+    let hasError = false;
+
+    // Validate amount (minimum is 2500 USD)
+    if (!usdAmount || isNaN(usdAmount) || usdAmount < 2500) {
+      setUsdAmountError(true);
+      hasError = true;
+    }
+
+    // Validate payment method
+    if (!paymentMethod) {
+      setPaymentMethodError(true);
+      hasError = true;
+    }
+
+    // Transform selectedCoins to match the expected structure
+    const cryptocurrencies = selectedCoins.map((coin) => ({
+      token: coin.name,
+      percentage: coin.percentage,
+      name : coin.fullName
+    }));
+
+    console.log(
+      planName,
+      email,
+      usdAmount,
+      cryptocurrencies,
+      new Date().toISOString(),
+      '',
+      '',
+      '',
+      email
+    );
+
+    try {
+      let newPlanName = planName + ' Smart Crypto Ripple';
+      setPlanName(newPlanName);
+      let createPlan = await insertNewSmartCryptoPlan(
+        newPlanName,
+        email,
+        usdAmount,
+        cryptocurrencies,
+        new Date().toISOString(),
+        '',
+        'Smart Crypto Ripple',
+        'Ripple',
+        email
+      );
+      console.log(createPlan);
+      setLoadings(false);
+    } catch (error) {
+      console.error('Error creating plan:', error);
+      setLoadings(false);
+    }
+
+    // Stop if there are errors
+    if (hasError) return;
+
+    if (paymentMethod) {
+      setPaymentMethod('');
+      await confirmPayment();
+    } else {
+      setPaymentMethod('Select Method*');
+    } 
+  };
+
+  const confirmPayment = async () => {
+    try {
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        await createNewBuyOrder(paymentMethod);
+      } else if (paymentMethod === 'USD') {
+        // Ensure usdBalance and spendAmount are numbers by removing commas and converting them
+        const usdBalanceNumber = parseFloat(usdBalance.replace(/,/g, '')); // Removes commas and converts to number
+        const spendAmountNumber = parseFloat(usdAmount.replace(/,/g, '')); // Removes commas (if any) and converts to number
+
+        if (usdBalanceNumber > 0 && usdBalanceNumber >= spendAmountNumber) {
+          await createNewBuyOrder(paymentMethod);
+        } else {
+          console.log('Insufficient Balance');
+          setGeneralMessage('Insufficient Balance');
+          setIsModalOpen(true);
+          return;
+        }
+      } else if (paymentMethod === 'TygaPay') {
+        await createNewBuyOrderForTygaPay();
+      } else if (
+        paymentMethod === 'Zelle' ||
+        paymentMethod === 'Wire transfer' ||
+        paymentMethod === 'Venmo' ||
+        paymentMethod === 'ACH'
+      ) {
+        const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
+        if (orderId) {
+          let selectedMethod = String(paymentMethod).toLowerCase();
+          navigate(
+            `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
+          );
+        }
+      }
+    } catch (err) {
+      console.log('Err', err);
+      setLoadings(false);
+    }
+  };
+
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrder = async (paymentMethod) => {
+    setLoadings(true);
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setGeneralMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setIsModalOpen(true);
+        setLoadings(false);
+        return;
+      }
+      console.log("planName", planName)
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        true,
+        paymentMethod
+      );
+    } else {
+      console.log("planName", planName)
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        setLoadings(false);
+        //--Below code is to enable paypal Order---
+        let payPalPaymentLink = '';
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes('approve')) {
+            //window.location.href = res.data.links[i].href;
+            payPalPaymentLink = res.data.links[i].href;
+            break;
+          }
+        }
+        navigate('/paypal-partnership-with-indexx', {
+          state: { payPalPaymentLink },
+        });
+      } else {
+        setLoadings(false);
+        console.log('res.data', res.data);
+        setIsModalOpen(true);
+        setGeneralMessage('Order Completed');
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setIsModalOpen(true);
+      setGeneralMessage(res.data);
+    }
+  };
+
+  const createBuyOrderForZelleAndWire = async (paymentMethod) => {
+    setLoadings(true);
+    setLoadings(true);
+    let res;
+    console.log('paymentMethod', paymentMethod);
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setGeneralMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setIsModalOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        true,
+        paymentMethod
+      );
+    } else {
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      setLoadings(false);
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      setGeneralMessage(res.data);
+      setIsModalOpen(true);
+      return null;
+    }
+  };
+
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrderForTygaPay = async () => {
+    setLoadings(true);
+    let res;
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setGeneralMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setIsModalOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        true,
+        'tygapay'
+      );
+    } else {
+      res = await createBuyOrderForSmartCrypto(
+        planName + ' Smart Crypto Ripple',
+        planManagedBy,
+        usdAmount,
+        0,
+        email,
+        false,
+        'tygapay'
+      );
+    }
+    console.log(res);
+    if (res.status === 200) {
+      console.log('Res', res);
+      console.log('res.data.data.paymentUrl', res.data.data.paymentUrl);
+      setLoadings(false);
+      window.location.href = res.data.data.paymentUrl;
+    } else {
+      setLoadings(false);
+      setIsModalOpen(true);
+      setGeneralMessage(res.data);
+    }
+  };
+
   const classes = useStyles();
   return (
     <div
@@ -225,7 +650,7 @@ const CreateOwnPlan = ({ onClose, category }) => {
               <label>Plan's Name</label>
 
               <InputField
-                placeholder={'Create a plan name here (Optional)'}
+                placeholder={'Create a plan name here'}
                 type="text"
                 value={planName}
                 onChange={(e) => {
@@ -238,147 +663,106 @@ const CreateOwnPlan = ({ onClose, category }) => {
             </div>
             <div className={classes.coinAllocationRoot}>
               <div className={classes.selectCoinAndAllocationContainer}>
-                <label>Coin Allocation</label>
-                <NewMultiSelect />
+                <label>
+                  {' '}
+                  Coin Allocation (
+                  {selectedCoins?.reduce(
+                    (sum, coin) => sum + coin.percentage,
+                    0
+                  )}
+                  % / 100%)
+                </label>
+                <NewMultiSelect
+                  allTokens={filteredTokens}
+                  onChange={handleTokenChange}
+                  selectedTokens={selectedCoins}
+                />
               </div>
               <div className={classes.inputContainer}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '10px',
-                    alignItems: 'center',
-                    margin: '10px 0px',
-                  }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <InputField
-                      type="text"
-                      value="0.00" // Set a default or dynamic value here
-                      onChange={() => {}} // Add a proper handler if needed
-                      yellowBorders={category !== 'x-Blue'}
-                      blueBorders={category === 'x-Blue'}
-                      className={classes.coinAllocationInput}
-                      style={{ marginTop: '0px' }}
-                      startAdornment={
-                        <InputAdornment position="start">
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              marginLeft: '10px',
-                            }}
-                          >
-                            <img
-                              src={coinImg}
-                              alt="icon"
-                              style={{
-                                width: 20,
-                                height: 20,
-                                borderRadius: '50%',
-                                marginRight: 8,
-                              }}
-                            />
-                            <span>Text</span>
-                          </div>
-                        </InputAdornment>
-                      }
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                      // Align text to the right
-
-                      fullWidth
-                    />
-                  </div>
-
-                  <IconButton
-                    aria-label="delete"
+                {selectedCoins.map((coin, index) => (
+                  <Box
+                    key={index}
                     sx={{
-                      width: 'auto',
-                      border: `1px solid ${theme.palette.divider}`,
-                      borderRadius: '5px',
-                      padding: '0px 20px',
-                      height: '50px',
+                      display: 'flex',
+                      gap: '10px',
+                      alignItems: 'center',
+                      margin: '10px 0px',
                     }}
                   >
-                    -
-                  </IconButton>
-                </Box>
-
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '10px',
-                    alignItems: 'center',
-                    margin: '10px 0px',
-                  }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <InputField
-                      type="text"
-                      value="0.00" // Set a default or dynamic value here
-                      onChange={() => {}} // Add a proper handler if needed
-                      yellowBorders={category !== 'x-Blue'}
-                      blueBorders={category === 'x-Blue'}
-                      className={classes.coinAllocationInput}
-                      style={{ marginTop: '0px' }}
-                      startAdornment={
-                        <InputAdornment position="start">
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              marginLeft: '10px',
-                            }}
-                          >
-                            <img
-                              src={coinImg}
-                              alt="icon"
+                    <div style={{ flex: 1 }}>
+                      <InputField
+                        type="text"
+                        value={coin.percentage}
+                        onChange={(e) =>
+                          handlePercentageChange(index, e.target.value)
+                        }
+                        yellowBorders={category !== 'x-Blue'}
+                        blueBorders={category === 'x-Blue'}
+                        className={classes.coinAllocationInput}
+                        style={{ marginTop: '0px' }}
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <div
                               style={{
-                                width: 20,
-                                height: 20,
-                                borderRadius: '50%',
-                                marginRight: 8,
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginLeft: '10px',
                               }}
-                            />
-                            <span>Text</span>
-                          </div>
-                        </InputAdornment>
-                      }
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                      // Align text to the right
+                            >
+                              <img
+                                src={getImage(coin.name)}
+                                alt={coin.name}
+                                style={{
+                                  width: 20,
+                                  height: 20,
+                                  borderRadius: '50%',
+                                  marginRight: 8,
+                                }}
+                              />
+                              <span>{coin.name}</span>
+                            </div>
+                          </InputAdornment>
+                        }
+                        endAdornment={
+                          <InputAdornment position="end">%</InputAdornment>
+                        }
+                        fullWidth
+                      />
+                    </div>
 
-                      fullWidth
-                    />
-                  </div>
-
-                  <IconButton
-                    aria-label="delete"
-                    sx={{
-                      width: 'auto',
-                      border: `1px solid ${theme.palette.divider}`,
-                      borderRadius: '5px',
-                      padding: '0px 20px',
-                      height: '50px',
-                    }}
-                  >
-                    -
-                  </IconButton>
-                </Box>
+                    <IconButton
+                      aria-label="delete"
+                      sx={{
+                        width: 'auto',
+                        border: `1px solid ${theme.palette.divider}`,
+                        borderRadius: '5px',
+                        padding: '0px 20px',
+                        height: '50px',
+                      }}
+                      onClick={() => handleRemoveCoin(index)}
+                    >
+                      -
+                    </IconButton>
+                  </Box>
+                ))}
               </div>
+              {error && <div style={{ color: 'red' }}>{error}</div>}
             </div>
           </div>
           <div style={{ width: '100%' }}>
             <div className={classes.enterAmountContainer}>
               <label>Amount Per Period</label>
               <InputField
-                placeholder={'The minimum amount is 0.1 USD'}
+                placeholder={'The minimum amount is 2500 USD'}
                 type="text"
                 style={{ marginTop: '0px', marginBottom: '10px' }}
-                value={''}
-                onChange={() => {}}
+                value={usdAmount}
+                onChange={handleAmountChange}
+                error={usdAmountError} // Highlight error
+                helperText={
+                  usdAmountError &&
+                  'Please enter a valid amount of at least 2500 USD'
+                }
                 yellowBorders={category !== 'x-Blue'}
                 blueBorders={category === 'x-Blue'}
                 endAdornment={
@@ -410,6 +794,7 @@ const CreateOwnPlan = ({ onClose, category }) => {
               text="Cancel"
               onClick={onClose}
             />
+
             <GenericButton
               text="Create a plan"
               className={
@@ -417,7 +802,9 @@ const CreateOwnPlan = ({ onClose, category }) => {
                   ? classes.blueButton
                   : classes.yellowButton
               }
-              onClick={onClose}
+              onClick={handleSubmit}
+              disabled={!usdAmount || usdAmount < 2500 || !paymentMethod} // Disable if invalid
+              loading={loadings}
             />
           </div>
         </div>

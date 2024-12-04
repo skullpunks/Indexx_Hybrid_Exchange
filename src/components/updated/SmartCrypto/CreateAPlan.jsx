@@ -425,7 +425,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
         usdAmount,
         0,
         email,
-        true,
+        false,
         paymentMethod
       );
     }
@@ -535,7 +535,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
         usdAmount,
         0,
         email,
-        true,
+        false,
         'tygapay'
       );
     }
