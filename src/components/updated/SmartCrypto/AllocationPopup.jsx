@@ -133,7 +133,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AllocationPopup = ({ onClose, category, allocationData }) => {
+const AllocationPopup = ({
+  onClose,
+  category,
+  allocationData,
+  onStartPopup,
+}) => {
   const theme = useTheme();
 
   const classes = useStyles();
@@ -205,7 +210,10 @@ const AllocationPopup = ({ onClose, category, allocationData }) => {
                   ? classes.blueButton
                   : classes.yellowButton
               }
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                onStartPopup(allocationData);
+              }}
             />
           </div>
         </div>

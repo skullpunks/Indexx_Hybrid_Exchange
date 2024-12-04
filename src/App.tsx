@@ -244,6 +244,10 @@ function App() {
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
+              <Route path="/wallet/crypto" element={<AssetsPage />} />
+              <Route path="/wallet/fiat" element={<AssetsPage />} />
+              <Route path="/wallet/smart-crypto" element={<AssetsPage />} />
+              <Route path="/wallet/iusd+" element={<AssetsPage />} />
               <Route
                 path="/indexx-exchange/market-data"
                 element={<MarketsPage />}

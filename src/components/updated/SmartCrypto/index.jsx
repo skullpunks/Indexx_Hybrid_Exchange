@@ -403,7 +403,7 @@ const SmartCrypto = () => {
                 <img src={smartCryptoLogo} />
                 <h3>Smart Crypto</h3>
               </div>
-              <p>#Start growing your assets on Smart Crypto</p>
+              <p>Autopilot, hands-off investment vehicle</p>
             </div>
           </div>
           <div
@@ -564,6 +564,7 @@ const SmartCrypto = () => {
           onClose={() => setAllocationPopup(false)}
           category={category}
           allocationData={selectedAllocation}
+          onStartPopup={(pkg) => handleClickBuyPlan(pkg)}
         />
       )}
 

@@ -177,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   const theme = useTheme();
-  const [paymentMethod, setPaymentMethod] = useState();
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [email, setEmail] = useState('');
   const [usdAmount, setUsdAmount] = useState();
   const [planName, setPlanName] = useState('');
