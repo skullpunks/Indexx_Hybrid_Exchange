@@ -19,12 +19,14 @@ import {
   getAppSettings,
   getCoinPriceByName,
   getUserWallets,
+  validateUserEmail,
 } from '../../../services/api';
 import ConversionPreviewModal from './ConversionPreviewModal';
 import OpenNotification from '../../OpenNotification/OpenNotification';
 import Inex from '../../../assets/updated/buySell/INEX.svg'; // Default image
 import PreviewConversionpopup from './PreviewConversionpopup';
 import SuccessPopup from './SuccessfulConvertPopup';
+import GeneralPopup from '../BuySell/Popup';
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
@@ -122,6 +124,9 @@ const ConvertCrypto = () => {
   const [fromTokenImage, setFromTokenImage] = useState(Inex); // Default image
   const [toTokenImage, setToTokenImage] = useState(Inex); // Default image
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+
   let appSettingArr = [];
 
   // Utility function to check if a token is an Indexx token
@@ -402,8 +407,8 @@ const ConvertCrypto = () => {
     const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
     setFromBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'fromToken'
     setFromTokenImage(getImage(token.image)); // Set the image when token changes
-     // Recalculate the amount when token changes
-     if (finalRate) {
+    // Recalculate the amount when token changes
+    if (finalRate) {
       const calculatedToAmount = (amount * finalRate).toFixed(8);
       setReceiveAmount(
         (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
@@ -412,7 +417,25 @@ const ConvertCrypto = () => {
     //fetchConversionRate(); // Fetch new rates based on the new token
   };
 
-  const handlePreviewConversion = () => {
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMessage('');
+  };
+
+  const handlePreviewConversion = async () => {
+    const email = localStorage.getItem('email');
+    const response = await validateUserEmail(email);
+    const data = response;
+
+    if (data.status === 200) {
+      console.log('data', data);
+      if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+        setShowPopup(true);
+        setPopupMessage('Please Complete KYC first');
+        return;
+      }
+    }
+
     formik.handleSubmit();
     // Perform necessary checks before opening modal
     setOpenModal(true);
@@ -544,12 +567,21 @@ const ConvertCrypto = () => {
           rateData1={rateData1}
           rateData2={rateData2}
           createProcessOrder={createProcessOrder}
-          insufficientBalance={Number(fromBalance?.replace(/,/g, '') ?? 0) < Number(amount)}
+          insufficientBalance={
+            Number(fromBalance?.replace(/,/g, '') ?? 0) < Number(amount)
+          }
           adminFee={adminFee}
         />
       )}
       {openSuccessPopup && (
         <SuccessPopup onClose={() => setOpenSuccessPopup(false)} />
+      )}
+      {showPopup && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopupClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
       )}
     </div>
   );

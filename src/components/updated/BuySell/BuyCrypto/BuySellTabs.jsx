@@ -16,6 +16,7 @@ import {
   decodeJWT,
   getHoneyBeeDataByUsername,
   getUserWallets,
+  validateUserEmail,
 } from '../../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PaymentMethod } from '../../../AccountSettings/PaymentMethod';
@@ -209,7 +210,7 @@ const BuySellTabs = ({
   }, []);
 
   console.log('defaultReceiveToken', defaultReceiveToken);
-  const handleChange = (value) => {
+  const handleChange = async(value) => {
     setValue(value);
     if (value === 'buy') {
       setSpendToken({ title: 'USD', image: 'USD' });
@@ -299,6 +300,19 @@ const BuySellTabs = ({
       setPaymentMethodError('');
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
+      
+      const email = localStorage.getItem('email');
+      const response = await validateUserEmail(email);
+      const data = response;
+
+      if (data.status === 200) {
+        console.log("data", data)
+        if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
+          setIsModalOpen(true);
+          setGeneralMessage("Please Complete KYC first");
+          return;
+        }
+      }
       setPaymentMethodError('');
       const res = await createNewSellOrder();
       console.log('res', res);

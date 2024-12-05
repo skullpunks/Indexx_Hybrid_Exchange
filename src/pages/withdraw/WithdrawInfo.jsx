@@ -7,6 +7,8 @@ import InputField from '../../components/updated/shared/TextField';
 import { Country, State } from 'country-state-city';
 import { MenuItem, Select } from '@mui/material';
 import StyledSelect from '.';
+import { validateUserEmail } from '../../services/api';
+import GeneralPopup from '../../components/updated/BuySell/Popup';
 
 const useStyle = makeStyles((theme) => ({
   heading: {
@@ -52,6 +54,8 @@ const WithdrawAddAccountInfo = () => {
   const [zipCode, setZipCode] = useState(initialState.zipCode || '');
   const [states, setStates] = useState([]);
   const [countryCode, setCountryCode] = useState('');
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     if (countryCode) {
@@ -65,7 +69,20 @@ const WithdrawAddAccountInfo = () => {
     }
   }, [countryCode, state]);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    const email = localStorage.getItem('email');
+    const response = await validateUserEmail(email);
+    const data = response;
+
+    if (data.status === 200) {
+      console.log("data", data)
+      if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
+        setShowPopup(true);
+        setPopupMessage("Please Complete KYC first");
+        return;
+      }
+    }
+
     navigate('/withdraw-enter-amount', {
       state: {
         beneficiaryName,
@@ -81,6 +98,11 @@ const WithdrawAddAccountInfo = () => {
         zipCode,
       },
     });
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMessage('');
   };
 
   return (
@@ -194,6 +216,13 @@ const WithdrawAddAccountInfo = () => {
       />
       <div style={{ margin: '30px' }}></div>
       <GenericButton text={'Continue'} onClick={handleContinue} />
+      {showPopup && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopupClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
     </WithdrawLayout>
   );
 };

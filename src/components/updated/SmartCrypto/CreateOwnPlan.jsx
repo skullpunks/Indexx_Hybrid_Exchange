@@ -22,7 +22,9 @@ import {
   decodeJWT,
   getUserWallets,
   insertNewSmartCryptoPlan,
+  validateUserEmail,
 } from '../../../services/api';
+import GeneralPopup from '../BuySell/Popup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -196,7 +198,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const [selectedCoins, setSelectedCoins] = useState([]);
   const [error, setError] = useState('');
   const [usdAmountError, setUsdAmountError] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState();
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [email, setEmail] = useState('');
   const [usdAmount, setUsdAmount] = useState();
   const [planName, setPlanName] = useState('');
@@ -211,6 +213,8 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadings, setLoadings] = useState(false);
   const [paymentMethodError, setPaymentMethodError] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -352,6 +356,19 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
 
   const handleSubmit = async () => {
     setLoadings(true);
+    const email = localStorage.getItem('email');
+    const response = await validateUserEmail(email);
+    const data = response;
+
+    if (data.status === 200) {
+      if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+        setShowPopup(true);
+        setPopupMessage('Please Complete KYC first');
+        setLoadings(false);
+        return;
+      }
+    }
+
     let hasError = false;
 
     // Validate amount (minimum is 2500 USD)
@@ -370,20 +387,8 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
     const cryptocurrencies = selectedCoins.map((coin) => ({
       token: coin.name,
       percentage: coin.percentage,
-      name : coin.fullName
+      name: coin.fullName,
     }));
-
-    console.log(
-      planName,
-      email,
-      usdAmount,
-      cryptocurrencies,
-      new Date().toISOString(),
-      '',
-      '',
-      '',
-      email
-    );
 
     try {
       let newPlanName = planName + ' Smart Crypto Ripple';
@@ -414,7 +419,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
       await confirmPayment();
     } else {
       setPaymentMethod('Select Method*');
-    } 
+    }
   };
 
   const confirmPayment = async () => {
@@ -470,7 +475,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
         setLoadings(false);
         return;
       }
-      console.log("planName", planName)
+      console.log('planName', planName);
       res = await createBuyOrderForSmartCrypto(
         planName + ' Smart Crypto Ripple',
         planManagedBy,
@@ -481,7 +486,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
         paymentMethod
       );
     } else {
-      console.log("planName", planName)
+      console.log('planName', planName);
       res = await createBuyOrderForSmartCrypto(
         planName + ' Smart Crypto Ripple',
         planManagedBy,
@@ -613,6 +618,11 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
       setIsModalOpen(true);
       setGeneralMessage(res.data);
     }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMessage('');
   };
 
   const classes = useStyles();
@@ -809,6 +819,13 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
           </div>
         </div>
       </div>
+      {showPopup && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopupClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
     </div>
   );
 };

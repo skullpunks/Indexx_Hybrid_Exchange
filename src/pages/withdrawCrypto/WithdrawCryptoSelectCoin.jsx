@@ -13,6 +13,7 @@ import {
   getUserWallets,
   getMinAndMaxOrderValues,
   createCryptoWithdraw,
+  validateUserEmail,
 } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import { Typography } from 'antd';
@@ -220,8 +221,22 @@ const WithdrawCryptoSelectCoin = () => {
   };
 
   const withdrawCrypto = async () => {
+
     setLoadings(true);
 
+    const email = localStorage.getItem('email');
+    const response = await validateUserEmail(email);
+    const data = response;
+
+    if (data.status === 200) {
+      console.log("data", data)
+      if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
+        setShowPopup(true);
+        setPopupMessage("Please Complete KYC first");
+        setLoadings(false);
+        return;
+      }
+    }
     const res = await createCryptoWithdraw(
       email,
       Number(finalAmount),

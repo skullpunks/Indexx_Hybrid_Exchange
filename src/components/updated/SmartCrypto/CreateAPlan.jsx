@@ -10,8 +10,10 @@ import {
   createBuyOrderForSmartCrypto,
   decodeJWT,
   getUserWallets,
+  validateUserEmail,
 } from '../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import GeneralPopup from '../BuySell/Popup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -196,6 +198,9 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
   const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
   const classes = useStyles();
   const [searchParams] = useSearchParams();
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
   };
@@ -331,6 +336,21 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
 
   const handleSubmit = async () => {
     setLoadings(true);
+
+    const email = localStorage.getItem('email');
+    const response = await validateUserEmail(email);
+    const data = response;
+
+    if (data.status === 200) {
+      console.log('data', data);
+      if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+        setShowPopup(true);
+        setPopupMessage('Please Complete KYC first');
+        setLoadings(false);
+        return;
+      }
+    }
+
     let hasError = false;
 
     // Validate amount (minimum is 2500 USD)
@@ -552,6 +572,11 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
     }
   };
 
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMessage('');
+  };
+  
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -670,6 +695,13 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
           </div>
         </div>
       </div>
+      {showPopup && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopupClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
     </div>
   );
 };
