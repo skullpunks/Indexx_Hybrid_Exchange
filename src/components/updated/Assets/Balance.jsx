@@ -15,7 +15,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: '1380px',
+    // maxWidth: '1380px',
+    width: '100%',
     padding: '24px',
     borderRadius: '16px',
     display: 'flex',

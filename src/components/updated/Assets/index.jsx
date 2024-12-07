@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  useMediaQuery,
 } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import assetLight from '../../../assets/updated/iconicHeader/lightMode/Vector.svg';
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative', // Center the container
   },
   maxWidthContainer: {
-    maxWidth: '1380px',
+    // maxWidth: '1380px',
     width: '100%',
     margin: 'auto',
     padding: '20px',
@@ -75,16 +76,48 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '20px',
   },
   activeLink: {
-    backgroundColor: theme.palette.divider,
-    color: theme.palette.common.white,
-    '& .MuiListItemText-primary': {
-      fontWeight: 'bold',
+    color: theme.palette.text.primary,
+    borderBottom: `0px solid ${theme.palette.primary.main}`, // 3px underline
+    '&::before': {
+      content: '""',
+      display: 'block',
+      width: '16px', // height of the line at the start of the item
+      height: '3px', // thickness
+      backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
+      position: 'absolute',
+      left: 20,
+      top: '95%',
+      transform: 'translateY(-50%)', // vertical alignment
     },
   },
   hoverEffect: {
     fontSize: '14px',
+    position: 'relative', // for the pseudo-element
+    background: 'none',
+    color: '#FFBB00',
     '&:hover': {
-      backgroundColor: theme.palette.divider,
+      backgroundColor: 'transparent',
+      borderBottom: `0px solid ${
+        theme.palette.mode === 'dark' ? '#fff' : '#000'
+      }`, // underline on hover
+    },
+    '&:hover::before': {
+      content: '""',
+      display: 'block',
+      width: '16px',
+      height: '3px',
+      backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
+      position: 'absolute',
+      left: 20,
+      top: '95%',
+      transform: 'translateY(-50%)',
+    },
+  },
+  tableContainer: {
+    display: 'flex',
+    padding: '0px 20px',
+    [theme.breakpoints.down('md')]: {
+      padding: '0px',
     },
   },
 }));
@@ -95,6 +128,7 @@ const Assets = () => {
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState('Asset Wallet');
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const tab = useMediaQuery('(max-width:900px)');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -121,51 +155,60 @@ const Assets = () => {
           </p>
         </div>
       </div>
-      {/* <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          marginBottom: '50px',
-        }}
-        className={classes.maxWidthContainer}
-      >
-        <CategoryIconicHeader
-          selectedTab={selectedCategory}
-          setSelectedTab={setSelectedCategory}
-        />
-      </div> */}
-      <div style={{ display: 'flex', padding: '0px 20px' }}>
-        {/* <div
+      {tab && (
+        <div
           style={{
-            width: '300px',
-            position: 'sticky',
-            top: 100,
-            marginTop: '20px',
+            display: 'flex',
+            justifyContent: 'flex-start',
           }}
+          className={classes.maxWidthContainer}
         >
-          <List sx={{ position: 'sticky', top: 100 }}>
-            {[
-              { name: 'Overview', path: '/wallet/overview' },
-              { name: 'Crypto', path: '/wallet/crypto' },
-              { name: 'Fiat', path: '/wallet/fiat' },
-              { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
-              { name: 'IUSD+', path: '/wallet/iusd+' },
-            ].map((el, index) => (
-              <ListItem
-                key={el.path}
-                disablePadding
-                onClick={() => navigate(`${el.path}`)}
-                className={`${classes.hoverEffect} ${
-                  location.pathname === el.path ? classes.activeLink : ''
-                }`}
-              >
-                <ListItemButton>
-                  <ListItemText primary={el.name} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </div> */}
+          <CategoryIconicHeader
+            selectedTab={selectedCategory}
+            setSelectedTab={setSelectedCategory}
+          />
+        </div>
+      )}
+
+      <div className={classes.tableContainer}>
+        {!tab && (
+          <div
+            style={{
+              width: '300px',
+              position: 'sticky',
+              top: 100,
+              marginTop: '20px',
+            }}
+          >
+            <List sx={{ position: 'sticky', top: 100 }}>
+              {[
+                { name: 'Overview', path: '/wallet/overview' },
+                { name: 'Crypto', path: '/wallet/crypto' },
+                { name: 'Fiat', path: '/wallet/fiat' },
+                { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+                { name: 'IUSD+', path: '/wallet/iusd+' },
+              ].map((el, index) => (
+                <ListItem
+                  key={el.path}
+                  disablePadding
+                  disableRipple
+                  onClick={() => navigate(`${el.path}`)}
+                  className={`${classes.hoverEffect} ${
+                    location.pathname === el.path ? classes.activeLink : ''
+                  }`}
+                >
+                  <ListItemButton
+                    disableRipple
+                    sx={{ '&:hover': { backgroundColor: 'transparent' } }}
+                  >
+                    <ListItemText primary={el.name} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        )}
+
         <div className={classes.maxWidthContainer}>
           <BalanceOverview />
 
