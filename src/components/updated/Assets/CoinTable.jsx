@@ -141,7 +141,11 @@ EnhancedTableHead.propTypes = {
   isMobile: PropTypes.bool.isRequired,
 };
 
-export default function EnhancedTable({ searchQuery, hideAssets }) {
+export default function EnhancedTable({
+  searchQuery,
+  hideAssets,
+  selectedValue,
+}) {
   const classes = useStyles();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -354,7 +358,6 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       (a, b) => a.priority - b.priority || getComparator(order, orderBy)(a, b)
     );
 
-    // If BTC is part of smartCryptoCoins, add it twice
     const finalRows = sortedByPriority.filter((row) => {
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -366,18 +369,41 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       return matchesSearchQuery && passesHideAssets;
     });
 
-    // Add BTC twice if it is in smartCryptoCoins
-    // if (smartCryptoCoins.some((coin) => coin.coinSymbol === 'BTC')) {
-    //   console.log('');
-    //   const btcRow = finalRows.find((row) => row.coin === 'BTC');
-    //   console.log('btcRow', btcRow);
-    //   if (btcRow) {
-    //     // Duplicate BTC row in the final list
-    //     finalRows.push(btcRow);
-    //   }
-    // }
-
-    return finalRows;
+    console.log('finalRows', finalRows);
+    console.log('smartCryptoCoins', smartCryptoCoins);
+    // Additional filters based on `selectedValue`
+    if (selectedValue === 'Fiat') {
+      return finalRows.filter((row) => row.coin === 'USD');
+    } else if (selectedValue === 'IUSD+') {
+      return finalRows.filter(
+        (row) => row.coin === 'IUSD+' || row.coin === 'iUSD+'
+      );
+    } else if (selectedValue === 'Crypto') {
+      return finalRows.filter((row) => {
+        const isSmartCryptoNote =
+          row.notes.includes('Smart Crypto Surge') ||
+          row.notes.includes('Smart Crypto Ripple') ||
+          row.notes.includes('Smart Crypto Wave') ||
+          row.notes.includes('xBitcoin Blooming') ||
+          row.notes.includes('xBitcoin Rush') ||
+          row.notes.includes('xBitcoin Bull-Run');
+        return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
+      });
+    } else if (selectedValue === 'Smart Crypto') {
+      return finalRows.filter((row) => {
+        const isSmartCryptoNote =
+          row.notes.includes('Smart Crypto Surge') ||
+          row.notes.includes('Smart Crypto Ripple') ||
+          row.notes.includes('Smart Crypto Wave') ||
+          row.notes.includes('xBitcoin Blooming') ||
+          row.notes.includes('xBitcoin Rush') ||
+          row.notes.includes('xBitcoin Bull-Run');
+        return isSmartCryptoNote; // Include only rows with Smart Crypto notes
+      });
+    } else {
+      // Default case for Overview or other values
+      return finalRows;
+    }
   }, [
     sortedRows,
     searchQuery,
@@ -385,6 +411,7 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
     order,
     orderBy,
     preferredOrder,
+    selectedValue,
     smartCryptoCoins,
   ]);
 
@@ -407,53 +434,31 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
   );
   console.log('firstSmartCryptoRowIndex', firstSmartCryptoRowIndex);
 
-  const groupedRows0 = (rows) => {
-    const xBitcoinRows = [];
-    const smartCryptoRows = [];
-    const otherCoinRows = [];
-
-    // Separate rows into categories
-    rows.forEach((row) => {
-      if (
-        row.notes &&
-        (row.notes.startsWith('xBitcoin Blooming') ||
-          row.notes.startsWith('xBitcoin Rush') ||
-          row.notes.startsWith('xBitcoin Bull-Run'))
-      ) {
-        xBitcoinRows.push(row);
-      } else if (
-        row.notes &&
-        ['Wave', 'Surge', 'Ripple'].some((type) => row.notes.includes(type))
-      ) {
-        smartCryptoRows.push(row);
-      } else {
-        otherCoinRows.push(row);
-      }
-    });
-
-    // Sort 'otherCoinRows' based on preferred order
-    const sortedOtherCoins = otherCoinRows.sort((a, b) => {
-      const aIndex = preferredOrder.indexOf(a.coin);
-      const bIndex = preferredOrder.indexOf(b.coin);
-
-      // If a coin is in preferredOrder, it will have an index >= 0
-      // Sort coins from preferredOrder first, then others by their original order
-      if (aIndex !== -1 && bIndex === -1) return -1; // 'a' is in preferredOrder, 'b' is not
-      if (bIndex !== -1 && aIndex === -1) return 1; // 'b' is in preferredOrder, 'a' is not
-      return aIndex - bIndex; // Sort coins within preferredOrder based on their position
-    });
-
-    const organizedRows = [
-      { category: 'Coins', rows: sortedOtherCoins },
-      ...(xBitcoinRows.length > 0
-        ? [{ category: 'Smart Crypto x-Bitcoin', rows: xBitcoinRows }]
-        : []), // Only include 'x-Bitcoin' if there are rows
-      ...(smartCryptoRows.length > 0
-        ? [{ category: 'Smart Crypto x-Blue', rows: smartCryptoRows }]
-        : []), // Only include 'x-Blue' if there are rows
-    ];
-
-    return organizedRows;
+  const applySelectedValue = (organizedRows, selectedValue) => {
+    if (['Fiat', 'IUSD+', 'Crypto'].includes(selectedValue)) {
+      // Use only the "Other Coins" category
+      const otherCoinsCategory = organizedRows.find(
+        (category) => category.category === 'Other Coins'
+      );
+  
+      if (!otherCoinsCategory) return []; // Return empty if no "Other Coins" category exists
+  
+      const filteredRows = otherCoinsCategory.rows.filter((row) => {
+        if (selectedValue === 'Fiat') return row.coin === 'USD';
+        if (selectedValue === 'IUSD+') return row.coin === 'IUSD+' || row.coin === 'iUSD+';
+        return true; // Include all rows for "Crypto"
+      });
+  
+      return filteredRows.length > 0
+        ? [{ category: 'Other Coins', rows: filteredRows }]
+        : [];
+    } else if (['Smart Crypto'].includes(selectedValue)) {
+      // Exclude the "Other Coins" category
+      return organizedRows.filter((category) => category.category !== 'Other Coins');
+    } else {
+      return organizedRows;
+    }
+  
   };
 
   const groupedRows = (rows) => {
@@ -507,7 +512,13 @@ export default function EnhancedTable({ searchQuery, hideAssets }) {
       rows: categories[category],
     }));
 
-    return organizedRows;
+    console.log('organizedRows', organizedRows);
+    const filteredOrganizedRows = applySelectedValue(
+      organizedRows,
+      selectedValue
+    );
+    console.log('filteredOrganizedRows', filteredOrganizedRows);
+    return filteredOrganizedRows;
   };
 
   // Format categories

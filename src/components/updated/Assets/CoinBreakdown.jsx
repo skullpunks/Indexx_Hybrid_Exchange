@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CoinBreakdown = () => {
+const CoinBreakdown = ({ selectedValue }) => {
   const classes = useStyles();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,7 +149,7 @@ const CoinBreakdown = () => {
         </Box>
       </Box>
 
-      <EnhancedTable searchQuery={searchQuery} hideAssets={hideAssets} />
+      <EnhancedTable searchQuery={searchQuery} hideAssets={hideAssets} selectedValue={selectedValue}/>
     </Box>
   );
 };
