@@ -101,7 +101,7 @@ const BalanceOverview = () => {
   const [visibleTotalBalance, setVisibleTotalBalance] = useState(false);
   const [visibleTotalInvestment, setVisibleTotalInvestment] = useState(false);
   const [profit, setProfit] = useState({ value: 0, percentage: 0 });
-
+  const [email, setEmail] = useState('');
   const handleToggleVisibility = () => {
     setVisible(!visible);
   };
@@ -115,11 +115,13 @@ const BalanceOverview = () => {
   const handleToggleTotalInvestmentVisibility = () => {
     setVisibleTotalInvestment(!visibleTotalInvestment);
   };
+
   useEffect(() => {
     const fetchUserWallets = async () => {
       setIsLoading(true);
       try {
         let email = String(localStorage.getItem('email'));
+        setEmail(email);
         if (!email) {
           navigate('/auth/login');
           return;
@@ -209,7 +211,7 @@ const BalanceOverview = () => {
       <Box className={classes.balanceSection}>
         <Box className={classes.balanceSectionWrapper}>
           <Box className={classes.header}>
-            <Typography variant="h6">Estimated Balance</Typography>
+            <Typography variant="h6">{email === 'wallet@azooca.com' ? '10% Balance' : 'Estimated Balance'}</Typography>
             <div
               className={classes.eyeIcon}
               onClick={handleToggleVisibility}
@@ -248,7 +250,7 @@ const BalanceOverview = () => {
       </Box>
       <Box className={classes.balanceSectionWrapper}>
         <Box className={classes.header}>
-          <Typography variant="h6">Staked Balance</Typography>
+          <Typography variant="h6">{email === 'wallet@azooca.com' ? '3% Balance' : 'Staked Balance'}</Typography>
           <div
             className={classes.eyeIcon}
             onClick={handleToggleStakingVisibility}

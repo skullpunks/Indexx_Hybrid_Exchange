@@ -23,6 +23,8 @@ import smartCryptoLogo from '../../../assets/updated/smartCrypto/smartCryptoLogo
 import CategoryIconicHeader from './CategoryIconicHeader';
 import CreateOwnPlan from './CreateOwnPlan';
 import { useLocation, useNavigate } from 'react-router-dom';
+import initialTokens from '../../../utils/Tokens.json';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
@@ -182,6 +184,8 @@ const SmartCrypto = () => {
     categoryValue === 'x-blue' || !categoryValue ? 0 : 1
   );
 
+  const [allTokens, setAllTokens] = useState([]);
+  //const [selectedCategory, setSelectedCategory] = useState(0);
   const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const descriptionXBlueData = [
     { name: '', description: '', img: '' },
@@ -228,6 +232,12 @@ const SmartCrypto = () => {
   };
 
   useEffect(() => {
+    let getRequiredCoin = initialTokens.filter(
+      (x) => x.commonToken === true && x.isStock === false && x.isETF === false
+    );
+    setAllTokens(getRequiredCoin);
+  }, []);
+  useEffect(() => {
     setCategory(selectedCategory === 0 ? 'x-Blue' : 'x-Bitcoin');
   }, [selectedCategory]);
   useEffect(() => {
@@ -254,9 +264,14 @@ const SmartCrypto = () => {
           ],
         };
 
+        console.log('sortedData', sortedData);
         const applicableNames = categoryFilters[category] || [];
+        console.log('applicableNames', applicableNames);
+        // Filter with partial matches
         const filteredData = sortedData.filter((pkg) =>
-          applicableNames.includes(pkg.portfolioName)
+          applicableNames.some((name) =>
+            pkg.portfolioName.toLowerCase().includes(name.toLowerCase())
+          )
         );
 
         console.log('Filtered Data:', filteredData);
@@ -287,8 +302,12 @@ const SmartCrypto = () => {
       };
 
       const applicableNames = categoryFilters[category] || [];
+
+      // Filter with partial matches
       const filteredByCategory = packagesData.filter((pkg) =>
-        applicableNames.includes(pkg.portfolioName)
+        applicableNames.some((name) =>
+          pkg.portfolioName.toLowerCase().includes(name.toLowerCase())
+        )
       );
 
       // Filtering logic based on selectedInnerTab
@@ -458,8 +477,8 @@ const SmartCrypto = () => {
           <div className={classes.cardWrapper}>
             {loading ? (
               <p>Loading...</p>
-            ) : filteredPackages.length > 0 ? (
-              filteredPackages.map((pkg) => (
+            ) : filteredPackages?.length > 0 ? (
+              filteredPackages?.map((pkg) => (
                 <div key={pkg._id} className={classes.cardContainer}>
                   <h3>
                     {pkg.portfolioName.includes('Smart Crypto Ripple') &&
@@ -512,45 +531,46 @@ const SmartCrypto = () => {
             ) : (
               <p>No packages found.</p>
             )}
-            {/* <div className={classes.cardContainer}>
-              <h3>Can’t find a plan you like?</h3>
-              <div className={classes.flexContainer}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                  }}
-                >
-                  <p style={{ marginBottom: '10px' }}>
-                    Choose and create your own plan!
-                  </p>
-                  <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                    <Avatar />
-                  </AvatarGroup>
+            {loading ? (
+              <></>
+            ) : (
+              <div className={classes.cardContainer}>
+                <h3>Can’t find a plan you like?</h3>
+                <div className={classes.flexContainer}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    <p style={{ marginBottom: '10px' }}>
+                      Choose and create your own plan!
+                    </p>
+                    <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
+                      {allTokens?.map((crypto) => (
+                        <Avatar
+                          key={crypto._id}
+                          alt={crypto.name}
+                          src={getImage(crypto?.image)}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </div>
+                </div>
+                <div className={classes.buttonContainer}>
+                  <GenericButton
+                    text="Create your own plan!"
+                    className={
+                      category === 'x-Blue'
+                        ? classes.blueButton
+                        : classes.yellowButton
+                    }
+                    onClick={() => setCreateOwnPlan(true)}
+                  />
                 </div>
               </div>
-              <div className={classes.buttonContainer}>
-                <GenericButton
-                  text="Create your own plan!"
-                  className={
-                    category === 'x-Blue'
-                      ? classes.blueButton
-                      : classes.yellowButton
-                  }
-                  onClick={() => setCreateOwnPlan(true)}
-                />
-              </div>
-            </div> */}
+            )}
           </div>
         </div>
 
@@ -579,6 +599,7 @@ const SmartCrypto = () => {
         <CreateOwnPlan
           onClose={() => setCreateOwnPlan(false)}
           category={category}
+          filteredTokens={allTokens}
         />
       )}
     </>
