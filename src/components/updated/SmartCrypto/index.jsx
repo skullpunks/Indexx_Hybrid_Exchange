@@ -231,6 +231,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignitems: 'center',
     textAlign: 'center',
+    transition: 'all .2s linear',
+    '&:hover': {
+      '& > img': {
+        transform: 'scale(1.05)',
+        transition: 'all .2s linear',
+      },
+    },
   },
   blueSmCardHover: {
     '&:hover': {
@@ -250,8 +257,12 @@ const useStyles = makeStyles((theme) => ({
     margin: '200px 0px',
     '& h3': {
       fontSize: '48px',
-      marginBottom: '30px',
+      marginBottom: '20px',
       fontWeight: '500',
+    },
+    '& p': {
+      fontSize: '14px',
+      marginBottom: '50px',
     },
   },
   plusContainer: {
@@ -558,6 +569,7 @@ const SmartCrypto = () => {
         </div>
         <div className={classes.cardRoot}>
           <h3>Get to know Smart Crypto</h3>
+          <p>We offers two exclusive strategies, x-Blue, x-Bitcoin </p>
           <div className={classes.cardContainer}>
             <div className={classes.card}>
               <div className={classes.imgContainer}>
