@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
       position: 'absolute',
       left: 20,
-      top: '95%',
+      top: '90%',
       transform: 'translateY(-50%)', // vertical alignment
     },
   },
@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative', // for the pseudo-element
     background: 'none',
     color: '#FFBB00',
+    marginBottom: '10px',
     '&:hover': {
       backgroundColor: 'transparent',
       borderBottom: `0px solid ${
@@ -109,13 +110,16 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
       position: 'absolute',
       left: 20,
-      top: '95%',
+      top: '90%',
       transform: 'translateY(-50%)',
     },
   },
   tableContainer: {
     display: 'flex',
     padding: '0px 20px',
+    maxWidth: '1540px',
+    width: '100%',
+    margin: 'auto',
     [theme.breakpoints.down('md')]: {
       padding: '0px',
     },

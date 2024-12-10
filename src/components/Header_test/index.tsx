@@ -663,15 +663,27 @@ const HeaderTest = () => {
                 <>
                   <li
                     className="main"
-                    onMouseEnter={() => updateBackDropVisibility('enter')}
-                    onMouseLeave={() => updateBackDropVisibility('leave')}
+                    onMouseEnter={() =>
+                      updateBackDropVisibility(
+                        !element.hasMegaDrop ? '' : 'enter'
+                      )
+                    }
+                    onMouseLeave={() =>
+                      updateBackDropVisibility(
+                        !element.hasMegaDrop ? '' : 'leave'
+                      )
+                    }
                   >
                     <a
                       href={element.href}
                       className={`desktop-item ${
                         element.active ? 'link_active' : ''
                       }`}
-                      onMouseEnter={() => updateBackDropVisibility('enter')}
+                      onMouseEnter={() =>
+                        updateBackDropVisibility(
+                          !element.hasMegaDrop ? '' : 'enter'
+                        )
+                      }
                     >
                       {element.mainTextDesktop}
                     </a>

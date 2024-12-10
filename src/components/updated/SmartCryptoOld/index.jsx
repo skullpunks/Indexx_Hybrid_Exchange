@@ -24,10 +24,6 @@ import CategoryIconicHeader from './CategoryIconicHeader';
 import CreateOwnPlan from './CreateOwnPlan';
 import { useLocation, useNavigate } from 'react-router-dom';
 import initialTokens from '../../../utils/Tokens.json';
-import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
-import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
-import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
-import DetailPopup from './DetailPopup';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -36,17 +32,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '50px auto',
     padding: '24px',
   },
-  contentContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: '100px auto',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: '30px',
-    },
-  },
+  contentContainer: {},
   descriptionWrapper: {
     display: 'flex',
     gap: '10px',
@@ -81,14 +67,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardContainer: {
+    border:
+      theme.palette.mode === 'dark'
+        ? '1px solid rgb(71, 77, 87)'
+        : `1px solid ${theme.palette.divider}`,
+    width: '32.7%',
+    background: theme.palette.mode === 'dark' ? theme.palette.divider : '#fff',
+    padding: '20px',
     display: 'flex',
-    justifyContent: 'center',
-
-    gap: '20px',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+    gap: '10px',
+    margin: '0px',
+    minWidth: 0,
+    flexDirection: 'column',
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+    },
+    '& h3': {
+      fontSize: '16px',
+      fontWeight: '500',
+      color: theme.palette.text.primary,
+      margin: '0px 0px 16px',
     },
   },
   flexContainer: {
@@ -142,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
   faqContainer: {
     margin: '80px auto',
     '& h3': {
-      fontSize: '48px',
+      fontSize: '24px',
       fontWeight: '500',
       marginBottom: '16px',
       [theme.breakpoints.down('md')]: {
@@ -151,134 +149,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   smartCryptoContainer: {
-    flex: 1,
     display: 'flex',
     alignItems: 'center',
-
     gap: '5px',
     '& img': {
       height: '70px',
-    },
-  },
-  headerText: {
-    flex: 1,
-    fontSize: '32px',
-    fontWeight: 'bold',
-  },
-  videoContainer: {
-    width: '100%',
-    height: 'auto',
-    aspectRatio: '16/9', // Ensures the video maintains a 16:9 aspect ratio
-    position: 'relative',
-    overflow: 'hidden',
-    borderRadius: theme.shape.borderRadius,
-    [theme.breakpoints.down('sm')]: {
-      width: '100%', // Full width on mobile
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '100%', // Wider view on tablets and desktops
-      margin: '100px auto', // Centered alignment
-    },
-  },
-  video: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    objectFit: 'cover', // Ensures the video fills the container proportionally
-  },
-  card: {
-    background: theme.palette.divider,
-    position: 'relative',
-    padding: '20px',
-    paddingBottom: '100px',
-    flex: 1,
-    maxWidth: '400px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    '& p': {
-      flex: 1,
-      fontSize: '18px',
-    },
-  },
-  imgContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '10px',
-    '& img': {
-      width: '70px',
-    },
-    '& span': {
-      fontSize: '18px',
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-    },
-  },
-  smallCardContainer: {
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '10px',
-    marginTop: '25px',
-  },
-  smallCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignitems: 'center',
-    textAlign: 'center',
-  },
-  blueSmCardHover: {
-    '&:hover': {
-      '& span': {
-        color: '#08A6FD',
-      },
-    },
-  },
-  yellowSmCardHover: {
-    '&:hover': {
-      '& span': {
-        color: '#FBB002',
-      },
-    },
-  },
-  cardRoot: {
-    margin: '200px 0px',
-    '& h3': {
-      fontSize: '48px',
-      marginBottom: '30px',
-      fontWeight: '500',
-    },
-  },
-  plusContainer: {
-    position: 'absolute',
-    width: '30px',
-    height: '30px',
-    bottom: 15,
-    right: 15,
-    display: 'flex',
-    cursor: 'pointer',
-    justifyContent: 'center',
-    alignItem: 'center',
-    '&:hover': {
-      opacity: 0.6,
-    },
-    '& img': {
-      width: '100%',
-      height: '100%',
-    },
-  },
-  disclaimerContainer: {
-    marginTop: '200px',
-    '& h3': {
-      fontSize: '48px',
-    },
-    '& p': {
-      marginBottom: '25px',
     },
   },
 }));
@@ -292,7 +167,6 @@ const SmartCrypto = () => {
   const plainId = params.get('plan_id');
 
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
-  const [planDetailPopupOpen, setPlanDetailPopupOpen] = useState(false);
   const [selectedInnerTab, setSelectedInnerTab] = useState(
     typeValue === 'ripple' || typeValue === 'blooming'
       ? 1
@@ -306,7 +180,9 @@ const SmartCrypto = () => {
   const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
   const [selectedAllocation, setSelectedAllocation] = useState(null);
   const [filteredPackages, setFilteredPackages] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryValue === 'x-blue' || !categoryValue ? 0 : 1
+  );
 
   const [allTokens, setAllTokens] = useState([]);
   //const [selectedCategory, setSelectedCategory] = useState(0);
@@ -455,6 +331,18 @@ const SmartCrypto = () => {
     });
   }, [selectedInnerTab, packagesData, category]);
 
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (plainId) {
@@ -517,195 +405,203 @@ const SmartCrypto = () => {
     0: 'A stable crypto option with moderate volatility and consistent returns.',
     1: 'A package with 60% Bitcoin and 40% altcoins, balancing stability with growth potential.',
   };
-  const handleBlueCard = () => {
-    setSelectedCategory('x-Blue');
-    setPlanDetailPopupOpen(true);
-  };
 
-  const handleYellowCard = () => {
-    setSelectedCategory('x-Bitcoin');
-    setPlanDetailPopupOpen(true);
-  };
-
+  console.log(
+    categoryDiscription[selectedCategory],
+    selectedCategory,
+    'categoryDiscription[selectedCategory]'
+  );
   return (
     <>
       <div className={classes.Container}>
         <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
         <div className={classes.contentContainer}>
-          <div className={classes.smartCryptoContainer}>
-            <img src={smartCryptoLogo} />
-            <div>
-              <h3 style={{ fontStyle: 'italic' }}>
-                <span style={{ color: '#FBAF01 ' }}>Smart Crypto</span>
-              </h3>
-              <p>Autopilot, hands-off investment vehicle</p>
+          <div className={classes.flexContainer1}>
+            <div className={classes.smartCryptoContainer}>
+              <img src={smartCryptoLogo} />
+              <div>
+                <h3>Smart Crypto</h3>
+                <p>Autopilot, hands-off investment vehicle</p>
+              </div>
             </div>
           </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: '35px',
+            }}
+          >
+            <CategoryIconicHeader
+              selectedTab={selectedCategory}
+              setSelectedTab={(value) => {
+                setSelectedCategory(value);
+                setSelectedInnerTab(0);
+              }}
+            />
 
-          <div className={classes.headerText}>
-            We've outperformed Bitcoin and other altcoins.
+            <p>{categoryDiscription[selectedCategory]}</p>
           </div>
-        </div>
-        <div className={classes.videoContainer}>
-          <iframe
-            className={classes.video}
-            src="https://www.youtube.com/embed/A51sWNnCtD4?si=jLS4KKFWGeIMCqmB"
-            title="Embedded YouTube Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className={classes.cardRoot}>
-          <h3>Get to know Smart Crypto</h3>
-          <div className={classes.cardContainer}>
-            <div className={classes.card}>
-              <div className={classes.imgContainer}>
-                <img src={xBlueIcon} />
-                <span>x-Blue</span>
-              </div>
-              <p>
-                With over 80% altcoins and less than 20% Bitcoin, this offers a
-                diverse range of cryptocurrencies for your investment, allowing
-                you to stay in tune with the heartbeat of the crypto industry.
-              </p>
 
-              <div className={classes.smallCardContainer}>
-                <div
-                  className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
-                >
-                  <img src={ripple} />
-                  <span>Ripple</span>
-                </div>
-
-                <div
-                  className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
-                >
-                  <img src={surge} />
-                  <span>Surge</span>
-                </div>
-
-                <div
-                  className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
-                >
-                  <img src={wave} />
-                  <span>Wave</span>
-                </div>
-              </div>
-
+          <div>
+            <SmartCryptoTabs
+              setSelectedInnerTab={setSelectedInnerTab}
+              selectedInnerTab={selectedInnerTab}
+              backgroundColor={category === 'x-Blue' ? '#07A6FC' : '#F1C232'}
+              category={category}
+            />
+          </div>
+          {selectedInnerTab !== 0 && (
+            <div className={classes.descriptionWrapper}>
               <div
-                className={classes.plusContainer}
-                onClick={() => handleBlueCard()}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin: 0,
+                  gap: '5px',
+                }}
               >
-                <img src={plusIcon} />
+                <img
+                  style={{ height: '50px' }}
+                  src={descriptionData[selectedInnerTab].img}
+                />
+                <h4>{descriptionData[selectedInnerTab].name}</h4>
               </div>
+
+              <p>{descriptionData[selectedInnerTab].description}</p>
             </div>
+          )}
 
-            <div className={classes.card}>
-              <div className={classes.imgContainer}>
-                <img src={xBitcoinIcon} />
-                <span>x-Bitcoin</span>
-              </div>
-              <p>
-                A portfolio consisting of 60% Bitcoin and 40% altcoins offers a
-                balanced approach, combining the stability of Bitcoin with the
-                growth potential of altcoins.
-              </p>
-
-              <div className={classes.smallCardContainer}>
-                <div
-                  className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
-                >
-                  <img src={bloomingIcon} />
-                  <span>Blooming</span>
+          <div className={classes.cardWrapper}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : filteredPackages?.length > 0 ? (
+              filteredPackages?.map((pkg) => (
+                <div key={pkg._id} className={classes.cardContainer}>
+                  <h3>
+                    {pkg.portfolioName.includes('Smart Crypto Ripple') &&
+                      'x-Blue Ripple'}
+                    {pkg.portfolioName.includes('Smart Crypto Wave') &&
+                      'x-Blue Wave'}
+                    {pkg.portfolioName.includes('Smart Crypto Surge') &&
+                      'x-Blue Surge'}
+                    {pkg.portfolioName.includes('xBitcoin Blooming') &&
+                      'x-Bitcoin Blooming'}
+                    {pkg.portfolioName.includes('xBitcoin Bull-Run') &&
+                      'x-Bitcoin Bull-Run'}
+                    {pkg.portfolioName.includes('xBitcoin Rush') &&
+                      'x-Bitcoin Rush'}
+                    ({pkg?.managedBy})
+                  </h3>
+                  <p>{pkg.description}</p>
+                  <div className={classes.flexContainer}>
+                    <div>
+                      <p>Assets</p>
+                      <AvatarGroup max={4}>
+                        {pkg.cryptocurrencies.map((crypto) => (
+                          <Avatar
+                            key={crypto._id}
+                            alt={crypto.name}
+                            src={getImage(crypto?.token)}
+                          />
+                        ))}
+                      </AvatarGroup>
+                    </div>
+                  </div>
+                  <div className={classes.buttonContainer}>
+                    <GenericButton
+                      text="View Allocation"
+                      className={classes.greyButton}
+                      onClick={() => handleViewAllocation(pkg)}
+                    />
+                    <GenericButton
+                      text="Start Plan"
+                      className={
+                        category === 'x-Blue'
+                          ? classes.blueButton
+                          : classes.yellowButton
+                      }
+                      onClick={() => handleClickBuyPlan(pkg)}
+                    />
+                  </div>
                 </div>
-
-                <div
-                  className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
-                >
-                  <img src={rushIcon} />
-                  <span>Rush</span>
+              ))
+            ) : (
+              <p>No packages found.</p>
+            )}
+            {loading ? (
+              <></>
+            ) : (
+              <div className={classes.cardContainer}>
+                <h3>Can’t find a plan you like?</h3>
+                <div className={classes.flexContainer}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    <p style={{ marginBottom: '10px' }}>
+                      Choose and create your own plan!
+                    </p>
+                    <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
+                      {allTokens?.map((crypto) => (
+                        <Avatar
+                          key={crypto._id}
+                          alt={crypto.name}
+                          src={getImage(crypto?.image)}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </div>
                 </div>
-
-                <div
-                  className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
-                >
-                  <img src={bullRunIcon} />
-                  <span>Bull-Run</span>
+                <div className={classes.buttonContainer}>
+                  <GenericButton
+                    text="Create your own plan!"
+                    className={
+                      category === 'x-Blue'
+                        ? classes.blueButton
+                        : classes.yellowButton
+                    }
+                    onClick={() => setCreateOwnPlan(true)}
+                  />
                 </div>
               </div>
-
-              <div
-                className={classes.plusContainer}
-                onClick={() => handleYellowCard()}
-              >
-                <img src={plusIcon} />
-              </div>
-            </div>
+            )}
           </div>
         </div>
+
         <div className={classes.faqContainer}>
           <h3>FAQ</h3>
           <AccordionExpandDefault />
         </div>
-        <div className={classes.disclaimerContainer}>
-          <h3>Note</h3>
-          <p>
-            Let’s talk about how Smart Crypto is structured to ensure both
-            transparency and value for our investors. We’ve built a simple and
-            fair system that supports your investment journey:
-          </p>
-          <p>
-            1. One-Time Setup Fee:
-            <br />
-            To set up your portfolio and align it with your chosen package,
-            there’s a small, one-time setup fee of $150. This covers the initial
-            costs of creating and customizing a portfolio tailored to your risk
-            preferences and financial goals.
-          </p>
-          <p>
-            2. Transaction Fee:
-            <br /> To ensure your portfolio is actively monitored and adjusted
-            to align with market conditions, we charge a 3% Transaction fee.
-            This allows us to continuously optimize your investments with our AI
-            and expert team.
-          </p>
-          <p>
-            3. Profit-Based Success Fee:
-            <br /> Here’s where we align our success with yours. We charge a 15%
-            performance fee only when your portfolio generates a profit. And if
-            your portfolio doesn’t make money? We don’t charge this fee. This
-            ensures we’re fully committed to maximizing your returns.{' '}
-          </p>
-
-          <p>
-            4. Portfolio Flexibility:
-            <br /> Your money is always accessible. You can withdraw your
-            principal and profits at any time—no penalties, no restrictions.
-            Your funds remain under your control.
-          </p>
-          <p>
-            This structure keeps everything clear, fair, and focused on helping
-            you succeed in the ever-changing crypto market. Our goal is to
-            ensure that every step of your investment journey is aligned with
-            your goals and maximizes your potential.
-          </p>
-        </div>
-
-        {planDetailPopupOpen && (
-          <DetailPopup
-            category={selectedCategory}
-            onClose={() => setPlanDetailPopupOpen(false)}
-          />
-        )}
-        {/* <PlanDetails /> */}
       </div>
+      {allocationPopop && (
+        <AllocationPopup
+          onClose={() => setAllocationPopup(false)}
+          category={category}
+          allocationData={selectedAllocation}
+          onStartPopup={(pkg) => handleClickBuyPlan(pkg)}
+        />
+      )}
+
+      {createAPlanPopop && (
+        <CreateAPlanPopup
+          onClose={() => setCreateAPlanPopup(false)}
+          category={category}
+          allocationData={selectedAllocation}
+        />
+      )}
+      {createOwnPlan && (
+        <CreateOwnPlan
+          onClose={() => setCreateOwnPlan(false)}
+          category={category}
+          filteredTokens={allTokens}
+        />
+      )}
     </>
   );
 };

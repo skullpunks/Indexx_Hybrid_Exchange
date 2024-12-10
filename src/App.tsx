@@ -153,6 +153,8 @@ import ConvertPage from './pages/Convert';
 import NewAdvancedRealTimeChartComponent from './components/Graphs/NewTradingView';
 import MarketsPage from './pages/Markets';
 import SmartCryptoPage from './pages/SmartCrypto';
+import SmartCryptoOldPage from './pages/SmartCryptoold';
+import PlanDetails from './components/updated/SmartCrypto/PlanDetails';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -252,7 +254,12 @@ function App() {
                 path="/indexx-exchange/market-data"
                 element={<MarketsPage />}
               />
+              <Route path="/smart-cryptos" element={<SmartCryptoOldPage />} />
               <Route path="/smart-crypto" element={<SmartCryptoPage />} />
+              <Route
+                path="/smart-crypto/plan-detail/:name"
+                element={<PlanDetails />}
+              />
               {/* <Route
                 path="/paypal-partnership-with-indexx"
                 element={<PaypalPartnershipPage />}

@@ -75,10 +75,10 @@ const header_data = [
             name: 'Staking',
             href: '/indexx-exchange/buy-sell/staking',
           },
-          {
-            name: 'Smart Crypto',
-            href: '/smart-crypto?category=x-blue',
-          },
+          // {
+          //   name: 'Smart Crypto',
+          //   href: '/smart-crypto?category=x-blue',
+          // },
         ],
       },
       {
@@ -116,6 +116,14 @@ const header_data = [
         ],
       },
     ],
+  },
+  {
+    mainTextDesktop: 'Smart Crypto',
+    mainTextMob: 'Smart Crypto',
+    active: false,
+    href: '/',
+    hasMegaDrop: false,
+    dropDownContent: [],
   },
   {
     mainTextDesktop: 'Shop',
