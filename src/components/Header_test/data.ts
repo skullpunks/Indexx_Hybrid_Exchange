@@ -121,7 +121,7 @@ const header_data = [
     mainTextDesktop: 'Smart Crypto',
     mainTextMob: 'Smart Crypto',
     active: false,
-    href: '/',
+    href: '/smart-crypto',
     hasMegaDrop: false,
     dropDownContent: [],
   },

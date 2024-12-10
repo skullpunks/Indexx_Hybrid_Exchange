@@ -80,7 +80,7 @@ const Links = [
 const HeaderTest = () => {
   const theme = useTheme() as any;
   const isAuthenticated = localStorage.getItem('access_token') !== null;
-
+  const { pathname } = useLocation();
   const [backdropVisibility, setBackdropVisibility] = useState(false);
   const elementRef = useRef(null);
 
@@ -106,7 +106,7 @@ const HeaderTest = () => {
   const [url, setUrl] = useState('');
   const [loginUserType, setLoginUserType] = useState<any>();
   const [haspowerpack, setHaspowerpack] = useState(false);
-
+  const [authHeader, setAuthHeader] = useState(header_data);
   console.log(haspowerpack, 'has pack');
 
   useEffect(() => {
@@ -124,6 +124,29 @@ const HeaderTest = () => {
       setIsInsideApp(location.pathname.includes('/indexx-exchange/'));
     }
   }, [location]);
+
+  useEffect(() => {
+    setAuthHeader(
+      header_data.map((el) => {
+        if (pathname.includes('/smart-crypto')) {
+          if (el.mainTextDesktop === 'Smart Crypto') {
+            return { ...el, active: true };
+          }
+          if (el.mainTextDesktop === 'Exchange / Buy Crypto') {
+            return { ...el, active: false };
+          }
+        } else {
+          if (el.mainTextDesktop === 'Exchange / Buy Crypto') {
+            return { ...el, active: true };
+          }
+        }
+
+        // In all other cases, set 'active' to false
+        return { ...el, active: false };
+      })
+    );
+  }, [pathname]);
+
   const showText: any = Links.filter((link) =>
     window.location.pathname.includes(link.value)
   ).map((obj) => obj.label);
@@ -659,7 +682,7 @@ const HeaderTest = () => {
                       )}
                     </>
                   ))}
-              {header_data.map((element) => (
+              {authHeader.map((element) => (
                 <>
                   <li
                     className="main"
