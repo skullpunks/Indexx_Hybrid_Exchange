@@ -132,9 +132,15 @@ const Assets = () => {
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState('Asset Wallet');
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedListValue, setSelectedListValue] = useState('Overview');
   const tab = useMediaQuery('(max-width:900px)');
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+  };
+
+  const handleListClick = (value, path) => {
+    setSelectedListValue(value); // Update the selected list value
+    navigate(path); // Navigate to the desired path
   };
 
   return (
@@ -196,7 +202,7 @@ const Assets = () => {
                   key={el.path}
                   disablePadding
                   disableRipple
-                  onClick={() => navigate(`${el.path}`)}
+                  onClick={() => handleListClick(el.name, el.path)} // Handle click
                   className={`${classes.hoverEffect} ${
                     location.pathname === el.path ? classes.activeLink : ''
                   }`}
@@ -214,7 +220,7 @@ const Assets = () => {
         )}
 
         <div className={classes.maxWidthContainer}>
-          <BalanceOverview />
+          <BalanceOverview selectedValue={selectedListValue} />
 
           <Box className={`${classes.buttonContainer}`}>
             <GenericButton
@@ -240,7 +246,7 @@ const Assets = () => {
             />
           </Box>
           <div>
-            <CoinBreakdown />
+            <CoinBreakdown selectedValue={selectedListValue} />
           </div>
         </div>
       </div>

@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BalanceOverview = () => {
+const BalanceOverview = ({ selectedValue }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -211,7 +211,11 @@ const BalanceOverview = () => {
       <Box className={classes.balanceSection}>
         <Box className={classes.balanceSectionWrapper}>
           <Box className={classes.header}>
-            <Typography variant="h6">{email === 'wallet@azooca.com' ? '10% Balance' : 'Estimated Balance'}</Typography>
+            <Typography variant="h6">
+              {email === 'wallet@azooca.com'
+                ? '10% Balance'
+                : 'Estimated Balance'}
+            </Typography>
             <div
               className={classes.eyeIcon}
               onClick={handleToggleVisibility}
@@ -250,7 +254,9 @@ const BalanceOverview = () => {
       </Box>
       <Box className={classes.balanceSectionWrapper}>
         <Box className={classes.header}>
-          <Typography variant="h6">{email === 'wallet@azooca.com' ? '3% Balance' : 'Staked Balance'}</Typography>
+          <Typography variant="h6">
+            {email === 'wallet@azooca.com' ? '3% Balance' : 'Staked Balance'}
+          </Typography>
           <div
             className={classes.eyeIcon}
             onClick={handleToggleStakingVisibility}
