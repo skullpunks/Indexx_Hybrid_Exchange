@@ -14,6 +14,7 @@ import {
   getMinAndMaxOrderValues,
   createCryptoWithdraw,
   validateUserEmail,
+  getCoinPriceByName,
 } from '../../services/api';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import { Typography } from 'antd';
@@ -221,20 +222,23 @@ const WithdrawCryptoSelectCoin = () => {
   };
 
   const withdrawCrypto = async () => {
-
     setLoadings(true);
+    const selectedCoinPrice = await getCoinPriceByName(selectedCoin);
+    let usdAmount = finalAmount * selectedCoinPrice.data.results.data;
+    if (usdAmount > 500) {
+      // ask for KYC is the converted final amount is greater 500 usd
+      const email = localStorage.getItem('email');
+      const response = await validateUserEmail(email);
+      const data = response;
 
-    const email = localStorage.getItem('email');
-    const response = await validateUserEmail(email);
-    const data = response;
-
-    if (data.status === 200) {
-      console.log("data", data)
-      if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
-        setShowPopup(true);
-        setPopupMessage("Please Complete KYC first");
-        setLoadings(false);
-        return;
+      if (data.status === 200) {
+        console.log('data', data);
+        if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+          setShowPopup(true);
+          setPopupMessage('Please Complete KYC first');
+          setLoadings(false);
+          return;
+        }
       }
     }
     const res = await createCryptoWithdraw(
@@ -256,7 +260,10 @@ const WithdrawCryptoSelectCoin = () => {
       setLoadings(false);
     } else {
       setLoadings(false);
-      setPopupMessage(res?.data?.message || 'Failed to withdraw. Please try again or contact support');
+      setPopupMessage(
+        res?.data?.message ||
+          'Failed to withdraw. Please try again or contact support'
+      );
     }
     setShowPopup(true);
   };

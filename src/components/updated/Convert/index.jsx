@@ -423,6 +423,9 @@ const ConvertCrypto = () => {
   };
 
   const handlePreviewConversion = async () => {
+    const selectedCoinPrice = await getCoinPriceByName(fromToken.title);
+    let usdAmount = amount * selectedCoinPrice.data.results.data;
+    if(usdAmount > 500) { // ask for KYC if the converted final amount is greater 500 usd
     const email = localStorage.getItem('email');
     const response = await validateUserEmail(email);
     const data = response;
@@ -435,6 +438,7 @@ const ConvertCrypto = () => {
         return;
       }
     }
+  }
 
     formik.handleSubmit();
     // Perform necessary checks before opening modal

@@ -210,7 +210,7 @@ const BuySellTabs = ({
   }, []);
 
   console.log('defaultReceiveToken', defaultReceiveToken);
-  const handleChange = async(value) => {
+  const handleChange = async (value) => {
     setValue(value);
     if (value === 'buy') {
       setSpendToken({ title: 'USD', image: 'USD' });
@@ -300,17 +300,19 @@ const BuySellTabs = ({
       setPaymentMethodError('');
       await confirmPayment();
     } else if (selectedPaymentMethod && value === 'sell') {
-      
-      const email = localStorage.getItem('email');
-      const response = await validateUserEmail(email);
-      const data = response;
+      if (receiveAmount > 500) {
+        // ask for KYC is the converted final amount is greater 500 usd
+        const email = localStorage.getItem('email');
+        const response = await validateUserEmail(email);
+        const data = response;
 
-      if (data.status === 200) {
-        console.log("data", data)
-        if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
-          setIsModalOpen(true);
-          setGeneralMessage("Please Complete KYC first");
-          return;
+        if (data.status === 200) {
+          console.log('data', data);
+          if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+            setIsModalOpen(true);
+            setGeneralMessage('Please Complete KYC first');
+            return;
+          }
         }
       }
       setPaymentMethodError('');

@@ -70,18 +70,6 @@ const WithdrawAddAccountInfo = () => {
   }, [countryCode, state]);
 
   const handleContinue = async () => {
-    const email = localStorage.getItem('email');
-    const response = await validateUserEmail(email);
-    const data = response;
-
-    if (data.status === 200) {
-      console.log("data", data)
-      if(!data.data.isKYCPass && data.data.kycStatus !== "Completed"){
-        setShowPopup(true);
-        setPopupMessage("Please Complete KYC first");
-        return;
-      }
-    }
 
     navigate('/withdraw-enter-amount', {
       state: {
@@ -191,7 +179,7 @@ const WithdrawAddAccountInfo = () => {
         }))}
       />
       <div style={{ margin: '30px' }}></div>
-        <StyledSelect
+      <StyledSelect
         label="State"
         value={state}
         onChange={(e) => {

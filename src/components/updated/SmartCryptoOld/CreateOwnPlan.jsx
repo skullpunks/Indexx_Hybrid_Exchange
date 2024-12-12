@@ -356,19 +356,6 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
 
   const handleSubmit = async () => {
     setLoadings(true);
-    const email = localStorage.getItem('email');
-    const response = await validateUserEmail(email);
-    const data = response;
-
-    if (data.status === 200) {
-      if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
-        setShowPopup(true);
-        setPopupMessage('Please Complete KYC first');
-        setLoadings(false);
-        return;
-      }
-    }
-
     let hasError = false;
 
     // Validate amount (minimum is 2500 USD)
