@@ -33,7 +33,7 @@ const Security = () => {
         </Button> */}
       </div>
 
-      <div className="row d-flex padding-tb-2x mt-5">
+      {/* <div className="row d-flex padding-tb-2x mt-5">
         <div className="col-lg-8">
           <h4>2-Factor Authentication (2FA)</h4>
           <p className="font_17x">
@@ -135,7 +135,7 @@ const Security = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
