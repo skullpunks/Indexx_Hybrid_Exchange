@@ -31,6 +31,7 @@ import wave from '../../../assets/updated/smartCrypto/Wave.png';
 import PlainsPopup from './PlainsPopup';
 import AllocationPopup from '../SmartCrypto/AllocationPopup';
 import CreateAPlanPopup from '../SmartCrypto/CreateAPlan';
+import CongratulationsPopup from './Congratulations';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -404,7 +405,15 @@ const Assets = () => {
                     >
                       <ListItemButton
                         disableRipple
-                        sx={{ '&:hover': { backgroundColor: 'transparent' } }}
+                        sx={{
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? '#11BE6A'
+                              : 'inherit',
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                          },
+                        }}
                       >
                         <ListItemText primary={el.name} />
                       </ListItemButton>
@@ -533,6 +542,8 @@ const Assets = () => {
           currentPlanName={currentPlanName}
         />
       )}
+
+      {/* {true && <CongratulationsPopup />} */}
     </div>
   );
 };

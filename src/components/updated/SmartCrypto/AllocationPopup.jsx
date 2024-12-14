@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   bidsFullModal: {},
   bnMask: {
     alignItems: 'center',
-    backgroundColor: ' rgba(0, 0, 0, .1)',
+    backgroundColor: ' rgba(0, 0, 0, .6)',
     bottom: 0,
     display: 'flex',
     justifyContent: 'center',
