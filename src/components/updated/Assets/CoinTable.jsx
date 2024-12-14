@@ -147,6 +147,7 @@ export default function EnhancedTable({
   hideAssets,
   selectedValue,
   setupdatePlanMode,
+  setCurrentPlanName,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -775,26 +776,33 @@ export default function EnhancedTable({
                   </TableRow>
                 )}
 
-                <TableRow>
-                  <TableCell colSpan={isMobile ? 3 : 5}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                      }}
-                    >
-                      <Button
-                        variant="outlined"
-                        sx={{ width: 'auto' }}
-                        onClick={() => setupdatePlanMode(true)}
-                      >
-                        Switch Plan
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
+                {group.category.includes('Smart Crypto') &&
+                  group?.rows?.length > 0 && (
+                    <TableRow>
+                      <TableCell colSpan={isMobile ? 3 : 5}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            sx={{ width: 'auto' }}
+                            onClick={() => {
+                              setupdatePlanMode(true);
+                              console.log("group.categorygroup.category", group.category)
+                              setCurrentPlanName(group.category);
+                            }}
+                          >
+                            Switch Plan
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
               </>
             ))}
           </TableBody>

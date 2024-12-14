@@ -242,6 +242,7 @@ const Assets = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedListValue, setSelectedListValue] = useState('Overview');
   const [updatePlanMode, setupdatePlanMode] = useState(false);
+  const [currentPlanName, setCurrentPlanName] = useState('');
   const [userType, setUserType] = useState('Indexx Exchange');
   const [searchQuery, setSearchQuery] = useState('');
   const [hideAssets, setHideAssets] = useState(true);
@@ -268,6 +269,8 @@ const Assets = () => {
       setUserType(user);
     }
   }, []);
+
+  console.log("currentPlanName", currentPlanName)
 
   const xBlueplanDetails = [
     {
@@ -462,6 +465,7 @@ const Assets = () => {
               hideAssets={hideAssets}
               selectedValue={selectedListValue}
               setupdatePlanMode={setupdatePlanMode}
+              setCurrentPlanName={setCurrentPlanName}
             />
           </div>
 
@@ -526,6 +530,7 @@ const Assets = () => {
           category={selectedPlanTab ? 'x-Bitcoin' : 'x-Blue'}
           allocationData={selectedAllocation}
           buttonTextName="Switch Plan"
+          currentPlanName={currentPlanName}
         />
       )}
     </div>
