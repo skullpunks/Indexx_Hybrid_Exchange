@@ -7,7 +7,7 @@ import { Avatar, AvatarGroup, Button, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
-import congratulationIcon from '../../../assets/updated/smartCrypto/congratulationIcon.png';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -77,6 +77,15 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  redButton: {
+    backgroundColor: `red !important`,
+    color: `#000 !important`,
+    maxWidth: '80%',
+    margin: '0 auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   blueButton: {
     maxWidth: '80%',
     backgroundColor: `#07A6FC !important`,
@@ -118,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '30px',
@@ -126,9 +136,10 @@ const useStyles = makeStyles((theme) => ({
       height: '120px',
     },
     '& h2': {
-      fontSize: '42px',
+      fontSize: '26px',
+      textAlign: 'center',
       margin: 0,
-      fontWeight: '500',
+      fontWeight: '600',
     },
   },
   closeBtn: {
@@ -157,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CongratulationsPopup = ({ onClose }) => {
+const SellConfirmationPopup = ({ onClose }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
@@ -184,24 +195,19 @@ const CongratulationsPopup = ({ onClose }) => {
             </div>
           </div>
           <div className={classes.header}>
-            <img src={congratulationIcon} />
-            <h2>Congratulations!</h2>
+            <HelpOutlineIcon style={{ fontSize: '50px', color: '#FEBA00' }} />
+            <h2>Are you sure you want to sell?</h2>
           </div>
 
           <div className={classes.planDetails}>
-            <p>Your plan is switched to</p>
             <img src={bloomingIcon} />
             <p>x-Bitcoin Blooming - kash</p>
           </div>
 
           <div className={classes.btnContainer}>
-            <Button variant="outlined" className={classes.yellowOutlinedBtn}>
-              Explore Smart Crypto
-            </Button>
-            <GenericButton
-              text={'View Asset Wallet'}
-              className={classes.yellowButton}
-            />
+            <GenericButton text={'Cancel'} className={classes.greyButton} />
+
+            <GenericButton text={'Sell Plan'} className={classes.redButton} />
           </div>
         </div>
       </div>
@@ -209,4 +215,4 @@ const CongratulationsPopup = ({ onClose }) => {
   );
 };
 
-export default CongratulationsPopup;
+export default SellConfirmationPopup;

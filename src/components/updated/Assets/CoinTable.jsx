@@ -23,6 +23,7 @@ import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
+import SellConfirmationPopup from './SellConfirmationPopup';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -157,6 +158,7 @@ export default function EnhancedTable({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dense, setDense] = useState(false);
+  const [sellConfirmationPopup, setSellConfirmationPopup] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
@@ -781,16 +783,40 @@ export default function EnhancedTable({
                       style={{
                         display: 'flex',
                         justifyContent: 'center',
+                        gap: '15px',
                         alignItems: 'center',
                         width: '100%',
                       }}
                     >
                       <Button
                         variant="outlined"
-                        sx={{ width: 'auto' }}
+                        sx={{
+                          width: 'auto',
+                          '&:hover': {
+                            background: 'none',
+                            opacity: '.7',
+                          },
+                        }}
                         onClick={() => setupdatePlanMode(true)}
                       >
                         Switch Plan
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          width: 'auto',
+                          color: 'red',
+                          borderColor: 'red',
+                          '&:hover': {
+                            color: 'red',
+                            borderColor: 'red',
+                            opacity: '.7',
+                            background: 'none',
+                          },
+                        }}
+                        onClick={() => setSellConfirmationPopup(true)}
+                      >
+                        Sell Plan
                       </Button>
                     </div>
                   </TableCell>
@@ -800,6 +826,12 @@ export default function EnhancedTable({
           </TableBody>
         </Table>
       </TableContainer>
+
+      {sellConfirmationPopup && (
+        <SellConfirmationPopup
+          onClose={() => setSellConfirmationPopup(false)}
+        />
+      )}
     </Box>
   );
 }
