@@ -177,7 +177,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
+const CreateAPlanPopup = ({
+  onClose,
+  category,
+  allocationData,
+  buttonTextName = 'Start Plan',
+}) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [email, setEmail] = useState('');
@@ -562,7 +567,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
     setShowPopup(false);
     setPopupMessage('');
   };
-  
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -668,7 +673,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
             />
 
             <GenericButton
-              text="Start plan"
+              text={buttonTextName}
               className={
                 category === 'x-Blue'
                   ? classes.blueButton

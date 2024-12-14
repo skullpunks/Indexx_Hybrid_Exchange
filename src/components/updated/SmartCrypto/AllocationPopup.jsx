@@ -138,6 +138,7 @@ const AllocationPopup = ({
   category,
   allocationData,
   onStartPopup,
+  buttonTextName = 'Start Plan',
 }) => {
   const theme = useTheme();
 
@@ -204,7 +205,7 @@ const AllocationPopup = ({
               onClick={onClose}
             />
             <GenericButton
-              text="Start plan"
+              text={buttonTextName}
               className={
                 category === 'x-Blue'
                   ? classes.blueButton

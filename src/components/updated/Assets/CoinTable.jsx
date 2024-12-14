@@ -22,6 +22,7 @@ import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
+import { Button } from '@mui/material';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -145,6 +146,7 @@ export default function EnhancedTable({
   searchQuery,
   hideAssets,
   selectedValue,
+  setupdatePlanMode,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -440,25 +442,27 @@ export default function EnhancedTable({
       const otherCoinsCategory = organizedRows.find(
         (category) => category.category === 'Other Coins'
       );
-  
+
       if (!otherCoinsCategory) return []; // Return empty if no "Other Coins" category exists
-  
+
       const filteredRows = otherCoinsCategory.rows.filter((row) => {
         if (selectedValue === 'Fiat') return row.coin === 'USD';
-        if (selectedValue === 'IUSD+') return row.coin === 'IUSD+' || row.coin === 'iUSD+';
+        if (selectedValue === 'IUSD+')
+          return row.coin === 'IUSD+' || row.coin === 'iUSD+';
         return true; // Include all rows for "Crypto"
       });
-  
+
       return filteredRows.length > 0
         ? [{ category: 'Other Coins', rows: filteredRows }]
         : [];
     } else if (['Smart Crypto'].includes(selectedValue)) {
       // Exclude the "Other Coins" category
-      return organizedRows.filter((category) => category.category !== 'Other Coins');
+      return organizedRows.filter(
+        (category) => category.category !== 'Other Coins'
+      );
     } else {
       return organizedRows;
     }
-  
   };
 
   const groupedRows = (rows) => {
@@ -631,7 +635,6 @@ export default function EnhancedTable({
                     </TableCell>
                   </TableRow>
                 )}
-
                 {/* Rows for each category */}
                 {group.rows.map((row, index) => (
                   <TableRow
@@ -740,7 +743,6 @@ export default function EnhancedTable({
                     )}
                   </TableRow>
                 ))}
-
                 {/* Total Row - Only display for non-'Coins' categories */}
                 {group.category !== 'Coins' && group.rows.length > 0 && (
                   <TableRow>
@@ -772,6 +774,27 @@ export default function EnhancedTable({
                     </TableCell>
                   </TableRow>
                 )}
+
+                <TableRow>
+                  <TableCell colSpan={isMobile ? 3 : 5}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                      }}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{ width: 'auto' }}
+                        onClick={() => setupdatePlanMode(true)}
+                      >
+                        Switch Plan
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
               </>
             ))}
           </TableBody>

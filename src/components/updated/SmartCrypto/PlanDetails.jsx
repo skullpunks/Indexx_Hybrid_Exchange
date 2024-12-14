@@ -13,7 +13,7 @@ import wave from '../../../assets/updated/smartCrypto/Wave.png';
 
 import { Avatar, AvatarGroup } from '@mui/material';
 import GenericButton from '../shared/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getSmartCryptoPackages } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
@@ -22,21 +22,25 @@ import AllocationPopup from './AllocationPopup';
 import CreateAPlanPopup from './CreateAPlan';
 import CreateOwnPlan from './CreateOwnPlan';
 import IconicHeader from '../shared/IconicHeader';
-
+import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
+import DetailPopup from './DetailPopup';
+import xBlueBg from '../../../assets/updated/smartCrypto/x-bluebg.png';
+import xBitcoinBg from '../../../assets/updated/smartCrypto/x-Bitcoinbg.png';
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '1280px',
-    width: '100%',
-    padding: '20px',
+    // maxWidth: '1280px',
+    // width: '100%',
     margin: '0 auto',
   },
   header: {
+    maxWidth: '1280px',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '10px',
-    margin: '100px 0px',
+    margin: '100px auto',
   },
   headerIconContainer: {
     display: 'flex',
@@ -54,9 +58,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardWrapper: {
-    display: 'flex',
-    justifyContent: 'flex-start',
+    maxWidth: '1280px',
     width: '100%',
+    display: 'flex',
+    margin: 'auto',
+    justifyContent: 'flex-start',
     gap: '10px',
     flexWrap: 'wrap',
     [theme.breakpoints.down('md')]: {
@@ -137,6 +143,8 @@ const useStyles = makeStyles((theme) => ({
     color: `#000 !important`,
   },
   createOwnPlan: {
+    maxWidth: '1280px',
+    width: '100%',
     margin: '100px auto',
     display: 'flex',
     flexDirection: 'column',
@@ -151,11 +159,188 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '50px',
     },
   },
+  cardRoot: {
+    maxWidth: '1280px',
+    width: '100%',
+    margin: '200px auto',
+    '& h3': {
+      fontSize: '48px',
+      marginBottom: '20px',
+      fontWeight: '500',
+    },
+    '& p': {
+      fontSize: '14px',
+      marginBottom: '50px',
+    },
+  },
+  plusContainer: {
+    position: 'absolute',
+    width: '30px',
+    height: '30px',
+    bottom: 15,
+    right: 15,
+    display: 'flex',
+    cursor: 'pointer',
+    justifyContent: 'center',
+    alignItem: 'center',
+    '&:hover': {
+      opacity: 0.6,
+    },
+    '& img': {
+      width: '100%',
+      height: '100%',
+    },
+  },
+
+  card: {
+    background: theme.palette.divider,
+    position: 'relative',
+    padding: '20px',
+    paddingBottom: '100px',
+    flex: 1,
+    maxWidth: '400px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    '& p': {
+      flex: 1,
+      fontSize: '18px',
+    },
+  },
+  imgContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '10px',
+    '& img': {
+      width: '70px',
+    },
+    '& span': {
+      fontSize: '18px',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+    },
+  },
+  smallCardContainer: {
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '10px',
+    marginTop: '25px',
+  },
+  smallCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignitems: 'center',
+    textAlign: 'center',
+    transition: 'all .2s linear',
+    '&:hover': {
+      '& > img': {
+        transform: 'scale(1.05)',
+        transition: 'all .2s linear',
+      },
+    },
+  },
+  blueSmCardHover: {
+    '&:hover': {
+      '& span': {
+        color: '#08A6FD',
+      },
+    },
+  },
+  yellowSmCardHover: {
+    '&:hover': {
+      '& span': {
+        color: '#FBB002',
+      },
+    },
+  },
+  cardContainerOne: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    gap: '20px',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+  exploreContainer: {
+    position: 'relative',
+    '& h3': {
+      fontSize: '48px',
+      marginBottom: '50px',
+      fontWeight: '500',
+      maxWidth: '1280px',
+      width: '100%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  absoluteImg: {
+    position: 'absolute',
+    top: -50,
+    right: 0,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    '& img': {
+      width: '50%',
+    },
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  exploreBgContainer: {
+    background: theme.palette.divider,
+    padding: '50px',
+  },
+  contentContainer: {
+    maxWidth: '1280px',
+    width: '100%',
+    margin: 'auto',
+    display: 'flex',
+    gap: '20px',
+    '&>div': {
+      maxWidth: '270px',
+      width: '100%',
+    },
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  planCardRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    background: theme.palette.divider,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '10px',
+    padding: '10px',
+    '& img': {
+      height: '100px',
+      width: '100px',
+      margin: 'auto',
+    },
+    '& h4': {
+      marginTop: '-10px',
+      fontSize: '24px',
+      fontWeight: 'bold',
+    },
+    '& p': {
+      marginBottom: '40px',
+      textAlign: 'center',
+    },
+  },
 }));
 
 const PlanDetails = () => {
   const classes = useStyles();
   const { name } = useParams();
+  const navigate = useNavigate();
   const [category, setCategory] = useState();
   const [details, setDetails] = useState({});
   const [filteredPackages, setFilteredPackages] = useState([]);
@@ -167,6 +352,8 @@ const PlanDetails = () => {
   const [allTokens, setAllTokens] = useState([]);
   const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [planDetailPopupOpen, setPlanDetailPopupOpen] = useState(false);
 
   useEffect(() => {
     let getRequiredCoin = initialTokens.filter(
@@ -219,6 +406,8 @@ const PlanDetails = () => {
         description: '   High volatility, high rewards.',
       });
     }
+
+    setPlanDetailPopupOpen(false);
   }, [name]);
 
   useEffect(() => {
@@ -327,6 +516,60 @@ const PlanDetails = () => {
     setSelectedTab(newValue);
   };
 
+  const handleBlueCard = () => {
+    setSelectedCategory('x-Blue');
+    setPlanDetailPopupOpen(true);
+  };
+
+  const handleYellowCard = () => {
+    setSelectedCategory('x-Bitcoin');
+    setPlanDetailPopupOpen(true);
+  };
+
+  const xBlueplanDetails = [
+    {
+      image: ripple,
+      name: 'Ripple',
+      description: 'Designed for stability and stable returns',
+      path: '/smart-crypto/plan-detail/ripple',
+    },
+    {
+      image: surge,
+      name: 'Surge',
+      description: 'Moderate volatility, consistent returns.',
+      path: '/smart-crypto/plan-detail/surge',
+    },
+    {
+      image: wave,
+      name: 'Wave',
+      description: ' High volatility, high potential rewards.',
+      path: '/smart-crypto/plan-detail/wave',
+    },
+  ];
+
+  const xBitcoinplanDetails = [
+    {
+      image: bloomingIcon,
+      name: 'Blooming',
+      description: 'Optimized for low volatility and steady performance.',
+      path: '/smart-crypto/plan-detail/blooming',
+    },
+    {
+      image: rushIcon,
+      name: 'Rush',
+      description: 'Moderate volatility, consistent returns',
+      path: '/smart-crypto/plan-detail/rush',
+    },
+    {
+      image: bullRunIcon,
+      name: 'Bull-Run',
+      description: 'High volatility, high potential returns.',
+      path: '/smart-crypto/plan-detail/bull-run',
+    },
+  ];
+
+  const planDetails =
+    category === 'x-Blue' ? xBlueplanDetails : xBitcoinplanDetails;
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px auto' }}></div>
@@ -447,6 +690,130 @@ const PlanDetails = () => {
         </div>
       </div>
 
+      <div className={classes.exploreContainer}>
+        <h3>Explore {category}</h3>
+        <div className={classes.absoluteImg}>
+          <img src={category === 'x-Blue' ? xBlueBg : xBitcoinBg} alt="" />
+        </div>
+        <div className={classes.exploreBgContainer}>
+          <div className={classes.contentContainer}>
+            {planDetails.map((curr) => (
+              <div className={classes.planCardRoot}>
+                <img src={curr.image} />
+                <h4>{curr.name}</h4>
+                <p>{curr.description}</p>
+                <GenericButton
+                  text="View Package"
+                  className={
+                    category === 'x-Blue'
+                      ? classes.blueButton
+                      : classes.yellowButton
+                  }
+                  onClick={() => {
+                    navigate(curr.path);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className={classes.cardRoot}>
+        <h3>Get to know Smart Crypto</h3>
+        <p>We offers two exclusive strategies, x-Blue, x-Bitcoin </p>
+        <div className={classes.cardContainerOne}>
+          <div className={classes.card}>
+            <div className={classes.imgContainer}>
+              <img src={xBlueIcon} />
+              <span>x-Blue</span>
+            </div>
+            <p>
+              With over 80% altcoins and less than 20% Bitcoin, this offers a
+              diverse range of cryptocurrencies for your investment, allowing
+              you to stay in tune with the heartbeat of the crypto industry.
+            </p>
+
+            <div className={classes.smallCardContainer}>
+              <div
+                className={`${classes.smallCard} ${classes.blueSmCardHover}`}
+                onClick={() => handleBlueCard()}
+              >
+                <img src={ripple} />
+                <span>Ripple</span>
+              </div>
+
+              <div
+                className={`${classes.smallCard} ${classes.blueSmCardHover}`}
+                onClick={() => handleBlueCard()}
+              >
+                <img src={surge} />
+                <span>Surge</span>
+              </div>
+
+              <div
+                className={`${classes.smallCard} ${classes.blueSmCardHover}`}
+                onClick={() => handleBlueCard()}
+              >
+                <img src={wave} />
+                <span>Wave</span>
+              </div>
+            </div>
+
+            <div
+              className={classes.plusContainer}
+              onClick={() => handleBlueCard()}
+            >
+              <img src={plusIcon} />
+            </div>
+          </div>
+
+          <div className={classes.card}>
+            <div className={classes.imgContainer}>
+              <img src={xBitcoinIcon} />
+              <span>x-Bitcoin</span>
+            </div>
+            <p>
+              A portfolio consisting of 60% Bitcoin and 40% altcoins offers a
+              balanced approach, combining the stability of Bitcoin with the
+              growth potential of altcoins.
+            </p>
+
+            <div className={classes.smallCardContainer}>
+              <div
+                className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
+                onClick={() => handleYellowCard()}
+              >
+                <img src={bloomingIcon} />
+                <span>Blooming</span>
+              </div>
+
+              <div
+                className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
+                onClick={() => handleYellowCard()}
+              >
+                <img src={rushIcon} />
+                <span>Rush</span>
+              </div>
+
+              <div
+                className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
+                onClick={() => handleYellowCard()}
+              >
+                <img src={bullRunIcon} />
+                <span>Bull-Run</span>
+              </div>
+            </div>
+
+            <div
+              className={classes.plusContainer}
+              onClick={() => handleYellowCard()}
+            >
+              <img src={plusIcon} />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {allocationPopop && (
         <AllocationPopup
           onClose={() => setAllocationPopup(false)}
@@ -468,6 +835,12 @@ const PlanDetails = () => {
           onClose={() => setCreateOwnPlan(false)}
           category={category}
           filteredTokens={allTokens}
+        />
+      )}
+      {planDetailPopupOpen && (
+        <DetailPopup
+          category={selectedCategory}
+          onClose={() => setPlanDetailPopupOpen(false)}
         />
       )}
     </div>
