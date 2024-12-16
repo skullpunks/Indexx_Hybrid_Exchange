@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     '& img': {
-      height: '70px',
+      height: '40px',
     },
     '& span': {
       fontSize: '24px',

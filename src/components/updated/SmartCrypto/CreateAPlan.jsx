@@ -175,6 +175,35 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'right',
     },
   },
+  switchPlanContainer: {
+    padding: '16px',
+    marginTop: '20px',
+    backgroundColor: theme.palette.mode === 'dark' ? '#2c2f36' : '#f9f9f9',
+    borderRadius: '8px',
+    textAlign: 'left',
+    '& p': {
+      fontSize: '14px',
+      fontWeight: 500,
+      color: theme.palette.text.primary,
+      marginBottom: '12px',
+    },
+    '& strong': {
+      fontWeight: 600,
+    },
+    '& div': {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '8px',
+    },
+    '& input': {
+      marginRight: '8px',
+    },
+    '& label': {
+      fontSize: '14px',
+      fontWeight: 500,
+      color: theme.palette.text.primary,
+    },
+  },
 }));
 
 const CreateAPlanPopup = ({
@@ -182,6 +211,7 @@ const CreateAPlanPopup = ({
   category,
   allocationData,
   buttonTextName = 'Start Plan',
+  currentPlanName = '',
 }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
@@ -205,6 +235,11 @@ const CreateAPlanPopup = ({
   const [searchParams] = useSearchParams();
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setIsFeeAcknowledged(e.target.checked);
+  };
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -621,48 +656,80 @@ const CreateAPlanPopup = ({
               </div>
             </div>
           </div>
+          {buttonTextName !== 'Switch Plan' && (
+            <>
+              {/* Amount Per Period Section */}
+              <div style={{ width: '100%' }}>
+                <div className={classes.enterAmountContainer}>
+                  <label>Amount Per Period</label>
+                  <InputField
+                    placeholder="The minimum amount is 2500 USD"
+                    type="text"
+                    style={{ marginTop: '0px', marginBottom: '10px' }}
+                    value={usdAmount}
+                    onChange={handleAmountChange}
+                    error={usdAmountError} // Highlight error
+                    helperText={
+                      usdAmountError &&
+                      'Please enter a valid amount of at least 2500 USD'
+                    }
+                    yellowBorders={category !== 'x-Blue'}
+                    blueBorders={category === 'x-Blue'}
+                    endAdornment={
+                      <InputAdornment position="end">USD</InputAdornment>
+                    }
+                  />
+                </div>
+              </div>
+            </>
+          )}
 
-          {/* Amount Per Period Section */}
-          <div style={{ width: '100%' }}>
-            <div className={classes.enterAmountContainer}>
-              <label>Amount Per Period</label>
-              <InputField
-                placeholder="The minimum amount is 2500 USD"
-                type="text"
-                style={{ marginTop: '0px', marginBottom: '10px' }}
-                value={usdAmount}
-                onChange={handleAmountChange}
-                error={usdAmountError} // Highlight error
-                helperText={
-                  usdAmountError &&
-                  'Please enter a valid amount of at least 2500 USD'
-                }
-                yellowBorders={category !== 'x-Blue'}
-                blueBorders={category === 'x-Blue'}
-                endAdornment={
-                  <InputAdornment position="end">USD</InputAdornment>
-                }
-              />
-            </div>
-          </div>
-
-          {/* Payment Method Section */}
-          <div className={classes.selectTypeContainer}>
-            <label>Select Payment Option</label>
-            <CustomSelectBox
-              items={[
-                { name: 'Credit Card', value: 'Credit Card' },
-                { name: 'Paypal', value: 'Paypal' },
-                { name: 'ACH', value: 'ACH' },
-                { name: 'Wire transfer', value: 'Wire transfer' },
-                { name: 'Zelle', value: 'Zelle' },
-                { name: 'TygaPay', value: 'TygaPay' },
-              ]}
-              value={paymentMethod}
-              onChange={handleChange}
-              hasborder
-            />
-          </div>
+          {buttonTextName !== 'Switch Plan' && (
+            <>
+              {/* Payment Method Section */}
+              <div className={classes.selectTypeContainer}>
+                <label>Select Payment Option</label>
+                <CustomSelectBox
+                  items={[
+                    { name: 'Credit Card', value: 'Credit Card' },
+                    { name: 'Paypal', value: 'Paypal' },
+                    { name: 'ACH', value: 'ACH' },
+                    { name: 'Wire transfer', value: 'Wire transfer' },
+                    { name: 'Zelle', value: 'Zelle' },
+                    { name: 'TygaPay', value: 'TygaPay' },
+                  ]}
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  hasborder
+                />
+              </div>
+            </>
+          )}
+          {buttonTextName === 'Switch Plan' && (
+            <>
+              <div className={classes.switchPlanContainer}>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="feeAcknowledgment"
+                    checked={isFeeAcknowledged}
+                    onChange={handleCheckboxChange}
+                  />
+                  <p>
+                  I confirm considering 6% as Gas fees or Transaction Fees for
+                  switching plan from <strong>{currentPlanName}</strong> to{' '}
+                  <strong>
+                    {reformPlanName(
+                      allocationData?.portfolioName,
+                      allocationData?.managedBy
+                    )}
+                  </strong>
+                  .
+                </p>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Action Buttons */}
           <div className={classes.btnContainer}>
@@ -680,7 +747,11 @@ const CreateAPlanPopup = ({
                   : classes.yellowButton
               }
               onClick={handleSubmit}
-              disabled={!usdAmount || usdAmount < 2500 || !paymentMethod} // Disable if invalid
+              disabled={
+                buttonTextName !== 'Switch Plan'
+                  ? ''
+                  : !usdAmount || usdAmount < 2500 || !paymentMethod
+              } // Disable if invalid
               loading={loadings}
             />
           </div>

@@ -149,6 +149,7 @@ export default function EnhancedTable({
   hideAssets,
   selectedValue,
   setupdatePlanMode,
+  setCurrentPlanName,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -793,82 +794,90 @@ export default function EnhancedTable({
                   </TableRow>
                 )}
 
-                <TableRow>
-                  <TableCell colSpan={isMobile ? 3 : 5}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '15px',
-                        alignItems: 'center',
-                        width: '100%',
-                      }}
-                    >
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          maxWidth: '250px',
-                          width: '100%',
-                          color:
-                            userType === 'Indexx Exchange'
-                              ? theme.palette.primary.main
-                              : '#FFA500',
-                          borderColor:
-                            userType === 'Indexx Exchange'
-                              ? theme.palette.primary.main
-                              : '#FFA500',
-
-                          '&:hover': {
-                            color:
-                              userType === 'Indexx Exchange'
-                                ? theme.palette.primary.main
-                                : '#FFA500',
-                            borderColor:
-                              userType === 'Indexx Exchange'
-                                ? theme.palette.primary.main
-                                : '#FFA500',
-
-                            background: 'none',
-                            opacity: '.7',
-                          },
-                        }}
-                        onClick={() => setupdatePlanMode(true)}
-                      >
-                        Switch Plan
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          maxWidth: '250px',
-                          width: '100%',
-                          color:
-                            userType === 'Indexx Exchange'
-                              ? theme.palette.primary.main
-                              : '#FFA500',
-                          borderColor:
-                            userType === 'Indexx Exchange'
-                              ? theme.palette.primary.main
-                              : '#FFA500',
-                          '&:hover': {
-                            color:
-                              userType === 'Indexx Exchange'
-                                ? theme.palette.primary.main
-                                : '#FFA500',
-                            borderColor:
-                              userType === 'Indexx Exchange'
-                                ? theme.palette.primary.main
-                                : '#FFA500',
-                            opacity: '.7',
-                            background: 'none',
-                          },
-                        }}
-                        onClick={() => setSellConfirmationPopup(true)}
-                      >
-                        Sell Plan
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
+                {group.category.includes('Smart Crypto') &&
+                  group?.rows?.length > 0 && (
+                    <TableRow>
+                      <TableCell colSpan={isMobile ? 3 : 5}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: '15px',
+                            alignItems: 'center',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            sx={{
+                              maxWidth: '250px',
+                              width: '100%',
+                              color:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              borderColor:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              '&:hover': {
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                opacity: '.7',
+                                background: 'none',
+                              },
+                            }}
+                            onClick={() => {
+                              setupdatePlanMode(true);
+                              console.log(
+                                'group.categorygroup.category',
+                                group.category
+                              );
+                              setCurrentPlanName(group.category);
+                            }}
+                          >
+                            Switch Plan
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            sx={{
+                              maxWidth: '250px',
+                              width: '100%',
+                              color:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              borderColor:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              '&:hover': {
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                opacity: '.7',
+                                background: 'none',
+                              },
+                            }}
+                            onClick={() => setSellConfirmationPopup(true)}
+                          >
+                            Sell Plan
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
               </>
             ))}
           </TableBody>
