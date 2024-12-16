@@ -271,7 +271,7 @@ const Assets = () => {
     }
   }, []);
 
-  console.log("currentPlanName", currentPlanName)
+  console.log('currentPlanName', currentPlanName);
 
   const xBlueplanDetails = [
     {
@@ -543,7 +543,7 @@ const Assets = () => {
         />
       )}
 
-      {true && <CongratulationsPopup category={'x-Blue'} />}
+      {/* {true && <CongratulationsPopup category={'x-Blue'} />} */}
     </div>
   );
 };

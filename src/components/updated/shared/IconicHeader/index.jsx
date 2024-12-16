@@ -38,7 +38,8 @@ import giftHive from '../../../../assets/updated/iconicHeader/gift_hive.svg';
 import assetHive from '../../../../assets/updated/iconicHeader/asset_wallet_hive.svg';
 import hiveHive from '../../../../assets/updated/iconicHeader/hive_hive.svg';
 import smartCrypto from '../../../../assets/updated/smartCrypto/smartCryptoLogo.png';
-import smartCryptoGreen from '../../../../assets/updated/smartCrypto/green.png';
+import smartCryptoWhite from '../../../../assets/updated/smartCrypto/smartcryptowhite.svg';
+import smartCryptoBlack from '../../../../assets/updated/smartCrypto/smartcryptoblack.svg';
 import { checkByemail } from '../../../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
@@ -189,8 +190,8 @@ export default function IconicHeader({ selectedTab, onChange }) {
     },
     {
       label: 'Smart Crypto',
-      light: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
-      dark: userType === 'Indexx Exchange' ? smartCryptoGreen : smartCrypto,
+      light: userType === 'Indexx Exchange' ? smartCryptoBlack : smartCrypto,
+      dark: userType === 'Indexx Exchange' ? smartCryptoWhite : smartCrypto,
       path: '/smart-crypto?category=x-blue',
       search: '',
     },

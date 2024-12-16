@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import GenericButton from '../components/updated/shared/Button';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
-import notFoundImg from '../assets/updated/404.png';
+import notFoundImg from '../assets/updated/404.svg';
 const useStyles = makeStyles({
   container: {
     textAlign: 'center',
