@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SellConfirmationPopup = ({ onClose }) => {
+const SellConfirmationPopup = ({ onClose, category }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
@@ -207,7 +207,14 @@ const SellConfirmationPopup = ({ onClose }) => {
           <div className={classes.btnContainer}>
             <GenericButton text={'Cancel'} className={classes.greyButton} />
 
-            <GenericButton text={'Sell Plan'} className={classes.redButton} />
+            <GenericButton
+              text={'Sell Plan'}
+              className={
+                category === 'x-Bitcoin'
+                  ? classes.blueButton
+                  : classes.yellowButton
+              }
+            />
           </div>
         </div>
       </div>

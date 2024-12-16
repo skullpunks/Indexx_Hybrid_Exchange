@@ -24,6 +24,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
 import SellConfirmationPopup from './SellConfirmationPopup';
+import { useTheme } from '@mui/material/styles';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -98,6 +99,7 @@ const headCells = [
 
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort, isMobile } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -105,7 +107,6 @@ function EnhancedTableHead(props) {
   if (isMobile) {
     return null; // Don't render the table header on mobile devices
   }
-
   return (
     <TableHead>
       <TableRow>
@@ -151,6 +152,7 @@ export default function EnhancedTable({
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -160,6 +162,14 @@ export default function EnhancedTable({
   const [dense, setDense] = useState(false);
   const [sellConfirmationPopup, setSellConfirmationPopup] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const [userType, setUserType] = useState('Indexx Exchange');
+
+  useEffect(() => {
+    const user = localStorage.getItem('userType');
+    if (user) {
+      setUserType(user);
+    }
+  }, []);
 
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
@@ -569,7 +579,6 @@ export default function EnhancedTable({
       totalStakingBalance += row.staking_balance * row.coin_price;
     });
 
-    console.log(totalAmount, totalStakingBalance);
     return {
       totalAmount,
       totalStakingBalance,
@@ -613,7 +622,11 @@ export default function EnhancedTable({
                     <TableCell
                       colSpan={isMobile ? 3 : 5}
                       sx={{
-                        borderBottom: '1px solid orange',
+                        borderBottom: `1px solid ${
+                          userType === 'Indexx Exchange'
+                            ? theme.palette.primary.main
+                            : '#FFA500'
+                        }`,
                       }}
                     />
                   </TableRow>
@@ -626,7 +639,10 @@ export default function EnhancedTable({
                       sx={{
                         borderBottom: 'none',
                         fontWeight: 'bold',
-                        color: 'orange',
+                        color:
+                          userType === 'Indexx Exchange'
+                            ? theme.palette.primary.main
+                            : '#FFA500',
                         textAlign: 'center',
                       }}
                     >
@@ -791,8 +807,27 @@ export default function EnhancedTable({
                       <Button
                         variant="outlined"
                         sx={{
-                          width: 'auto',
+                          maxWidth: '250px',
+                          width: '100%',
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
+                          borderColor:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
+
                           '&:hover': {
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+                            borderColor:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+
                             background: 'none',
                             opacity: '.7',
                           },
@@ -804,12 +839,25 @@ export default function EnhancedTable({
                       <Button
                         variant="outlined"
                         sx={{
-                          width: 'auto',
-                          color: 'red',
-                          borderColor: 'red',
+                          maxWidth: '250px',
+                          width: '100%',
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
+                          borderColor:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
                           '&:hover': {
-                            color: 'red',
-                            borderColor: 'red',
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+                            borderColor:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
                             opacity: '.7',
                             background: 'none',
                           },
@@ -830,6 +878,7 @@ export default function EnhancedTable({
       {sellConfirmationPopup && (
         <SellConfirmationPopup
           onClose={() => setSellConfirmationPopup(false)}
+          category="x-Blue"
         />
       )}
     </Box>

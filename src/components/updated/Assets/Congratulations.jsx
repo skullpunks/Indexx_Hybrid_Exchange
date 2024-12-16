@@ -153,11 +153,21 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px !important',
     '&:hover': {
       background: 'none !important',
+      opacity: '.7',
+    },
+  },
+  blueOutlinedBtn: {
+    color: '#07A6FC !important',
+    borderColor: '#07A6FC !important',
+    borderRadius: '10px !important',
+    '&:hover': {
+      background: 'none !important',
+      opacity: '.7',
     },
   },
 }));
 
-const CongratulationsPopup = ({ onClose }) => {
+const CongratulationsPopup = ({ onClose, category }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
@@ -195,12 +205,23 @@ const CongratulationsPopup = ({ onClose }) => {
           </div>
 
           <div className={classes.btnContainer}>
-            <Button variant="outlined" className={classes.yellowOutlinedBtn}>
+            <Button
+              variant="outlined"
+              className={
+                category === 'x-Bitcoin'
+                  ? classes.yellowOutlinedBtn
+                  : classes.blueOutlinedBtn
+              }
+            >
               Explore Smart Crypto
             </Button>
             <GenericButton
               text={'View Asset Wallet'}
-              className={classes.yellowButton}
+              className={
+                category === 'x-Bitcoin'
+                  ? classes.yellowButton
+                  : classes.blueButton
+              }
             />
           </div>
         </div>

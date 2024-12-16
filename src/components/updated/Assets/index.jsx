@@ -538,7 +538,7 @@ const Assets = () => {
         />
       )}
 
-      {/* {true && <CongratulationsPopup />} */}
+      {true && <CongratulationsPopup category={'x-Blue'} />}
     </div>
   );
 };

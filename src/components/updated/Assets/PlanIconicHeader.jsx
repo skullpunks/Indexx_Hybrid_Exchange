@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
-  color: '#FEBA00',
+  color: '#fff',
   width: 'fit-content',
   marginRight: '10px',
   padding: '12px 0px',
@@ -20,7 +20,7 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   position: 'relative',
   background: 'transparent !important',
   '&.active': {
-    color: '#FEBA00',
+    color: '#fff',
     '&::after': {
       content: '""',
       position: 'absolute',
@@ -31,7 +31,7 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
     },
   },
   '&:hover': {
-    color: '#FEBA00',
+    color: '#fff',
     background: 'transparent !important',
     '&::after': {
       content: '""',
