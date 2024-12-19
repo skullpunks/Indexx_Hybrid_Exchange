@@ -574,10 +574,10 @@ export const auth_header_data = [
             name: 'Account & Settings',
             href: '/indexx-exchange/account',
           },
-          // {
-          //   name: 'Bridge',
-          //   href: '/indexx-exchange/bridge',
-          // },
+          {
+            name: 'KYC',
+            href: '/indexx-exchange/account',
+          },
           {
             name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',
@@ -707,10 +707,10 @@ export const auth_header_data_asset_wallet = [
             name: 'Account & Settings',
             href: '/indexx-exchange/account',
           },
-          // {
-          //   name: 'Bridge',
-          //   href: '/indexx-exchange/bridge',
-          // },
+          {
+            name: 'KYC',
+            href: '/indexx-exchange/account',
+          },
           {
             name: 'Hive Dashboard',
             href: '/indexx-exchange/dashboard',

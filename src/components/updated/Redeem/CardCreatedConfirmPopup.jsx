@@ -129,7 +129,7 @@ const CardCreatedConfirmPopup = ({
       Number(amount),
       currentUserEmail,
       currency,
-      selectedImg,
+      selectedImgUrl,
       cardType,
       email
     );

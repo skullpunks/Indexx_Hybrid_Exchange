@@ -123,7 +123,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                   <div className="d-flex align-items-center">
                     <img
                       src={
-                        localStorage.getItem('userlogged') === 'normal'
+                        localStorage.getItem('userType') === 'Indexx Exchange'
                           ? BasicVerfication
                           : HiveVerfication
                       }
@@ -194,7 +194,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                   <div>
                     <img
                       src={
-                        localStorage.getItem('userlogged') === 'normal'
+                        localStorage.getItem('userType') === 'Indexx Exchange'
                           ? BasicVerfication
                           : HiveVerfication
                       }

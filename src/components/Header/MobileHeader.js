@@ -502,6 +502,7 @@ const MobileHeader = () => {
       name: 'Profile',
       subItems: [
         { name: 'Account & Settings', url: '/indexx-exchange/account' },
+        { name: 'KYC', url: '/indexx-exchange/account' },
         { name: 'Bridge', url: '/indexx-exchange/bridge' },
         { name: 'Hive Dashboard', url: '/indexx-exchange/dashboard' },
         { name: 'Deposit', url: '/indexx-exchange/buy-sell/deposit-crypto' },
