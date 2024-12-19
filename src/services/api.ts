@@ -23,7 +23,7 @@ const keySize = 32;
 const algorithm = 'aes-256-cbc';
 const salt = crypto.createHash('sha1').update(secret).digest('hex');
 export let baseAcademyUrl = '';
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
+ if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
   baseAPIURL = 'https://api.indexx.ai';
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -1495,6 +1495,7 @@ interface CryptoCategoryData {
 }
 
 export const switchPlanSmartCryptoPlan = async (
+  currentNewPlanName: string,
   newPortfolioName: string, // Updated field name to match server expectations
   managedBy: string, // Updated field name to match server expectations
   exitingCryptocurrencies: CryptoCategoryData, // Array of cryptocurrency data
@@ -1502,6 +1503,7 @@ export const switchPlanSmartCryptoPlan = async (
 ) => {
   try {
     const result = await API.post('/api/v1/inex/order/switchsmartcryptoPlan', {
+      currentPortfolioName: currentNewPlanName,
       planName: newPortfolioName,
       exitingCryptocurrencies, // Array of cryptocurrencies
       managedBy, // Updated field name

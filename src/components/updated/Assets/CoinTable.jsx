@@ -801,7 +801,7 @@ export default function EnhancedTable({
                 )}
 
                 {group.category.includes('Smart Crypto') &&
-                  group?.rows?.length > 0 && (
+                  group?.rows?.length > 0 && calculateTotal(group.rows).totalAmount > 0 &&(
                     <TableRow>
                       <TableCell colSpan={isMobile ? 3 : 5}>
                         <div

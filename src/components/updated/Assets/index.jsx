@@ -367,7 +367,10 @@ const Assets = () => {
   const [allTokens, setAllTokens] = useState([]);
   const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const tab = useMediaQuery('(max-width:900px)');
-
+  const [congratulationsPopup, setCongratulationsPopup] = useState(false);
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [userSellPlan, setUserPlanName] = useState('');
+  
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -531,7 +534,6 @@ const Assets = () => {
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
     console.log('Selected Plan currentPlanName:', currentPlanName);
-
   };
 
   const handlePlanChange = (plan) => {
@@ -552,6 +554,40 @@ const Assets = () => {
       return Inex;
     }
   };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
+
+  const isCurrentPlan = (planName, managedBy) => {
+    console.log('planName, managedBy', planName, managedBy);
+
+    let currentPlanName = localStorage.getItem('CurrentPlan');
+    let newName = extractPlanDetails(currentPlanName);
+    console.log('newName', newName);
+    if (
+      planName.includes(newName.planName) &&
+      managedBy.includes(newName.managedBy)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div className={classes.container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
@@ -686,20 +722,6 @@ const Assets = () => {
         <div className={classes.switchPlanRoot}>
           <div className={classes.switchPlanHeader}>
             <h2>Switch your Plan</h2>
-
-            <h3>Current Plan</h3>
-            <img src={wave} />
-            <p>Smart Crypto x-Blue Wave-Issah</p>
-          </div>
-
-          <div className={classes.tableContainer1}>
-            <EnhancedTable
-              searchQuery={searchQuery}
-              hideAssets={hideAssets}
-              selectedValue={selectedListValue}
-              setupdatePlanMode={setupdatePlanMode}
-              onPlanChange={handlePlanChange}
-            />
           </div>
 
           <div className={classes.selectNewPlanContainer}>
@@ -777,7 +799,7 @@ const Assets = () => {
                     </div>
                     <div className={classes.cardDescription}>
                       <h4>Description:</h4>
-                      <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
+                      <p>{pkg.description}</p>
                     </div>
                     <div className={classes.buttonContainer1}>
                       <GenericButton
@@ -786,12 +808,20 @@ const Assets = () => {
                         onClick={() => handleViewAllocation(pkg)}
                       />
                       <GenericButton
-                        text="Switch Plan"
+                        text={
+                          !isCurrentPlan(pkg.portfolioName, pkg?.managedBy)
+                            ? 'Switch Plan'
+                            : 'Current Plan'
+                        }
                         className={
                           selectedPlanTab === 0
                             ? classes.blueButtonWithBg
                             : classes.yellowButtonWithBg
                         }
+                        disabled={isCurrentPlan(
+                          pkg.portfolioName,
+                          pkg?.managedBy
+                        )}
                         onClick={() => handleClickBuyPlan(pkg)}
                       />
                     </div>
@@ -833,10 +863,10 @@ const Assets = () => {
                     </AvatarGroup>
                   </div>
                 </div>
-                <div className={classes.cardDescription}>
+                {/* <div className={classes.cardDescription}>
                   <h4>Description:</h4>
                   <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
-                </div>
+                </div> */}
                 <div className={classes.buttonContainer1}>
                   <GenericButton
                     text="Create your own plan!"
@@ -884,6 +914,12 @@ const Assets = () => {
           allocationData={selectedAllocation}
           buttonTextName="Switch Plan"
           currentPlanName={currentPlanName}
+          confirmSwitch={(userSellPlanReformed, userSellPlan) => {
+            setCreateAPlanPopup(false);
+            setCongratulationsPopup(true);
+            setUserPlanNameReformed(userSellPlanReformed);
+            setUserPlanName(userSellPlan);
+          }}
         />
       )}
       {createOwnPlan && (
@@ -894,7 +930,14 @@ const Assets = () => {
         />
       )}
 
-      {/* {true && <CongratulationsPopup category={'x-Blue'} />} */}
+      {congratulationsPopup && (
+        <CongratulationsPopup
+          onClose={() => setCongratulationsPopup(false)}
+          category={'x-Blue'}
+          userSellPlanReformed={userSellPlanReformed}
+          userSellPlan={userSellPlan}
+        />
+      )}
     </div>
   );
 };

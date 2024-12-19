@@ -213,6 +213,7 @@ const CreateAPlanPopup = ({
   allocationData,
   currentPlanName,
   buttonTextName = 'Start Plan',
+  confirmSwitch,
 }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
@@ -453,8 +454,14 @@ const CreateAPlanPopup = ({
       switchCurrencies, // Array of cryptocurrency data
       email
     );
+
     console.log('createSwitch', createSwitch);
     setLoadings(false);
+    let userSellPlanReformed = reformPlanName(
+      allocationData?.portfolioName,
+      allocationData?.managedBy
+    );
+    confirmSwitch(userSellPlanReformed, allocationData?.portfolioName);
   };
 
   const confirmPayment = async () => {
