@@ -6,6 +6,8 @@ import CoinBreakdown from './CoinBreakdown';
 import IconicHeader from '../shared/IconicHeader';
 import GenericButton from '../shared/Button';
 import {
+  Avatar,
+  AvatarGroup,
   Box,
   List,
   ListItem,
@@ -31,7 +33,11 @@ import wave from '../../../assets/updated/smartCrypto/Wave.png';
 import PlainsPopup from './PlainsPopup';
 import AllocationPopup from '../SmartCrypto/AllocationPopup';
 import CreateAPlanPopup from '../SmartCrypto/CreateAPlan';
-
+import CongratulationsPopup from './Congratulations';
+import { getSmartCryptoPackages } from '../../../services/api';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
+import initialTokens from '../../../utils/Tokens.json';
+import CreateOwnPlan from '../SmartCrypto/CreateOwnPlan';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -57,6 +63,54 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
+  buttonContainer1: {
+    display: 'flex',
+    gap: '10px',
+  },
+  greyButton: {
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? `rgb(71, 77, 87) !important`
+        : `${theme.palette.divider} !important`,
+    color: `${theme.palette.text.primary} !important`,
+  },
+  yellowButton: {
+    backgroundColor: `transparent !important`,
+    background: `none !important`,
+    color: `#FEBA00 !important`,
+    border: `1px solid #FEBA00 !important`,
+    '&:hover': {
+      backgroundColor: `#FEBA00 !important`,
+      color: `#000 !important`,
+    },
+  },
+  blueButtonWithBg: {
+    backgroundColor: `#07A6FC !important`,
+    color: `#000 !important`,
+  },
+  yellowButtonWithBg: {
+    backgroundColor: `#FEBA00 !important`,
+    color: `#000 !important`,
+  },
+
+  blueButton: {
+    backgroundColor: `transparent !important`,
+    background: `none !important`,
+    color: `#07A6FC !important`,
+    border: `1px solid #07A6FC !important`,
+    '&:hover': {
+      backgroundColor: `#07A6FC !important`,
+      color: `#000 !important`,
+    },
+  },
+  blueActive: {
+    backgroundColor: `#07A6FC !important`,
+    color: `#000 !important`,
+  },
+  yellowActive: {
+    backgroundColor: `#FEBA00 !important`,
+    color: `#000 !important`,
+  },
   button: {
     fontSize: '13px !important',
     lineHeight: '10px !important',
@@ -78,6 +132,63 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
       },
     },
+  },
+  cardWrapper: {
+    maxWidth: '1280px',
+    width: '100%',
+    display: 'flex',
+    margin: '50px auto',
+    justifyContent: 'flex-start',
+    gap: '10px',
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  createOwnPlan: {
+    maxWidth: '1280px',
+    width: '100%',
+    margin: '100px auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '&>h3': {
+      fontSize: '38px',
+      textAlign: 'center',
+    },
+    '&>p': {
+      textAlign: 'center',
+      marginBottom: '50px',
+    },
+  },
+  cardContainer: {
+    border:
+      theme.palette.mode === 'dark'
+        ? '1px solid rgb(71, 77, 87)'
+        : `1px solid ${theme.palette.divider}`,
+    width: '32.7%',
+    background: theme.palette.mode === 'dark' ? theme.palette.divider : '#fff',
+    padding: '20px',
+    display: 'flex',
+    gap: '10px',
+    margin: '0px',
+    minWidth: 0,
+    flexDirection: 'column',
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+    },
+    '& h3': {
+      fontSize: '16px',
+      fontWeight: '500',
+      color: theme.palette.text.primary,
+      margin: '0px 0px 16px',
+    },
+  },
+  flexContainer2: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   smartCryptoContainer: {
     display: 'flex',
@@ -138,6 +249,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   exploreContainer: {
+    width: '100%',
     position: 'relative',
     '& h3': {
       fontSize: '48px',
@@ -150,7 +262,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   contentContainer: {
-    maxWidth: '1280px',
+    maxWidth: '1380px',
     width: '100%',
     margin: 'auto',
     display: 'flex',
@@ -183,14 +295,6 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
   },
-  yellowButton: {
-    backgroundColor: `#FEBA00 !important`,
-    color: `#000 !important`,
-  },
-  blueButton: {
-    backgroundColor: `#07A6FC !important`,
-    color: `#000 !important`,
-  },
   switchPlanRoot: {
     maxWidth: '1280px',
     width: '100%',
@@ -202,13 +306,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '50px auto',
+    margin: '50px auto 0px auto',
     '& h2': {
       fontSize: '42px',
       fontWeight: '500',
-      marginBottom: '40px',
     },
-
     '& h3': {
       marginBottom: '10px',
     },
@@ -226,11 +328,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectNewPlanContainer: {
-    margin: '100px auto',
+    margin: '10px auto 100px auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cardDescription: {
+    margin: '50px 0px',
+    '& h4': {
+      fontSize: '16px',
+    },
   },
 }));
 
@@ -242,6 +350,7 @@ const Assets = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedListValue, setSelectedListValue] = useState('Overview');
   const [updatePlanMode, setupdatePlanMode] = useState(false);
+  const [currentPlanName, setCurrentPlanName] = useState('');
   const [userType, setUserType] = useState('Indexx Exchange');
   const [searchQuery, setSearchQuery] = useState('');
   const [hideAssets, setHideAssets] = useState(true);
@@ -251,8 +360,17 @@ const Assets = () => {
   const [allocationPopop, setAllocationPopup] = useState(false);
   const [createAPlanPopop, setCreateAPlanPopup] = useState(false);
   const [selectedAllocation, setSelectedAllocation] = useState(null);
-
+  const [filteredPackages, setFilteredPackages] = useState([]);
+  const [packagesData, setPackagesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [details, setDetails] = useState('surge');
+  const [allTokens, setAllTokens] = useState([]);
+  const [createOwnPlan, setCreateOwnPlan] = useState(false);
   const tab = useMediaQuery('(max-width:900px)');
+  const [congratulationsPopup, setCongratulationsPopup] = useState(false);
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [userSellPlan, setUserPlanName] = useState('');
+  
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -269,6 +387,99 @@ const Assets = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedPlanTab === 0) {
+      setDetails('ripple');
+    } else {
+      setDetails('blooming');
+    }
+  }, [selectedPlanTab]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getSmartCryptoPackages();
+        // Sort by subTitle (assuming subTitle is a string)
+        const sortedData = (response.data || []).sort((a, b) =>
+          a.subTitle.localeCompare(b.subTitle)
+        );
+
+        // Category-based filtering logic
+        const categoryFilters = {
+          'x-Blue': [
+            'Smart Crypto Ripple',
+            'Smart Crypto Surge',
+            'Smart Crypto Wave',
+          ],
+          'x-Bitcoin': [
+            'xBitcoin Blooming',
+            'xBitcoin Bull-Run',
+            'xBitcoin Rush',
+          ],
+        };
+
+        console.log('sortedData', sortedData);
+        const applicableNames =
+          categoryFilters[selectedPlanTab === 0 ? 'x-Blue' : 'x-Bitcoin'] || [];
+        // Filter with partial matches
+        const filteredData = sortedData.filter((pkg) =>
+          applicableNames.some((name) =>
+            pkg.portfolioName.toLowerCase().includes(name.toLowerCase())
+          )
+        );
+
+        console.log('Filtered Data:', filteredData);
+        setPackagesData(filteredData);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching packages:', err);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [selectedPlanTab]);
+
+  useEffect(() => {
+    setFilteredPackages(() => {
+      const categoryFilters = {
+        'x-Blue': [
+          'Smart Crypto Ripple',
+          'Smart Crypto Surge',
+          'Smart Crypto Wave',
+        ],
+        'x-Bitcoin': [
+          'xBitcoin Blooming',
+          'xBitcoin Bull-Run',
+          'xBitcoin Rush',
+        ],
+      };
+
+      const applicableNames =
+        categoryFilters[selectedPlanTab === 0 ? 'x-Blue' : 'x-Bitcoin'] || [];
+      console.log(applicableNames, 'applicablenames');
+      // Filter with partial matches
+      const filteredByCategory = packagesData.filter((pkg) =>
+        applicableNames.some((name) =>
+          pkg.portfolioName.toLowerCase().includes(name.toLowerCase())
+        )
+      );
+      console.log(filteredByCategory, 'filteredByCategory');
+
+      // Filtering logic based on selectedInnerTab
+      return filteredByCategory.filter((pkg) =>
+        pkg.portfolioName.toLowerCase().includes(details)
+      );
+    });
+  }, [details, packagesData, selectedPlanTab]);
+
+  useEffect(() => {
+    let getRequiredCoin = initialTokens.filter(
+      (x) => x.commonToken === true && x.isStock === false && x.isETF === false
+    );
+    setAllTokens(getRequiredCoin);
+  }, []);
   const xBlueplanDetails = [
     {
       image: ripple,
@@ -294,7 +505,7 @@ const Assets = () => {
     {
       image: bloomingIcon,
       name: 'Blooming',
-      description: 'Optimized for low volatility and steady performance.',
+      description: 'Optimized for low volatility and steady returns.',
       path: '/smart-crypto/plan-detail/blooming',
     },
     {
@@ -322,6 +533,59 @@ const Assets = () => {
   const handleClickBuyPlan = (allocationData) => {
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
+    console.log('Selected Plan currentPlanName:', currentPlanName);
+  };
+
+  const handlePlanChange = (plan) => {
+    setCurrentPlanName(plan);
+    setupdatePlanMode(true);
+    console.log('Selected Plan:', plan);
+    localStorage.setItem('CurrentPlan', plan);
+  };
+
+  const getImage = (image) => {
+    try {
+      if (image === 'INEX') {
+        return Inex;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return Inex;
+    }
+  };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
+
+  const isCurrentPlan = (planName, managedBy) => {
+    console.log('planName, managedBy', planName, managedBy);
+
+    let currentPlanName = localStorage.getItem('CurrentPlan');
+    let newName = extractPlanDetails(currentPlanName);
+    console.log('newName', newName);
+    if (
+      planName.includes(newName.planName) &&
+      managedBy.includes(newName.managedBy)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -401,7 +665,15 @@ const Assets = () => {
                     >
                       <ListItemButton
                         disableRipple
-                        sx={{ '&:hover': { backgroundColor: 'transparent' } }}
+                        sx={{
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? '#11BE6A'
+                              : 'inherit',
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                          },
+                        }}
                       >
                         <ListItemText primary={el.name} />
                       </ListItemButton>
@@ -450,23 +722,9 @@ const Assets = () => {
         <div className={classes.switchPlanRoot}>
           <div className={classes.switchPlanHeader}>
             <h2>Switch your Plan</h2>
-
-            <h3>Current Plan</h3>
-            <img src={wave} />
-            <p>Smart Crypto x-Blue Wave-Issah</p>
-          </div>
-
-          <div className={classes.tableContainer1}>
-            <EnhancedTable
-              searchQuery={searchQuery}
-              hideAssets={hideAssets}
-              selectedValue={selectedListValue}
-              setupdatePlanMode={setupdatePlanMode}
-            />
           </div>
 
           <div className={classes.selectNewPlanContainer}>
-            <h3>Select New Plan</h3>
             <PlanIconicHeader
               selectedPlanTab={selectedPlanTab}
               setSelectedPlanTab={setSelectedPlanTab}
@@ -481,18 +739,145 @@ const Assets = () => {
                     <p>{curr.description}</p>
                     <GenericButton
                       text={`Switch to ${curr.name}`}
-                      className={
+                      className={`${
                         selectedPlanTab === 0
                           ? classes.blueButton
                           : classes.yellowButton
-                      }
+                      } ${
+                        details === curr.name.toLowerCase()
+                          ? selectedPlanTab === 0
+                            ? classes.blueActive
+                            : classes.yellowActive
+                          : ''
+                      }`}
                       onClick={() => {
                         setPlainName(curr.name.toLowerCase());
-                        setPlanDetailsShow(true);
+                        setDetails(curr.name.toLowerCase());
+                        // setPlanDetailsShow(true);
                       }}
                     />
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className={classes.cardWrapper}>
+              {loading ? (
+                <p>Loading...</p>
+              ) : filteredPackages?.length > 0 ? (
+                filteredPackages?.map((pkg) => (
+                  <div key={pkg._id} className={classes.cardContainer}>
+                    <h3>
+                      {pkg.portfolioName.includes('Smart Crypto Ripple') &&
+                        'x-Blue Ripple'}
+                      {pkg.portfolioName.includes('Smart Crypto Wave') &&
+                        'x-Blue Wave'}
+                      {pkg.portfolioName.includes('Smart Crypto Surge') &&
+                        'x-Blue Surge'}
+                      {pkg.portfolioName.includes('xBitcoin Blooming') &&
+                        'x-Bitcoin Blooming'}
+                      {pkg.portfolioName.includes('xBitcoin Bull-Run') &&
+                        'x-Bitcoin Bull-Run'}
+                      {pkg.portfolioName.includes('xBitcoin Rush') &&
+                        'x-Bitcoin Rush'}
+                      ({pkg?.managedBy})
+                    </h3>
+                    <p>{pkg.description}</p>
+                    <div className={classes.flexContainer2}>
+                      <div style={{ margin: '10px 0px' }}>
+                        <p>Assets</p>
+                        <AvatarGroup max={4}>
+                          {pkg.cryptocurrencies.map((crypto) => (
+                            <Avatar
+                              key={crypto._id}
+                              alt={crypto.name}
+                              src={getImage(crypto?.token)}
+                            />
+                          ))}
+                        </AvatarGroup>
+                      </div>
+                    </div>
+                    <div className={classes.cardDescription}>
+                      <h4>Description:</h4>
+                      <p>{pkg.description}</p>
+                    </div>
+                    <div className={classes.buttonContainer1}>
+                      <GenericButton
+                        text="View Allocation"
+                        className={classes.greyButton}
+                        onClick={() => handleViewAllocation(pkg)}
+                      />
+                      <GenericButton
+                        text={
+                          !isCurrentPlan(pkg.portfolioName, pkg?.managedBy)
+                            ? 'Switch Plan'
+                            : 'Current Plan'
+                        }
+                        className={
+                          selectedPlanTab === 0
+                            ? classes.blueButtonWithBg
+                            : classes.yellowButtonWithBg
+                        }
+                        disabled={isCurrentPlan(
+                          pkg.portfolioName,
+                          pkg?.managedBy
+                        )}
+                        onClick={() => handleClickBuyPlan(pkg)}
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No packages found.</p>
+              )}
+            </div>
+
+            <div className={classes.createOwnPlan}>
+              <h3>Create your own plan</h3>
+              <p>
+                Create a smart crypto plan to boost your autopilot, hands-off
+                investment vehicle
+              </p>
+
+              <div className={classes.cardContainer}>
+                <h3>Can’t find a plan you like?</h3>
+                <div className={classes.flexContainer2}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    <p style={{ marginBottom: '10px' }}>
+                      Choose and create your own plan!
+                    </p>
+                    <AvatarGroup max={8} sx={{ marginBottom: '10px' }}>
+                      {allTokens?.map((crypto) => (
+                        <Avatar
+                          key={crypto._id}
+                          alt={crypto.name}
+                          src={getImage(crypto?.image)}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </div>
+                </div>
+                {/* <div className={classes.cardDescription}>
+                  <h4>Description:</h4>
+                  <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
+                </div> */}
+                <div className={classes.buttonContainer1}>
+                  <GenericButton
+                    text="Create your own plan!"
+                    className={
+                      selectedPlanTab === 0
+                        ? classes.blueButtonWithBg
+                        : classes.yellowButtonWithBg
+                    }
+                    onClick={() => setCreateOwnPlan(true)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -507,6 +892,7 @@ const Assets = () => {
           setAllocationPopup={setAllocationPopup}
           setCreateAPlanPopup={setCreateAPlanPopup}
           setSelectedAllocation={setSelectedAllocation}
+          currentPlanName={currentPlanName}
         />
       )}
 
@@ -517,6 +903,7 @@ const Assets = () => {
           allocationData={selectedAllocation}
           onStartPopup={(pkg) => handleClickBuyPlan(pkg)}
           buttonTextName="Switch Plan"
+          currentPlanName={currentPlanName}
         />
       )}
 
@@ -526,6 +913,29 @@ const Assets = () => {
           category={selectedPlanTab ? 'x-Bitcoin' : 'x-Blue'}
           allocationData={selectedAllocation}
           buttonTextName="Switch Plan"
+          currentPlanName={currentPlanName}
+          confirmSwitch={(userSellPlanReformed, userSellPlan) => {
+            setCreateAPlanPopup(false);
+            setCongratulationsPopup(true);
+            setUserPlanNameReformed(userSellPlanReformed);
+            setUserPlanName(userSellPlan);
+          }}
+        />
+      )}
+      {createOwnPlan && (
+        <CreateOwnPlan
+          onClose={() => setCreateOwnPlan(false)}
+          category={selectedPlanTab ? 'x-Bitcoin' : 'x-Blue'}
+          filteredTokens={allTokens}
+        />
+      )}
+
+      {congratulationsPopup && (
+        <CongratulationsPopup
+          onClose={() => setCongratulationsPopup(false)}
+          category={'x-Blue'}
+          userSellPlanReformed={userSellPlanReformed}
+          userSellPlan={userSellPlan}
         />
       )}
     </div>

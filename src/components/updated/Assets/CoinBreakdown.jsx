@@ -106,6 +106,7 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [hideAssets, setHideAssets] = useState(true);
+  const [currentPlanName, setCurrentPlanName] = useState('');
 
   const handleSearchIconHover = () => {
     setSearchOpen(true);
@@ -121,6 +122,14 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
 
   const handleCheckboxChange = (event) => {
     setHideAssets(event.target.checked);
+  };
+
+  const handlePlanChange = (plan, cryptocurrencies) => {
+    setCurrentPlanName(plan);
+    setupdatePlanMode(true);
+    console.log('Selected Plan: here', plan, cryptocurrencies);
+    localStorage.setItem('CurrentPlan', plan);
+    localStorage.setItem('CurrentPlanCurrencies', JSON.stringify(cryptocurrencies));
   };
 
   return (
@@ -154,6 +163,7 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
         hideAssets={hideAssets}
         selectedValue={selectedValue}
         setupdatePlanMode={setupdatePlanMode}
+        onPlanChange={handlePlanChange}
       />
     </Box>
   );

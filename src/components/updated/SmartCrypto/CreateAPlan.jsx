@@ -10,6 +10,7 @@ import {
   createBuyOrderForSmartCrypto,
   decodeJWT,
   getUserWallets,
+  switchPlanSmartCryptoPlan,
   validateUserEmail,
 } from '../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -175,13 +176,44 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'right',
     },
   },
+  switchPlanContainer: {
+    padding: '16px',
+    marginTop: '20px',
+    backgroundColor: theme.palette.mode === 'dark' ? '#2c2f36' : '#f9f9f9',
+    borderRadius: '8px',
+    textAlign: 'left',
+    '& p': {
+      fontSize: '14px',
+      fontWeight: 500,
+      color: theme.palette.text.primary,
+      marginBottom: '12px',
+    },
+    '& strong': {
+      fontWeight: 600,
+    },
+    '& div': {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '8px',
+    },
+    '& input': {
+      marginRight: '8px',
+    },
+    '& label': {
+      fontSize: '14px',
+      fontWeight: 500,
+      color: theme.palette.text.primary,
+    },
+  },
 }));
 
 const CreateAPlanPopup = ({
   onClose,
   category,
   allocationData,
+  currentPlanName,
   buttonTextName = 'Start Plan',
+  confirmSwitch,
 }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
@@ -205,6 +237,14 @@ const CreateAPlanPopup = ({
   const [searchParams] = useSearchParams();
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
+  const [currentPlanWithManagedBy, setCurrentPlanWithManagedBy] = useState('');
+  const [currentNewPlanName, setCurrentNewPlanName] = useState('');
+
+  const handleCheckboxChange = (e) => {
+    setIsFeeAcknowledged(e.target.checked);
+    console.log('e.target.checked0', e.target.checked);
+  };
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -222,6 +262,23 @@ const CreateAPlanPopup = ({
 
     setUsdAmount(value); // Update state regardless
   };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
 
   let planManagedBy = allocationData?.managedBy;
   let planType = allocationData?.portfolioName;
@@ -283,6 +340,15 @@ const CreateAPlanPopup = ({
     }
   };
 
+  useEffect(() => {
+    let newPlan = extractPlanDetails(localStorage.getItem('CurrentPlan'));
+    console.log(newPlan);
+    let refinedPlanName = reformPlanName(newPlan.planName, newPlan.managedBy);
+    setCurrentNewPlanName(newPlan.planName);
+    console.log('refinedPlanName', refinedPlanName);
+    setCurrentPlanWithManagedBy(refinedPlanName);
+  }, []);
+
   const renderCoinAllocationInputs = () => {
     return allocationData?.cryptocurrencies.map((coin) => (
       <InputField
@@ -329,8 +395,7 @@ const CreateAPlanPopup = ({
       return `Smart Crypto x-Blue Surge - ${managedBy}`;
     if (name.includes('Ripple'))
       return `Smart Crypto x-Blue Ripple - ${managedBy}`;
-    if (name.includes('Wave'))
-      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Wave')) return `Smart Crypto x-Blue Wave - ${managedBy}`;
     if (name.includes('Blooming'))
       return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
     if (name.includes('Rush'))
@@ -365,6 +430,38 @@ const CreateAPlanPopup = ({
     } else {
       setPaymentMethod('Select Method*');
     }
+  };
+
+  const handleSubmitSwitchPlan = async () => {
+    setLoadings(true);
+
+    let switchCurrencies = JSON.parse(
+      localStorage.getItem('CurrentPlanCurrencies')
+    );
+    console.log(switchCurrencies, 'switchCurrencies');
+
+    console.log(
+      currentNewPlanName,
+      allocationData?.portfolioName, // Updated field name to match server expectations
+      allocationData?.managedBy, // Updated field name to match server expectations
+      switchCurrencies, // Array of cryptocurrency data
+      email
+    );
+    let createSwitch = await switchPlanSmartCryptoPlan(
+      currentNewPlanName,
+      allocationData?.portfolioName, // Updated field name to match server expectations
+      allocationData?.managedBy, // Updated field name to match server expectations
+      switchCurrencies, // Array of cryptocurrency data
+      email
+    );
+
+    console.log('createSwitch', createSwitch);
+    setLoadings(false);
+    let userSellPlanReformed = reformPlanName(
+      allocationData?.portfolioName,
+      allocationData?.managedBy
+    );
+    confirmSwitch(userSellPlanReformed, allocationData?.portfolioName);
   };
 
   const confirmPayment = async () => {
@@ -621,48 +718,112 @@ const CreateAPlanPopup = ({
               </div>
             </div>
           </div>
+          {buttonTextName !== 'Switch Plan' && (
+            <>
+              {/* Amount Per Period Section */}
+              <div style={{ width: '100%' }}>
+                <div className={classes.enterAmountContainer}>
+                  <label>Amount Per Period</label>
+                  <InputField
+                    placeholder="The minimum amount is 2500 USD"
+                    type="text"
+                    style={{ marginTop: '0px', marginBottom: '10px' }}
+                    value={usdAmount}
+                    onChange={handleAmountChange}
+                    error={usdAmountError} // Highlight error
+                    helperText={
+                      usdAmountError &&
+                      'Please enter a valid amount of at least 2500 USD'
+                    }
+                    yellowBorders={category !== 'x-Blue'}
+                    blueBorders={category === 'x-Blue'}
+                    endAdornment={
+                      <InputAdornment position="end">USD</InputAdornment>
+                    }
+                  />
+                </div>
+              </div>
+            </>
+          )}
 
-          {/* Amount Per Period Section */}
-          <div style={{ width: '100%' }}>
-            <div className={classes.enterAmountContainer}>
-              <label>Amount Per Period</label>
-              <InputField
-                placeholder="The minimum amount is 2500 USD"
-                type="text"
-                style={{ marginTop: '0px', marginBottom: '10px' }}
-                value={usdAmount}
-                onChange={handleAmountChange}
-                error={usdAmountError} // Highlight error
-                helperText={
-                  usdAmountError &&
-                  'Please enter a valid amount of at least 2500 USD'
-                }
-                yellowBorders={category !== 'x-Blue'}
-                blueBorders={category === 'x-Blue'}
-                endAdornment={
-                  <InputAdornment position="end">USD</InputAdornment>
-                }
-              />
-            </div>
-          </div>
-
-          {/* Payment Method Section */}
-          <div className={classes.selectTypeContainer}>
-            <label>Select Payment Option</label>
-            <CustomSelectBox
-              items={[
-                { name: 'Credit Card', value: 'Credit Card' },
-                { name: 'Paypal', value: 'Paypal' },
-                { name: 'ACH', value: 'ACH' },
-                { name: 'Wire transfer', value: 'Wire transfer' },
-                { name: 'Zelle', value: 'Zelle' },
-                { name: 'TygaPay', value: 'TygaPay' },
-              ]}
-              value={paymentMethod}
-              onChange={handleChange}
-              hasborder
-            />
-          </div>
+          {buttonTextName !== 'Switch Plan' && (
+            <>
+              {/* Payment Method Section */}
+              <div className={classes.selectTypeContainer}>
+                <label>Select Payment Option</label>
+                <CustomSelectBox
+                  items={[
+                    { name: 'Credit Card', value: 'Credit Card' },
+                    { name: 'Paypal', value: 'Paypal' },
+                    { name: 'ACH', value: 'ACH' },
+                    { name: 'Wire transfer', value: 'Wire transfer' },
+                    { name: 'Zelle', value: 'Zelle' },
+                    { name: 'TygaPay', value: 'TygaPay' },
+                  ]}
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  hasborder
+                />
+              </div>
+            </>
+          )}
+          {buttonTextName === 'Switch Plan' && (
+            <>
+              <div className={classes.switchPlanContainer}>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="feeAcknowledgment"
+                    checked={isFeeAcknowledged}
+                    onChange={handleCheckboxChange}
+                  />
+                  <p>
+                    I confirm considering take some minimum Gas fees or
+                    Transaction fees for switching plan from{' '}
+                    <strong
+                      style={{
+                        color: /Ripple|Wave|Surge/i.test(
+                          currentPlanWithManagedBy
+                        )
+                          ? '#07A6FC'
+                          : /x-Bitcoin/i.test(currentPlanWithManagedBy)
+                          ? '#FEBA00'
+                          : '#000', // Default color if no match
+                      }}
+                    >
+                      {currentPlanWithManagedBy}
+                    </strong>{' '}
+                    to{' '}
+                    <strong
+                      style={{
+                        color: /Ripple|Wave|Surge/i.test(
+                          reformPlanName(
+                            allocationData?.portfolioName,
+                            allocationData?.managedBy
+                          )
+                        )
+                          ? '#07A6FC'
+                          : /x-Bitcoin/i.test(
+                              reformPlanName(
+                                allocationData?.portfolioName,
+                                allocationData?.managedBy
+                              )
+                            )
+                          ? '#FEBA00'
+                          : '#000', // Default color if no match
+                      }}
+                    >
+                      {reformPlanName(
+                        allocationData?.portfolioName,
+                        allocationData?.managedBy
+                      )}
+                    </strong>
+                    .
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Action Buttons */}
           <div className={classes.btnContainer}>
@@ -679,8 +840,16 @@ const CreateAPlanPopup = ({
                   ? classes.blueButton
                   : classes.yellowButton
               }
-              onClick={handleSubmit}
-              disabled={!usdAmount || usdAmount < 2500 || !paymentMethod} // Disable if invalid
+              onClick={
+                buttonTextName !== 'Switch Plan'
+                  ? handleSubmit
+                  : handleSubmitSwitchPlan
+              }
+              disabled={
+                buttonTextName === 'Switch Plan'
+                  ? !isFeeAcknowledged
+                  : !usdAmount || usdAmount < 2500 || !paymentMethod
+              } // Disable if invalid
               loading={loadings}
             />
           </div>

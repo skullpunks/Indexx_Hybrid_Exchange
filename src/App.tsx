@@ -155,6 +155,7 @@ import MarketsPage from './pages/Markets';
 import SmartCryptoPage from './pages/SmartCrypto';
 import SmartCryptoOldPage from './pages/SmartCryptoold';
 import PlanDetails from './components/updated/SmartCrypto/PlanDetails';
+import NotFound from './pages/NotFound';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -673,6 +674,7 @@ function App() {
               path="/indexx-exchange/change-password"
               element={<SecurityChange />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
         <Footer />

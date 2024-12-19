@@ -23,6 +23,10 @@ import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
+import SellConfirmationPopup from './SellConfirmationPopup';
+import { useTheme } from '@mui/material/styles';
+import CongratulationsPopup from './Congratulations';
+import SellCongratulations from './SellCongratulations';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -97,6 +101,7 @@ const headCells = [
 
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort, isMobile } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -104,7 +109,6 @@ function EnhancedTableHead(props) {
   if (isMobile) {
     return null; // Don't render the table header on mobile devices
   }
-
   return (
     <TableHead>
       <TableRow>
@@ -147,9 +151,11 @@ export default function EnhancedTable({
   hideAssets,
   selectedValue,
   setupdatePlanMode,
+  onPlanChange,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -157,8 +163,21 @@ export default function EnhancedTable({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dense, setDense] = useState(false);
+  const [sellConfirmationPopup, setSellConfirmationPopup] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const [userType, setUserType] = useState('Indexx Exchange');
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [userSellPlan, setUserPlanName] = useState('');
+  const [CongratulationsPopup, setCongratulationsPopup] = useState(false);
+  console.log('onPlanChange', onPlanChange);
+  useEffect(() => {
+    const user = localStorage.getItem('userType');
+    if (user) {
+      setUserType(user);
+    }
+  }, []);
 
+  const [planName, setPlanName] = useState('');
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
 
@@ -567,7 +586,6 @@ export default function EnhancedTable({
       totalStakingBalance += row.staking_balance * row.coin_price;
     });
 
-    console.log(totalAmount, totalStakingBalance);
     return {
       totalAmount,
       totalStakingBalance,
@@ -611,7 +629,11 @@ export default function EnhancedTable({
                     <TableCell
                       colSpan={isMobile ? 3 : 5}
                       sx={{
-                        borderBottom: '1px solid orange',
+                        borderBottom: `1px solid ${
+                          userType === 'Indexx Exchange'
+                            ? theme.palette.primary.main
+                            : '#FFA500'
+                        }`,
                       }}
                     />
                   </TableRow>
@@ -624,7 +646,10 @@ export default function EnhancedTable({
                       sx={{
                         borderBottom: 'none',
                         fontWeight: 'bold',
-                        color: 'orange',
+                        color:
+                          userType === 'Indexx Exchange'
+                            ? theme.palette.primary.main
+                            : '#FFA500',
                         textAlign: 'center',
                       }}
                     >
@@ -775,31 +800,126 @@ export default function EnhancedTable({
                   </TableRow>
                 )}
 
-                <TableRow>
-                  <TableCell colSpan={isMobile ? 3 : 5}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                      }}
-                    >
-                      <Button
-                        variant="outlined"
-                        sx={{ width: 'auto' }}
-                        onClick={() => setupdatePlanMode(true)}
-                      >
-                        Switch Plan
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
+                {group.category.includes('Smart Crypto') &&
+                  group?.rows?.length > 0 && calculateTotal(group.rows).totalAmount > 0 &&(
+                    <TableRow>
+                      <TableCell colSpan={isMobile ? 3 : 5}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: '15px',
+                            alignItems: 'center',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            sx={{
+                              maxWidth: '250px',
+                              width: '100%',
+                              color:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              borderColor:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              '&:hover': {
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                opacity: '.7',
+                                background: 'none',
+                              },
+                            }}
+                            onClick={() => {
+                              setupdatePlanMode(true);
+                              console.log(
+                                'group.categorygroup.category',
+                                group.category,
+                                group.rows[0].notes
+                              );
+                              onPlanChange(group.rows[0].notes, group);
+                            }}
+                          >
+                            Switch Plan
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            sx={{
+                              maxWidth: '250px',
+                              width: '100%',
+                              color:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              borderColor:
+                                userType === 'Indexx Exchange'
+                                  ? theme.palette.primary.main
+                                  : '#FFA500',
+                              '&:hover': {
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                opacity: '.7',
+                                background: 'none',
+                              },
+                            }}
+                            onClick={() => {
+                              setSellConfirmationPopup(true);
+                              setPlanName(group.rows[0].notes);
+                              localStorage.setItem(
+                                'SellPlanCurrencies',
+                                JSON.stringify(group)
+                              );
+                            }}
+                          >
+                            Sell Plan
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
               </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {sellConfirmationPopup && (
+        <SellConfirmationPopup
+          onClose={() => setSellConfirmationPopup(false)}
+          category="x-Blue"
+          packageName={planName}
+          confirmSellProcessed={(userSellPlanReformed, userSellPlan) => {
+            setSellConfirmationPopup(false);
+            setCongratulationsPopup(true);
+            setUserPlanNameReformed(userSellPlanReformed);
+            setUserPlanName(userSellPlan);
+          }}
+        />
+      )}
+
+      {CongratulationsPopup && (
+        <SellCongratulations
+          onClose={() => setCongratulationsPopup(false)}
+          category={'x-Blue'}
+          userSellPlanReformed={userSellPlanReformed}
+          userSellPlan={userSellPlan}
+        />
+      )}
     </Box>
   );
 }

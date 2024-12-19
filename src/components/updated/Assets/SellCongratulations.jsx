@@ -173,7 +173,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CongratulationsPopup = ({
+const SellCongratulations = ({
   onClose,
   category,
   userSellPlanReformed,
@@ -225,7 +225,7 @@ const CongratulationsPopup = ({
           </div>
 
           <div className={classes.planDetails}>
-            <p>Your plan is switched to</p>
+            <p>Your Smart Crypto plan is sold</p>
             <img src={getPlanImage(userSellPlan)} />
             <p>{userSellPlanReformed}</p>
           </div>
@@ -239,7 +239,6 @@ const CongratulationsPopup = ({
                   : classes.blueOutlinedBtn
               }
               onClick={() => {
-                onClose();
                 navigate('/smart-crypto');
               }}
             >
@@ -253,7 +252,6 @@ const CongratulationsPopup = ({
                   : classes.blueButton
               }
               onClick={() => {
-                onClose();
                 navigate('/wallet/overview');
               }}
             />
@@ -264,4 +262,4 @@ const CongratulationsPopup = ({
   );
 };
 
-export default CongratulationsPopup;
+export default SellCongratulations;

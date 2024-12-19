@@ -13,7 +13,8 @@ import wave from '../../../assets/updated/smartCrypto/Wave.png';
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
 import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
 import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
-import congratulationIcon from '../../../assets/updated/smartCrypto/congratulationIcon.png';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { sellPlanSmartCryptoPlan } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -83,6 +84,15 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  redButton: {
+    backgroundColor: `red !important`,
+    color: `#000 !important`,
+    maxWidth: '80%',
+    margin: '0 auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   blueButton: {
     maxWidth: '80%',
     backgroundColor: `#07A6FC !important`,
@@ -124,6 +134,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '30px',
@@ -132,9 +143,10 @@ const useStyles = makeStyles((theme) => ({
       height: '120px',
     },
     '& h2': {
-      fontSize: '42px',
+      fontSize: '26px',
+      textAlign: 'center',
       margin: 0,
-      fontWeight: '500',
+      fontWeight: '600',
     },
   },
   closeBtn: {
@@ -159,34 +171,77 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px !important',
     '&:hover': {
       background: 'none !important',
-      opacity: '.7',
-    },
-  },
-  blueOutlinedBtn: {
-    color: '#07A6FC !important',
-    borderColor: '#07A6FC !important',
-    borderRadius: '10px !important',
-    '&:hover': {
-      background: 'none !important',
-      opacity: '.7',
     },
   },
 }));
 
-const CongratulationsPopup = ({
+const SellConfirmationPopup = ({
   onClose,
   category,
-  userSellPlanReformed,
-  userSellPlan,
+  packageName,
+  confirmSellProcessed,
 }) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  console.log(
-    'userSellPlanReformed, userSellPlan',
-    userSellPlanReformed,
-    userSellPlan
-  );
+  const [userSellPlan, setUserPlanName] = useState('');
+  const [userSellPlanManagedBy, setUserPlanNameManagedBy] = useState('');
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const handleCheckboxChange = (e) => {
+    setIsFeeAcknowledged(e.target.checked);
+    console.log('e.target.checked0', e.target.checked);
+  };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
+
+  useEffect(() => {
+    let plan = extractPlanDetails(packageName);
+    let reformedPlan = reformPlanName(plan.planName, plan.managedBy);
+    console.log('reformedPlan', reformedPlan);
+    setUserPlanNameReformed(reformedPlan);
+    setUserPlanName(plan.planName);
+    setUserPlanNameManagedBy(plan.managedBy);
+  }, [packageName]);
+
+  const reformPlanName = (name, managedBy) => {
+    if (!name) return;
+    if (name.includes('Surge'))
+      return `Smart Crypto x-Blue Surge - ${managedBy}`;
+    if (name.includes('Ripple'))
+      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Wave')) return `Smart Crypto x-Blue Wave - ${managedBy}`;
+    if (name.includes('Blooming'))
+      return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
+    if (name.includes('Rush'))
+      return `Smart Crypto x-Bitcoin Rush - ${managedBy}`;
+    if (name.includes('Bull-Run'))
+      return `Smart Crypto x-Bitcoin Bull-Run - ${managedBy}`;
+  };
+
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    setEmail(email);
+  }, []);
+
   const getPlanImage = (planName) => {
     if (planName.includes('Surge')) return surge;
     if (planName.includes('Wave')) return wave;
@@ -196,6 +251,27 @@ const CongratulationsPopup = ({
     if (planName.includes('Rush')) return rushIcon;
   };
 
+  const handleSubmitSellPlan = async () => {
+    setLoadings(true);
+
+    let sellCurrencies = JSON.parse(localStorage.getItem('SellPlanCurrencies'));
+    console.log(sellCurrencies, 'sellCurrencies');
+
+    console.log(
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      sellCurrencies, // Array of cryptocurrency data
+      email
+    );
+    let createSwitch = await sellPlanSmartCryptoPlan(
+      userSellPlan, // Updated field name to match server expectations
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      sellCurrencies, // Array of cryptocurrency data
+      email
+    );
+    setLoadings(false);
+    confirmSellProcessed(userSellPlanReformed, userSellPlan);
+  };
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -220,42 +296,52 @@ const CongratulationsPopup = ({
             </div>
           </div>
           <div className={classes.header}>
-            <img src={congratulationIcon} />
-            <h2>Congratulations!</h2>
+            <HelpOutlineIcon style={{ fontSize: '50px', color: '#FEBA00' }} />
+            <h2>Are you sure you want to sell?</h2>
           </div>
 
           <div className={classes.planDetails}>
-            <p>Your plan is switched to</p>
             <img src={getPlanImage(userSellPlan)} />
             <p>{userSellPlanReformed}</p>
           </div>
 
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginTop: '15px',
+            }}
+          >
+            <input
+              type="checkbox"
+              id="feeAcknowledgment"
+              checked={isFeeAcknowledged}
+              onChange={handleCheckboxChange}
+            />
+            <p>
+              I confirm considering take some minimum Gas fees or Transaction
+              fees for selling this plan.
+            </p>
+          </div>
+
           <div className={classes.btnContainer}>
-            <Button
-              variant="outlined"
-              className={
-                category === 'x-Bitcoin'
-                  ? classes.yellowOutlinedBtn
-                  : classes.blueOutlinedBtn
-              }
-              onClick={() => {
-                onClose();
-                navigate('/smart-crypto');
-              }}
-            >
-              Explore Smart Crypto
-            </Button>
             <GenericButton
-              text={'View Asset Wallet'}
+              text={'Cancel'}
+              className={classes.greyButton}
+              onClick={onClose}
+            />
+
+            <GenericButton
+              text={'Sell Plan'}
               className={
-                category === 'x-Bitcoin'
-                  ? classes.yellowButton
-                  : classes.blueButton
+                /Ripple|Wave|Surge/i.test(userSellPlan)
+                  ? classes.blueButton
+                  : classes.yellowButton
               }
-              onClick={() => {
-                onClose();
-                navigate('/wallet/overview');
-              }}
+              loading={loadings}
+              disabled={!isFeeAcknowledged}
+              onClick={handleSubmitSellPlan}
             />
           </div>
         </div>
@@ -264,4 +350,4 @@ const CongratulationsPopup = ({
   );
 };
 
-export default CongratulationsPopup;
+export default SellConfirmationPopup;

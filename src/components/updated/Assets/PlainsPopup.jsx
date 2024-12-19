@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     '& img': {
-      height: '70px',
+      height: '40px',
     },
     '& span': {
       fontSize: '24px',
@@ -307,6 +307,7 @@ const PlainsPopup = ({
   setAllocationPopup,
   setCreateAPlanPopup,
   setSelectedAllocation,
+  currentPlanName,
 }) => {
   const classes = useStyles();
   const [name, setName] = useState(plainName);
@@ -322,6 +323,7 @@ const PlainsPopup = ({
   const [selectedCategory, setSelectedCategory] = useState();
   const [planDetailPopupOpen, setPlanDetailPopupOpen] = useState(false);
 
+  console.log(localStorage.getItem('CurrentPlan'), 'currentPlanName in popup');
   useEffect(() => {
     let getRequiredCoin = initialTokens.filter(
       (x) => x.commonToken === true && x.isStock === false && x.isETF === false
@@ -472,6 +474,38 @@ const PlainsPopup = ({
     // const params = new URLSearchParams(search);
     // params.set('plan_id', allocationData._id);
     // navigate({ search: params.toString() }, { replace: true });
+  };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
+  const isCurrentPlan = (planName, managedBy) => {
+    console.log('planName, managedBy', planName, managedBy);
+
+    let currentPlanName = localStorage.getItem('CurrentPlan');
+    let newName = extractPlanDetails(currentPlanName);
+    console.log('newName', newName);
+    if (
+      planName.includes(newName.planName) &&
+      managedBy.includes(newName.managedBy)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const getImage = (image) => {
@@ -629,7 +663,11 @@ const PlainsPopup = ({
                       }}
                     />
                     <GenericButton
-                      text="Switch Plan"
+                      text={
+                        !isCurrentPlan(pkg.portfolioName, pkg?.managedBy)
+                          ? 'Switch Plan'
+                          : 'Current Plan'
+                      }
                       className={
                         category === 'x-Blue'
                           ? classes.blueButton
@@ -639,6 +677,7 @@ const PlainsPopup = ({
                         handleClickBuyPlan(pkg);
                         onClose();
                       }}
+                      disabled={isCurrentPlan(pkg.portfolioName, pkg?.managedBy)}
                     />
                   </div>
                 </div>

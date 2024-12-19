@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
 import CloseIcon from '@mui/icons-material/Close';
@@ -225,7 +225,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DetailPopup = ({ onClose, category }) => {
+const DetailPopup = ({ onClose, category, planName }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -235,18 +235,21 @@ const DetailPopup = ({ onClose, category }) => {
       name: 'Ripple',
       description: 'Designed for stability and stable returns',
       path: '/smart-crypto/plan-detail/ripple',
+      id: 'ripple',
     },
     {
       image: surge,
       name: 'Surge',
       description: 'Moderate volatility, consistent returns.',
       path: '/smart-crypto/plan-detail/surge',
+      id: 'surge',
     },
     {
       image: wave,
       name: 'Wave',
       description: ' High volatility, high rewards.',
       path: '/smart-crypto/plan-detail/wave',
+      id: 'wave',
     },
   ];
 
@@ -256,21 +259,33 @@ const DetailPopup = ({ onClose, category }) => {
       name: 'Blooming',
       description: 'Optimized for low volatility and steady performance.',
       path: '/smart-crypto/plan-detail/blooming',
+      id: 'blooming',
     },
     {
       image: rushIcon,
       name: 'Rush',
       description: 'Moderate volatility, consistent returns',
       path: '/smart-crypto/plan-detail/rush',
+      id: 'rush',
     },
     {
       image: bullRunIcon,
       name: 'Bull-Run',
       description: 'High volatility, high potential returns.',
       path: '/smart-crypto/plan-detail/bull-run',
+      id: 'bull-run',
     },
   ];
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const element = document.getElementById(planName);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100); // Delay in milliseconds
+    return () => clearTimeout(timeout);
+  }, [planName]);
   const planDetails =
     category === 'x-Blue' ? xBlueplanDetails : xBitcoinplanDetails;
   return (
@@ -318,7 +333,7 @@ const DetailPopup = ({ onClose, category }) => {
 
             <div className={classes.planCardContainer}>
               {planDetails.map((curr) => (
-                <div className={classes.planCardRoot}>
+                <div id={curr.id} className={classes.planCardRoot}>
                   <img src={curr.image} />
                   <h4>{curr.name}</h4>
                   <p>{curr.description}</p>

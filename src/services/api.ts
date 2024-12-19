@@ -23,7 +23,7 @@ const keySize = 32;
 const algorithm = 'aes-256-cbc';
 const salt = crypto.createHash('sha1').update(secret).digest('hex');
 export let baseAcademyUrl = '';
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
+ if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
   baseAPIURL = 'https://api.indexx.ai';
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
@@ -1401,7 +1401,6 @@ export const createBuyOrder = async (
   }
 };
 
-
 export const createBuyOrderForSmartCrypto = async (
   planName: string,
   planManagedBy: string,
@@ -1412,58 +1411,136 @@ export const createBuyOrderForSmartCrypto = async (
   paymentType: string = 'paypal'
 ) => {
   try {
-    const result = await API.post('/api/v1/inex/order/createOrderForSmartCrypto', {
-      planName: planName,
-      planManagedBy: planManagedBy,
-      amount: amount,
-      price: price,
-      orderType: 'SmartCryptoBuy',
-      email: email ? email : localStorage.getItem('user'),
-      isHoneyBeeOrder: isHoneyBeeOrder,
-      paymentType,
-    });
+    const result = await API.post(
+      '/api/v1/inex/order/createOrderForSmartCrypto',
+      {
+        planName: planName,
+        planManagedBy: planManagedBy,
+        amount: amount,
+        price: price,
+        orderType: 'SmartCryptoBuy',
+        email: email ? email : localStorage.getItem('user'),
+        isHoneyBeeOrder: isHoneyBeeOrder,
+        paymentType,
+      }
+    );
     return result.data;
   } catch (e: any) {
-    console.log('FAILED: unable to perform API request (createOrderForSmartCrypto)');
+    console.log(
+      'FAILED: unable to perform API request (createOrderForSmartCrypto)'
+    );
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
   }
 };
 
-
 export const insertNewSmartCryptoPlan = async (
   portfolioName: string, // Updated field name to match server expectations
   managedBy: string, // Updated field name to match server expectations
   totalInvestment: number = 0, // Matches server field
-  cryptocurrencies: Array<{ name: string; percentage: number, token: string }>, // Array of cryptocurrency data
+  cryptocurrencies: Array<{ name: string; percentage: number; token: string }>, // Array of cryptocurrency data
   createdDate: string, // ISO string for the creation date
   description?: string, // Optional field
   title?: string, // Optional field
   subTitle?: string, // Optional field
-  email?: string,
+  email?: string
 ) => {
   try {
-    const result = await API.post('/api/v1/inex/admin/addsmartcryptoportfolio', {
-      portfolioName, // Updated field name
-      totalInvestment, // Matches server field
-      cryptocurrencies, // Array of cryptocurrencies
-      createdDate, // ISO format date
-      description, // Optional description
-      title, // Optional title
-      subTitle, // Optional subtitle
-      managedBy, // Updated field name
-      email: email || localStorage.getItem('user'), // Default to localStorage if email is not provided
-    });
+    const result = await API.post(
+      '/api/v1/inex/admin/addsmartcryptoportfolio',
+      {
+        portfolioName, // Updated field name
+        totalInvestment, // Matches server field
+        cryptocurrencies, // Array of cryptocurrencies
+        createdDate, // ISO format date
+        description, // Optional description
+        title, // Optional title
+        subTitle, // Optional subtitle
+        managedBy, // Updated field name
+        email: email || localStorage.getItem('user'), // Default to localStorage if email is not provided
+      }
+    );
     return result.data;
   } catch (e: any) {
-    console.error('FAILED: unable to perform API request (insertNewSmartCryptoPlan)');
+    console.error(
+      'FAILED: unable to perform API request (insertNewSmartCryptoPlan)'
+    );
     console.error(e);
     console.error(e.response?.data);
     return e.response?.data;
   }
 };
 
+interface CryptocurrencyRow {
+  id: string; // Coin identifier (e.g., 'ChainLink')
+  coin: string; // Coin symbol (e.g., 'LINK')
+  amount: number; // Amount of the coin
+  staking_balance: number; // Staking balance of the coin
+  coin_price: number; // Price of the coin
+  todayPNL: {
+    value: string; // Profit and loss value as a string
+    percentage: string; // Profit and loss percentage as a string
+    isPositive: boolean; // Whether the PNL is positive or negative
+  };
+  coinNetwork: string; // Network associated with the coin (e.g., 'Binance Smart Chain')
+  hasSmartCryptoNote: boolean; // Indicates if there's a Smart Crypto note
+  notes: string; // Additional notes related to the coin
+  priority: number; // Priority of the coin
+}
+
+interface CryptoCategoryData {
+  category: string; // Category name (e.g., 'Smart Crypto x-Blue Wave')
+  rows: CryptocurrencyRow[]; // Array of cryptocurrency data
+}
+
+export const switchPlanSmartCryptoPlan = async (
+  currentNewPlanName: string,
+  newPortfolioName: string, // Updated field name to match server expectations
+  managedBy: string, // Updated field name to match server expectations
+  exitingCryptocurrencies: CryptoCategoryData, // Array of cryptocurrency data
+  email?: string
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/order/switchsmartcryptoPlan', {
+      currentPortfolioName: currentNewPlanName,
+      planName: newPortfolioName,
+      exitingCryptocurrencies, // Array of cryptocurrencies
+      managedBy, // Updated field name
+      email: email || localStorage.getItem('user'), // Default to localStorage if email is not provided
+    });
+    return result.data;
+  } catch (e: any) {
+    console.error(
+      'FAILED: unable to perform API request (switchPlanSmartCryptoPlan)'
+    );
+    console.error(e);
+    console.error(e.response?.data);
+    return e.response?.data;
+  }
+};
+
+export const sellPlanSmartCryptoPlan = async (
+  currentPortfolioName: string,
+  managedBy: string, // Updated field name to match server expectations
+  exitingCryptocurrencies: CryptoCategoryData, // Array of cryptocurrency data
+  email?: string
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/order/sellSmartCrypoPlan', {
+      currentPortfolioName,
+      exitingCryptocurrencies, // Array of cryptocurrencies
+      managedBy, // Updated field name
+      email: email || localStorage.getItem('user'), // Default to localStorage if email is not provided
+    });
+    return result.data;
+  } catch (e: any) {
+    console.error('FAILED: unable to perform API request (sellSmartCrypoPlan)');
+    console.error(e);
+    console.error(e.response?.data);
+    return e.response?.data;
+  }
+};
 
 export const createFiatDepositForOrder = async (
   email: string,
