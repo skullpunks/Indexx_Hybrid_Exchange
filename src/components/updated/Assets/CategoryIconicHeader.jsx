@@ -64,15 +64,16 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
       key: 1,
     },
     {
-      label: 'Fiat',
+      label: 'Smart APY',
       key: 2,
     },
+
     {
       label: 'Smart Crypto',
       key: 3,
     },
     {
-      label: 'IUSD+',
+      label: 'Fiat',
       key: 4,
     },
   ];

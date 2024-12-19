@@ -48,7 +48,7 @@ import greeting24 from '../../../assets/redeem/greeting24.png';
 import greeting25 from '../../../assets/redeem/greeting25.png';
 import greeting26 from '../../../assets/redeem/greeting26.png';
 import greeting27 from '../../../assets/redeem/greeting27.png';
-import { useTheme } from '@mui/material';
+import { InputAdornment, useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
@@ -70,11 +70,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   sendCryptoRoot: {
-    maxWidth: '700px',
+    maxWidth: '800px',
     width: '100%',
     '& h3': {
       color: theme.palette.text.primary,
-      fontSize: '38px',
+      fontSize: '32px',
       fontWeight: '500',
     },
     '& p': {
@@ -524,7 +524,7 @@ const CreateCards = ({ onSendCard }) => {
       type: 'Seasonal Greeting Card',
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/christmas7.png',
-    }
+    },
   ];
 
   const [value, setValue] = useState(type ?? 'Crypto Gift Card');
@@ -542,16 +542,22 @@ const CreateCards = ({ onSendCard }) => {
   const handleChange = (event) => {
     if (
       event.target.value === 'Crypto Gift Card' ||
-      event.target.value === 'Crypto Greeting Card' || 
-      event.target.value === 'Seasonal Greeting Card' 
+      event.target.value === 'Crypto Greeting Card' ||
+      event.target.value === 'Seasonal Greeting Card'
     ) {
       setValue(event.target.value);
       setSelectedImg(
-        event.target.value === 'Crypto Gift Card' ? gift1 : event.target.value === 'Crypto Greeting Card' ? greeting1 : christman1
+        event.target.value === 'Crypto Gift Card'
+          ? gift1
+          : event.target.value === 'Crypto Greeting Card'
+          ? greeting1
+          : christman1
       );
       setSelectedImgUrl(
         event.target.value === 'Crypto Gift Card'
-          ? giftArr[0].imgUrl : event.target.value === 'Crypto Greeting Card' ? greetingArr[0].imgUrl
+          ? giftArr[0].imgUrl
+          : event.target.value === 'Crypto Greeting Card'
+          ? greetingArr[0].imgUrl
           : christmanArr[0].imgUrl
       );
     } else {
@@ -592,7 +598,13 @@ const CreateCards = ({ onSendCard }) => {
   // }, [balanceError]);
   useEffect(() => {
     if (value) {
-      setSelectedCards(value === 'Crypto Gift Card' ? giftArr : value === 'Crypto Greeting Card' ? greetingArr : christmanArr );
+      setSelectedCards(
+        value === 'Crypto Gift Card'
+          ? giftArr
+          : value === 'Crypto Greeting Card'
+          ? greetingArr
+          : christmanArr
+      );
       setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
@@ -618,6 +630,7 @@ const CreateCards = ({ onSendCard }) => {
     setSelectedImg(data.img);
     setValue(data.type);
     setSelectedImgUrl(data.imgUrl);
+    document.getElementById('topRoot').scrollIntoView();
   };
 
   // Fetch all wallets once and store them in state
@@ -675,14 +688,14 @@ const CreateCards = ({ onSendCard }) => {
     } catch (err) {}
   }, [amountInUsd]);
   return (
-    <div className={classes.root}>
+    <div id="topRoot" className={classes.root}>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>
-          Create Crypto Gift Card, Crypto Greeting Cards, Seasonal <br />{' '}
-          Greeting Card
+          Create Crypto Gift Card,
+          <br /> Crypto Greeting Cards, Seasonal Greeting Card
         </h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
@@ -734,6 +747,11 @@ const CreateCards = ({ onSendCard }) => {
               type="number"
               value={amountInUsd}
               onChange={(e) => setAmountInUsd(e.target.value)}
+              startAdornment={
+                <InputAdornment position="start" sx={{ marginLeft: '10px' }}>
+                  $
+                </InputAdornment>
+              }
             />
           </div>
           {singleWallet && (
@@ -784,14 +802,17 @@ const CreateCards = ({ onSendCard }) => {
               <h3>
                 {value === 'Crypto Gift Card'
                   ? 'Select any crypto gift card design from below:'
-                  : value === 'Crypto Gift Card' ? 'Select any crypto greeting card design from below:' : 'Select any seasonal greeting card design from below:'}
-                  {' '}
+                  : value === 'Crypto Gift Card'
+                  ? 'Select any crypto greeting card design from below:'
+                  : 'Select any seasonal greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
                 {value === 'Crypto Gift Card'
                   ? 'Send a crypto gift card for any occasion'
-                  : value === 'Crypto Gift Card' ? 'Send a crypto greeting card for any occasion': 'Send a seasonal greeting card for any occasion'}
+                  : value === 'Crypto Gift Card'
+                  ? 'Send a crypto greeting card for any occasion'
+                  : 'Send a seasonal greeting card for any occasion'}
               </p>
             </div>
           </div>
@@ -805,7 +826,11 @@ const CreateCards = ({ onSendCard }) => {
                   curr.img === selectedImg ? classes.activeImg : ''
                 } `}
               >
-                <img src={curr.img} alt="img" style={{ width: '100%' }} />
+                <img
+                  src={curr.img}
+                  alt="img"
+                  style={{ width: '100%', height: '100%' }}
+                />
               </div>
             ))}
           </div>
@@ -817,16 +842,19 @@ const CreateCards = ({ onSendCard }) => {
               style={{ marginTop: '50px' }}
             >
               <h3>
-              {value === 'Crypto Gift Card'
+                {value === 'Crypto Gift Card'
                   ? 'Select any crypto gift card design from below:'
-                  : value === 'Crypto Gift Card' ? 'Select any crypto greeting card design from below:' : 'Select any seasonal greeting card design from below:'}
-                  {' '}
+                  : value === 'Crypto Gift Card'
+                  ? 'Select any crypto greeting card design from below:'
+                  : 'Select any seasonal greeting card design from below:'}{' '}
               </h3>
               <p>
                 {' '}
                 {value === 'Crypto Gift Card'
                   ? 'Send a crypto gift card for any occasion'
-                  : value === 'Crypto Gift Card' ? 'Send a crypto greeting card for any occasion': 'Send a seasonal greeting card for any occasion'}
+                  : value === 'Crypto Gift Card'
+                  ? 'Send a crypto greeting card for any occasion'
+                  : 'Send a seasonal greeting card for any occasion'}
               </p>
             </div>
           </div>

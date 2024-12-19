@@ -75,9 +75,9 @@ const SendCardSuccessfully = ({ onClose }) => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '100px' }}>
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <div className={classes.contentContainer}>
-        <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
         <img src={greenCheck} height="100px" />
         <h3>Sent Successfully</h3>
         <h4>
