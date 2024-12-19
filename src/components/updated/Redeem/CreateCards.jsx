@@ -868,7 +868,11 @@ const CreateCards = ({ onSendCard }) => {
                   curr.img === selectedImg ? classes.activeImg : ''
                 } `}
               >
-                <img src={curr.img} alt="img" style={{ width: '100%' }} />
+                <img
+                  src={curr.img}
+                  alt="img"
+                  style={{ width: '100%', height: '100%' }}
+                />
               </div>
             ))}
           </div>
