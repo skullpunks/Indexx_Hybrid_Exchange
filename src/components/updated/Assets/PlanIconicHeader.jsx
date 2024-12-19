@@ -11,20 +11,24 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   color: '#fff',
   width: 'fit-content',
-  marginRight: '10px',
+  marginRight: '50px',
+
+  fontSize: '16px',
   padding: '12px 0px',
   display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
   alignItems: 'center',
   position: 'relative',
   background: 'transparent !important',
+  opacity: '.7',
   '&.active': {
     color: '#fff',
+    transform: 'scale(1.15)',
+    opacity: '1',
+
     '&::after': {
       content: '""',
       position: 'absolute',
-      bottom: 2,
+      bottom: 12,
       left: 'calc(50% - 10px)',
       width: '16px',
       borderBottom: `3px solid ${theme.palette.text.primary}`,
@@ -32,11 +36,14 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   },
   '&:hover': {
     color: '#fff',
+    transform: 'scale(1.15)',
+    opacity: '1',
+
     background: 'transparent !important',
     '&::after': {
       content: '""',
       position: 'absolute',
-      bottom: 2,
+      bottom: 12,
       left: 'calc(50% - 10px)',
       width: '16px',
       borderBottom: `3px solid ${theme.palette.text.primary}`,
@@ -53,7 +60,11 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   },
 }));
 
-const PlanIconicHeader = ({ selectedPlanTab, setSelectedPlanTab }) => {
+const PlanIconicHeader = ({
+  selectedPlanTab,
+  setSelectedPlanTab,
+  largeFont = false,
+}) => {
   const navigate = useNavigate();
   const tabsData = [
     {
@@ -80,6 +91,7 @@ const PlanIconicHeader = ({ selectedPlanTab, setSelectedPlanTab }) => {
         display: 'flex',
         justifyContent: 'center',
         marginBottom: '50px',
+        width: '100%',
       }}
     >
       <Tabs
@@ -89,7 +101,11 @@ const PlanIconicHeader = ({ selectedPlanTab, setSelectedPlanTab }) => {
         variant="scrollable"
         scrollButtons={false}
         sx={{
+          maxWidth: largeFont ? '450px' : '250px',
           width: '100%',
+          display: 'flex',
+
+          justifyContent: 'space-between',
           background: 'none',
           '& .MuiTabs-indicator': {
             display: 'none',
@@ -115,14 +131,18 @@ const PlanIconicHeader = ({ selectedPlanTab, setSelectedPlanTab }) => {
                 src={tab.img}
                 alt=""
                 style={{
-                  height: '25px',
+                  height: largeFont ? '45px' : '25px',
                   marginBottom: '0px',
                 }}
               />
             }
-            iconPosition="top"
+            iconPosition="start"
             disableRipple
             className={selectedPlanTab === tab.key ? 'active' : ''}
+            style={{
+              fontSize: largeFont ? '24px' : '',
+              marginLeft: largeFont ? '30px' : '',
+            }}
           />
         ))}
       </Tabs>

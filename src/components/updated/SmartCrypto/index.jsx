@@ -298,7 +298,7 @@ const SmartCrypto = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const navigate = useNavigate();
-  const categoryValue = params.get('category');
+  const idValue = params.get('id');
   const typeValue = params.get('type');
   const plainId = params.get('plan_id');
 
@@ -318,6 +318,7 @@ const SmartCrypto = () => {
   const [selectedAllocation, setSelectedAllocation] = useState(null);
   const [filteredPackages, setFilteredPackages] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedPlanName, setSelectedPlanName] = useState('');
 
   const [allTokens, setAllTokens] = useState([]);
   //const [selectedCategory, setSelectedCategory] = useState(0);
@@ -528,16 +529,24 @@ const SmartCrypto = () => {
     0: 'A stable crypto option with moderate volatility and consistent returns.',
     1: 'A package with 60% Bitcoin and 40% altcoins, balancing stability with growth potential.',
   };
-  const handleBlueCard = () => {
+  const handleBlueCard = (planName = 'ripple') => {
     setSelectedCategory('x-Blue');
     setPlanDetailPopupOpen(true);
+    setSelectedPlanName(planName);
   };
 
-  const handleYellowCard = () => {
+  const handleYellowCard = (planName = 'blooming') => {
     setSelectedCategory('x-Bitcoin');
     setPlanDetailPopupOpen(true);
+    setSelectedPlanName(planName);
   };
 
+  useEffect(() => {
+    if (idValue === 'get-to-know') {
+      const element = document.getElementById('get-to-know');
+      element.scrollIntoView();
+    }
+  }, [idValue]);
   return (
     <>
       <div className={classes.Container}>
@@ -568,7 +577,7 @@ const SmartCrypto = () => {
           ></iframe>
         </div>
         <div className={classes.cardRoot}>
-          <h3>Get to know Smart Crypto</h3>
+          <h3 id="get-to-know">Get to know Smart Crypto</h3>
           <p>We offers two exclusive strategies, x-Blue, x-Bitcoin </p>
           <div className={classes.cardContainer}>
             <div className={classes.card}>
@@ -585,7 +594,7 @@ const SmartCrypto = () => {
               <div className={classes.smallCardContainer}>
                 <div
                   className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
+                  onClick={() => handleBlueCard('ripple')}
                 >
                   <img src={ripple} />
                   <span>Ripple</span>
@@ -593,7 +602,7 @@ const SmartCrypto = () => {
 
                 <div
                   className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
+                  onClick={() => handleBlueCard('surge')}
                 >
                   <img src={surge} />
                   <span>Surge</span>
@@ -601,7 +610,7 @@ const SmartCrypto = () => {
 
                 <div
                   className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                  onClick={() => handleBlueCard()}
+                  onClick={() => handleBlueCard('wave')}
                 >
                   <img src={wave} />
                   <span>Wave</span>
@@ -630,7 +639,7 @@ const SmartCrypto = () => {
               <div className={classes.smallCardContainer}>
                 <div
                   className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
+                  onClick={() => handleYellowCard('blooming')}
                 >
                   <img src={bloomingIcon} />
                   <span>Blooming</span>
@@ -638,7 +647,7 @@ const SmartCrypto = () => {
 
                 <div
                   className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
+                  onClick={() => handleYellowCard('rush')}
                 >
                   <img src={rushIcon} />
                   <span>Rush</span>
@@ -646,7 +655,7 @@ const SmartCrypto = () => {
 
                 <div
                   className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                  onClick={() => handleYellowCard()}
+                  onClick={() => handleYellowCard('bull-run')}
                 >
                   <img src={bullRunIcon} />
                   <span>Bull-Run</span>
@@ -714,6 +723,7 @@ const SmartCrypto = () => {
           <DetailPopup
             category={selectedCategory}
             onClose={() => setPlanDetailPopupOpen(false)}
+            planName={selectedPlanName}
           />
         )}
         {/* <PlanDetails /> */}
