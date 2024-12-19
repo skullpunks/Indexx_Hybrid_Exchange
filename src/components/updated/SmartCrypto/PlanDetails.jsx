@@ -26,6 +26,7 @@ import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
 import DetailPopup from './DetailPopup';
 import xBlueBg from '../../../assets/updated/smartCrypto/x-bluebg.png';
 import xBitcoinBg from '../../../assets/updated/smartCrypto/x-Bitcoinbg.png';
+import PlanIconicHeader from '../Assets/PlanIconicHeader';
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: '1280px',
@@ -48,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginBottom: '20px',
     alignItems: 'center',
+    transition: 'all .3s linear',
+    cursor: 'pointer',
     '& img': {
       height: '70px',
     },
@@ -55,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '24px',
       fontWeight: '500',
       fontStyle: 'italic',
+    },
+    '&:hover': {
+      transform: 'scale(1.1)',
+      transition: 'all .3s linear',
     },
   },
   cardWrapper: {
@@ -102,15 +109,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '10px',
+    flexDirection: 'column',
+    transition: 'all .2s linear',
+    cursor: 'pointer',
+    '&:hover': {
+      transform: 'scale(1.15)',
+    },
     '& img': {
-      height: '120px',
+      height: '60px',
     },
     '& h2': {
-      fontSize: '52px',
-      fontWeight: '500',
+      fontSize: '16px',
+      fontWeight: '400',
       margin: 0,
     },
+    margin: '0px 0px 20px 0px',
   },
   assetContainer: {
     display: 'flex',
@@ -335,11 +348,31 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
   },
+  cardDescription: {
+    margin: '50px 0px',
+    '& h4': {
+      fontSize: '16px',
+    },
+  },
+  flexContainertwo: {
+    display: 'flex',
+    gap: '100px',
+    marginBottom: '10px',
+  },
+  activePlan: {
+    transform: 'scale(1.15)',
+  },
+  activeBar: {
+    width: '16px',
+    height: '3px',
+    background: 'white',
+    marginTop: '10px',
+  },
 }));
 
 const PlanDetails = () => {
   const classes = useStyles();
-  const { name } = useParams();
+  const { name: names } = useParams();
   const navigate = useNavigate();
   const [category, setCategory] = useState();
   const [details, setDetails] = useState({});
@@ -354,7 +387,51 @@ const PlanDetails = () => {
   const [selectedTab, setSelectedTab] = useState('Smart Crypto');
   const [selectedCategory, setSelectedCategory] = useState();
   const [planDetailPopupOpen, setPlanDetailPopupOpen] = useState(false);
+  const [selectedPlanName, setSelectedPlanName] = useState('');
+  const [selectedPlanTab, setSelectedPlanTab] = useState(0);
+  const [name, setName] = useState(names);
 
+  const xBluePlan = [
+    {
+      img: ripple,
+      name: 'Ripple',
+    },
+    {
+      img: surge,
+      name: 'Surge',
+    },
+    {
+      img: wave,
+      name: 'Wave',
+    },
+  ];
+
+  const xBitcoinPlan = [
+    {
+      img: bloomingIcon,
+      name: 'Blooming',
+    },
+    {
+      img: rushIcon,
+      name: 'Rush',
+    },
+    {
+      img: bullRunIcon,
+      name: 'Bull Run',
+    },
+  ];
+
+  const selectedPlan = category === 'x-Blue' ? xBluePlan : xBitcoinPlan;
+
+  useEffect(() => {
+    if (selectedPlanTab) {
+      setCategory('x-Bitcoin');
+      setName('blooming');
+    } else {
+      setCategory('x-Blue');
+      setName('ripple');
+    }
+  }, [selectedPlanTab]);
   useEffect(() => {
     let getRequiredCoin = initialTokens.filter(
       (x) => x.commonToken === true && x.isStock === false && x.isETF === false
@@ -363,6 +440,7 @@ const PlanDetails = () => {
   }, []);
 
   useEffect(() => {
+    console.log(name, 'name');
     if (name === 'blooming') {
       setCategory('x-Bitcoin');
       setDetails({
@@ -377,7 +455,7 @@ const PlanDetails = () => {
         logo: rushIcon,
         description: ' Moderate volatility, consistent returns.',
       });
-    } else if (name === 'bull-run') {
+    } else if (name === 'bull run') {
       setCategory('x-Bitcoin');
       setDetails({
         name: 'Bull-Run',
@@ -454,7 +532,7 @@ const PlanDetails = () => {
     };
 
     fetchData();
-  }, [category]);
+  }, [category, name]);
 
   useEffect(() => {
     setFilteredPackages(() => {
@@ -472,7 +550,7 @@ const PlanDetails = () => {
       };
 
       const applicableNames = categoryFilters[category] || [];
-      console.log(applicableNames, 'applicablenames');
+      console.log(details?.name, 'applicablenames');
       // Filter with partial matches
       const filteredByCategory = packagesData.filter((pkg) =>
         applicableNames.some((name) =>
@@ -485,7 +563,7 @@ const PlanDetails = () => {
         pkg.portfolioName.includes(details?.name)
       );
     });
-  }, [details, packagesData, category]);
+  }, [details, packagesData, category, name]);
 
   const handleViewAllocation = (allocationData) => {
     setSelectedAllocation(allocationData);
@@ -516,14 +594,16 @@ const PlanDetails = () => {
     setSelectedTab(newValue);
   };
 
-  const handleBlueCard = () => {
+  const handleBlueCard = (planName = 'ripple') => {
     setSelectedCategory('x-Blue');
     setPlanDetailPopupOpen(true);
+    setSelectedPlanName(planName);
   };
 
-  const handleYellowCard = () => {
+  const handleYellowCard = (planName = 'blooming') => {
     setSelectedCategory('x-Bitcoin');
     setPlanDetailPopupOpen(true);
+    setSelectedPlanName(planName);
   };
 
   const xBlueplanDetails = [
@@ -568,6 +648,10 @@ const PlanDetails = () => {
     },
   ];
 
+  const handleHeader = () => {
+    navigate(`/smart-crypto?id=get-to-know`);
+  };
+
   const planDetails =
     category === 'x-Blue' ? xBlueplanDetails : xBitcoinplanDetails;
   return (
@@ -575,14 +659,33 @@ const PlanDetails = () => {
       <div style={{ margin: '100px auto' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <div className={classes.header}>
-        <div className={classes.headerIconContainer}>
+        {/* <div className={classes.headerIconContainer} onClick={handleHeader}>
           <img src={category === 'x-Bitcoin' ? xBitcoinIcon : xBlueIcon} />
           <p>{category === 'x-Bitcoin' ? 'x-Bitcoin' : 'x-Blue'}</p>
+        </div> */}
+        <PlanIconicHeader
+          selectedPlanTab={selectedPlanTab}
+          setSelectedPlanTab={setSelectedPlanTab}
+          largeFont={true}
+        />
+
+        <div className={classes.flexContainertwo}>
+          {selectedPlan.map((curr) => (
+            <div
+              className={`${classes.flexContainer1} ${
+                name === curr.name.toLowerCase() && classes.activePlan
+              }`}
+              onClick={() => setName(curr.name.toLowerCase())}
+            >
+              <img src={curr?.img} alt="" />
+              <h2>{curr?.name}</h2>
+              {name === curr.name.toLowerCase() && (
+                <div className={classes.activeBar}></div>
+              )}
+            </div>
+          ))}
         </div>
-        <div className={classes.flexContainer1}>
-          <img src={details?.logo} alt="" />
-          <h2>{details?.name}</h2>
-        </div>
+
         <p>{details?.description}</p>
       </div>
 
@@ -609,7 +712,7 @@ const PlanDetails = () => {
               </h3>
               <p>{pkg.description}</p>
               <div className={classes.flexContainer}>
-                <div>
+                <div style={{ margin: '10px 0px' }}>
                   <p>Assets</p>
                   <AvatarGroup max={4}>
                     {pkg.cryptocurrencies.map((crypto) => (
@@ -621,6 +724,10 @@ const PlanDetails = () => {
                     ))}
                   </AvatarGroup>
                 </div>
+              </div>
+              <div className={classes.cardDescription}>
+                <h4>Description:</h4>
+                <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
               </div>
               <div className={classes.buttonContainer}>
                 <GenericButton
@@ -676,6 +783,10 @@ const PlanDetails = () => {
               </AvatarGroup>
             </div>
           </div>
+          <div className={classes.cardDescription}>
+            <h4>Description:</h4>
+            <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
+          </div>
           <div className={classes.buttonContainer}>
             <GenericButton
               text="Create your own plan!"
@@ -690,7 +801,7 @@ const PlanDetails = () => {
         </div>
       </div>
 
-      <div className={classes.exploreContainer}>
+      {/* <div className={classes.exploreContainer}>
         <h3>Explore {category}</h3>
         <div className={classes.absoluteImg}>
           <img src={category === 'x-Blue' ? xBlueBg : xBitcoinBg} alt="" />
@@ -736,7 +847,7 @@ const PlanDetails = () => {
             <div className={classes.smallCardContainer}>
               <div
                 className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                onClick={() => handleBlueCard()}
+                onClick={() => handleBlueCard('ripple')}
               >
                 <img src={ripple} />
                 <span>Ripple</span>
@@ -744,7 +855,7 @@ const PlanDetails = () => {
 
               <div
                 className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                onClick={() => handleBlueCard()}
+                onClick={() => handleBlueCard('surge')}
               >
                 <img src={surge} />
                 <span>Surge</span>
@@ -752,7 +863,7 @@ const PlanDetails = () => {
 
               <div
                 className={`${classes.smallCard} ${classes.blueSmCardHover}`}
-                onClick={() => handleBlueCard()}
+                onClick={() => handleBlueCard('wave')}
               >
                 <img src={wave} />
                 <span>Wave</span>
@@ -781,7 +892,7 @@ const PlanDetails = () => {
             <div className={classes.smallCardContainer}>
               <div
                 className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                onClick={() => handleYellowCard()}
+                onClick={() => handleYellowCard('blooming')}
               >
                 <img src={bloomingIcon} />
                 <span>Blooming</span>
@@ -789,7 +900,7 @@ const PlanDetails = () => {
 
               <div
                 className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                onClick={() => handleYellowCard()}
+                onClick={() => handleYellowCard('rush')}
               >
                 <img src={rushIcon} />
                 <span>Rush</span>
@@ -797,7 +908,7 @@ const PlanDetails = () => {
 
               <div
                 className={`${classes.smallCard} ${classes.yellowSmCardHover}`}
-                onClick={() => handleYellowCard()}
+                onClick={() => handleYellowCard('bull-run')}
               >
                 <img src={bullRunIcon} />
                 <span>Bull-Run</span>
@@ -812,7 +923,7 @@ const PlanDetails = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {allocationPopop && (
         <AllocationPopup
@@ -841,6 +952,7 @@ const PlanDetails = () => {
         <DetailPopup
           category={selectedCategory}
           onClose={() => setPlanDetailPopupOpen(false)}
+          planName={selectedPlanName}
         />
       )}
     </div>

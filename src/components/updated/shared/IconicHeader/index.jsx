@@ -192,7 +192,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
       label: 'Smart Crypto',
       light: userType === 'Indexx Exchange' ? smartCryptoBlack : smartCrypto,
       dark: userType === 'Indexx Exchange' ? smartCryptoWhite : smartCrypto,
-      path: '/smart-crypto?category=x-blue',
+      path: '/smart-crypto',
       search: '',
     },
 
