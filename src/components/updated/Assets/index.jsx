@@ -326,6 +326,15 @@ const Assets = () => {
   const handleClickBuyPlan = (allocationData) => {
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
+    console.log('Selected Plan currentPlanName:', currentPlanName);
+
+  };
+
+  const handlePlanChange = (plan) => {
+    setCurrentPlanName(plan);
+    setupdatePlanMode(true);
+    console.log('Selected Plan:', plan);
+    localStorage.setItem('CurrentPlan', plan);
   };
 
   return (
@@ -474,7 +483,7 @@ const Assets = () => {
               hideAssets={hideAssets}
               selectedValue={selectedListValue}
               setupdatePlanMode={setupdatePlanMode}
-              setCurrentPlanName={setCurrentPlanName}
+              onPlanChange={handlePlanChange}
             />
           </div>
 
@@ -520,6 +529,7 @@ const Assets = () => {
           setAllocationPopup={setAllocationPopup}
           setCreateAPlanPopup={setCreateAPlanPopup}
           setSelectedAllocation={setSelectedAllocation}
+          currentPlanName={currentPlanName}
         />
       )}
 
@@ -530,6 +540,7 @@ const Assets = () => {
           allocationData={selectedAllocation}
           onStartPopup={(pkg) => handleClickBuyPlan(pkg)}
           buttonTextName="Switch Plan"
+          currentPlanName={currentPlanName}
         />
       )}
 

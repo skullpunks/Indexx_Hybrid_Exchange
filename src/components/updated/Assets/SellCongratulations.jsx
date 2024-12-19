@@ -6,7 +6,13 @@ import { Avatar, AvatarGroup, Button, useTheme } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 
+import ripple from '../../../assets/updated/smartCrypto/ripple.png';
+import surge from '../../../assets/updated/smartCrypto/surge.png';
+import wave from '../../../assets/updated/smartCrypto/Wave.png';
+
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
+import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
+import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
 import congratulationIcon from '../../../assets/updated/smartCrypto/congratulationIcon.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -167,9 +173,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CongratulationsPopup = ({ onClose, category }) => {
+const SellCongratulations = ({
+  onClose,
+  category,
+  userSellPlanReformed,
+  userSellPlan,
+}) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  console.log(
+    'userSellPlanReformed, userSellPlan',
+    userSellPlanReformed,
+    userSellPlan
+  );
+  const getPlanImage = (planName) => {
+    if (planName.includes('Surge')) return surge;
+    if (planName.includes('Wave')) return wave;
+    if (planName.includes('Ripple')) return ripple;
+    if (planName.includes('Blooming')) return bloomingIcon;
+    if (planName.includes('Bull-Run')) return bullRunIcon;
+    if (planName.includes('Rush')) return rushIcon;
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -199,9 +225,9 @@ const CongratulationsPopup = ({ onClose, category }) => {
           </div>
 
           <div className={classes.planDetails}>
-            <p>Your plan is switched to</p>
-            <img src={bloomingIcon} />
-            <p>x-Bitcoin Blooming - kash</p>
+            <p>Your Smart Crypto plan is sold</p>
+            <img src={getPlanImage(userSellPlan)} />
+            <p>{userSellPlanReformed}</p>
           </div>
 
           <div className={classes.btnContainer}>
@@ -236,4 +262,4 @@ const CongratulationsPopup = ({ onClose, category }) => {
   );
 };
 
-export default CongratulationsPopup;
+export default SellCongratulations;

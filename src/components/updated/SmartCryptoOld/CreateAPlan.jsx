@@ -325,7 +325,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
     if (name.includes('Ripple'))
       return `Smart Crypto x-Blue Ripple - ${managedBy}`;
     if (name.includes('Wave'))
-      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+      return `Smart Crypto x-Blue Wave - ${managedBy}`;
     if (name.includes('Blooming'))
       return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
     if (name.includes('Rush'))

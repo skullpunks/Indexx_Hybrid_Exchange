@@ -6,8 +6,15 @@ import { Avatar, AvatarGroup, Button, useTheme } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 
+import ripple from '../../../assets/updated/smartCrypto/ripple.png';
+import surge from '../../../assets/updated/smartCrypto/surge.png';
+import wave from '../../../assets/updated/smartCrypto/Wave.png';
+
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
+import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
+import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { sellPlanSmartCryptoPlan } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -168,9 +175,103 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SellConfirmationPopup = ({ onClose, category }) => {
+const SellConfirmationPopup = ({
+  onClose,
+  category,
+  packageName,
+  confirmSellProcessed,
+}) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const [userSellPlan, setUserPlanName] = useState('');
+  const [userSellPlanManagedBy, setUserPlanNameManagedBy] = useState('');
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const handleCheckboxChange = (e) => {
+    setIsFeeAcknowledged(e.target.checked);
+    console.log('e.target.checked0', e.target.checked);
+  };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
+
+  useEffect(() => {
+    let plan = extractPlanDetails(packageName);
+    let reformedPlan = reformPlanName(plan.planName, plan.managedBy);
+    console.log('reformedPlan', reformedPlan);
+    setUserPlanNameReformed(reformedPlan);
+    setUserPlanName(plan.planName);
+    setUserPlanNameManagedBy(plan.managedBy);
+  }, [packageName]);
+
+  const reformPlanName = (name, managedBy) => {
+    if (!name) return;
+    if (name.includes('Surge'))
+      return `Smart Crypto x-Blue Surge - ${managedBy}`;
+    if (name.includes('Ripple'))
+      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Wave')) return `Smart Crypto x-Blue Wave - ${managedBy}`;
+    if (name.includes('Blooming'))
+      return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
+    if (name.includes('Rush'))
+      return `Smart Crypto x-Bitcoin Rush - ${managedBy}`;
+    if (name.includes('Bull-Run'))
+      return `Smart Crypto x-Bitcoin Bull-Run - ${managedBy}`;
+  };
+
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    setEmail(email);
+  }, []);
+
+  const getPlanImage = (planName) => {
+    if (planName.includes('Surge')) return surge;
+    if (planName.includes('Wave')) return wave;
+    if (planName.includes('Ripple')) return ripple;
+    if (planName.includes('Blooming')) return bloomingIcon;
+    if (planName.includes('Bull-Run')) return bullRunIcon;
+    if (planName.includes('Rush')) return rushIcon;
+  };
+
+  const handleSubmitSellPlan = async () => {
+    setLoadings(true);
+
+    let sellCurrencies = JSON.parse(localStorage.getItem('SellPlanCurrencies'));
+    console.log(sellCurrencies, 'sellCurrencies');
+
+    console.log(
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      sellCurrencies, // Array of cryptocurrency data
+      email
+    );
+    let createSwitch = await sellPlanSmartCryptoPlan(
+      userSellPlan, // Updated field name to match server expectations
+      userSellPlanManagedBy, // Updated field name to match server expectations
+      sellCurrencies, // Array of cryptocurrency data
+      email
+    );
+    setLoadings(false);
+    confirmSellProcessed(userSellPlanReformed, userSellPlan);
+  };
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -200,20 +301,47 @@ const SellConfirmationPopup = ({ onClose, category }) => {
           </div>
 
           <div className={classes.planDetails}>
-            <img src={bloomingIcon} />
-            <p>x-Bitcoin Blooming - kash</p>
+            <img src={getPlanImage(userSellPlan)} />
+            <p>{userSellPlanReformed}</p>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginTop: '15px',
+            }}
+          >
+            <input
+              type="checkbox"
+              id="feeAcknowledgment"
+              checked={isFeeAcknowledged}
+              onChange={handleCheckboxChange}
+            />
+            <p>
+              I confirm considering take some minimum Gas fees or Transaction
+              fees for selling this plan.
+            </p>
           </div>
 
           <div className={classes.btnContainer}>
-            <GenericButton text={'Cancel'} className={classes.greyButton} />
+            <GenericButton
+              text={'Cancel'}
+              className={classes.greyButton}
+              onClick={onClose}
+            />
 
             <GenericButton
               text={'Sell Plan'}
               className={
-                category === 'x-Bitcoin'
+                /Ripple|Wave|Surge/i.test(userSellPlan)
                   ? classes.blueButton
                   : classes.yellowButton
               }
+              loading={loadings}
+              disabled={!isFeeAcknowledged}
+              onClick={handleSubmitSellPlan}
             />
           </div>
         </div>

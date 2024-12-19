@@ -25,6 +25,8 @@ import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
 import SellConfirmationPopup from './SellConfirmationPopup';
 import { useTheme } from '@mui/material/styles';
+import CongratulationsPopup from './Congratulations';
+import SellCongratulations from './SellCongratulations';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -149,7 +151,7 @@ export default function EnhancedTable({
   hideAssets,
   selectedValue,
   setupdatePlanMode,
-  setCurrentPlanName,
+  onPlanChange,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -164,7 +166,10 @@ export default function EnhancedTable({
   const [sellConfirmationPopup, setSellConfirmationPopup] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [userType, setUserType] = useState('Indexx Exchange');
-
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
+  const [userSellPlan, setUserPlanName] = useState('');
+  const [CongratulationsPopup, setCongratulationsPopup] = useState(false);
+  console.log('onPlanChange', onPlanChange);
   useEffect(() => {
     const user = localStorage.getItem('userType');
     if (user) {
@@ -172,6 +177,7 @@ export default function EnhancedTable({
     }
   }, []);
 
+  const [planName, setPlanName] = useState('');
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
 
@@ -837,9 +843,10 @@ export default function EnhancedTable({
                               setupdatePlanMode(true);
                               console.log(
                                 'group.categorygroup.category',
-                                group.category
+                                group.category,
+                                group.rows[0].notes
                               );
-                              setCurrentPlanName(group.category);
+                              onPlanChange(group.rows[0].notes, group);
                             }}
                           >
                             Switch Plan
@@ -870,7 +877,14 @@ export default function EnhancedTable({
                                 background: 'none',
                               },
                             }}
-                            onClick={() => setSellConfirmationPopup(true)}
+                            onClick={() => {
+                              setSellConfirmationPopup(true);
+                              setPlanName(group.rows[0].notes);
+                              localStorage.setItem(
+                                'SellPlanCurrencies',
+                                JSON.stringify(group)
+                              );
+                            }}
                           >
                             Sell Plan
                           </Button>
@@ -888,6 +902,22 @@ export default function EnhancedTable({
         <SellConfirmationPopup
           onClose={() => setSellConfirmationPopup(false)}
           category="x-Blue"
+          packageName={planName}
+          confirmSellProcessed={(userSellPlanReformed, userSellPlan) => {
+            setSellConfirmationPopup(false);
+            setCongratulationsPopup(true);
+            setUserPlanNameReformed(userSellPlanReformed);
+            setUserPlanName(userSellPlan);
+          }}
+        />
+      )}
+
+      {CongratulationsPopup && (
+        <SellCongratulations
+          onClose={() => setCongratulationsPopup(false)}
+          category={'x-Blue'}
+          userSellPlanReformed={userSellPlanReformed}
+          userSellPlan={userSellPlan}
         />
       )}
     </Box>

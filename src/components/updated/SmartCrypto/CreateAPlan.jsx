@@ -10,6 +10,7 @@ import {
   createBuyOrderForSmartCrypto,
   decodeJWT,
   getUserWallets,
+  switchPlanSmartCryptoPlan,
   validateUserEmail,
 } from '../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -210,8 +211,8 @@ const CreateAPlanPopup = ({
   onClose,
   category,
   allocationData,
+  currentPlanName,
   buttonTextName = 'Start Plan',
-  currentPlanName = '',
 }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
@@ -236,9 +237,12 @@ const CreateAPlanPopup = ({
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
+  const [currentPlanWithManagedBy, setCurrentPlanWithManagedBy] = useState('');
+  const [currentNewPlanName, setCurrentNewPlanName] = useState('');
 
   const handleCheckboxChange = (e) => {
     setIsFeeAcknowledged(e.target.checked);
+    console.log('e.target.checked0', e.target.checked);
   };
 
   const handleChange = (e) => {
@@ -257,6 +261,23 @@ const CreateAPlanPopup = ({
 
     setUsdAmount(value); // Update state regardless
   };
+
+  function extractPlanDetails(inputString) {
+    // Regular expressions
+    const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
+    const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
+
+    // Extract the plan name
+    const planNameMatch = inputString.match(planNameRegex);
+    const planName = planNameMatch ? planNameMatch[1].trim() : null;
+
+    // Extract the managed by name
+    const managedByMatch = inputString.match(managedByRegex);
+    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
+
+    // Return the result
+    return { planName, managedBy };
+  }
 
   let planManagedBy = allocationData?.managedBy;
   let planType = allocationData?.portfolioName;
@@ -318,6 +339,15 @@ const CreateAPlanPopup = ({
     }
   };
 
+  useEffect(() => {
+    let newPlan = extractPlanDetails(localStorage.getItem('CurrentPlan'));
+    console.log(newPlan);
+    let refinedPlanName = reformPlanName(newPlan.planName, newPlan.managedBy);
+    setCurrentNewPlanName(newPlan.planName);
+    console.log('refinedPlanName', refinedPlanName);
+    setCurrentPlanWithManagedBy(refinedPlanName);
+  }, []);
+
   const renderCoinAllocationInputs = () => {
     return allocationData?.cryptocurrencies.map((coin) => (
       <InputField
@@ -364,8 +394,7 @@ const CreateAPlanPopup = ({
       return `Smart Crypto x-Blue Surge - ${managedBy}`;
     if (name.includes('Ripple'))
       return `Smart Crypto x-Blue Ripple - ${managedBy}`;
-    if (name.includes('Wave'))
-      return `Smart Crypto x-Blue Ripple - ${managedBy}`;
+    if (name.includes('Wave')) return `Smart Crypto x-Blue Wave - ${managedBy}`;
     if (name.includes('Blooming'))
       return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
     if (name.includes('Rush'))
@@ -400,6 +429,32 @@ const CreateAPlanPopup = ({
     } else {
       setPaymentMethod('Select Method*');
     }
+  };
+
+  const handleSubmitSwitchPlan = async () => {
+    setLoadings(true);
+
+    let switchCurrencies = JSON.parse(
+      localStorage.getItem('CurrentPlanCurrencies')
+    );
+    console.log(switchCurrencies, 'switchCurrencies');
+
+    console.log(
+      currentNewPlanName,
+      allocationData?.portfolioName, // Updated field name to match server expectations
+      allocationData?.managedBy, // Updated field name to match server expectations
+      switchCurrencies, // Array of cryptocurrency data
+      email
+    );
+    let createSwitch = await switchPlanSmartCryptoPlan(
+      currentNewPlanName,
+      allocationData?.portfolioName, // Updated field name to match server expectations
+      allocationData?.managedBy, // Updated field name to match server expectations
+      switchCurrencies, // Array of cryptocurrency data
+      email
+    );
+    console.log('createSwitch', createSwitch);
+    setLoadings(false);
   };
 
   const confirmPayment = async () => {
@@ -716,16 +771,48 @@ const CreateAPlanPopup = ({
                     onChange={handleCheckboxChange}
                   />
                   <p>
-                  I confirm considering 6% as Gas fees or Transaction Fees for
-                  switching plan from <strong>{currentPlanName}</strong> to{' '}
-                  <strong>
-                    {reformPlanName(
-                      allocationData?.portfolioName,
-                      allocationData?.managedBy
-                    )}
-                  </strong>
-                  .
-                </p>
+                    I confirm considering take some minimum Gas fees or
+                    Transaction fees for switching plan from{' '}
+                    <strong
+                      style={{
+                        color: /Ripple|Wave|Surge/i.test(
+                          currentPlanWithManagedBy
+                        )
+                          ? '#07A6FC'
+                          : /x-Bitcoin/i.test(currentPlanWithManagedBy)
+                          ? '#FEBA00'
+                          : '#000', // Default color if no match
+                      }}
+                    >
+                      {currentPlanWithManagedBy}
+                    </strong>{' '}
+                    to{' '}
+                    <strong
+                      style={{
+                        color: /Ripple|Wave|Surge/i.test(
+                          reformPlanName(
+                            allocationData?.portfolioName,
+                            allocationData?.managedBy
+                          )
+                        )
+                          ? '#07A6FC'
+                          : /x-Bitcoin/i.test(
+                              reformPlanName(
+                                allocationData?.portfolioName,
+                                allocationData?.managedBy
+                              )
+                            )
+                          ? '#FEBA00'
+                          : '#000', // Default color if no match
+                      }}
+                    >
+                      {reformPlanName(
+                        allocationData?.portfolioName,
+                        allocationData?.managedBy
+                      )}
+                    </strong>
+                    .
+                  </p>
                 </div>
               </div>
             </>
@@ -746,10 +833,14 @@ const CreateAPlanPopup = ({
                   ? classes.blueButton
                   : classes.yellowButton
               }
-              onClick={handleSubmit}
-              disabled={
+              onClick={
                 buttonTextName !== 'Switch Plan'
-                  ? ''
+                  ? handleSubmit
+                  : handleSubmitSwitchPlan
+              }
+              disabled={
+                buttonTextName === 'Switch Plan'
+                  ? !isFeeAcknowledged
                   : !usdAmount || usdAmount < 2500 || !paymentMethod
               } // Disable if invalid
               loading={loadings}
