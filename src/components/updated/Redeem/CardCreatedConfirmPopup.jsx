@@ -109,6 +109,7 @@ const CardCreatedConfirmPopup = ({
   isLoading,
   currentUserEmail,
   cardType,
+  cardSubType,
   amountInUsd,
 }) => {
   const theme = useTheme();
@@ -125,12 +126,23 @@ const CardCreatedConfirmPopup = ({
       return;
     }
     setError(''); // Clear any previous error messages
-    const result = await createGiftcard(
+    console.log(' cardType,ardSubType,', cardType, cardSubType);
+    let formatedCardType =
+    cardType === 'Seasonal Greeting Card'
+      ? `${cardType} - ${cardSubType}`
+      : cardType;
+        console.log(    Number(amount),
+        currentUserEmail,
+        currency,
+        selectedImgUrl,
+        formatedCardType,
+        email)
+   const result = await createGiftcard(
       Number(amount),
       currentUserEmail,
       currency,
       selectedImgUrl,
-      cardType,
+      formatedCardType,
       email
     );
     console.log(result);
