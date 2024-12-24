@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     gap: '15px',
     marginTop: '25px',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      gap: '20px',
+    },
   },
   cancelButton: {
     background:
@@ -144,6 +148,12 @@ const SendCardSuccessfully = ({ onClose }) => {
           <GenericButton
             text="Send Another card"
             onClick={() => navigate('/redeem/create-card')}
+            styles={{ minWidth: '200px' }}
+          />
+          <GenericButton
+            text="View Shopping History"
+            onClick={() => navigate('/redeem/shopping-history')}
+            styles={{ minWidth: '200px' }}
           />
         </div>
       </div>

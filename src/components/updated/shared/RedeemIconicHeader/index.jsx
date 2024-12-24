@@ -17,15 +17,19 @@ import createLightMode from '../../../../assets/redeem/createWhiteMode.svg';
 import sendDarkMode from '../../../../assets/redeem/sendDarkMode.svg';
 import sendLightMode from '../../../../assets/redeem/sendWhiteMode.svg';
 
+import howItWorksDark from '../../../../assets/redeem/How it works.svg';
+import howItWorksLight from '../../../../assets/redeem/howToCreateLightMode.svg';
+import shoppingHistoryDark from '../../../../assets/redeem/Shopping history.svg';
+import shoppingHistoryLight from '../../../../assets/redeem/shoppingHistoryLightMode.svg';
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
-  width: '130px',
+  width: '200px',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
   margin: '0 10px',
-  padding: '12px 16px',
+  padding: '12px 10px',
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
@@ -99,6 +103,18 @@ export default function IconicHeader({ selectedTab, onChange }) {
         light: radeemLightMode,
         dark: radeemDarkMode,
         path: '/redeem',
+      },
+      {
+        label: 'Shopping History',
+        light: shoppingHistoryLight,
+        dark: shoppingHistoryDark,
+        path: '/redeem/shopping-history',
+      },
+      {
+        label: 'How to Create, Buy & Sell',
+        light: howItWorksLight,
+        dark: howItWorksDark,
+        path: '/redeem/how-to-create-buy-sell',
       }
     );
   }
@@ -142,7 +158,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        maxWidth: '500px',
+        maxWidth: '1100px',
         margin: '20px auto 50px auto',
       }}
     >
@@ -151,7 +167,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
         onChange={handleChange}
         centered={!isLoggedIn}
         variant="scrollable"
-        scrollButtons={false}
+        scrollButtons={'auto'}
         sx={{
           width: '100%',
           background: 'none',

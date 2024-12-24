@@ -48,7 +48,16 @@ import greeting24 from '../../../assets/redeem/greeting24.png';
 import greeting25 from '../../../assets/redeem/greeting25.png';
 import greeting26 from '../../../assets/redeem/greeting26.png';
 import greeting27 from '../../../assets/redeem/greeting27.png';
-import { useTheme } from '@mui/material';
+import Slider from 'react-slick';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputAdornment,
+  Radio,
+  RadioGroup,
+  useTheme,
+} from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import GenericButton from '../shared/Button';
 import CardCreatedPopup from './CardCreatedPopup';
@@ -66,11 +75,11 @@ import InsufficientBalancePopup from './InsufficientBalancePopup';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '20px',
-    maxWidth: '1280px',
+    maxWidth: '1380px',
     margin: 'auto',
   },
   sendCryptoRoot: {
-    maxWidth: '700px',
+    maxWidth: '840px',
     width: '100%',
     '& h3': {
       color: theme.palette.text.primary,
@@ -135,12 +144,13 @@ const useStyles = makeStyles((theme) => ({
   quantityContainer: {
     marginBottom: '20px',
   },
-  activeImg: {
-    border: `5px solid ${theme.palette.primary.main}`,
-  },
+  // activeImg: {
+  //   border: `5px solid ${theme.palette.primary.main}`,
+  // },
   hoverCardEffect: {
+    padding: '0px 20px',
     '&:hover': {
-      border: `5px solid ${theme.palette.primary.main}`,
+      transform: 'scale(1.01)',
     },
   },
   errorMessage: {
@@ -165,15 +175,10 @@ const useStyles = makeStyles((theme) => ({
   },
   cardGrid: {
     marginTop: '20px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4,1fr)',
     gap: '10px',
-  },
-  [theme.breakpoints.down('md')]: {
-    gridTemplateColumns: 'repeat(2,1fr)',
-  },
-  [theme.breakpoints.down('sm')]: {
-    gridTemplateColumns: 'repeat(1,1fr)',
+    '& .slick-list': {
+      height: '570px',
+    },
   },
 }));
 
@@ -257,14 +262,14 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 1,
       img: greeting1,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting1.png',
     },
     {
       id: 2,
       img: greeting2,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting2.png',
@@ -272,7 +277,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 3,
       img: greeting3,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting3.png',
@@ -280,7 +285,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 4,
       img: greeting4,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting4.png',
@@ -288,7 +293,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 5,
       img: greeting5,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting5.png',
@@ -296,7 +301,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 6,
       img: greeting6,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting6.png',
@@ -304,7 +309,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 7,
       img: greeting7,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting7.png',
@@ -312,7 +317,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 8,
       img: greeting8,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting8.png',
@@ -321,7 +326,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 9,
       img: greeting9,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting9.png',
@@ -329,7 +334,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 10,
       img: greeting10,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting10.png',
@@ -337,7 +342,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 11,
       img: greeting11,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting11.png',
@@ -345,7 +350,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 12,
       img: greeting12,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting12.png',
@@ -353,7 +358,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 13,
       img: greeting13,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting13.png',
@@ -362,7 +367,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 14,
       img: greeting14,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting14.png',
@@ -370,7 +375,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 15,
       img: greeting15,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting15.png',
@@ -378,7 +383,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 16,
       img: greeting16,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting16.png',
@@ -386,7 +391,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 17,
       img: greeting17,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting17.png',
@@ -394,7 +399,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 18,
       img: greeting18,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting18.png',
@@ -403,7 +408,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 19,
       img: greeting19,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting19.png',
@@ -411,7 +416,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 20,
       img: greeting20,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting20.png',
@@ -419,7 +424,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 21,
       img: greeting21,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting21.png',
@@ -427,7 +432,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 22,
       img: greeting22,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting22.png',
@@ -435,7 +440,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 23,
       img: greeting23,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting23.png',
@@ -444,7 +449,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 24,
       img: greeting24,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting24.png',
@@ -452,7 +457,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 25,
       img: greeting25,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting25.png',
@@ -460,7 +465,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 26,
       img: greeting26,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting26.png',
@@ -468,7 +473,7 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 27,
       img: greeting27,
-      type: 'Crypto Greeting Card',
+      type: 'Crypto Birthday Card',
 
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/greeting27.png',
@@ -524,8 +529,26 @@ const CreateCards = ({ onSendCard }) => {
       type: 'Seasonal Greeting Card',
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/christmas7.png',
-    }
+    },
   ];
+
+  const [contentArr, setContentArr] = useState([
+    {
+      id: 0,
+      name: 'Select any crypto gift card design from below:',
+      data: giftArr,
+    },
+    {
+      id: 1,
+      name: 'Select any crypto birthday card design from below:',
+      data: greetingArr,
+    },
+    {
+      id: 2,
+      name: 'Select a seasonal greeting card design from the options below:',
+      data: christmanArr,
+    },
+  ]);
 
   const [value, setValue] = useState(type ?? 'Crypto Gift Card');
   const [openPopup, setOpenPopup] = useState(false);
@@ -542,18 +565,44 @@ const CreateCards = ({ onSendCard }) => {
   const handleChange = (event) => {
     if (
       event.target.value === 'Crypto Gift Card' ||
-      event.target.value === 'Crypto Greeting Card' || 
-      event.target.value === 'Seasonal Greeting Card' 
+      event.target.value === 'Crypto Birthday Card' ||
+      event.target.value === 'Seasonal Greeting Card'
     ) {
       setValue(event.target.value);
       setSelectedImg(
-        event.target.value === 'Crypto Gift Card' ? gift1 : event.target.value === 'Crypto Greeting Card' ? greeting1 : christman1
+        event.target.value === 'Crypto Gift Card'
+          ? gift1
+          : event.target.value === 'Crypto Birthday Card'
+          ? greeting1
+          : christman1
       );
       setSelectedImgUrl(
         event.target.value === 'Crypto Gift Card'
-          ? giftArr[0].imgUrl : event.target.value === 'Crypto Greeting Card' ? greetingArr[0].imgUrl
+          ? giftArr[0].imgUrl
+          : event.target.value === 'Crypto Birthday Card'
+          ? greetingArr[0].imgUrl
           : christmanArr[0].imgUrl
       );
+
+      if (event.target.value === 'Crypto Gift Card') {
+        const reorderedArray = [
+          ...contentArr.filter((item) => item.id === 0),
+          ...contentArr.filter((item) => item.id !== 0),
+        ];
+        setContentArr(reorderedArray);
+      } else if (event.target.value === 'Crypto Birthday Card') {
+        const reorderedArray = [
+          ...contentArr.filter((item) => item.id === 1),
+          ...contentArr.filter((item) => item.id !== 1),
+        ];
+        setContentArr(reorderedArray);
+      } else if (event.target.value === 'Seasonal Greeting Card') {
+        const reorderedArray = [
+          ...contentArr.filter((item) => item.id === 2),
+          ...contentArr.filter((item) => item.id !== 2),
+        ];
+        setContentArr(reorderedArray);
+      }
     } else {
       console.log('event', event.target.value);
       const userWallet = allWallets.find(
@@ -580,19 +629,20 @@ const CreateCards = ({ onSendCard }) => {
   const [allWallets, setAllWallets] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [openInsufficientPopup, setOpenInsufficientPopup] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
+  const [selectedValue, setSelectedValue] = useState('Pay with USD');
   const closePopup = () => {
     setShowPopup(false);
   };
-
-  // useEffect(() => {
-  //   console.log(balanceError, 'balanceError');
-  //   if (balanceError) {
-  //     setOpenInsufficientPopup(true);
-  //   }
-  // }, [balanceError]);
   useEffect(() => {
     if (value) {
-      setSelectedCards(value === 'Crypto Gift Card' ? giftArr : value === 'Crypto Greeting Card' ? greetingArr : christmanArr );
+      setSelectedCards(
+        value === 'Crypto Gift Card'
+          ? giftArr
+          : value === 'Crypto Greeting Card'
+          ? greetingArr
+          : christmanArr
+      );
       setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
@@ -674,6 +724,39 @@ const CreateCards = ({ onSendCard }) => {
       fetchPrice();
     } catch (err) {}
   }, [amountInUsd]);
+
+  const handlePaymentChange = (event) => {
+    setSelectedValue(event.target.value);
+    console.log('Selected Payment Method:', event.target.value);
+  };
+  const sliderSettings = {
+    dots: false, // Show navigation dots
+    infinite: true, // Infinite scroll
+    speed: 500, // Transition speed
+    slidesToShow: 3, // Show 4 items at a time
+    slidesToScroll: 1, // Scroll one item at a time
+    responsive: [
+      {
+        breakpoint: 1024, // Adjust for tablet
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768, // Adjust for mobile
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480, // Smaller mobile screens
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -698,13 +781,17 @@ const CreateCards = ({ onSendCard }) => {
         </div>
         <div className={classes.redeemLeft}>
           <div className={classes.selectTypeContainer}>
-            <label>Select Type</label>
+            <label>Select Card Type</label>
             <CustomSelectBox
               items={[
                 { name: 'Crypto Gift Card', value: 'Crypto Gift Card' },
-                { name: 'Crypto Greeting Card', value: 'Crypto Greeting Card' },
                 {
-                  name: 'Seasonal Greeting Card',
+                  name: 'Crypto Birthday Card',
+                  value: 'Crypto Birthday Card',
+                },
+
+                {
+                  name: 'Seasonal Crypto Greeting Card',
                   value: 'Seasonal Greeting Card',
                 },
               ]}
@@ -714,24 +801,71 @@ const CreateCards = ({ onSendCard }) => {
             />
           </div>
           <div className={classes.selectTypeContainer}>
-            <label>Select Token</label>
-            <CustomSelectBox
-              items={initialTokens.map((token) => ({
-                name: token.title,
-                value: token.title,
-                image: token.image,
-              }))}
-              type={'Coin'}
-              value={currency}
-              onCurrencyChange={(value) => setCurrency(value)}
-              onChange={handleChange}
-              hasborder={true}
-            />
+            <label>Select Payment Type:</label>
+            <div>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="Pay with USD"
+                  name="radio-buttons-group"
+                  value={selectedValue}
+                  onChange={handlePaymentChange}
+                >
+                  <FormControlLabel
+                    value="Pay with USD"
+                    control={<Radio />}
+                    label="Pay with USD"
+                  />
+                  <FormControlLabel
+                    value="Pay with Token"
+                    control={<Radio />}
+                    label="Pay with Token"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
           </div>
+
+          {selectedValue === 'Pay with USD' ? (
+            <div className={classes.selectTypeContainer}>
+              <label>Select Payment Method</label>
+              <CustomSelectBox
+                items={[
+                  { name: 'Credit Card', value: 'Credit Card' },
+                  { name: 'Paypal', value: 'Paypal' },
+                  { name: 'ACH', value: 'ACH' },
+                  { name: 'Wire transfer', value: 'Wire transfer' },
+                  { name: 'Zelle', value: 'Zelle' },
+                  { name: 'TygaPay', value: 'TygaPay' },
+                ]}
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                hasborder
+              />
+            </div>
+          ) : (
+            <div className={classes.selectTypeContainer}>
+              <label>Select Token for Gift</label>
+              <CustomSelectBox
+                items={initialTokens.map((token) => ({
+                  name: token.title,
+                  value: token.title,
+                  image: token.image,
+                }))}
+                type={'Coin'}
+                value={currency}
+                onCurrencyChange={(value) => setCurrency(value)}
+                onChange={handleChange}
+                hasborder={true}
+              />
+            </div>
+          )}
+
           <div className={classes.enterAmountContainer}>
             <InputField
               label={'Enter Amount in USD'}
               type="number"
+              placeholder={'Min. Amount is 5 USD'}
               value={amountInUsd}
               onChange={(e) => setAmountInUsd(e.target.value)}
             />
@@ -778,73 +912,38 @@ const CreateCards = ({ onSendCard }) => {
       </div>
       {/* Gift card listing */}
       <div>
-        <div className={classes.cardListingRoot}>
-          <div className={classes.cardListHeader}>
-            <div className={classes.cardHeaderLeft}>
-              <h3>
-                {value === 'Crypto Gift Card'
-                  ? 'Select any crypto gift card design from below:'
-                  : value === 'Crypto Gift Card' ? 'Select any crypto greeting card design from below:' : 'Select any seasonal greeting card design from below:'}
-                  {' '}
-              </h3>
-              <p>
-                {' '}
-                {value === 'Crypto Gift Card'
-                  ? 'Send a crypto gift card for any occasion'
-                  : value === 'Crypto Gift Card' ? 'Send a crypto greeting card for any occasion': 'Send a seasonal greeting card for any occasion'}
-              </p>
+        {contentArr.map((el) => (
+          <div
+            className={classes.cardListingRoot}
+            style={{ marginBottom: '100px' }}
+          >
+            <div className={classes.cardListHeader}>
+              <div className={classes.cardHeaderLeft}>
+                <h3>{el.name}</h3>
+              </div>
+            </div>
+
+            <div className={classes.cardGrid}>
+              <Slider {...sliderSettings}>
+                {el.data.map((curr, i) => (
+                  <div
+                    key={i} // Unique key for each slide
+                    onClick={() => handleImgClick(curr)}
+                    className={`${classes.hoverCardEffect} ${
+                      curr.img === selectedImg ? classes.activeImg : ''
+                    }`}
+                  >
+                    <img
+                      src={curr.img}
+                      alt="img"
+                      style={{ width: '100%', height: 'auto' }}
+                    />
+                  </div>
+                ))}
+              </Slider>
             </div>
           </div>
-
-          <div className={classes.cardGrid}>
-            {selectedCard.map((curr, i) => (
-              <div
-                key={i} // Added key to the map iterator
-                onClick={() => handleImgClick(curr)}
-                className={`${classes.hoverCardEffect} ${
-                  curr.img === selectedImg ? classes.activeImg : ''
-                } `}
-              >
-                <img src={curr.img} alt="img" style={{ width: '100%' }} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className={classes.cardListingRoot}>
-          <div className={classes.cardListHeader}>
-            <div
-              className={classes.cardHeaderLeft}
-              style={{ marginTop: '50px' }}
-            >
-              <h3>
-              {value === 'Crypto Gift Card'
-                  ? 'Select any crypto gift card design from below:'
-                  : value === 'Crypto Gift Card' ? 'Select any crypto greeting card design from below:' : 'Select any seasonal greeting card design from below:'}
-                  {' '}
-              </h3>
-              <p>
-                {' '}
-                {value === 'Crypto Gift Card'
-                  ? 'Send a crypto gift card for any occasion'
-                  : value === 'Crypto Gift Card' ? 'Send a crypto greeting card for any occasion': 'Send a seasonal greeting card for any occasion'}
-              </p>
-            </div>
-          </div>
-
-          <div className={classes.cardGrid}>
-            {nonSelectedCard.map((curr, i) => (
-              <div
-                key={i} // Added key to the map iterator
-                onClick={() => handleImgClick(curr)}
-                className={`${classes.hoverCardEffect} ${
-                  curr.img === selectedImg ? classes.activeImg : ''
-                } `}
-              >
-                <img src={curr.img} alt="img" style={{ width: '100%' }} />
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
 
       {showPopup && (
