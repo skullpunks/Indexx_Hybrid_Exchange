@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import { createGiftcard } from '../../../services/api';
+import Inex from '../../../assets/updated/buySell/INEX.svg';
+import { Avatar } from 'antd';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -128,16 +130,18 @@ const CardCreatedConfirmPopup = ({
     setError(''); // Clear any previous error messages
     console.log(' cardType,ardSubType,', cardType, cardSubType);
     let formatedCardType =
-    cardType === 'Seasonal Greeting Card'
-      ? `${cardType} - ${cardSubType}`
-      : cardType;
-        console.log(    Number(amount),
-        currentUserEmail,
-        currency,
-        selectedImgUrl,
-        formatedCardType,
-        email)
-   const result = await createGiftcard(
+      cardType === 'Seasonal Greeting Card'
+        ? `${cardType} - ${cardSubType}`
+        : cardType;
+    console.log(
+      Number(amount),
+      currentUserEmail,
+      currency,
+      selectedImgUrl,
+      formatedCardType,
+      email
+    );
+    const result = await createGiftcard(
       Number(amount),
       currentUserEmail,
       currency,
@@ -155,6 +159,15 @@ const CardCreatedConfirmPopup = ({
     }
     isLoading(false);
   };
+
+  const getImage = (image) => {
+    try {
+      return require(`../../../assets/token-icons/${image}.png`).default;
+    } catch (error) {
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -193,7 +206,13 @@ const CardCreatedConfirmPopup = ({
           >
             {/* <p>Quantity: {1}</p> */}
             <p>
-              Token Amount: {amount} {currency}
+              Token Amount:{' '}
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6,
+              }).format(amount)}{' '}
+              {currency} <Avatar alt={`${currency}`} src={getImage(currency)} />
             </p>
             <p>
               Amount in USD: $

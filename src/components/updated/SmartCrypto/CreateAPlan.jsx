@@ -269,11 +269,11 @@ const CreateAPlanPopup = ({
     const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
 
     // Extract the plan name
-    const planNameMatch = inputString.match(planNameRegex);
+    const planNameMatch = inputString?.match(planNameRegex);
     const planName = planNameMatch ? planNameMatch[1].trim() : null;
 
     // Extract the managed by name
-    const managedByMatch = inputString.match(managedByRegex);
+    const managedByMatch = inputString?.match(managedByRegex);
     const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
 
     // Return the result

@@ -156,6 +156,8 @@ import SmartCryptoPage from './pages/SmartCrypto';
 import SmartCryptoOldPage from './pages/SmartCryptoold';
 import PlanDetails from './components/updated/SmartCrypto/PlanDetails';
 import NotFound from './pages/NotFound';
+import GiftShoppingHistoryPage from './pages/GiftShoppingHistory';
+import HowToCreateBuySellPage from './pages/HowToCreateBuySell';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -239,6 +241,14 @@ function App() {
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/redeem" element={<RedeemPage />} />
             <Route path="/redeem/create-card" element={<CreateCardPage />} />
+            <Route
+              path="/redeem/shopping-history"
+              element={<GiftShoppingHistoryPage />}
+            />
+            <Route
+              path="/redeem/how-to-create-buy-sell"
+              element={<HowToCreateBuySellPage />}
+            />
             <Route path="/redeem/send-card" element={<SendCardPage />} />
             <Route
               path="/redeem/send-card-successful"

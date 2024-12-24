@@ -144,7 +144,12 @@ const CardCreatedPopup = ({
           >
             {/* <p>Quantity: {1}</p> */}
             <p>
-              Token Amount: {giftCardData.amount} {giftCardData?.type}
+              Token Amount:{' '}
+              {new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6,
+              }).format(giftCardData.amount)}{' '} {giftCardData?.type}
             </p>
             <p>
               Amount in USD: $
