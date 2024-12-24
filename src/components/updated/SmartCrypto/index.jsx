@@ -25,6 +25,9 @@ import CreateOwnPlan from './CreateOwnPlan';
 import { useLocation, useNavigate } from 'react-router-dom';
 import initialTokens from '../../../utils/Tokens.json';
 import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
+import xBlueIconUpdated from '../../../assets/updated/smartCrypto/bitcoinLogo.svg';
+import xBitcoinIconUpdated from '../../../assets/updated/smartCrypto/x-blueLogo.svg';
+
 import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
 import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
 import DetailPopup from './DetailPopup';
@@ -209,7 +212,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     gap: '10px',
     '& img': {
-      width: '70px',
+      height: '60px',
     },
     '& span': {
       fontSize: '18px',
@@ -582,8 +585,8 @@ const SmartCrypto = () => {
           <div className={classes.cardContainer}>
             <div className={classes.card}>
               <div className={classes.imgContainer}>
-                <img src={xBlueIcon} />
-                <span>x-Blue</span>
+                <img src={xBitcoinIconUpdated} />
+                {/* <span>x-Blue</span> */}
               </div>
               <p>
                 With over 80% altcoins and less than 20% Bitcoin, this offers a
@@ -627,8 +630,7 @@ const SmartCrypto = () => {
 
             <div className={classes.card}>
               <div className={classes.imgContainer}>
-                <img src={xBitcoinIcon} />
-                <span>x-Bitcoin</span>
+                <img src={xBlueIconUpdated} />
               </div>
               <p>
                 A portfolio consisting of 60% Bitcoin and 40% altcoins offers a
