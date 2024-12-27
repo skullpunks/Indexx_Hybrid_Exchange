@@ -148,6 +148,17 @@ import RedeemPage from './pages/Redeem/Redeem';
 import CreateCardPage from './pages/Redeem/CreateCard';
 import SendCardPage from './pages/Redeem/SendCard';
 import SendCardSuccessfulPage from './pages/Redeem/SendCardSuccessfull';
+
+// Redeem Page Updated Component start
+
+import RedeemPageUpdated from './pages/RedeemUpdated/Redeem';
+import CreateCardPageUpdated from './pages/RedeemUpdated/CreateCard';
+import SendCardPageUpdated from './pages/RedeemUpdated/SendCard';
+import SendCardSuccessfulPageUpdated from './pages/RedeemUpdated/SendCardSuccessfull';
+import GiftShoppingHistoryPageUpdated from './pages/GiftShoppingHistoryUpdated';
+import HowToCreateBuySellPageUpdated from './pages/HowToCreateBuySellUpdated';
+
+// Redeem Page Updated Component End
 import PaypalPartnershipPage from './pages/PaypalPartnership';
 import ConvertPage from './pages/Convert';
 import NewAdvancedRealTimeChartComponent from './components/Graphs/NewTradingView';
@@ -158,6 +169,7 @@ import PlanDetails from './components/updated/SmartCrypto/PlanDetails';
 import NotFound from './pages/NotFound';
 import GiftShoppingHistoryPage from './pages/GiftShoppingHistory';
 import HowToCreateBuySellPage from './pages/HowToCreateBuySell';
+import PaymentMethodSelectionPage from './pages/RedeemUpdated/PaymentMethodSelection';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -254,6 +266,36 @@ function App() {
               path="/redeem/send-card-successful"
               element={<SendCardSuccessfulPage />}
             />
+
+            {/* Redeem updated Route Start */}
+
+            <Route path="/redeem-updated" element={<RedeemPageUpdated />} />
+            <Route
+              path="/redeem-updated/create-card"
+              element={<CreateCardPageUpdated />}
+            />
+            <Route
+              path="/redeem-updated/shopping-history"
+              element={<GiftShoppingHistoryPageUpdated />}
+            />
+            <Route
+              path="/redeem-updated/how-to-create-buy-sell"
+              element={<HowToCreateBuySellPageUpdated />}
+            />
+            <Route
+              path="/redeem-updated/send-card"
+              element={<SendCardPageUpdated />}
+            />
+            <Route
+              path="/redeem-updated/select-payment-method"
+              element={<PaymentMethodSelectionPage />}
+            />
+            <Route
+              path="/redeem-updated/send-card-successful"
+              element={<SendCardSuccessfulPageUpdated />}
+            />
+
+            {/* Redeem updated Route End */}
 
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />

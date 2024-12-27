@@ -70,6 +70,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.2",
     "styled-components": "^6.1.8",
+    "swiper": "^9.4.0",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4",
     "web3": "^1.8.0",

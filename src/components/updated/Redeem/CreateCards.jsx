@@ -49,6 +49,9 @@ import greeting25 from '../../../assets/redeem/greeting25.png';
 import greeting26 from '../../../assets/redeem/greeting26.png';
 import greeting27 from '../../../assets/redeem/greeting27.png';
 import Slider from 'react-slick';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 import {
   FormControl,
   FormControlLabel,
@@ -176,8 +179,58 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     marginTop: '20px',
     gap: '10px',
-    '& .slick-list': {
-      height: '570px',
+    // '& .slick-list': {
+    //   height: '570px',
+    // },
+  },
+  swiperContainer: {
+    position: 'relative', // Set position relative to enable absolute positioning of arrows
+    margin: '2rem auto',
+  },
+  slickArrow: {
+    position: 'absolute',
+    top: '50%', // Center the arrows vertically
+    transform: 'translateY(-50%)', // Adjust vertical alignment
+    backgroundColor: 'none',
+    height: '50px',
+    width: '35px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
+    opacity: 1,
+    zIndex: 1,
+    cursor: 'pointer',
+  },
+  slickPrev: {
+    left: '-40px', // Position to the left of the slider
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+      left: '0px',
+    },
+  },
+  slickNext: {
+    right: '-40px', // Position to the right of the slider
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+
+      right: '0px',
+    },
+  },
+  slickArrowHover: {
+    '&:hover': {
+      color:
+        theme.palette.mode === 'dark' ? 'white !important' : 'white !important',
+      opacity: 1,
+    },
+  },
+  slickArrowIcon: {
+    color: 'grey',
+    fontSize: '30px',
+    '&:hover': {
+      color:
+        theme.palette.mode === 'dark' ? 'white !important' : 'white !important',
+      opacity: 1,
     },
   },
 }));
@@ -729,17 +782,51 @@ const CreateCards = ({ onSendCard }) => {
     setSelectedValue(event.target.value);
     console.log('Selected Payment Method:', event.target.value);
   };
+
+  const SamplePrevArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <div
+        onClick={onClick}
+        className={`${classes.slickArrow} ${classes.slickPrev} ${classes.slickArrowHover}`}
+      >
+        <span className={classes.slickArrowIcon}>
+          {' '}
+          <NavigateBeforeIcon width={28} height={28} />
+        </span>
+      </div>
+    );
+  };
+
+  const SampleNextArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <div
+        onClick={onClick}
+        className={`${classes.slickArrow} ${classes.slickNext} ${classes.slickArrowHover}`}
+      >
+        <span className={classes.slickArrowIcon}>
+          {' '}
+          <NavigateNextIcon width={28} height={28} />
+        </span>
+      </div>
+    );
+  };
+
   const sliderSettings = {
     dots: false, // Show navigation dots
     infinite: true, // Infinite scroll
     speed: 500, // Transition speed
-    slidesToShow: 3, // Show 4 items at a time
+    slidesToShow: 2, // Show 4 items at a time
     slidesToScroll: 1, // Scroll one item at a time
+    nextArrow: <SampleNextArrow />, // Use custom Next arrow
+    prevArrow: <SamplePrevArrow />, // Use custom Previous arrow
+
     responsive: [
       {
         breakpoint: 1024, // Adjust for tablet
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
         },
       },
       {

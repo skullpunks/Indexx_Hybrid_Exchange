@@ -313,10 +313,10 @@
   height: 100% !important;
   object-fit: cover !important;
 }
-
+/* 
 .slick-slide {
   width: 432px !important;
-}
+} */
 
 .my-calendar {
   margin-top: 8%;
@@ -372,10 +372,10 @@
     height: 100% !important;
     object-fit: cover !important;
   }
-
+  /* 
   .slick-slide {
     width: 285px !important;
-  }
+  } */
 
   .custom-table {
     overflow-x: auto;
