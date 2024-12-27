@@ -86,13 +86,13 @@ const Account = () => {
       component: <Security />,
       key: '2',
     },
-    {
-      label: 'Preferences',
-      light: preferenceLight,
-      dark: preferenceDark,
-      component: <Preferences />,
-      key: '3',
-    },
+    // {
+    //   label: 'Preferences',
+    //   light: preferenceLight,
+    //   dark: preferenceDark,
+    //   component: <Preferences />,
+    //   key: '3',
+    // },
   ];
 
   if (localStorage.getItem('userType') === 'Indexx Exchange') {

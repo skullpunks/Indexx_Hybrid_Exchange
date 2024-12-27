@@ -15,6 +15,16 @@ import gift7 from '../../../assets/redeem/gift7.png';
 import gift8 from '../../../assets/redeem/gift8.png';
 
 import greeting1 from '../../../assets/redeem/greeting1.png';
+import newyear1 from '../../../assets/redeem/newyear1.png';
+import newyear2 from '../../../assets/redeem/newyear2.png';
+import newyear3 from '../../../assets/redeem/newyear3.png';
+import newyear4 from '../../../assets/redeem/newyear4.png';
+import newyear5 from '../../../assets/redeem/newyear5.png';
+import newyear6 from '../../../assets/redeem/newyear6.png';
+import newyear7 from '../../../assets/redeem/newyear7.png';
+import newyear8 from '../../../assets/redeem/newyear8.png';
+import newyear9 from '../../../assets/redeem/newyear9.png';
+import newyear10 from '../../../assets/redeem/newyear10.png';
 import christman1 from '../../../assets/redeem/christmas1.png';
 import christman2 from '../../../assets/redeem/christmas2.png';
 import christman3 from '../../../assets/redeem/christmas3.png';
@@ -86,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     '& h3': {
       color: theme.palette.text.primary,
-      fontSize: '38px',
+      fontSize: '32px',
       fontWeight: '500',
     },
     '& p': {
@@ -533,7 +543,7 @@ const CreateCards = ({ onSendCard }) => {
     },
   ];
 
-  const christmanArr = [
+  const seasonalArr = [
     {
       id: 1,
       img: christman1,
@@ -583,6 +593,76 @@ const CreateCards = ({ onSendCard }) => {
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/christmas7.png',
     },
+    {
+      id: 8,
+      img: newyear1,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear1.png',
+    },
+    {
+      id: 9,
+      img: newyear2,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear2.png',
+    },
+    {
+      id: 10,
+      img: newyear3,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear3.png',
+    },
+    {
+      id: 11,
+      img: newyear4,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear4.png',
+    },
+    {
+      id: 12,
+      img: newyear5,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear5.png',
+    },
+    {
+      id: 13,
+      img: newyear6,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear6.png',
+    },
+    {
+      id: 14,
+      img: newyear7,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear7.png',
+    },
+    {
+      id: 15,
+      img: newyear8,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear8.png',
+    },
+    {
+      id: 16,
+      img: newyear9,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear9.png',
+    },
+    {
+      id: 17,
+      img: newyear10,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear10.png',
+    },
   ];
 
   const [contentArr, setContentArr] = useState([
@@ -599,11 +679,12 @@ const CreateCards = ({ onSendCard }) => {
     {
       id: 2,
       name: 'Select a seasonal greeting card design from the options below:',
-      data: christmanArr,
+      data: seasonalArr,
     },
   ]);
 
   const [value, setValue] = useState(type ?? 'Crypto Gift Card');
+  const [subvalue, setSubValue] = useState('Christmas' ?? 'Crypto Gift Card');
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
     value === 'Crypto Gift Card' ? giftArr : greetingArr
@@ -634,7 +715,7 @@ const CreateCards = ({ onSendCard }) => {
           ? giftArr[0].imgUrl
           : event.target.value === 'Crypto Birthday Card'
           ? greetingArr[0].imgUrl
-          : christmanArr[0].imgUrl
+          : seasonalArr[0].imgUrl
       );
 
       if (event.target.value === 'Crypto Gift Card') {
@@ -665,6 +746,43 @@ const CreateCards = ({ onSendCard }) => {
       setSingleWallet(userWallet);
     }
   };
+
+  const handleChangeSubType = (event) => {
+    if (
+      event.target.value === 'Christmas' ||
+      event.target.value === 'New Year'
+    ) {
+      setSubValue(event.target.value);
+      setSelectedImg(
+        event.target.value === 'Christmas' ? christman1 : newyear1
+      );
+      // Filter the array based on the selected subtype
+      const sortedArr = seasonalArr.filter((item) => {
+        if (event.target.value === 'Christmas') {
+          return item.imgUrl.includes('christmas');
+        } else if (event.target.value === 'New Year') {
+          return item.imgUrl.includes('newyear');
+        }
+        return false;
+      });
+
+      // Log or update the state with the sorted array
+      console.log(sortedArr);
+      setSelectedImgUrl(
+        event.target.value === 'Christmas'
+          ? sortedArr[0].imgUrl
+          : sortedArr[0].imgUrl
+      );
+    } else {
+      console.log('event', event.target.value);
+      const userWallet = allWallets.find(
+        (wallet) => wallet.coinSymbol === event.target.value
+      );
+      console.log('userWallet', userWallet);
+      setSingleWallet(userWallet);
+    }
+  };
+
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -683,7 +801,7 @@ const CreateCards = ({ onSendCard }) => {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [openInsufficientPopup, setOpenInsufficientPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [selectedValue, setSelectedValue] = useState('Pay with USD');
+  const [selectedValue, setSelectedValue] = useState('Pay with Token');
   const closePopup = () => {
     setShowPopup(false);
   };
@@ -694,11 +812,25 @@ const CreateCards = ({ onSendCard }) => {
           ? giftArr
           : value === 'Crypto Greeting Card'
           ? greetingArr
-          : christmanArr
+          : seasonalArr
       );
       setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
-  }, [value]);
+
+    if (subvalue && value === 'Seasonal Greeting Card') {
+      // Filter the array based on the selected subtype
+      const sortedArr = seasonalArr.filter((item) => {
+        if (subvalue === 'Christmas') {
+          return item.imgUrl.includes('christmas');
+        } else if (subvalue === 'New Year') {
+          return item.imgUrl.includes('newyear');
+        }
+        return false;
+      });
+      setSelectedCards(sortedArr);
+      setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
+    }
+  }, [value, subvalue]);
 
   useEffect(() => {
     async function fetchPrice() {
@@ -721,6 +853,7 @@ const CreateCards = ({ onSendCard }) => {
     setSelectedImg(data.img);
     setValue(data.type);
     setSelectedImgUrl(data.imgUrl);
+    document.getElementById('topRoot').scrollIntoView();
   };
 
   // Fetch all wallets once and store them in state
@@ -845,14 +978,14 @@ const CreateCards = ({ onSendCard }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div id="topRoot" className={classes.root}>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>
-          Create Crypto Gift Card, Crypto Greeting Cards, Seasonal <br />{' '}
-          Greeting Card
+          Create Crypto Gift Card,
+          <br /> Crypto Greeting Cards, Seasonal Greeting Card
         </h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
@@ -887,6 +1020,23 @@ const CreateCards = ({ onSendCard }) => {
               hasborder
             />
           </div>
+          {value === 'Seasonal Greeting Card' && (
+            <div className={classes.selectTypeContainer}>
+              <label>Select Season</label>
+              <CustomSelectBox
+                items={[
+                  { name: 'Christmas', value: 'Christmas' },
+                  {
+                    name: 'New Year',
+                    value: 'New Year',
+                  },
+                ]}
+                value={subvalue}
+                onChange={handleChangeSubType}
+                hasborder
+              />
+            </div>
+          )}
           <div className={classes.selectTypeContainer}>
             <label>Select Payment Type:</label>
             <div>
@@ -898,11 +1048,11 @@ const CreateCards = ({ onSendCard }) => {
                   value={selectedValue}
                   onChange={handlePaymentChange}
                 >
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     value="Pay with USD"
                     control={<Radio />}
                     label="Pay with USD"
-                  />
+                  /> */}
                   <FormControlLabel
                     value="Pay with Token"
                     control={<Radio />}
@@ -955,6 +1105,11 @@ const CreateCards = ({ onSendCard }) => {
               placeholder={'Min. Amount is 5 USD'}
               value={amountInUsd}
               onChange={(e) => setAmountInUsd(e.target.value)}
+              startAdornment={
+                <InputAdornment position="start" sx={{ marginLeft: '10px' }}>
+                  $
+                </InputAdornment>
+              }
             />
           </div>
           {singleWallet && (
@@ -990,7 +1145,8 @@ const CreateCards = ({ onSendCard }) => {
               disabled={
                 !isFormValid ||
                 balanceError ||
-                singleWallet?.coinBalance === undefined
+                singleWallet?.coinBalance === undefined ||
+                amountInUsd < 5
               }
             />
           </div>
@@ -1058,6 +1214,7 @@ const CreateCards = ({ onSendCard }) => {
           isLoading={isLoading}
           currentUserEmail={currentUserEmail}
           cardType={value}
+          cardSubType={subvalue}
           amountInUsd={amountInUsd}
         />
       )}

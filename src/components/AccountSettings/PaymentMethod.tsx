@@ -21,7 +21,7 @@ export const PaymentMethod = () => {
       <br />
       <img
         src={
-          localStorage.getItem('userlogged') === 'normal'
+          localStorage.getItem('userType') === 'Indexx Exchange'
             ? Verification
             : HiveVerification
         }

@@ -1,10 +1,27 @@
 import { Pagination, Table } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { decodeJWT, getAllGiftCards } from '../../../services/api';
 
 const ShoppingHistoryTable = () => {
-  const pageSize = 10;
+  const [giftCards, setGiftCards] = useState([]);
   const [current, setCurrent] = useState(1);
+  const pageSize = 10;
+
+  useEffect(() => {
+    async function fetchGiftCard() {
+      const token = localStorage.getItem('access_token');
+      const decodedToken = decodeJWT(String(token));
+      let res = await getAllGiftCards(decodedToken?.email);
+      // Sort the data in reverse order by dateOfGeneration (latest first)
+      const sortedData = res.data.sort(
+        (a, b) => new Date(b.dateOfGeneration) - new Date(a.dateOfGeneration)
+      );
+
+      setGiftCards(sortedData);
+    }
+    fetchGiftCard();
+  }, []);
 
   const columns = [
     {
@@ -21,14 +38,14 @@ const ShoppingHistoryTable = () => {
       dataIndex: 'currencyRef',
       key: 'currencyRef',
       width: 100,
-      render: (text) => <span>{text}</span>,
+      render: (text) => <span>${text.toFixed(2)}</span>,
     },
     {
       title: "Receiver's Email",
       dataIndex: 'transactionType',
       key: 'transactionType',
       width: 100,
-      render: (text) => <span>{text}</span>,
+      render: (text) => <span>{text || 'N/A'}</span>,
     },
     {
       title: 'Selected Payment For Gift',
@@ -36,17 +53,17 @@ const ShoppingHistoryTable = () => {
       key: 'walletType',
       width: 200,
       render: (text) => (
-        <span>{text === 'ASSET_WALLET' ? 'Asset Wallet' : text}</span>
+        <span>{text === 'Asset Wallet' ? 'Asset Wallet' : text}</span>
       ),
     },
   ];
 
-  const dataSource = Array.from({ length: 20 }, (_, index) => ({
+  const dataSource = giftCards.map((giftCard, index) => ({
     key: index + 1,
-    txDate: moment().subtract(index, 'days').toISOString(),
-    currencyRef: `$${(Math.random() * 100).toFixed(2)}`,
-    transactionType: `user${index + 1}@example.com`,
-    walletType: index % 2 === 0 ? 'ASSET_WALLET' : 'CASH_WALLET',
+    txDate: giftCard.dateOfGeneration,
+    currencyRef: giftCard.amount,
+    transactionType: giftCard.assignedToUser,
+    walletType: giftCard.paymentMethodUsed,
   }));
 
   const MyPagination = ({ total, onChange, current }) => {

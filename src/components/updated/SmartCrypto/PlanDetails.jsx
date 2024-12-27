@@ -388,7 +388,9 @@ const PlanDetails = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [planDetailPopupOpen, setPlanDetailPopupOpen] = useState(false);
   const [selectedPlanName, setSelectedPlanName] = useState('');
-  const [selectedPlanTab, setSelectedPlanTab] = useState(0);
+  const [selectedPlanTab, setSelectedPlanTab] = useState(
+    names === 'ripple' || names === 'surge' || names === 'wave' ? 0 : 1
+  );
   const [name, setName] = useState(names);
 
   const xBluePlan = [
@@ -417,21 +419,12 @@ const PlanDetails = () => {
     },
     {
       img: bullRunIcon,
-      name: 'Bull Run',
+      name: 'Bull-Run',
     },
   ];
 
   const selectedPlan = category === 'x-Blue' ? xBluePlan : xBitcoinPlan;
 
-  useEffect(() => {
-    if (selectedPlanTab) {
-      setCategory('x-Bitcoin');
-      setName('blooming');
-    } else {
-      setCategory('x-Blue');
-      setName('ripple');
-    }
-  }, [selectedPlanTab]);
   useEffect(() => {
     let getRequiredCoin = initialTokens.filter(
       (x) => x.commonToken === true && x.isStock === false && x.isETF === false
@@ -443,6 +436,7 @@ const PlanDetails = () => {
     console.log(name, 'name');
     if (name === 'blooming') {
       setCategory('x-Bitcoin');
+      // setSelectedPlanTab(1);
       setDetails({
         name: 'Blooming',
         logo: bloomingIcon,
@@ -450,13 +444,15 @@ const PlanDetails = () => {
       });
     } else if (name === 'rush') {
       setCategory('x-Bitcoin');
+      // setSelectedPlanTab(1);
       setDetails({
         name: 'Rush',
         logo: rushIcon,
         description: ' Moderate volatility, consistent returns.',
       });
-    } else if (name === 'bull run') {
+    } else if (name === 'bull-run') {
       setCategory('x-Bitcoin');
+      // setSelectedPlanTab(1);
       setDetails({
         name: 'Bull-Run',
         logo: bullRunIcon,
@@ -464,6 +460,7 @@ const PlanDetails = () => {
       });
     } else if (name === 'ripple') {
       setCategory('x-Blue');
+      // setSelectedPlanTab(0);
       setDetails({
         name: 'Ripple',
         logo: ripple,
@@ -471,6 +468,8 @@ const PlanDetails = () => {
       });
     } else if (name === 'surge') {
       setCategory('x-Blue');
+      // setSelectedPlanTab(0);
+
       setDetails({
         name: 'Surge',
         logo: surge,
@@ -478,6 +477,8 @@ const PlanDetails = () => {
       });
     } else if (name === 'wave') {
       setCategory('x-Blue');
+      // setSelectedPlanTab(0);
+
       setDetails({
         name: 'Wave',
         logo: wave,
@@ -665,7 +666,16 @@ const PlanDetails = () => {
         </div> */}
         <PlanIconicHeader
           selectedPlanTab={selectedPlanTab}
-          setSelectedPlanTab={setSelectedPlanTab}
+          setSelectedPlanTab={(val) => {
+            if (val === 1) {
+              setCategory('x-Bitcoin');
+              setName('blooming');
+            } else {
+              setCategory('x-Blue');
+              setName('ripple');
+            }
+            setSelectedPlanTab(val);
+          }}
           largeFont={true}
         />
 
@@ -710,7 +720,20 @@ const PlanDetails = () => {
                   'x-Bitcoin Rush'}
                 ({pkg?.managedBy})
               </h3>
-              <p>{pkg.description}</p>
+              <p>
+                {pkg.portfolioName.includes('Smart Crypto Ripple') &&
+                  'Less Volatility'}
+                {pkg.portfolioName.includes('Smart Crypto Wave') &&
+                  'High Volatility, Mid Return On Investment(ROI)'}
+                {pkg.portfolioName.includes('Smart Crypto Surge') &&
+                  'Mid Level Volatility, Mid Return On Investment(ROI)'}
+                {pkg.portfolioName.includes('xBitcoin Blooming') &&
+                  'High Performance Portfolio'}
+                {pkg.portfolioName.includes('xBitcoin Bull-Run') &&
+                  'Aggressive Growth Portfolio'}
+                {pkg.portfolioName.includes('xBitcoin Rush') &&
+                  'Diverse Crypto Portfolio'}
+              </p>
               <div className={classes.flexContainer}>
                 <div style={{ margin: '10px 0px' }}>
                   <p>Assets</p>

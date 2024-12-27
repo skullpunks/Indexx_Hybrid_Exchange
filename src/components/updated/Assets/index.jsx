@@ -370,7 +370,7 @@ const Assets = () => {
   const [congratulationsPopup, setCongratulationsPopup] = useState(false);
   const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
   const [userSellPlan, setUserPlanName] = useState('');
-  
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -650,9 +650,9 @@ const Assets = () => {
                   {[
                     { name: 'Overview', path: '/wallet/overview' },
                     { name: 'Crypto', path: '/wallet/crypto' },
-                    { name: 'Fiat', path: '/wallet/fiat' },
-                    { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
                     { name: 'Smart APY', path: '/wallet/iusd+' },
+                    { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+                    { name: 'Fiat', path: '/wallet/fiat' },
                   ].map((el, index) => (
                     <ListItem
                       key={el.path}
@@ -782,7 +782,20 @@ const Assets = () => {
                         'x-Bitcoin Rush'}
                       ({pkg?.managedBy})
                     </h3>
-                    <p>{pkg.description}</p>
+                    <p>
+                      {pkg.portfolioName.includes('Smart Crypto Ripple') &&
+                        'Less Volatility'}
+                      {pkg.portfolioName.includes('Smart Crypto Wave') &&
+                        'High Volatility, Mid Return On Investment(ROI)'}
+                      {pkg.portfolioName.includes('Smart Crypto Surge') &&
+                        'Mid Level Volatility, Mid Return On Investment(ROI)'}
+                      {pkg.portfolioName.includes('xBitcoin Blooming') &&
+                        'High Performance Portfolio'}
+                      {pkg.portfolioName.includes('xBitcoin Bull-Run') &&
+                        'Aggressive Growth Portfolio'}
+                      {pkg.portfolioName.includes('xBitcoin Rush') &&
+                        'Diverse Crypto Portfolio'}
+                    </p>
                     <div className={classes.flexContainer2}>
                       <div style={{ margin: '10px 0px' }}>
                         <p>Assets</p>

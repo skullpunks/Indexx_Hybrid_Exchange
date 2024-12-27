@@ -70,7 +70,7 @@ const AffiliateProgram = () => {
           alignItems: 'center',
         }}
       >
-        {localStorage.getItem('userlogged') !== 'normal' && (
+        {localStorage.getItem('userType') !== 'Indexx Exchange' && (
           <div>
             <div
               style={{
