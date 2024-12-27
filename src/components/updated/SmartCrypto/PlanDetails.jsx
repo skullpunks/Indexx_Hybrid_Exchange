@@ -808,7 +808,10 @@ const PlanDetails = () => {
           </div>
           <div className={classes.cardDescription}>
             <h4>Description:</h4>
-            <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
+            <p>
+              Customize strategies to achieve your goals and take control of
+              your investment.
+            </p>
           </div>
           <div className={classes.buttonContainer}>
             <GenericButton

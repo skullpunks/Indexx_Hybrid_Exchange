@@ -876,10 +876,13 @@ const Assets = () => {
                     </AvatarGroup>
                   </div>
                 </div>
-                {/* <div className={classes.cardDescription}>
+                <div className={classes.cardDescription}>
                   <h4>Description:</h4>
-                  <p>dsdd sjdsjns jdjfjsjf jdfdsfdsjf sdjfjdsjf skdfsnf</p>
-                </div> */}
+                  <p>
+                    Customize strategies to achieve your goals and take control
+                    of your investment.
+                  </p>
+                </div>
                 <div className={classes.buttonContainer1}>
                   <GenericButton
                     text="Create your own plan!"
