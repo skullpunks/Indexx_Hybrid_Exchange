@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#1e2329',
       borderRadius: '16px',
       boxShadow: '0px 3px 6px rgba(0,0,0,.04)',
-      overflow: 'hidden',
+      overflow: 'auto',
       position: 'relative',
       transform: 'scale(.9)',
       transitionDuration: '250ms',
@@ -50,6 +50,27 @@ const useStyles = makeStyles((theme) => ({
       transitionTimingFunction: 'ease-in-out',
       maxWidth: '460px',
       width: '100%',
+      marginTop: '100px',
+      height: '80vh',
+      '&::-webkit-scrollbar': {
+        width: '7px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? '#5f6673 !important'
+            : '#b7bdc6 !important',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-track': {
+        display: 'none !important', // Hide the scrollbar track
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? '#5f6673 !important'
+            : '#b7bdc6 !important', // Keep the same color on hover
+      },
     },
   },
   contentContainer: {
@@ -217,6 +238,12 @@ const AllocationPopup = ({
               }}
             />
           </div>
+
+          {/* Disclaimer text */}
+          <p style={{ marginTop: '20px' }}>
+            Disclaimer: The allocation of tokens may vary due to ongoing
+            development and changes in the marketplace.
+          </p>
         </div>
       </div>
     </div>

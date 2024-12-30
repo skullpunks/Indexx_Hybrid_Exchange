@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     margin: '50px auto',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     gap: '10px',
     flexWrap: 'wrap',
     [theme.breakpoints.down('md')]: {
