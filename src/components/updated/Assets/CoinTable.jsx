@@ -563,7 +563,7 @@ export default function EnhancedTable({
       cryptoMappings.find((type) => note.includes(type)) || 'Unknown Crypto';
     const managedBy =
       managerMappings.find((manager) => note.includes(manager)) ||
-      'Unknown Manager';
+      'Gabe';
 
     // Determine if it's a Smart Crypto type
     const isSmartCrypto = ['Ripple', 'Wave', 'Surge'].includes(cryptoType);
