@@ -524,13 +524,22 @@ const Assets = () => {
 
   const planDetails =
     selectedPlanTab === 0 ? xBlueplanDetails : xBitcoinplanDetails;
-
+  const isAuthenticated = localStorage.getItem('access_token') !== null;
   const handleViewAllocation = (allocationData) => {
+    console.log(isAuthenticated, 'isAuthenticated');
+    if (!isAuthenticated) {
+      window.location = 'https://indexx.ai/auth/signup-email/';
+      return;
+    }
     setSelectedAllocation(allocationData);
     setAllocationPopup(true);
   };
 
   const handleClickBuyPlan = (allocationData) => {
+    if (!isAuthenticated) {
+      window.location = 'https://indexx.ai/auth/signup-email/';
+      return;
+    }
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
     console.log('Selected Plan currentPlanName:', currentPlanName);
@@ -891,7 +900,14 @@ const Assets = () => {
                         ? classes.blueButtonWithBg
                         : classes.yellowButtonWithBg
                     }
-                    onClick={() => setCreateOwnPlan(true)}
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        window.location =
+                          'https://indexx.ai/auth/signup-email/';
+                        return;
+                      }
+                      setCreateOwnPlan(true);
+                    }}
                   />
                 </div>
               </div>

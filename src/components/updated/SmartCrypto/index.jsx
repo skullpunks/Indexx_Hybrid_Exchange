@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
     width: '100%',
-    margin: '50px auto',
+    margin: '50px auto 0px auto',
     padding: '24px',
   },
   contentContainer: {
@@ -288,11 +288,15 @@ const useStyles = makeStyles((theme) => ({
   },
   disclaimerContainer: {
     marginTop: '200px',
+    marginBottom: '-190px',
     '& h3': {
-      fontSize: '48px',
+      fontSize: '14px',
+      fontWeight: 'light',
     },
     '& p': {
+      fontSize: '12px',
       marginBottom: '25px',
+      fontWeight: 'light',
     },
   },
 }));

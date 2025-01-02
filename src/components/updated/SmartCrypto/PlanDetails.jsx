@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '10px',
-    margin: '100px auto',
+    margin: '100px auto 30px auto',
   },
   headerIconContainer: {
     display: 'flex',
@@ -566,13 +566,23 @@ const PlanDetails = () => {
       );
     });
   }, [details, packagesData, category, name]);
+  const isAuthenticated = localStorage.getItem('access_token') !== null;
 
   const handleViewAllocation = (allocationData) => {
+    if (!isAuthenticated) {
+      window.location = 'https://indexx.ai/auth/signup-email/';
+      return;
+    }
     setSelectedAllocation(allocationData);
     setAllocationPopup(true);
   };
 
   const handleClickBuyPlan = (allocationData) => {
+    if (!isAuthenticated) {
+      window.location = 'https://indexx.ai/auth/signup-email/';
+      return;
+    }
+
     setSelectedAllocation(allocationData);
     setCreateAPlanPopup(true);
     // const params = new URLSearchParams(search);
@@ -661,10 +671,6 @@ const PlanDetails = () => {
       <div style={{ margin: '100px auto' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <div className={classes.header}>
-        {/* <div className={classes.headerIconContainer} onClick={handleHeader}>
-          <img src={category === 'x-Bitcoin' ? xBitcoinIcon : xBlueIcon} />
-          <p>{category === 'x-Bitcoin' ? 'x-Bitcoin' : 'x-Blue'}</p>
-        </div> */}
         <PlanIconicHeader
           selectedPlanTab={selectedPlanTab}
           setSelectedPlanTab={(val) => {
@@ -822,7 +828,13 @@ const PlanDetails = () => {
                   ? classes.blueButton
                   : classes.yellowButton
               }
-              onClick={() => setCreateOwnPlan(true)}
+              onClick={() => {
+                if (!isAuthenticated) {
+                  window.location = 'https://indexx.ai/auth/signup-email/';
+                  return;
+                }
+                setCreateOwnPlan(true);
+              }}
             />
           </div>
         </div>

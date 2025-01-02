@@ -158,6 +158,7 @@ import PlanDetails from './components/updated/SmartCrypto/PlanDetails';
 import NotFound from './pages/NotFound';
 import GiftShoppingHistoryPage from './pages/GiftShoppingHistory';
 import HowToCreateBuySellPage from './pages/HowToCreateBuySell';
+import SmartAPYPage from './pages/SmartAPY';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -254,7 +255,11 @@ function App() {
               path="/redeem/send-card-successful"
               element={<SendCardSuccessfulPage />}
             />
-
+            <Route path="/smart-crypto" element={<SmartCryptoPage />} />
+            <Route
+              path="/smart-crypto/plan-detail/:name"
+              element={<PlanDetails />}
+            />
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/wallet/crypto" element={<AssetsPage />} />
@@ -266,11 +271,8 @@ function App() {
                 element={<MarketsPage />}
               />
               <Route path="/smart-cryptos" element={<SmartCryptoOldPage />} />
-              <Route path="/smart-crypto" element={<SmartCryptoPage />} />
-              <Route
-                path="/smart-crypto/plan-detail/:name"
-                element={<PlanDetails />}
-              />
+              <Route path="/smart-apy" element={<SmartAPYPage />} />
+
               {/* <Route
                 path="/paypal-partnership-with-indexx"
                 element={<PaypalPartnershipPage />}

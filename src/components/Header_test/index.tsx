@@ -333,15 +333,6 @@ const HeaderTest = () => {
     console.log(userType);
 
     window.location.href = `${baseURL}/auth/login?action=Logout`;
-    // if (userType === 'CaptainBee') {
-    //   window.location.href = '/auth/login';
-    // } else if (userType === 'HoneyBee') {
-    //   window.location.href = '/auth/login';
-    // } else {
-    //   if (window.location.pathname.includes('trade-to-earn'))
-    //     window.location.reload();
-    //   else window.location.href = '/auth/login';
-    // }
   };
 
   const [isAssetWallet, setIsAssetWallet] = useState(false);
@@ -710,13 +701,25 @@ const HeaderTest = () => {
                     >
                       {element.mainTextDesktop}
                     </a>
-                    <input type="checkbox" id={element.mainTextMob} />
-                    <label
-                      htmlFor={element.mainTextMob}
-                      className="mobile-item"
-                    >
-                      {element.mainTextDesktop} {element.hasMegaDrop ? '>' : ''}
-                    </label>
+
+                    {element.hasMegaDrop ? (
+                      <>
+                        <input type="checkbox" id={element.mainTextMob} />
+
+                        <label
+                          htmlFor={element.mainTextMob}
+                          className="mobile-item"
+                        >
+                          {element.mainTextDesktop}{' '}
+                          {element.hasMegaDrop ? '>' : ''}
+                        </label>
+                      </>
+                    ) : (
+                      <a href={element.href} className="mobile-item">
+                        {element.mainTextMob}
+                      </a>
+                    )}
+
                     {element.hasMegaDrop ? (
                       <div
                         className="mega-box"
