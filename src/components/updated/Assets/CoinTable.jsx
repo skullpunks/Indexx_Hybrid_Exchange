@@ -556,14 +556,14 @@ export default function EnhancedTable({
       'Wave',
       'Surge',
     ];
-    const managerMappings = ['Omkar', 'Kashir', 'Issa'];
+    const managerMappings = ['Omkar', 'Kashir', 'Issa' , 'Jan-2025', 'Feb-2025', 'Mar-2025', 'Gabe'];
 
     // Find the crypto type and manager from the note
     const cryptoType =
       cryptoMappings.find((type) => note.includes(type)) || 'Unknown Crypto';
     const managedBy =
       managerMappings.find((manager) => note.includes(manager)) ||
-      'Gabe';
+      '';
 
     // Determine if it's a Smart Crypto type
     const isSmartCrypto = ['Ripple', 'Wave', 'Surge'].includes(cryptoType);
