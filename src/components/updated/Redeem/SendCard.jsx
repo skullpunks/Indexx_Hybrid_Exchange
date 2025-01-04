@@ -272,8 +272,8 @@ Enjoy and happy investing!`);
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
         <h3>
-          Send Crypto Gift Card or <br />
-          Crypto Greeting Cards
+          Send Crypto Gift Card, <br />
+          Crypto Greeting Cards, Seasonal Greeting Card
         </h3>
         <p>
           Struggling to find a unique gift? Our crypto gift cards are the
@@ -330,15 +330,17 @@ Enjoy and happy investing!`);
               </p>
               <p>
                 {`Amount in USD: ${' '}
-  ${new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 6,
-  }).format(
-    isNaN(amountInUsd) || amountInUsd === null || amountInUsd === undefined
-      ? amountInUsdValue
-      : amountInUsd
-  )}`}
+            ${new Intl.NumberFormat('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 6,
+            }).format(
+              isNaN(amountInUsd) ||
+                amountInUsd === null ||
+                amountInUsd === undefined
+                ? amountInUsdValue
+                : amountInUsd
+            )}`}
               </p>
             </div>
           )}
