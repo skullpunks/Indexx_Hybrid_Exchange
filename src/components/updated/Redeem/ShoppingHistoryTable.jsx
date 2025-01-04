@@ -58,16 +58,24 @@ const ShoppingHistoryTable = () => {
     },
   ];
 
-  const dataSource = giftCards.map((giftCard, index) => ({
-    key: index + 1,
-    txDate: giftCard.dateOfGeneration,
-    currencyRef:
-      giftCard.type === 'USD'
-        ? `$${giftCard.amount.toFixed(2)}`
-        : `$${(giftCard.amount * giftCard.price).toFixed(2)} (${giftCard.amount} ${giftCard.type})`,
-    transactionType: giftCard.assignedToUser,
-    walletType: giftCard.paymentMethodUsed,
-  }));
+  const dataSource = giftCards.map((giftCard, index) => {
+    const amount = giftCard?.amount ?? 0; // Default to 0 if amount is undefined or null
+    const price = giftCard?.price ?? 0; // Default to 0 if price is undefined or null
+    const type = giftCard?.type ?? ''; // Default to empty string if type is undefined or null
+    const calculatedAmount =
+      type === 'USD'
+        ? `$${amount.toFixed(2)}`
+        : `$${(amount * price).toFixed(2)} (${amount} ${type})`;
+  
+    return {
+      key: index + 1,
+      txDate: giftCard?.dateOfGeneration || 'N/A', // Default to 'N/A' if dateOfGeneration is missing
+      currencyRef: calculatedAmount,
+      transactionType: giftCard?.assignedToUser || 'N/A', // Default to 'N/A' if assignedToUser is missing
+      walletType: giftCard?.paymentMethodUsed || 'N/A', // Default to 'N/A' if paymentMethodUsed is missing
+    };
+  });
+  
 
   const MyPagination = ({ total, onChange, current }) => {
     return (
