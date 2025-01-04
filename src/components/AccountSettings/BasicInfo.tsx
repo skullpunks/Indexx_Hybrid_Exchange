@@ -10,6 +10,7 @@ import OpenNotification from '../OpenNotification/OpenNotification';
 import { useNavigate } from 'react-router-dom';
 import GenericButton from '../updated/shared/Button';
 import './Account.css';
+import IdentificationInput from './SSNInputField';
 const BasicInfo = ({ theme }: { theme: any }) => {
   const [email, setEmail] = useState('');
   const [userData, setUserData] = useState() as any;
@@ -171,6 +172,8 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                 )}
               </div>
               <br></br>
+              {/* Need to Add SSN Input field */}
+              <IdentificationInput />
               <div
                 className={
                   !userData?.isKYCPass

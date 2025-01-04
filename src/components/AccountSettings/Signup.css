@@ -7,7 +7,6 @@ div.custom-sel::-webkit-scrollbar-thumb {
   border-radius: 6px;
 }
 
-
 @keyframes dots {
   0% {
     content: '';
@@ -18,14 +17,18 @@ div.custom-sel::-webkit-scrollbar-thumb {
   50% {
     content: '..';
   }
-  75%, 100% {
+  75%,
+  100% {
     content: '...';
   }
 }
-
 
 .dots-animation::after {
   display: inline-block;
   content: '';
   animation: dots 1.5s infinite;
+}
+
+.inputmaskfield:focus-visible {
+  outline: none;
 }

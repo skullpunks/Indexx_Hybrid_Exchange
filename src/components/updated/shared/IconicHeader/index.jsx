@@ -11,8 +11,8 @@ import tokenLight from '../../../../assets/updated/iconicHeader/lightMode/Token.
 import tokenDark from '../../../../assets/updated/iconicHeader/Token.svg';
 import wallStreetLight from '../../../../assets/updated/iconicHeader/Stock token for Light Mode.svg';
 import wallStreetDark from '../../../../assets/updated/iconicHeader/Stock token for dark mode.svg';
-import stakingLight from '../../../../assets/updated/iconicHeader/lightMode/Staking.svg';
-import stakingDark from '../../../../assets/updated/iconicHeader/Staking.svg';
+import stakingLight from '../../../../assets/updated/SmartApy/staking light mode.png';
+import stakingDark from '../../../../assets/updated/SmartApy/Staking dark mode.png';
 import etfLight from '../../../../assets/updated/iconicHeader/lightMode/etf-logo.svg';
 import etfDark from '../../../../assets/updated/iconicHeader/ETF_dark.svg';
 import giftLight from '../../../../assets/redeem/giftWhite.svg';
@@ -33,13 +33,19 @@ import yellowModeMarket from '../../../../assets/updated/iconicHeader/market yel
 import tokenHive from '../../../../assets/updated/iconicHeader/token_hive.svg';
 import stockTokenHive from '../../../../assets/updated/iconicHeader/stock_token_hive.svg';
 import etfHive from '../../../../assets/updated/iconicHeader/etf_hive.svg';
-import stakingHive from '../../../../assets/updated/iconicHeader/staking_hive.svg';
+import stakingHive from '../../../../assets/updated/SmartApy/Staking Yellow.png';
+
 import giftHive from '../../../../assets/updated/iconicHeader/gift_hive.svg';
 import assetHive from '../../../../assets/updated/iconicHeader/asset_wallet_hive.svg';
 import hiveHive from '../../../../assets/updated/iconicHeader/hive_hive.svg';
 import smartCrypto from '../../../../assets/updated/smartCrypto/smartCryptoLogo.png';
 import smartCryptoWhite from '../../../../assets/updated/smartCrypto/smartcryptowhite.svg';
 import smartCryptoBlack from '../../../../assets/updated/smartCrypto/smartcryptoblack.svg';
+
+import apyYellow from '../../../../assets/updated/SmartApy/APY yellow.png';
+import apyDarkMode from '../../../../assets/updated/SmartApy/APY Dark mode.png';
+import apyLightMode from '../../../../assets/updated/SmartApy/APY Light mode.png';
+
 import { checkByemail } from '../../../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
@@ -195,6 +201,13 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/smart-crypto',
       search: '',
     },
+    {
+      label: 'Smart APY',
+      light: userType === 'Indexx Exchange' ? apyLightMode : apyYellow,
+      dark: userType === 'Indexx Exchange' ? apyDarkMode : apyYellow,
+      path: '/smart-apy',
+      search: '',
+    },
 
     {
       label: 'Markets',
@@ -203,28 +216,6 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/market-data',
       search: '',
     },
-
-    // {
-    //   label: 'Smart Crypto',
-    //   light: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-    //   dark: userType === 'Indexx Exchange' ? smartCrypto : smartCrypto,
-    //   path: '/smart-crypto',
-    //   search: '',
-    // },
-    // {
-    //   label: 'Stock Tokens',
-    //   light: userType === 'Indexx Exchange' ? wallStreetLight : stockTokenHive,
-    //   dark: userType === 'Indexx Exchange' ? wallStreetDark : stockTokenHive,
-    //   path: '/update/home/stock-token',
-    //   search: 'buyToken=AMZN',
-    // },
-    // {
-    //   label: 'ETF Tokens',
-    //   light: userType === 'Indexx Exchange' ? etfLight : etfHive,
-    //   dark: userType === 'Indexx Exchange' ? etfDark : etfHive,
-    //   path: '/update/home/etf-tokens',
-    //   search: 'buyToken=ALCRYP',
-    // },
   ];
 
   if (isLoggedIn) {
@@ -302,11 +293,11 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   let maxWidthTabContainer;
   if (isLoggedIn && userType === 'Indexx Exchange') {
-    maxWidthTabContainer = '1130px';
+    maxWidthTabContainer = '1260px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
-    maxWidthTabContainer = '1200px';
+    maxWidthTabContainer = '1300px';
   } else {
-    maxWidthTabContainer = '700px';
+    maxWidthTabContainer = '870px';
   }
 
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;
