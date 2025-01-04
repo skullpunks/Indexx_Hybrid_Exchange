@@ -61,7 +61,10 @@ const ShoppingHistoryTable = () => {
   const dataSource = giftCards.map((giftCard, index) => ({
     key: index + 1,
     txDate: giftCard.dateOfGeneration,
-    currencyRef: giftCard.amount,
+    currencyRef:
+      giftCard.type === 'USD'
+        ? `$${giftCard.amount.toFixed(2)}`
+        : `$${(giftCard.amount * giftCard.price).toFixed(2)} (${giftCard.amount} ${giftCard.type})`,
     transactionType: giftCard.assignedToUser,
     walletType: giftCard.paymentMethodUsed,
   }));
