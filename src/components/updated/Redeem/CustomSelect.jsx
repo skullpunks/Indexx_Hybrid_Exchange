@@ -152,9 +152,9 @@ export default function CustomSelectBox({
               <MenuItem
                 key={card.voucher}
                 value={card.voucher}
-                disabled={card.isUsed || card.assignedToUser}
+                disabled={card.isUsed}
               >
-                {`${card.voucher} - ${card.amount} ${card.type}`}
+                {`${card.voucher} - ${card.amount} ${card.type}(${card?.assignedToUser ? card?.assignedToUser : 'NA'})`}
               </MenuItem>
             ))
           : !isCurrency
