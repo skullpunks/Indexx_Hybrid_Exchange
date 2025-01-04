@@ -38,7 +38,7 @@ const ShoppingHistoryTable = () => {
       dataIndex: 'currencyRef',
       key: 'currencyRef',
       width: 100,
-      render: (text) => <span>${text.toFixed(2)}</span>,
+      render: (text) => <span>${text}</span>,
     },
     {
       title: "Receiver's Email",
@@ -59,6 +59,7 @@ const ShoppingHistoryTable = () => {
   ];
 
   const dataSource = giftCards.map((giftCard, index) => {
+    try{
     const amount = giftCard?.amount ?? 0; // Default to 0 if amount is undefined or null
     const price = giftCard?.price ?? 0; // Default to 0 if price is undefined or null
     const type = giftCard?.type ?? ''; // Default to empty string if type is undefined or null
@@ -74,6 +75,9 @@ const ShoppingHistoryTable = () => {
       transactionType: giftCard?.assignedToUser || 'N/A', // Default to 'N/A' if assignedToUser is missing
       walletType: giftCard?.paymentMethodUsed || 'N/A', // Default to 'N/A' if paymentMethodUsed is missing
     };
+  } catch(err) {
+    console.log("Err",err)
+  }
   });
   
 
