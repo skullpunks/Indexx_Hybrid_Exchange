@@ -154,7 +154,7 @@ export default function CustomSelectBox({
                 value={card.voucher}
                 disabled={card.isUsed}
               >
-                {`${card.voucher} - ${card.amount} ${card.type}(Amount in USD: ${card.type === 'USD' ? card.amount: card.amount * card.price}, email:${card?.assignedToUser ? card?.assignedToUser : 'NA'})`}
+                {`${card.voucher} - ${card.amount} ${card.type}(Amount in USD: ${card.type === 'USD' ? card.amount: Number(card.amount * card.price).toFixed(2)}, email:${card?.assignedToUser ? card?.assignedToUser : 'NA'})`}
               </MenuItem>
             ))
           : !isCurrency
