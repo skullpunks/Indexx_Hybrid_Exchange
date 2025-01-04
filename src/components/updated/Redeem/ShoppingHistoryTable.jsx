@@ -38,7 +38,7 @@ const ShoppingHistoryTable = () => {
       dataIndex: 'currencyRef',
       key: 'currencyRef',
       width: 100,
-      render: (text) => <span>${text}</span>,
+      render: (text) => <span>{text}</span>,
     },
     {
       title: "Receiver's Email",
@@ -58,28 +58,59 @@ const ShoppingHistoryTable = () => {
     },
   ];
 
-  const dataSource = giftCards.map((giftCard, index) => {
-    try{
-    const amount = giftCard?.amount ?? 0; // Default to 0 if amount is undefined or null
-    const price = giftCard?.price ?? 0; // Default to 0 if price is undefined or null
-    const type = giftCard?.type ?? ''; // Default to empty string if type is undefined or null
-    const calculatedAmount =
-      type === 'USD'
-        ? `$${amount.toFixed(2)}`
-        : `$${(amount * price).toFixed(2)} (${amount} ${type})`;
-  
-    return {
-      key: index + 1,
-      txDate: giftCard?.dateOfGeneration || 'N/A', // Default to 'N/A' if dateOfGeneration is missing
-      currencyRef: calculatedAmount,
-      transactionType: giftCard?.assignedToUser || 'N/A', // Default to 'N/A' if assignedToUser is missing
-      walletType: giftCard?.paymentMethodUsed || 'N/A', // Default to 'N/A' if paymentMethodUsed is missing
-    };
-  } catch(err) {
-    console.log("Err",err)
-  }
+  const dataSource1 = giftCards.map((giftCard, index) => {
+    try {
+      const amount = giftCard?.amount ?? 0; // Default to 0 if amount is undefined or null
+      const price = giftCard?.price ?? 0; // Default to 0 if price is undefined or null
+      const type = giftCard?.type ?? ''; // Default to empty string if type is undefined or null
+      const calculatedAmount =
+        type === 'USD'
+          ? `$${amount.toFixed(2)}`
+          : `$${(amount * price).toFixed(2)} (${amount} ${type})`;
+
+      return {
+        key: index + 1,
+        txDate: giftCard?.dateOfGeneration || 'N/A', // Default to 'N/A' if dateOfGeneration is missing
+        currencyRef: calculatedAmount,
+        transactionType: giftCard?.assignedToUser || 'N/A', // Default to 'N/A' if assignedToUser is missing
+        walletType: giftCard?.paymentMethodUsed || 'N/A', // Default to 'N/A' if paymentMethodUsed is missing
+      };
+    } catch (err) {
+      console.log('Err', err);
+    }
   });
-  
+
+  const dataSource = giftCards.map((giftCard, index) => {
+    try {
+      const amount = giftCard?.amount ?? 0; // Default to 0 if amount is undefined or null
+      const price = giftCard?.price ?? 0; // Default to 0 if price is undefined or null
+      const type = giftCard?.type ?? ''; // Default to empty string if type is undefined or null
+
+      // Determine precision dynamically
+      const getDynamicPrecision = (value) => {
+        const decimalPlaces = value.toString().split('.')[1]?.length || 0; // Count decimal places
+        return decimalPlaces > 2 ? 8 : 2; // Use 8 if more than 2 decimal places, otherwise 2
+      };
+
+      const precision = getDynamicPrecision(amount);
+      const formattedAmount =
+        type === 'USD'
+          ? `$${amount.toFixed(2)}`
+          : `$${(amount * price).toFixed(2)} (${amount.toFixed(
+              precision
+            )} ${type})`;
+
+      return {
+        key: index + 1,
+        txDate: giftCard?.dateOfGeneration || 'N/A', // Default to 'N/A' if dateOfGeneration is missing
+        currencyRef: formattedAmount,
+        transactionType: giftCard?.assignedToUser || 'N/A', // Default to 'N/A' if assignedToUser is missing
+        walletType: giftCard?.paymentMethodUsed || 'N/A', // Default to 'N/A' if paymentMethodUsed is missing
+      };
+    } catch (err) {
+      console.log('Err', err);
+    }
+  });
 
   const MyPagination = ({ total, onChange, current }) => {
     return (
