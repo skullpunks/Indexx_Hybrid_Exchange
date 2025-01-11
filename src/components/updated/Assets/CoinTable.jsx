@@ -328,7 +328,8 @@ export default function EnhancedTable({
             index === self.findIndex((t) => t.id === value.id)
         );
         if (
-          !email === 'dpar4fam@hotmail.com' 
+          !email === 'dpar4fam@hotmail.com' ||
+          !email === 'fowlertrucking14@yahoo.com'
         )
           setRows(uniqueFormattedData);
         else setRows(formattedData);
