@@ -289,6 +289,7 @@ export default function EnhancedTable({
             item.notes.startsWith('Smart Crypto Wave') ||
             item.notes.startsWith('xBitcoin Blooming') ||
             item.notes.startsWith('xBitcoin Rush') ||
+            item.notes.startsWith('xBitcoin Bitcoin') ||
             item.notes.startsWith('xBitcoin Bull-Run');
 
           // if (hasSmartCryptoNote) {
@@ -303,6 +304,7 @@ export default function EnhancedTable({
               item.notes.startsWith('Smart Crypto Wave') ||
               item.notes.startsWith('xBitcoin Blooming') ||
               item.notes.startsWith('xBitcoin Rush') ||
+              item.notes.startsWith('xBitcoin Bitcoin') || 
               item.notes.startsWith('xBitcoin Bull-Run')
           );
           setSmartCryptoCoins(newSmartCryptoCoins);
@@ -407,6 +409,7 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
+          row.notes.startsWith('xBitcoin Bitcoin') || 
           row.notes.includes('xBitcoin Bull-Run');
         return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
       });
@@ -418,6 +421,7 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
+          row.notes.startsWith('xBitcoin Bitcoin') || 
           row.notes.includes('xBitcoin Bull-Run');
         return isSmartCryptoNote; // Include only rows with Smart Crypto notes
       });
@@ -496,6 +500,8 @@ export default function EnhancedTable({
         applicableCategories.push('Smart Crypto x-Bitcoin Rush');
       if (notes.startsWith('xBitcoin Bull-Run'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
+      if (notes.startsWith('xBitcoin Bitcoin'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
       if (notes.includes('Wave'))
         applicableCategories.push('Smart Crypto x-Blue Wave');
       if (notes.includes('Surge'))
@@ -550,6 +556,7 @@ export default function EnhancedTable({
     // Define mappings for crypto types and managers
     const cryptoMappings = [
       'Bull-Run',
+      'Bitcoin',
       'Blooming',
       'Rush',
       'Ripple',
