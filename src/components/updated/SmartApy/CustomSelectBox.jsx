@@ -109,10 +109,10 @@ export default function CustomSelectBox({
           },
           '& .MuiSelect-outlined': {
             borderRadius: '12px',
-            backgroundColor: 'none !important',
+            backgroundColor: theme.palette.background.default,
             color: `${theme.palette.text.primary} !important`,
             '&:focus': {
-              backgroundColor: 'none !important',
+              backgroundColor: theme.palette.background.default,
               color: `${theme.palette.text.primary} !important`,
               border: 'none',
             },
@@ -129,10 +129,10 @@ export default function CustomSelectBox({
           );
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {selectedItem?.img && (
+              {type === 'Coin' && selectedItem && (
                 <img
-                  src={selectedItem?.img}
-                  alt={selectedItem?.name}
+                  src={getImage(selectedItem.image)}
+                  alt={selectedItem.name}
                   style={{ width: '24px', height: '24px', marginRight: '10px' }}
                 />
               )}
@@ -152,17 +152,25 @@ export default function CustomSelectBox({
               <MenuItem
                 key={card.voucher}
                 value={card.voucher}
-                disabled={card.isUsed || card.assignedToUser}
+                disabled={card.isUsed}
               >
-                {`${card.voucher} - ${card.amount} ${card.type}`}
+                {`${card.voucher} - ${card.amount} ${
+                  card.type
+                }(Amount in USD: ${
+                  card.type === 'USD'
+                    ? card.amount
+                    : Number(card.amount * card.price).toFixed(2)
+                }, email:${
+                  card?.assignedToUser ? card?.assignedToUser : 'NA'
+                })`}
               </MenuItem>
             ))
           : !isCurrency
-          ? items?.map(({ name, value, img }) => (
+          ? items?.map(({ name, value, image }) => (
               <MenuItem key={name} value={value}>
-                {img && (
+                {type === 'Coin' && (
                   <img
-                    src={img}
+                    src={getImage(image)}
                     alt={name}
                     style={{
                       width: '24px',

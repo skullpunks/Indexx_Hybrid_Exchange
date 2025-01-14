@@ -52,6 +52,7 @@ const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
   width: '120px',
+  height: '100%',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
@@ -102,6 +103,7 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   color: '#FEBA00 !important',
   minWidth: 0,
   width: '120px',
+  height: '100%',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
@@ -327,6 +329,9 @@ export default function IconicHeader({ selectedTab, onChange }) {
               display: 'none',
             },
 
+            '& .MuiTabs-flexContainer': {
+              height: '100%',
+            },
             [theme.breakpoints.down('md')]: {
               '& .MuiTabs-scrollButtons': {
                 display: 'flex',
@@ -343,7 +348,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
               icon={
                 <img
                   src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
-                  style={{ height: '25px', marginBottom: '0px' }}
+                  style={{ height: '65px', marginBottom: '0px' }}
                 />
               }
               iconPosition="top"

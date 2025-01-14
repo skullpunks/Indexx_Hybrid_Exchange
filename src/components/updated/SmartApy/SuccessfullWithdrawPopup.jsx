@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuccessfullDepositPopup = ({ onClose }) => {
+const SuccessfullWithdrawPopup = ({ onClose }) => {
   const theme = useTheme();
 
   const classes = useStyles();
@@ -134,13 +134,11 @@ const SuccessfullDepositPopup = ({ onClose }) => {
             </div>
           </div>
           <img src={greenCheck} height="60px" />
-          <h3>Successfully deposited!</h3>
-          <p>The amount will reflect to your asset in your dashboard</p>
-
+          <h3>Smart APY Plan has been successfully withdrawn</h3>
           <div className={classes.btnContainer}>
-            <GenericButton text="Dashboard" onClick={onClose} />
+            <GenericButton text="Asset Wallet" onClick={onClose} />
             <GenericButton
-              text="Buy token"
+              text="Invest"
               onClick={onClose}
               className={classes.outlineBtn}
             />
@@ -151,4 +149,4 @@ const SuccessfullDepositPopup = ({ onClose }) => {
   );
 };
 
-export default SuccessfullDepositPopup;
+export default SuccessfullWithdrawPopup;
