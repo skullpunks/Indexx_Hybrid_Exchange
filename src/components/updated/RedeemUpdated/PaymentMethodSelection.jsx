@@ -11,7 +11,8 @@ import {
 import CustomSelectBox from './CustomSelect';
 import initialTokens from '../../../utils/Tokens.json';
 import GenericButton from '../shared/Button';
-
+import SelectPaymentMethod from './SelectPaymentMethod';
+import Popup from './PaymentPopup';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '20px',
@@ -50,7 +51,9 @@ const PaymentMethodSelection = () => {
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [selectedValue, setSelectedValue] = useState('Pay with USD');
   const [currency, setCurrency] = useState(initialTokens[0]?.title);
-
+  const [paymentMethodError, setPaymentMethodError] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [popupOpen, setPopupOpen] = useState(false);
   const handlePaymentChange = (event) => {
     setSelectedValue(event.target.value);
     console.log('Selected Payment Method:', event.target.value);
@@ -59,6 +62,20 @@ const PaymentMethodSelection = () => {
   const classes = useStyles();
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+  };
+
+  const handlePaymentMethodClick = async () => {
+    setPopupOpen(true);
+  };
+
+  const handleNewPopupClose = () => {
+    setPopupOpen(false);
+  };
+
+  const handlePaymentMethodSelect = (method) => {
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+    handleNewPopupClose();
   };
 
   return (
@@ -99,7 +116,7 @@ const PaymentMethodSelection = () => {
 
       {selectedValue === 'Pay with USD' ? (
         <div className={classes.selectTypeContainer}>
-          <label>Select payment method</label>
+          {/* <label>Select payment method</label>
           <CustomSelectBox
             items={[
               { name: 'Credit Card', value: 'Credit Card' },
@@ -112,7 +129,15 @@ const PaymentMethodSelection = () => {
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
             hasborder
-          />
+          /> */}
+          <div style={{ width: '100%' }}>
+            <SelectPaymentMethod
+              onClick={handlePaymentMethodClick}
+              errorMsg={paymentMethodError}
+              buttonText={selectedPaymentMethod || 'Select Transaction Method'}
+              type={`${'Buy'}`}
+            />
+          </div>
         </div>
       ) : (
         <div className={classes.selectTypeContainer}>
@@ -132,6 +157,18 @@ const PaymentMethodSelection = () => {
       )}
       <div style={{ marginTop: '40px' }}></div>
       <GenericButton className={classes.button} text={'Proceed'} />
+
+      <div>
+        <Popup
+          open={popupOpen}
+          onClose={handleNewPopupClose}
+          amount={''}
+          onSelectPaymentMethod={handlePaymentMethodSelect}
+          type={`${'Buy'}`}
+          token={'inex'}
+          spendToken={'wibs'}
+        />
+      </div>
     </div>
   );
 };
