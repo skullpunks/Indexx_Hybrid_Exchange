@@ -161,6 +161,7 @@ import HowToCreateBuySellPage from './pages/HowToCreateBuySell';
 import SmartAPYPage from './pages/SmartAPY';
 import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
 import SmartApyCalPage from './pages/SmartApyCal';
+import CryptoTreasuryPage from './pages/CryptoTreasury';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -292,6 +293,7 @@ function App() {
                 path="/indexx-exchange/send"
                 element={<HorizontalLinearStepper2 />}
               />
+              <Route path="/crypto-treasury" element={<CryptoTreasuryPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
 
               <Route

@@ -285,7 +285,7 @@ const StakingTop = ({ onStakeSuccess }) => {
             findToken.stakingPercentage6months
           );
           console.log('result', result);
-        setRewards(result?.data?.finalAmount ?? 0);
+          setRewards(result?.data?.finalAmount ?? 0);
           setFinalAmount(
             amt * (1 + selectedToken.stakingPercentage1year / 100)
           );
@@ -297,7 +297,7 @@ const StakingTop = ({ onStakeSuccess }) => {
             findToken.stakingPercentage6months
           );
           console.log('result', result);
-        setRewards(result?.data?.finalAmount ?? 0);
+          setRewards(result?.data?.finalAmount ?? 0);
           setFinalAmount(
             amt * (1 + selectedToken.stakingPercentage6months / 100)
           );
@@ -489,7 +489,7 @@ const StakingTop = ({ onStakeSuccess }) => {
                       'Long',
                       selectedToken.stakingPercentage6months
                     );
-                  setRewards(result?.data?.finalAmount ?? 0);
+                    setRewards(result?.data?.finalAmount ?? 0);
                     setFinalAmount(
                       inputAmt *
                         (1 + selectedToken?.stakingPercentage1year / 100 ?? 0)
@@ -501,7 +501,7 @@ const StakingTop = ({ onStakeSuccess }) => {
                       'Short',
                       selectedToken.stakingPercentage6months
                     );
-                  setRewards(result?.data?.finalAmount ?? 0);
+                    setRewards(result?.data?.finalAmount ?? 0);
                     setFinalAmount(
                       inputAmt *
                         (1 + selectedToken?.stakingPercentage6months / 100 ?? 0)
@@ -559,8 +559,14 @@ const StakingTop = ({ onStakeSuccess }) => {
             />
           </div>
           <div className={classes.buttonContainer}>
-            <GenericButton text="Deposit Amount" />
-            <GenericButton text="Withdraw Amount" />
+            <GenericButton
+              text="Deposit Amount"
+              onClick={() => navigate('/deposit-crypto-select-coin')}
+            />
+            <GenericButton
+              text="Withdraw Amount"
+              onClick={() => navigate('/withdraw-crypto-select-coin')}
+            />
           </div>
         </div>
       </div>
@@ -594,7 +600,7 @@ const StakingTop = ({ onStakeSuccess }) => {
           type="number"
           placeholder="Enter Amount"
           value={calcAmt}
-          onChange={async(e) => {
+          onChange={async (e) => {
             setcalcAmt(e.target.value);
             let result1 = await calculateStakeReward(
               Number(e.target.value),
@@ -608,12 +614,8 @@ const StakingTop = ({ onStakeSuccess }) => {
               'Long',
               selectedToken.stakingPercentage1year
             );
-            setSixMonthReward(
-              result1.data.finalAmount ?? 0
-            );
-            setOneYearReward(
-              result2.data.finalAmount ?? 0
-            );
+            setSixMonthReward(result1.data.finalAmount ?? 0);
+            setOneYearReward(result2.data.finalAmount ?? 0);
           }}
           endAdornment={
             <InputAdornment position="end">

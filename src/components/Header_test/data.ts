@@ -121,7 +121,7 @@ const header_data = [
     mainTextDesktop: 'Crypto Treasury',
     mainTextMob: 'Crypto Treasury',
     active: false,
-    href: '/smart-crypto',
+    href: '/crypto-treasury',
     hasMegaDrop: true,
     dropDownContent: [
       {

@@ -128,10 +128,7 @@ const HeaderTest = () => {
   useEffect(() => {
     setAuthHeader(
       header_data.map((el) => {
-        if (
-          pathname.includes('/smart-crypto') ||
-          pathname.includes('/smart-apy')
-        ) {
+        if (pathname.includes('/crypto-treasury')) {
           if (el.mainTextDesktop === 'Crypto Treasury') {
             return { ...el, active: true };
           }
