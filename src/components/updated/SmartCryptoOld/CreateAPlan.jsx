@@ -324,8 +324,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
       return `Smart Crypto x-Blue Surge - ${managedBy}`;
     if (name.includes('Ripple'))
       return `Smart Crypto x-Blue Ripple - ${managedBy}`;
-    if (name.includes('Wave'))
-      return `Smart Crypto x-Blue Wave - ${managedBy}`;
+    if (name.includes('Wave')) return `Smart Crypto x-Blue Wave - ${managedBy}`;
     if (name.includes('Blooming'))
       return `Smart Crypto x-Bitcoin Blooming - ${managedBy}`;
     if (name.includes('Rush'))
@@ -389,7 +388,12 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
-          let selectedMethod = String(paymentMethod).toLowerCase();
+          let selectedMethod =
+            paymentMethod === 'Wire transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );
@@ -562,7 +566,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
     setShowPopup(false);
     setPopupMessage('');
   };
-  
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
