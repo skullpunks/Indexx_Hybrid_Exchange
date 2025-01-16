@@ -73,7 +73,7 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
       key: 3,
     },
     {
-      label: 'Fiat',
+      label: 'Fiat / Cash',
       key: 4,
     },
   ];

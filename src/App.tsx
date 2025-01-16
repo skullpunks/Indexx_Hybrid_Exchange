@@ -159,6 +159,9 @@ import NotFound from './pages/NotFound';
 import GiftShoppingHistoryPage from './pages/GiftShoppingHistory';
 import HowToCreateBuySellPage from './pages/HowToCreateBuySell';
 import SmartAPYPage from './pages/SmartAPY';
+import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
+import SmartApyCalPage from './pages/SmartApyCal';
+import CryptoTreasuryPage from './pages/CryptoTreasury';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -272,6 +275,14 @@ function App() {
               />
               <Route path="/smart-cryptos" element={<SmartCryptoOldPage />} />
               <Route path="/smart-apy" element={<SmartAPYPage />} />
+              <Route
+                path="/smart-apy-calculator"
+                element={<SmartApyCalPage />}
+              />
+              <Route
+                path="/smart-apy-how-it-works"
+                element={<HowItWorksSmartAPY />}
+              />
 
               {/* <Route
                 path="/paypal-partnership-with-indexx"
@@ -282,6 +293,7 @@ function App() {
                 path="/indexx-exchange/send"
                 element={<HorizontalLinearStepper2 />}
               />
+              <Route path="/crypto-treasury" element={<CryptoTreasuryPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
 
               <Route

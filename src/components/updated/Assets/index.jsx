@@ -661,7 +661,7 @@ const Assets = () => {
                     { name: 'Crypto', path: '/wallet/crypto' },
                     { name: 'Smart APY', path: '/wallet/iusd+' },
                     { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
-                    { name: 'Fiat', path: '/wallet/fiat' },
+                    { name: 'Fiat / Cash', path: '/wallet/fiat' },
                   ].map((el, index) => (
                     <ListItem
                       key={el.path}

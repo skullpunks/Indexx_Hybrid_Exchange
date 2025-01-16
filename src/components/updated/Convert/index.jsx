@@ -9,7 +9,7 @@ import InputField from '../shared/TextField';
 import GenericButton from '../shared/Button';
 import CustomTextField from './CustomTextField';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-import IconicHeader from './IconicHeader';
+import IconicHeaders from './IconicHeader';
 import CoinsPopup from './CoinsPopup';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
@@ -27,10 +27,12 @@ import Inex from '../../../assets/updated/buySell/INEX.svg'; // Default image
 import PreviewConversionpopup from './PreviewConversionpopup';
 import SuccessPopup from './SuccessfulConvertPopup';
 import GeneralPopup from '../BuySell/Popup';
+import IconicHeader from '../shared/IconicHeader';
+
 const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1280px',
-    margin: '50px auto',
+    margin: '80px auto',
     padding: '10px 20px',
   },
   header: {
@@ -126,6 +128,7 @@ const ConvertCrypto = () => {
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedTab, setSelectedTab] = useState('Convert');
 
   let appSettingArr = [];
 
@@ -425,20 +428,21 @@ const ConvertCrypto = () => {
   const handlePreviewConversion = async () => {
     const selectedCoinPrice = await getCoinPriceByName(fromToken.title);
     let usdAmount = amount * selectedCoinPrice.data.results.data;
-    if(usdAmount > 500) { // ask for KYC if the converted final amount is greater 500 usd
-    const email = localStorage.getItem('email');
-    const response = await validateUserEmail(email);
-    const data = response;
+    if (usdAmount > 500) {
+      // ask for KYC if the converted final amount is greater 500 usd
+      const email = localStorage.getItem('email');
+      const response = await validateUserEmail(email);
+      const data = response;
 
-    if (data.status === 200) {
-      console.log('data', data);
-      if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
-        setShowPopup(true);
-        setPopupMessage('Please Complete KYC first');
-        return;
+      if (data.status === 200) {
+        console.log('data', data);
+        if (!data.data.isKYCPass && data.data.kycStatus !== 'Completed') {
+          setShowPopup(true);
+          setPopupMessage('Please Complete KYC first');
+          return;
+        }
       }
     }
-  }
 
     formik.handleSubmit();
     // Perform necessary checks before opening modal
@@ -459,19 +463,23 @@ const ConvertCrypto = () => {
     }
     //fetchConversionRate(); // Fetch new rates based on the new token
   };
-
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   return (
     <div className={classes.Container}>
-      <div className={classes.header}>
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
+
+      {/* <div className={classes.header}>
         <Link className={classes.link} to="/">
           <ArrowBackIcon /> Buy and Sell
         </Link>
-      </div>
+      </div> */}
       <div className={classes.contentContent}>
         <div className={classes.rightContainer}>
           <h2 className={classes.mainHeading}>Convert</h2>
-          <IconicHeader />
-          <h6 className={classes.heading}>Wallet</h6>
+          <IconicHeaders />
+
           <div className={classes.rightContentContainer}>
             <CustomTextField
               label="From"

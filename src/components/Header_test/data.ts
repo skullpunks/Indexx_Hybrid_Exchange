@@ -118,12 +118,27 @@ const header_data = [
     ],
   },
   {
-    mainTextDesktop: 'Smart Crypto',
-    mainTextMob: 'Smart Crypto',
+    mainTextDesktop: 'Crypto Treasury',
+    mainTextMob: 'Crypto Treasury',
     active: false,
-    href: '/smart-crypto',
-    hasMegaDrop: false,
-    dropDownContent: [],
+    href: '/crypto-treasury',
+    hasMegaDrop: true,
+    dropDownContent: [
+      {
+        heading: 'Explore Crypto Treasury',
+        mainList: true,
+        links: [
+          {
+            name: 'Smart Crypto',
+            href: '/smart-crypto',
+          },
+          {
+            name: 'Smart APY',
+            href: '/smart-apy',
+          },
+        ],
+      },
+    ],
   },
   {
     mainTextDesktop: 'Shop',

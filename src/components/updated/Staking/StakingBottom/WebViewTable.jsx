@@ -188,17 +188,17 @@ export default function StickyHeadTable({
                             ? 'Active'
                             : 'Inactive'
                           : column.id === 'stakedAmount'
-                          ? `${parseFloat(value).toFixed(2)} ${row.coin}`
+                          ? `${parseFloat(value)?.toFixed(2)} ${row.coin}`
                           : column.id === 'rewardAmount'
-                          ? `${parseFloat(value).toFixed(2)} ${row.rewardCoin}`
+                          ? `${parseFloat(value)?.toFixed(2)} ${row.rewardCoin}`
                           : column.id === 'finalAmount'
                           ? row.coin === row.rewardCoin
-                            ? `${(row.stakedAmount + row.rewardAmount).toFixed(
+                            ? `${(row.stakedAmount + row.rewardAmount)?.toFixed(
                                 2
                               )} ${row.coin}`
-                            : `${row.stakedAmount.toFixed(2)} ${
+                            : `${row.stakedAmount?.toFixed(2)} ${
                                 row.coin
-                              } + ${row.rewardAmount.toFixed(2)} ${
+                              } + ${row.rewardAmount?.toFixed(2)} ${
                                 row.rewardCoin
                               }`
                           : column.id === 'percentage'
