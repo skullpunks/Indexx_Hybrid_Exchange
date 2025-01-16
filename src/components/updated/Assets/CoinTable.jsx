@@ -563,7 +563,7 @@ export default function EnhancedTable({
       'Wave',
       'Surge',
     ];
-    const managerMappings = ['Omkar', 'Kashir', 'Issa' , 'Jan-2025', 'Feb-2025', 'Mar-2025', 'Gabe'];
+    const managerMappings = ['Omkar', 'Kashir', 'Issa' , 'Jan-2025', 'Feb-2025', 'Mar-2025', 'Gabe' , 'Jan-2025($5,000)', 'Jan-2025($6,000)'];
 
     // Find the crypto type and manager from the note
     const cryptoType =
