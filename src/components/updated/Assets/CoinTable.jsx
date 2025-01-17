@@ -290,8 +290,8 @@ export default function EnhancedTable({
             item.notes.startsWith('xBitcoin Blooming') ||
             item.notes.startsWith('xBitcoin Rush') ||
             item.notes.startsWith('xBitcoin Bitcoin') ||
-            item.notes.startsWith("xBBitcoin Bull-Run-2") ||
-            item.notes.startsWith("xBitcoin Bull-Run-3") ||
+            item.notes.startsWith('xBBitcoin Bull-Run-2') ||
+            item.notes.startsWith('xBBitcoin Bull-Run-3') ||
             item.notes.startsWith('xBitcoin Bull-Run');
 
           // if (hasSmartCryptoNote) {
@@ -306,9 +306,9 @@ export default function EnhancedTable({
               item.notes.startsWith('Smart Crypto Wave') ||
               item.notes.startsWith('xBitcoin Blooming') ||
               item.notes.startsWith('xBitcoin Rush') ||
-              item.notes.startsWith('xBitcoin Bitcoin') || 
-              item.notes.startsWith("xBBitcoin Bull-Run-2") ||
-              item.notes.startsWith("xBitcoin Bull-Run-3") ||
+              item.notes.startsWith('xBitcoin Bitcoin') ||
+              item.notes.startsWith('xBBitcoin Bull-Run-2') ||
+              item.notes.startsWith('xBBitcoin Bull-Run-3') ||
               item.notes.startsWith('xBitcoin Bull-Run')
           );
           setSmartCryptoCoins(newSmartCryptoCoins);
@@ -413,9 +413,9 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
-          row.notes.includes('xBitcoin Bitcoin') || 
-          row.notes.includes("xBBitcoin Bull-Run-2") ||
-          row.notes.includes("xBitcoin Bull-Run-3") ||
+          row.notes.includes('xBitcoin Bitcoin') ||
+          row.notes.includes('xBBitcoin Bull-Run-2') ||
+          row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
         return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
       });
@@ -427,9 +427,9 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
-          row.notes.includes('xBitcoin Bitcoin') || 
-          row.notes.includes("xBBitcoin Bull-Run-2") ||
-          row.notes.includes("xBitcoin Bull-Run-3") ||
+          row.notes.includes('xBitcoin Bitcoin') ||
+          row.notes.includes('xBBitcoin Bull-Run-2') ||
+          row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
         return isSmartCryptoNote; // Include only rows with Smart Crypto notes
       });
@@ -509,9 +509,9 @@ export default function EnhancedTable({
       if (notes.startsWith('xBitcoin Bull-Run'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
       if (notes.startsWith('xBBitcoin Bull-Run-2'))
-        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
-      if (notes.startsWith('xBitcoin Bull-Run-3'))
-        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
+        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run-2');
+      if (notes.startsWith('xBBitcoin Bull-Run-3'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run-3');
       if (notes.startsWith('xBitcoin Bitcoin'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
       if (notes.includes('Wave'))
@@ -536,6 +536,19 @@ export default function EnhancedTable({
       });
     });
 
+    // Remove duplicate rows within the "Other Coins" category
+    if (categories['Other Coins']) {
+      const uniqueOtherCoins = [];
+      const seenCoins = new Set();
+      categories['Other Coins'].forEach((row) => {
+        if (!seenCoins.has(row.coin)) {
+          uniqueOtherCoins.push(row);
+          seenCoins.add(row.coin);
+        }
+      });
+      categories['Other Coins'] = uniqueOtherCoins;
+    }
+
     // Sort "Other Coins" based on preferredOrder, if present
     if (categories['Other Coins']) {
       categories['Other Coins'].sort((a, b) => {
@@ -559,6 +572,7 @@ export default function EnhancedTable({
       selectedValue
     );
     console.log('filteredOrganizedRows', filteredOrganizedRows);
+
     return filteredOrganizedRows;
   };
 
@@ -567,6 +581,8 @@ export default function EnhancedTable({
     console.log('notes', note);
     // Define mappings for crypto types and managers
     const cryptoMappings = [
+      'Bull-Run-2',
+      'Bull-Run-3',
       'Bull-Run',
       'Bitcoin',
       'Blooming',
@@ -575,14 +591,23 @@ export default function EnhancedTable({
       'Wave',
       'Surge',
     ];
-    const managerMappings = ['Omkar', 'Kashir', 'Issa' , 'Jan-2025', 'Feb-2025', 'Mar-2025', 'Gabe' , 'Jan_2025($5,000)', 'Jan_2025($6,000)'];
+    const managerMappings = [
+      'Omkar',
+      'Kashir',
+      'Issa',
+      'Jan-2025',
+      'Feb-2025',
+      'Mar-2025',
+      'Gabe',
+      'Jan_2025($5,000)',
+      'Jan_2025($6,000)',
+    ];
 
     // Find the crypto type and manager from the note
     const cryptoType =
       cryptoMappings.find((type) => note.includes(type)) || 'Unknown Crypto';
     const managedBy =
-      managerMappings.find((manager) => note.includes(manager)) ||
-      '';
+      managerMappings.find((manager) => note.includes(manager)) || '';
 
     // Determine if it's a Smart Crypto type
     const isSmartCrypto = ['Ripple', 'Wave', 'Surge'].includes(cryptoType);
@@ -820,7 +845,8 @@ export default function EnhancedTable({
                 )}
 
                 {group.category.includes('Smart Crypto') &&
-                  group?.rows?.length > 0 && calculateTotal(group.rows).totalAmount > 0 &&(
+                  group?.rows?.length > 0 &&
+                  calculateTotal(group.rows).totalAmount > 0 && (
                     <TableRow>
                       <TableCell colSpan={isMobile ? 3 : 5}>
                         <div
