@@ -78,7 +78,7 @@ const PaypalBridge = () => {
   const { payPalPaymentLink } = location.state || {};
 
   const handleProceedToPaypal = () => {
-    console.log("payPalPaymentLink", payPalPaymentLink)
+    console.log('payPalPaymentLink', payPalPaymentLink);
     if (payPalPaymentLink) {
       window.location.href = payPalPaymentLink;
     } else {
@@ -101,7 +101,7 @@ const PaypalBridge = () => {
 
       <div style={{ margin: '30px 0px' }}>
         <GenericButton
-          text={'Proceed to Paypal'}
+          text={'Pay with debit or credit card via PayPal'}
           styles={{ padding: '10px 30px' }}
           onClick={handleProceedToPaypal}
         />
@@ -109,16 +109,15 @@ const PaypalBridge = () => {
 
       <div style={{ textAlign: 'left', width: '100%' }}>
         <p className={classes.instructionsText}>Instructions:</p>
-
         <p variant="body1">
-          1.Please Click on{' '}
-          <span className={classes.cardPaymentButton}>
-            Pay with Debit or Credit Card
-          </span>{' '}
-          on the payment page to proceed with debit card payment.
+          1. Click the green button to proceed to the PayPal payment page.
         </p>
         <p variant="body1">
-          2. Click the green button to proceed to the PayPal payment page.
+          2.Please Click on{' '}
+          <span className={classes.cardPaymentButton}>
+            Pay with a Bank Account Credit Card
+          </span>{' '}
+          on the payment page to proceed with debit card payment.
         </p>
       </div>
     </Box>
