@@ -135,33 +135,56 @@ const BalanceOverview = ({ selectedValue }) => {
         const getInvestments = await getUserInvestments(email);
         let totalInvestment = getInvestments.data; // Variable for staked balance
         setTotalInvestment(totalInvestment);
+        const processedSymbols = new Set(); // To track already processed INEX and WIBS
+
         usersWallet.forEach((wallet) => {
           const balance = Number(wallet.coinBalance);
           const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
           const price = Number(wallet.coinPrice);
           const prevPrice = Number(wallet.coinPrevPrice);
-
-          if (balance > 0 && wallet.coinSymbol !== 'USD') {
-            if (
-              wallet.coinType === 'Crypto' &&
-              !isNaN(price) &&
-              !isNaN(prevPrice)
-            ) {
-              totalBalInUSD += balance * price;
-              totalPrevBalInUSD += balance * prevPrice;
-            } else if (!isNaN(price)) {
-              totalBalInUSD += balance * price;
-            } else {
-              totalBalInUSD += balance;
+        
+          // Specific handling for INEX and WIBS to avoid duplicates
+          if (wallet.coinSymbol === "INEX" || wallet.coinSymbol === "WIBS") {
+            if (processedSymbols.has(wallet.coinSymbol)) {
+              return; // Skip if already processed
             }
-          }
-
-          if (wallet.coinSymbol === 'USD' && wallet.coinBalance > 0) {
-            totalBalInUSD += wallet.coinBalance;
-          }
-
-          if (stakedBalance > 0 && !isNaN(price)) {
-            totalStakedBalInUSD += stakedBalance * price;
+            processedSymbols.add(wallet.coinSymbol); // Mark as processed
+        
+            if (balance > 0) {
+              if (!isNaN(price)) {
+                totalBalInUSD += balance * price;
+              } else {
+                totalBalInUSD += balance;
+              }
+            }
+        
+            if (stakedBalance > 0 && !isNaN(price)) {
+              totalStakedBalInUSD += stakedBalance * price;
+            }
+          } else {
+            // General logic for other symbols
+            if (balance > 0 && wallet.coinSymbol !== "USD") {
+              if (
+                wallet.coinType === "Crypto" &&
+                !isNaN(price) &&
+                !isNaN(prevPrice)
+              ) {
+                totalBalInUSD += balance * price;
+                totalPrevBalInUSD += balance * prevPrice;
+              } else if (!isNaN(price)) {
+                totalBalInUSD += balance * price;
+              } else {
+                totalBalInUSD += balance;
+              }
+            }
+        
+            if (wallet.coinSymbol === "USD" && wallet.coinBalance > 0) {
+              totalBalInUSD += wallet.coinBalance;
+            }
+        
+            if (stakedBalance > 0 && !isNaN(price)) {
+              totalStakedBalInUSD += stakedBalance * price;
+            }
           }
         });
 
