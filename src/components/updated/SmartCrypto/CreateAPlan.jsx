@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     visibility: 'hidden',
   },
   bnModal: {
-    '& .bnModalWrap': {
+    '& .bnModalWraps': {
       backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#1e2329',
       borderRadius: '16px',
       boxShadow: '0px 3px 6px rgba(0,0,0,.1)',
@@ -61,6 +61,27 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       padding: '10px',
       marginTop: '20px',
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      '&::-webkit-scrollbar': {
+        width: '7px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? '#5f6673 !important'
+            : '#b7bdc6 !important',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-track': {
+        display: 'none !important', // Hide the scrollbar track
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? '#5f6673 !important'
+            : '#b7bdc6 !important', // Keep the same color on hover
+      },
       [theme.breakpoints.down('sm')]: {
         marginTop: '100px',
         height: '100vh',
@@ -669,7 +690,7 @@ const CreateAPlanPopup = ({
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
     >
-      <div className="bnModalWrap">
+      <div className="bnModalWraps">
         <div className={classes.contentContainer}>
           <div
             style={{
