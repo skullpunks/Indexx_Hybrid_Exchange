@@ -297,7 +297,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   if (isLoggedIn && userType === 'Indexx Exchange') {
     maxWidthTabContainer = '1260px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
-    maxWidthTabContainer = '1300px';
+    maxWidthTabContainer = '1400px';
   } else {
     maxWidthTabContainer = '870px';
   }

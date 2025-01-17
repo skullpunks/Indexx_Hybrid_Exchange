@@ -35,7 +35,7 @@ export default function ThemeContextUpdated({ children }) {
                 primary: {
                   main: '#11BE6A',
                 },
-                divider: '#EAECEF',
+                divider: '#D1D1D6',
                 border: '#EAECEF',
                 background: {
                   default: '#F4F4F6',

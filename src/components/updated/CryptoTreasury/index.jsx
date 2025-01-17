@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '50px',
     fontStyle: 'italic',
     fontWeight: '500',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '32px',
+    },
   },
   text: {
     fontWeight: '300',
@@ -77,12 +80,13 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: '10px',
-    color: '#00ff7f',
+    color: '#FAAF02 !important',
     maxWidth: '250px',
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `1px solid #FAAF02 !important`,
     '&:hover': {
+      border: `1px solid ${theme.palette.primary.main} !important `,
       background: 'none !important',
-      color: '#00ff7f',
+      color: `${theme.palette.primary.main} !important`,
     },
   },
 }));

@@ -25,6 +25,7 @@ const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
   minWidth: 0,
   width: '200px',
+  height: '100%',
   [theme.breakpoints.up('sm')]: {
     minWidth: 0,
   },
@@ -174,6 +175,9 @@ export default function IconicHeader({ selectedTab, onChange }) {
           '& .MuiTabs-indicator': {
             display: 'none',
           },
+          '& .MuiTabs-flexContainer': {
+            height: '100%',
+          },
         }}
       >
         {tabsData.map((tab, index) => (
@@ -182,7 +186,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
             icon={
               <img
                 src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
-                style={{ height: '35px', marginBottom: '-5px' }}
+                style={{ height: '70px', marginBottom: '-5px' }}
               />
             }
             iconPosition="top"

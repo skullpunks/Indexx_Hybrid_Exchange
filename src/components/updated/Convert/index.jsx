@@ -31,7 +31,7 @@ import IconicHeader from '../shared/IconicHeader';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
-    maxWidth: '1280px',
+    maxWidth: '1400px',
     margin: '80px auto',
     padding: '10px 20px',
   },

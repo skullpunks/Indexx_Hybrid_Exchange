@@ -31,10 +31,12 @@ import xBitcoinIconUpdated from '../../../assets/updated/smartCrypto/x-blueLogo.
 import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
 import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
 import DetailPopup from './DetailPopup';
+import CongratulationsPopup from './Congratulations';
+import ProcessingFailedPopup from './ProcessingFailedPopup';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
-    maxWidth: '1248px',
+    maxWidth: '1400px',
     width: '100%',
     margin: '50px auto 0px auto',
     padding: '24px',
@@ -370,6 +372,19 @@ const SmartCrypto = () => {
   const [packagesData, setPackagesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('x-Blue');
+  const [congratulationsPopup, setCongratulationsPopup] = useState(false);
+  const [failedPopup, setFailedPopup] = useState(false);
+  const [userSellPlanReformed, setUserPlanNameReformed] = useState(
+    'x-Bitcoin Bull-Run(Omkar)'
+  );
+  const [userSellPlan, setUserPlanName] = useState('x-Bitcoin Bull-Run(Omkar)');
+  // x-Blue Ripple(Issa)
+  // x-Blue Surge(Issa)
+  // x-Blue Wave(Issa)
+  // x-Bitcoin Blooming(Omkar)
+  // x-Bitcoin Rush(Omkar)
+  // x-Bitcoin Bull-Run(Omkar)
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -730,6 +745,21 @@ const SmartCrypto = () => {
             category={selectedCategory}
             onClose={() => setPlanDetailPopupOpen(false)}
             planName={selectedPlanName}
+          />
+        )}
+
+        {congratulationsPopup && (
+          <CongratulationsPopup
+            onClose={() => setCongratulationsPopup(false)}
+            category={'x-Bitcoin'}
+            userSellPlanReformed={userSellPlanReformed}
+            userSellPlan={userSellPlan}
+          />
+        )}
+        {failedPopup && (
+          <ProcessingFailedPopup
+            onClose={() => setFailedPopup(false)}
+            category={'x-Bitcoin'}
           />
         )}
         {/* <PlanDetails /> */}

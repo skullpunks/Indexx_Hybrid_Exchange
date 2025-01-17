@@ -23,8 +23,11 @@ const useStyles = makeStyles((theme) => ({
   Container: {
     maxWidth: '1248px',
     width: '100%',
-    margin: '50px auto',
     padding: '24px',
+    margin: '-80px auto 0px auto',
+  },
+  root: {
+    margin: '100px auto',
   },
 }));
 
@@ -198,21 +201,25 @@ const BuySell = () => {
   };
 
   return (
-    <div className={classes.Container}>
-      <IconicHeader selectedTab={'Buy & Sell'} onChange={handleTabChange} />
-      <BuyCrypto
-        tokenType={'Tokens'}
-        onReceiveTokenChange={handleReceiveTokenChange}
-        defaultReceiveToken={receiveToken} // Pass the updated state
-        handleTokenSelect={handleTokenSelect}
-      />
-      <HowToBuyCrypto tokenType={'Tokens'} receiveToken={receiveToken} />
-      <CryptoCarts receiveToken={receiveToken} />
-      <PopularConversion receiveToken={receiveToken} />
-      {isModalOpen && (
-        <Popup message={popupMessage} onClose={handlePopupClose} />
-      )}
-    </div>
+    <>
+      <div className={classes.root}>
+        <IconicHeader selectedTab={'Buy & Sell'} onChange={handleTabChange} />
+        <div className={classes.Container}>
+          <BuyCrypto
+            tokenType={'Tokens'}
+            onReceiveTokenChange={handleReceiveTokenChange}
+            defaultReceiveToken={receiveToken} // Pass the updated state
+            handleTokenSelect={handleTokenSelect}
+          />
+          <HowToBuyCrypto tokenType={'Tokens'} receiveToken={receiveToken} />
+          <CryptoCarts receiveToken={receiveToken} />
+          <PopularConversion receiveToken={receiveToken} />
+          {isModalOpen && (
+            <Popup message={popupMessage} onClose={handlePopupClose} />
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

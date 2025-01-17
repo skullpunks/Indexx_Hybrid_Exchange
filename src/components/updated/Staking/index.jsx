@@ -7,7 +7,7 @@ import StakingTop from './StakingTop';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     width: '100%',
     padding: '0px',
     paddingTop: '50px',
@@ -52,8 +52,10 @@ const Staking = () => {
     <>
       <div className={classes.container}>
         <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
-        <StakingTop onStakeSuccess={handleRefresh} />
-        <StakingBottom refresh={refresh} />
+        <div style={{ maxWidth: '1280px', width: '100%', margin: 'auto' }}>
+          <StakingTop onStakeSuccess={handleRefresh} />
+          <StakingBottom refresh={refresh} />
+        </div>
       </div>
     </>
   );
