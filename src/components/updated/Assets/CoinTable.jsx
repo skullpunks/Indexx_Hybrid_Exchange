@@ -290,7 +290,7 @@ export default function EnhancedTable({
             item.notes.startsWith('xBitcoin Blooming') ||
             item.notes.startsWith('xBitcoin Rush') ||
             item.notes.startsWith('xBitcoin Bitcoin') ||
-            item.notes.startsWith("xBitcoin Bull-Run-2") ||
+            item.notes.startsWith("xBBitcoin Bull-Run-2") ||
             item.notes.startsWith("xBitcoin Bull-Run-3") ||
             item.notes.startsWith('xBitcoin Bull-Run');
 
@@ -307,7 +307,7 @@ export default function EnhancedTable({
               item.notes.startsWith('xBitcoin Blooming') ||
               item.notes.startsWith('xBitcoin Rush') ||
               item.notes.startsWith('xBitcoin Bitcoin') || 
-              item.notes.startsWith("xBitcoin Bull-Run-2") ||
+              item.notes.startsWith("xBBitcoin Bull-Run-2") ||
               item.notes.startsWith("xBitcoin Bull-Run-3") ||
               item.notes.startsWith('xBitcoin Bull-Run')
           );
@@ -414,7 +414,7 @@ export default function EnhancedTable({
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') || 
-          row.notes.includes("xBitcoin Bull-Run-2") ||
+          row.notes.includes("xBBitcoin Bull-Run-2") ||
           row.notes.includes("xBitcoin Bull-Run-3") ||
           row.notes.includes('xBitcoin Bull-Run');
         return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
@@ -428,7 +428,7 @@ export default function EnhancedTable({
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') || 
-          row.notes.includes("xBitcoin Bull-Run-2") ||
+          row.notes.includes("xBBitcoin Bull-Run-2") ||
           row.notes.includes("xBitcoin Bull-Run-3") ||
           row.notes.includes('xBitcoin Bull-Run');
         return isSmartCryptoNote; // Include only rows with Smart Crypto notes
@@ -508,7 +508,7 @@ export default function EnhancedTable({
         applicableCategories.push('Smart Crypto x-Bitcoin Rush');
       if (notes.startsWith('xBitcoin Bull-Run'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
-      if (notes.startsWith('xBitcoin Bull-Run-2'))
+      if (notes.startsWith('xBBitcoin Bull-Run-2'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
       if (notes.startsWith('xBitcoin Bull-Run-3'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
