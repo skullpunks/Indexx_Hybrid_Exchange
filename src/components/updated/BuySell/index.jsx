@@ -68,8 +68,7 @@ const BuySell = () => {
     const type = searchParams.get('type');
     const orderId = searchParams.get('orderId');
     const redirectFlag = localStorage.getItem('redirected');
-
-    console.log('type', type);
+    const successFlag = searchParams.get('success');
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
         if (res.status === 200) {
@@ -93,6 +92,10 @@ const BuySell = () => {
               `${orderData?.orderType} Order processed successfully`
             );
             setIsModalOpen(true);
+          } else if (orderData?.orderType === 'SmartCryptoBuy'){
+            navigate(
+              `/smart-crypto?orderId=${orderData?.orderId}&success=${successFlag}`
+            );
           } else {
             navigate(
               `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`

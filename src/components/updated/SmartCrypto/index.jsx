@@ -9,12 +9,16 @@ import wave from '../../../assets/updated/smartCrypto/Wave.png';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import GenericButton from '../shared/Button';
-import { getSmartCryptoPackages } from '../../../services/api';
+import {
+  decodeJWT,
+  getOrderDetails,
+  getSmartCryptoPackages,
+} from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import AllocationPopup from './AllocationPopup';
 import CreateAPlanPopup from './CreateAPlan';
 import CustomSelectBox from './CustomSelectBox';
-
+import { Link, useSearchParams } from 'react-router-dom';
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
 import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
 import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
@@ -444,6 +448,52 @@ const SmartCrypto = () => {
     fetchData();
   }, [category]);
 
+  const [orderID, setOrderId] = useState('');
+  const [orderData, setOrderData] = useState('');
+  const [orderId] = useSearchParams();
+  const [success] = useSearchParams();
+
+  useEffect(() => {
+    const orderIdParam = orderId.get('orderId');
+    const successParam = success.get('success');
+
+    // Ensure both orderId and success are available
+    if (orderIdParam && successParam) {
+      setOrderId(String(orderIdParam));
+      console.log('success', successParam);
+
+      if (successParam === 'true') {
+        setCongratulationsPopup(true);
+      } else {
+        setFailedPopup(true);
+      }
+
+      if (orderIdParam !== undefined) {
+        let access_token = String(localStorage.getItem('access_token'));
+        let decoded = decodeJWT(access_token);
+
+        getOrderDetails(decoded.email, String(orderIdParam)).then((res) => {
+          const userEmail = decoded.email;
+          const userKey = localStorage.getItem('userkey');
+          const userType = localStorage.getItem('userType');
+          console.log('userEmail', userEmail);
+          console.log('userKey', userKey);
+
+          console.log(res);
+          let orderData = res;
+          if (res.status === 200) {
+            console.log('orderData', orderData);
+            setOrderData(orderData.data);
+          }
+        });
+      }
+    } else {
+      console.log(
+        'Missing orderId or success parameter. Skipping state updates.'
+      );
+    }
+  }, [orderId, success]);
+
   useEffect(() => {
     setFilteredPackages(() => {
       const categoryFilters = {
@@ -754,6 +804,7 @@ const SmartCrypto = () => {
             category={'x-Bitcoin'}
             userSellPlanReformed={userSellPlanReformed}
             userSellPlan={userSellPlan}
+            orderData={orderData}
           />
         )}
         {failedPopup && (
