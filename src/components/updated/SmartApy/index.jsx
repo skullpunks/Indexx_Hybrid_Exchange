@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
-import smartApyImage from '../../../assets/updated/SmartApy/smartApyImage.png';
+import smartApyImage from '../../../assets/updated/SmartApy/smart-apy-image.png';
 import iusdLogo from '../../../assets/updated/SmartApy/iusdLogo.svg';
 import IconicHeader from '../shared/IconicHeader';
 import {
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
   },
   image: {
-    maxWidth: '100%',
+    maxWidth: '90%',
     height: 'auto',
   },
   imageOne: {
