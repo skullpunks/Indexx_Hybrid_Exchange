@@ -757,7 +757,7 @@ const PlanDetails = () => {
               </div>
               <div className={classes.cardDescription}>
                 <h4>Description:</h4>
-                <p>{pkg.description}</p>
+                <p>{pkg?.description}</p>
               </div>
               <div className={classes.buttonContainer}>
                 <GenericButton

@@ -15,6 +15,8 @@ import {
 } from '../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import GeneralPopup from '../BuySell/Popup';
+import PaymentMethodSelection from './SelectPaymentMethod';
+import Popup from './PaymentPopup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -261,6 +263,8 @@ const CreateAPlanPopup = ({
   const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
   const [currentPlanWithManagedBy, setCurrentPlanWithManagedBy] = useState('');
   const [currentNewPlanName, setCurrentNewPlanName] = useState('');
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
   const handleCheckboxChange = (e) => {
     setIsFeeAcknowledged(e.target.checked);
@@ -269,6 +273,16 @@ const CreateAPlanPopup = ({
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
+  };
+
+  const handleNewPopupClose = () => {
+    setPopupOpen(false);
+  };
+
+  const handlePaymentMethodSelect = (method) => {
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+    handleNewPopupClose();
   };
 
   const handleAmountChange = (e) => {
@@ -487,6 +501,7 @@ const CreateAPlanPopup = ({
 
   const confirmPayment = async () => {
     try {
+      console.log("paymentMethod", paymentMethod)
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
@@ -499,21 +514,23 @@ const CreateAPlanPopup = ({
         } else {
           console.log('Insufficient Balance');
           setGeneralMessage('Insufficient Balance');
-          setIsModalOpen(true);
+          setPopupMessage('Insufficient Balance');
+          setLoadings(false);
+          setShowPopup(true);
           return;
         }
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire transfer' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod =
-            paymentMethod === 'Wire transfer'
+            paymentMethod === 'Wire Transfer'
               ? 'wire'
               : paymentMethod === 'ACH'
               ? 'ACH'
@@ -691,6 +708,10 @@ const CreateAPlanPopup = ({
     setPopupMessage('');
   };
 
+  const handlePaymentMethodClick = async () => {
+    setPopupOpen(true);
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -773,9 +794,9 @@ const CreateAPlanPopup = ({
           )}
 
           {buttonTextName !== 'Switch Plan' && (
-            <>
+           <>
               {/* Payment Method Section */}
-              <div className={classes.selectTypeContainer}>
+              {/* <div className={classes.selectTypeContainer}>
                 <label>Select Payment Option</label>
                 <CustomSelectBox
                   items={[
@@ -789,6 +810,19 @@ const CreateAPlanPopup = ({
                   value={paymentMethod}
                   onChange={handleChange}
                   hasborder
+                />
+              </div> */}
+              {/* Pay with popup here... */}
+              <div style={{ width: '100%' }}>
+                <PaymentMethodSelection
+                  onClick={handlePaymentMethodClick}
+                  errorMsg={paymentMethodError}
+                  blueBorders={category === 'x-Blue'}
+                  yellowBorders={category !== 'x-Blue'}
+                  buttonText={
+                    selectedPaymentMethod || 'Select Transaction Method'
+                  }
+                  type={`${'Buy'}`}
                 />
               </div>
             </>
@@ -874,7 +908,7 @@ const CreateAPlanPopup = ({
               disabled={
                 buttonTextName === 'Switch Plan'
                   ? !isFeeAcknowledged
-                  : !usdAmount || usdAmount < 2500 || !paymentMethod
+                  : !usdAmount || usdAmount < 2500 || !paymentMethod || !selectedPaymentMethod
               } // Disable if invalid
               loading={loadings}
             />
@@ -888,6 +922,18 @@ const CreateAPlanPopup = ({
           width={popupMessage.length > 100 ? '600px' : '360px'}
         />
       )}
+    <div>
+        <Popup
+          open={popupOpen}
+          onClose={handleNewPopupClose}
+          amount={''}
+          onSelectPaymentMethod={handlePaymentMethodSelect}
+          type={`${'Buy'}`}
+          token={'inex'}
+          spendToken={'wibs'}
+          category={category}
+        />
+      </div>
     </div>
   );
 };

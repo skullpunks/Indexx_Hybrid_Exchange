@@ -26,6 +26,7 @@ const BSBuyInProgress: React.FC<Props> = ({ setScreenName }) => {
     const payAmount = parseFloat(searchParams.get("payAmount") || "0");
     const token = searchParams.get("token");
     const subscriptionId = searchParams.get("subscription_id");
+    const successFlag = searchParams.get('success');
 
     if (subscriptionId && token) {
       getPaypalSubscription(subscriptionId).then((res) => {
@@ -45,9 +46,14 @@ const BSBuyInProgress: React.FC<Props> = ({ setScreenName }) => {
             setOutAmt(orderData.breakdown.outAmount);
             setOutcurr(orderData.breakdown.outCurrencyName);
             setIsModalOpen(true);
-          } else {
+          } else if (orderData?.orderType === 'SmartCryptoBuy') {
             navigate(
-              `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`
+              `/smart-crypto?orderId=${orderData?.orderId}`
+            );
+          }
+          else {
+            navigate(
+              `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}&success=${successFlag}`
             );
           }
         }

@@ -192,6 +192,7 @@ const CongratulationsPopup = ({
   category,
   userSellPlanReformed,
   userSellPlan,
+  orderData,
 }) => {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -203,6 +204,15 @@ const CongratulationsPopup = ({
     if (planName.includes('Blooming')) return bloomingIcon;
     if (planName.includes('Bull-Run')) return bullRunIcon;
     if (planName.includes('Rush')) return rushIcon;
+  };
+
+  const getFormatedPlanName = (planName) => {
+    if (planName.includes('Surge')) return 'x-Blue Surge(Issa)';
+    if (planName.includes('Wave')) return 'x-Blue Wave(Issa)';
+    if (planName.includes('Ripple')) return 'x-Blue Rippe(Issa)';
+    if (planName.includes('Blooming')) return 'x-Bitcoin Blooming(Omkar)';
+    if (planName.includes('Bull-Run')) return 'x-Bitcoin Bull-Run(Omkar)';;
+    if (planName.includes('Rush')) return 'x-Bitcoin Rush(Omkar)';;
   };
 
   return (
@@ -231,15 +241,25 @@ const CongratulationsPopup = ({
             <img src={congratulationIcon} />
             <h2>Congratulations!</h2>
           </div>
-
-          <div className={classes.planDetails}>
-            <p>on purchasing the Smart Crypto</p>
-            <div className={classes.planNameRoot}>
-              <img src={getPlanImage(userSellPlan)} />
-              <p>{userSellPlanReformed}</p>
+          {orderData ? (
+            <div className={classes.planDetails}>
+              <p>on purchasing the Smart Crypto</p>
+              <div className={classes.planNameRoot}>
+                <img src={getPlanImage(orderData?.breakdown?.outCurrencyName)} />
+                <p>{getFormatedPlanName(orderData?.breakdown?.outCurrencyName)}</p>
+              </div>
+              <p style={{ fontSize: '20px' }}>worth ${orderData?.breakdown?.inAmount}.</p>
             </div>
-            <p style={{ fontSize: '20px' }}>worth $3,000.</p>
-          </div>
+          ) : (
+            <div className={classes.planDetails}>
+              <p>on purchasing the Smart Crypto</p>
+              <div className={classes.planNameRoot}>
+                <img src={getPlanImage(userSellPlan)} />
+                <p>{userSellPlanReformed}</p>
+              </div>
+              <p style={{ fontSize: '20px' }}>worth $3,000.</p>
+            </div>
+          )}
 
           <div style={{ textAlign: 'center' }}>
             <p>Note: To view your purchase, check your asset wallet.</p>
