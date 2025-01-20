@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // To extract the query parameter
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -69,6 +70,7 @@ const CustomTab = styled(Tab)(({ theme }) => ({
 
 const Account = () => {
   const theme = useTheme();
+  const location = useLocation(); // Access the query parameters
   const [captainBeeForm, setCaptainBeeForm] = useState(false);
 
   const tabsData = [
@@ -108,6 +110,15 @@ const Account = () => {
       key: '5',
     });
   }
+
+  // Extract `active` from the URL query parameters
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const activeTab = params.get('active');
+    if (activeTab === 'security') {
+      setSelectedTab(1); // Set tab 2 (index 1) as active
+    }
+  }, [location.search]);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
