@@ -217,7 +217,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const [paymentMethodError, setPaymentMethodError] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-const [popupOpen, setPopupOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
   const handleChange = (e) => {
@@ -457,11 +457,11 @@ const [popupOpen, setPopupOpen] = useState(false);
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod =
-          paymentMethod === 'Wire Transfer'
-            ? 'wire'
-            : paymentMethod === 'ACH'
-            ? 'ACH'
-            : String(paymentMethod).toLowerCase();
+            paymentMethod === 'Wire Transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );
@@ -841,7 +841,17 @@ const [popupOpen, setPopupOpen] = useState(false);
                   : classes.yellowButton
               }
               onClick={handleSubmit}
-              disabled={!usdAmount || usdAmount < 2500 || !paymentMethod} // Disable if invalid
+              disabled={
+                !planName ||
+                !usdAmount ||
+                usdAmount < 2500 ||
+                !paymentMethod ||
+                !selectedPaymentMethod ||
+                selectedCoins.reduce(
+                  (sum, coin) => sum + coin.percentage,
+                  0
+                ) !== 100
+              } // Disable if invalid
               loading={loadings}
             />
           </div>
