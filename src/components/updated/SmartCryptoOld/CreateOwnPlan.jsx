@@ -430,14 +430,14 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire transfer' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
           let selectedMethod =
-            paymentMethod === 'Wire transfer'
+            paymentMethod === 'Wire Transfer'
               ? 'wire'
               : paymentMethod === 'ACH'
               ? 'ACH'
