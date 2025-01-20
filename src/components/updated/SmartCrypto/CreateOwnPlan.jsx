@@ -25,6 +25,8 @@ import {
   validateUserEmail,
 } from '../../../services/api';
 import GeneralPopup from '../BuySell/Popup';
+import PaymentMethodSelection from './SelectPaymentMethod';
+import Popup from './PaymentPopup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -215,9 +217,21 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const [paymentMethodError, setPaymentMethodError] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);
+  };
+
+  const handleNewPopupClose = () => {
+    setPopupOpen(false);
+  };
+
+  const handlePaymentMethodSelect = (method) => {
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+    handleNewPopupClose();
   };
 
   useEffect(() => {
@@ -409,6 +423,10 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
     }
   };
 
+  const handlePaymentMethodClick = async () => {
+    setPopupOpen(true);
+  };
+
   const confirmPayment = async () => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
@@ -423,20 +441,27 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
         } else {
           console.log('Insufficient Balance');
           setGeneralMessage('Insufficient Balance');
-          setIsModalOpen(true);
+          setPopupMessage('Insufficient Balance');
+          setLoadings(false);
+          setShowPopup(true);
           return;
         }
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire transfer' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
-          let selectedMethod = String(paymentMethod).toLowerCase();
+          let selectedMethod =
+          paymentMethod === 'Wire Transfer'
+            ? 'wire'
+            : paymentMethod === 'ACH'
+            ? 'ACH'
+            : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );
@@ -768,22 +793,38 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
               />
             </div>
           </div>
-          <div className={classes.selectTypeContainer}>
-            <label>Select Payment Option</label>
-            <CustomSelectBox
-              items={[
-                { name: 'Credit Card', value: 'Credit Card' },
-                { name: 'Paypal', value: 'Paypal' },
-                { name: 'ACH', value: 'ACH' },
-                { name: 'Wire transfer', value: 'Wire transfer' },
-                { name: 'Zelle', value: 'Zelle' },
-                { name: 'TygoPay', value: 'TygoPay' },
-              ]}
-              value={paymentMethod}
-              onChange={handleChange}
-              hasborder
-            />
-          </div>
+          <>
+            {/* Payment Method Section */}
+            {/* <div className={classes.selectTypeContainer}>
+                <label>Select Payment Option</label>
+                <CustomSelectBox
+                  items={[
+                    { name: 'Credit Card', value: 'Credit Card' },
+                    { name: 'Paypal', value: 'Paypal' },
+                    { name: 'ACH', value: 'ACH' },
+                    { name: 'Wire transfer', value: 'Wire transfer' },
+                    { name: 'Zelle', value: 'Zelle' },
+                    { name: 'TygaPay', value: 'TygaPay' },
+                  ]}
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  hasborder
+                />
+              </div> */}
+            {/* Pay with popup here... */}
+            <div style={{ width: '100%' }}>
+              <PaymentMethodSelection
+                onClick={handlePaymentMethodClick}
+                errorMsg={paymentMethodError}
+                blueBorders={category === 'x-Blue'}
+                yellowBorders={category !== 'x-Blue'}
+                buttonText={
+                  selectedPaymentMethod || 'Select Transaction Method'
+                }
+                type={`${'Buy'}`}
+              />
+            </div>
+          </>
 
           <div className={classes.btnContainer}>
             <GenericButton
@@ -813,6 +854,19 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
           width={popupMessage.length > 100 ? '600px' : '360px'}
         />
       )}
+
+      <div>
+        <Popup
+          open={popupOpen}
+          onClose={handleNewPopupClose}
+          amount={''}
+          onSelectPaymentMethod={handlePaymentMethodSelect}
+          type={`${'Buy'}`}
+          token={'inex'}
+          spendToken={'wibs'}
+          category={category}
+        />
+      </div>
     </div>
   );
 };

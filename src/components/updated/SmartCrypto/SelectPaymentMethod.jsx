@@ -101,7 +101,7 @@ const PaymentMethodSelection = ({
                 ? ach
                 : buttonText === 'TygaPay'
                 ? tygpay
-                : buttonText === 'Wire'
+                : buttonText === 'Wire Transfer'
                 ? wireTransfer
                 : buttonText === 'USD'
                 ? usd

@@ -479,6 +479,7 @@ const CreateAPlanPopup = ({
 
   const confirmPayment = async () => {
     try {
+      console.log("paymentMethod", paymentMethod)
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
@@ -491,20 +492,27 @@ const CreateAPlanPopup = ({
         } else {
           console.log('Insufficient Balance');
           setGeneralMessage('Insufficient Balance');
-          setIsModalOpen(true);
+          setPopupMessage('Insufficient Balance');
+          setLoadings(false);
+          setShowPopup(true);
           return;
         }
       } else if (paymentMethod === 'TygaPay') {
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire transfer' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
-          let selectedMethod = String(paymentMethod).toLowerCase();
+          let selectedMethod =
+            paymentMethod === 'Wire Transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );
@@ -878,7 +886,7 @@ const CreateAPlanPopup = ({
               disabled={
                 buttonTextName === 'Switch Plan'
                   ? !isFeeAcknowledged
-                  : !usdAmount || usdAmount < 2500 || !paymentMethod
+                  : !usdAmount || usdAmount < 2500 || !paymentMethod || !selectedPaymentMethod
               } // Disable if invalid
               loading={loadings}
             />
