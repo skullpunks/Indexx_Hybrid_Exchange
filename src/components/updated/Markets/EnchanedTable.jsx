@@ -67,6 +67,10 @@ const EnhancedTable = ({
       'IN500',
       'IUSD+',
       'DaCrazy',
+      'ALCRYP',
+      'EQSTK',
+      'IUSDP',
+      'IUSD+'
     ];
 
     if (restrictedSymbols.includes(Symbol)) {
