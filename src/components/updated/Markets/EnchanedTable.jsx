@@ -11,7 +11,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Button } from '@mui/material';
+import GeneralPopup from '../BuySell/Popup';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,8 @@ const EnhancedTable = ({
   isLoading,
 }) => {
   const classes = useStyles();
-
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const filteredRows = useMemo(() => {
     if (Array.isArray(data)) {
       return data
@@ -61,6 +63,7 @@ const EnhancedTable = ({
       'INEX',
       'WIBS',
       'INXC',
+      'INXP',
       'IN500',
       'IUSD+',
       'DaCrazy',
@@ -69,6 +72,8 @@ const EnhancedTable = ({
     if (restrictedSymbols.includes(Symbol)) {
       // Do nothing if the symbol is in the restricted list
       console.log(`No redirect for token: ${Symbol}`);
+      setPopupMessage(`Chart for ${Symbol} coming soon!`);
+      setShowPopup(true);
       return;
     }
 
@@ -89,7 +94,6 @@ const EnhancedTable = ({
             key={row.Name}
             className={classes.hoverRow}
             sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-            onClick={() => handleRowClick(row.Symbol)}
           >
             <TableCell sx={{ borderBottom: 'none !important' }}>
               {showCoinImage ? (
@@ -117,6 +121,16 @@ const EnhancedTable = ({
             >
               {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
             </TableCell>
+            <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => handleRowClick(row.Symbol)}
+              >
+                View Chart
+              </Button>
+            </TableCell>
           </TableRow>
         );
       case 'All Market':
@@ -126,7 +140,6 @@ const EnhancedTable = ({
               key={`${row.Name}-USD`}
               className={classes.hoverRow}
               sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-              onClick={() => handleRowClick(row.Symbol)}
             >
               <TableCell sx={{ borderBottom: 'none !important' }}>
                 {row.Symbol}/USD
@@ -143,12 +156,21 @@ const EnhancedTable = ({
               >
                 {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
               </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleRowClick(row.Symbol)}
+                >
+                  View Chart
+                </Button>
+              </TableCell>
             </TableRow>
             <TableRow
               key={`${row.Name}-BTC`}
               className={classes.hoverRow}
               sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-              onClick={() => handleRowClick(row.Symbol)}
             >
               <TableCell sx={{ borderBottom: 'none !important' }}>
                 {row.Symbol}/BTC
@@ -165,12 +187,21 @@ const EnhancedTable = ({
               >
                 {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
               </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleRowClick(row.Symbol)}
+                >
+                  View Chart
+                </Button>
+              </TableCell>
             </TableRow>
             <TableRow
               key={`${row.Name}-ETH`}
               className={classes.hoverRow}
               sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-              onClick={() => handleRowClick(row.Symbol)}
             >
               <TableCell sx={{ borderBottom: 'none !important' }}>
                 {row.Symbol}/ETH
@@ -187,12 +218,21 @@ const EnhancedTable = ({
               >
                 {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
               </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleRowClick(row.Symbol)}
+                >
+                  View Chart
+                </Button>
+              </TableCell>
             </TableRow>
             <TableRow
               key={`${row.Name}-BNB`}
               className={classes.hoverRow}
               sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-              onClick={() => handleRowClick(row.Symbol)}
             >
               <TableCell sx={{ borderBottom: 'none !important' }}>
                 {row.Symbol}/BNB
@@ -209,6 +249,16 @@ const EnhancedTable = ({
               >
                 {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
               </TableCell>
+              <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleRowClick(row.Symbol)}
+                >
+                  View Chart
+                </Button>
+              </TableCell>
             </TableRow>
           </>
         );
@@ -218,7 +268,6 @@ const EnhancedTable = ({
             key={row.Symbol}
             className={classes.hoverRow}
             sx={{ cursor: 'pointer', borderBottom: 'none !important' }}
-            onClick={() => handleRowClick(row.Symbol)}
           >
             <TableCell
               sx={{
@@ -246,6 +295,16 @@ const EnhancedTable = ({
             >
               {row.Change >= 0 ? `+${row.Change}%` : `${row.Change}%`}
             </TableCell>
+            <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => handleRowClick(row.Symbol)}
+              >
+                View Chart
+              </Button>
+            </TableCell>
           </TableRow>
         );
       default:
@@ -253,6 +312,10 @@ const EnhancedTable = ({
     }
   };
 
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMessage('');
+  };
   if (isLoading) {
     return (
       <div className={classes.loading}>
@@ -283,6 +346,13 @@ const EnhancedTable = ({
           </TableBody>
         </Table>
       </TableContainer>
+      {showPopup && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopupClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
     </Box>
   );
 };

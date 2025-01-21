@@ -59,7 +59,7 @@ const Markets = () => {
   return (
     <div className={classes.root}>
       <div className={classes.container}>
-      <MarketsTable title="All Coins" data={gainers.concat(losers, volumes)} loading={loading} />
+        <MarketsTable title="All Coins" data={gainers.concat(losers, volumes)} loading={loading} />
         <MarketsTable title="Hot Coins" data={hotTokens} loading={loading} />
       </div>
       <div className={classes.container}>
