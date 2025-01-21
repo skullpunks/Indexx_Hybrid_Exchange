@@ -548,9 +548,9 @@ const HeaderTest = () => {
                                 style={{
                                   width: isCaptain ? '40px' : '50px',
                                   height: isCaptain ? '40px' : '60px',
-                                  backgroundImage: `url(${
-                                    isCaptain === true ? frame : beeframe
-                                  })`,
+                                  // backgroundImage: `url(${
+                                  //   isCaptain === true ? frame : beeframe
+                                  // })`,
                                   transform: !isCaptain ? 'rotate(-30deg)' : '',
                                   // backgroundImage: `url(${frame})`,
                                   backgroundRepeat: 'no-repeat',
@@ -565,6 +565,22 @@ const HeaderTest = () => {
                                   // border:"none"
                                 }}
                               >
+                                <div
+                                  style={{
+                                    width: isCaptain ? '40px' : '50px',
+                                    height: isCaptain ? '40px' : '60px',
+                                    position: 'absolute',
+                                    zIndex: '1',
+                                  }}
+                                >
+                                  <img
+                                    src={isCaptain === true ? frame : beeframe}
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                    }}
+                                  />
+                                </div>
                                 <div
                                   className={
                                     isCaptain ? 'bee-hexagon' : 'elipse-img'
@@ -841,11 +857,11 @@ const HeaderTest = () => {
                             >
                               <div
                                 style={{
-                                  width: isCaptain ? '50px' : '50px',
+                                  width: isCaptain ? '60px' : '50px',
                                   height: isCaptain ? '70px' : '60px',
-                                  backgroundImage: `url(${
-                                    isCaptain === true ? frame : beeframe
-                                  })`,
+                                  // backgroundImage: `url(${
+                                  //   isCaptain === true ? frame : beeframe
+                                  // })`,
                                   transform: !isCaptain ? 'rotate(-30deg)' : '',
                                   // backgroundImage: `url(${frame})`,
                                   backgroundRepeat: 'no-repeat',
@@ -860,6 +876,23 @@ const HeaderTest = () => {
                                   // border:"none"
                                 }}
                               >
+                                <div
+                                  style={{
+                                    width: isCaptain ? '60px' : '50px',
+                                    height: isCaptain ? '70px' : '60px',
+                                    position: 'absolute',
+                                    zIndex: '1',
+                                  }}
+                                >
+                                  <img
+                                    src={isCaptain === true ? frame : beeframe}
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                    }}
+                                  />
+                                </div>
+
                                 {!profileLoading && (
                                   <div
                                     className={
