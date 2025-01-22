@@ -1,18 +1,50 @@
 import { InfoCircleFilled } from '@ant-design/icons';
 import { Button, Input, Form } from 'antd';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { decodeJWT, changePassword } from '../../services/api';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { decodeJWT, changePassword, getCaptainBeeByEmail, loginWithToken } from '../../services/api';
 import OpenNotification from '../OpenNotification/OpenNotification';
 
 const SecurityChange = () => {
-  // const onFinish = (values: any) => {
-  //     
-  // }
   const [loadings, setLoadings] = useState<boolean>(false);
-
-  const navigate = useNavigate();
   const [isError, setError] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const defaultSignInToken = searchParams.get('signInToken');
+
+  useEffect(() => {
+    const redirectFlag = localStorage.getItem('redirected');
+    if (defaultSignInToken && !redirectFlag) {
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  const checkLogin = async (signInToken: string) => {
+    try {
+      const res = await loginWithToken(signInToken);
+      if (res.status === 200) {
+        const resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true');
+
+        if (resObj?.userType === 'CaptainBee') {
+          const resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+          const username = resObj2?.data.Username;
+          localStorage.setItem('username', username);
+        }
+        window.location.reload();
+      } else {
+        console.error('Login failed:', res.data);
+      }
+    } catch (err) {
+      console.error('Error during login:', err);
+    }
+  };
+
   const onFinish = async (values: any) => {
     const access_token = String(localStorage.getItem('access_token'));
     const decoded: any = decodeJWT(access_token);
