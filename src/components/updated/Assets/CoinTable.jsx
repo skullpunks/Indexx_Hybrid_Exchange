@@ -169,6 +169,8 @@ export default function EnhancedTable({
   const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
   const [userSellPlan, setUserPlanName] = useState('');
   const [CongratulationsPopup, setCongratulationsPopup] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState([]); // Track expanded categories
+
   console.log('onPlanChange', onPlanChange);
   useEffect(() => {
     const user = localStorage.getItem('userType');
@@ -324,6 +326,7 @@ export default function EnhancedTable({
             coinNetwork: item.coinNetwork,
             hasSmartCryptoNote: hasSmartCryptoNote, // Store flag for smart crypto
             notes: item.notes ? item.notes : '',
+            amountInvested: item?.amountInvested ? item?.amountInvested : 0,
           };
         });
 
@@ -650,6 +653,17 @@ export default function EnhancedTable({
     return percentageMap[coin] || originalPercentage; // Use the coin's specific percentage if available, otherwise fallback to the original
   };
 
+  // Function to toggle expansion of a category
+  const toggleCategory = (category) => {
+    console.log('category', category);
+    setExpandedCategories(
+      (prev) =>
+        prev.includes(category)
+          ? prev.filter((cat) => cat !== category) // Collapse category
+          : [...prev, category] // Expand category
+    );
+  };
+
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <TableContainer>
@@ -710,25 +724,49 @@ export default function EnhancedTable({
                       colSpan={isMobile ? 1 : 2}
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
-                      Estimated Value: 300
+                      Estimated Value: $
+                      {group.rows
+                        .reduce(
+                          (total, row) => total + row.amount * row.coin_price,
+                          0
+                        )
+                        .toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </TableCell>
                     <TableCell
                       colSpan={isMobile ? 2 : 2}
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
-                      Invested Amount : 200
+                      Invested Amount: $
+                      {group.rows
+                        .reduce((total, row) => total + row.amountInvested, 0)
+                        .toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </TableCell>
                     <TableCell
                       colSpan={isMobile ? 2 : 2}
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
-                      Total Value: 1,000,000
+                      Total Value: $
+                      {group.rows
+                        .reduce(
+                          (total, row) => total + row.amount * row.coin_price,
+                          0
+                        )
+                        .toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </TableCell>
                   </TableRow>
                 )}
 
                 {/* Rows for each category */}
-                {group.category.includes('Coins') || true ? (
+                {group.category.includes('Coins') ? (
                   group.rows.map((row, index) => (
                     <TableRow
                       key={row.id}
@@ -870,17 +908,129 @@ export default function EnhancedTable({
                               background: 'none',
                             },
                           }}
-                          onClick={() => {}}
+                          onClick={() => toggleCategory(group.category)} // Toggle category rows
                         >
-                          See Details
+                          {expandedCategories.includes(group.category)
+                            ? 'Hide Details'
+                            : 'See Details'}
                         </Button>
                       </div>
                     </TableCell>
                   </TableRow>
                 )}
 
+                {/* Render rows conditionally */}
+                {expandedCategories.includes(group.category) &&
+                  group.rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{
+                        borderBottom: 'none !important',
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="none"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        <ListItem
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            paddingLeft: 0,
+                            '&:hover': {
+                              background: 'transparent !important',
+                            },
+                          }}
+                        >
+                          <ListItemAvatar>
+                            <Avatar>
+                              <Avatar
+                                alt={`${row.coin}`}
+                                src={getImage(row?.coin)}
+                              />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={row.coin}
+                            secondary={`ID: ${row.id}`}
+                          />
+                        </ListItem>
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {new Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 6,
+                        }).format(row.amount)}{' '}
+                        / $
+                        {row.coin === 'USD'
+                          ? row.amount.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })
+                          : (row.amount * row.coin_price).toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }
+                            )}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ borderBottom: 'none !important' }}
+                      >
+                        {new Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 6,
+                        }).format(row.staking_balance)}{' '}
+                        / $
+                        {(row.staking_balance * row.coin_price).toLocaleString(
+                          undefined,
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                        )}
+                      </TableCell>
+
+                      {!isMobile && (
+                        <>
+                          <TableCell
+                            align="right"
+                            sx={{ borderBottom: 'none !important' }}
+                          >
+                            {row.coin === 'WIBS' || row.coin === 'DaCrazy'
+                              ? row.coin_price.toFixed(5)
+                              : row.coin_price.toFixed(2)}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ borderBottom: 'none !important' }}
+                            className={
+                              row.todayPNL
+                                ? row.todayPNL.isPositive
+                                  ? classes.greenText
+                                  : classes.redText
+                                : ''
+                            }
+                          >
+                            {row.todayPNL
+                              ? // Adjust percentage based on coin type
+                                `${row.todayPNL.value} (${getAdjustedPercentage(
+                                  row.coin,
+                                  row.todayPNL.percentage
+                                )}%)`
+                              : '0.00'}
+                          </TableCell>
+                        </>
+                      )}
+                    </TableRow>
+                  ))}
+
                 {/* Total Row - Only display for non-'Coins' categories */}
-                {group.category !== 'Coins' && group.rows.length > 0 && (
+                {group.category.includes('Coins') && group.rows.length > 0 && (
                   <TableRow>
                     <TableCell
                       colSpan={isMobile ? 3 : 5}
