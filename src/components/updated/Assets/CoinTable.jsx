@@ -36,6 +36,19 @@ const useStyles = makeStyles((theme) => ({
   redText: {
     color: `${theme.palette.error.main} !important`,
   },
+  flexContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  orderFirstOnTab: {
+    [theme.breakpoints.down('md')]: {
+      order: '-1',
+    },
+  },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -704,6 +717,29 @@ export default function EnhancedTable({
                     </TableCell>
                   </TableRow>
                 )}
+                {!group.category.includes('Coins') && (
+                  <TableRow sx={{ borderBottom: 'none !important' }}>
+                    <TableCell
+                      colSpan={isMobile ? 1 : 2}
+                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
+                    >
+                      Estimated Value: 300
+                    </TableCell>
+                    <TableCell
+                      colSpan={isMobile ? 1 : 2}
+                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
+                    >
+                      Invested Amount : 200
+                    </TableCell>
+                    <TableCell
+                      colSpan={isMobile ? 1 : 2}
+                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
+                    >
+                      Total Value: 1,000,000
+                    </TableCell>
+                  </TableRow>
+                )}
+
                 {/* Rows for each category */}
                 {group.rows.map((row, index) => (
                   <TableRow
@@ -849,29 +885,85 @@ export default function EnhancedTable({
                   calculateTotal(group.rows).totalAmount > 0 && (
                     <TableRow>
                       <TableCell colSpan={isMobile ? 3 : 5}>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: '15px',
-                            alignItems: 'center',
-                            width: '100%',
-                          }}
-                        >
-                          <Button
-                            variant="outlined"
-                            sx={{
-                              maxWidth: '250px',
+                        <div className={classes.flexContainer}>
+                          <div></div>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              gap: '15px',
+                              alignItems: 'center',
                               width: '100%',
-                              color:
-                                userType === 'Indexx Exchange'
-                                  ? theme.palette.primary.main
-                                  : '#FFA500',
-                              borderColor:
-                                userType === 'Indexx Exchange'
-                                  ? theme.palette.primary.main
-                                  : '#FFA500',
-                              '&:hover': {
+                            }}
+                          >
+                            <Button
+                              sx={{
+                                maxWidth: '150px',
+                                width: '100%',
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor: 'none',
+                                '&:hover': {
+                                  color:
+                                    userType === 'Indexx Exchange'
+                                      ? theme.palette.primary.main
+                                      : '#FFA500',
+                                  borderColor: 'none',
+                                  opacity: '.7',
+                                  background: 'none',
+                                },
+                              }}
+                              onClick={() => {
+                                setupdatePlanMode(true);
+                                console.log(
+                                  'group.categorygroup.category',
+                                  group.category,
+                                  group.rows[0].notes
+                                );
+                                onPlanChange(group.rows[0].notes, group);
+                              }}
+                            >
+                              Switch Plan
+                            </Button>
+                            <Button
+                              sx={{
+                                maxWidth: '150px',
+                                width: '100%',
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor: 'none',
+                                '&:hover': {
+                                  color:
+                                    userType === 'Indexx Exchange'
+                                      ? theme.palette.primary.main
+                                      : '#FFA500',
+                                  borderColor: 'none',
+                                  opacity: '.7',
+                                  background: 'none',
+                                },
+                              }}
+                              onClick={() => {
+                                setSellConfirmationPopup(true);
+                                setPlanName(group.rows[0].notes);
+                                localStorage.setItem(
+                                  'SellPlanCurrencies',
+                                  JSON.stringify(group)
+                                );
+                              }}
+                            >
+                              Sell Plan
+                            </Button>
+                          </div>
+                          <div className={classes.orderFirstOnTab}>
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                minWidth: '250px',
+                                width: '100%',
                                 color:
                                   userType === 'Indexx Exchange'
                                     ? theme.palette.primary.main
@@ -880,59 +972,26 @@ export default function EnhancedTable({
                                   userType === 'Indexx Exchange'
                                     ? theme.palette.primary.main
                                     : '#FFA500',
-                                opacity: '.7',
-                                background: 'none',
-                              },
-                            }}
-                            onClick={() => {
-                              setupdatePlanMode(true);
-                              console.log(
-                                'group.categorygroup.category',
-                                group.category,
-                                group.rows[0].notes
-                              );
-                              onPlanChange(group.rows[0].notes, group);
-                            }}
-                          >
-                            Switch Plan
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            sx={{
-                              maxWidth: '250px',
-                              width: '100%',
-                              color:
-                                userType === 'Indexx Exchange'
-                                  ? theme.palette.primary.main
-                                  : '#FFA500',
-                              borderColor:
-                                userType === 'Indexx Exchange'
-                                  ? theme.palette.primary.main
-                                  : '#FFA500',
-                              '&:hover': {
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                borderColor:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                opacity: '.7',
-                                background: 'none',
-                              },
-                            }}
-                            onClick={() => {
-                              setSellConfirmationPopup(true);
-                              setPlanName(group.rows[0].notes);
-                              localStorage.setItem(
-                                'SellPlanCurrencies',
-                                JSON.stringify(group)
-                              );
-                            }}
-                          >
-                            Sell Plan
-                          </Button>
+                                '&:hover': {
+                                  color:
+                                    userType === 'Indexx Exchange'
+                                      ? theme.palette.primary.main
+                                      : '#FFA500',
+                                  borderColor:
+                                    userType === 'Indexx Exchange'
+                                      ? theme.palette.primary.main
+                                      : '#FFA500',
+                                  opacity: '.7',
+                                  background: 'none',
+                                },
+                              }}
+                              onClick={() => {
+                                navigate('/smart-crypto');
+                              }}
+                            >
+                              Invest In New Package
+                            </Button>
+                          </div>
                         </div>
                       </TableCell>
                     </TableRow>

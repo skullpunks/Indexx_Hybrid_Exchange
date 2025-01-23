@@ -727,6 +727,10 @@ export const auth_header_data_asset_wallet = [
             href: '/indexx-exchange/account',
           },
           {
+            name: 'Change Password',
+            href: '/indexx-exchange/change-password',
+          },
+          {
             name: 'KYC',
             href: '/indexx-exchange/account',
           },

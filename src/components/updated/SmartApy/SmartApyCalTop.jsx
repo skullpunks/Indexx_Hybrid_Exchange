@@ -370,27 +370,6 @@ const SmartApyTop = ({ onStakeSuccess }) => {
             <label className={classes.label}>
               Balance: {formatPrice(selectedTokenBalance)}
             </label>
-            <div className={classes.selectTypeContainer}>
-              <label>Investment Tier</label>
-              <CustomSelectBox
-                items={[
-                  { name: 'Bronze', value: 'Bronze' },
-                  {
-                    name: 'Silver',
-                    value: 'Silver',
-                  },
-
-                  {
-                    name: 'Gold',
-                    value: 'Gold',
-                  },
-                ]}
-                value={value}
-                onChange={handleChange}
-                hasborder
-              />
-            </div>
-
             <InputField
               label="Enter amount"
               type="text"
@@ -417,11 +396,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
                   (period) => (
                     <GenericButton
                       key={period}
-                      text={`${period} (${
-                        period === '6 Months'
-                          ? `${selectedToken?.stakingPercentage6months} %`
-                          : `${selectedToken?.stakingPercentage1year} %`
-                      })`}
+                      text={`${period}`}
                       onClick={() => handleButtonClick(period)}
                       className={
                         activeButton === period
@@ -463,7 +438,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
           </div>
           <div className={classes.buttonContainer}>
             <GenericButton
-              text="Buy token"
+              text="Buy IUSD+"
               className={classes.inactiveButton}
               onClick={() => navigate('/update/home?buyToken=IUSD%2B')}
             />
