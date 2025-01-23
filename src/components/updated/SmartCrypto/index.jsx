@@ -186,7 +186,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('md')]: {
       width: '100%', // Wider view on tablets and desktops
-      margin: '100px auto', // Centered alignment
+      margin: '100px auto 20px auto', // Centered alignment
     },
   },
   video: {
@@ -272,6 +272,24 @@ const useStyles = makeStyles((theme) => ({
     '& p': {
       fontSize: '14px',
       marginBottom: '50px',
+      maxWidth: '700px',
+    },
+  },
+  testimonialRoot: {
+    margin: '200px 0px',
+    '& h3': {
+      fontSize: '48px',
+      marginBottom: '20px',
+      fontWeight: '500',
+    },
+    '& p': {
+      fontSize: '14px',
+      marginBottom: '50px',
+      maxWidth: '700px',
+    },
+    '& .videoContainer': {
+      maxWidth: '1280px',
+      margin: 'auto',
     },
   },
   plusContainer: {
@@ -650,7 +668,13 @@ const SmartCrypto = () => {
         </div>
         <div className={classes.cardRoot}>
           <h3 id="get-to-know">Get to know Smart Crypto</h3>
-          <p>We offers two exclusive strategies, x-Blue, x-Bitcoin </p>
+          <p>
+            Indexx Smart crypto is an AI self driving, hands off Vehicle of
+            future money investment, taking you to a successful crypto paradise.
+            We offer two exclusive investment options: x-Blue and x-Bitcoin,
+            both carefully crafted to boost your portfolio’s performance. Choose
+            one and watch your investment grow{' '}
+          </p>
           <div className={classes.cardContainer}>
             <div className={classes.card}>
               <div className={classes.imgContainer}>
@@ -740,6 +764,54 @@ const SmartCrypto = () => {
                 <img src={plusIcon} />
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className={classes.testimonialRoot}>
+          <h3 id="get-to-know">Hear it from the investors</h3>
+          <p>
+            Hear the success stories of investors who achieved their goals with
+            Indexx Smart Crypto. Discover how our AI-driven platform has
+            transformed their investments into profitable journeys.
+          </p>
+          <div style={{ maxWidth: '1200px', margin: 'auto' }}>
+            <div className={classes.videoContainer}>
+              <iframe
+                className={classes.video}
+                src="https://www.youtube.com/embed/aPrWpQgKvRQ?si=SXZbK7oGc22fTrx5"
+                title="Embedded YouTube Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <h3
+              style={{
+                fontSize: '46px',
+                textAlign: 'center',
+                marginBottom: '150px',
+              }}
+            >
+              Tony Banks
+            </h3>
+            <div className={classes.videoContainer}>
+              <iframe
+                className={classes.video}
+                src="https://www.youtube.com/embed/nQkR9Rccu6U?si=U71I1-8Z29BRinkI"
+                title="Embedded YouTube Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <h3
+              style={{
+                fontSize: '46px',
+                textAlign: 'center',
+              }}
+            >
+              Rod Fowler
+            </h3>
           </div>
         </div>
         <div className={classes.faqContainer}>

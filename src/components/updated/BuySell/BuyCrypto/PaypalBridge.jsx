@@ -37,12 +37,15 @@ const useStyles = makeStyles((theme) => ({
   },
   welcomeText: {
     fontSize: '36px',
+    marginBottom: '10px',
     fontWeight: '500',
     color: theme.palette.text.primary,
-    marginBottom: '20px',
     [theme.breakpoints.down('sm')]: {
       fontSize: '28px',
     },
+  },
+  welcomeDescription: {
+    marginBottom: '20px',
   },
   instructionsText: {
     fontSize: '24px',
@@ -93,6 +96,9 @@ const PaypalBridge = () => {
       <img src={partnershipFirst} alt="Example" className={classes.image} />
 
       <p className={classes.welcomeText}>Welcome to our Partnership</p>
+      <p className={classes.welcomeDescription}>
+        Through this partnership, PayPal will manage payments for indexx
+      </p>
       <img
         src={theme.palette.mode === 'dark' ? partnershipDark : partnershipLight}
         alt="Example"
@@ -115,7 +121,7 @@ const PaypalBridge = () => {
         <p variant="body1">
           2.Please Click on{' '}
           <span className={classes.cardPaymentButton}>
-            Pay with a Bank Account Credit Card
+            Pay with a Bank Account or Credit Card
           </span>{' '}
           on the payment page to proceed with debit card payment.
         </p>

@@ -233,15 +233,14 @@ export default function IconicHeader({ selectedTab, onChange }) {
         light: userType === 'Indexx Exchange' ? giftDark : giftHive,
         dark: userType === 'Indexx Exchange' ? giftLight : giftHive,
         path: '/redeem/create-card',
-      },
-
-      {
-        label: 'Asset Wallet',
-        light: userType === 'Indexx Exchange' ? assetLight : assetHive,
-        dark: userType === 'Indexx Exchange' ? assetDark : assetHive,
-        path: '/wallet/overview',
       }
     );
+    tabsData.unshift({
+      label: 'Asset Wallet',
+      light: userType === 'Indexx Exchange' ? assetLight : assetHive,
+      dark: userType === 'Indexx Exchange' ? assetDark : assetHive,
+      path: '/wallet/overview',
+    });
   }
 
   if (userType !== 'Indexx Exchange') {
