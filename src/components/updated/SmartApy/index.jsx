@@ -203,11 +203,6 @@ const SmartAPY = () => {
     { duration: '12 months', growth: '30%', action: 'Invest' },
     { duration: '18 months', growth: '40%', action: 'Invest' },
   ];
-  const investmentTiersRows = [
-    { tier: 'Bronze', investmentRange: '$5,000 -$10,000', action: 'Invest' },
-    { tier: 'Silver', investmentRange: '$11,000-$100,000', action: 'Invest' },
-    { tier: 'Gold', investmentRange: '$110,000+', action: 'Invest' },
-  ];
 
   return (
     <div className={classes.root}>
@@ -352,7 +347,7 @@ const SmartAPY = () => {
         </TableContainer>
       </div>
 
-      <div className={classes.investPlanContainer}>
+      {/* <div className={classes.investPlanContainer}>
         <h2>Investment Tiers</h2>
         <p style={{ maxWidth: '700px', width: '100%' }}>
           Boost your returns with flexible investment options crafted to align
@@ -390,7 +385,7 @@ const SmartAPY = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </div> */}
 
       <div className={classes.disclaimerRoot}>
         <div
