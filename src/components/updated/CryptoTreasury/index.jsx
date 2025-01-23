@@ -145,7 +145,7 @@ const CryptoTreasury = () => {
             height="100"
           />
           <h3>Smart Crypto</h3>
-          <p>Maximize your rewards by investing your IUSD+</p>
+          <p>A Hands-off, autopilot investment vehicle</p>
           <Button
             variant="outlined"
             className={classes.button}
