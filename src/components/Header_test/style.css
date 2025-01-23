@@ -325,6 +325,7 @@ nav .wrapper {
   #WallStreet:checked ~ .mega-box,
   #Affiliate:checked ~ .mega-box,
   #Elite\ Club:checked ~ .mega-box,
+  #Crypto\ Treasury:checked ~ .mega-box,
   #Company:checked ~ .mega-box,
   #profile:checked ~ .mega-box,
   #Exchange:checked ~ .mega-box {

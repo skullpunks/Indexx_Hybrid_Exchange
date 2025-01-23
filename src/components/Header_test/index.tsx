@@ -4,16 +4,14 @@ import greetingCard from '../../assets/header-icons/sec_header_greeting.svg';
 import logo from '../../assets/header-icons/new indexx.ai logo.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
+import CrossIconNew from '../../assets/updated/cross_white.png';
 
 import Fantasy_Lotto from '../../assets/BSheader/fantasy.png';
 import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 import { auth_header_data, auth_header_data_asset_wallet } from './data';
 import header_data from './data';
-// import { Button } from 'react-bootstrap';
-// import { BellOutlined } from "@ant-design/icons";
 
-// import { Dropdown } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -394,7 +392,7 @@ const HeaderTest = () => {
             <input type="radio" name="slider" id="close-btn" />
             <ul className="nav-links" style={{ flex: 1 }}>
               <label htmlFor="close-btn" className="btn close-btn">
-                x
+                <img src={CrossIconNew} alt="cross icon " />
               </label>
               {isMobile &&
                 auth_header_data
