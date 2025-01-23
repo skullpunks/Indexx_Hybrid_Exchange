@@ -738,42 +738,45 @@ export default function EnhancedTable({
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
                       Estimated Value: $
-                      {group.rows
-                        .reduce(
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(
+                        group.rows.reduce(
                           (total, row) => total + row.amount * row.coin_price,
                           0
                         )
-                        .toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                      )}
                     </TableCell>
                     <TableCell
                       colSpan={isMobile ? 2 : 2}
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
                       Invested Amount: $
-                      {group.rows
-                        .reduce((total, row) => total + row.amountInvested, 0)
-                        .toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(
+                        group.rows.reduce(
+                          (total, row) => total + row.amountInvested,
+                          0
+                        )
+                      )}
                     </TableCell>
                     <TableCell
                       colSpan={isMobile ? 2 : 2}
                       sx={{ fontSize: '22px', borderBottom: 'none !important' }}
                     >
                       Total Value: $
-                      {group.rows
-                        .reduce(
+                      {new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(
+                        group.rows.reduce(
                           (total, row) => total + row.amount * row.coin_price,
                           0
                         )
-                        .toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                      )}
                     </TableCell>
                   </TableRow>
                 )}
