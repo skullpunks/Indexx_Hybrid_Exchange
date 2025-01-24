@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
+    maxWidth: '1100px',
+    width: '100%',
+    '&>div': { flex: 1 },
     gap: '20px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
@@ -102,11 +105,10 @@ const useStyles = makeStyles((theme) => ({
   buttonTabContainer: {
     display: 'flex',
     gap: '15px',
+    flexDirection: 'column',
     marginBottom: '15px',
-
-    flexWrap: 'wrap',
     '& > button': {
-      maxWidth: '205px',
+      width: '100%',
     },
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
@@ -178,8 +180,8 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [stakingtype, setStakingtype] = useState('token');
   const [token, setToken] = useState('INEX');
   const [selectedToken, setSelectedToken] = useState({
-    title: 'IUSD+',
-    image: 'IUSD+',
+    title: 'USD',
+    image: 'USD',
     stakingPercentage6months: 6,
     stakingPercentage1year: 15,
     chain: 'Binance Smart Chain',
@@ -367,9 +369,6 @@ const SmartApyTop = ({ onStakeSuccess }) => {
       <div className={classes.container}>
         <div className={classes.item}>
           <div className={classes.balanceContainer}>
-            <label className={classes.label}>
-              Balance: {formatPrice(selectedTokenBalance)}
-            </label>
             <InputField
               label="Enter amount"
               type="text"
@@ -437,11 +436,11 @@ const SmartApyTop = ({ onStakeSuccess }) => {
             </div>
           </div>
           <div className={classes.buttonContainer}>
-            <GenericButton
+            {/* <GenericButton
               text="Buy IUSD+"
               className={classes.inactiveButton}
               onClick={() => navigate('/update/home?buyToken=IUSD%2B')}
-            />
+            /> */}
             <GenericButton
               text="View all Plans"
               className={classes.inactiveButton}
