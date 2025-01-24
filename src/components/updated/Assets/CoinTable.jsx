@@ -576,8 +576,26 @@ export default function EnhancedTable({
       });
     }
 
-    // Transform categories into an array of objects for structured output
-    const organizedRows = Object.keys(categories).map((category) => ({
+    // Sort the categories based on priority: xBitcoin first, xBlue second, Other Coins last
+    const categoryPriority = [
+      'Other Coins',
+      'Smart Crypto x-Bitcoin Blooming',
+      'Smart Crypto x-Bitcoin Rush',
+      'Smart Crypto x-Bitcoin Bull-Run',
+      'Smart Crypto x-Bitcoin Bull-Run-2',
+      'Smart Crypto x-Bitcoin Bull-Run-3',
+      'Smart Crypto x-Bitcoin Bitcoin',
+      'Smart Crypto x-Blue Wave',
+      'Smart Crypto x-Blue Surge',
+      'Smart Crypto x-Blue Ripple',
+    ];
+
+    const sortedCategories = Object.keys(categories).sort(
+      (a, b) => categoryPriority.indexOf(a) - categoryPriority.indexOf(b)
+    );
+
+    // Transform sorted categories into an array of objects for structured output
+    const organizedRows = sortedCategories.map((category) => ({
       category,
       rows: categories[category],
     }));
@@ -692,509 +710,585 @@ export default function EnhancedTable({
             isMobile={isMobile}
           />
           <TableBody>
-            {organizedRows.map((group, groupIndex) => (
-              <>
-                {/* Orange Separator */}
-                {groupIndex > 0 && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={isMobile ? 3 : 5}
-                      sx={{
-                        borderBottom: `1px solid ${
-                          userType === 'Indexx Exchange'
-                            ? theme.palette.primary.main
-                            : '#FFA500'
-                        }`,
-                      }}
-                    />
-                  </TableRow>
-                )}
-                {/* Category Heading */}
-                {!group.category.includes('Coins') && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={isMobile ? 3 : 5}
-                      sx={{
-                        borderBottom: 'none',
-                        fontWeight: 'bold',
-                        color:
-                          userType === 'Indexx Exchange'
-                            ? theme.palette.primary.main
-                            : '#FFA500',
-                        textAlign: 'center',
-                      }}
-                    >
-                      {group.category}{' '}
-                      {group.rows.length > 0 &&
-                        // Display formatted category names once per group
-                        getFormattedCategory(group.rows[0].notes)}
-                    </TableCell>
-                  </TableRow>
-                )}
-                {!group.category.includes('Coins') && (
-                  <TableRow sx={{ borderBottom: 'none !important' }}>
-                    <TableCell
-                      colSpan={isMobile ? 1 : 2}
-                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
-                    >
-                      Estimated Value: $
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(
-                        group.rows.reduce(
-                          (total, row) => total + row.amount * row.coin_price,
-                          0
-                        )
-                      )}
-                    </TableCell>
-                    <TableCell
-                      colSpan={isMobile ? 2 : 2}
-                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
-                    >
-                      Invested Amount: $
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(
-                        group.rows.reduce(
-                          (total, row) => total + row.amountInvested,
-                          0
-                        )
-                      )}
-                    </TableCell>
-                    <TableCell
-                      colSpan={isMobile ? 2 : 2}
-                      sx={{ fontSize: '22px', borderBottom: 'none !important' }}
-                    >
-                      Total Value: $
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(
-                        group.rows.reduce(
-                          (total, row) => total + row.amount * row.coin_price,
-                          0
-                        )
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )}
+            {(() => {
+              let hasRenderedXBitcoin = false;
+              let hasRenderedXBlue = false;
 
-                {/* Rows for each category */}
-                {group.category.includes('Coins') ? (
-                  group.rows.map((row, index) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{
-                        borderBottom: 'none !important',
-                      }}
-                    >
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        <ListItem
+              return organizedRows.map((group, groupIndex) => (
+                <React.Fragment key={groupIndex}>
+                  {/* Render xBitcoin Heading */}
+                  {group.category.includes('x-Bitcoin') &&
+                    !hasRenderedXBitcoin && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5}
                           sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            paddingLeft: 0,
-                            '&:hover': {
-                              background: 'transparent !important',
-                            },
-                          }}
-                        >
-                          <ListItemAvatar>
-                            <Avatar>
-                              <Avatar
-                                alt={`${row.coin}`}
-                                src={getImage(row?.coin)}
-                              />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={row.coin}
-                            secondary={`ID: ${row.id}`}
-                          />
-                        </ListItem>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 6,
-                        }).format(row.amount)}{' '}
-                        / $
-                        {row.coin === 'USD'
-                          ? row.amount.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })
-                          : (row.amount * row.coin_price).toLocaleString(
-                              undefined,
-                              {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }
-                            )}
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 6,
-                        }).format(row.staking_balance)}{' '}
-                        / $
-                        {(row.staking_balance * row.coin_price).toLocaleString(
-                          undefined,
-                          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                        )}
-                      </TableCell>
-
-                      {!isMobile && (
-                        <>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                          >
-                            {row.coin === 'WIBS' || row.coin === 'DaCrazy'
-                              ? row.coin_price.toFixed(5)
-                              : row.coin_price.toFixed(2)}
-                          </TableCell>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                            className={
-                              row.todayPNL
-                                ? row.todayPNL.isPositive
-                                  ? classes.greenText
-                                  : classes.redText
-                                : ''
-                            }
-                          >
-                            {row.todayPNL
-                              ? // Adjust percentage based on coin type
-                                `${row.todayPNL.value} (${getAdjustedPercentage(
-                                  row.coin,
-                                  row.todayPNL.percentage
-                                )}%)`
-                              : '0.00'}
-                          </TableCell>
-                        </>
-                      )}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={isMobile ? 3 : 5}
-                      sx={{ border: 'none !impoprtant' }}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          gap: '15px',
-                          alignItems: 'center',
-                          width: '100%',
-                        }}
-                      >
-                        <Button
-                          sx={{
-                            maxWidth: '250px',
-                            width: '100%',
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            fontSize: '24px',
                             color:
                               userType === 'Indexx Exchange'
                                 ? theme.palette.primary.main
                                 : '#FFA500',
-                            borderColor: 'none',
-                            '&:hover': {
+                            textAlign: 'center',
+                          }}
+                        >
+                          Smart Crypto xBitcoin
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  {group.category.includes('x-Bitcoin') &&
+                    (hasRenderedXBitcoin = true)}
+
+                  {/* Render xBlue Heading */}
+                  {group.category.includes('x-Blue') && !hasRenderedXBlue && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5}
+                        sx={{
+                          borderBottom: 'none',
+                          fontWeight: 'bold',
+                          fontSize: '24px',
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
+                          textAlign: 'center',
+                        }}
+                      >
+                        Smart Crypto xBlue
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {group.category.includes('x-Blue') &&
+                    (hasRenderedXBlue = true)}
+
+                  {/* Orange Separator */}
+                  {groupIndex > 0 && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5}
+                        sx={{
+                          borderBottom: `1px solid ${
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500'
+                          }`,
+                        }}
+                      />
+                    </TableRow>
+                  )}
+                  {/* Category Heading */}
+                  {!group.category.includes('Coins') && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5}
+                        sx={{
+                          borderBottom: 'none',
+                          fontWeight: 'bold',
+                          color:
+                            userType === 'Indexx Exchange'
+                              ? theme.palette.primary.main
+                              : '#FFA500',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {group.category}{' '}
+                        {group.rows.length > 0 &&
+                          // Display formatted category names once per group
+                          getFormattedCategory(group.rows[0].notes)}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {!group.category.includes('Coins') && (
+                    <TableRow sx={{ borderBottom: 'none !important' }}>
+                      <TableCell
+                        colSpan={isMobile ? 1 : 2}
+                        sx={{
+                          fontSize: '22px',
+                          borderBottom: 'none !important',
+                        }}
+                      >
+                        Estimated Value: $
+                        {new Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }).format(
+                          group.rows.reduce(
+                            (total, row) => total + row.amount * row.coin_price,
+                            0
+                          )
+                        )}
+                      </TableCell>
+                      <TableCell
+                        colSpan={isMobile ? 2 : 2}
+                        sx={{
+                          fontSize: '22px',
+                          borderBottom: 'none !important',
+                        }}
+                      >
+                        Invested Amount: $
+                        {new Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }).format(
+                          group.rows.reduce(
+                            (total, row) => total + row.amountInvested,
+                            0
+                          )
+                        )}
+                      </TableCell>
+                      <TableCell
+                        colSpan={isMobile ? 2 : 2}
+                        sx={{
+                          fontSize: '22px',
+                          borderBottom: 'none !important',
+                        }}
+                      >
+                        Total Value: $
+                        {new Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }).format(
+                          group.rows.reduce(
+                            (total, row) =>
+                              total +
+                              row.amount * row.coin_price +
+                              row?.staking_balance * row?.coin_price,
+                            0
+                          )
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )}
+
+                  {/* Rows for each category */}
+                  {group.category.includes('Coins') ? (
+                    group.rows.map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          borderBottom: 'none !important',
+                        }}
+                      >
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          padding="none"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          <ListItem
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              paddingLeft: 0,
+                              '&:hover': {
+                                background: 'transparent !important',
+                              },
+                            }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar>
+                                <Avatar
+                                  alt={`${row.coin}`}
+                                  src={getImage(row?.coin)}
+                                />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={row.coin}
+                              secondary={`ID: ${row.id}`}
+                            />
+                          </ListItem>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 6,
+                          }).format(row.amount)}{' '}
+                          / $
+                          {row.coin === 'USD'
+                            ? row.amount.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : (row.amount * row.coin_price).toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                }
+                              )}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 6,
+                          }).format(row.staking_balance)}{' '}
+                          / $
+                          {(
+                            row.staking_balance * row.coin_price
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </TableCell>
+
+                        {!isMobile && (
+                          <>
+                            <TableCell
+                              align="right"
+                              sx={{ borderBottom: 'none !important' }}
+                            >
+                              {row.coin === 'WIBS' || row.coin === 'DaCrazy'
+                                ? row.coin_price.toFixed(5)
+                                : row.coin_price.toFixed(2)}
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              sx={{ borderBottom: 'none !important' }}
+                              className={
+                                row.todayPNL
+                                  ? row.todayPNL.isPositive
+                                    ? classes.greenText
+                                    : classes.redText
+                                  : ''
+                              }
+                            >
+                              {row.todayPNL
+                                ? // Adjust percentage based on coin type
+                                  `${
+                                    row.todayPNL.value
+                                  } (${getAdjustedPercentage(
+                                    row.coin,
+                                    row.todayPNL.percentage
+                                  )}%)`
+                                : '0.00'}
+                            </TableCell>
+                          </>
+                        )}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5}
+                        sx={{ border: 'none !impoprtant' }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: '15px',
+                            alignItems: 'center',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            sx={{
+                              maxWidth: '250px',
+                              width: '100%',
                               color:
                                 userType === 'Indexx Exchange'
                                   ? theme.palette.primary.main
                                   : '#FFA500',
                               borderColor: 'none',
-                              opacity: '.7',
-                              background: 'none',
-                            },
-                          }}
-                          onClick={() => toggleCategory(group.category)} // Toggle category rows
-                        >
-                          {expandedCategories.includes(group.category)
-                            ? 'Hide Details'
-                            : 'See Details'}
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
-
-                {/* Render rows conditionally */}
-                {expandedCategories.includes(group.category) &&
-                  group.rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{
-                        borderBottom: 'none !important',
-                      }}
-                    >
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        <ListItem
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            paddingLeft: 0,
-                            '&:hover': {
-                              background: 'transparent !important',
-                            },
-                          }}
-                        >
-                          <ListItemAvatar>
-                            <Avatar>
-                              <Avatar
-                                alt={`${row.coin}`}
-                                src={getImage(row?.coin)}
-                              />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={row.coin}
-                            secondary={`ID: ${row.id}`}
-                          />
-                        </ListItem>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 6,
-                        }).format(row.amount)}{' '}
-                        / $
-                        {row.coin === 'USD'
-                          ? row.amount.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })
-                          : (row.amount * row.coin_price).toLocaleString(
-                              undefined,
-                              {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }
-                            )}
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{ borderBottom: 'none !important' }}
-                      >
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 6,
-                        }).format(row.staking_balance)}{' '}
-                        / $
-                        {(row.staking_balance * row.coin_price).toLocaleString(
-                          undefined,
-                          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                        )}
-                      </TableCell>
-
-                      {!isMobile && (
-                        <>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                          >
-                            {row.coin === 'WIBS' || row.coin === 'DaCrazy'
-                              ? row.coin_price.toFixed(5)
-                              : row.coin_price.toFixed(2)}
-                          </TableCell>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                            className={
-                              row.todayPNL
-                                ? row.todayPNL.isPositive
-                                  ? classes.greenText
-                                  : classes.redText
-                                : ''
-                            }
-                          >
-                            {row.todayPNL
-                              ? // Adjust percentage based on coin type
-                                `${row.todayPNL.value} (${getAdjustedPercentage(
-                                  row.coin,
-                                  row.todayPNL.percentage
-                                )}%)`
-                              : '0.00'}
-                          </TableCell>
-                        </>
-                      )}
-                    </TableRow>
-                  ))}
-
-                {/* Total Row - Only display for non-'Coins' categories */}
-                {group.category.includes('Coins') && group.rows.length > 0 && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={isMobile ? 3 : 5}
-                      sx={{
-                        borderBottom: 'none',
-                        fontWeight: 'bold',
-                        textAlign: 'right',
-                      }}
-                    >
-                      Total Crypto Amount in USD: $
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(calculateTotal(group.rows).totalAmount)}
-                      <br />
-                      {group.category.includes('Coins') && (
-                        <>
-                          Total Staked Balance in USD: $
-                          {new Intl.NumberFormat('en-US', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }).format(
-                            calculateTotal(group.rows).totalStakingBalance
-                          )}
-                        </>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )}
-
-                {group.category.includes('Smart Crypto') &&
-                  group?.rows?.length > 0 &&
-                  calculateTotal(group.rows).totalAmount > 0 && (
-                    <TableRow>
-                      <TableCell colSpan={isMobile ? 3 : 5}>
-                        <div className={classes.flexContainer}>
-                          <div></div>
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              gap: '15px',
-                              alignItems: 'center',
-                              width: '100%',
+                              '&:hover': {
+                                color:
+                                  userType === 'Indexx Exchange'
+                                    ? theme.palette.primary.main
+                                    : '#FFA500',
+                                borderColor: 'none',
+                                opacity: '.7',
+                                background: 'none',
+                              },
                             }}
+                            onClick={() => toggleCategory(group.category)} // Toggle category rows
                           >
-                            <Button
-                              sx={{
-                                maxWidth: '150px',
-                                width: '100%',
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                borderColor: 'none',
-                                '&:hover': {
-                                  color:
-                                    userType === 'Indexx Exchange'
-                                      ? theme.palette.primary.main
-                                      : '#FFA500',
-                                  borderColor: 'none',
-                                  opacity: '.7',
-                                  background: 'none',
-                                },
-                              }}
-                              onClick={() => {
-                                setupdatePlanMode(true);
-                                console.log(
-                                  'group.categorygroup.category',
-                                  group.category,
-                                  group.rows[0].notes
-                                );
-                                onPlanChange(group.rows[0].notes, group);
-                              }}
-                            >
-                              Switch Plan
-                            </Button>
-                            <Button
-                              sx={{
-                                maxWidth: '150px',
-                                width: '100%',
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                borderColor: 'none',
-                                '&:hover': {
-                                  color:
-                                    userType === 'Indexx Exchange'
-                                      ? theme.palette.primary.main
-                                      : '#FFA500',
-                                  borderColor: 'none',
-                                  opacity: '.7',
-                                  background: 'none',
-                                },
-                              }}
-                              onClick={() => {
-                                setSellConfirmationPopup(true);
-                                setPlanName(group.rows[0].notes);
-                                localStorage.setItem(
-                                  'SellPlanCurrencies',
-                                  JSON.stringify(group)
-                                );
-                              }}
-                            >
-                              Sell Plan
-                            </Button>
-                          </div>
-                          <div className={classes.orderFirstOnTab}>
-                            <Button
-                              variant="outlined"
-                              sx={{
-                                minWidth: '250px',
-                                width: '100%',
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                borderColor:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
-                                '&:hover': {
-                                  color:
-                                    userType === 'Indexx Exchange'
-                                      ? theme.palette.primary.main
-                                      : '#FFA500',
-                                  borderColor:
-                                    userType === 'Indexx Exchange'
-                                      ? theme.palette.primary.main
-                                      : '#FFA500',
-                                  opacity: '.7',
-                                  background: 'none',
-                                },
-                              }}
-                              onClick={() => {
-                                navigate('/smart-crypto');
-                              }}
-                            >
-                              Invest In New Package
-                            </Button>
-                          </div>
+                            {expandedCategories.includes(group.category)
+                              ? 'Hide Details'
+                              : 'See Details'}
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   )}
-              </>
-            ))}
+
+                  {/* Render rows conditionally */}
+                  {expandedCategories.includes(group.category) &&
+                    group.rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          borderBottom: 'none !important',
+                        }}
+                      >
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          padding="none"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          <ListItem
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              paddingLeft: 0,
+                              '&:hover': {
+                                background: 'transparent !important',
+                              },
+                            }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar>
+                                <Avatar
+                                  alt={`${row.coin}`}
+                                  src={getImage(row?.coin)}
+                                />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={row.coin}
+                              secondary={`ID: ${row.id}`}
+                            />
+                          </ListItem>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 6,
+                          }).format(row.amount)}{' '}
+                          / $
+                          {row.coin === 'USD'
+                            ? row.amount.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : (row.amount * row.coin_price).toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                }
+                              )}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{ borderBottom: 'none !important' }}
+                        >
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 6,
+                          }).format(row.staking_balance)}{' '}
+                          / $
+                          {(
+                            row.staking_balance * row.coin_price
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </TableCell>
+
+                        {!isMobile && (
+                          <>
+                            <TableCell
+                              align="right"
+                              sx={{ borderBottom: 'none !important' }}
+                            >
+                              {row.coin === 'WIBS' || row.coin === 'DaCrazy'
+                                ? row.coin_price.toFixed(5)
+                                : row.coin_price.toFixed(2)}
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              sx={{ borderBottom: 'none !important' }}
+                              className={
+                                row.todayPNL
+                                  ? row.todayPNL.isPositive
+                                    ? classes.greenText
+                                    : classes.redText
+                                  : ''
+                              }
+                            >
+                              {row.todayPNL
+                                ? // Adjust percentage based on coin type
+                                  `${
+                                    row.todayPNL.value
+                                  } (${getAdjustedPercentage(
+                                    row.coin,
+                                    row.todayPNL.percentage
+                                  )}%)`
+                                : '0.00'}
+                            </TableCell>
+                          </>
+                        )}
+                      </TableRow>
+                    ))}
+
+                  <>
+                    {expandedCategories.includes(group.category) &&
+                      group.category.includes('Smart Crypto') &&
+                      group?.rows?.length > 0 &&
+                      calculateTotal(group.rows).totalAmount > 0 && (
+                        <TableRow>
+                          <TableCell colSpan={isMobile ? 3 : 5}>
+                            <div className={classes.flexContainer}>
+                              <div></div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  gap: '15px',
+                                  alignItems: 'center',
+                                  width: '100%',
+                                }}
+                              >
+                                <Button
+                                  sx={{
+                                    maxWidth: '150px',
+                                    width: '100%',
+                                    color:
+                                      userType === 'Indexx Exchange'
+                                        ? theme.palette.primary.main
+                                        : '#FFA500',
+                                    borderColor: 'none',
+                                    '&:hover': {
+                                      color:
+                                        userType === 'Indexx Exchange'
+                                          ? theme.palette.primary.main
+                                          : '#FFA500',
+                                      borderColor: 'none',
+                                      opacity: '.7',
+                                      background: 'none',
+                                    },
+                                  }}
+                                  onClick={() => {
+                                    setupdatePlanMode(true);
+                                    console.log(
+                                      'group.categorygroup.category',
+                                      group.category,
+                                      group.rows[0].notes
+                                    );
+                                    onPlanChange(group.rows[0].notes, group);
+                                  }}
+                                >
+                                  Switch Plan
+                                </Button>
+                                <Button
+                                  sx={{
+                                    maxWidth: '150px',
+                                    width: '100%',
+                                    color:
+                                      userType === 'Indexx Exchange'
+                                        ? theme.palette.primary.main
+                                        : '#FFA500',
+                                    borderColor: 'none',
+                                    '&:hover': {
+                                      color:
+                                        userType === 'Indexx Exchange'
+                                          ? theme.palette.primary.main
+                                          : '#FFA500',
+                                      borderColor: 'none',
+                                      opacity: '.7',
+                                      background: 'none',
+                                    },
+                                  }}
+                                  onClick={() => {
+                                    setSellConfirmationPopup(true);
+                                    setPlanName(group.rows[0].notes);
+                                    localStorage.setItem(
+                                      'SellPlanCurrencies',
+                                      JSON.stringify(group)
+                                    );
+                                  }}
+                                >
+                                  Sell Plan
+                                </Button>
+                              </div>
+                              <div className={classes.orderFirstOnTab}>
+                                <Button
+                                  variant="outlined"
+                                  sx={{
+                                    minWidth: '250px',
+                                    width: '100%',
+                                    color:
+                                      userType === 'Indexx Exchange'
+                                        ? theme.palette.primary.main
+                                        : '#FFA500',
+                                    borderColor:
+                                      userType === 'Indexx Exchange'
+                                        ? theme.palette.primary.main
+                                        : '#FFA500',
+                                    '&:hover': {
+                                      color:
+                                        userType === 'Indexx Exchange'
+                                          ? theme.palette.primary.main
+                                          : '#FFA500',
+                                      borderColor:
+                                        userType === 'Indexx Exchange'
+                                          ? theme.palette.primary.main
+                                          : '#FFA500',
+                                      opacity: '.7',
+                                      background: 'none',
+                                    },
+                                  }}
+                                  onClick={() => {
+                                    navigate('/smart-crypto');
+                                  }}
+                                >
+                                  Invest In New Package
+                                </Button>
+                              </div>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                  </>
+
+                  {/* Total Row - Only display for non-'Coins' categories */}
+                  {group.category.includes('Coins') &&
+                    group.rows.length > 0 && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5}
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                          }}
+                        >
+                          Total Crypto Amount in USD: $
+                          {new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }).format(calculateTotal(group.rows).totalAmount)}
+                          <br />
+                          {group.category.includes('Coins') && (
+                            <>
+                              Total Staked Balance in USD: $
+                              {new Intl.NumberFormat('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }).format(
+                                calculateTotal(group.rows).totalStakingBalance
+                              )}
+                            </>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                </React.Fragment>
+              ));
+            })()}
           </TableBody>
         </Table>
       </TableContainer>
