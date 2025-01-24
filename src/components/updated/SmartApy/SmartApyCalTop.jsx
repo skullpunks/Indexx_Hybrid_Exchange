@@ -20,8 +20,10 @@ import smartApyCalImage from '../../../assets/updated/SmartApy/smartApyCalRight.
 import smartAPYLogo from '../../../assets/updated/SmartApy/smartApyLogo.svg';
 import CustomSelectBox from './CustomSelectBox';
 import iusdIcon from '../../../assets/updated/SmartApy/iUSD+.svg';
+import usd from '../../../assets/token-icons/USD.png';
 import ViewAllPlansPopup from './ViewAllPlansPopup';
-
+import PaymentMethodSelection from './SelectPaymentMethod';
+import Popup from './PaymentPopup';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -30,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
+    maxWidth: '1100px',
+    width: '100%',
+    '&>div': { flex: 1 },
     gap: '20px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
@@ -102,11 +107,10 @@ const useStyles = makeStyles((theme) => ({
   buttonTabContainer: {
     display: 'flex',
     gap: '15px',
+    flexDirection: 'column',
     marginBottom: '15px',
-
-    flexWrap: 'wrap',
     '& > button': {
-      maxWidth: '205px',
+      width: '100%',
     },
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
@@ -130,6 +134,7 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     display: 'flex',
     gap: '15px',
+    justifyContent: 'center',
   },
   activeButton: {
     backgroundColor: `${theme.palette.primary.main} !important`,
@@ -139,6 +144,13 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.primary.main} !important`,
     background: 'none !important',
     color: `${theme.palette.primary.main} !important`,
+  },
+  borderNoneBtn: {
+    border: 'none !important',
+    background: 'none !important',
+    width: 'fit-content',
+    color: `${theme.palette.primary.main} !important`,
+    margin: 'auto',
   },
   inputFieldContainer: {
     display: 'grid',
@@ -169,6 +181,30 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '10px',
     },
   },
+
+  helpContainer: {
+    padding: '24px',
+    margin: 'auto',
+  },
+  heading: {
+    fontSize: '30px',
+    fontWeight: 600,
+    marginBottom: '16px',
+  },
+  step: {
+    marginBottom: '30px',
+    '& span': {
+      fontSize: '20px',
+      fontWeight: 500,
+      paddingTop: '15px',
+    },
+  },
+  note: {
+    fontStyle: 'italic',
+    fontSize: '14px',
+    marginTop: '4px',
+    color: '#a0a0a0', // Lighter gray for the note
+  },
 }));
 
 const SmartApyTop = ({ onStakeSuccess }) => {
@@ -178,8 +214,8 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [stakingtype, setStakingtype] = useState('token');
   const [token, setToken] = useState('INEX');
   const [selectedToken, setSelectedToken] = useState({
-    title: 'IUSD+',
-    image: 'IUSD+',
+    title: 'USD',
+    image: 'USD',
     stakingPercentage6months: 6,
     stakingPercentage1year: 15,
     chain: 'Binance Smart Chain',
@@ -207,10 +243,15 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [viewAllPlansPopup, setViewAllPlansPopup] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethodError, setPaymentMethodError] = useState('');
+
   const theme = useTheme();
   const [searchParams] = useSearchParams();
   const [activeButton, setActiveButton] = useState('6 Months');
   const defaultSignInToken = searchParams.get('signInToken');
+  const [popupOpen, setPopupOpen] = useState(false);
 
   const handleButtonClick = async (button) => {
     setActiveButton(button);
@@ -344,10 +385,22 @@ const SmartApyTop = ({ onStakeSuccess }) => {
       setLoadings(false);
     }
   };
+  const handlePopupClose = () => {
+    setPopupOpen(false);
+  };
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+  const handlePaymentMethodClick = async () => {
+    setPopupOpen(true);
+  };
+  const handlePaymentMethodSelect = (method) => {
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+    handlePopupClose();
+  };
+
   return (
     <div className={classes.root}>
       <div
@@ -367,9 +420,6 @@ const SmartApyTop = ({ onStakeSuccess }) => {
       <div className={classes.container}>
         <div className={classes.item}>
           <div className={classes.balanceContainer}>
-            <label className={classes.label}>
-              Balance: {formatPrice(selectedTokenBalance)}
-            </label>
             <InputField
               label="Enter amount"
               type="text"
@@ -381,7 +431,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               endAdornment={
                 <InputAdornment position="end">
                   <div className={classes.dropDownIconContainer}>
-                    <img src={iusdIcon} alt={'usdIcon'} />
+                    <img src={usd} alt={'usdIcon'} />
                     <p>{selectedToken?.title}</p>
                   </div>
                 </InputAdornment>
@@ -419,13 +469,25 @@ const SmartApyTop = ({ onStakeSuccess }) => {
                   endAdornment={
                     <InputAdornment position="end">
                       <div className={classes.dropDownIconContainer}>
-                        <img src={iusdIcon} alt={'usdIcon'} />
+                        <img src={usd} alt={'usdIcon'} />
                         <p>{selectedToken?.title}</p>
                       </div>
                     </InputAdornment>
                   }
                 />
               </div>
+              {/* Pay with */}
+              <div>
+                <PaymentMethodSelection
+                  onClick={handlePaymentMethodClick}
+                  errorMsg={paymentMethodError}
+                  buttonText={
+                    selectedPaymentMethod || 'Select Transaction Method'
+                  }
+                  type={`${'Buy'}`}
+                />
+              </div>
+
               <div className={classes.fullWidthButton}>
                 <GenericButton
                   text="Invest"
@@ -437,29 +499,56 @@ const SmartApyTop = ({ onStakeSuccess }) => {
             </div>
           </div>
           <div className={classes.buttonContainer}>
-            <GenericButton
+            {/* <GenericButton
               text="Buy IUSD+"
               className={classes.inactiveButton}
               onClick={() => navigate('/update/home?buyToken=IUSD%2B')}
-            />
+            /> */}
             <GenericButton
               text="View all Plans"
-              className={classes.inactiveButton}
+              className={classes.borderNoneBtn}
               onClick={() => setViewAllPlansPopup(true)}
             />
           </div>
         </div>
-        <div className={classes.item} style={{ alignSelf: 'center' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <img src={smartApyCalImage} alt="" />
-            <p>Investment made easy with Smart APY</p>
+        <div className={classes.item} style={{ alignSelf: 'flex-start' }}>
+          <div className={classes.helpContainer}>
+            <p className={classes.heading}>How to Invest in Smart APY:</p>
+            <p className={classes.step}>
+              <span>1. Enter an Amount</span>
+              <div style={{ margin: '10px 0px' }}>
+                Start with a minimum investment of $5,000.
+              </div>
+            </p>
+            <p className={classes.step}>
+              <span>2. Choose a Lock-In Period</span>
+              <div style={{ margin: '10px 0px' }}>
+                Select the duration of your investment.
+              </div>
+              <p component="span" className={classes.note}>
+                (Note: Early withdrawal may incur penalties.)
+              </p>
+            </p>
+            <p className={classes.step}>
+              <span>3. Select Payment Option</span>
+              <div style={{ margin: '10px 0px' }}>
+                Choose your preferred payment method and complete the
+                transaction.
+              </div>
+            </p>
+            <p className={classes.step}>
+              <span>4. Click "Invest"</span>
+              <div style={{ margin: '10px 0px' }}>
+                Proceed to finalize your payment.
+              </div>
+            </p>
+            <p className={classes.step}>
+              <span>5. Conversion of USD to IUSD+</span>
+              <div style={{ margin: '10px 0px' }}>
+                Once the payment is confirmed, your funds will be converted to
+                IUSD+ and automatically staked.
+              </div>
+            </p>
           </div>
         </div>
       </div>
@@ -467,6 +556,16 @@ const SmartApyTop = ({ onStakeSuccess }) => {
       {viewAllPlansPopup && (
         <ViewAllPlansPopup onClose={() => setViewAllPlansPopup(false)} />
       )}
+
+      <Popup
+        open={popupOpen}
+        onClose={handlePopupClose}
+        amount={''}
+        onSelectPaymentMethod={handlePaymentMethodSelect}
+        type={`${'Buy'}`}
+        token={'inex'}
+        spendToken={'wibs'}
+      />
     </div>
   );
 };

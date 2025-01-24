@@ -27,7 +27,9 @@ import SellConfirmationPopup from './SellConfirmationPopup';
 import { useTheme } from '@mui/material/styles';
 import CongratulationsPopup from './Congratulations';
 import SellCongratulations from './SellCongratulations';
-
+import smartCryptoIcon from '../../../assets/updated/asset_wallet/smartCryptoAssetWallet.svg';
+import xBlueIcon from '../../../assets/updated/asset_wallet/x-blueAssetWallet.svg';
+import xBitcoinIcon from '../../../assets/updated/asset_wallet/x-bitcoinAssetWallet.svg';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   greenText: {
@@ -726,6 +728,7 @@ export default function EnhancedTable({
                             borderBottom: 'none',
                             fontWeight: 'bold',
                             fontSize: '24px',
+
                             color:
                               userType === 'Indexx Exchange'
                                 ? theme.palette.primary.main
@@ -733,7 +736,8 @@ export default function EnhancedTable({
                             textAlign: 'center',
                           }}
                         >
-                          Smart Crypto xBitcoin
+                          <img src={smartCryptoIcon} />
+                          <img src={xBitcoinIcon} />
                         </TableCell>
                       </TableRow>
                     )}
@@ -756,7 +760,8 @@ export default function EnhancedTable({
                           textAlign: 'center',
                         }}
                       >
-                        Smart Crypto xBlue
+                        <img src={smartCryptoIcon} />
+                        <img src={xBlueIcon} />
                       </TableCell>
                     </TableRow>
                   )}
@@ -774,6 +779,8 @@ export default function EnhancedTable({
                               ? theme.palette.primary.main
                               : '#FFA500'
                           }`,
+
+                          padding: 0,
                         }}
                       />
                     </TableRow>
@@ -991,6 +998,7 @@ export default function EnhancedTable({
                           }}
                         >
                           <Button
+                            disableRipple
                             sx={{
                               maxWidth: '250px',
                               width: '100%',
@@ -998,14 +1006,18 @@ export default function EnhancedTable({
                                 userType === 'Indexx Exchange'
                                   ? theme.palette.primary.main
                                   : '#FFA500',
+                              background: 'none',
                               borderColor: 'none',
                               '&:hover': {
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
+                                color: theme.palette.text.primary,
                                 borderColor: 'none',
                                 opacity: '.7',
+                                background: 'none',
+                              },
+                              '&:active': {
+                                background: 'none',
+                              },
+                              '&:focus': {
                                 background: 'none',
                               },
                             }}
