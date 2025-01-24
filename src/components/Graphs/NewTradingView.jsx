@@ -3,13 +3,18 @@ import {
   AdvancedRealTimeChart,
   TickerTape,
   TechnicalAnalysis,
+  CryptoCurrencyMarket,
+  EconomicCalendar,
+  CryptoCoinsHeatmap,
+  SymbolOverview,
+  MarketOverview,
 } from 'react-ts-tradingview-widgets';
 
 const NewAdvancedRealTimeChartComponent = ({ coin }) => {
-  const [size, setSize] = useState({ width: 1000, height: 600 }); // Increased chart width and set height
+  const [size, setSize] = useState({ width: 1200, height: 800 }); // Larger chart size
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'dark'
-  ); // default theme from localStorage
+  ); // Default theme from localStorage
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,7 +23,7 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
       } else if (window.matchMedia('(max-width: 990px)').matches) {
         setSize({ width: 450, height: 690 });
       } else {
-        setSize({ width: 1000, height: 700 }); // Adjusted chart size for larger screens
+        setSize({ width: 1200, height: 800 }); // Adjusted size for larger screens
       }
     };
 
@@ -36,34 +41,13 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const STOCK_SYMBOLS = [
-    'AMZN',
-    'AAPL',
-    'AVGO',
-    'GOOGL',
-    'META',
-    'MSFT',
-    'NVDA',
-    'PEP',
-    'SNP500',
-    'TSLA',
-  ];
-
   const getSymbol = (coin) => {
-    return STOCK_SYMBOLS.includes(coin.toUpperCase()) ? coin : `${coin}USD`;
-  };
-
-  // Modify this function to correctly format symbols for Technical Analysis Widget
-  const getSymbolForTAnalysis = (coin) => {
-    if (STOCK_SYMBOLS.includes(coin.toUpperCase())) {
-      return `NASDAQ:${coin}`; // Stock symbols prefixed with NASDAQ for US stocks
-    }
-    return `BINANCE:${coin.toUpperCase()}USDT`; // Cryptocurrency symbols prefixed with BINANCE
+    return `${coin.toUpperCase()}USDT`;
   };
 
   return (
     <div className="flex-1 relative z-0 overflow-y-auto focus:outline-none overflow-x-hidden">
-      {/* TickerTape for a better visual effect */}
+      {/* Ticker Tape */}
       <div style={{ marginTop: '100px', pointerEvents: 'none' }}>
         <TickerTape
           colorTheme={theme}
@@ -86,57 +70,79 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
         />
       </div>
 
-      <br />
-
-      <div>
-          <AdvancedRealTimeChart
-            toolbar_bg={'#f1f3f6'}
-            symbol={getSymbol(coin)}
-            autosize={false}
-            theme={theme}
-            width={size.width} 
-            height={size.height} 
-            allow_symbol_change={false}
-            settings={true}
-          />
-        </div>
-
-      {/* Flex container for the chart and technical analysis widget */}
-      {/* <div
+      {/* Flex container for widgets */}
+      <div
         style={{
           display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '10px', 
+          flexDirection: 'column',
+          gap: '20px',
           marginTop: '20px',
+          marginLeft: '20px',
+          marginRight: '20px',
         }}
       >
-        <div style={{ flex: 3, marginRight: '20px' }}>
-          <AdvancedRealTimeChart
-            toolbar_bg={'#f1f3f6'}
-            symbol={getSymbol(coin)}
-            autosize={false}
-            theme={theme}
-            width={size.width} 
-            height={size.height} 
-            allow_symbol_change={false}
-            settings={true}
-          />
+        {/* Chart Section */}
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+          <div style={{ flex: 3 }}>
+            <AdvancedRealTimeChart
+              toolbar_bg={'#f1f3f6'}
+              symbol={getSymbol(coin)}
+              autosize={false}
+              theme={theme}
+              width={size.width}
+              height={size.height}
+              allow_symbol_change={false}
+              settings={true}
+            />
+          </div>
+
+          {/* Right section: Additional widgets */}
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Technical Analysis Widget */}
+            <TechnicalAnalysis
+              colorTheme={theme}
+              symbol={`BINANCE:${coin.toUpperCase()}USDT`}
+              width={size.width / 2}
+              height={size.height / 2}
+              interval="1D"
+              showIntervalTabs={true}
+            />
+
+            {/* CryptoCurrency Market */}
+            <CryptoCurrencyMarket
+              colorTheme={theme}
+              width={size.width / 2}
+              height={size.height / 2}
+            />
+          </div>
         </div>
 
-        <div style={{ flex: 1 }}>
-          <TechnicalAnalysis
+        {/* Heatmap Section */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            marginTop: '20px',
+            marginLeft: '20px',
+            marginRight: '20px',
+          }}
+        >
+          <CryptoCoinsHeatmap
             colorTheme={theme}
-            width={size.width / 3} 
-            height={size.height} 
-            symbol={getSymbolForTAnalysis(coin)}
-            interval="1D"
-            isTransparent={false}
-            showIntervalTabs={true}
+            width="auto" // Adjusted for left and right gaps
+            height={size.height}
           />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
