@@ -991,6 +991,7 @@ export default function EnhancedTable({
                           }}
                         >
                           <Button
+                            disableRipple
                             sx={{
                               maxWidth: '250px',
                               width: '100%',
@@ -998,14 +999,18 @@ export default function EnhancedTable({
                                 userType === 'Indexx Exchange'
                                   ? theme.palette.primary.main
                                   : '#FFA500',
+                              background: 'none',
                               borderColor: 'none',
                               '&:hover': {
-                                color:
-                                  userType === 'Indexx Exchange'
-                                    ? theme.palette.primary.main
-                                    : '#FFA500',
+                                color: theme.palette.text.primary,
                                 borderColor: 'none',
                                 opacity: '.7',
+                                background: 'none',
+                              },
+                              '&:active': {
+                                background: 'none',
+                              },
+                              '&:focus': {
                                 background: 'none',
                               },
                             }}
