@@ -60,7 +60,7 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
       key: 0,
     },
     {
-      label: 'Crypto',
+      label: 'Cryptos',
       key: 1,
     },
     {

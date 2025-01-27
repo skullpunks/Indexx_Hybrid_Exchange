@@ -658,7 +658,7 @@ const Assets = () => {
                 <List sx={{ position: 'sticky', top: 100 }}>
                   {[
                     { name: 'Overview', path: '/wallet/overview' },
-                    { name: 'Crypto', path: '/wallet/crypto' },
+                    { name: 'Cryptos', path: '/wallet/crypto' },
                     { name: 'Smart APY', path: '/wallet/iusd+' },
                     { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
                     { name: 'Fiat / Cash', path: '/wallet/fiat' },

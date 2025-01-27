@@ -205,6 +205,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '4px',
     color: '#a0a0a0', // Lighter gray for the note
   },
+  disclaimerText: {
+    color: theme.palette.primary.main,
+    fontStyle: 'italic',
+  },
 }));
 
 const SmartApyTop = ({ onStakeSuccess }) => {
@@ -459,7 +463,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               </div>
               <div className={classes.rewardContainer}>
                 <InputField
-                  label="Rewards you will receive in IUSD+"
+                  label="Expected profit"
                   type="text"
                   placeholder="0.0"
                   value={amt}
@@ -523,11 +527,9 @@ const SmartApyTop = ({ onStakeSuccess }) => {
             <p className={classes.step}>
               <span>2. Choose a Lock-In Period</span>
               <div style={{ margin: '10px 0px' }}>
-                Select the duration of your investment.
+                Select your desired investment duration. Once chosen, the system
+                will automatically calculate your expected profit.
               </div>
-              <p component="span" className={classes.note}>
-                (Note: Early withdrawal may incur penalties.)
-              </p>
             </p>
             <p className={classes.step}>
               <span>3. Select Payment Option</span>
@@ -546,9 +548,13 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               <span>5. Conversion of USD to IUSD+</span>
               <div style={{ margin: '10px 0px' }}>
                 Once the payment is confirmed, your funds will be converted to
-                IUSD+ and automatically staked.
+                IUSD+ (indexx stable coin) and automatically staked.
               </div>
+              <p component="span" className={classes.note}>
+                (Note: Early withdrawal of the investment may incur penalties.)
+              </p>
             </p>
+            <p className={classes.disclaimerText}>See disclaimer</p>
           </div>
         </div>
       </div>

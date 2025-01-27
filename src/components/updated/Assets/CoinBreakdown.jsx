@@ -12,7 +12,7 @@ import { makeStyles } from '@mui/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchComponent from './SearchInput';
 import EnhancedTable from './CoinTable';
-
+import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
   row: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+    // '&>div': { flex: 1 },
     alignItems: 'center',
     marginBottom: '16px',
     [theme.breakpoints.down('md')]: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '30px',
   },
   leftHeading: {
     fontSize: '16px !important',
@@ -129,17 +131,16 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
     setupdatePlanMode(true);
     console.log('Selected Plan: here', plan, cryptocurrencies);
     localStorage.setItem('CurrentPlan', plan);
-    localStorage.setItem('CurrentPlanCurrencies', JSON.stringify(cryptocurrencies));
+    localStorage.setItem(
+      'CurrentPlanCurrencies',
+      JSON.stringify(cryptocurrencies)
+    );
   };
 
   return (
     <Box className={classes.container}>
       <Typography className={classes.heading}>My Assets</Typography>
       <Box className={classes.row}>
-        <Box className={classes.leftDiv}>
-          <Typography className={classes.leftHeading}>Coin View</Typography>
-          <Box className={classes.underline}></Box>
-        </Box>
         <Box className={classes.rightDiv}>
           <span className={classes.searchComponent}>
             <SearchComponent
@@ -155,6 +156,13 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
             }
             label="Hide assets <1 USD"
           />
+        </Box>
+      </Box>
+      <Box>
+        <Box className={classes.leftDiv}>
+          {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
+          <Box className={classes.underline}></Box> */}
+          <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
         </Box>
       </Box>
 

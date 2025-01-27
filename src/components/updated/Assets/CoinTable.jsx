@@ -185,7 +185,7 @@ export default function EnhancedTable({
   const [userSellPlan, setUserPlanName] = useState('');
   const [CongratulationsPopup, setCongratulationsPopup] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]); // Track expanded categories
-
+  const [isTotalAmount, setIsTotalAmount] = useState(false);
   console.log('onPlanChange', onPlanChange);
   useEffect(() => {
     const user = localStorage.getItem('userType');
@@ -728,7 +728,7 @@ export default function EnhancedTable({
                             borderBottom: 'none',
                             fontWeight: 'bold',
                             fontSize: '24px',
-
+                            paddingTop: '60px',
                             color:
                               userType === 'Indexx Exchange'
                                 ? theme.palette.primary.main
@@ -753,6 +753,8 @@ export default function EnhancedTable({
                           borderBottom: 'none',
                           fontWeight: 'bold',
                           fontSize: '24px',
+                          paddingTop: '60px',
+
                           color:
                             userType === 'Indexx Exchange'
                               ? theme.palette.primary.main
@@ -871,117 +873,167 @@ export default function EnhancedTable({
 
                   {/* Rows for each category */}
                   {group.category.includes('Coins') ? (
-                    group.rows.map((row, index) => (
-                      <TableRow
-                        key={row.id}
-                        sx={{
-                          borderBottom: 'none !important',
-                        }}
-                      >
+                    <>
+                      <TableRow>
                         <TableCell
-                          component="th"
-                          scope="row"
-                          padding="none"
-                          sx={{ borderBottom: 'none !important' }}
+                          colSpan={isMobile ? 3 : 5}
+                          sx={{ border: 'none !impoprtant' }}
                         >
-                          <ListItem
-                            sx={{
+                          <div
+                            style={{
                               display: 'flex',
+                              justifyContent: 'center',
+                              gap: '15px',
                               alignItems: 'center',
-                              paddingLeft: 0,
-                              '&:hover': {
-                                background: 'transparent !important',
-                              },
+                              width: '100%',
                             }}
                           >
-                            <ListItemAvatar>
-                              <Avatar>
-                                <Avatar
-                                  alt={`${row.coin}`}
-                                  src={getImage(row?.coin)}
-                                />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                              primary={row.coin}
-                              secondary={`ID: ${row.id}`}
-                            />
-                          </ListItem>
+                            <Button
+                              disableRipple
+                              sx={{
+                                maxWidth: '250px',
+                                width: '100%',
+                                color: theme.palette.primary.main,
+                                background: 'none',
+                                borderColor: 'none',
+                                '&:hover': {
+                                  color: theme.palette.text.primary,
+                                  borderColor: 'none',
+                                  opacity: '.7',
+                                  background: 'none',
+                                },
+                                '&:active': {
+                                  background: 'none',
+                                },
+                                '&:focus': {
+                                  background: 'none',
+                                },
+                              }}
+                              onClick={() => {
+                                toggleCategory(group.category);
+                                setIsTotalAmount(!isTotalAmount);
+                              }} // Toggle category rows
+                            >
+                              {expandedCategories.includes(group.category)
+                                ? 'Hide Details'
+                                : 'See Details'}
+                            </Button>
+                          </div>
                         </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{ borderBottom: 'none !important' }}
+                      </TableRow>
+
+                      {/* {group.rows.map((row, index) => (
+                        <TableRow
+                          key={row.id}
+                          sx={{
+                            borderBottom: 'none !important',
+                          }}
                         >
-                          {new Intl.NumberFormat('en-US', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 6,
-                          }).format(row.amount)}{' '}
-                          / $
-                          {row.coin === 'USD'
-                            ? row.amount.toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                            : (row.amount * row.coin_price).toLocaleString(
-                                undefined,
-                                {
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            padding="none"
+                            sx={{ borderBottom: 'none !important' }}
+                          >
+                            <ListItem
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                paddingLeft: 0,
+                                '&:hover': {
+                                  background: 'transparent !important',
+                                },
+                              }}
+                            >
+                              <ListItemAvatar>
+                                <Avatar>
+                                  <Avatar
+                                    alt={`${row.coin}`}
+                                    src={getImage(row?.coin)}
+                                  />
+                                </Avatar>
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={row.coin}
+                                secondary={`ID: ${row.id}`}
+                              />
+                            </ListItem>
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ borderBottom: 'none !important' }}
+                          >
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 6,
+                            }).format(row.amount)}{' '}
+                            / $
+                            {row.coin === 'USD'
+                              ? row.amount.toLocaleString(undefined, {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
-                                }
-                              )}
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{ borderBottom: 'none !important' }}
-                        >
-                          {new Intl.NumberFormat('en-US', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 6,
-                          }).format(row.staking_balance)}{' '}
-                          / $
-                          {(
-                            row.staking_balance * row.coin_price
-                          ).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </TableCell>
+                                })
+                              : (row.amount * row.coin_price).toLocaleString(
+                                  undefined,
+                                  {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  }
+                                )}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ borderBottom: 'none !important' }}
+                          >
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 6,
+                            }).format(row.staking_balance)}{' '}
+                            / $
+                            {(
+                              row.staking_balance * row.coin_price
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </TableCell>
 
-                        {!isMobile && (
-                          <>
-                            <TableCell
-                              align="right"
-                              sx={{ borderBottom: 'none !important' }}
-                            >
-                              {row.coin === 'WIBS' || row.coin === 'DaCrazy'
-                                ? row.coin_price.toFixed(5)
-                                : row.coin_price.toFixed(2)}
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ borderBottom: 'none !important' }}
-                              className={
-                                row.todayPNL
-                                  ? row.todayPNL.isPositive
-                                    ? classes.greenText
-                                    : classes.redText
-                                  : ''
-                              }
-                            >
-                              {row.todayPNL
-                                ? // Adjust percentage based on coin type
-                                  `${
-                                    row.todayPNL.value
-                                  } (${getAdjustedPercentage(
-                                    row.coin,
-                                    row.todayPNL.percentage
-                                  )}%)`
-                                : '0.00'}
-                            </TableCell>
-                          </>
-                        )}
-                      </TableRow>
-                    ))
+                          {!isMobile && (
+                            <>
+                              <TableCell
+                                align="right"
+                                sx={{ borderBottom: 'none !important' }}
+                              >
+                                {row.coin === 'WIBS' || row.coin === 'DaCrazy'
+                                  ? row.coin_price.toFixed(5)
+                                  : row.coin_price.toFixed(2)}
+                              </TableCell>
+                              <TableCell
+                                align="right"
+                                sx={{ borderBottom: 'none !important' }}
+                                className={
+                                  row.todayPNL
+                                    ? row.todayPNL.isPositive
+                                      ? classes.greenText
+                                      : classes.redText
+                                    : ''
+                                }
+                              >
+                                {row.todayPNL
+                                  ? // Adjust percentage based on coin type
+                                    `${
+                                      row.todayPNL.value
+                                    } (${getAdjustedPercentage(
+                                      row.coin,
+                                      row.todayPNL.percentage
+                                    )}%)`
+                                  : '0.00'}
+                              </TableCell>
+                            </>
+                          )}
+                        </TableRow>
+                      ))} */}
+                    </>
                   ) : (
                     <TableRow>
                       <TableCell
@@ -1267,7 +1319,8 @@ export default function EnhancedTable({
                   </>
 
                   {/* Total Row - Only display for non-'Coins' categories */}
-                  {group.category.includes('Coins') &&
+                  {isTotalAmount &&
+                    group.category.includes('Coins') &&
                     group.rows.length > 0 && (
                       <TableRow>
                         <TableCell

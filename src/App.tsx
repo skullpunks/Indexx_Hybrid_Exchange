@@ -40,6 +40,7 @@ import About from './components/About/About';
 import Account from './components/AccountSettings/Account';
 // import BSDashhboard from './components/BuySell/BSDashboard';
 import SecurityChange from './components/AccountSettings/SecurityChange';
+import SecurityChangeUpdated from './components/AccountSettings/SecurityChangeUpdated';
 // import Blockpass from './components/Blockpass/Blockpass';
 import BlockpassLink from './components/Blockpass/BlockpassLink';
 // import { useEffect, useState } from 'react';
@@ -698,6 +699,11 @@ function App() {
               path="/indexx-exchange/change-password"
               element={<SecurityChange />}
             />
+            <Route
+              path="/indexx-exchange/change-password-updated"
+              element={<SecurityChangeUpdated />}
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
