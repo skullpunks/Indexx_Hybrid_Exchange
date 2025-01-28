@@ -2078,7 +2078,36 @@ export const stakingList = async (email: string) => {
     const result = await API.get(`/api/v1/inex/user/getStakedCoins/${email}`);
     return result.data;
   } catch (err: any) {
-    console.log('FAILED: unable to perform API request (transactionList)');
+    console.log('FAILED: unable to perform API request (stakingList)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const smartAPY = async (email: string) => {
+  try {
+    const result = await API.get(
+      `/api/v1/inex/user/getSmartApyInvestmens/${email}`
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (smartAPY)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const withdrawSmartAPY = async (email: string, smartApyId: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/withdrawSmartApy`, {
+      email: email,
+      smartApyId: smartApyId,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (smartAPY)');
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
@@ -2179,6 +2208,40 @@ export const stakeCoin = async (
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
+  }
+};
+
+export const createBuyOrderForSmartAPY = async (
+  coin: string,
+  type: string,
+  percentage: number,
+  duration: string,
+  amount: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false,
+  paymentType: string = 'paypal'
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/order/createOrderForSmartAPY', {
+      coin: coin,
+      type: type,
+      percentage: percentage,
+      duration: duration,
+      amount: amount,
+      orderType: 'SmartAPY',
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
+      paymentType,
+      yieldValue: (amount * (1 + percentage)) / 100,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (createBuyOrderForSmartAPY)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
   }
 };
 

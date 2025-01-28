@@ -1,5 +1,5 @@
 // Updated ViewAllPlansPopup Component
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
@@ -12,8 +12,10 @@ import {
   TableRow,
   Button,
   Paper,
+  CircularProgress,
 } from '@mui/material';
 import SmartApyWithdrawPopup from './SmartApyWithdrawPopup';
+import { decodeJWT, smartAPY, withdrawSmartAPY } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -138,7 +140,32 @@ const useStyles = makeStyles((theme) => ({
 const ViewAllPlansPopup = ({ onClose }) => {
   const theme = useTheme();
   const classes = useStyles();
-  const [withdrawPopup, setWithdrawPopup] = useState(false);
+  const [txList, setTxList] = useState([]);
+  const [loadingRow, setLoadingRow] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const decodedToken = decodeJWT(String(token));
+    smartAPY(decodedToken?.email).then((res) => {
+      if (res.status === 200 && Array.isArray(res.data)) {
+        const reversedResults = [...res.data].reverse();
+        setTxList(reversedResults);
+      }
+    });
+  }, []);
+
+  const handleWithdraw = (email, smartApyId) => {
+    setLoadingRow(smartApyId); // Set loading state for the specific row
+    withdrawSmartAPY(email, smartApyId).then((response) => {
+      if (response.status === 200) {
+        alert('Withdrawal successful');
+        setTxList((prev) => prev.filter((item) => item.smartApyId !== smartApyId));
+      } else {
+        alert('Withdrawal failed: ' + response.message);
+      }
+      setLoadingRow(null); // Clear loading state
+    });
+  };
 
   return (
     <div
@@ -177,55 +204,39 @@ const ViewAllPlansPopup = ({ onClose }) => {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell className={classes.tableHeadCell}>Tier</TableCell>
-                  <TableCell className={classes.tableHeadCell}>
-                    Deposit Duration
-                  </TableCell>
+                  <TableCell className={classes.tableHeadCell}>Deposit Duration</TableCell>
                   <TableCell className={classes.tableHeadCell}>APY</TableCell>
-                  <TableCell className={classes.tableHeadCell}>
-                    Amount
-                  </TableCell>
-                  <TableCell className={classes.tableHeadCell}>
-                    Action
-                  </TableCell>
+                  <TableCell className={classes.tableHeadCell}>Amount</TableCell>
+                  <TableCell className={classes.tableHeadCell}>Status</TableCell>
+                  <TableCell className={classes.tableHeadCell}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {[
-                  {
-                    tier: 'Bronze',
-                    depositDuration: '6 months',
-                    apy: '20%',
-                    amount: '$500',
-                    action: 'Withdraw',
-                  },
-                  {
-                    tier: 'Gold',
-                    depositDuration: '12 months',
-                    apy: '30%',
-                    amount: '$51,000',
-                    action: 'Withdraw',
-                  },
-                ].map((row, index) => (
+                {txList.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.tier}</TableCell>
-                    <TableCell>{row.depositDuration}</TableCell>
-                    <TableCell>{row.apy}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.duration || 'N/A'}</TableCell>
+                    <TableCell>{(row.percentage || 0) * 100}%</TableCell>
+                    <TableCell>${row.stakedAmount}</TableCell>
+                    <TableCell>{row.isActive ? 'Active' : 'Inactive'}</TableCell>
                     <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          textTransform: 'capitalize',
-                          width: 'fit-content',
-                          height: 'fit-content',
-                          padding: '10px 25px',
-                        }}
-                        onClick={() => setWithdrawPopup(true)}
-                      >
-                        {row.action}
-                      </Button>
+                      {loadingRow === row.smartApyId ? (
+                        <CircularProgress size={24} />
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{
+                            textTransform: 'capitalize',
+                            width: 'fit-content',
+                            height: 'fit-content',
+                            padding: '10px 25px',
+                          }}
+                          onClick={() => handleWithdraw(row.email, row.smartApyId)}
+                          disabled={!row.isActive}
+                        >
+                          Withdraw
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -234,9 +245,6 @@ const ViewAllPlansPopup = ({ onClose }) => {
           </TableContainer>
         </div>
       </div>
-      {withdrawPopup && (
-        <SmartApyWithdrawPopup onClose={() => setWithdrawPopup(false)} />
-      )}
     </div>
   );
 };

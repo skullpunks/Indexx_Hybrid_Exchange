@@ -19,7 +19,6 @@ const columns = [
   { id: 'stakedAmount', label: 'Staked Amount', minWidth: 100 },
   { id: 'rewardAmount', label: 'Reward Amount', minWidth: 100 },
   { id: 'finalAmount', label: 'Final Amount', minWidth: 100 },
-  { id: 'type', label: 'Type', minWidth: 100 },
   { id: 'duration', label: 'Duration', minWidth: 100 },
   { id: 'percentage', label: 'Percentage', minWidth: 100 },
   { id: 'status', label: 'Status', minWidth: 100 },

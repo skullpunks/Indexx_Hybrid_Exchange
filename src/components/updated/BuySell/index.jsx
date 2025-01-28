@@ -92,10 +92,12 @@ const BuySell = () => {
               `${orderData?.orderType} Order processed successfully`
             );
             setIsModalOpen(true);
-          } else if (orderData?.orderType === 'SmartCryptoBuy'){
+          } else if (orderData?.orderType === 'SmartCryptoBuy') {
             navigate(
               `/smart-crypto?orderId=${orderData?.orderId}&success=${successFlag}`
             );
+          } else if (orderData?.orderType === 'SmartAPY') {
+            navigate(`/smart-apy-calculator?orderId=${orderData?.orderId}&success=${successFlag}`);
           } else {
             navigate(
               `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`

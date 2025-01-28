@@ -519,13 +519,18 @@ export default function EnhancedTable({
 
     // Helper function to determine all applicable categories for a row
     const getCategories = (notes) => {
+      let email = String(localStorage.getItem('email'));
       const applicableCategories = [];
       if (notes.startsWith('xBitcoin Blooming'))
         applicableCategories.push('Smart Crypto x-Bitcoin Blooming');
       if (notes.startsWith('xBitcoin Rush'))
         applicableCategories.push('Smart Crypto x-Bitcoin Rush');
       if (notes.startsWith('xBitcoin Bull-Run'))
-        applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
+        if(email === "fowlertrucking14@yahoo.com") {
+          applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run($10,000 Investment + $10,000 Commission)');
+        } else {
+          applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
+        }
       if (notes.startsWith('xBBitcoin Bull-Run-2'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run-2');
       if (notes.startsWith('xBBitcoin Bull-Run-3'))
@@ -586,6 +591,7 @@ export default function EnhancedTable({
       'Smart Crypto x-Bitcoin Blooming',
       'Smart Crypto x-Bitcoin Rush',
       'Smart Crypto x-Bitcoin Bull-Run',
+      'Smart Crypto x-Bitcoin Bull-Run($10,000 Investment + $10,000 Commission)',
       'Smart Crypto x-Bitcoin Bull-Run-2',
       'Smart Crypto x-Bitcoin Bull-Run-3',
       'Smart Crypto x-BBitcoin Bitcoin-Commission',
