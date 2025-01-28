@@ -13,6 +13,7 @@ import {
   Button,
   Paper,
   CircularProgress,
+  Typography,
 } from '@mui/material';
 import SmartApyWithdrawPopup from './SmartApyWithdrawPopup';
 import { decodeJWT, smartAPY, withdrawSmartAPY } from '../../../services/api';
@@ -159,7 +160,9 @@ const ViewAllPlansPopup = ({ onClose }) => {
     withdrawSmartAPY(email, smartApyId).then((response) => {
       if (response.status === 200) {
         alert('Withdrawal successful');
-        setTxList((prev) => prev.filter((item) => item.smartApyId !== smartApyId));
+        setTxList((prev) =>
+          prev.filter((item) => item.smartApyId !== smartApyId)
+        );
       } else {
         alert('Withdrawal failed: ' + response.message);
       }
@@ -196,53 +199,74 @@ const ViewAllPlansPopup = ({ onClose }) => {
 
           <h3 className={classes.heading}>Existing Smart APY Plans</h3>
 
-          <TableContainer
-            component={Paper}
-            elevation={0}
-            sx={{ background: 'none' }}
-          >
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.tableHeadCell}>Deposit Duration</TableCell>
-                  <TableCell className={classes.tableHeadCell}>APY</TableCell>
-                  <TableCell className={classes.tableHeadCell}>Amount</TableCell>
-                  <TableCell className={classes.tableHeadCell}>Status</TableCell>
-                  <TableCell className={classes.tableHeadCell}>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {txList.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.duration || 'N/A'}</TableCell>
-                    <TableCell>{(row.percentage || 0) * 100}%</TableCell>
-                    <TableCell>${row.stakedAmount}</TableCell>
-                    <TableCell>{row.isActive ? 'Active' : 'Inactive'}</TableCell>
-                    <TableCell>
-                      {loadingRow === row.smartApyId ? (
-                        <CircularProgress size={24} />
-                      ) : (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          sx={{
-                            textTransform: 'capitalize',
-                            width: 'fit-content',
-                            height: 'fit-content',
-                            padding: '10px 25px',
-                          }}
-                          onClick={() => handleWithdraw(row.email, row.smartApyId)}
-                          disabled={!row.isActive}
-                        >
-                          Withdraw
-                        </Button>
-                      )}
+          {txList.length === 0 ? (
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 4, color: theme.palette.text.secondary }}
+            >
+              No active Smart APY plans exist.
+            </Typography>
+          ) : (
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{ background: 'none' }}
+            >
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.tableHeadCell}>
+                      Deposit Duration
+                    </TableCell>
+                    <TableCell className={classes.tableHeadCell}>APY</TableCell>
+                    <TableCell className={classes.tableHeadCell}>
+                      Amount
+                    </TableCell>
+                    <TableCell className={classes.tableHeadCell}>
+                      Status
+                    </TableCell>
+                    <TableCell className={classes.tableHeadCell}>
+                      Action
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {txList.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{row.duration || 'N/A'}</TableCell>
+                      <TableCell>{(row.percentage || 0) * 100}%</TableCell>
+                      <TableCell>${row.stakedAmount}</TableCell>
+                      <TableCell>
+                        {row.isActive ? 'Active' : 'Inactive'}
+                      </TableCell>
+                      <TableCell>
+                        {loadingRow === row.smartApyId ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                              textTransform: 'capitalize',
+                              width: 'fit-content',
+                              height: 'fit-content',
+                              padding: '10px 25px',
+                            }}
+                            onClick={() =>
+                              handleWithdraw(row.email, row.smartApyId)
+                            }
+                            disabled={!row.isActive}
+                          >
+                            Withdraw
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </div>
       </div>
     </div>
