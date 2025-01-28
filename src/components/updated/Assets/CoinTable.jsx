@@ -530,6 +530,8 @@ export default function EnhancedTable({
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run-2');
       if (notes.startsWith('xBBitcoin Bull-Run-3'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run-3');
+      if (notes.startsWith('xBBitcoin Bitcoin-Commission'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin-Commission');
       if (notes.startsWith('xBitcoin Bitcoin'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
       if (notes.includes('Wave'))
@@ -586,6 +588,8 @@ export default function EnhancedTable({
       'Smart Crypto x-Bitcoin Bull-Run',
       'Smart Crypto x-Bitcoin Bull-Run-2',
       'Smart Crypto x-Bitcoin Bull-Run-3',
+      'Smart Crypto x-BBitcoin Bitcoin-Commission',
+      'Smart Crypto x-Bitcoin Bitcoin-Commission',
       'Smart Crypto x-Bitcoin Bitcoin',
       'Smart Crypto x-Blue Wave',
       'Smart Crypto x-Blue Surge',
