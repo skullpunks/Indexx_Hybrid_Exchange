@@ -122,7 +122,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConfirmInvestmentPopup = ({ onClose }) => {
+const ConfirmInvestmentPopup = ({
+  onClose,
+  onConfirm,
+  amount,
+  duration,
+  loading,
+}) => {
   const theme = useTheme();
 
   const classes = useStyles();
@@ -155,7 +161,8 @@ const ConfirmInvestmentPopup = ({ onClose }) => {
           {/* <img src={greenCheck} height="60px" /> */}
           <h3 className={classes.heading}>Confirm Your Investment</h3>
           <h4 className={classes.subHeading}>
-            You’re about to stake $5,000 for 6 months.
+            You’re about to stake $
+            {new Intl.NumberFormat('en-US').format(amount)} for {duration}.
           </h4>
           <p className={classes.paragraph}>
             Your funds will be converted to IUSD+ and securely staked to
@@ -165,7 +172,11 @@ const ConfirmInvestmentPopup = ({ onClose }) => {
           <div style={{ margin: '30px' }}></div>
           <p className={classes.paragraph}> Please confirm to proceed.</p>
           <div className={classes.btnContainer}>
-            <GenericButton text="Confirm and Stake" onClick={onClose} />
+            <GenericButton
+              text="Confirm and Stake"
+              onClick={onConfirm}
+              loading={loading}
+            />
 
             <GenericButton
               text="Invest"

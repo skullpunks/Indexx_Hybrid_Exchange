@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import GenericButton from '../shared/Button';
 import smartApyIcon from '../../../assets/updated/SmartApy/smartApyLogo.svg';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -123,8 +124,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuccessfulStakePopup = ({ onClose }) => {
+const SuccessfulStakePopup = ({ onClose, orderData, duration }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const classes = useStyles();
   return (
@@ -156,7 +158,13 @@ const SuccessfulStakePopup = ({ onClose }) => {
           <img src={greenCheck} height="60px" />
           <h3 className={classes.heading}>Your Stake Is Successful!</h3>
           <h4 className={classes.subHeading}>
-            You’ve successfully staked $5,000 for 6 months.
+            You’ve successfully staked $
+            {new Intl.NumberFormat('en-US').format(
+              orderData?.breakdown?.inAmount
+                ? orderData?.breakdown?.inAmount
+                : 0
+            )}
+             {' '}for {orderData?.smartAPYduration}.
           </h4>
           <p className={classes.paragraph}>
             Your funds have been converted to IUSD+ and are now earning
@@ -169,7 +177,13 @@ const SuccessfulStakePopup = ({ onClose }) => {
             ends. You can withdraw to USD or reinvest in other tokens.
           </p>
           <div className={classes.btnContainer}>
-            <GenericButton text="View Asset Wallet" onClick={onClose} />
+            <GenericButton
+              text="View Asset Wallet"
+              onClick={() => {
+                onClose();
+                navigate('/smart-apy');
+              }}
+            />
           </div>
         </div>
       </div>

@@ -104,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
+  console.log(selectedValue, setupdatePlanMode);
   const classes = useStyles();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -158,13 +159,11 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
           />
         </Box>
       </Box>
-      <Box>
+      {/* <Box>
         <Box className={classes.leftDiv}>
-          {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
-          <Box className={classes.underline}></Box> */}
           <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
         </Box>
-      </Box>
+      </Box> */}
 
       <EnhancedTable
         searchQuery={searchQuery}

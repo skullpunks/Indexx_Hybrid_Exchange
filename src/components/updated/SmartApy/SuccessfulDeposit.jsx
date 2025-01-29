@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import GenericButton from '../shared/Button';
 import smartApyIcon from '../../../assets/updated/SmartApy/smartApyLogo.svg';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -112,9 +113,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuccessfullDepostPopup = ({ onClose }) => {
+const SuccessfullDepostPopup = ({ onClose, orderData }) => {
   const theme = useTheme();
-
+  const navigate = useNavigate();
   const classes = useStyles();
   return (
     <div
@@ -143,7 +144,9 @@ const SuccessfullDepostPopup = ({ onClose }) => {
             </div>
           </div>
           <img src={greenCheck} height="60px" />
-          <h3>Thank you for investing with </h3>
+          <h3>
+            Thank you for investing ${orderData?.breakdown?.inAmount} with{' '}
+          </h3>
           <div
             style={{
               display: 'flex',
@@ -161,7 +164,13 @@ const SuccessfullDepostPopup = ({ onClose }) => {
               <p style={{ fontSize: '10px' }}>
                 Click Asset to check your investment
               </p>
-              <GenericButton text="Asset Wallet" onClick={onClose} />
+              <GenericButton
+                text="Asset Wallet"
+                onClick={() => {
+                  onClose();
+                  navigate('/wallet/overview');
+                }}
+              />
             </div>
             <div>
               <p style={{ fontSize: '10px' }}>Click "Invest"</p>
