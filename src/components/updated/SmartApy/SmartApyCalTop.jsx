@@ -763,7 +763,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
 
               <div className={classes.fullWidthButton}>
                 <GenericButton
-                  text="Invest"
+                  text="Stake Now"
                   disabled={
                     loadings ||
                     !!error ||

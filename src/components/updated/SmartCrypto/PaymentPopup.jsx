@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     zIndex: 1200,
     width: '100%',
-    minheight: '100vh',
+    height: '90vh',
   },
   bnTrans: {
     opacity: 0,
