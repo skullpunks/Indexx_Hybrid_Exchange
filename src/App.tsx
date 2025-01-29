@@ -697,7 +697,7 @@ function App() {
             />
             <Route
               path="/indexx-exchange/change-password"
-              element={<SecurityChange />}
+              element={<SecurityChangeUpdated />}
             />
             <Route
               path="/indexx-exchange/change-password-updated"

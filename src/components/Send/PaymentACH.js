@@ -69,7 +69,13 @@ const Final = ({
   }, [fromDetails, toDetails, photoIdUrl, apiCalled]);
 
   const handleWallet = () => {
-    navigate('/wallet/overview');
+    if (orderData?.orderType === 'SmartCryptoBuy') {
+      navigate('/smart-crypto');
+    } else if (orderData?.orderType === 'SmartAPY') {
+      navigate('/smart-apy-calculator');
+    } else {
+      navigate('/wallet/overview');
+    }
   };
 
   const handleExchange = () => {
@@ -100,7 +106,7 @@ const Final = ({
           className="font_17x"
           style={{ color: theme.palette.text.primary, textAlign: 'center' }}
         >
-          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : "Crypto"} purchase!
+          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : orderData?.orderType === 'SmartAPY' ? 'Smart APY' : "Crypto"} purchase!
         </div>
         <div className="font_10x mt-4">
           Our team is diligently verifying your order, and your tokens will be
@@ -239,13 +245,13 @@ const FileComponent1 = ({
           </span>
           {String(orderData?.orderType)?.includes('Pack')
             ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
-                'en-US',
-                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-              )
+              'en-US',
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )
             : orderData?.breakdown?.inAmount?.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{' '}
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}{' '}
           {orderData?.breakdown?.inCurrenyName}
         </h1>
         <WarningAmberIcon /> Kindly transfer the exact amount specified above
@@ -1145,35 +1151,35 @@ export default function PaymentACH() {
         >
           {localStorage.getItem('userlogged') === 'normal'
             ? steps.map((step, index) => (
-                <Step key={step.label}>
-                  <StepLabel>{step.label}</StepLabel>
-                </Step>
-              ))
+              <Step key={step.label}>
+                <StepLabel>{step.label}</StepLabel>
+              </Step>
+            ))
             : steps.map((step, index) => (
-                <Step key={step.label}>
-                  <StepLabel
-                    StepIconComponent={({ completed, active }) => (
-                      <div className={classes.customIconContainer}>
-                        {/* <div
+              <Step key={step.label}>
+                <StepLabel
+                  StepIconComponent={({ completed, active }) => (
+                    <div className={classes.customIconContainer}>
+                      {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                        <div
-                          className={
-                            completed
-                              ? classes.completedIcon
-                              : activeStep === index
+                      <div
+                        className={
+                          completed
+                            ? classes.completedIcon
+                            : activeStep === index
                               ? classes.activeIcon
                               : classes.inactiveIcon
-                          }
-                        />
-                        <div className={classes.stepNumber}>{index + 1}</div>
-                      </div>
-                    )}
-                  >
-                    {step.label}
-                  </StepLabel>
-                </Step>
-              ))}
+                        }
+                      />
+                      <div className={classes.stepNumber}>{index + 1}</div>
+                    </div>
+                  )}
+                >
+                  {step.label}
+                </StepLabel>
+              </Step>
+            ))}
         </Stepper>
 
         <Box>

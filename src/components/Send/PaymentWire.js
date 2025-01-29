@@ -46,8 +46,15 @@ const Final = ({
   const navigate = useNavigate();
   const theme = useTheme();
   const handleWallet = () => {
-    navigate('/wallet/overview');
+    if (orderData?.orderType === 'SmartCryptoBuy') {
+      navigate('/smart-crypto');
+    } else if (orderData?.orderType === 'SmartAPY') {
+      navigate('/smart-apy-calculator');
+    } else {
+      navigate('/wallet/overview');
+    }
   };
+
   const handleExchange = () => {
     navigate('/update/home');
   };
@@ -92,7 +99,7 @@ const Final = ({
           className="font_17x"
           style={{ color: theme.palette.text.primary, textAlign: 'center' }}
         >
-          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : "Crypto"} purchase!
+          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : orderData?.orderType === 'SmartAPY' ? 'Smart APY' : "Crypto"} purchase!
         </div>
         <div className="font_10x mt-4">
           Our team is diligently verifying your order, and your tokens will be

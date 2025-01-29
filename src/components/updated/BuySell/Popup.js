@@ -108,7 +108,7 @@ const GeneralPopup = ({ message, onClose, width }) => {
           <h3>{message}</h3>
           <div className={classes.btnContainer}>
             <GenericButton text="Close" onClick={onClose} />
-            {message?.includes('KYC') && (
+            {typeof message === 'string' && message.includes('KYC') && (
               <GenericButton text="Complete KYC Now" onClick={handleAccountRedirect} />
             )}
           </div>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SingleSelectPlaceholder from '../Staking/CustomSelect';
 import StickyHeadTable from '../Staking/StakingBottom/WebViewTable';
 import { useTheme } from '@mui/material';
+import { decodeJWT, smartAPY } from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -52,25 +53,16 @@ const RewardTransactionTable = ({ refresh }) => {
   const [selectedType, setSelectedType] = useState('');
   const [selectedCoin, setSelectedCoin] = useState('');
 
-  // Sample data for table
-  const sampleData = [
-    { id: 1, coin: 'BTC', type: 'Deposit', isActive: true },
-    { id: 2, coin: 'ETH', type: 'Withdraw', isActive: false },
-    { id: 3, coin: 'USDT', type: 'Deposit', isActive: true },
-    { id: 4, coin: 'BTC', type: 'Withdraw', isActive: false },
-    { id: 5, coin: 'ETH', type: 'Deposit', isActive: true },
-    { id: 6, coin: 'USDT', type: 'Withdraw', isActive: false },
-    { id: 7, coin: 'BTC', type: 'Deposit', isActive: true },
-    { id: 8, coin: 'ETH', type: 'Withdraw', isActive: true },
-    { id: 9, coin: 'USDT', type: 'Deposit', isActive: false },
-    { id: 10, coin: 'BTC', type: 'Withdraw', isActive: true },
-  ];
 
   useEffect(() => {
-    // Set sample data as initial table data
-    const reversedResults = [...sampleData].reverse();
-    setTxList(reversedResults);
-    setTxListFilter(reversedResults);
+    const token = localStorage.getItem('access_token');
+    const decodedToken = decodeJWT(String(token));
+    smartAPY(decodedToken?.email).then((res) => {
+      const results = res.data;
+      const reversedResults = [...results].reverse();
+      setTxList(reversedResults);
+      setTxListFilter(reversedResults);
+    });
   }, [refresh]);
 
   useEffect(() => {
@@ -127,7 +119,7 @@ const RewardTransactionTable = ({ refresh }) => {
         </div>
       </div>
       <div className={classes.tableContainer}>
-        <StickyHeadTable
+      <StickyHeadTable
           data={txListFilter}
           pageSize={pageSize}
           current={current}

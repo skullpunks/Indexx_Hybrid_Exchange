@@ -6,13 +6,13 @@ import iusd from '../../../assets/updated/buySell/usd.svg';
 import GenericButton from '../shared/Button';
 import {
   baseURL,
-  calculateStakeReward,
+  createBuyOrderForSmartAPY,
   decodeJWT,
+  getOrderDetails,
   getUserWallets,
   loginWithToken,
-  stakeCoin,
 } from '../../../services/api';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import tokensList from '../../../utils/Tokens.json';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import { title } from 'process';
@@ -28,6 +28,9 @@ import step1Img from '../../../assets/updated/SmartApy/step1Img.svg';
 import step2Img from '../../../assets/updated/SmartApy/step2Img.svg';
 import step3Img from '../../../assets/updated/SmartApy/step3Img.svg';
 import step4Img from '../../../assets/updated/SmartApy/step4Img.svg';
+import GeneralPopup from '../BuySell/Popup';
+import ProcessingFailedPopup from '../SmartCrypto/ProcessingFailedPopup';
+import CongratulationsPopup from './Congratulations';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -237,32 +240,20 @@ const useStyles = makeStyles((theme) => ({
 const SmartApyTop = ({ onStakeSuccess }) => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [totalBalanceInUSD, setTotalBalanceInUSD] = useState(0);
-  const [stakingtype, setStakingtype] = useState('token');
-  const [token, setToken] = useState('INEX');
   const [selectedToken, setSelectedToken] = useState({
     title: 'USD',
     image: 'USD',
-    stakingPercentage6months: 6,
-    stakingPercentage1year: 15,
+    stakingPercentage6months: 20,
+    stakingPercentage1year: 30,
+    stakingPercentage18months: 40,
     chain: 'Binance Smart Chain',
   });
-  const [selectedTokenBalance, setSelectedTokenBalance] = useState(0);
   const [value, setValue] = useState('Bronze');
-
-  const [allWallets, setAllWallets] = useState();
-  const [tokenType, setTokenType] = useState('Tokens');
-  const [calcAmt, setcalcAmt] = useState('');
-  const [amt, setAmt] = useState(0);
+  const [amt, setAmt] = useState();
+  const [formattedAmt, setFormattedAmt] = useState(''); // Formatted value for display
   const [type, setType] = useState('Short');
-  const [isVisible, setIsVisible] = useState(true);
-  const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
   const [honeyBeeId, setHoneyBeeId] = useState('');
   const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
-  const [userBalance, setUserBalance] = useState(0);
-  const [sixMonthReward, setSixMonthReward] = useState(0);
-  const [oneYearReward, setOneYearReward] = useState(0);
-  const [rewards, setRewards] = useState(0);
   const [finalAmount, setFinalAmount] = useState(0);
   const [error, setError] = useState('');
   const [loadings, setLoadings] = useState(false);
@@ -273,38 +264,77 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentMethodError, setPaymentMethodError] = useState('');
-
+  const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
+  const [usdAmount, setUsdAmount] = useState();
   const theme = useTheme();
+  const { id } = useParams();
+  const [congratulationsPopup, setCongratulationsPopup] = useState(false);
+  const [failedPopup, setFailedPopup] = useState(false);
+
   const [searchParams] = useSearchParams();
-  const [activeButton, setActiveButton] = useState('6 Months');
+  const [activeButton, setActiveButton] = useState('6 Months (20%)');
   const defaultSignInToken = searchParams.get('signInToken');
   const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMsgOpen, setPopupMsgOpen] = useState(false);
+  const [permissionData, setPermissionData] = useState();
+
+  const [orderID, setOrderId] = useState('');
+  const [orderData, setOrderData] = useState('');
+  const [orderId] = useSearchParams();
+  const [success] = useSearchParams();
+
+  useEffect(() => {
+    const orderIdParam = orderId.get('orderId');
+    const successParam = success.get('success');
+
+    // Ensure both orderId and success are available
+    if (orderIdParam && successParam) {
+      setOrderId(String(orderIdParam));
+      console.log('success', successParam);
+
+      if (successParam === 'true') {
+        setCongratulationsPopup(true);
+      } else {
+        setFailedPopup(true);
+      }
+
+      if (orderIdParam !== undefined) {
+        let access_token = String(localStorage.getItem('access_token'));
+        let decoded = decodeJWT(access_token);
+
+        getOrderDetails(decoded.email, String(orderIdParam)).then((res) => {
+          const userEmail = decoded.email;
+          const userKey = localStorage.getItem('userkey');
+          const userType = localStorage.getItem('userType');
+          console.log('userEmail', userEmail);
+          console.log('userKey', userKey);
+
+          console.log(res);
+          let orderData = res;
+          if (res.status === 200) {
+            console.log('orderData', orderData);
+            setOrderData(orderData.data);
+          }
+        });
+      }
+    } else {
+      console.log(
+        'Missing orderId or success parameter. Skipping state updates.'
+      );
+    }
+  }, [orderId, success]);
 
   const handleButtonClick = async (button) => {
     setActiveButton(button);
     console.log('Button', button);
-    if (button === '1 Year') {
-      let result = await calculateStakeReward(
-        amt ?? 0,
-        selectedToken.title,
-        'Long',
-        selectedToken.stakingPercentage1year
-      );
-      console.log('result', result);
-      setRewards(result?.data?.finalAmount ?? 0);
+    if (button === '12 Months') {
       setFinalAmount(amt * (1 + selectedToken.stakingPercentage1year / 100));
-      setType('Long');
     } else if (button === '6 Months') {
-      let result = await calculateStakeReward(
-        amt ?? 0,
-        selectedToken.title,
-        'Short',
-        selectedToken.stakingPercentage6months
-      );
-      console.log('result', result);
-      setRewards(result?.data?.finalAmount ?? 0);
       setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
-      setType('Short');
+    } else if (button === '18 Months') {
+      setFinalAmount(amt * (1 + selectedToken.stakingPercentage6months / 100));
     }
   };
 
@@ -345,30 +375,31 @@ const SmartApyTop = ({ onStakeSuccess }) => {
     }
   }
 
-  const getAllUserWallet = async () => {
-    try {
-      let email = String(localStorage.getItem('email'));
-      const userWallets = await getUserWallets(email);
-      const usersWallet = userWallets.data;
-      setAllWallets(usersWallet);
-      const findTokenBal = usersWallet.find(
-        (x) => x.coinSymbol === selectedToken.title
-      );
-      setSelectedTokenBalance(findTokenBal.coinBalance);
-    } catch (err) {
-      console.error('Error in getAllUserWallet', err);
-    }
-  };
-
   useEffect(() => {
-    getAllUserWallet();
-  }, []);
+    const percentage =
+      activeButton === '6 Months (20%)'
+        ? selectedToken.stakingPercentage6months
+        : activeButton === '12 months (30%)'
+        ? selectedToken.stakingPercentage1year
+        : selectedToken.stakingPercentage18months;
 
-  const getImage = (image) => {
-    try {
-      return require(`../../../../assets/token-icons/${image}.png`).default;
-    } catch (error) {
-      return Inex; // Fallback image if specific token icon is not found
+    const profit = amt * (percentage / 100);
+    setFinalAmount(profit ? profit : 0);
+  }, [amt, activeButton, selectedToken]);
+
+  const formattedProfit = new Intl.NumberFormat('en-US').format(finalAmount); // Format profit for display
+
+  const handleAmountChange = (e) => {
+    // Remove non-numeric characters and restrict to whole numbers
+    const rawValue = e.target.value.replace(/[^0-9]/g, '');
+
+    if (!isNaN(rawValue) && rawValue >= 0) {
+      setAmt(rawValue); // Set raw value for API
+      setFormattedAmt(
+        rawValue
+          ? new Intl.NumberFormat('en-US').format(rawValue) // Format as a whole number with commas
+          : ''
+      ); // Format value for display
     }
   };
 
@@ -377,45 +408,254 @@ const SmartApyTop = ({ onStakeSuccess }) => {
 
   const submitStake = async () => {
     try {
-      setLoadings(true);
-      const email = localStorage.getItem('email');
-      let percentage =
-        type === 'Short'
-          ? selectedToken.stakingPercentage6months
-          : selectedToken.stakingPercentage1year;
-      let res = await stakeCoin(
-        email,
-        amt,
-        selectedToken.title,
-        type,
-        percentage
-      );
-      console.log(res);
-      if (res.status === 200) {
-        setLoadings(false);
-        setShowSuccessPopup(true); // Show success popup
-        onStakeSuccess();
-        setAmt('');
-        setRewards(0);
-        // Re-fetch the updated wallet balances after staking
-        await getAllUserWallet();
-      } else {
-        setLoadings(false);
-        setShowErrorPopup(true); // Show success popup
-        setErrorMessage(res.message);
-        setAmt('');
-        setRewards(0);
-        // Re-fetch the updated wallet balances after staking
-        await getAllUserWallet();
-      }
+      await confirmPayment();
     } catch (err) {
+      console.log('Err', err);
       setLoadings(false);
     }
   };
+
+  const confirmPayment = async () => {
+    try {
+      console.log('paymentMethod', paymentMethod);
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        await createNewBuyOrder(paymentMethod);
+      } else if (paymentMethod === 'USD') {
+        // Ensure usdBalance and spendAmount are numbers by removing commas and converting them
+        const usdBalanceNumber = parseFloat(usdBalance.replace(/,/g, '')); // Removes commas and converts to number
+        const spendAmountNumber = parseFloat(usdAmount.replace(/,/g, '')); // Removes commas (if any) and converts to number
+
+        if (usdBalanceNumber > 0 && usdBalanceNumber >= spendAmountNumber) {
+          await createNewBuyOrder(paymentMethod);
+        } else {
+          console.log('Insufficient Balance');
+          setPopupMessage('Insufficient Balance');
+          setLoadings(false);
+          setPopupMsgOpen(true);
+          return;
+        }
+      } else if (paymentMethod === 'TygaPay') {
+        await createNewBuyOrderForTygaPay();
+      } else if (
+        paymentMethod === 'Zelle' ||
+        paymentMethod === 'Wire Transfer' ||
+        paymentMethod === 'Venmo' ||
+        paymentMethod === 'ACH'
+      ) {
+        const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
+        if (orderId) {
+          let selectedMethod =
+            paymentMethod === 'Wire Transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
+          navigate(
+            `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
+          );
+        }
+      }
+    } catch (err) {
+      console.log('Err', err);
+      setLoadings(false);
+    }
+  };
+
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrder = async (paymentMethod) => {
+    setLoadings(true);
+    const email = localStorage.getItem('email');
+    let res;
+    const duration =
+      activeButton.split(' ')[0] + ' ' + activeButton.split(' ')[1];
+    const percentage =
+      activeButton === '6 Months (20%)'
+        ? selectedToken.stakingPercentage6months
+        : activeButton === '12 months (30%)'
+        ? selectedToken.stakingPercentage1year
+        : selectedToken.stakingPercentage18months;
+
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setPopupMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setPopupMsgOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrderForSmartAPY(
+        'IUSD+',
+        activeButton,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    } else {
+      res = await createBuyOrderForSmartAPY(
+        'IUSD+',
+        activeButton,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
+        setLoadings(false);
+        //--Below code is to enable paypal Order---
+        let payPalPaymentLink = '';
+        for (let i = 0; i < res.data.links.length; i++) {
+          if (res.data.links[i].rel.includes('approve')) {
+            //window.location.href = res.data.links[i].href;
+            payPalPaymentLink = res.data.links[i].href;
+            break;
+          }
+        }
+        navigate('/paypal-partnership-with-indexx', {
+          state: { payPalPaymentLink },
+        });
+      } else {
+        setLoadings(false);
+        console.log('res.data', res.data);
+        setPopupMsgOpen(true);
+        setPopupMessage('Order Completed');
+      }
+      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
+    } else {
+      setLoadings(false);
+      setPopupMsgOpen(true);
+      setPopupMessage('Failed to create order. Please try again!');
+    }
+  };
+
+  const createBuyOrderForZelleAndWire = async (paymentMethod) => {
+    setLoadings(true);
+    const email = localStorage.getItem('email');
+    let percentage =
+      type === 'Short'
+        ? selectedToken.stakingPercentage6months
+        : selectedToken.stakingPercentage1year;
+    let res;
+    const duration =
+      activeButton.split(' ')[0] + ' ' + activeButton.split(' ')[1];
+    console.log('paymentMethod', paymentMethod);
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setPopupMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setPopupMsgOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrderForSmartAPY(
+        'IUSD+',
+        type,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    } else {
+      res = await createBuyOrderForSmartAPY(
+        'IUSD+',
+        type,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    }
+    if (res.status === 200) {
+      setLoadings(false);
+      // Return the order ID for Zelle and Wire
+      return res.data.orderId;
+    } else {
+      setLoadings(false);
+      setPopupMessage(res.data);
+      setPopupMsgOpen(true);
+      return null;
+    }
+  };
+
+  // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
+  const createNewBuyOrderForTygaPay = async () => {
+    setLoadings(true);
+    const email = localStorage.getItem('email');
+    const percentage =
+      activeButton === '6 Months (20%)'
+        ? selectedToken.stakingPercentage6months
+        : activeButton === '12 months (30%)'
+        ? selectedToken.stakingPercentage1year
+        : selectedToken.stakingPercentage18months;
+    let res;
+    const duration =
+      activeButton.split(' ')[0] + ' ' + activeButton.split(' ')[1];
+    if (id) {
+      if (!permissionData?.permissions?.buy) {
+        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
+        setPopupMessage(
+          'As Hive Captain, Please apply for buy approval from Hive Member'
+        );
+        setPopupMsgOpen(true);
+        setLoadings(false);
+        return;
+      }
+      res = await createBuyOrderForSmartAPY(
+        'IUSD+',
+        activeButton,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    } else {
+      res = createBuyOrderForSmartAPY(
+        'IUSD+',
+        activeButton,
+        percentage,
+        duration,
+        parseFloat(amt),
+        email,
+        false,
+        paymentMethod
+      );
+    }
+    console.log(res);
+    if (res.status === 200) {
+      console.log('Res', res);
+      console.log('res.data.data.paymentUrl', res.data.data.paymentUrl);
+      setLoadings(false);
+      window.location.href = res.data.data.paymentUrl;
+    } else {
+      setLoadings(false);
+      setPopupMsgOpen(true);
+      setPopupMessage(res.data);
+    }
+  };
+
   const handlePopupClose = () => {
     setPopupOpen(false);
   };
 
+  const handlePopuMsgpClose = () => {
+    setPopupMsgOpen(false);
+  };
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -451,10 +691,8 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               label="Enter amount"
               type="text"
               placeholder="0.0"
-              value={amt}
-              onChange={async (e) => {
-                const inputAmt = e.target.value;
-              }}
+              value={formattedAmt}
+              onChange={handleAmountChange}
               endAdornment={
                 <InputAdornment position="end">
                   <div className={classes.dropDownIconContainer}>
@@ -489,10 +727,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
                   label="Expected profit in Smart APY"
                   type="text"
                   placeholder="0.0"
-                  value={amt}
-                  onChange={async (e) => {
-                    const inputAmt = e.target.value;
-                  }}
+                  value={formattedProfit}
                   endAdornment={
                     <InputAdornment position="end">
                       <div className={classes.dropDownIconContainer}>
@@ -518,7 +753,14 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               <div className={classes.fullWidthButton}>
                 <GenericButton
                   text="Stake Now"
-                  disabled={loadings || !!error} // Disable button if loading or if there is an error
+                  text="Invest"
+                  disabled={
+                    loadings ||
+                    !!error ||
+                    amt < 5000 ||
+                    !activeButton ||
+                    !selectedPaymentMethod
+                  }
                   loading={loadings}
                   onClick={submitStake}
                 />
@@ -616,6 +858,14 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         <ViewAllPlansPopup onClose={() => setViewAllPlansPopup(false)} />
       )}
 
+      {popupMsgOpen && (
+        <GeneralPopup
+          message={popupMessage}
+          onClose={handlePopuMsgpClose}
+          width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
+
       <Popup
         open={popupOpen}
         onClose={handlePopupClose}
@@ -625,6 +875,23 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         token={'inex'}
         spendToken={'wibs'}
       />
+
+      {failedPopup && (
+        <ProcessingFailedPopup
+          onClose={() => setFailedPopup(false)}
+          category={'x-Bitcoin'}
+        />
+      )}
+
+      {congratulationsPopup && (
+        <CongratulationsPopup
+          onClose={() => setCongratulationsPopup(false)}
+          category={'x-Bitcoin'}
+          userSellPlanReformed={'userSellPlanReformed'}
+          userSellPlan={'userSellPlan'}
+          orderData={orderData}
+        />
+      )}
     </div>
   );
 };
