@@ -7,6 +7,7 @@ import {
   CryptoCurrencyMarket,
   CryptoCoinsHeatmap,
 } from 'react-ts-tradingview-widgets';
+import IconicHeader from '../../components/updated/shared/IconicHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     outline: 'none',
     overflowX: 'hidden',
+    marginTop: '100px',
   },
   tickerContainer: {
-    marginTop: 100,
+    marginTop: 50,
     pointerEvents: 'none',
   },
   widgetContainer: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chart: {
-    flex: 1,
+    flex: 3,
     minHeight: '700px',
   },
   rightSection: {
@@ -73,6 +75,12 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
     localStorage.getItem('selectedTheme') || 'dark'
   ); // Default theme from localStorage
 
+  const [selectedTab, setSelectedTab] = useState('Markets');
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia('(max-width: 560px)').matches) {
@@ -105,6 +113,8 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
   return (
     <div className={classes.root}>
       {/* Ticker Tape */}
+      <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
+
       <div className={classes.tickerContainer}>
         <TickerTape
           colorTheme={theme}
@@ -149,13 +159,18 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
               <TechnicalAnalysis
                 colorTheme={theme}
                 symbol={`BINANCE:${coin.toUpperCase()}USDT`}
-                autosize={true}
+                width={'auto'}
+                height={'381'}
                 interval="1D"
                 showIntervalTabs={true}
               />
             </div>
             <div>
-              <CryptoCurrencyMarket colorTheme={theme} autosize={true} />
+              <CryptoCurrencyMarket
+                colorTheme={theme}
+                width={'auto'}
+                height={'382'}
+              />
             </div>
           </div>
         </div>
