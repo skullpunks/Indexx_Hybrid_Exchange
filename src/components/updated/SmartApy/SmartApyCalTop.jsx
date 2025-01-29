@@ -24,6 +24,10 @@ import usd from '../../../assets/token-icons/USD.png';
 import ViewAllPlansPopup from './ViewAllPlansPopup';
 import PaymentMethodSelection from './SelectPaymentMethod';
 import Popup from './PaymentPopup';
+import step1Img from '../../../assets/updated/SmartApy/step1Img.svg';
+import step2Img from '../../../assets/updated/SmartApy/step2Img.svg';
+import step3Img from '../../../assets/updated/SmartApy/step3Img.svg';
+import step4Img from '../../../assets/updated/SmartApy/step4Img.svg';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -32,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
-    maxWidth: '1100px',
+    maxWidth: '1200px',
     width: '100%',
     '&>div': { flex: 1 },
     gap: '20px',
@@ -103,6 +107,17 @@ const useStyles = makeStyles((theme) => ({
     gap: '10px',
     color: theme.palette.text.secondary,
     margin: '15px 0px',
+  },
+  howStackWorksText: {
+    marginBottom: '30px',
+    '& h3': {
+      fontSize: '14px',
+      fontWeight: '600',
+    },
+    '& p': {
+      fontSize: '12px',
+      fontWeight: '300',
+    },
   },
   buttonTabContainer: {
     display: 'flex',
@@ -183,13 +198,21 @@ const useStyles = makeStyles((theme) => ({
   },
 
   helpContainer: {
-    padding: '24px',
     margin: 'auto',
   },
+  stepImg: {
+    width: '70px',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
   heading: {
-    fontSize: '30px',
-    fontWeight: 600,
+    fontSize: '22px',
+    fontWeight: 500,
     marginBottom: '16px',
+    '& span': {
+      fontSize: '32px',
+      fontWeight: 600,
+    },
   },
   step: {
     marginBottom: '30px',
@@ -419,7 +442,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
           <img src={smartAPYLogo} alt="" />
           <h2>Smart APY</h2>
         </div>
-        <p>Maximize your rewards by investing your IUSD+</p>
+        <p>Maximize your rewards by Staking your money in indexx Smart APY</p>
       </div>
       <div className={classes.container}>
         <div className={classes.item}>
@@ -463,7 +486,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
               </div>
               <div className={classes.rewardContainer}>
                 <InputField
-                  label="Expected profit"
+                  label="Expected profit in Smart APY"
                   type="text"
                   placeholder="0.0"
                   value={amt}
@@ -494,7 +517,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
 
               <div className={classes.fullWidthButton}>
                 <GenericButton
-                  text="Invest"
+                  text="Stake Now"
                   disabled={loadings || !!error} // Disable button if loading or if there is an error
                   loading={loadings}
                   onClick={submitStake}
@@ -517,44 +540,74 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         </div>
         <div className={classes.item} style={{ alignSelf: 'flex-start' }}>
           <div className={classes.helpContainer}>
-            <p className={classes.heading}>How to Invest in Smart APY:</p>
-            <p className={classes.step}>
-              <span>1. Enter an Amount</span>
-              <div style={{ margin: '10px 0px' }}>
-                Start with a minimum investment of $5,000.
-              </div>
+            <p className={classes.heading}>
+              How does <br /> <span>Smart APY Staking works</span>
             </p>
-            <p className={classes.step}>
-              <span>2. Choose a Lock-In Period</span>
-              <div style={{ margin: '10px 0px' }}>
-                Select your desired investment duration. Once chosen, the system
-                will automatically calculate your expected profit.
-              </div>
-            </p>
-            <p className={classes.step}>
-              <span>3. Select Payment Option</span>
-              <div style={{ margin: '10px 0px' }}>
-                Choose your preferred payment method and complete the
-                transaction.
-              </div>
-            </p>
-            <p className={classes.step}>
-              <span>4. Click "Invest"</span>
-              <div style={{ margin: '10px 0px' }}>
-                Proceed to finalize your payment.
-              </div>
-            </p>
-            <p className={classes.step}>
-              <span>5. Conversion of USD to IUSD+</span>
-              <div style={{ margin: '10px 0px' }}>
-                Once the payment is confirmed, your funds will be converted to
-                IUSD+ (indexx stable coin) and automatically staked.
-              </div>
-              <p component="span" className={classes.note}>
-                (Note: Early withdrawal of the investment may incur penalties.)
+            <div className={classes.howStackWorksText}>
+              <h3>What does Stake means?</h3>
+              <p>
+                To lock up cryptocurrency in a network to support it and earn
+                rewards.
               </p>
-            </p>
-            <p className={classes.disclaimerText}>See disclaimer</p>
+            </div>
+            <div
+              style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+            >
+              <img
+                className={classes.stepImg}
+                src={step1Img}
+                alt="step 1 img"
+              />
+              <p className={classes.step}>
+                <span>1. SelectLock-in Period and Investment Amount</span>
+                <div style={{ margin: '10px 0px' }}>
+                  Select a lock-in period of 6, 12, or 18 months based on your
+                  financial goals and the initial investment amount. Then click
+                  “Stake Now”
+                </div>
+              </p>
+            </div>
+            <div
+              style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+            >
+              <img src={step2Img} alt="" className={classes.stepImg} />
+
+              <p className={classes.step}>
+                <span>2. Confirm your investment</span>
+                <div style={{ margin: '10px 0px' }}>
+                  To proceed with staking your investment, you need to confirm
+                  your action. You will be redirect to the payment option you
+                  choose. Once the lock-in period is complete, your yield will
+                  be available in IUSD+.
+                </div>
+              </p>
+            </div>
+
+            <div
+              style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+            >
+              <img src={step3Img} alt="" className={classes.stepImg} />
+              <p className={classes.step}>
+                <span>3. Successful Staking Acknowledgment</span>
+                <div style={{ margin: '10px 0px' }}>
+                  Once the payment process goes through, your funds are
+                  converted to IUSD+ and are now earning guaranteed returns.
+                </div>
+              </p>
+            </div>
+
+            <div
+              style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+            >
+              <img src={step4Img} alt="" className={classes.stepImg} />
+              <p className={classes.step}>
+                <span>4.View Staking Dashboard</span>
+                <div style={{ margin: '10px 0px' }}>
+                  On your dashboard inside the Asset Wallet, you will see the
+                  Staking Overview.
+                </div>
+              </p>
+            </div>
           </div>
         </div>
       </div>

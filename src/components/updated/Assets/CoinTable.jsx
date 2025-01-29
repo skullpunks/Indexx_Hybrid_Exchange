@@ -729,6 +729,7 @@ export default function EnhancedTable({
                             fontWeight: 'bold',
                             fontSize: '24px',
                             paddingTop: '60px',
+                            paddingBottom: '0px',
                             color:
                               userType === 'Indexx Exchange'
                                 ? theme.palette.primary.main
@@ -754,6 +755,7 @@ export default function EnhancedTable({
                           fontWeight: 'bold',
                           fontSize: '24px',
                           paddingTop: '60px',
+                          paddingBottom: '0px',
 
                           color:
                             userType === 'Indexx Exchange'
@@ -771,7 +773,7 @@ export default function EnhancedTable({
                     (hasRenderedXBlue = true)}
 
                   {/* Orange Separator */}
-                  {groupIndex > 0 && (
+                  {/* {groupIndex > 0 && (
                     <TableRow>
                       <TableCell
                         colSpan={isMobile ? 3 : 5}
@@ -786,7 +788,7 @@ export default function EnhancedTable({
                         }}
                       />
                     </TableRow>
-                  )}
+                  )} */}
                   {/* Category Heading */}
                   {!group.category.includes('Coins') && (
                     <TableRow>
@@ -877,7 +879,7 @@ export default function EnhancedTable({
                       <TableRow>
                         <TableCell
                           colSpan={isMobile ? 3 : 5}
-                          sx={{ border: 'none !impoprtant' }}
+                          sx={{ border: 'none !important' }}
                         >
                           <div
                             style={{
@@ -1038,7 +1040,7 @@ export default function EnhancedTable({
                     <TableRow>
                       <TableCell
                         colSpan={isMobile ? 3 : 5}
-                        sx={{ border: 'none !impoprtant' }}
+                        sx={{ border: 'none !important' }}
                       >
                         <div
                           style={{
@@ -1204,7 +1206,10 @@ export default function EnhancedTable({
                       group?.rows?.length > 0 &&
                       calculateTotal(group.rows).totalAmount > 0 && (
                         <TableRow>
-                          <TableCell colSpan={isMobile ? 3 : 5}>
+                          <TableCell
+                            colSpan={isMobile ? 3 : 5}
+                            sx={{ border: 'none !important' }}
+                          >
                             <div className={classes.flexContainer}>
                               <div></div>
                               <div
@@ -1322,35 +1327,47 @@ export default function EnhancedTable({
                   {isTotalAmount &&
                     group.category.includes('Coins') &&
                     group.rows.length > 0 && (
-                      <TableRow>
-                        <TableCell
-                          colSpan={isMobile ? 3 : 5}
-                          sx={{
-                            borderBottom: 'none',
-                            fontWeight: 'bold',
-                            textAlign: 'right',
-                          }}
-                        >
-                          Total Crypto Amount in USD: $
-                          {new Intl.NumberFormat('en-US', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }).format(calculateTotal(group.rows).totalAmount)}
-                          <br />
-                          {group.category.includes('Coins') && (
-                            <>
-                              Total Staked Balance in USD: $
-                              {new Intl.NumberFormat('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }).format(
-                                calculateTotal(group.rows).totalStakingBalance
-                              )}
-                            </>
-                          )}
-                        </TableCell>
-                      </TableRow>
+                      <>
+                        <TableRow>
+                          <TableCell
+                            colSpan={isMobile ? 3 : 5}
+                            sx={{
+                              borderBottom: 'none',
+                              fontWeight: 'bold',
+                              textAlign: 'right',
+                            }}
+                          >
+                            Total Crypto Amount in USD: $
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(calculateTotal(group.rows).totalAmount)}
+                            <br />
+                            {group.category.includes('Coins') && (
+                              <>
+                                Total Staked Balance in USD: $
+                                {new Intl.NumberFormat('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                }).format(
+                                  calculateTotal(group.rows).totalStakingBalance
+                                )}
+                              </>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      </>
                     )}
+                  <TableRow>
+                    <TableCell
+                      colSpan={isMobile ? 3 : 5}
+                      sx={{
+                        borderBottom: '1px solid #FFA500',
+                        fontWeight: 'bold',
+                        textAlign: 'right',
+                      }}
+                    ></TableCell>
+                  </TableRow>
                 </React.Fragment>
               ));
             })()}

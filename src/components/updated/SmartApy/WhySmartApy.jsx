@@ -1,29 +1,29 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import { Box, Typography } from '@mui/material';
-import SmartApyImage from '../../../assets/updated/SmartApy/whySmartApyImage.png';
+import whyUseSmartApy from '../../../assets/updated/SmartApy/whyUseSmartApy.svg';
 // Create styles using makeStyles
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '1380px',
+    maxWidth: '1200px',
     width: '100%',
     margin: '50px auto',
     padding: '20px',
   },
   image: {
-    maxWidth: '450px', // Adjust size to fit your needs
     width: '100%',
+    margin: 'auto',
     height: 'auto',
     marginBottom: theme.spacing(2),
   },
   mainText: {
-    fontSize: '18px',
+    fontSize: '22px',
     fontWeight: 'normal',
     marginBottom: theme.spacing(1),
     '& span': {
-      fontSize: '38px',
+      fontSize: '48px',
       fontWeight: 'bold',
       margin: '10px 0px',
     },
@@ -52,7 +52,7 @@ const WhySmartApy = () => {
         }}
       >
         <img
-          src={SmartApyImage}
+          src={whyUseSmartApy}
           alt="IndeXX Mascot"
           className={classes.image}
         />
@@ -68,10 +68,13 @@ const WhySmartApy = () => {
         </p>
         {/* Subtitle */}
         <p className={classes.subText}>
-          Indexx USD+ stablecoin lets you earn passive yield effortlessly.
-          Instantly mint and redeem USD+ to USDT at a 1:1 ratio. Replace your
-          USDT with USD+ and unlock growth opportunities where none existed
-          before!
+          Indexx IUSD+ is a stablecoin pegged 1:1 to the US Dollar, exclusively
+          used on the Indexx platform. It powers your Smart APY investments by
+          allowing seamless staking and yield generation. With IUSD+, your funds
+          stay secure, maintain their value, and grow effortlessly through
+          guaranteed returns. Once your lock-in period ends, you can withdraw
+          IUSD+ back to USD or reinvest in other opportunities—all with the same
+          value as your initial investment.
         </p>
       </div>
       {/* Title */}

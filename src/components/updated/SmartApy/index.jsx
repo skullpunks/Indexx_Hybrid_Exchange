@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import DepositPopup from './DepositPopup';
 import RenewPopup from './RenewPopup';
-import SuccessfullDepositPopup from './SuccessfullWithdrawPopup';
+import SuccessfullDepositPopup from './SuccessfulDeposit';
 import SuccessfullRenewPopup from './SuccessfullRenewPopup';
 
 import disclaimerImage from '../../../assets/updated/SmartApy/disclaimerImage.svg';
@@ -27,6 +27,11 @@ import { useNavigate } from 'react-router-dom';
 import SmartApyCal from './SmartApyCal';
 import SmartApyWithdrawPopup from './SmartApyWithdrawPopup';
 import SuccessfullWithdrawPopup from './SuccessfullWithdrawPopup';
+
+import SmartApyImage from '../../../assets/updated/SmartApy/whySmartApyImage.png';
+import ConfirmInvestmentPopup from './ConfirmInvestmentPopup';
+import SuccessfulStakePopup from './SuccessfulStakePopup';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -51,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   iusdcontainer: {
     background: theme.palette.divider,
+    paddingBottom: '50px',
   },
   contentContainer: {
     display: 'flex',
@@ -59,8 +65,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     maxWidth: '1380px',
     width: '100%',
-    margin: '50px auto',
-    padding: '120px 20px',
+    margin: '50px auto 0 auto',
+    padding: '80px 20px',
     gap: '50px',
     '@media (max-width: 768px)': {
       flexDirection: 'column',
@@ -240,7 +246,6 @@ const SmartAPY = () => {
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
-            transform: 'translateY(130px)',
           }}
         >
           <img
@@ -305,8 +310,23 @@ const SmartAPY = () => {
             </div>
           </div>
         </div>
+        <WhySmartApy />
       </div>
-      <WhySmartApy />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '50px auto',
+        }}
+      >
+        <img
+          src={SmartApyImage}
+          alt="IndeXX Mascot"
+          className={classes.image}
+        />
+      </div>
+
       <div className={classes.investPlanContainer}>
         <h2>Smart APY Investment Plans</h2>
         <p>
@@ -445,6 +465,8 @@ const SmartAPY = () => {
       {/* <SuccessfullDepositPopup /> */}
       {/* <RenewPopup /> */}
       {/* <DepositPopup /> */}
+      {/* <ConfirmInvestmentPopup /> */}
+      {/* <SuccessfulStakePopup /> */}
     </div>
   );
 };

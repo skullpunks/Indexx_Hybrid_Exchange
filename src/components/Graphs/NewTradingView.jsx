@@ -1,16 +1,73 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   AdvancedRealTimeChart,
   TickerTape,
   TechnicalAnalysis,
   CryptoCurrencyMarket,
-  EconomicCalendar,
   CryptoCoinsHeatmap,
-  SymbolOverview,
-  MarketOverview,
 } from 'react-ts-tradingview-widgets';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flex: 1,
+    position: 'relative',
+    zIndex: 0,
+    overflowY: 'auto',
+    outline: 'none',
+    overflowX: 'hidden',
+  },
+  tickerContainer: {
+    marginTop: 100,
+    pointerEvents: 'none',
+  },
+  widgetContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  chartSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    minHeight: 780,
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
+  },
+  chart: {
+    flex: 1,
+    minHeight: '700px',
+  },
+  rightSection: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    justifyContent: 'space-between',
+    '&>div': {
+      flex: 1,
+    },
+    [theme.breakpoints.down('md')]: {
+      '&>div': {
+        height: '500px',
+      },
+    },
+  },
+  heatmapSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    marginTop: 20,
+    minHeight: '100vh',
+  },
+}));
+
 const NewAdvancedRealTimeChartComponent = ({ coin }) => {
+  const classes = useStyles();
   const [size, setSize] = useState({ width: 1200, height: 800 }); // Larger chart size
   const [theme, setTheme] = useState(
     localStorage.getItem('selectedTheme') || 'dark'
@@ -46,9 +103,9 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
   };
 
   return (
-    <div className="flex-1 relative z-0 overflow-y-auto focus:outline-none overflow-x-hidden">
+    <div className={classes.root}>
       {/* Ticker Tape */}
-      <div style={{ marginTop: '100px', pointerEvents: 'none' }}>
+      <div className={classes.tickerContainer}>
         <TickerTape
           colorTheme={theme}
           symbols={[
@@ -71,76 +128,41 @@ const NewAdvancedRealTimeChartComponent = ({ coin }) => {
       </div>
 
       {/* Flex container for widgets */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          marginTop: '20px',
-          marginLeft: '20px',
-          marginRight: '20px',
-        }}
-      >
+      <div className={classes.widgetContainer}>
         {/* Chart Section */}
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-          <div style={{ flex: 3 }}>
+        <div className={classes.chartSection}>
+          <div className={classes.chart}>
             <AdvancedRealTimeChart
               toolbar_bg={'#f1f3f6'}
               symbol={getSymbol(coin)}
-              autosize={false}
+              width={'auto'}
+              height={'820'}
               theme={theme}
-              width={size.width}
-              height={size.height}
               allow_symbol_change={false}
               settings={true}
             />
           </div>
 
           {/* Right section: Additional widgets */}
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* Technical Analysis Widget */}
-            <TechnicalAnalysis
-              colorTheme={theme}
-              symbol={`BINANCE:${coin.toUpperCase()}USDT`}
-              width={size.width / 2}
-              height={size.height / 2}
-              interval="1D"
-              showIntervalTabs={true}
-            />
-
-            {/* CryptoCurrency Market */}
-            <CryptoCurrencyMarket
-              colorTheme={theme}
-              width={size.width / 2}
-              height={size.height / 2}
-            />
+          <div className={classes.rightSection}>
+            <div>
+              <TechnicalAnalysis
+                colorTheme={theme}
+                symbol={`BINANCE:${coin.toUpperCase()}USDT`}
+                autosize={true}
+                interval="1D"
+                showIntervalTabs={true}
+              />
+            </div>
+            <div>
+              <CryptoCurrencyMarket colorTheme={theme} autosize={true} />
+            </div>
           </div>
         </div>
 
         {/* Heatmap Section */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            marginTop: '20px',
-            marginLeft: '20px',
-            marginRight: '20px',
-          }}
-        >
-          <CryptoCoinsHeatmap
-            colorTheme={theme}
-            width="auto" // Adjusted for left and right gaps
-            height={size.height}
-          />
+        <div className={classes.heatmapSection}>
+          <CryptoCoinsHeatmap colorTheme={theme} width="auto" height="800" />
         </div>
       </div>
     </div>

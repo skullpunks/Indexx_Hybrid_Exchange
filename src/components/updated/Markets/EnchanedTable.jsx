@@ -13,6 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
 import { CircularProgress, Button } from '@mui/material';
 import GeneralPopup from '../BuySell/Popup';
+import { useNavigate } from 'react-router-dom';
 
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.divider,
     },
+  },
+  viewChartBtn: {
+    background: 'none',
+    color: `${theme.palette.primary.main} !important`,
   },
 }));
 
@@ -47,6 +52,7 @@ const EnhancedTable = ({
   const classes = useStyles();
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
   const filteredRows = useMemo(() => {
     if (Array.isArray(data)) {
       return data
@@ -70,7 +76,7 @@ const EnhancedTable = ({
       'ALCRYP',
       'EQSTK',
       'IUSDP',
-      'IUSD+'
+      'IUSD+',
     ];
 
     if (restrictedSymbols.includes(Symbol)) {
@@ -81,8 +87,7 @@ const EnhancedTable = ({
       return;
     }
 
-    console.log(`Row clicked: ${Symbol}`);
-    window.location.href = `/indexx-exchange/trading-view/${Symbol}`;
+    navigate(`/indexx-exchange/trading-view/${Symbol}`);
   };
 
   const renderRowForMarketType = (row, index) => {
@@ -127,10 +132,10 @@ const EnhancedTable = ({
             </TableCell>
             <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
               <Button
-                variant="contained"
                 color="primary"
                 size="small"
                 onClick={() => handleRowClick(row.Symbol)}
+                className={classes.viewChartBtn}
               >
                 View Chart
               </Button>
@@ -162,9 +167,9 @@ const EnhancedTable = ({
               </TableCell>
               <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
                 <Button
-                  variant="contained"
                   color="primary"
                   size="small"
+                  className={classes.viewChartBtn}
                   onClick={() => handleRowClick(row.Symbol)}
                 >
                   View Chart
@@ -193,10 +198,10 @@ const EnhancedTable = ({
               </TableCell>
               <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
                 <Button
-                  variant="contained"
                   color="primary"
                   size="small"
                   onClick={() => handleRowClick(row.Symbol)}
+                  className={classes.viewChartBtn}
                 >
                   View Chart
                 </Button>
@@ -224,10 +229,10 @@ const EnhancedTable = ({
               </TableCell>
               <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
                 <Button
-                  variant="contained"
                   color="primary"
                   size="small"
                   onClick={() => handleRowClick(row.Symbol)}
+                  className={classes.viewChartBtn}
                 >
                   View Chart
                 </Button>
@@ -255,10 +260,10 @@ const EnhancedTable = ({
               </TableCell>
               <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
                 <Button
-                  variant="contained"
                   color="primary"
                   size="small"
                   onClick={() => handleRowClick(row.Symbol)}
+                  className={classes.viewChartBtn}
                 >
                   View Chart
                 </Button>
@@ -301,10 +306,10 @@ const EnhancedTable = ({
             </TableCell>
             <TableCell align="right" sx={{ borderBottom: 'none !important' }}>
               <Button
-                variant="contained"
                 color="primary"
                 size="small"
                 onClick={() => handleRowClick(row.Symbol)}
+                className={classes.viewChartBtn}
               >
                 View Chart
               </Button>
