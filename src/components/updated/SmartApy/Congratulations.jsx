@@ -279,8 +279,7 @@ const CongratulationsPopup = ({
                   : classes.blueButton
               }
               onClick={() => {
-                onClose();
-                navigate('/wallet/iusd+');
+                navigate('/wallet/iusd+?selectedValue=SmartAPY');
               }}
             />
           </div>

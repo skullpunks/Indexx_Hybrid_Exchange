@@ -427,7 +427,7 @@ export default function EnhancedTable({
     // Additional filters based on `selectedValue`
     if (selectedValue === 'Fiat' || selectedValue === 'Fiat / Cash') {
       return finalRows.filter((row) => row.coin === 'USD');
-    } else if (selectedValue === 'IUSD+' || selectedValue === 'Smart APY') {
+    } else if (selectedValue === 'IUSD+' || selectedValue === 'Smart APY' || selectedValue === 'SmartAPY') {
       return finalRows.filter(
         (row) => row.coin === 'IUSD+' || row.coin === 'iUSD+'
       );

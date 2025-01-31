@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from '@mui/material';
+import { Skeleton, useTheme } from '@mui/material';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import GenericButton from '../shared/Button';
 import smartApyIcon from '../../../assets/updated/SmartApy/smartApyLogo.svg';
@@ -129,6 +129,16 @@ const SuccessfulStakePopup = ({ onClose, orderData, duration }) => {
   const navigate = useNavigate();
 
   const classes = useStyles();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (orderData) {
+      setTimeout(() => {
+        setIsLoading(false); // Simulating loading time
+      }, 1000); // You can adjust the delay as needed
+    }
+  }, [orderData]);
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -157,15 +167,17 @@ const SuccessfulStakePopup = ({ onClose, orderData, duration }) => {
           </div>
           <img src={greenCheck} height="60px" />
           <h3 className={classes.heading}>Your Stake Is Successful!</h3>
-          <h4 className={classes.subHeading}>
-            You’ve successfully staked $
-            {new Intl.NumberFormat('en-US').format(
-              orderData?.breakdown?.inAmount
-                ? orderData?.breakdown?.inAmount
-                : 0
-            )}
-             {' '}for {orderData?.smartAPYduration}.
-          </h4>
+          {isLoading ? (
+            <Skeleton variant="text" width={250} height={40} />
+          ) : (
+            <h4 className={classes.subHeading}>
+              You’ve successfully staked $
+              {new Intl.NumberFormat('en-US').format(
+                orderData?.breakdown?.inAmount || 0
+              )}{' '}
+              for {orderData?.smartAPYduration}.
+            </h4>
+          )}
           <p className={classes.paragraph}>
             Your funds have been converted to IUSD+ and are now earning
             guaranteed returns. You can track your staking progress on the
@@ -180,8 +192,7 @@ const SuccessfulStakePopup = ({ onClose, orderData, duration }) => {
             <GenericButton
               text="View Asset Wallet"
               onClick={() => {
-                onClose();
-                navigate('/smart-apy');
+                navigate('/wallet/iusd+?selectedValue=SmartAPY');
               }}
             />
           </div>
