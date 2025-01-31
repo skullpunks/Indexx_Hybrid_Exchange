@@ -427,7 +427,11 @@ export default function EnhancedTable({
     // Additional filters based on `selectedValue`
     if (selectedValue === 'Fiat' || selectedValue === 'Fiat / Cash') {
       return finalRows.filter((row) => row.coin === 'USD');
-    } else if (selectedValue === 'IUSD+' || selectedValue === 'Smart APY' || selectedValue === 'SmartAPY') {
+    } else if (
+      selectedValue === 'IUSD+' ||
+      selectedValue === 'Smart APY' ||
+      selectedValue === 'SmartAPY'
+    ) {
       return finalRows.filter(
         (row) => row.coin === 'IUSD+' || row.coin === 'iUSD+'
       );
@@ -443,7 +447,7 @@ export default function EnhancedTable({
           row.notes.includes('xBBitcoin Bull-Run-2') ||
           row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
-        return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
+        return !isSmartCryptoNote && row.coin !== 'USD';
       });
     } else if (selectedValue === 'Smart Crypto') {
       return finalRows.filter((row) => {
@@ -461,7 +465,7 @@ export default function EnhancedTable({
       });
     } else {
       // Default case for Overview or other values
-      return finalRows;
+      return finalRows.filter((row) => row.coin !== 'USD');
     }
   }, [
     sortedRows,
@@ -847,7 +851,11 @@ export default function EnhancedTable({
                             textAlign: 'center',
                           }}
                         >
-                          <img src={cryptosImg}  alt="cryptosImg" style={{ height: '50px' }}/>
+                          <img
+                            src={cryptosImg}
+                            alt="cryptosImg"
+                            style={{ height: '50px' }}
+                          />
                         </TableCell>
                       </TableRow>
                     )}
