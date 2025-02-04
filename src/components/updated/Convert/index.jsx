@@ -217,26 +217,39 @@ const ConvertCrypto = () => {
       await fetchConversionRate(); // Fetch updated conversion rates
     }
   };
-
+  
   const fetchUserWallets = async () => {
     const token = localStorage.getItem('access_token');
     const decodedToken = decodeJWT(String(token)); // Decode JWT
-
-    const userWallets = await getUserWallets(decodedToken?.email);
-    setUsersWallets(userWallets.data);
-    setFromBalance(
-      formatBalance(
-        userWallets.data.find((x) => x.coinSymbol === fromToken.title)
-          ?.coinBalance || 0
-      )
-    );
-    setToBalance(
-      formatBalance(
-        userWallets.data.find((x) => x.coinSymbol === toToken.title)
-          ?.coinBalance || 0
-      )
-    );
+  
+    try {
+      const userWallets = await getUserWallets(decodedToken?.email);
+      setUsersWallets(userWallets.data);
+  
+      // Function to filter out invalid balances based on notes
+      const filterValidBalance = (wallets, token) => {
+        return wallets
+          .filter((wallet) => {
+            const note = wallet.notes ? wallet.notes.toLowerCase() : '';
+            return (
+              wallet.coinSymbol === token &&
+              (!wallet.notes ||
+                note.includes('gift card') ||
+                note.includes('received from'))
+            );
+          })
+          .reduce((sum, wallet) => sum + wallet.coinBalance, 0);
+      };
+  
+      // Update from and to balances after filtering
+      setFromBalance(formatBalance(filterValidBalance(userWallets.data, fromToken.title)));
+      setToBalance(formatBalance(filterValidBalance(userWallets.data, toToken.title)));
+  
+    } catch (error) {
+      console.error("Error fetching user wallets:", error);
+    }
   };
+  
 
   // Fetch prices and calculate conversion rate
   const fetchConversionRate = async () => {
@@ -296,6 +309,7 @@ const ConvertCrypto = () => {
 
   // Function to format the balance based on its value
   const formatBalance = (balance) => {
+    if (!balance) return '0.00';
     if (balance < 0.0001) {
       // Format to 5 or 6 decimal places if balance is less than 0.001
       return balance.toLocaleString('en-US', {
@@ -313,26 +327,6 @@ const ConvertCrypto = () => {
 
   // Fetch user wallets to set balances
   useEffect(() => {
-    const fetchUserWallets = async () => {
-      const token = localStorage.getItem('access_token');
-      const decodedToken = decodeJWT(String(token)); // Decode JWT
-
-      const userWallets = await getUserWallets(decodedToken?.email);
-      setUsersWallets(userWallets.data);
-      setFromBalance(
-        formatBalance(
-          userWallets.data.find((x) => x.coinSymbol === fromToken.title)
-            ?.coinBalance || 0
-        )
-      );
-      setToBalance(
-        formatBalance(
-          userWallets.data.find((x) => x.coinSymbol === toToken.title)
-            ?.coinBalance || 0
-        )
-      );
-    };
-
     fetchUserWallets();
     getAllSetting();
   }, [fromToken, toToken]);
@@ -407,19 +401,23 @@ const ConvertCrypto = () => {
 
   const handleFromTokenChange = (token) => {
     setFromToken(token);
-    const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
-    setFromBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'fromToken'
-    setFromTokenImage(getImage(token.image)); // Set the image when token changes
-    // Recalculate the amount when token changes
-    if (finalRate) {
-      const calculatedToAmount = (amount * finalRate).toFixed(8);
-      setReceiveAmount(
-        (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
-      );
-    }
-    //fetchConversionRate(); // Fetch new rates based on the new token
+    setFromBalance(
+      formatBalance(
+        usersWallets
+          .filter((wallet) => {
+            const note = wallet.notes ? wallet.notes.toLowerCase() : '';
+            return (
+              wallet.coinSymbol === token &&
+              (!wallet.notes ||
+                note.includes('gift card') ||
+                note.includes('received from'))
+            );
+          })
+          .reduce((sum, wallet) => sum + wallet.coinBalance, 0)
+      )
+    );
   };
-
+  
   const handlePopupClose = () => {
     setShowPopup(false);
     setPopupMessage('');
@@ -451,18 +449,23 @@ const ConvertCrypto = () => {
 
   const handleToTokenChange = (token) => {
     setToToken(token);
-    const userWallet = usersWallets.filter((x) => x.coinSymbol === token);
-    setToBalance(formatBalance(userWallet[0]?.coinBalance || 0)); // Update balance for new 'toToken'
-    setToTokenImage(getImage(token.image)); // Set the image when token changes
-    // Recalculate the amount when token changes
-    if (finalRate) {
-      const calculatedToAmount = (amount * finalRate).toFixed(8);
-      setReceiveAmount(
-        (calculatedToAmount * (1 - Number(adminFee) / 100)).toFixed(8)
-      );
-    }
-    //fetchConversionRate(); // Fetch new rates based on the new token
+    setToBalance(
+      formatBalance(
+        usersWallets
+          .filter((wallet) => {
+            const note = wallet.notes ? wallet.notes.toLowerCase() : '';
+            return (
+              wallet.coinSymbol === token &&
+              (!wallet.notes ||
+                note.includes('gift card') ||
+                note.includes('received from'))
+            );
+          })
+          .reduce((sum, wallet) => sum + wallet.coinBalance, 0)
+      )
+    );
   };
+  
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
