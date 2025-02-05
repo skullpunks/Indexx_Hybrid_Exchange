@@ -20,6 +20,14 @@ import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
+import ripple from '../../../assets/updated/smartCrypto/ripple.png';
+import surge from '../../../assets/updated/smartCrypto/surge.png';
+import wave from '../../../assets/updated/smartCrypto/Wave.png';
+import bullrun from '../../../assets/updated/smartCrypto/bullrun.png';
+import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
+import blooming from '../../../assets/updated/smartCrypto/blomming.png';
+import rush from '../../../assets/updated/smartCrypto/rush.png';
+import xBitcoin from '../../../assets/updated/smartCrypto/x-bitcoin.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
@@ -417,9 +425,13 @@ export default function EnhancedTable({
     console.log('finalRows', finalRows);
     console.log('smartCryptoCoins', smartCryptoCoins);
     // Additional filters based on `selectedValue`
-    if (selectedValue === 'Fiat') {
+    if (selectedValue === 'Fiat' || selectedValue === 'Fiat / Cash') {
       return finalRows.filter((row) => row.coin === 'USD');
-    } else if (selectedValue === 'IUSD+') {
+    } else if (
+      selectedValue === 'IUSD+' ||
+      selectedValue === 'Smart APY' ||
+      selectedValue === 'SmartAPY'
+    ) {
       return finalRows.filter(
         (row) => row.coin === 'IUSD+' || row.coin === 'iUSD+'
       );
@@ -435,7 +447,7 @@ export default function EnhancedTable({
           row.notes.includes('xBBitcoin Bull-Run-2') ||
           row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
-        return !isSmartCryptoNote; // Exclude rows with Smart Crypto notes
+        return !isSmartCryptoNote && row.coin !== 'USD';
       });
     } else if (selectedValue === 'Smart Crypto') {
       return finalRows.filter((row) => {
@@ -453,7 +465,7 @@ export default function EnhancedTable({
       });
     } else {
       // Default case for Overview or other values
-      return finalRows;
+      return finalRows.filter((row) => row.coin !== 'USD');
     }
   }, [
     sortedRows,
@@ -665,6 +677,42 @@ export default function EnhancedTable({
     return ` - ${managedBy}`;
   };
 
+  const getFormattedCategoryForImage = (note) => {
+    console.log('notes', note);
+
+    // Define mappings for crypto types
+    const cryptoMappings = [
+      'Bull-Run-2',
+      'Bull-Run-3',
+      'Bull-Run',
+      'Bitcoin',
+      'Blooming',
+      'Rush',
+      'Ripple',
+      'Wave',
+      'Surge',
+    ];
+
+    // Match whole words using regex boundaries (\b) to prevent substring mismatches
+    const cryptoType = cryptoMappings.find((type) =>
+      new RegExp(`\\b${type}\\b`).test(note)
+    );
+
+    return cryptoType || 'Unknown Crypto';
+  };
+
+  const getPlanImage = (planName) => {
+    console.log('planName', planName);
+    if (planName.includes('Surge')) return surge;
+    if (planName.includes('Wave')) return wave;
+    if (planName.includes('Ripple')) return ripple;
+    if (planName.includes('Blooming')) return blooming;
+    if (planName.includes('Bull-Run')) return bullrun;
+    if (planName.includes('Rush')) return rush;
+    if (planName.includes('Bitcoin')) return xBitcoin;
+    //return xBitcoin; // Fallback in case no match is found
+  };
+
   const organizedRows = groupedRows(visibleRows);
 
   console.log(organizedRows);
@@ -784,6 +832,33 @@ export default function EnhancedTable({
                   {group.category.includes('x-Blue') &&
                     (hasRenderedXBlue = true)}
 
+                  {group.category.includes('Coins') &&
+                    (selectedValue === 'Cryptos' ||
+                      selectedValue === 'Overview') && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5}
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            fontSize: '24px',
+                            paddingTop: '60px',
+                            paddingBottom: '0px',
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+                            textAlign: 'center',
+                          }}
+                        >
+                          <img
+                            src={cryptosImg}
+                            alt="cryptosImg"
+                            style={{ height: '50px' }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )}
                   {/* Orange Separator */}
                   {/* {groupIndex > 0 && (
                     <TableRow>
@@ -803,25 +878,57 @@ export default function EnhancedTable({
                   )} */}
                   {/* Category Heading */}
                   {!group.category.includes('Coins') && (
-                    <TableRow>
-                      <TableCell
-                        colSpan={isMobile ? 3 : 5}
-                        sx={{
-                          borderBottom: 'none',
-                          fontWeight: 'bold',
-                          color:
-                            userType === 'Indexx Exchange'
-                              ? theme.palette.primary.main
-                              : '#FFA500',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {group.category}{' '}
-                        {group.rows.length > 0 &&
-                          // Display formatted category names once per group
-                          getFormattedCategory(group.rows[0].notes)}
-                      </TableCell>
-                    </TableRow>
+                    <>
+                      <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5}
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {group.category}{' '}
+                          {group.rows.length > 0 &&
+                            // Display formatted category names once per group
+                            getFormattedCategory(group.rows[0].notes)}
+                        </TableCell>
+                      </TableRow>
+
+                      {/* <TableRow>
+                        <TableCell
+                          colSpan={isMobile ? 3 : 5}
+                          sx={{
+                            borderBottom: 'none',
+                            fontWeight: 'bold',
+                            fontSize: '24px',
+                            paddingTop: '20px',
+                            paddingBottom: '0px',
+
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? theme.palette.primary.main
+                                : '#FFA500',
+                            textAlign: 'center',
+                          }}
+                        >
+                          <img
+                            src={getPlanImage(
+                              getFormattedCategoryForImage(group.rows[0].notes)
+                            )}
+                            style={{ maxHeight: '55.003px', width: 'auto' }}
+                            alt="Plan Image"
+                          />
+                          <p>
+                            {getFormattedCategoryForImage(group.rows[0].notes)}
+                          </p>
+                        </TableCell>
+                      </TableRow> */}
+                    </>
                   )}
                   {!group.category.includes('Coins') && (
                     <TableRow sx={{ borderBottom: 'none !important' }}>
@@ -935,118 +1042,6 @@ export default function EnhancedTable({
                           </div>
                         </TableCell>
                       </TableRow>
-
-                      {/* {group.rows.map((row, index) => (
-                        <TableRow
-                          key={row.id}
-                          sx={{
-                            borderBottom: 'none !important',
-                          }}
-                        >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            padding="none"
-                            sx={{ borderBottom: 'none !important' }}
-                          >
-                            <ListItem
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                paddingLeft: 0,
-                                '&:hover': {
-                                  background: 'transparent !important',
-                                },
-                              }}
-                            >
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <Avatar
-                                    alt={`${row.coin}`}
-                                    src={getImage(row?.coin)}
-                                  />
-                                </Avatar>
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={row.coin}
-                                secondary={`ID: ${row.id}`}
-                              />
-                            </ListItem>
-                          </TableCell>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                          >
-                            {new Intl.NumberFormat('en-US', {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 6,
-                            }).format(row.amount)}{' '}
-                            / $
-                            {row.coin === 'USD'
-                              ? row.amount.toLocaleString(undefined, {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })
-                              : (row.amount * row.coin_price).toLocaleString(
-                                  undefined,
-                                  {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                  }
-                                )}
-                          </TableCell>
-                          <TableCell
-                            align="right"
-                            sx={{ borderBottom: 'none !important' }}
-                          >
-                            {new Intl.NumberFormat('en-US', {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 6,
-                            }).format(row.staking_balance)}{' '}
-                            / $
-                            {(
-                              row.staking_balance * row.coin_price
-                            ).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                          </TableCell>
-
-                          {!isMobile && (
-                            <>
-                              <TableCell
-                                align="right"
-                                sx={{ borderBottom: 'none !important' }}
-                              >
-                                {row.coin === 'WIBS' || row.coin === 'DaCrazy'
-                                  ? row.coin_price.toFixed(5)
-                                  : row.coin_price.toFixed(2)}
-                              </TableCell>
-                              <TableCell
-                                align="right"
-                                sx={{ borderBottom: 'none !important' }}
-                                className={
-                                  row.todayPNL
-                                    ? row.todayPNL.isPositive
-                                      ? classes.greenText
-                                      : classes.redText
-                                    : ''
-                                }
-                              >
-                                {row.todayPNL
-                                  ? // Adjust percentage based on coin type
-                                    `${
-                                      row.todayPNL.value
-                                    } (${getAdjustedPercentage(
-                                      row.coin,
-                                      row.todayPNL.percentage
-                                    )}%)`
-                                  : '0.00'}
-                              </TableCell>
-                            </>
-                          )}
-                        </TableRow>
-                      ))} */}
                     </>
                   ) : (
                     <TableRow>

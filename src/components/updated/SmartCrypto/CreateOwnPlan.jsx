@@ -360,8 +360,8 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
     const value = e.target.value;
 
     // Reset and validate amount dynamically
-    if (isNaN(value) || value < 2500) {
-      setUsdAmountError(true); // Set error for invalid or less than $2500
+    if (isNaN(value) || value < 500) {
+      setUsdAmountError(true); // Set error for invalid or less than $500
     } else {
       setUsdAmountError(false); // Clear error if valid
     }
@@ -373,8 +373,8 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
     setLoadings(true);
     let hasError = false;
 
-    // Validate amount (minimum is 2500 USD)
-    if (!usdAmount || isNaN(usdAmount) || usdAmount < 2500) {
+    // Validate amount (minimum is 500 USD)
+    if (!usdAmount || isNaN(usdAmount) || usdAmount < 500) {
       setUsdAmountError(true);
       hasError = true;
     }
@@ -776,7 +776,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
             <div className={classes.enterAmountContainer}>
               <label>Amount Per Period</label>
               <InputField
-                placeholder={'The minimum amount is 2500 USD'}
+                placeholder={'The minimum amount is 500 USD'}
                 type="text"
                 style={{ marginTop: '0px', marginBottom: '10px' }}
                 value={usdAmount}
@@ -784,7 +784,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
                 error={usdAmountError} // Highlight error
                 helperText={
                   usdAmountError &&
-                  'Please enter a valid amount of at least 2500 USD'
+                  'Please enter a valid amount of at least 500 USD'
                 }
                 yellowBorders={category !== 'x-Blue'}
                 blueBorders={category === 'x-Blue'}
@@ -845,7 +845,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
               disabled={
                 !planName ||
                 !usdAmount ||
-                usdAmount < 2500 ||
+                usdAmount < 500 ||
                 !paymentMethod ||
                 !selectedPaymentMethod ||
                 selectedCoins.reduce(

@@ -16,7 +16,7 @@ import {
   ListItemText,
   useMediaQuery,
 } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import assetLight from '../../../assets/updated/iconicHeader/lightMode/Vector.svg';
 import assetDark from '../../../assets/updated/iconicHeader/Asset wallet.svg';
 import assetHive from '../../../assets/updated/iconicHeader/asset_wallet_hive.svg';
@@ -390,7 +390,11 @@ const Assets = () => {
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState('Asset Wallet');
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const [selectedListValue, setSelectedListValue] = useState('Overview');
+  const [searchParams] = useSearchParams();
+  const selectedValueFromUrl = searchParams.get('selectedValue');
+  const [selectedListValue, setSelectedListValue] = useState(
+    selectedValueFromUrl || 'Overview'
+  );
   const [updatePlanMode, setupdatePlanMode] = useState(false);
   const [currentPlanName, setCurrentPlanName] = useState('');
   const [userType, setUserType] = useState('Indexx Exchange');

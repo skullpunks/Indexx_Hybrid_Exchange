@@ -15,8 +15,8 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
-import SmartApyWithdrawPopup from './SmartApyWithdrawPopup';
 import { decodeJWT, smartAPY, withdrawSmartAPY } from '../../../services/api';
+import SuccessfullWithdrawPopup from './SuccessfullWithdrawPopup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -143,7 +143,8 @@ const ViewAllPlansPopup = ({ onClose }) => {
   const classes = useStyles();
   const [txList, setTxList] = useState([]);
   const [loadingRow, setLoadingRow] = useState(null);
-
+  const [successPopup, setSuccessPopup] = useState(false);
+  
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken = decodeJWT(String(token));
@@ -159,7 +160,7 @@ const ViewAllPlansPopup = ({ onClose }) => {
     setLoadingRow(smartApyId); // Set loading state for the specific row
     withdrawSmartAPY(email, smartApyId).then((response) => {
       if (response.status === 200) {
-        alert('Withdrawal successful');
+        setSuccessPopup(true); // Show success popup
         setTxList((prev) =>
           prev.filter((item) => item.smartApyId !== smartApyId)
         );
@@ -269,6 +270,9 @@ const ViewAllPlansPopup = ({ onClose }) => {
           )}
         </div>
       </div>
+      {successPopup && (
+        <SuccessfullWithdrawPopup onClose={() => setSuccessPopup(false)} />
+      )}
     </div>
   );
 };

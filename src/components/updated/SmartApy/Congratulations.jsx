@@ -244,12 +244,12 @@ const CongratulationsPopup = ({
           {orderData ? (
             <div className={classes.planDetails}>
               <p>on purchasing the Smart APY</p>
-              <p style={{ fontSize: '20px' }}>worth ${orderData?.breakdown?.inAmount}.</p>
+              <p style={{ fontSize: '20px' }}>worth ${new Intl.NumberFormat('en-US').format(orderData?.breakdown?.inAmount ? orderData?.breakdown?.inAmount : 0)}.</p>
             </div>
           ) : (
             <div className={classes.planDetails}>
               <p>on purchasing the Smart APY</p>
-              <p style={{ fontSize: '20px' }}>worth {orderData?.breakdown?.inAmount}.</p>
+              <p style={{ fontSize: '20px' }}>worth ${new Intl.NumberFormat('en-US').format(orderData?.breakdown?.inAmount)}.</p>
             </div>
           )}
 
@@ -279,8 +279,7 @@ const CongratulationsPopup = ({
                   : classes.blueButton
               }
               onClick={() => {
-                onClose();
-                navigate('/wallet/overview');
+                navigate('/wallet/iusd+?selectedValue=SmartAPY');
               }}
             />
           </div>

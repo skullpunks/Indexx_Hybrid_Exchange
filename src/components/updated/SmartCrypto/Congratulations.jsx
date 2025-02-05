@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button } from '@mui/material';
+import { Skeleton, Button } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -196,6 +196,15 @@ const CongratulationsPopup = ({
 }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (orderData) {
+      setTimeout(() => {
+        setIsLoading(false); // Simulating loading time
+      }, 1000); // You can adjust the delay as needed
+    }
+  }, [orderData]);
 
   const getPlanImage = (planName) => {
     if (planName.includes('Surge')) return surge;
@@ -211,8 +220,8 @@ const CongratulationsPopup = ({
     if (planName.includes('Wave')) return 'x-Blue Wave(Issa)';
     if (planName.includes('Ripple')) return 'x-Blue Rippe(Issa)';
     if (planName.includes('Blooming')) return 'x-Bitcoin Blooming(Omkar)';
-    if (planName.includes('Bull-Run')) return 'x-Bitcoin Bull-Run(Omkar)';;
-    if (planName.includes('Rush')) return 'x-Bitcoin Rush(Omkar)';;
+    if (planName.includes('Bull-Run')) return 'x-Bitcoin Bull-Run(Omkar)';
+    if (planName.includes('Rush')) return 'x-Bitcoin Rush(Omkar)';
   };
 
   return (
@@ -241,25 +250,36 @@ const CongratulationsPopup = ({
             <img src={congratulationIcon} />
             <h2>Congratulations!</h2>
           </div>
-          {orderData ? (
-            <div className={classes.planDetails}>
-              <p>on purchasing the Smart Crypto</p>
-              <div className={classes.planNameRoot}>
-                <img src={getPlanImage(orderData?.breakdown?.outCurrencyName)} />
-                <p>{getFormatedPlanName(orderData?.breakdown?.outCurrencyName)}</p>
-              </div>
-              <p style={{ fontSize: '20px' }}>worth ${orderData?.breakdown?.inAmount}.</p>
+          <div className={classes.planDetails}>
+            <p>on purchasing the Smart Crypto</p>
+            <div className={classes.planNameRoot}>
+              {isLoading ? (
+                <Skeleton variant="circular" width={50} height={50} />
+              ) : (
+                <img
+                  src={getPlanImage(
+                    orderData?.breakdown?.outCurrencyName || userSellPlan
+                  )}
+                  alt="Plan"
+                />
+              )}
+              {isLoading ? (
+                <Skeleton variant="text" width={180} height={30} />
+              ) : (
+                <p>
+                  {userSellPlanReformed ||
+                    orderData?.breakdown?.outCurrencyName}
+                </p>
+              )}
             </div>
-          ) : (
-            <div className={classes.planDetails}>
-              <p>on purchasing the Smart Crypto</p>
-              <div className={classes.planNameRoot}>
-                <img src={getPlanImage(userSellPlan)} />
-                <p>{userSellPlanReformed}</p>
-              </div>
-              <p style={{ fontSize: '20px' }}>worth $3,000.</p>
-            </div>
-          )}
+            {isLoading ? (
+              <Skeleton variant="text" width={100} height={30} />
+            ) : (
+              <p style={{ fontSize: '20px' }}>
+                worth ${orderData?.breakdown?.inAmount || 3000}.
+              </p>
+            )}
+          </div>
 
           <div style={{ textAlign: 'center' }}>
             <p>Note: To view your purchase, check your asset wallet.</p>

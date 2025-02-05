@@ -31,6 +31,8 @@ import step4Img from '../../../assets/updated/SmartApy/step4Img.svg';
 import GeneralPopup from '../BuySell/Popup';
 import ProcessingFailedPopup from '../SmartCrypto/ProcessingFailedPopup';
 import CongratulationsPopup from './Congratulations';
+import ConfirmInvestmentPopup from './ConfirmInvestmentPopup';
+import SuccessfulStakePopup from './SuccessfulStakePopup';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -280,6 +282,8 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsgOpen, setPopupMsgOpen] = useState(false);
   const [permissionData, setPermissionData] = useState();
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [confirmData, setConfirmData] = useState({});
 
   const [orderID, setOrderId] = useState('');
   const [orderData, setOrderData] = useState('');
@@ -404,8 +408,16 @@ const SmartApyTop = ({ onStakeSuccess }) => {
     }
   };
 
-  const formatPrice = (value) =>
-    value < 1 ? value.toFixed(5) : value.toFixed(2);
+  const handleConfirmInvestment = () => {
+    if (!amt || amt < 2500 || !activeButton || !selectedPaymentMethod) return;
+
+    setConfirmData({
+      amount: amt,
+      duration: activeButton,
+    });
+
+    setShowConfirmPopup(true);
+  };
 
   const submitStake = async () => {
     try {
@@ -418,7 +430,6 @@ const SmartApyTop = ({ onStakeSuccess }) => {
 
   const confirmPayment = async () => {
     try {
-      console.log('paymentMethod', paymentMethod);
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
@@ -757,12 +768,12 @@ const SmartApyTop = ({ onStakeSuccess }) => {
                   disabled={
                     loadings ||
                     !!error ||
-                    amt < 5000 ||
+                    amt < 2500 ||
                     !activeButton ||
                     !selectedPaymentMethod
                   }
                   loading={loadings}
-                  onClick={submitStake}
+                  onClick={handleConfirmInvestment}
                 />
               </div>
             </div>
@@ -884,12 +895,20 @@ const SmartApyTop = ({ onStakeSuccess }) => {
       )}
 
       {congratulationsPopup && (
-        <CongratulationsPopup
+        <SuccessfulStakePopup
           onClose={() => setCongratulationsPopup(false)}
-          category={'x-Bitcoin'}
-          userSellPlanReformed={'userSellPlanReformed'}
-          userSellPlan={'userSellPlan'}
           orderData={orderData}
+          duration={confirmData.duration}
+        />
+      )}
+
+      {showConfirmPopup && (
+        <ConfirmInvestmentPopup
+          onClose={() => setShowConfirmPopup(false)}
+          onConfirm={submitStake}
+          amount={confirmData.amount}
+          duration={confirmData.duration}
+          loading={loadings}
         />
       )}
     </div>

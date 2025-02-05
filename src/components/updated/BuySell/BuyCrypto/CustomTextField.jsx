@@ -447,8 +447,17 @@ const CustomTextField = ({
             >
               Available:{' '}
               {formatBalance(
-                balance?.find((x) => x.coinSymbol === selectedToken?.image)
-                  ?.coinBalance
+                balance
+                  ?.filter((wallet) => {
+                    const note = wallet.notes ? wallet.notes.toLowerCase() : '';
+                    return (
+                      wallet.coinSymbol === selectedToken?.image &&
+                      (!wallet.notes ||
+                        note.includes('gift card') ||
+                        note.includes('received from'))
+                    );
+                  })
+                  .reduce((sum, wallet) => sum + wallet.coinBalance, 0)
               )}{' '}
               {selectedToken?.title}
             </Typography>

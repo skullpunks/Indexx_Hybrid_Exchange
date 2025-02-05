@@ -105,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
+  console.log(selectedValue, setupdatePlanMode);
   const classes = useStyles();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
