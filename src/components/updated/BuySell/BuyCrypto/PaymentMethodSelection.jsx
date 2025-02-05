@@ -36,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
       background: 'transparent',
       border: `1px solid ${theme.palette.primary.main}`,
     },
+    '&:active': {
+      background: 'transparent',
+      border: `1px solid ${theme.palette.primary.main}`,
+    },
+    '&:focus': {
+      background: 'transparent',
+      border: `1px solid ${theme.palette.primary.main}`,
+    },
   },
   iconTextContainer: {
     display: 'flex',
@@ -66,7 +74,7 @@ const PaymentMethodSelection = ({
   return (
     <Box className={classes.container}>
       <p className={classes.label}>
-        {type === "Buy" ? label : "Received Method"}{' '}
+        {type === 'Buy' ? label : 'Received Method'}{' '}
         {errorMsg && (
           <span style={{ color: 'red', marginLeft: '5px' }}> {errorMsg} </span>
         )}
@@ -96,7 +104,7 @@ const PaymentMethodSelection = ({
             {selectedPaymentMethod || buttonText}
           </p>
         </Box>
-        <ArrowForwardIosIcon sx={{ width: '16px' }} />
+        {type !== 'Sell' && <ArrowForwardIosIcon sx={{ width: '16px' }} />}
       </button>
     </Box>
   );

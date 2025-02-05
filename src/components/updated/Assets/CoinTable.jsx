@@ -423,7 +423,7 @@ export default function EnhancedTable({
       return finalRows.filter(
         (row) => row.coin === 'IUSD+' || row.coin === 'iUSD+'
       );
-    } else if (selectedValue === 'Crypto') {
+    } else if (selectedValue === 'Cryptos') {
       return finalRows.filter((row) => {
         const isSmartCryptoNote =
           row.notes.includes('Smart Crypto Surge') ||
@@ -526,8 +526,10 @@ export default function EnhancedTable({
       if (notes.startsWith('xBitcoin Rush'))
         applicableCategories.push('Smart Crypto x-Bitcoin Rush');
       if (notes.startsWith('xBitcoin Bull-Run'))
-        if(email === "fowlertrucking14@yahoo.com") {
-          applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run($10,000 Investment + $10,000 Commission)');
+        if (email === 'fowlertrucking14@yahoo.com') {
+          applicableCategories.push(
+            'Smart Crypto x-Bitcoin Bull-Run($10,000 Investment + $10,000 Commission)'
+          );
         } else {
           applicableCategories.push('Smart Crypto x-Bitcoin Bull-Run');
         }

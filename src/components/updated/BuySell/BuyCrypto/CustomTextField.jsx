@@ -384,17 +384,24 @@ const CustomTextField = ({
       ? parsedBalance.toFixed(2)
       : parsedBalance.toFixed(6);
   };
+  useEffect(() => {
+    console.log(focused, 'focusedValue');
+  }, [focused]);
 
   return (
     <>
       <Box
         className={classes.container}
-        style={{
-          border: focused
-            ? `1px solid ${theme.palette.primary.main} !important`
-            : `1px solid ${
-                theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
-              } !important`,
+        sx={{
+          border: `1px solid ${
+            theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
+          }`,
+          '&:hover': {
+            border: `1px solid ${theme.palette.primary.main} !important`,
+          },
+          '&:focus-within': {
+            border: `1px solid ${theme.palette.primary.main} !important`,
+          },
         }}
       >
         <FormControl className={classes.formControl}>
@@ -470,6 +477,16 @@ const CustomTextField = ({
                   <TextField
                     variant="outlined"
                     className={classes.searchField}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '&.Mui-focused': {
+                          borderColor: `${theme.palette.primary.main} !important`,
+                        },
+                        '&:hover': {
+                          borderColor: `${theme.palette.primary.main} !important`,
+                        },
+                      },
+                    }}
                     placeholder="Search..."
                     value={searchTerm}
                     onChange={handleSearchChange}

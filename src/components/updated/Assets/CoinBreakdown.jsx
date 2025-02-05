@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchComponent from './SearchInput';
 import EnhancedTable from './CoinTable';
 import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
+import CoinTableAPY from './CoinTableAPY';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -159,20 +160,34 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
         </Box>
       </Box>
       <Box>
-        <Box className={classes.leftDiv}>
-          {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
+        {selectedValue === 'Smart APY' ? (
+          ''
+        ) : (
+          <Box className={classes.leftDiv}>
+            {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
           <Box className={classes.underline}></Box> */}
-          <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
-        </Box>
+            <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
+          </Box>
+        )}
       </Box>
 
-      <EnhancedTable
-        searchQuery={searchQuery}
-        hideAssets={hideAssets}
-        selectedValue={selectedValue}
-        setupdatePlanMode={setupdatePlanMode}
-        onPlanChange={handlePlanChange}
-      />
+      {selectedValue === 'Smart APY' ? (
+        <CoinTableAPY
+          searchQuery={searchQuery}
+          hideAssets={hideAssets}
+          selectedValue={selectedValue}
+          setupdatePlanMode={setupdatePlanMode}
+          onPlanChange={handlePlanChange}
+        />
+      ) : (
+        <EnhancedTable
+          searchQuery={searchQuery}
+          hideAssets={hideAssets}
+          selectedValue={selectedValue}
+          setupdatePlanMode={setupdatePlanMode}
+          onPlanChange={handlePlanChange}
+        />
+      )}
     </Box>
   );
 };

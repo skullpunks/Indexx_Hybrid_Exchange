@@ -24,6 +24,8 @@ import tokens from '../../../../utils/Tokens.json';
 import ErrorPage from './ErrorPopup';
 import exchangeLight from '../../../../assets/updated/buySell/Exchange for Light mode.svg';
 import exchangeDark from '../../../../assets/updated/buySell/exchange for Dark mode.svg';
+import NonIndexxFailPopup from './NonIndexxFailPopup';
+import OrderProcessedSuccessfullyPopup from './OrderProcessedSuccessfullyPopup';
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
@@ -178,8 +180,9 @@ const BuySellTabs = ({
   const [price, setPrice] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupOpen2, setPopupOpen2] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState('Credit Card');
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const { id } = useParams();
   const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
@@ -200,12 +203,14 @@ const BuySellTabs = ({
   const navigate = useNavigate();
   const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
   const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
-
+  const [isIndexxTokenSell, setIsIndexxTokenSell] = useState(false);
+  const [orderProcessedSuccessfullyPopup, setOrderProcessedSuccessfullyPopup] =
+    useState(false);
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
-    console.log('!!email && !!user', !!email && !!user);
+
     setIsLoggedIn(!!email && !!user);
   }, []);
 
@@ -261,9 +266,11 @@ const BuySellTabs = ({
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
     console.log('amount, price', amount, price);
-    updateReceiveAmount(amount, price);
   };
 
+  useEffect(() => {
+    updateReceiveAmount(spendAmount, price);
+  }, [spendAmount, price]);
   const handleReceiveAmountChange = (amount) => {
     setReceiveAmount(amount);
   };
@@ -277,13 +284,16 @@ const BuySellTabs = ({
     [spendAmount]
   );
 
-  const updateReceiveAmount = useCallback((amount, rate) => {
-    if (amount && rate) {
-      const calculatedReceiveAmount =
-        value === 'buy' ? amount / rate : amount * rate;
-      setReceiveAmount(calculatedReceiveAmount.toFixed(2));
-    }
-  });
+  const updateReceiveAmount = useCallback(
+    (amount = 0, rate) => {
+      if (rate) {
+        const calculatedReceiveAmount =
+          value === 'buy' ? amount / rate : amount * rate;
+        setReceiveAmount(calculatedReceiveAmount.toFixed(2));
+      }
+    },
+    [spendAmount]
+  );
 
   const handlePaymentMethodClick = async () => {
     setPopupOpen(true);
@@ -694,7 +704,7 @@ const BuySellTabs = ({
     if (value !== 'buy') {
       setSelectedPaymentMethod('Asset Wallet');
     } else {
-      setSelectedPaymentMethod('');
+      setSelectedPaymentMethod('Credit Card');
     }
   }, [value]);
   const formatPrice = (price) => {
@@ -852,7 +862,7 @@ const BuySellTabs = ({
           {isLoggedIn ? (
             <>
               <PaymentMethodSelection
-                onClick={handlePaymentMethodClick}
+                onClick={value === 'buy' ? handlePaymentMethodClick : undefined}
                 errorMsg={paymentMethodError}
                 buttonText={
                   selectedPaymentMethod || 'Select Transaction Method'
@@ -934,6 +944,16 @@ const BuySellTabs = ({
         spendToken={spendToken}
       />
       {openErrorPopup && <ErrorPage onClose={() => setOpenErrorPopup(false)} />}
+
+      {isIndexxTokenSell && (
+        <NonIndexxFailPopup onClose={() => setIsIndexxTokenSell(false)} />
+      )}
+
+      {orderProcessedSuccessfullyPopup && (
+        <OrderProcessedSuccessfullyPopup
+          onClose={() => setOrderProcessedSuccessfullyPopup(false)}
+        />
+      )}
     </Box>
   );
 };

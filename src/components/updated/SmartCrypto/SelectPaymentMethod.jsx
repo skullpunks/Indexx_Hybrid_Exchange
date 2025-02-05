@@ -38,12 +38,28 @@ const useStyles = makeStyles((theme) => ({
       background: 'transparent',
       border: `1px solid #07A6FC`,
     },
+    '&:active': {
+      background: 'transparent',
+      border: `1px solid #07A6FC`,
+    },
+    '&:focus': {
+      background: 'transparent',
+      border: `1px solid #07A6FC`,
+    },
   },
   yellowHover: {
     '&:hover': {
       background: 'transparent',
       border: `1px solid #FFB300
         `,
+    },
+    '&:active': {
+      background: 'transparent',
+      border: `1px solid  #FFB300`,
+    },
+    '&:focus': {
+      background: 'transparent',
+      border: `1px solid  #FFB300`,
     },
   },
   iconTextContainer: {

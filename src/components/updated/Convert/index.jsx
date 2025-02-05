@@ -483,7 +483,9 @@ const ConvertCrypto = () => {
           <div className={classes.rightContentContainer}>
             <CustomTextField
               label="From"
-              placeholder="0.01 - 5000000"
+              placeholder={`${
+                fromBalance > 0.01 ? '0.01' : 0
+              } - ${fromBalance}`}
               tokenType="from"
               setShowCoinsDropdown={(isOpen) => {
                 setShowCoinsDropdown(isOpen);
@@ -504,7 +506,7 @@ const ConvertCrypto = () => {
             </div>
             <CustomTextField
               label="To"
-              placeholder="0.00000017 - 84"
+              placeholder="0"
               tokenType="to"
               setShowCoinsDropdown={(isOpen) => {
                 setShowCoinsDropdown(isOpen);

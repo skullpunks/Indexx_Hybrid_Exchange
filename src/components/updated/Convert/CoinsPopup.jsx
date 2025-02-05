@@ -150,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
         'border-color',
         'background-color',
       ]),
-      '&:focus': {
+      '&.Mui-focused': {
         borderColor: `${theme.palette.primary.main} !important`,
       },
       '&:hover': {

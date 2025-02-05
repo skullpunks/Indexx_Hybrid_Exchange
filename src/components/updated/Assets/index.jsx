@@ -9,6 +9,7 @@ import {
   Avatar,
   AvatarGroup,
   Box,
+  Collapse,
   List,
   ListItem,
   ListItemButton,
@@ -38,6 +39,7 @@ import { getSmartCryptoPackages } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import initialTokens from '../../../utils/Tokens.json';
 import CreateOwnPlan from '../SmartCrypto/CreateOwnPlan';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -214,6 +216,21 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translateY(-50%)', // vertical alignment
     },
   },
+  activeChildLink: {
+    color: theme.palette.text.primary,
+    borderBottom: `0px solid ${theme.palette.primary.main}`, // 3px underline
+    '&::before': {
+      content: '""',
+      display: 'block',
+      width: '16px', // height of the line at the start of the item
+      height: '3px', // thickness
+      backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
+      position: 'absolute',
+      left: 35,
+      top: '90%',
+      transform: 'translateY(-50%)', // vertical alignment
+    },
+  },
   hoverEffect: {
     fontSize: '14px',
     position: 'relative', // for the pseudo-element
@@ -238,6 +255,31 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translateY(-50%)',
     },
   },
+  childHoverEffect: {
+    fontSize: '14px',
+    position: 'relative', // for the pseudo-element
+    background: 'none',
+    color: '#FFBB00',
+    marginBottom: '10px',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      borderBottom: `0px solid ${
+        theme.palette.mode === 'dark' ? '#fff' : '#000'
+      }`, // underline on hover
+    },
+    '&:hover::before': {
+      content: '""',
+      display: 'block',
+      width: '16px',
+      height: '3px',
+      backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#000',
+      position: 'absolute',
+      left: 35,
+      top: '90%',
+      transform: 'translateY(-50%)',
+    },
+  },
+
   tableContainer: {
     display: 'flex',
     padding: '0px 20px',
@@ -370,6 +412,7 @@ const Assets = () => {
   const [congratulationsPopup, setCongratulationsPopup] = useState(false);
   const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
   const [userSellPlan, setUserPlanName] = useState('');
+  const [cryptoTreasuryOpen, setCryptoTreasuryOpen] = useState(false); // State for dropdown
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -378,6 +421,10 @@ const Assets = () => {
   const handleListClick = (value, path) => {
     setSelectedListValue(value); // Update the selected list value
     navigate(path); // Navigate to the desired path
+  };
+
+  const handleCryptoTreasuryClick = () => {
+    setCryptoTreasuryOpen(!cryptoTreasuryOpen); // Toggle dropdown state
   };
 
   useEffect(() => {
@@ -649,44 +696,105 @@ const Assets = () => {
             {!tab && (
               <div
                 style={{
-                  width: '300px',
+                  width: '220px',
                   position: 'sticky',
                   top: 100,
                   marginTop: '20px',
+                  flexShrink: 0,
                 }}
               >
                 <List sx={{ position: 'sticky', top: 100 }}>
                   {[
                     { name: 'Overview', path: '/wallet/overview' },
                     { name: 'Cryptos', path: '/wallet/crypto' },
-                    { name: 'Smart APY', path: '/wallet/iusd+' },
-                    { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+                    {
+                      name: 'Crypto Treasury',
+                      path: '/wallet/smart-crypto',
+                      children: [
+                        { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+                        { name: 'Smart APY', path: '/wallet/iusd+' },
+                      ],
+                    },
                     { name: 'Fiat / Cash', path: '/wallet/fiat' },
                   ].map((el, index) => (
-                    <ListItem
-                      key={el.path}
-                      disablePadding
-                      disableRipple
-                      onClick={() => handleListClick(el.name, el.path)} // Handle click
-                      className={`${classes.hoverEffect} ${
-                        location.pathname === el.path ? classes.activeLink : ''
-                      }`}
-                    >
-                      <ListItemButton
+                    <React.Fragment key={el.path}>
+                      <ListItem
+                        disablePadding
                         disableRipple
-                        sx={{
-                          color:
-                            userType === 'Indexx Exchange'
-                              ? '#11BE6A'
-                              : 'inherit',
-                          '&:hover': {
-                            backgroundColor: 'transparent',
-                          },
-                        }}
+                        onClick={
+                          el.children
+                            ? handleCryptoTreasuryClick
+                            : () => handleListClick(el.name, el.path)
+                        }
+                        className={`${classes.hoverEffect} ${
+                          location.pathname === el.path ||
+                          (el.children &&
+                            el.children.some(
+                              (child) => location.pathname === child.path
+                            ))
+                            ? classes.activeLink
+                            : ''
+                        }`}
                       >
-                        <ListItemText primary={el.name} />
-                      </ListItemButton>
-                    </ListItem>
+                        <ListItemButton
+                          disableRipple
+                          sx={{
+                            color:
+                              userType === 'Indexx Exchange'
+                                ? '#11BE6A'
+                                : 'inherit',
+                            '&:hover': {
+                              backgroundColor: 'transparent',
+                            },
+                          }}
+                        >
+                          <ListItemText primary={el.name} />
+                          {el.children &&
+                            (cryptoTreasuryOpen ? (
+                              <ExpandLess />
+                            ) : (
+                              <ExpandMore />
+                            ))}
+                        </ListItemButton>
+                      </ListItem>
+                      {el.children && (
+                        <Collapse in={cryptoTreasuryOpen} timeout="auto">
+                          <List component="div" disablePadding>
+                            {el.children.map((child) => (
+                              <ListItem
+                                key={child.path}
+                                className={`${classes.childHoverEffect} ${
+                                  location.pathname === child.path
+                                    ? classes.activeChildLink
+                                    : ''
+                                }`}
+                                disablePadding
+                                disableRipple
+                                onClick={() =>
+                                  handleListClick(child.name, child.path)
+                                }
+                              >
+                                <ListItemButton
+                                  disableRipple
+                                  sx={{
+                                    pl: 4,
+                                    color:
+                                      userType === 'Indexx Exchange'
+                                        ? '#11BE6A'
+                                        : 'inherit',
+                                    '&:hover': {
+                                      backgroundColor: 'transparent',
+                                    },
+                                  }}
+                                >
+                                  <ListItemText primary={child.name} />
+                                </ListItemButton>
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Collapse>
+                      )}
+                    </React.Fragment>
                   ))}
                 </List>
               </div>

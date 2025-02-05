@@ -157,19 +157,14 @@ export default function IconicHeader({ selectedTab, onChange }) {
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
     const email = localStorage.getItem('email');
+    const userType = localStorage.getItem('userType');
+
     setIsLoggedIn(!!email);
-    if (email) {
-      checkByemail(String(email))
-        .then((res) => {
-          if (res && res.userType) {
-            setUserType(res.userType);
-          }
-          setLoading(false);
-        })
-        .catch((err) => setLoading(false));
-    } else {
-      setLoading(false);
+    if (userType) {
+      setUserType(userType);
     }
+
+    setLoading(false);
   }, []);
 
   const tabsData = [
@@ -301,6 +296,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
     maxWidthTabContainer = '870px';
   }
 
+  console.log();
   const TabView = userType === 'Indexx Exchange' ? CustomTab : CustomTabHive;
   return (
     <Box

@@ -4,17 +4,26 @@ import { Box, useTheme } from '@mui/material';
 import ss1 from '../../../assets/updated/SmartApy/ss1.svg';
 import ss2 from '../../../assets/updated/SmartApy/ss2.svg';
 
-import step1DarkMode from '../../../assets/updated/SmartApy/step1DarkMode.svg';
-import step1LightMode from '../../../assets/updated/SmartApy/step1LightMode.svg';
+import step2aLightMode from '../../../assets/updated/SmartApy/step2aLightMode.svg';
+import step2aDarkMode from '../../../assets/updated/SmartApy/step2aDarkMode.svg';
 
-import step31DarkMode from '../../../assets/updated/SmartApy/step31DarkMode.svg';
-import step31LightMode from '../../../assets/updated/SmartApy/step31LightMode.svg';
+import step2bDarkMode from '../../../assets/updated/SmartApy/step2bDarkMode.svg';
+import step2bLightMode from '../../../assets/updated/SmartApy/step2bLightMode.svg';
 
-import step32DarkMode from '../../../assets/updated/SmartApy/step32DarkMode.svg';
-import step32LightMode from '../../../assets/updated/SmartApy/step32LightMode.svg';
+import step3aDarkMode from '../../../assets/updated/SmartApy/step3aDarkMode.svg';
+import step3aLightMode from '../../../assets/updated/SmartApy/step3aLightMode.svg';
 
-import step5DarkMode from '../../../assets/updated/SmartApy/step5darkMode.svg';
+import step3bDarkMode from '../../../assets/updated/SmartApy/step3bDarkMode.svg';
+import step3bLightMode from '../../../assets/updated/SmartApy/step3bLightMode.svg';
+
+import step4DarkMode from '../../../assets/updated/SmartApy/step4DarkMode.svg';
+import step4LightMode from '../../../assets/updated/SmartApy/step4LightMode.svg';
+
+import step5DarkMode from '../../../assets/updated/SmartApy/step5DarkMode.svg';
 import step5LightMode from '../../../assets/updated/SmartApy/step5LightMode.svg';
+
+import step6DarkMode from '../../../assets/updated/SmartApy/step6DarkMode.svg';
+import step6LightMode from '../../../assets/updated/SmartApy/step6LightMode.svg';
 
 import GenericButton from '../shared/Button';
 import { Link, useNavigate } from 'react-router-dom';
@@ -54,6 +63,15 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     fontWeight: '500',
     marginBottom: theme.spacing(1),
+    '& span': {
+      fontSize: '38px',
+    },
+  },
+  stepImg: {
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
   },
   stepDescription: {
     fontSize: '14px',
@@ -114,7 +132,9 @@ const HowItWorks = () => {
         {/* Step 1 */}
 
         <Box className={classes.step}>
-          <p className={classes.stepNumber}>1. Log in or Register an account</p>
+          <p className={classes.stepNumber}>
+            <span>1.</span> Log in or Register an account
+          </p>
           <p className={classes.stepDescription}>
             If you're an Indexx user, log in to your account. New users, please
             register before investing.
@@ -140,86 +160,135 @@ const HowItWorks = () => {
         {/* Step 2 */}
 
         <Box className={classes.step}>
-          <p className={classes.stepNumber}>2. Buy IUSD+</p>
-          <p className={classes.stepDescription}>
-            Ensure you have a sufficient balance of IUSD+ before investing.
-            Otherwise, purchase tokens on the exchange.
+          <p className={classes.stepNumber}>
+            <span>2.</span> SelectLock-in Period and Investment Amount
           </p>
-
-          <img
-            src={theme.palette.mode === 'dark' ? step1DarkMode : step1LightMode}
-            alt="step1"
-          />
-          <Box className={classes.btnContainer}>
-            <GenericButton
-              text={'Buy IUSD+'}
-              styles={{ width: 'fit-content', margin: 'auto' }}
-              onClick={() => navigate('/update/home?buyToken=IUSD%2B')}
+          <p className={classes.stepDescription}>
+            Select a lock-in period of 6, 12, or 18 months based on your
+            financial goals and the initial investment amount. Then click “Stake
+            Now”. A pop-up will appear. Follow the next steps.
+          </p>
+          <div className={classes.stepImg}>
+            <img
+              src={
+                theme.palette.mode === 'dark' ? step2aDarkMode : step2aLightMode
+              }
+              alt="step2a"
             />
-          </Box>
+          </div>
+
+          <p className={classes.stepDescription}>Click “Confirm and Stake”</p>
+
+          <div className={classes.stepImg}>
+            <img
+              src={
+                theme.palette.mode === 'dark' ? step2bDarkMode : step2bLightMode
+              }
+              alt="step2b"
+            />
+          </div>
         </Box>
 
         {/* Step 3 */}
         <Box className={classes.step}>
           <p className={classes.stepNumber}>
-            3. Select investment plan and investment tier
+            <span>3.</span> Confirm your investment by paying through your
+            preferred payment option.
           </p>
           <p className={classes.stepDescription} s>
-            Select the preferred duration of your investment and the applicable
-            APY. This allows you to align your investment with your financial
-            goals.
+            To proceed with staking your investment, you need to confirm your
+            action. You will be redirect to the payment option you choose. Once
+            the lock-in period is complete, your yield will be available in
+            IUSD+.
           </p>
 
-          <img
-            src={
-              theme.palette.mode === 'dark' ? step31DarkMode : step31LightMode
-            }
-            alt="step3"
-          />
-          <img
-            src={
-              theme.palette.mode === 'dark' ? step32DarkMode : step32LightMode
-            }
-            alt="step3"
-          />
+          <Box className={classes.step}>
+            <p className={classes.stepDescription} s>
+              a. Click the green button to proceed
+            </p>
+            <div className={classes.stepImg}>
+              <img
+                src={
+                  theme.palette.mode === 'dark'
+                    ? step3aDarkMode
+                    : step3aLightMode
+                }
+                alt="step3a"
+              />
+            </div>
+
+            <p className={classes.stepDescription} s>
+              b. Click the green button to proceed
+            </p>
+
+            <div className={classes.stepImg}>
+              <img
+                src={
+                  theme.palette.mode === 'dark'
+                    ? step3bDarkMode
+                    : step3bLightMode
+                }
+                alt="step3b"
+              />
+            </div>
+          </Box>
         </Box>
         {/* Step 4 */}
         <Box className={classes.step}>
-          <p className={classes.stepNumber}>4. Maturity of the Plan</p>
-          <ul>
-            <li>
-              Once your deposit is made, you will need to wait until the
-              investment matures.
-            </li>
-            <li>
-              During this time, your funds will accrue interest based on the
-              chosen APY percentage.
-            </li>
-            <li>
-              You can choose to withdraw or reinvest once your investment
-              reaches maturity.
-            </li>
-          </ul>
-          <p className={classes.stepDescription}>
-            Note: Withdrawing the plan before its maturity will incur a certain
-            fee.
+          <p className={classes.stepNumber}>
+            <span>4.</span> Successful Staking Acknowledgment
           </p>
+
+          <p className={classes.stepDescription}>
+            Once the payment process goes through, your funds are converted to
+            IUSD+ and are now earning guaranteed returns.
+          </p>
+          <div className={classes.stepImg}>
+            <img
+              src={
+                theme.palette.mode === 'dark' ? step4DarkMode : step4LightMode
+              }
+              alt="step4"
+            />
+          </div>
         </Box>
 
         {/* Step 5 */}
         <Box className={classes.step}>
-          <p className={classes.stepNumber}>5. Assets Monitoring</p>
+          <p className={classes.stepNumber}>
+            <span>5.</span> View Staking Dashboard
+          </p>
 
           <p className={classes.stepDescription}>
-            All your assets and their current status are visible in the asset
-            wallet, making it easy to track investments, view accrued interest,
-            and make informed decisions about reinvesting or withdrawing funds
-            as needed.
+            On your dashboard inside the Asset Wallet, you will see the Staking
+            Overview.
           </p>
-          <img
-            src={theme.palette.mode === 'dark' ? step5DarkMode : step5LightMode}
-            alt="step3"
-          />
+          <div className={classes.stepImg}>
+            <img
+              src={
+                theme.palette.mode === 'dark' ? step5DarkMode : step5LightMode
+              }
+              alt="step5"
+            />
+          </div>
+        </Box>
+
+        <Box className={classes.step}>
+          <p className={classes.stepNumber}>
+            <span>6.</span> Asset Wallet
+          </p>
+
+          <p className={classes.stepDescription}>
+            Your dashboard shows your Smart APY investment.
+          </p>
+          <div className={classes.stepImg}>
+            <img
+              src={
+                theme.palette.mode === 'dark' ? step6DarkMode : step6LightMode
+              }
+              alt="step6"
+            />
+          </div>
         </Box>
       </div>
     </Box>

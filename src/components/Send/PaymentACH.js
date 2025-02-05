@@ -26,6 +26,7 @@ import {
 } from '../../services/api';
 import AWS from 'aws-sdk';
 import GenericButton from '../updated/shared/Button';
+import InputField from '../updated/shared/TextField';
 
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
@@ -106,7 +107,13 @@ const Final = ({
           className="font_17x"
           style={{ color: theme.palette.text.primary, textAlign: 'center' }}
         >
-          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : orderData?.orderType === 'SmartAPY' ? 'Smart APY' : "Crypto"} purchase!
+          for choosing Indexx for your{' '}
+          {orderData?.orderType === 'SmartCryptoBuy'
+            ? 'Smart Crypto'
+            : orderData?.orderType === 'SmartAPY'
+            ? 'Smart APY'
+            : 'Crypto'}{' '}
+          purchase!
         </div>
         <div className="font_10x mt-4">
           Our team is diligently verifying your order, and your tokens will be
@@ -245,13 +252,13 @@ const FileComponent1 = ({
           </span>
           {String(orderData?.orderType)?.includes('Pack')
             ? orderData?.breakdown?.finalAmountAfterDiscount?.toLocaleString(
-              'en-US',
-              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-            )
+                'en-US',
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )
             : orderData?.breakdown?.inAmount?.toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}{' '}
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{' '}
           {orderData?.breakdown?.inCurrenyName}
         </h1>
         <WarningAmberIcon /> Kindly transfer the exact amount specified above
@@ -374,6 +381,7 @@ const FileComponent1 = ({
               alignItems: 'baseline',
               width: '100%',
               my: 2,
+              gap: '10px',
             }}
           >
             <Typography
@@ -385,45 +393,10 @@ const FileComponent1 = ({
             >
               Full Name
             </Typography>
-            <TextField
+            <InputField
               //   label="First Name"
               placeholder="Name"
               variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '64%',
-                '& .MuiInputBase-input': {
-                  color: `${theme.palette.text.primary} !important`,
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&:hover fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                },
-                '& input': {
-                  '&:-webkit-autofill': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                    transition: 'background-color 5000s ease-in-out 0s',
-                  },
-                  '&:-webkit-autofill:focus': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                  '&:-webkit-autofill:hover': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                },
-              }}
-              size="small" // Make the input box smaller
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -440,6 +413,7 @@ const FileComponent1 = ({
               alignItems: 'baseline',
               width: '100%',
               mb: 2,
+              gap: '10px',
             }}
           >
             <Typography
@@ -451,44 +425,10 @@ const FileComponent1 = ({
             >
               Bank Name
             </Typography>
-            <TextField
+            <InputField
               //   label="Account Name"
               variant="outlined"
               placeholder="Add bank name"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '64%',
-                '& .MuiInputBase-input': {
-                  color: `${theme.palette.text.primary} !important`,
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&:hover fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                },
-                '& input': {
-                  '&:-webkit-autofill': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                    transition: 'background-color 5000s ease-in-out 0s',
-                  },
-                  '&:-webkit-autofill:focus': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                  '&:-webkit-autofill:hover': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                },
-              }}
               size="small" // Make the input box smaller
               value={Bank}
               onChange={(e) => {
@@ -506,6 +446,7 @@ const FileComponent1 = ({
               alignItems: 'baseline',
               width: '100%',
               mb: 2,
+              gap: '10px',
             }}
           >
             <Typography
@@ -517,45 +458,10 @@ const FileComponent1 = ({
             >
               Bank Account Number
             </Typography>
-            <TextField
+            <InputField
               //   label="Account Name"
               variant="outlined"
               placeholder="Add bank account number"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '64%',
-                '& .MuiInputBase-input': {
-                  color: `${theme.palette.text.primary} !important`,
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&:hover fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                },
-                '& input': {
-                  '&:-webkit-autofill': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                    transition: 'background-color 5000s ease-in-out 0s',
-                  },
-                  '&:-webkit-autofill:focus': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                  '&:-webkit-autofill:hover': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                },
-              }}
-              size="small" // Make the input box smaller
               value={accno}
               onChange={(e) => {
                 setaccno(e.target.value);
@@ -572,6 +478,7 @@ const FileComponent1 = ({
               alignItems: 'baseline',
               width: '100%',
               mb: 2,
+              gap: '10px',
             }}
           >
             <Typography
@@ -583,45 +490,10 @@ const FileComponent1 = ({
             >
               Address
             </Typography>
-            <TextField
+            <InputField
               //   label="Account Name"
               variant="outlined"
               placeholder="Add address"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '64%',
-                '& .MuiInputBase-input': {
-                  color: `${theme.palette.text.primary} !important`,
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&:hover fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                },
-                '& input': {
-                  '&:-webkit-autofill': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                    transition: 'background-color 5000s ease-in-out 0s',
-                  },
-                  '&:-webkit-autofill:focus': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                  '&:-webkit-autofill:hover': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                },
-              }}
-              size="small" // Make the input box smaller
               value={address}
               onChange={(e) => {
                 setAddress(e.target.value);
@@ -635,6 +507,7 @@ const FileComponent1 = ({
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-between',
+              gap: '10px',
               alignItems: 'baseline',
               width: '100%',
               mb: 2,
@@ -649,45 +522,10 @@ const FileComponent1 = ({
             >
               Phone Number
             </Typography>
-            <TextField
+            <InputField
               variant="outlined"
               placeholder="Add phone number"
               type="tel"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                mb: 2,
-                width: '64%',
-                '& .MuiInputBase-input': {
-                  color: `${theme.palette.text.primary} !important`,
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&:hover fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: `${theme.palette.divider} !important`,
-                  },
-                },
-                '& input': {
-                  '&:-webkit-autofill': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                    transition: 'background-color 5000s ease-in-out 0s',
-                  },
-                  '&:-webkit-autofill:focus': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                  '&:-webkit-autofill:hover': {
-                    boxShadow: `0 0 0 30px ${theme.palette.background.default} inset !important`,
-                    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
-                  },
-                },
-              }}
-              size="small"
               value={phone}
               onChange={handlePhoneChange}
               error={!isValidPhone} // Highlight the input if the phone number is not valid
@@ -1151,35 +989,35 @@ export default function PaymentACH() {
         >
           {localStorage.getItem('userlogged') === 'normal'
             ? steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            ))
+                <Step key={step.label}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))
             : steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepLabel
-                  StepIconComponent={({ completed, active }) => (
-                    <div className={classes.customIconContainer}>
-                      {/* <div
+                <Step key={step.label}>
+                  <StepLabel
+                    StepIconComponent={({ completed, active }) => (
+                      <div className={classes.customIconContainer}>
+                        {/* <div
                   className={active ? classes.activeIcon : classes.inactiveIcon}
                 /> */}
-                      <div
-                        className={
-                          completed
-                            ? classes.completedIcon
-                            : activeStep === index
+                        <div
+                          className={
+                            completed
+                              ? classes.completedIcon
+                              : activeStep === index
                               ? classes.activeIcon
                               : classes.inactiveIcon
-                        }
-                      />
-                      <div className={classes.stepNumber}>{index + 1}</div>
-                    </div>
-                  )}
-                >
-                  {step.label}
-                </StepLabel>
-              </Step>
-            ))}
+                          }
+                        />
+                        <div className={classes.stepNumber}>{index + 1}</div>
+                      </div>
+                    )}
+                  >
+                    {step.label}
+                  </StepLabel>
+                </Step>
+              ))}
         </Stepper>
 
         <Box>

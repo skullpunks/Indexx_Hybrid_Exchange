@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
       transitionDuration: '250ms',
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
-      maxWidth: '560px',
+      maxWidth: '460px',
       width: '100%',
       marginTop: '50px',
     },
@@ -124,10 +124,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     gap: '15px',
     '& img': {
-      height: '120px',
+      height: '80px',
     },
     '& h2': {
-      fontSize: '42px',
+      fontSize: '36px',
       margin: 0,
       fontWeight: '500',
     },
@@ -157,10 +157,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '30px',
-    marginTop: '30px',
+    marginBottom: '50px',
+    marginTop: '20px',
     '& p': {
-      fontSize: '20px',
+      fontSize: '16px',
+      textAlign: 'center',
     },
   },
   yellowOutlinedBtn: {
@@ -210,37 +211,18 @@ const ProcessingFailedPopup = ({ onClose, category }) => {
           </div>
           <div className={classes.header}>
             <img src={failedIcon} />
-            <h2>Failed</h2>
+            <h2>Failed!</h2>
           </div>
 
           <div className={classes.planDetails}>
-            <p>Sorry, your purchased failed.</p>
+            <p>Your transaction has failed. Please try again.</p>
           </div>
           <div className={classes.btnContainer}>
-            <Button
-              variant="outlined"
-              className={
-                category === 'x-Bitcoin'
-                  ? classes.yellowOutlinedBtn
-                  : classes.blueOutlinedBtn
-              }
+            <GenericButton
+              text={'Try again'}
               onClick={() => {
                 onClose();
                 navigate('/smart-crypto');
-              }}
-            >
-              Try again
-            </Button>
-            <GenericButton
-              text={'View Asset Wallet'}
-              className={
-                category === 'x-Bitcoin'
-                  ? classes.yellowButton
-                  : classes.blueButton
-              }
-              onClick={() => {
-                onClose();
-                navigate('/wallet/overview');
               }}
             />
           </div>

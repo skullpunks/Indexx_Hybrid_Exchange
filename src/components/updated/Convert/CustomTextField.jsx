@@ -327,12 +327,16 @@ const CustomTextField = ({
     <>
       <Box
         className={classes.container}
-        style={{
-          border: focused
-            ? `1px solid ${theme.palette.primary.main} !important`
-            : `1px solid ${
-                theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
-              } !important`,
+        sx={{
+          border: `1px solid ${
+            theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843'
+          }`,
+          '&:hover': {
+            border: `1px solid ${theme.palette.primary.main} !important`,
+          },
+          '&:focus-within': {
+            border: `1px solid ${theme.palette.primary.main} !important`,
+          },
         }}
       >
         <FormControl className={classes.formControl}>

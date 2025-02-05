@@ -261,8 +261,9 @@ const SmartApyTop = ({ onStakeSuccess }) => {
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [viewAllPlansPopup, setViewAllPlansPopup] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState('Credit Card');
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [paymentMethodError, setPaymentMethodError] = useState('');
   const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
   const [usdAmount, setUsdAmount] = useState();

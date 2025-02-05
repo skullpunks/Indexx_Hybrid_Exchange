@@ -264,7 +264,8 @@ const CreateAPlanPopup = ({
   const [currentPlanWithManagedBy, setCurrentPlanWithManagedBy] = useState('');
   const [currentNewPlanName, setCurrentNewPlanName] = useState('');
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState('Credit Card');
 
   const handleCheckboxChange = (e) => {
     setIsFeeAcknowledged(e.target.checked);
@@ -501,7 +502,7 @@ const CreateAPlanPopup = ({
 
   const confirmPayment = async () => {
     try {
-      console.log("paymentMethod", paymentMethod)
+      console.log('paymentMethod', paymentMethod);
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         await createNewBuyOrder(paymentMethod);
       } else if (paymentMethod === 'USD') {
@@ -794,7 +795,7 @@ const CreateAPlanPopup = ({
           )}
 
           {buttonTextName !== 'Switch Plan' && (
-           <>
+            <>
               {/* Payment Method Section */}
               {/* <div className={classes.selectTypeContainer}>
                 <label>Select Payment Option</label>
@@ -908,7 +909,10 @@ const CreateAPlanPopup = ({
               disabled={
                 buttonTextName === 'Switch Plan'
                   ? !isFeeAcknowledged
-                  : !usdAmount || usdAmount < 2500 || !paymentMethod || !selectedPaymentMethod
+                  : !usdAmount ||
+                    usdAmount < 2500 ||
+                    !paymentMethod ||
+                    !selectedPaymentMethod
               } // Disable if invalid
               loading={loadings}
             />
@@ -922,7 +926,7 @@ const CreateAPlanPopup = ({
           width={popupMessage.length > 100 ? '600px' : '360px'}
         />
       )}
-    <div>
+      <div>
         <Popup
           open={popupOpen}
           onClose={handleNewPopupClose}

@@ -218,7 +218,8 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState('Credit Card');
 
   const handleChange = (e) => {
     setPaymentMethod(e.target.value);

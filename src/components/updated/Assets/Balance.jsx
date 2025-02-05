@@ -20,7 +20,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '24px',
     borderRadius: '16px',
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    '&>div': {
+      display: 'flex',
+      [theme.breakpoints.down('md')]: {
+        flexDirection: 'column',
+      },
+    },
     margin: '0 auto',
     border: `1px solid ${theme.palette.divider}`,
     [theme.breakpoints.down('md')]: {
@@ -30,8 +36,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   balanceSection: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: 'grid',
+    gridTemplateColumns: 'auto auto',
+    flex: 2,
+    gap: '50px',
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'auto',
+    },
   },
   header: {
     display: 'flex',
@@ -47,9 +58,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '8px',
     fontWeight: '600 !important',
   },
+  pnlTextToday: {
+    fontSize: '14px !important',
+    marginTop: '35px !important',
+  },
   pnlText: {
     fontSize: '14px !important',
-    marginTop: '25px !important',
+    marginTop: '15px !important',
   },
   eyeIcon: {
     marginLeft: '8px',
@@ -63,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonContainer: {
     display: 'flex',
+    flex: 1,
     gap: '10px',
     [theme.breakpoints.down('md')]: {
       flex: 1,
@@ -142,14 +158,14 @@ const BalanceOverview = ({ selectedValue }) => {
           const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
           const price = Number(wallet.coinPrice);
           const prevPrice = Number(wallet.coinPrevPrice);
-        
+
           // Specific handling for INEX and WIBS to avoid duplicates
-          if (wallet.coinSymbol === "INEX" || wallet.coinSymbol === "WIBS") {
+          if (wallet.coinSymbol === 'INEX' || wallet.coinSymbol === 'WIBS') {
             if (processedSymbols.has(wallet.coinSymbol)) {
               return; // Skip if already processed
             }
             processedSymbols.add(wallet.coinSymbol); // Mark as processed
-        
+
             if (balance > 0) {
               if (!isNaN(price)) {
                 totalBalInUSD += balance * price;
@@ -157,15 +173,15 @@ const BalanceOverview = ({ selectedValue }) => {
                 totalBalInUSD += balance;
               }
             }
-        
+
             if (stakedBalance > 0 && !isNaN(price)) {
               totalStakedBalInUSD += stakedBalance * price;
             }
           } else {
             // General logic for other symbols
-            if (balance > 0 && wallet.coinSymbol !== "USD") {
+            if (balance > 0 && wallet.coinSymbol !== 'USD') {
               if (
-                wallet.coinType === "Crypto" &&
+                wallet.coinType === 'Crypto' &&
                 !isNaN(price) &&
                 !isNaN(prevPrice)
               ) {
@@ -177,11 +193,11 @@ const BalanceOverview = ({ selectedValue }) => {
                 totalBalInUSD += balance;
               }
             }
-        
-            if (wallet.coinSymbol === "USD" && wallet.coinBalance > 0) {
+
+            if (wallet.coinSymbol === 'USD' && wallet.coinBalance > 0) {
               totalBalInUSD += wallet.coinBalance;
             }
-        
+
             if (stakedBalance > 0 && !isNaN(price)) {
               totalStakedBalInUSD += stakedBalance * price;
             }
@@ -231,139 +247,144 @@ const BalanceOverview = ({ selectedValue }) => {
 
   return (
     <Box className={classes.container}>
-      <Box className={classes.balanceSection}>
-        <Box className={classes.balanceSectionWrapper}>
-          <Box className={classes.header}>
-            <Typography variant="h6">
-              {email === 'wallet@azooca.com'
-                ? '10% Balance'
-                : 'Estimated Balance'}
+      <Box>
+        <Box className={classes.balanceSection}>
+          <Box className={classes.balanceSectionWrapper}>
+            <Box className={classes.header}>
+              <Typography variant="h6">
+                {email === 'wallet@azooca.com'
+                  ? '10% Balance'
+                  : 'Estimated Balance'}
+              </Typography>
+              <div
+                className={classes.eyeIcon}
+                onClick={handleToggleVisibility}
+                size="small"
+                style={{ cursor: 'pointer' }}
+              >
+                {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </div>
+            </Box>
+            <Typography className={classes.hiddenBalance}>
+              $
+              {visible
+                ? '*******'
+                : `${new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(totalBalanceInUSD)}`}
             </Typography>
-            <div
-              className={classes.eyeIcon}
-              onClick={handleToggleVisibility}
-              size="small"
-              style={{ cursor: 'pointer' }}
-            >
-              {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-            </div>
           </Box>
-          <Typography className={classes.hiddenBalance}>
-            $
-            {visible
-              ? '*******'
-              : `${new Intl.NumberFormat('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(totalBalanceInUSD)}`}
-          </Typography>
+          <Box className={classes.balanceSectionWrapper}>
+            <Box className={classes.header}>
+              <Typography variant="h6">
+                {email === 'wallet@azooca.com'
+                  ? '3% Balance'
+                  : 'Staked Balance'}
+              </Typography>
+              <div
+                className={classes.eyeIcon}
+                onClick={handleToggleStakingVisibility}
+                size="small"
+                style={{ cursor: 'pointer' }}
+              >
+                {visibleStaking ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </div>
+            </Box>
+            <Typography className={classes.hiddenBalance}>
+              $
+              {visibleStaking
+                ? '*******'
+                : `${new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(totalStakedBalanceInUSD)}`}
+            </Typography>
+          </Box>
+          <Box className={classes.balanceSectionWrapper}>
+            <Box className={classes.header}>
+              <Typography variant="h6">Total Balance</Typography>
+              <div
+                className={classes.eyeIcon}
+                onClick={handleToggleTotalBalanceVisibility}
+                size="small"
+                style={{ cursor: 'pointer' }}
+              >
+                {visibleTotalBalance ? (
+                  <VisibilityOffIcon />
+                ) : (
+                  <VisibilityIcon />
+                )}
+              </div>
+            </Box>
+            <Typography className={classes.hiddenBalance}>
+              $
+              {visibleTotalBalance
+                ? '*******'
+                : `${new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(totalBalanceInUSD + totalStakedBalanceInUSD)}`}
+            </Typography>
+          </Box>
+          <Box className={classes.balanceSectionWrapper}>
+            <Box className={classes.header}>
+              <Typography variant="h6">Investment Amount</Typography>
+              <div
+                className={classes.eyeIcon}
+                onClick={handleToggleTotalInvestmentVisibility}
+                size="small"
+                style={{ cursor: 'pointer' }}
+              >
+                {visibleTotalInvestment ? (
+                  <VisibilityOffIcon />
+                ) : (
+                  <VisibilityIcon />
+                )}
+              </div>
+            </Box>
+            <Typography className={classes.hiddenBalance}>
+              $
+              {visibleTotalInvestment
+                ? '*******'
+                : `${new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(totalInvestment)}`}
+            </Typography>
+          </Box>
         </Box>
+        <Box className={classes.buttonContainer}>
+          <GenericButton
+            text={'Deposit'}
+            className={classes.button}
+            onClick={() => navigate('/deposit-crypto-select-coin')}
+          />
+          <GenericButton
+            text={'Withdraw'}
+            className={classes.button}
+            onClick={() => navigate('/withdraw-crypto-select-coin')}
+          />
+          <GenericButton
+            text={'Transfer'}
+            className={classes.button}
+            onClick={() => navigate('/indexx-exchange/send')}
+          />
+        </Box>
+      </Box>
 
-        {/* staking balance */}
-        <Typography className={classes.pnlText}>
-          Today's PNL:{' '}
-          <span
-            className={pnlClass}
-          >{`$${pnl.value} (${pnl.percentage}%)`}</span>
-        </Typography>
+      <Typography className={classes.pnlTextToday}>
+        Today's PNL:{' '}
+        <span className={pnlClass}>{`$${pnl.value} (${pnl.percentage}%)`}</span>
+      </Typography>
 
-        {/* Profit Section */}
-        <Typography className={classes.pnlText}>
-          Portfolio PNL:${' '}
-          <span className={profitClass}>
-            {`$${profit.value} (${profit.percentage}%)`}
-          </span>
-        </Typography>
-      </Box>
-      <Box className={classes.balanceSectionWrapper}>
-        <Box className={classes.header}>
-          <Typography variant="h6">
-            {email === 'wallet@azooca.com' ? '3% Balance' : 'Staked Balance'}
-          </Typography>
-          <div
-            className={classes.eyeIcon}
-            onClick={handleToggleStakingVisibility}
-            size="small"
-            style={{ cursor: 'pointer' }}
-          >
-            {visibleStaking ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </div>
-        </Box>
-        <Typography className={classes.hiddenBalance}>
-          $
-          {visibleStaking
-            ? '*******'
-            : `${new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(totalStakedBalanceInUSD)}`}
-        </Typography>
-      </Box>
-      <Box className={classes.balanceSectionWrapper}>
-        <Box className={classes.header}>
-          <Typography variant="h6">Total Balance</Typography>
-          <div
-            className={classes.eyeIcon}
-            onClick={handleToggleTotalBalanceVisibility}
-            size="small"
-            style={{ cursor: 'pointer' }}
-          >
-            {visibleTotalBalance ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </div>
-        </Box>
-        <Typography className={classes.hiddenBalance}>
-          $
-          {visibleTotalBalance
-            ? '*******'
-            : `${new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(totalBalanceInUSD + totalStakedBalanceInUSD)}`}
-        </Typography>
-      </Box>
-      <Box className={classes.balanceSectionWrapper}>
-        <Box className={classes.header}>
-          <Typography variant="h6">Investment Amount</Typography>
-          <div
-            className={classes.eyeIcon}
-            onClick={handleToggleTotalInvestmentVisibility}
-            size="small"
-            style={{ cursor: 'pointer' }}
-          >
-            {visibleTotalInvestment ? (
-              <VisibilityOffIcon />
-            ) : (
-              <VisibilityIcon />
-            )}
-          </div>
-        </Box>
-        <Typography className={classes.hiddenBalance}>
-          $
-          {visibleTotalInvestment
-            ? '*******'
-            : `${new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(totalInvestment)}`}
-        </Typography>
-      </Box>
-      <Box className={classes.buttonContainer}>
-        <GenericButton
-          text={'Deposit'}
-          className={classes.button}
-          onClick={() => navigate('/deposit-crypto-select-coin')}
-        />
-        <GenericButton
-          text={'Withdraw'}
-          className={classes.button}
-          onClick={() => navigate('/withdraw-crypto-select-coin')}
-        />
-        <GenericButton
-          text={'Transfer'}
-          className={classes.button}
-          onClick={() => navigate('/indexx-exchange/send')}
-        />
-      </Box>
+      {/* Profit Section */}
+      <Typography className={classes.pnlText}>
+        Portfolio PNL:${' '}
+        <span className={profitClass}>
+          {`$${profit.value} (${profit.percentage}%)`}
+        </span>
+      </Typography>
     </Box>
   );
 };
