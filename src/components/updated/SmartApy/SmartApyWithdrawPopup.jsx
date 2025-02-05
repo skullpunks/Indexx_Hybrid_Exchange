@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SmartApyWithdrawPopup = ({ onClose }) => {
+const SmartApyWithdrawPopup = ({ onClose, onConfirm }) => {
   const theme = useTheme();
 
   const classes = useStyles();
@@ -140,7 +140,7 @@ const SmartApyWithdrawPopup = ({ onClose }) => {
           <p>A 10% early withdrawal penalty applies.</p>
 
           <div className={classes.btnContainer}>
-            <GenericButton text="OK" onClick={onClose} />
+            <GenericButton text="OK" onClick={onConfirm} />
             <GenericButton
               text="Back"
               onClick={onClose}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -9,12 +9,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { Paper } from '@mui/material';
+import { Paper, Button } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import CustomSelectBox from './CustomSelectBox';
-import Inex from '../../../assets/updated/buySell/INEX.svg';
+import {
+  smartAPY,
+  reinvestSmartAPY,
+  withdrawSmartAPY,
+  decodeJWT,
+} from '../../../services/api';
+import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
+import SuccessfullWithdrawPopup from '../SmartApy/SuccessfullWithdrawPopup';
+import SmartApyWithdrawPopup from '../SmartApy/SmartApyWithdrawPopup';
 
 const headCells = [
   {
@@ -89,174 +95,93 @@ const headCells = [
   },
 ];
 
-const dummyData = [
-  {
-    id: 1,
-    coin: 'INEX',
-    date: '2023-10-01',
-    maturityDate: '2024-10-01',
-    stakedAmount: 1000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '10%',
-    totalYield: '$100',
-    daystoMaturity: 365,
-  },
-  {
-    id: 2,
-    coin: 'INXC',
-    date: '2023-09-15',
-    maturityDate: '2024-09-15',
-    stakedAmount: 500,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '8%',
-    totalYield: '$40',
-    daystoMaturity: 300,
-  },
-  {
-    id: 3,
-    coin: 'IN500',
-    date: '2023-08-20',
-    maturityDate: '2024-08-20',
-    stakedAmount: 2000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '12%',
-    totalYield: '$240',
-    daystoMaturity: 250,
-  },
-  {
-    id: 4,
-    coin: 'INEX',
-    date: '2023-10-01',
-    maturityDate: '2024-10-01',
-    stakedAmount: 1000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '10%',
-    totalYield: '$100',
-    daystoMaturity: 365,
-  },
-  {
-    id: 5,
-    coin: 'INXC',
-    date: '2023-09-15',
-    maturityDate: '2024-09-15',
-    stakedAmount: 500,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '8%',
-    totalYield: '$40',
-    daystoMaturity: 300,
-  },
-  {
-    id: 6,
-    coin: 'IN500',
-    date: '2023-08-20',
-    maturityDate: '2024-08-20',
-    stakedAmount: 2000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '12%',
-    totalYield: '$240',
-    daystoMaturity: 250,
-  },
-  {
-    id: 7,
-    coin: 'INEX',
-    date: '2023-10-01',
-    maturityDate: '2024-10-01',
-    stakedAmount: 1000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '10%',
-    totalYield: '$100',
-    daystoMaturity: 365,
-  },
-  {
-    id: 8,
-    coin: 'INXC',
-    date: '2023-09-15',
-    maturityDate: '2024-09-15',
-    stakedAmount: 500,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '8%',
-    totalYield: '$40',
-    daystoMaturity: 300,
-  },
-  {
-    id: 9,
-    coin: 'IN500',
-    date: '2023-08-20',
-    maturityDate: '2024-08-20',
-    stakedAmount: 2000,
-    lockupPeriod: '1 Year',
-    divident: '5%',
-    APYYield: '12%',
-    totalYield: '$240',
-    daystoMaturity: 250,
-  },
-];
-
-function EnhancedTableHead({ order, orderBy, onRequestSort }) {
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            style={{ minWidth: headCell.minWidth, border: 'none !important' }}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-};
-
-export default function CoinTableAPY() {
+export default function CoinTableAPY({ refresh }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('coin');
-  const [actionValues, setActionValues] = useState({});
-  const [value, setValue] = useState('Select Action');
+  const [txList, setTxList] = useState([]);
+  const [loadingRow, setLoadingRow] = useState(null);
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [withdrawPopup, setWithdrawPopup] = useState(false);
+  const [selectedWithdraw, setSelectedWithdraw] = useState(null);
   const theme = useTheme();
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-  const handleChange = (event) => {
-    setValue(event.target.value);
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const decodedToken = decodeJWT(String(token));
+    smartAPY(decodedToken?.email).then((res) => {
+      const results = res.data;
+      const reversedResults = [...results].reverse();
+      setTxList(reversedResults);
+    });
+  }, [refresh]);
+
+  const getImage = (image) => {
+    try {
+      if (image === 'IUSD+') {
+        return iusdp;
+      } else {
+        return require(`../../../assets/token-icons/${image}.png`).default;
+      }
+    } catch (error) {
+      return iusdp;
+    }
   };
 
-  const handleActionChange = (event, id) => {
-    setActionValues({ ...actionValues, [id]: event.target.value });
+  const confirmWithdraw = (email, smartApyId) => {
+    setWithdrawPopup(false);
+    setLoadingRow(smartApyId);
+    withdrawSmartAPY(email, smartApyId).then((response) => {
+      if (response.status === 200) {
+        setSuccessPopup(true);
+        setTxList((prev) =>
+          prev.filter((item) => item.smartApyId !== smartApyId)
+        );
+      } else {
+        alert('Withdrawal failed: ' + response.message);
+      }
+      setLoadingRow(null);
+    });
+  };
+
+  const handleWithdraw = (email, smartApyId) => {
+    setSelectedWithdraw({ email, smartApyId });
+    setWithdrawPopup(true);
+  };
+
+  const handleReinvest = (email, smartApyId) => {
+    setLoadingRow(smartApyId);
+    reinvestSmartAPY(email, smartApyId).then((response) => {
+      if (response.status === 200) {
+        setTxList((prev) =>
+          prev.map((item) =>
+            item.smartApyId === smartApyId
+              ? { ...item, reinvested: true }
+              : item
+          )
+        );
+      } else {
+        alert('Reinvestment failed: ' + response.message);
+      }
+      setLoadingRow(null);
+    });
+  };
+
+  const handleChange = (event, row) => {
+    const value = event.target.value;
+    if (value === 'Withdraw') {
+      handleWithdraw(row.email, row.smartApyId);
+    } else if (value === 'Reinvest') {
+      const daysBeforeEndDate = Math.floor(
+        (new Date(row.endDate) - new Date()) / (1000 * 60 * 60 * 24)
+      );
+      if (daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7) {
+        handleReinvest(row.email, row.smartApyId);
+      } else {
+        alert(
+          'Reinvestment is allowed only between 1 to 7 days before maturity date'
+        );
+      }
+    }
   };
 
   return (
@@ -315,72 +240,118 @@ export default function CoinTableAPY() {
           }}
         >
           <Table sx={{ minWidth: 1000 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
-            <TableBody>
-              {dummyData.map((row) => (
-                <TableRow key={row.id}>
+            <TableHead>
+              <TableRow>
+                {headCells.map((headCell) => (
                   <TableCell
-                    component="th"
-                    scope="row"
-                    padding="none"
-                    sx={{ border: 'none !important' }}
+                    key={headCell.id}
+                    sx={{ minWidth: headCell.minWidth }}
                   >
-                    <img src={Inex} /> {row.coin}
+                    <TableSortLabel
+                      active={orderBy === headCell.id}
+                      direction={orderBy === headCell.id ? order : 'asc'}
+                      onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}
+                    >
+                      {headCell.label}
+                      {orderBy === headCell.id ? (
+                        <Box component="span" sx={visuallyHidden}>
+                          {order === 'desc'
+                            ? 'sorted descending'
+                            : 'sorted ascending'}
+                        </Box>
+                      ) : null}
+                    </TableSortLabel>
                   </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.date}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.maturityDate}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.stakedAmount}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.lockupPeriod}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.divident}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.APYYield}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.totalYield}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    {row.daystoMaturity}
-                  </TableCell>
-                  <TableCell sx={{ border: 'none !important' }}>
-                    <CustomSelectBox
-                      items={[
-                        { name: 'Select Action', value: 'Select Action' },
-                        { name: 'Withdraw', value: 'Withdraw' },
-                        {
-                          name: 'Reinvest',
-                          value: 'Reinvest',
-                        },
-                      ]}
-                      value={value}
-                      onChange={handleChange}
-                      hasborder
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {txList.map((row) => {
+                const daysBeforeEndDate = Math.floor(
+                  (new Date(row.endDate) - new Date()) / (1000 * 60 * 60 * 24)
+                );
+                const isReinvestEnabled =
+                  daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7;
+                return (
+                  <TableRow key={row.smartApyId}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      padding="none"
+                      sx={{ border: 'none !important' }}
+                    >
+                      <img
+                        src={getImage(row?.coin)}
+                        style={{ width: '20px', height: '20px' }}
+                      />{' '}
+                      {row.coin}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {new Date(row.startDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {new Date(row.endDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {row.stakedAmount}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {row.duration}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {(row.percentage * 100).toFixed(2)}%
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {row.finalAmount}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      {daysBeforeEndDate}
+                    </TableCell>
+                    <TableCell sx={{ border: 'none !important' }}>
+                      <CustomSelectBox
+                        items={[
+                          { name: 'Select Action', value: 'Select Action' },
+                          {
+                            name: 'Withdraw',
+                            value: 'Withdraw',
+                            disabled: !row.isActive,
+                          },
+                          {
+                            name: 'Reinvest',
+                            value: 'Reinvest',
+                            disabled: !(
+                              daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7
+                            ),
+                          },
+                        ]}
+                        value={'Select Action'}
+                        onChange={(event) => handleChange(event, row)}
+                        hasborder
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
+
+      {successPopup && (
+        <SuccessfullWithdrawPopup onClose={() => setSuccessPopup(false)} />
+      )}
+      {withdrawPopup && (
+        <SmartApyWithdrawPopup
+          onClose={() => setWithdrawPopup(false)}
+          onConfirm={() =>
+            confirmWithdraw(selectedWithdraw.email, selectedWithdraw.smartApyId)
+          }
+        />
+      )}
     </Box>
   );
 }
 
 CoinTableAPY.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  hideAssets: PropTypes.bool.isRequired,
+  refresh: PropTypes.any,
 };

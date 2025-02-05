@@ -15,8 +15,9 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
-import { decodeJWT, smartAPY, withdrawSmartAPY } from '../../../services/api';
+import { decodeJWT, smartAPY, reinvestSmartAPY } from '../../../services/api';
 import SuccessfullWithdrawPopup from './SuccessfullWithdrawPopup';
+import SmartApyWithdrawPopup from './SmartApyWithdrawPopup';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -143,7 +144,9 @@ const ViewAllPlansPopup = ({ onClose }) => {
   const classes = useStyles();
   const [txList, setTxList] = useState([]);
   const [loadingRow, setLoadingRow] = useState(null);
+  const [withdrawPopup, setWithdrawPopup] = useState(false);
   const [successPopup, setSuccessPopup] = useState(false);
+  const [selectedWithdraw, setSelectedWithdraw] = useState(null);
   
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -156,19 +159,25 @@ const ViewAllPlansPopup = ({ onClose }) => {
     });
   }, []);
 
-  const handleWithdraw = (email, smartApyId) => {
-    setLoadingRow(smartApyId); // Set loading state for the specific row
-    withdrawSmartAPY(email, smartApyId).then((response) => {
+  const confirmWithdraw = (email, smartApyId) => {
+    setWithdrawPopup(false);
+    setLoadingRow(smartApyId);
+    reinvestSmartAPY(email, smartApyId).then((response) => {
       if (response.status === 200) {
-        setSuccessPopup(true); // Show success popup
+        setSuccessPopup(true);
         setTxList((prev) =>
           prev.filter((item) => item.smartApyId !== smartApyId)
         );
       } else {
         alert('Withdrawal failed: ' + response.message);
       }
-      setLoadingRow(null); // Clear loading state
+      setLoadingRow(null);
     });
+  };
+
+  const handleWithdraw = (email, smartApyId) => {
+    setSelectedWithdraw({ email, smartApyId });
+    setWithdrawPopup(true);
   };
 
   return (
@@ -272,6 +281,12 @@ const ViewAllPlansPopup = ({ onClose }) => {
       </div>
       {successPopup && (
         <SuccessfullWithdrawPopup onClose={() => setSuccessPopup(false)} />
+      )}
+       {withdrawPopup && (
+        <SmartApyWithdrawPopup
+          onClose={() => setWithdrawPopup(false)}
+          onConfirm={() => confirmWithdraw(selectedWithdraw.email, selectedWithdraw.smartApyId)}
+        />
       )}
     </div>
   );
