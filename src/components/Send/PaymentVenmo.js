@@ -55,7 +55,6 @@ const Final = ({
     }
   };
 
-
   const handleExchange = () => {
     navigate('/update/home');
   };
@@ -108,7 +107,13 @@ const Final = ({
             textAlign: 'center',
           }}
         >
-          for choosing Indexx for your {orderData?.orderType === 'SmartCryptoBuy' ? "Smart Crypto" : orderData?.orderType === 'SmartAPY' ? 'Smart APY' : "Crypto"} purchase!
+          for choosing Indexx for your{' '}
+          {orderData?.orderType === 'SmartCryptoBuy'
+            ? 'Smart Crypto'
+            : orderData?.orderType === 'SmartAPY'
+            ? 'Smart APY'
+            : 'Crypto'}{' '}
+          purchase!
         </div>
         <div className="font_10x mt-4">
           Our team is diligently verifying your order, and your tokens will be
@@ -304,7 +309,6 @@ const FileComponent2 = ({
       onPhotoIdUrlChange(url);
     } catch (error) {
       console.log('Error here', error);
-      alert('Error uploading file:', error);
     }
   };
 
@@ -568,7 +572,7 @@ export default function PaymentVenmo() {
           let orderData = res.data;
           setOrderData(orderData);
         } else {
-          alert('Something went wrong. Please try again.');
+          console.log('Something went wrong. Please try again.');
         }
       });
     }

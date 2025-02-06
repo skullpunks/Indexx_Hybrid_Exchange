@@ -630,7 +630,6 @@ const FileComponent2 = ({
       onPhotoIdUrlChange(url);
     } catch (error) {
       console.log('Error here', error);
-      alert('Error uploading file:', error);
     }
   };
 
@@ -902,7 +901,7 @@ export default function PaymentACH() {
           let orderData = res.data;
           setOrderData(orderData);
         } else {
-          alert('Something went wrong. Please try again.');
+          console.log('Something went wrong. Please try again.');
         }
       });
     }

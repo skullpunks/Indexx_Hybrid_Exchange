@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const BuySell = () => {
   const classes = useStyles();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   let defaultToken = searchParams.get('buyToken') || 'INEX';
   const [receiveToken, setReceiveToken] = useState(defaultToken);
@@ -43,6 +43,7 @@ const BuySell = () => {
   const [popupMessage, setPopupMessage] = useState('');
   const defaultSignInToken = searchParams.get('signInToken');
 
+  console.log(defaultSignInToken, 'defaultSignInTokenfrom url');
   useEffect(() => {
     const path = location.pathname.toLowerCase();
     let newDefaultToken;
@@ -97,7 +98,9 @@ const BuySell = () => {
               `/smart-crypto?orderId=${orderData?.orderId}&success=${successFlag}`
             );
           } else if (orderData?.orderType === 'SmartAPY') {
-            navigate(`/smart-apy-calculator?orderId=${orderData?.orderId}&success=${successFlag}`);
+            navigate(
+              `/smart-apy-calculator?orderId=${orderData?.orderId}&success=${successFlag}`
+            );
           } else {
             navigate(
               `/indexx-exchange/powerpack-payment-success?orderId=${orderData?.orderId}`
@@ -125,8 +128,10 @@ const BuySell = () => {
         }
       });
     }
+  }, []);
 
-    if (defaultSignInToken && !redirectFlag) {
+  useEffect(() => {
+    if (defaultSignInToken) {
       console.log('I am here ', defaultSignInToken);
       checkLogin(defaultSignInToken);
     }
@@ -138,6 +143,7 @@ const BuySell = () => {
       console.log('I am here', res);
       console.log(res);
       if (res.status === 200) {
+        console.log(res.data.access_token, 'res.data.access_token');
         let resObj = await decodeJWT(res.data.access_token);
         localStorage.setItem('email', resObj?.email);
         localStorage.setItem('user', resObj?.email);
@@ -151,6 +157,8 @@ const BuySell = () => {
           let username = resObj2?.data.Username;
           localStorage.setItem('username', username);
         }
+        searchParams.delete('signInToken');
+        setSearchParams(searchParams);
         window.location.reload();
         if (searchParams.get('buyToken')) {
           navigate(`/update/home?buyToken=${defaultToken}`);

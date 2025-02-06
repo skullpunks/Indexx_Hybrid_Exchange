@@ -160,17 +160,7 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
           />
         </Box>
       </Box>
-      <Box>
-        {selectedValue === 'Smart APY' ? (
-          ''
-        ) : (
-          <Box className={classes.leftDiv}>
-            {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
-          <Box className={classes.underline}></Box> */}
-            <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
-          </Box>
-        )}
-      </Box>
+      <Box></Box>
 
       {selectedValue === 'Smart APY' ? (
         <CoinTableAPY
