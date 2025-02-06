@@ -380,7 +380,7 @@ const BalanceOverview = ({ selectedValue }) => {
 
       {/* Profit Section */}
       <Typography className={classes.pnlText}>
-        Portfolio PNL:${' '}
+        Portfolio PNL:{' '}
         <span className={profitClass}>
           {`$${profit.value} (${profit.percentage}%)`}
         </span>
