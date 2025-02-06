@@ -166,8 +166,8 @@ export default function CustomSelectBox({
               </MenuItem>
             ))
           : !isCurrency
-          ? items?.map(({ name, value, image }) => (
-              <MenuItem key={name} value={value}>
+          ? items?.map(({ name, value, image, disabled }) => (
+              <MenuItem key={name} value={value} disabled={disabled}>
                 {type === 'Coin' && (
                   <img
                     src={getImage(image)}
@@ -182,8 +182,8 @@ export default function CustomSelectBox({
                 {name}
               </MenuItem>
             ))
-          : items?.map(({ title, address, image }) => (
-              <MenuItem key={title} value={address}>
+          : items?.map(({ title, address, image, disabled }) => (
+              <MenuItem key={title} value={address} disabled={disabled}>
                 {type === 'Coin' && (
                   <img
                     src={getImage(image)}

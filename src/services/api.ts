@@ -2107,7 +2107,22 @@ export const withdrawSmartAPY = async (email: string, smartApyId: string) => {
     });
     return result.data;
   } catch (err: any) {
-    console.log('FAILED: unable to perform API request (smartAPY)');
+    console.log('FAILED: unable to perform API request (withdrawSmartAPY)');
+    console.log(err);
+    console.log(err.response.data);
+    return err.response.data;
+  }
+};
+
+export const reinvestSmartAPY = async (email: string, smartApyId: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/reinvestSmartApy`, {
+      email: email,
+      smartApyId: smartApyId,
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log('FAILED: unable to perform API request (reinvestSmartAPY)');
     console.log(err);
     console.log(err.response.data);
     return err.response.data;
