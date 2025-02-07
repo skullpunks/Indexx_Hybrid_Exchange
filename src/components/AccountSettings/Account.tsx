@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; // To extract the query parameter
+import { useLocation, useSearchParams } from 'react-router-dom'; // To extract the query parameter
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -21,7 +21,11 @@ import preferenceDark from '../../assets/updated/accountIconicHeader/preferences
 
 import convertLight from '../../assets/updated/accountIconicHeader/convertLightMode.svg';
 import convertDark from '../../assets/updated/accountIconicHeader/convertDarkMode.svg';
-import { loginWithToken, decodeJWT, getCaptainBeeByEmail } from '../../services/api';
+import {
+  loginWithToken,
+  decodeJWT,
+  getCaptainBeeByEmail,
+} from '../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
@@ -71,10 +75,49 @@ const CustomTab = styled(Tab)(({ theme }) => ({
 
 const Account = () => {
   const theme = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation(); // Access the query parameters
   const [captainBeeForm, setCaptainBeeForm] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-  const defaultSignInToken = new URLSearchParams(location.search).get('signInToken');
+  const defaultSignInToken = searchParams.get('signInToken');
+
+  useEffect(() => {
+    if (defaultSignInToken) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  async function checkLogin(defaultSignInToken: any) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        console.log(res.data.access_token, 'res.data.access_token');
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        if (resObj?.userType === 'CaptainBee') {
+          let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+          console.log(resObj2);
+          let username = resObj2?.data.Username;
+          localStorage.setItem('username', username);
+        }
+        searchParams.delete('signInToken');
+        setSearchParams(searchParams);
+        window.location.reload();
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   const tabsData = [
     {
@@ -114,40 +157,6 @@ const Account = () => {
     });
   }
 
-  useEffect(() => {
-    const redirectFlag = localStorage.getItem('redirected');
-    if (defaultSignInToken && !redirectFlag) {
-      checkLogin(defaultSignInToken);
-    }
-  }, [defaultSignInToken]);
-
-  const checkLogin = async (signInToken: any) => {
-    try {
-      const res = await loginWithToken(signInToken);
-      if (res.status === 200) {
-        const resObj = await decodeJWT(res.data.access_token);
-        localStorage.setItem('email', resObj?.email);
-        localStorage.setItem('user', resObj?.email);
-        localStorage.setItem('access_token', res.data.access_token);
-        localStorage.setItem('refresh_token', res.data.refresh_token);
-        localStorage.setItem('userType', resObj?.userType);
-        localStorage.setItem('redirected', 'true');
-
-        if (resObj?.userType === 'CaptainBee') {
-          const resObj2 = await getCaptainBeeByEmail(resObj?.email);
-          const username = resObj2?.data.Username;
-          localStorage.setItem('username', username);
-        }
-        window.location.reload();
-      } else {
-        console.error('Login failed:', res.data);
-      }
-    } catch (err) {
-      console.error('Error during login:', err);
-    }
-  };
-
-
   // Extract `active` from the URL query parameters
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -156,7 +165,6 @@ const Account = () => {
       setSelectedTab(1); // Set tab 2 (index 1) as active
     }
   }, [location.search]);
-
 
   const handleChange = (event: any, newValue: any) => {
     setSelectedTab(newValue);

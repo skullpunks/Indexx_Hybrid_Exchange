@@ -19,7 +19,7 @@ import step3bLightMode from '../../../assets/updated/SmartApy/step3bLightMode.sv
 import step4DarkMode from '../../../assets/updated/SmartApy/step4DarkMode.svg';
 import step4LightMode from '../../../assets/updated/SmartApy/step4LightMode.svg';
 
-import step5DarkMode from '../../../assets/updated/SmartApy/step5darkMode.svg';
+import step5DarkMode from '../../../assets/updated/SmartApy/step5DarkMode.svg';
 import step5LightMode from '../../../assets/updated/SmartApy/step5LightMode.svg';
 
 import step6DarkMode from '../../../assets/updated/SmartApy/step6DarkMode.svg';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,9 +7,15 @@ import Button from '@mui/material/Button';
 import InputField from '../updated/shared/TextField';
 import GenericButton from '../updated/shared/Button';
 import { InputAdornment } from '@mui/material';
-import { decodeJWT, changePassword } from '../../services/api';
+import {
+  decodeJWT,
+  changePassword,
+  loginWithToken,
+  getCaptainBeeByEmail,
+} from '../../services/api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import OpenNotification from '../OpenNotification/OpenNotification';
+import { useSearchParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -57,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangePasswordComponent = () => {
   const classes = useStyles();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [showOldPassword, setShowOldPassword] = React.useState(false);
   const [showNewPassword, setShowNewPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -68,10 +76,50 @@ const ChangePasswordComponent = () => {
 
   const [passwordError, setPasswordError] = useState('');
   const [matchError, setMatchError] = useState('');
+  const defaultSignInToken = searchParams.get('signInToken');
+
+  useEffect(() => {
+    if (defaultSignInToken) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  async function checkLogin(defaultSignInToken) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        console.log(res.data.access_token, 'res.data.access_token');
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        if (resObj?.userType === 'CaptainBee') {
+          let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+          console.log(resObj2);
+          let username = resObj2?.data.Username;
+          localStorage.setItem('username', username);
+        }
+        searchParams.delete('signInToken');
+        setSearchParams(searchParams);
+        window.location.reload();
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
-     // Check if old and new passwords are the same
-     if (oldPassword === newPassword) {
+    // Check if old and new passwords are the same
+    if (oldPassword === newPassword) {
       setPasswordError('Old password and new password cannot be the same.');
       return;
     }
@@ -122,8 +170,9 @@ const ChangePasswordComponent = () => {
     event.preventDefault();
   };
 
-   // Check if all fields are filled to enable the button
-   const isButtonDisabled = !oldPassword || !newPassword || !confirmPassword || loading;
+  // Check if all fields are filled to enable the button
+  const isButtonDisabled =
+    !oldPassword || !newPassword || !confirmPassword || loading;
 
   return (
     <div className={classes.Container}>

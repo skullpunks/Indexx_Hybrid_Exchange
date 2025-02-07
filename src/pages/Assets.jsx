@@ -1,36 +1,32 @@
 import React, { useEffect } from 'react';
 import Assets from '../components/updated/Assets';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { baseURL, decodeJWT, loginWithToken } from '../services/api';
+import {
+  baseURL,
+  decodeJWT,
+  getCaptainBeeByEmail,
+  loginWithToken,
+} from '../services/api';
 
 const AssetsPage = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const defaultSignInToken = searchParams.get('signInToken');
 
   useEffect(() => {
-    const checkAuthentication = async () => {
-      const redirectFlag = localStorage.getItem('redirected');
-
-      if (defaultSignInToken && !redirectFlag) {
-        console.log('I am here ', defaultSignInToken);
-        await checkLogin(defaultSignInToken);
-      } else {
-        const email = localStorage.getItem('email');
-        if (!email) {
-          window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
-        }
-      }
-    };
-
-    checkAuthentication();
+    if (defaultSignInToken) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
   }, []);
 
   async function checkLogin(defaultSignInToken) {
     try {
       const res = await loginWithToken(defaultSignInToken);
       console.log('I am here', res);
+      console.log(res);
       if (res.status === 200) {
+        console.log(res.data.access_token, 'res.data.access_token');
         let resObj = await decodeJWT(res.data.access_token);
         localStorage.setItem('email', resObj?.email);
         localStorage.setItem('user', resObj?.email);
@@ -38,6 +34,14 @@ const AssetsPage = () => {
         localStorage.setItem('refresh_token', res.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('redirected', 'true'); // Set flag
+        if (resObj?.userType === 'CaptainBee') {
+          let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+          console.log(resObj2);
+          let username = resObj2?.data.Username;
+          localStorage.setItem('username', username);
+        }
+        searchParams.delete('signInToken');
+        setSearchParams(searchParams);
         window.location.reload();
       } else {
         console.log(res.data);

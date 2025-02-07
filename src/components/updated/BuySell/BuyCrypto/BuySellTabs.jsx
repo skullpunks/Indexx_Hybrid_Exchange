@@ -214,7 +214,6 @@ const BuySellTabs = ({
     setIsLoggedIn(!!email && !!user);
   }, []);
 
-  console.log('defaultReceiveToken', defaultReceiveToken);
   const handleChange = async (value) => {
     setValue(value);
     if (value === 'buy') {
@@ -228,16 +227,12 @@ const BuySellTabs = ({
     setReceiveAmount('');
   };
 
-  useEffect(() => {
-    console.log('tokenType', tokenType);
-  }, [tokenType]);
 
   const defaultTokenFromUrl = searchParams.get('buyToken');
 
   const handleTokenSelect = useCallback(
     (token, type) => {
-      console.log('type', type);
-      console.log('value', value);
+     
 
       if (type === 'Spend') {
         setSpendToken({ title: token?.title, image: token?.image });
@@ -257,7 +252,7 @@ const BuySellTabs = ({
 
   useEffect(() => {
     const findToken = tokens.find((x) => x.title === defaultReceiveToken);
-    console.log(findToken);
+   
     if (findToken) {
       setDefaultSelectedToken(findToken);
     }
@@ -265,7 +260,7 @@ const BuySellTabs = ({
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
-    console.log('amount, price', amount, price);
+   
   };
 
   useEffect(() => {
@@ -304,8 +299,7 @@ const BuySellTabs = ({
       setOpenErrorPopup(true);
       return;
     }
-    console.log('selectedPaymentMethod', value);
-    console.log('selectedPaymentMethod', selectedPaymentMethod);
+  
     if (selectedPaymentMethod && value === 'buy') {
       setPaymentMethodError('');
       await confirmPayment();
@@ -444,7 +438,7 @@ const BuySellTabs = ({
         });
       } else {
         setLoadings(false);
-        console.log('res.data', res.data);
+       
         setIsModalOpen(true);
         setGeneralMessage('Order Completed');
       }
@@ -498,8 +492,7 @@ const BuySellTabs = ({
     }
     console.log(res);
     if (res.status === 200) {
-      console.log('Res', res);
-      console.log('res.data.data.paymentUrl', res.data.data.paymentUrl);
+  
       setLoadings(false);
       window.location.href = res.data.data.paymentUrl;
     } else {
@@ -515,9 +508,9 @@ const BuySellTabs = ({
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
-    console.log('receiveAmount', receiveAmount);
+   
     let res;
-    console.log('paymentMethod', paymentMethod);
+    
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");

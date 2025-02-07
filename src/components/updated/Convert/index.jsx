@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../shared/TextField';
@@ -17,8 +17,10 @@ import {
   createConvertOrder,
   decodeJWT,
   getAppSettings,
+  getCaptainBeeByEmail,
   getCoinPriceByName,
   getUserWallets,
+  loginWithToken,
   validateUserEmail,
 } from '../../../services/api';
 import ConversionPreviewModal from './ConversionPreviewModal';
@@ -105,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConvertCrypto = () => {
   const classes = useStyles();
+  const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
   const [fromToken, setFromToken] = useState({ title: 'INEX', image: 'INEX' }); // Default to INEX
   const [toToken, setToToken] = useState({ title: 'IUSD+', image: 'IUSD+' });
@@ -129,6 +132,7 @@ const ConvertCrypto = () => {
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Convert');
+  const defaultSignInToken = searchParams.get('signInToken');
 
   let appSettingArr = [];
 
@@ -217,15 +221,15 @@ const ConvertCrypto = () => {
       await fetchConversionRate(); // Fetch updated conversion rates
     }
   };
-  
+
   const fetchUserWallets = async () => {
     const token = localStorage.getItem('access_token');
     const decodedToken = decodeJWT(String(token)); // Decode JWT
-  
+
     try {
       const userWallets = await getUserWallets(decodedToken?.email);
       setUsersWallets(userWallets.data);
-  
+
       // Function to filter out invalid balances based on notes
       const filterValidBalance = (wallets, token) => {
         return wallets
@@ -240,16 +244,18 @@ const ConvertCrypto = () => {
           })
           .reduce((sum, wallet) => sum + wallet.coinBalance, 0);
       };
-  
+
       // Update from and to balances after filtering
-      setFromBalance(formatBalance(filterValidBalance(userWallets.data, fromToken.title)));
-      setToBalance(formatBalance(filterValidBalance(userWallets.data, toToken.title)));
-  
+      setFromBalance(
+        formatBalance(filterValidBalance(userWallets.data, fromToken.title))
+      );
+      setToBalance(
+        formatBalance(filterValidBalance(userWallets.data, toToken.title))
+      );
     } catch (error) {
-      console.error("Error fetching user wallets:", error);
+      console.error('Error fetching user wallets:', error);
     }
   };
-  
 
   // Fetch prices and calculate conversion rate
   const fetchConversionRate = async () => {
@@ -324,6 +330,44 @@ const ConvertCrypto = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (defaultSignInToken) {
+      console.log('I am here ', defaultSignInToken);
+      checkLogin(defaultSignInToken);
+    }
+  }, []);
+
+  async function checkLogin(defaultSignInToken) {
+    try {
+      const res = await loginWithToken(defaultSignInToken);
+      console.log('I am here', res);
+      console.log(res);
+      if (res.status === 200) {
+        console.log(res.data.access_token, 'res.data.access_token');
+        let resObj = await decodeJWT(res.data.access_token);
+        localStorage.setItem('email', resObj?.email);
+        localStorage.setItem('user', resObj?.email);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('userType', resObj?.userType);
+        localStorage.setItem('redirected', 'true'); // Set flag
+        if (resObj?.userType === 'CaptainBee') {
+          let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
+          console.log(resObj2);
+          let username = resObj2?.data.Username;
+          localStorage.setItem('username', username);
+        }
+        searchParams.delete('signInToken');
+        setSearchParams(searchParams);
+        window.location.reload();
+      } else {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  }
 
   // Fetch user wallets to set balances
   useEffect(() => {
@@ -417,7 +461,7 @@ const ConvertCrypto = () => {
       )
     );
   };
-  
+
   const handlePopupClose = () => {
     setShowPopup(false);
     setPopupMessage('');
@@ -465,7 +509,7 @@ const ConvertCrypto = () => {
       )
     );
   };
-  
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };

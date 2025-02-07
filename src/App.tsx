@@ -185,7 +185,7 @@ function App() {
     const handleStorageChange = (event: any) => {
       // console.log(event);
       if (setUserLogged !== event.currentTarget.localStorage.userlogged)
-        setUserLogged(event.currentTarget.localStorage.userlogged);
+      setUserLogged(event.currentTarget.localStorage.userlogged);
     };
 
     window.addEventListener('storage', handleStorageChange);
