@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import greetingCard from '../../assets/header-icons/sec_header_greeting.svg';
 // import logo from '../../assets/header-icons/indexx_logo.svg';
-import logo from '../../assets/header-icons/new indexx.ai logo.svg';
+import logo from '../../assets/header-icons/indexx-logo-v3-dark.svg';
 import './style.css';
 import CrossIcon from '../../assets/header-icons/cross';
 import CrossIconNew from '../../assets/updated/cross_white.png';
@@ -126,7 +126,11 @@ const HeaderTest = () => {
   useEffect(() => {
     setAuthHeader(
       header_data.map((el) => {
-        if (pathname.includes('/crypto-treasury')) {
+        if (
+          pathname.includes('/crypto-treasury') ||
+          pathname.includes('/smart-crypto') ||
+          pathname.includes('/smart-apy')
+        ) {
           if (el.mainTextDesktop === 'Crypto Treasury') {
             return { ...el, active: true };
           }

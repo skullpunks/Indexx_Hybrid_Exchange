@@ -185,7 +185,7 @@ function App() {
     const handleStorageChange = (event: any) => {
       // console.log(event);
       if (setUserLogged !== event.currentTarget.localStorage.userlogged)
-      setUserLogged(event.currentTarget.localStorage.userlogged);
+        setUserLogged(event.currentTarget.localStorage.userlogged);
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -264,26 +264,24 @@ function App() {
               path="/smart-crypto/plan-detail/:name"
               element={<PlanDetails />}
             />
+            <Route
+              path="/indexx-exchange/market-data"
+              element={<MarketsPage />}
+            />
+            <Route path="/smart-apy" element={<SmartAPYPage />} />
+            <Route path="/smart-apy-calculator" element={<SmartApyCalPage />} />
+            <Route
+              path="/smart-apy-how-it-works"
+              element={<HowItWorksSmartAPY />}
+            />
             <Route element={<PrivateRoutes />}>
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/wallet/crypto" element={<AssetsPage />} />
               <Route path="/wallet/fiat" element={<AssetsPage />} />
               <Route path="/wallet/smart-crypto" element={<AssetsPage />} />
               <Route path="/wallet/iusd+" element={<AssetsPage />} />
-              <Route
-                path="/indexx-exchange/market-data"
-                element={<MarketsPage />}
-              />
+
               <Route path="/smart-cryptos" element={<SmartCryptoOldPage />} />
-              <Route path="/smart-apy" element={<SmartAPYPage />} />
-              <Route
-                path="/smart-apy-calculator"
-                element={<SmartApyCalPage />}
-              />
-              <Route
-                path="/smart-apy-how-it-works"
-                element={<HowItWorksSmartAPY />}
-              />
 
               {/* <Route
                 path="/paypal-partnership-with-indexx"
