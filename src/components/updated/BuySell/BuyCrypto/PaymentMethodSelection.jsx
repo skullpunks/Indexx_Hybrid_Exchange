@@ -11,6 +11,7 @@ import venmo from '../../../../assets/updated/popup/venmo.svg';
 import ach from '../../../../assets/updated/popup/ach.png';
 import paypal from '../../../../assets/updated/popup/paypal.svg';
 import zelle from '../../../../assets/updated/popup/zelle.svg';
+import tygpay from '../../../../assets/updated/tyga_icon.png';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -93,7 +94,11 @@ const PaymentMethodSelection = ({
                 ? venmo
                 : buttonText === 'ACH'
                 ? ach
-                : buttonText === 'ACH'
+                : buttonText === 'TygaPay'
+                ? tygpay
+                : buttonText === 'Wire Transfer'
+                ? wireTransfer
+                : buttonText === 'USD'
                 ? usd
                 : transactionIcon
             }

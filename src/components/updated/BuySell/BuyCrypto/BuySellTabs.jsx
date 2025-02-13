@@ -588,13 +588,18 @@ const BuySellTabs = ({
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
-          let selectedMethod = String(paymentMethod).toLowerCase();
+          let selectedMethod =
+            paymentMethod === 'Wire Transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );

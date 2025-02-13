@@ -512,7 +512,7 @@ const Popup = ({
                   </button>
                   <button
                     className={classes.button}
-                    onClick={() => handlePaymentMethodSelect('Wire')}
+                    onClick={() => handlePaymentMethodSelect('Wire Transfer')}
                   >
                     <Box className={classes.iconTextContainer}>
                       <img src={wireTransfer} alt="wire transfer" />
