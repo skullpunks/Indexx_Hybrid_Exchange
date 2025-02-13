@@ -19,6 +19,7 @@ import {
 import Popup from './Popup';
 import tokens from '../../../utils/Tokens.json';
 import OrderProcessedSuccessfullyPopup from './BuyCrypto/OrderProcessedSuccessfullyPopup';
+import FailTokenPaymentPopup from './BuyCrypto/FailTokenPaymentPopup';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -44,6 +45,7 @@ const BuySell = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const defaultSignInToken = searchParams.get('signInToken');
+  const successFlag = searchParams.get('success');
 
   console.log(defaultSignInToken, 'defaultSignInTokenfrom url');
   useEffect(() => {
@@ -71,7 +73,6 @@ const BuySell = () => {
     const type = searchParams.get('type');
     const orderId = searchParams.get('orderId');
     const redirectFlag = localStorage.getItem('redirected');
-    const successFlag = searchParams.get('success');
     if (subscriptionId) {
       getPaypalSubscription(subscriptionId).then((res) => {
         if (res.status === 200) {
@@ -187,6 +188,7 @@ const BuySell = () => {
 
   const handlePopupClose = () => {
     setIsNewModalOpen(false);
+    navigate('/');
   };
 
   const handleTokenSelect = (selectedTokenValue) => {
@@ -236,6 +238,9 @@ const BuySell = () => {
           )}
           {isNewModalOpen && (
             <OrderProcessedSuccessfullyPopup onClose={handlePopupClose} />
+          )}
+          {successFlag === 'false' && (
+            <FailTokenPaymentPopup onClose={() => navigate('/')} />
           )}
         </div>
       </div>
