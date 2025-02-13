@@ -94,7 +94,9 @@ const BuySell = () => {
             setPopupMessage(
               `${orderData?.orderType} Order processed successfully`
             );
-            setIsNewModalOpen(true);
+            if (successFlag !== 'false') {
+              setIsNewModalOpen(true);
+            }
           } else if (orderData?.orderType === 'SmartCryptoBuy') {
             navigate(
               `/smart-crypto?orderId=${orderData?.orderId}&success=${successFlag}`
