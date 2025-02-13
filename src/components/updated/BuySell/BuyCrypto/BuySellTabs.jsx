@@ -227,13 +227,10 @@ const BuySellTabs = ({
     setReceiveAmount('');
   };
 
-
   const defaultTokenFromUrl = searchParams.get('buyToken');
 
   const handleTokenSelect = useCallback(
     (token, type) => {
-     
-
       if (type === 'Spend') {
         setSpendToken({ title: token?.title, image: token?.image });
       } else if (type === 'Receive') {
@@ -252,7 +249,7 @@ const BuySellTabs = ({
 
   useEffect(() => {
     const findToken = tokens.find((x) => x.title === defaultReceiveToken);
-   
+
     if (findToken) {
       setDefaultSelectedToken(findToken);
     }
@@ -260,7 +257,6 @@ const BuySellTabs = ({
 
   const handleSpendAmountChange = (amount) => {
     setSpendAmount(amount);
-   
   };
 
   useEffect(() => {
@@ -299,7 +295,7 @@ const BuySellTabs = ({
       setOpenErrorPopup(true);
       return;
     }
-  
+
     if (selectedPaymentMethod && value === 'buy') {
       setPaymentMethodError('');
       await confirmPayment();
@@ -438,7 +434,7 @@ const BuySellTabs = ({
         });
       } else {
         setLoadings(false);
-       
+
         setIsModalOpen(true);
         setGeneralMessage('Order Completed');
       }
@@ -492,7 +488,6 @@ const BuySellTabs = ({
     }
     console.log(res);
     if (res.status === 200) {
-  
       setLoadings(false);
       window.location.href = res.data.data.paymentUrl;
     } else {
@@ -508,9 +503,9 @@ const BuySellTabs = ({
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
-   
+
     let res;
-    
+
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
@@ -576,13 +571,18 @@ const BuySellTabs = ({
         await createNewBuyOrderForTygaPay();
       } else if (
         paymentMethod === 'Zelle' ||
-        paymentMethod === 'Wire' ||
+        paymentMethod === 'Wire Transfer' ||
         paymentMethod === 'Venmo' ||
         paymentMethod === 'ACH'
       ) {
         const orderId = await createBuyOrderForZelleAndWire(paymentMethod);
         if (orderId) {
-          let selectedMethod = String(paymentMethod).toLowerCase();
+          let selectedMethod =
+            paymentMethod === 'Wire Transfer'
+              ? 'wire'
+              : paymentMethod === 'ACH'
+              ? 'ACH'
+              : String(paymentMethod).toLowerCase();
           navigate(
             `/indexx-exchange/payment-${selectedMethod}?orderId=${orderId}`
           );
