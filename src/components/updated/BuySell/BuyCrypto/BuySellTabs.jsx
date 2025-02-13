@@ -171,6 +171,7 @@ const BuySellTabs = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [spendToken, setSpendToken] = useState({ title: 'USD', image: 'USD' });
+  const [tokenPriceLoading, setTokenPriceLoading] = useState(false);
   const [receiveToken, setReceiveToken] = useState({
     title: 'INEX',
     image: 'INEX',
@@ -206,6 +207,7 @@ const BuySellTabs = ({
   const [isIndexxTokenSell, setIsIndexxTokenSell] = useState(false);
   const [orderProcessedSuccessfullyPopup, setOrderProcessedSuccessfullyPopup] =
     useState(false);
+  const [minAmountError, setMinAmountError] = useState(false);
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const email = localStorage.getItem('email');
@@ -227,13 +229,10 @@ const BuySellTabs = ({
     setReceiveAmount('');
   };
 
-
   const defaultTokenFromUrl = searchParams.get('buyToken');
 
   const handleTokenSelect = useCallback(
     (token, type) => {
-     
-
       if (type === 'Spend') {
         setSpendToken({ title: token?.title, image: token?.image });
       } else if (type === 'Receive') {
@@ -252,17 +251,31 @@ const BuySellTabs = ({
 
   useEffect(() => {
     const findToken = tokens.find((x) => x.title === defaultReceiveToken);
-   
+
     if (findToken) {
       setDefaultSelectedToken(findToken);
     }
   }, [defaultSelectedToken, defaultReceiveToken]);
 
-  const handleSpendAmountChange = (amount) => {
-    setSpendAmount(amount);
-   
-  };
+  const handleSpendAmountChange = (amount, type) => {
+    console.log(amount, type, 'amount and type');
 
+    // Convert the amount to a number
+    const numericAmount = Number(amount);
+
+    // Check if the type is 'buy' and the amount is not empty
+    if (type === 'buy' && amount !== '') {
+      // If the amount is less than 1 or negative, set it to 1
+      if (numericAmount < 1 || numericAmount < 0) {
+        setSpendAmount(1);
+        setMinAmountError(true);
+        return;
+      }
+    }
+
+    // If the amount is valid, set it directly
+    setSpendAmount(amount);
+  };
   useEffect(() => {
     updateReceiveAmount(spendAmount, price);
   }, [spendAmount, price]);
@@ -299,7 +312,7 @@ const BuySellTabs = ({
       setOpenErrorPopup(true);
       return;
     }
-  
+
     if (selectedPaymentMethod && value === 'buy') {
       setPaymentMethodError('');
       await confirmPayment();
@@ -438,7 +451,7 @@ const BuySellTabs = ({
         });
       } else {
         setLoadings(false);
-       
+
         setIsModalOpen(true);
         setGeneralMessage('Order Completed');
       }
@@ -492,7 +505,6 @@ const BuySellTabs = ({
     }
     console.log(res);
     if (res.status === 200) {
-  
       setLoadings(false);
       window.location.href = res.data.data.paymentUrl;
     } else {
@@ -508,9 +520,9 @@ const BuySellTabs = ({
     let basecoin = receiveToken.title;
     let quotecoin = 'USD';
     let outAmount = Math.floor(receiveAmount * 1000000) / 1000000;
-   
+
     let res;
-    
+
     if (id) {
       if (!permissionData?.permissions?.buy) {
         // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
@@ -700,6 +712,25 @@ const BuySellTabs = ({
       setSelectedPaymentMethod('Credit Card');
     }
   }, [value]);
+
+  useEffect(() => {
+    let timeoutId;
+
+    if (minAmountError) {
+      // Set a timeout to clear the error after 2 seconds
+      timeoutId = setTimeout(() => {
+        setMinAmountError(false);
+      }, 5000);
+    }
+
+    // Cleanup function to clear the timeout if the component unmounts or `minAmountError` changes
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [minAmountError]);
+
   const formatPrice = (price) => {
     if (price >= 1) {
       return price.toFixed(2);
@@ -782,8 +813,9 @@ const BuySellTabs = ({
                   label="Spend"
                   placeholder="Enter Amount"
                   type="buy"
+                  setTokenPriceLoading={setTokenPriceLoading}
                   onSelectToken={(token) => handleTokenSelect(token, 'Spend')}
-                  onAmountChange={handleSpendAmountChange}
+                  onAmountChange={(e) => handleSpendAmountChange(e, value)}
                   onReceiveAmountChange={handleReceiveAmountChange}
                   onPriceChange={handlePriceChange}
                   amount={spendAmount}
@@ -795,11 +827,17 @@ const BuySellTabs = ({
                   }
                   defaultReceiveToken={defaultSelectedToken}
                 />
+                {minAmountError && (
+                  <p style={{ marginTop: '-5px', color: 'red' }}>
+                    Spend Amount should be greater than or equal to 1
+                  </p>
+                )}
                 <CustomTextField
                   label="Receive"
-                  placeholder="0.00"
+                  placeholder={tokenPriceLoading ? 'Loading Amount...' : '0.00'}
                   type="buy"
                   onSelectToken={(token) => handleTokenSelect(token, 'Receive')}
+                  setTokenPriceLoading={setTokenPriceLoading}
                   onAmountChange={handleReceiveAmountChange}
                   onPriceChange={handlePriceChange}
                   amount={receiveAmount}
@@ -823,11 +861,12 @@ const BuySellTabs = ({
                   onSelectToken={(token) =>
                     setSpendToken({ title: token?.title, image: token?.image })
                   }
-                  onAmountChange={handleSpendAmountChange}
+                  onAmountChange={(e) => handleSpendAmountChange(e, value)}
                   onReceiveAmountChange={handleReceiveAmountChange}
                   onPriceChange={handlePriceChange}
                   amount={spendAmount}
                   receiveAmount={receiveAmount}
+                  setTokenPriceLoading={setTokenPriceLoading}
                   tokenType={tokenType}
                   disableDropdown={false}
                   loggedIn
@@ -843,6 +882,7 @@ const BuySellTabs = ({
                   onPriceChange={handlePriceChange}
                   amount={receiveAmount}
                   receiveAmount={receiveAmount}
+                  setTokenPriceLoading={setTokenPriceLoading}
                   tokenType={tokenType}
                   disableDropdown={true}
                   fixedToken={{ title: 'USD', image: 'USD' }}

@@ -203,6 +203,7 @@ const CustomTextField = ({
   loggedIn,
   defaultReceiveToken,
   balance,
+  setTokenPriceLoading,
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -246,6 +247,10 @@ const CustomTextField = ({
   useEffect(() => {
     getPricesData(defaultTokenFromUrl);
   }, [defaultTokenFromUrl]);
+
+  useEffect(() => {
+    setUserAmount(amount);
+  }, [amount]);
 
   const handleTokenSelect = (token) => {
     console.log('I am here', token, disableDropdown);
@@ -298,8 +303,9 @@ const CustomTextField = ({
   };
 
   const getPricesData = async (currency) => {
-    console.log('usd', currency);
+    setTokenPriceLoading(true);
     const res = await getCoinPriceByName(String(currency));
+    setTokenPriceLoading(false);
     const priceData = res.data.results.data;
     setRateData(priceData);
     if (onPriceChange) {
@@ -435,6 +441,7 @@ const CustomTextField = ({
                 </InputAdornment>
               ),
             }}
+            autoComplete="off"
           />
         </FormControl>
 
@@ -498,6 +505,7 @@ const CustomTextField = ({
                     }}
                     placeholder="Search..."
                     value={searchTerm}
+                    autoComplete="off"
                     onChange={handleSearchChange}
                     InputProps={{
                       startAdornment: (

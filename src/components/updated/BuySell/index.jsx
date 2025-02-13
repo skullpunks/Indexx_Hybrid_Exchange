@@ -18,6 +18,7 @@ import {
 } from '../../../services/api';
 import Popup from './Popup';
 import tokens from '../../../utils/Tokens.json';
+import OrderProcessedSuccessfullyPopup from './BuyCrypto/OrderProcessedSuccessfullyPopup';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -40,6 +41,7 @@ const BuySell = () => {
   const [receiveToken, setReceiveToken] = useState(defaultToken);
   const [selectedTab, setSelectedTab] = useState('Crypto');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const defaultSignInToken = searchParams.get('signInToken');
 
@@ -74,7 +76,7 @@ const BuySell = () => {
       getPaypalSubscription(subscriptionId).then((res) => {
         if (res.status === 200) {
           setPopupMessage('Subscription successful');
-          setIsModalOpen(true);
+          setIsNewModalOpen(true);
           navigate(
             `/indexx-exchange/subscribe-success?subscription_id=${subscriptionId}`
           );
@@ -92,7 +94,7 @@ const BuySell = () => {
             setPopupMessage(
               `${orderData?.orderType} Order processed successfully`
             );
-            setIsModalOpen(true);
+            setIsNewModalOpen(true);
           } else if (orderData?.orderType === 'SmartCryptoBuy') {
             navigate(
               `/smart-crypto?orderId=${orderData?.orderId}&success=${successFlag}`
@@ -123,7 +125,7 @@ const BuySell = () => {
             setPopupMessage(
               `${orderData?.orderType} Order processed successfully`
             );
-            setIsModalOpen(true);
+            setIsNewModalOpen(true);
           }
         }
       });
@@ -182,7 +184,7 @@ const BuySell = () => {
   };
 
   const handlePopupClose = () => {
-    setIsModalOpen(false);
+    setIsNewModalOpen(false);
   };
 
   const handleTokenSelect = (selectedTokenValue) => {
@@ -229,6 +231,9 @@ const BuySell = () => {
           <PopularConversion receiveToken={receiveToken} />
           {isModalOpen && (
             <Popup message={popupMessage} onClose={handlePopupClose} />
+          )}
+          {isNewModalOpen && (
+            <OrderProcessedSuccessfullyPopup onClose={handlePopupClose} />
           )}
         </div>
       </div>

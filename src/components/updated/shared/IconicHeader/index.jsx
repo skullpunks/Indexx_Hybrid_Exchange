@@ -100,7 +100,7 @@ const CustomTab = styled(Tab)(({ theme }) => ({
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
-  color: '#FEBA00 !important',
+  color: '#FEBA00',
   minWidth: 0,
   width: '120px',
   height: '100%',
