@@ -58,6 +58,17 @@ import greeting24 from '../../../assets/redeem/greeting24.png';
 import greeting25 from '../../../assets/redeem/greeting25.png';
 import greeting26 from '../../../assets/redeem/greeting26.png';
 import greeting27 from '../../../assets/redeem/greeting27.png';
+import val1 from '../../../assets/redeem/val1.png';
+import val2 from '../../../assets/redeem/val2.png';
+import val3 from '../../../assets/redeem/val3.png';
+import val4 from '../../../assets/redeem/val4.png';
+import val5 from '../../../assets/redeem/val5.png';
+import val6 from '../../../assets/redeem/val6.png';
+import val7 from '../../../assets/redeem/val7.png';
+import val8 from '../../../assets/redeem/val8.png';
+import val9 from '../../../assets/redeem/val9.png';
+import val10 from '../../../assets/redeem/val10.png';
+
 import Slider from 'react-slick';
 import {
   FormControl,
@@ -610,6 +621,77 @@ const CreateCards = ({ onSendCard }) => {
       imgUrl:
         'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/newyear10.png',
     },
+    // Valentine's Day Cards
+    {
+      id: 18,
+      img: val1,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val1.png',
+    },
+    {
+      id: 19,
+      img: val2,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val2.png',
+    },
+    {
+      id: 20,
+      img: val3,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val3.png',
+    },
+    {
+      id: 21,
+      img: val4,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val4.png',
+    },
+    {
+      id: 22,
+      img: val5,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val5.png',
+    },
+    {
+      id: 23,
+      img: val6,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val6.png',
+    },
+    {
+      id: 24,
+      img: val7,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val7.png',
+    },
+    {
+      id: 25,
+      img: val8,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val8.png',
+    },
+    {
+      id: 26,
+      img: val9,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val9.png',
+    },
+    {
+      id: 27,
+      img: val10,
+      type: 'Seasonal Greeting Card',
+      imgUrl:
+        'https://indexx-exchange.s3.ap-northeast-1.amazonaws.com/New+GC/New+GC/val10.png',
+    },
   ];
 
   const [contentArr, setContentArr] = useState([
@@ -697,21 +779,39 @@ const CreateCards = ({ onSendCard }) => {
   const handleChangeSubType = (event) => {
     if (
       event.target.value === 'Christmas' ||
-      event.target.value === 'New Year'
+      event.target.value === 'New Year'  ||
+      event.target.value === "Valentine's Day"
     ) {
       setSubValue(event.target.value);
       setSelectedImg(
-        event.target.value === 'Christmas' ? christman1 : newyear1
+        event.target.value === 'Christmas' ? christman1 : event.target.value === "Valentine's Day" ? val1 : newyear1
       );
+      console.log('event', event.target.value);
       // Filter the array based on the selected subtype
+      // const sortedArr = seasonalArr.filter((item) => {
+      //   if (event.target.value === 'Christmas') {
+      //     return item.imgUrl.includes('christmas');
+      //   } else if (event.target.value === 'New Year') {
+      //     return item.imgUrl.includes('newyear');
+      //   } else if (event.target.value === "Valentine's Day") {
+      //     return item.imgUrl.includes('val');
+      //   }
+      //   return false;
+      // });
+
       const sortedArr = seasonalArr.filter((item) => {
-        if (event.target.value === 'Christmas') {
-          return item.imgUrl.includes('christmas');
-        } else if (event.target.value === 'New Year') {
-          return item.imgUrl.includes('newyear');
+        if (event.target.value === 'Christmas' && item.imgUrl.includes('christmas')) {
+          return true;
+        } else if (event.target.value === 'New Year' && item.imgUrl.includes('newyear')) {
+          return true;
+        } else if (event.target.value === "Valentine's Day" && item.imgUrl.includes('val')) {
+          return true;
         }
         return false;
       });
+      
+      console.log("sortedArr", sortedArr);
+      setSelectedCards(sortedArr);
 
       // Log or update the state with the sorted array
       console.log(sortedArr);
@@ -766,15 +866,38 @@ const CreateCards = ({ onSendCard }) => {
 
     if (subvalue && value === 'Seasonal Greeting Card') {
       // Filter the array based on the selected subtype
+      // const sortedArr = seasonalArr.filter((item) => {
+      //   if (subvalue === 'Christmas') {
+      //     return item.imgUrl.includes('christmas');
+      //   } else if (subvalue === 'New Year') {
+      //     return item.imgUrl.includes('newyear');
+      //   } else if (subvalue === "Valentine's Day") {
+      //     return item.imgUrl.includes('val');
+      //   }
+      //   return false;
+      // });
+
       const sortedArr = seasonalArr.filter((item) => {
-        if (subvalue === 'Christmas') {
-          return item.imgUrl.includes('christmas');
-        } else if (subvalue === 'New Year') {
-          return item.imgUrl.includes('newyear');
+        if (subvalue === 'Christmas' && item.imgUrl.includes('christmas')) {
+          return true;
+        } else if (subvalue === 'New Year' && item.imgUrl.includes('newyear')) {
+          return true;
+        } else if (subvalue === "Valentine's Day" && item.imgUrl.includes('val')) {
+          return true;
         }
         return false;
       });
+      
+      console.log("sortedArr", sortedArr);
+      console.log("subvalue", subvalue);
       setSelectedCards(sortedArr);
+      setContentArr((prevContentArr) =>
+        prevContentArr.map((item) =>
+          item.id === 2
+            ? { ...item, data: sortedArr }
+            : item
+        )
+      );
       setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
   }, [value, subvalue]);
@@ -942,6 +1065,10 @@ const CreateCards = ({ onSendCard }) => {
                   {
                     name: 'New Year',
                     value: 'New Year',
+                  },
+                  {
+                    name: "Valentine's Day",
+                    value: "Valentine's Day",
                   },
                 ]}
                 value={subvalue}
