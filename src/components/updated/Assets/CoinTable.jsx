@@ -969,10 +969,11 @@ export default function EnhancedTable({
                         )}
                       </TableCell>
                       <TableCell
-                        colSpan={isMobile ? 2 : 2}
+                        colSpan={isMobile ? 0 : 2}
                         sx={{
                           fontSize: '22px',
                           borderBottom: 'none !important',
+                          display: isMobile ? 'none' : 'flex',
                         }}
                       >
                         Total Value: $
