@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HowToBuyCrypto = ({ tokenType, receiveToken  }) => {
+const HowToBuyCrypto = ({ tokenType, receiveToken }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -116,8 +116,8 @@ const HowToBuyCrypto = ({ tokenType, receiveToken  }) => {
               : 'ETF Tokens'}
           </Typography>
           <Typography className={classes.cardText}>
-            After successful payment, the purchased crypto to will reach Spot
-            Wallet.
+            After successful payment, the purchased crypto will be deposited
+            into your Asset Wallet.
           </Typography>
         </Box>
       </div>
