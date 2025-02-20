@@ -676,7 +676,7 @@ const Assets = () => {
                 <h3 style={{ margin: 0 }}>Asset Wallet</h3>
               </div>
               <p>
-                Securely Manage, Grow, and Track Your Assets in One Powerful
+                Securely Manage, Grow and Track Your Assets in One Powerful
                 Wallet.
               </p>
             </div>
