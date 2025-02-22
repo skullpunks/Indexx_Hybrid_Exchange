@@ -372,9 +372,6 @@ const FileComponent2 = ({
     localStorage.getItem('userlogged') === 'normal' ? people_green : people;
   const recipient = email || username;
   const recipientProfilePic = profilePic || user_img;
-  const handleChangeType = (value) => {
-    setToken(value);
-  };
 
   const validateBalanceOfCurrentUser = async () => {
     if (currentUserEmail && currentUserEmail.trim() !== '') {
@@ -434,7 +431,7 @@ const FileComponent2 = ({
       setSelectedCoin(filter[0].title);
       setSelectedCoinObj(filter[0]);
     }
-  }, [token]);
+  }, [token, selectedCoinObj]);
 
   React.useEffect(() => {
     onStateChange({
@@ -509,7 +506,7 @@ const FileComponent2 = ({
                   seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
               )}
               type={'Currency'}
-              onCurrencyChange={handleChangeType}
+              onCurrencyChange={handleChangeCurrency}
               value={selectedCoinObj?.address}
               isCurrency={true}
             />
