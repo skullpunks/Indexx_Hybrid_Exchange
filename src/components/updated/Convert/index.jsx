@@ -103,6 +103,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600px',
     color: theme.palette.text.primary,
   },
+  swapIconHover: {
+    transition: 'all .2s linear',
+    '&:hover': {
+      transition: 'all .2s linear',
+
+      transform: 'scale(1.2)',
+    },
+  },
 }));
 
 const ConvertCrypto = () => {
@@ -550,6 +558,7 @@ const ConvertCrypto = () => {
               <ImportExportIcon
                 onClick={handleSwapTokens} // Add the click handler here
                 style={{ cursor: 'pointer', width: '32px', fontSize: '32px' }}
+                className={classes.swapIconHover}
               />
             </div>
             <CustomTextField
