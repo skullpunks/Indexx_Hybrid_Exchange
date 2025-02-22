@@ -373,6 +373,10 @@ const FileComponent2 = ({
   const recipient = email || username;
   const recipientProfilePic = profilePic || user_img;
 
+  const handleChangeType = (value) => {
+    setToken(value);
+  };
+
   const validateBalanceOfCurrentUser = async () => {
     if (currentUserEmail && currentUserEmail.trim() !== '') {
       const res = await getWalletBalance(currentUserEmail, selectedCoin);
