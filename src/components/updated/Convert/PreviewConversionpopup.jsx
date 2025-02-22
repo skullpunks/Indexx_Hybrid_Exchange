@@ -196,7 +196,7 @@ const PreviewConversionpopup = ({
   rateData2,
   insufficientBalance,
   createProcessOrder,
-  adminFee
+  adminFee,
 }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -214,6 +214,17 @@ const PreviewConversionpopup = ({
       console.error('Error during conversion:', error);
     }
   };
+
+  const getImage = (image) => {
+    console.log('my image', image);
+    try {
+      return require(`../../../assets/token-icons/${image}.png`).default;
+    } catch (error) {
+      console.log('er', error);
+      return Inex; // Fallback image if specific token icon is not found
+    }
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -252,7 +263,11 @@ const PreviewConversionpopup = ({
               <div
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
-                <img src={fromTokenImage} alt="" style={{ height: '30px' }} />
+                <img
+                  src={getImage(fromToken?.image)}
+                  alt={fromToken?.title}
+                  style={{ height: '30px' }}
+                />
                 <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
                   {amount}
                 </span>
@@ -273,7 +288,11 @@ const PreviewConversionpopup = ({
               <div
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
-                <img src={toTokenImage} alt="" style={{ height: '30px' }} />
+                <img
+                  src={getImage(toToken?.image)}
+                  alt={toToken?.title}
+                  style={{ height: '30px' }}
+                />
                 <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
                   {totalAmountToPay}
                 </span>

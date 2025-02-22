@@ -169,11 +169,12 @@ const ConvertCrypto = () => {
     try {
       const basecoin = fromToken.title;
       const quotecoin = toToken.title;
-
+      const userEmail = localStorage.getItem('user');
       // Check for disallowed selling of Indexx Tokens
       if (
         isIndexxToken(String(basecoin)) &&
-        !isIndexxToken(String(quotecoin))
+        !isIndexxToken(String(quotecoin)) &&
+        userEmail !== 'chrishumpherys@yahoo.com'
       ) {
         //alert("Selling of Indexx tokens is not allowed.");
         OpenNotification(
