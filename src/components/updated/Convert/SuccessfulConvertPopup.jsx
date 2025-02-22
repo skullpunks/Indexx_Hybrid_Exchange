@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
 import GenericButton from '../shared/Button';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SuccessPopup = ({ onClose }) => {
   const theme = useTheme();
-
+  const navigate = useNavigate();
   const classes = useStyles();
   return (
     <div
@@ -127,7 +128,10 @@ const SuccessPopup = ({ onClose }) => {
           <h3>Conversion successful!</h3>
 
           <div className={classes.btnContainer}>
-            <GenericButton text="Close" onClick={onClose} />
+            <GenericButton
+              text="View Asset Wallet"
+              onClick={() => navigate('/wallet/overview')}
+            />
           </div>
         </div>
       </div>

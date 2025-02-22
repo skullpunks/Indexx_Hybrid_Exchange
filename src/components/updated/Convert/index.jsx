@@ -548,7 +548,7 @@ const ConvertCrypto = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <ImportExportIcon
                 onClick={handleSwapTokens} // Add the click handler here
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', width: '32px', fontSize: '32px' }}
               />
             </div>
             <CustomTextField
