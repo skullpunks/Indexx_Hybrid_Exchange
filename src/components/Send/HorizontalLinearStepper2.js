@@ -435,7 +435,7 @@ const FileComponent2 = ({
       setSelectedCoin(filter[0].title);
       setSelectedCoinObj(filter[0]);
     }
-  }, [token, selectedCoinObj]);
+  }, [token]);
 
   React.useEffect(() => {
     onStateChange({
