@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
-
 import { Box, styled, useTheme } from '@mui/material';
 import Tab from '@mui/material/Tab';
-import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
-import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
+import { useLocation } from 'react-router-dom';
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
@@ -54,40 +52,38 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   },
 }));
 
-const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
-  const tabsData = [
-    {
-      label: 'Overview',
-      key: 0,
-    },
-    {
-      label: 'Cryptos',
-      key: 1,
-    },
-    {
-      label: 'Smart APY',
-      key: 2,
-    },
+const CategoryIconicHeader = ({ navigationMenu, selectedListValue, handleListClick }) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const location = useLocation();
+  const theme = useTheme();
 
-    {
-      label: 'Smart Crypto',
-      key: 3,
-    },
-    {
-      label: 'Fiat / Cash',
-      key: 4,
-    },
-    // {
-    //   label: 'Demo Investment',
-    //   key: 5,
-    // },
-  ];
+  const handlecategoryChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    const selectedMenuItem = navigationMenu[newValue];
+
+    if (selectedMenuItem) {
+      if (selectedMenuItem.children) {
+        handleListClick(selectedMenuItem.children[0].name, selectedMenuItem.children[0].path);
+      } else {
+        handleListClick(selectedMenuItem.name, selectedMenuItem.path);
+      }
+    }
+  };
 
   const TabView = CustomTabHive;
-  const theme = useTheme();
-  const handleChange = (e, newValue) => {
-    setSelectedTab(newValue);
-  };
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const index = navigationMenu.findIndex(item => {
+      if (item.children) {
+        return item.children.some(child => child.path === currentPath);
+      }
+      return item.path === currentPath;
+    });
+    if (index !== -1) {
+      setSelectedTab(index);
+    }
+  }, [location.pathname, navigationMenu]);
 
   return (
     <Box
@@ -99,7 +95,7 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
     >
       <Tabs
         value={selectedTab}
-        onChange={handleChange}
+        onChange={handlecategoryChange}
         centered={false}
         variant="scrollable"
         scrollButtons={false}
@@ -121,13 +117,13 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
           },
         }}
       >
-        {tabsData.map((tab, index) => (
+        {navigationMenu.map((tab, index) => (
           <TabView
             key={index}
-            label={tab.label}
+            label={tab.name}
             iconPosition="top"
             disableRipple
-            className={selectedTab === tab.key ? 'active' : ''}
+            className={selectedTab === index ? 'active' : ''}
           />
         ))}
       </Tabs>
