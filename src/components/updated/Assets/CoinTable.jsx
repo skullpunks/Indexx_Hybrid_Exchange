@@ -832,7 +832,7 @@ export default function EnhancedTable({
                   {group.category.includes('x-Blue') &&
                     (hasRenderedXBlue = true)}
 
-                  {group.category.includes('Coins') &&
+                  {/* {group.category.includes('Coins') &&
                     (selectedValue === 'Cryptos' ||
                       selectedValue === 'Overview') && (
                       <TableRow>
@@ -858,7 +858,7 @@ export default function EnhancedTable({
                           />
                         </TableCell>
                       </TableRow>
-                    )}
+                    )} */}
                   {/* Orange Separator */}
                   {/* {groupIndex > 0 && (
                     <TableRow>

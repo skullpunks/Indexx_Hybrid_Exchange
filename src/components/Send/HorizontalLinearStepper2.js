@@ -372,6 +372,7 @@ const FileComponent2 = ({
     localStorage.getItem('userlogged') === 'normal' ? people_green : people;
   const recipient = email || username;
   const recipientProfilePic = profilePic || user_img;
+
   const handleChangeType = (value) => {
     setToken(value);
   };
@@ -509,7 +510,7 @@ const FileComponent2 = ({
                   seltoken.title !== 'BTC' && seltoken.title !== 'LTC'
               )}
               type={'Currency'}
-              onCurrencyChange={handleChangeType}
+              onCurrencyChange={handleChangeCurrency}
               value={selectedCoinObj?.address}
               isCurrency={true}
             />
