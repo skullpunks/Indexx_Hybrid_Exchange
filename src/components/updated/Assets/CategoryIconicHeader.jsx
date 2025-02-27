@@ -77,6 +77,10 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
       label: 'Fiat / Cash',
       key: 4,
     },
+    // {
+    //   label: 'Demo Investment',
+    //   key: 5,
+    // },
   ];
 
   const TabView = CustomTabHive;

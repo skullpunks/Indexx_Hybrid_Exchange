@@ -14,6 +14,7 @@ import SearchComponent from './SearchInput';
 import EnhancedTable from './CoinTable';
 import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
 import CoinTableAPY from './CoinTableAPY';
+import DemoCoinTable from './DemoCoinTable';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -104,8 +105,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
-  console.log(selectedValue, setupdatePlanMode);
+const CoinBreakdown = ({
+  selectedValue,
+  setupdatePlanMode,
+  currentPath = '/wallet/overview',
+}) => {
   const classes = useStyles();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -162,13 +166,20 @@ const CoinBreakdown = ({ selectedValue, setupdatePlanMode }) => {
       </Box>
       <Box></Box>
 
-      {selectedValue === 'Smart APY' ? (
+      {currentPath === '/wallet/iusd+' ? (
         <CoinTableAPY
           searchQuery={searchQuery}
           hideAssets={hideAssets}
           selectedValue={selectedValue}
           setupdatePlanMode={setupdatePlanMode}
           onPlanChange={handlePlanChange}
+        />
+      ) : currentPath === '/wallet/demo-smart-crypto' ? (
+        <DemoCoinTable
+          searchQuery={searchQuery}
+          hideAssets={hideAssets}
+          selectedValue={selectedValue}
+          setupdatePlanMode={setupdatePlanMode}
         />
       ) : (
         <EnhancedTable

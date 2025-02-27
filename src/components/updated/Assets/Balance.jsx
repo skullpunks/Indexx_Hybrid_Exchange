@@ -101,7 +101,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BalanceOverview = ({ selectedValue }) => {
+const BalanceOverview = ({
+  selectedValue,
+  currentPath = '/wallet/overview',
+}) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -354,23 +357,25 @@ const BalanceOverview = ({ selectedValue }) => {
             </Typography>
           </Box>
         </Box>
-        <Box className={classes.buttonContainer}>
-          <GenericButton
-            text={'Deposit'}
-            className={classes.button}
-            onClick={() => navigate('/deposit-crypto-select-coin')}
-          />
-          <GenericButton
-            text={'Withdraw'}
-            className={classes.button}
-            onClick={() => navigate('/withdraw-crypto-select-coin')}
-          />
-          <GenericButton
-            text={'Transfer'}
-            className={classes.button}
-            onClick={() => navigate('/indexx-exchange/send')}
-          />
-        </Box>
+        {currentPath !== '/wallet/demo-smart-crypto' && (
+          <Box className={classes.buttonContainer}>
+            <GenericButton
+              text={'Deposit'}
+              className={classes.button}
+              onClick={() => navigate('/deposit-crypto-select-coin')}
+            />
+            <GenericButton
+              text={'Withdraw'}
+              className={classes.button}
+              onClick={() => navigate('/withdraw-crypto-select-coin')}
+            />
+            <GenericButton
+              text={'Transfer'}
+              className={classes.button}
+              onClick={() => navigate('/indexx-exchange/send')}
+            />
+          </Box>
+        )}
       </Box>
 
       <Typography className={classes.pnlTextToday}>

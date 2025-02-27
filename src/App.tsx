@@ -213,7 +213,10 @@ function App() {
         console.log('I am here');
         // Optionally store the token or take other actions
       } else {
-        if (window.location.hostname === "cex.indexx.ai" && window.location.pathname === "/wallet/smart-crypto") {
+        if (
+          window.location.hostname === 'cex.indexx.ai' &&
+          window.location.pathname === '/wallet/smart-crypto'
+        ) {
           window.location.href = `https://indexx.ai/auth/login?redirectWebsiteLink=exchange`;
           return null; // Prevent further rendering
         } else {
@@ -285,6 +288,10 @@ function App() {
               <Route path="/wallet/fiat" element={<AssetsPage />} />
               <Route path="/wallet/smart-crypto" element={<AssetsPage />} />
               <Route path="/wallet/iusd+" element={<AssetsPage />} />
+              <Route
+                path="/wallet/demo-smart-crypto"
+                element={<AssetsPage />}
+              />
 
               <Route path="/smart-cryptos" element={<SmartCryptoOldPage />} />
 
@@ -303,7 +310,7 @@ function App() {
               <Route
                 path="/indexx-exchange/buy-sell/staking"
                 element={<StakingPage />}
-              //element={<Staking />}
+                //element={<Staking />}
               />
               <Route
                 path="/deposit-select-currency"
