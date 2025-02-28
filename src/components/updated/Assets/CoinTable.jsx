@@ -558,7 +558,7 @@ export default function EnhancedTable({
       if (notes.startsWith('xBitcoin Bitcoin'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
       if (notes.startsWith('xBBitcoin Bitcoin2'))
-        applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
+        applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin-2');
       if (notes.includes('Wave'))
         applicableCategories.push('Smart Crypto x-Blue Wave');
       if (notes.includes('Surge'))
