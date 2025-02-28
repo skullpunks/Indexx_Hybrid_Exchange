@@ -315,6 +315,7 @@ export default function EnhancedTable({
             item.notes.startsWith('xBitcoin Blooming') ||
             item.notes.startsWith('xBitcoin Rush') ||
             item.notes.startsWith('xBitcoin Bitcoin') ||
+            item.notes.startsWith('xBBitcoin Bitcoin2') ||
             item.notes.startsWith('xBBitcoin Bull-Run-2') ||
             item.notes.startsWith('xBBitcoin Bull-Run-3') ||
             item.notes.startsWith('xBitcoin Bull-Run');
@@ -332,6 +333,7 @@ export default function EnhancedTable({
               item.notes.startsWith('xBitcoin Blooming') ||
               item.notes.startsWith('xBitcoin Rush') ||
               item.notes.startsWith('xBitcoin Bitcoin') ||
+              item.notes.startsWith('xBBitcoin Bitcoin2') ||
               item.notes.startsWith('xBBitcoin Bull-Run-2') ||
               item.notes.startsWith('xBBitcoin Bull-Run-3') ||
               item.notes.startsWith('xBitcoin Bull-Run')
@@ -444,6 +446,7 @@ export default function EnhancedTable({
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') ||
+          row.notes.includes('xBBitcoin Bitcoin2') ||
           row.notes.includes('xBBitcoin Bull-Run-2') ||
           row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
@@ -458,6 +461,7 @@ export default function EnhancedTable({
           row.notes.includes('xBitcoin Blooming') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') ||
+          row.notes.includes('xBBitcoin Bitcoin2') ||
           row.notes.includes('xBBitcoin Bull-Run-2') ||
           row.notes.includes('xBBitcoin Bull-Run-3') ||
           row.notes.includes('xBitcoin Bull-Run');
@@ -552,6 +556,8 @@ export default function EnhancedTable({
       if (notes.startsWith('xBBitcoin Bitcoin-Commission'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin-Commission');
       if (notes.startsWith('xBitcoin Bitcoin'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
+      if (notes.startsWith('xBBitcoin Bitcoin2'))
         applicableCategories.push('Smart Crypto x-Bitcoin Bitcoin');
       if (notes.includes('Wave'))
         applicableCategories.push('Smart Crypto x-Blue Wave');
