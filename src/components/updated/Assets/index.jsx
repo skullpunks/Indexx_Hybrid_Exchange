@@ -395,6 +395,12 @@ const Assets = () => {
   const [selectedListValue, setSelectedListValue] = useState(
     selectedValueFromUrl || 'Overview'
   );
+  const [currentPath, setCurrentPath] = useState('');
+
+  useEffect(() => {
+    console.log(location.pathname);
+    setCurrentPath(location?.pathname);
+  }, [location]);
   const [updatePlanMode, setupdatePlanMode] = useState(false);
   const [currentPlanName, setCurrentPlanName] = useState('');
   const [userType, setUserType] = useState('Indexx Exchange');
@@ -509,14 +515,13 @@ const Assets = () => {
 
       const applicableNames =
         categoryFilters[selectedPlanTab === 0 ? 'x-Blue' : 'x-Bitcoin'] || [];
-      console.log(applicableNames, 'applicablenames');
+
       // Filter with partial matches
       const filteredByCategory = packagesData.filter((pkg) =>
         applicableNames.some((name) =>
           pkg.portfolioName.toLowerCase().includes(name.toLowerCase())
         )
       );
-      console.log(filteredByCategory, 'filteredByCategory');
 
       // Filtering logic based on selectedInnerTab
       return filteredByCategory.filter((pkg) =>
@@ -720,6 +725,10 @@ const Assets = () => {
                       ],
                     },
                     { name: 'Fiat / Cash', path: '/wallet/fiat' },
+                    // {
+                    //   name: 'Demo Investment',
+                    //   path: '/wallet/demo-smart-crypto',
+                    // },
                   ].map((el, index) => (
                     <React.Fragment key={el.path}>
                       <ListItem
@@ -805,35 +814,41 @@ const Assets = () => {
             )}
 
             <div className={classes.maxWidthContainer}>
-              <BalanceOverview selectedValue={selectedListValue} />
+              <BalanceOverview
+                selectedValue={selectedListValue}
+                currentPath={currentPath}
+              />
+              {currentPath !== '/wallet/demo-smart-crypto' && (
+                <Box className={`${classes.buttonContainer}`}>
+                  <GenericButton
+                    text={'Transaction History'}
+                    className={classes.button}
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/transaction-history')
+                    }
+                  />
+                  <GenericButton
+                    text={'Order History'}
+                    className={classes.button}
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/order-history')
+                    }
+                  />
+                  <GenericButton
+                    text={'Staking History'}
+                    className={classes.button}
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/staking-history')
+                    }
+                  />
+                </Box>
+              )}
 
-              <Box className={`${classes.buttonContainer}`}>
-                <GenericButton
-                  text={'Transaction History'}
-                  className={classes.button}
-                  onClick={() =>
-                    navigate('/indexx-exchange/buy-sell/transaction-history')
-                  }
-                />
-                <GenericButton
-                  text={'Order History'}
-                  className={classes.button}
-                  onClick={() =>
-                    navigate('/indexx-exchange/buy-sell/order-history')
-                  }
-                />
-                <GenericButton
-                  text={'Staking History'}
-                  className={classes.button}
-                  onClick={() =>
-                    navigate('/indexx-exchange/buy-sell/staking-history')
-                  }
-                />
-              </Box>
               <div>
                 <CoinBreakdown
                   selectedValue={selectedListValue}
                   setupdatePlanMode={setupdatePlanMode}
+                  currentPath={currentPath}
                 />
               </div>
             </div>
