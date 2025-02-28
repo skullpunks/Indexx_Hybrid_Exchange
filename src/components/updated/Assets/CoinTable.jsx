@@ -617,6 +617,7 @@ export default function EnhancedTable({
       'Smart Crypto x-BBitcoin Bitcoin-Commission',
       'Smart Crypto x-Bitcoin Bitcoin-Commission',
       'Smart Crypto x-Bitcoin Bitcoin',
+      'Smart Crypto x-Bitcoin Bitcoin-2',
       'Smart Crypto x-Blue Wave',
       'Smart Crypto x-Blue Surge',
       'Smart Crypto x-Blue Ripple',
