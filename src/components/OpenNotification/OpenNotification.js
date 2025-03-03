@@ -12,13 +12,14 @@ const OpenNotification = (type, message) => {
   notification[type]({
     message: message,
     description: '',
-    placement: 'top',
+    placement: 'bottomRight',
     icon: Icon,
     style: {
       border: '1px solid var(--primary-color)',
       boxShadow: 'none',
       borderRadius: 5,
-      top: 400,
+      marginBottom: '20px',
+      marginRight: '20px'
     },
     className: `theme-${localStorage.getItem('userlogged')}`,
   });

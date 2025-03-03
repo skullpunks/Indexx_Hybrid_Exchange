@@ -146,6 +146,7 @@ const LoginComponent = () => {
           
           // Store authentication data in localStorage
           localStorage.setItem('user', resObj?.email);
+          localStorage.setItem('email', resObj?.email);
           localStorage.setItem('access_token', res.data.access_token);
           localStorage.setItem('refresh_token', res.data.refresh_token);
           localStorage.setItem('userType', resObj?.userType);
@@ -158,6 +159,9 @@ const LoginComponent = () => {
               ? 'captain'
               : 'honeyb'
           );
+
+          // Force a page reload to ensure all components re-render with the new state
+          window.location.reload();
 
           // Handle redirects
           let redirectUrl = window.localStorage.getItem('redirect');
@@ -173,9 +177,11 @@ const LoginComponent = () => {
             window.location.href = redirectRoute;
           } else {
             console.log('Redirecting to default route');
-            redirectUrl
-              ? navigate(redirectUrl)
-              : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
+            if (redirectUrl) {
+              navigate(redirectUrl);
+            } else {
+              window.location.href = '/update/home';
+            }
           }
         } catch (jwtError) {
           console.error('Error decoding JWT:', jwtError);
