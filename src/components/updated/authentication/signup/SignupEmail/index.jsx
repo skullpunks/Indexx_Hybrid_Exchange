@@ -122,19 +122,32 @@ const SignUpEmail = () => {
   };
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log('tokenResponse', tokenResponse);
-    const res = await signupWithGoogle(tokenResponse?.access_token);
+    console.log('Google signup tokenResponse received:', tokenResponse);
+    
+    try {
+      console.log('Sending Google token to backend for signup:', tokenResponse?.access_token);
+      const res = await signupWithGoogle(tokenResponse?.access_token);
+      console.log('Backend response for Google signup:', res);
 
-    if (res.status === 200) {
-      window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
-    } else {
-      setErrorMessage(res.data);
+      if (res.status === 200) {
+        console.log('Google signup successful, redirecting to login');
+        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+      } else {
+        console.error('Google signup failed with response:', res);
+        setErrorMessage(res.data || 'Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during Google signup:', error);
+      setErrorMessage('Signup error. Please try again later.');
     }
   };
 
   const login = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
-    onError: (error) => setErrorMessage('Login Failed'),
+    onError: (error) => {
+      console.error('Google signup error:', error);
+      setErrorMessage('Signup Failed: ' + (error.message || 'Unknown error'));
+    },
   });
 
   return (

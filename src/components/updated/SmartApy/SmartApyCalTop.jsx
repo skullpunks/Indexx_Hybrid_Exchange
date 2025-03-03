@@ -700,7 +700,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         <div className={classes.item}>
           <div className={classes.balanceContainer}>
             <InputField
-              label="Enter amount"
+              label="Enter amount (min 2500)"
               type="text"
               placeholder="0.0"
               value={formattedAmt}
