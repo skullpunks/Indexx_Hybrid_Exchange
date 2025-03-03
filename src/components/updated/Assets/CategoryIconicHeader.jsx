@@ -56,17 +56,26 @@ const CategoryIconicHeader = ({ navigationMenu, selectedListValue, handleListCli
   const [selectedTab, setSelectedTab] = useState(0);
   const location = useLocation();
   const theme = useTheme();
+  const [flatNavigation, setFlatNavigation] = useState([]);
+
+  useEffect(() => {
+    const flatNav = navigationMenu.reduce((acc, item) => {
+      if (item.children) {
+        acc.push(...item.children);
+      } else {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+    setFlatNavigation(flatNav);
+  }, [navigationMenu]);
 
   const handlecategoryChange = (event, newValue) => {
     setSelectedTab(newValue);
-    const selectedMenuItem = navigationMenu[newValue];
+    const selectedMenuItem = flatNavigation[newValue];
 
     if (selectedMenuItem) {
-      if (selectedMenuItem.children) {
-        handleListClick(selectedMenuItem.children[0].name, selectedMenuItem.children[0].path);
-      } else {
-        handleListClick(selectedMenuItem.name, selectedMenuItem.path);
-      }
+      handleListClick(selectedMenuItem.name, selectedMenuItem.path);
     }
   };
 
@@ -74,16 +83,11 @@ const CategoryIconicHeader = ({ navigationMenu, selectedListValue, handleListCli
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const index = navigationMenu.findIndex(item => {
-      if (item.children) {
-        return item.children.some(child => child.path === currentPath);
-      }
-      return item.path === currentPath;
-    });
+    const index = flatNavigation.findIndex(item => item.path === currentPath);
     if (index !== -1) {
       setSelectedTab(index);
     }
-  }, [location.pathname, navigationMenu]);
+  }, [location.pathname, flatNavigation]);
 
   return (
     <Box
@@ -117,7 +121,7 @@ const CategoryIconicHeader = ({ navigationMenu, selectedListValue, handleListCli
           },
         }}
       >
-        {navigationMenu.map((tab, index) => (
+        {flatNavigation.map((tab, index) => (
           <TabView
             key={index}
             label={tab.name}
