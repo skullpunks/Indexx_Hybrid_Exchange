@@ -48,6 +48,7 @@ import {
 } from '../../services/api';
 
 import DarkMode from '../DarkMode/DarkMode';
+import { Button } from 'react-bootstrap';
 
 const Links = [
   { label: 'Exchange', value: 'buy-sell', url: '/indexx-exchange/buy-sell' },
@@ -325,7 +326,7 @@ const HeaderTest = () => {
       localStorage.getItem('userType') !== undefined
         ? String(localStorage.getItem('userType'))
         : undefined;
-    
+
     // Remove specific authentication items instead of clearing everything
     const itemsToRemove = [
       'user',
@@ -335,12 +336,12 @@ const HeaderTest = () => {
       'username',
       'userlogged',
       'redirected',
-      'email'
+      'email',
     ];
-    
+
     // Remove each item individually
-    itemsToRemove.forEach(item => localStorage.removeItem(item));
-    
+    itemsToRemove.forEach((item) => localStorage.removeItem(item));
+
     // Redirect without the action=Logout parameter
     window.location.href = `${baseURL}/auth/login`;
   };
@@ -927,25 +928,66 @@ const HeaderTest = () => {
                               </div>
                             </div>
                           )}
-                          <a
-                            href={element.href}
-                            className={`desktop-item ${
-                              element.active ? 'link_active' : ''
-                            }`}
+                          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+
+                          <div
+                            style={{
+                              display: 'flex',
+                                justifyContent: 'center',
+                                flexDirection: 'column',
+                                alignItems: 'left',
+                            }}
                           >
-                            {isAuthenticated
-                              ? userEmail
-                              : element.mainTextDesktop}
-                          </a>
-                          <input type="checkbox" id={element.mainTextDesktop} />
-                          <label
-                            htmlFor={element.mainTextDesktop}
-                            className="mobile-item"
-                          >
-                            {isAuthenticated
-                              ? userEmail
-                              : element.mainTextDesktop}
-                          </label>
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                lineHeight: '1',
+                              }}
+                            >
+                              <a
+                                href={element.href}
+                                className={`desktop-item ${
+                                  element.active ? 'link_active' : ''
+                                }`}
+                              >
+                                {isAuthenticated
+                                  ? userEmail
+                                  : element.mainTextDesktop}
+                              </a>
+
+                              <input
+                                type="checkbox"
+                                id={element.mainTextDesktop}
+                              />
+                              <label
+                                htmlFor={element.mainTextDesktop}
+                                className="mobile-item"
+                              >
+                                {isAuthenticated
+                                  ? userEmail
+                                  : element.mainTextDesktop}
+                              </label>
+                            </div>
+                            <a
+                              className="desktop-item"
+                              style={{
+                              lineHeight: '1',
+                              width: '50%',
+                              background: '#007bff',
+                              padding: '3px',
+                                margin: '5px 0',
+                              color: 'white',
+                              borderRadius: '5px',
+                              textAlign: 'center',
+                              textDecoration: 'none',
+                              display: 'inline-block',
+                              }}
+                            >
+                              verified
+                            </a>
+                          </div>
+
                           {element.hasMegaDrop ? (
                             <div
                               className="mega-box"
