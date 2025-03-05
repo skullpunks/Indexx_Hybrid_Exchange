@@ -266,13 +266,27 @@ const CustomTextField = ({
   //   }
   // };
 
-  console.log('amount', amount);
+  const handleBeforeInput = (e) => {
+    const inputChar = e.data; // The character being inserted
+    if (inputChar && !/^\d$/.test(inputChar)) {
+      e.preventDefault(); // Prevent the character from being inserted
+    }
+  };
+
   const handleAmountChange = async (e) => {
     const amount = e.target.value;
-    setUserAmount(amount);
-
-    if (onAmountChange) {
-      onAmountChange(amount);
+    const parsedValue = parseInt(amount, 10);
+  
+    // Check if the input contains only digits or is empty
+    if (/^\d*$/.test(amount)) {
+      if (!isNaN(parsedValue) && parsedValue >= 0) {
+        setUserAmount(amount);
+        if (onAmountChange) {
+          onAmountChange(amount);
+        }
+      } else if (amount === '') {
+        setUserAmount('');
+      }
     }
   };
 
@@ -365,6 +379,7 @@ const CustomTextField = ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleAmountChange}
+            onBeforeInput={handleBeforeInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

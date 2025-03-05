@@ -417,10 +417,10 @@ export default function EnhancedTable({
       const matchesSearchQuery =
         row.coin.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
-
-      if (!hideAssets) return matchesSearchQuery;
-
-      const passesHideAssets = row.amount > 0 || row.staking_balance > 0;
+      console.log('matchesSearchQuery', row);
+      if (!hideAssets && row.amount > 0) return matchesSearchQuery;
+      
+      const passesHideAssets = row.amount * row.coin_price >= 1 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
 

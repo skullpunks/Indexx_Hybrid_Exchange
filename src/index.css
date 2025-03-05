@@ -280,3 +280,7 @@ div.flex-justify-center {
   color: var(--body_color) !important;
   border: none !important;
 }
+
+iframe[style*='z-index: 2147483647'] {
+  display: none !important;
+}

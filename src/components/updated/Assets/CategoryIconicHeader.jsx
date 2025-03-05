@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
-
 import { Box, styled, useTheme } from '@mui/material';
 import Tab from '@mui/material/Tab';
-import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
-import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
+import { useLocation } from 'react-router-dom';
 
 const CustomTabHive = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
@@ -54,40 +52,42 @@ const CustomTabHive = styled(Tab)(({ theme }) => ({
   },
 }));
 
-const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
-  const tabsData = [
-    {
-      label: 'Overview',
-      key: 0,
-    },
-    {
-      label: 'Cryptos',
-      key: 1,
-    },
-    {
-      label: 'Smart APY',
-      key: 2,
-    },
+const CategoryIconicHeader = ({ navigationMenu, selectedListValue, handleListClick }) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const location = useLocation();
+  const theme = useTheme();
+  const [flatNavigation, setFlatNavigation] = useState([]);
 
-    {
-      label: 'Smart Crypto',
-      key: 3,
-    },
-    {
-      label: 'Fiat / Cash',
-      key: 4,
-    },
-    // {
-    //   label: 'Demo Investment',
-    //   key: 5,
-    // },
-  ];
+  useEffect(() => {
+    const flatNav = navigationMenu.reduce((acc, item) => {
+      if (item.children) {
+        acc.push(...item.children);
+      } else {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+    setFlatNavigation(flatNav);
+  }, [navigationMenu]);
+
+  const handlecategoryChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    const selectedMenuItem = flatNavigation[newValue];
+
+    if (selectedMenuItem) {
+      handleListClick(selectedMenuItem.name, selectedMenuItem.path);
+    }
+  };
 
   const TabView = CustomTabHive;
-  const theme = useTheme();
-  const handleChange = (e, newValue) => {
-    setSelectedTab(newValue);
-  };
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const index = flatNavigation.findIndex(item => item.path === currentPath);
+    if (index !== -1) {
+      setSelectedTab(index);
+    }
+  }, [location.pathname, flatNavigation]);
 
   return (
     <Box
@@ -99,7 +99,7 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
     >
       <Tabs
         value={selectedTab}
-        onChange={handleChange}
+        onChange={handlecategoryChange}
         centered={false}
         variant="scrollable"
         scrollButtons={false}
@@ -121,13 +121,13 @@ const CategoryIconicHeader = ({ selectedTab, setSelectedTab }) => {
           },
         }}
       >
-        {tabsData.map((tab, index) => (
+        {flatNavigation.map((tab, index) => (
           <TabView
             key={index}
-            label={tab.label}
+            label={tab.name}
             iconPosition="top"
             disableRipple
-            className={selectedTab === tab.key ? 'active' : ''}
+            className={selectedTab === index ? 'active' : ''}
           />
         ))}
       </Tabs>

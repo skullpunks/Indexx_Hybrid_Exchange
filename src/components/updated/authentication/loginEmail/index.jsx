@@ -131,47 +131,78 @@ const LoginComponent = () => {
   };
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log('tokenResponse', tokenResponse);
-    const res = await loginWithGoogle(tokenResponse?.access_token);
+    console.log('Google tokenResponse received:', tokenResponse);
+    
+    try {
+      // Add more detailed logging
+      console.log('Sending tokenResponse to backend:', tokenResponse?.access_token);
+      const res = await loginWithGoogle(tokenResponse?.access_token);
+      console.log('Backend response for Google login:', res);
 
-    if (res.status === 200) {
-      let resObj = await decodeJWT(res.data.access_token);
-      localStorage.setItem('user', resObj?.email);
-      localStorage.setItem('access_token', res.data.access_token);
-      localStorage.setItem('refresh_token', res.data.refresh_token);
-      localStorage.setItem('userType', resObj?.userType);
-      localStorage.setItem('username', resObj?.username);
-      localStorage.setItem(
-        'userlogged',
-        resObj?.userType === 'Indexx Exchange'
-          ? 'normal'
-          : resObj?.userType === 'CaptainBee'
-          ? 'captain'
-          : 'honeyb'
-      );
+      if (res.status === 200) {
+        try {
+          let resObj = await decodeJWT(res.data.access_token);
+          console.log('Decoded JWT token:', resObj);
+          
+          // Store authentication data in localStorage
+          localStorage.setItem('user', resObj?.email);
+          localStorage.setItem('email', resObj?.email);
+          localStorage.setItem('access_token', res.data.access_token);
+          localStorage.setItem('refresh_token', res.data.refresh_token);
+          localStorage.setItem('userType', resObj?.userType);
+          localStorage.setItem('username', resObj?.username);
+          localStorage.setItem(
+            'userlogged',
+            resObj?.userType === 'Indexx Exchange'
+              ? 'normal'
+              : resObj?.userType === 'CaptainBee'
+              ? 'captain'
+              : 'honeyb'
+          );
 
-      let redirectUrl = window.localStorage.getItem('redirect');
-      window.localStorage.removeItem('redirect');
+          // Force a page reload to ensure all components re-render with the new state
+          window.location.reload();
 
-      // Check if there's a saved route in localStorage
-      const redirectRoute = localStorage.getItem('redirectRoute');
+          // Handle redirects
+          let redirectUrl = window.localStorage.getItem('redirect');
+          window.localStorage.removeItem('redirect');
 
-      if (redirectRoute) {
-        // Redirect to the saved route after successful login
-        window.location.href = redirectRoute;
+          // Check if there's a saved route in localStorage
+          const redirectRoute = localStorage.getItem('redirectRoute');
+          console.log('Redirect route from localStorage:', redirectRoute);
+
+          if (redirectRoute) {
+            // Redirect to the saved route after successful login
+            console.log('Redirecting to saved route:', redirectRoute);
+            window.location.href = redirectRoute;
+          } else {
+            console.log('Redirecting to default route');
+            if (redirectUrl) {
+              navigate(redirectUrl);
+            } else {
+              window.location.href = '/update/home';
+            }
+          }
+        } catch (jwtError) {
+          console.error('Error decoding JWT:', jwtError);
+          setErrorMessage('Error processing login data. Please try again.');
+        }
       } else {
-        redirectUrl
-          ? navigate(redirectUrl)
-          : (window.location.href = '/update/home'); // navigate("/indexx-exchange/buy-sell")
+        console.error('Google login failed with status:', res.status);
+        setErrorMessage(res.data.message || 'Login failed. Please try again.');
       }
-    } else {
-      setErrorMessage(res.data.message);
+    } catch (error) {
+      console.error('Error during Google authentication:', error);
+      setErrorMessage('Authentication error. Please try again later.');
     }
   };
 
   const login = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
-    onError: (error) => setErrorMessage('Login Failed'),
+    onError: (error) => {
+      console.error('Google login error:', error);
+      setErrorMessage('Login Failed: ' + (error.message || 'Unknown error'));
+    },
   });
 
   return (

@@ -42,23 +42,24 @@ const logOutUser = (e: React.MouseEvent<HTMLElement>) => {
     localStorage.getItem('userType') !== undefined
       ? String(localStorage.getItem('userType'))
       : undefined;
-  localStorage.removeItem('user'); //remove one item
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('redirected');
-  localStorage.removeItem('email');
-  localStorage.clear(); //clear all localstorage
-  console.log(userType);
-
-  window.location.href = `${baseURL}/auth/login?action=Logout`;
-  // if (userType === 'CaptainBee') {
-  //   window.location.href = '/indexx-exchange/buy-sell/hive-login';
-  // } else if (userType === 'HoneyBee') {
-  //   window.location.href = '/indexx-exchange/buy-sell/login-honeybee/';
-  // } else {
-  //   window.location.href = `${baseURL}/auth/login?action=Logout`;
-  // }
+  
+  // Remove specific authentication items instead of clearing everything
+  const itemsToRemove = [
+    'user',
+    'access_token',
+    'refresh_token',
+    'userType',
+    'username',
+    'userlogged',
+    'redirected',
+    'email'
+  ];
+  
+  // Remove each item individually
+  itemsToRemove.forEach(item => localStorage.removeItem(item));
+  
+  // Redirect without the action=Logout parameter
+  window.location.href = `${baseURL}/auth/login`;
 };
 
 const Links = [

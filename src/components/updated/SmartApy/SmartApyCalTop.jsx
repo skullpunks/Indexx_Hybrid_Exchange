@@ -345,38 +345,57 @@ const SmartApyTop = ({ onStakeSuccess }) => {
 
   useEffect(() => {
     const redirectFlag = localStorage.getItem('redirected');
+    const email = localStorage.getItem('email');
+    const access_token = localStorage.getItem('access_token');
 
+    // If we have a sign in token, process it
     if (defaultSignInToken && !redirectFlag) {
-      console.log('I am here ', defaultSignInToken);
+      console.log('Processing sign in token:', defaultSignInToken);
       checkLogin(defaultSignInToken);
-    } else {
-      const email = localStorage.getItem('email');
-      if (!email) {
-        window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
-      }
+      return;
     }
-  }, []);
+
+    // If we have an access token and email, user is already logged in
+    if (access_token && email) {
+      console.log('User already logged in');
+      return;
+    }
+
+    // Only redirect if we have no token and no existing session
+    if (!defaultSignInToken && !access_token && !email) {
+      console.log('No active session, redirecting to login');
+      window.location.href = `${baseURL}/auth/login?redirectWebsiteLink=exchange`;
+    }
+  }, [defaultSignInToken]);
 
   async function checkLogin(defaultSignInToken) {
     try {
       const res = await loginWithToken(defaultSignInToken);
-      console.log('I am here', res);
-      console.log(res);
+      console.log('Login response:', res);
+      
       if (res.status === 200) {
         let resObj = await decodeJWT(res.data.access_token);
 
+        // Store all user data
         localStorage.setItem('email', resObj?.email);
         localStorage.setItem('user', resObj?.email);
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('refresh_token', resObj?.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
-        localStorage.setItem('redirected', 'true'); // Set flag
+        localStorage.setItem('redirected', 'true');
+        
+        // Use window.location.reload() to refresh the page with new auth state
         window.location.reload();
       } else {
-        console.log(res.data);
+        console.error('Login failed:', res.data);
+        // Handle login failure - maybe show an error message
+        setPopupMessage('Login failed. Please try again.');
+        setPopupMsgOpen(true);
       }
     } catch (err) {
-      console.log('err', err);
+      console.error('Login error:', err);
+      setPopupMessage('An error occurred during login. Please try again.');
+      setPopupMsgOpen(true);
     }
   }
 
@@ -700,7 +719,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         <div className={classes.item}>
           <div className={classes.balanceContainer}>
             <InputField
-              label="Enter amount"
+              label="Enter amount (min 2500)"
               type="text"
               placeholder="0.0"
               value={formattedAmt}
@@ -816,7 +835,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
                 <div style={{ margin: '10px 0px' }}>
                   Select a lock-in period of 6, 12, or 18 months based on your
                   financial goals and the initial investment amount. Then click
-                  “Stake Now”
+                  "Stake Now"
                 </div>
               </p>
             </div>
