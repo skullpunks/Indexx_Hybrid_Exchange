@@ -17,6 +17,11 @@ const BasicInfo = ({ theme }: { theme: any }) => {
   const [copiedValue, copy] = useCopyToClipboard();
   const [loadings, setLoadings] = useState(false);
   const navigate = useNavigate();
+  const [isUpdating, setIsUpdating] = useState(false); // Loader state
+
+  const handleLoading = (state:any) => {
+    setIsUpdating(state);
+  };
 
   useEffect(() => {
     let access_token = String(localStorage.getItem('access_token'));
@@ -60,7 +65,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
     }
   };
   return (
-    <div>
+    <div className={isUpdating ? 'blurred-screen' : ''}>
       <div className="basic_info container margin-t-2x padding-t-3x">
         <div>
           <header className="font_25x border-b-1x padding-lr-2x padding-tb-1x">
@@ -173,7 +178,12 @@ const BasicInfo = ({ theme }: { theme: any }) => {
               </div>
               <br></br>
               {/* Need to Add SSN Input field */}
-              <IdentificationInput />
+              <IdentificationInput
+                initialCountry={userData?.country || 'US'}
+                initialPersonalId={userData?.personalIdNumber || ''}
+                setLoading={handleLoading}
+              />
+
               <div
                 className={
                   !userData?.isKYCPass
