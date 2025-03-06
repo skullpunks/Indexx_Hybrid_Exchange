@@ -37,6 +37,10 @@ import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
 import DetailPopup from './DetailPopup';
 import CongratulationsPopup from './Congratulations';
 import ProcessingFailedPopup from './ProcessingFailedPopup';
+import DemoInvestmentPopup from './DemoInvestmentPopup';
+import DemoInvestmentPopup1 from './DemoInvestmentPopup1';
+import DemoInvestmentPopup2 from './DemoInvestmentPopup2';
+import DemoInvestmentPopup3 from './DemoInvestmentPopup3';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -885,6 +889,10 @@ const SmartCrypto = () => {
             category={'x-Bitcoin'}
           />
         )}
+        {/* {<DemoInvestmentPopup />} */}
+        {/* {<DemoInvestmentPopup1 />} */}
+        {/* {<DemoInvestmentPopup2 />} */}
+        {/* {<DemoInvestmentPopup3 />} */}
         {/* <PlanDetails /> */}
       </div>
     </>
