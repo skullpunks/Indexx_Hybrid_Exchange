@@ -214,7 +214,7 @@ function App() {
         // Optionally store the token or take other actions
       } else {
         if (
-          window.location.hostname === 'cex.indexx.ai' &&
+          window.location.hostname === 'staging.cex.indexx.ai' &&
           window.location.pathname === '/wallet/smart-crypto'
         ) {
           window.location.href = `https://indexx.ai/auth/login?redirectWebsiteLink=exchange`;
