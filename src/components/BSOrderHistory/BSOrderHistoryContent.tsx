@@ -3,6 +3,7 @@ import React from 'react';
 import BSBuyOrderHistoryTable from './BSBuyOrderHistoryTable';
 import BSSellOrderHistoryTable from './BSSellOrderHistoryTable';
 import BSConvertOrderHistoryTable from './BSConvertOrderHistoryTable';
+import BSOverviewOrderHistoryTable from './BSOverviewOrderHistoryTable';
 import { makeStyles } from '@mui/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
@@ -55,13 +56,16 @@ const BSOrderHistoryContent = () => {
         defaultActiveKey="1"
         className="bs_tab_item orange tabs_button"
       >
-        <Tabs.TabPane tab="Buy" key="1">
+        <Tabs.TabPane tab="Overview" key="1">
+          <BSOverviewOrderHistoryTable />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Buy" key="2">
           <BSBuyOrderHistoryTable />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Sell" key="2">
+        <Tabs.TabPane tab="Sell" key="3">
           <BSSellOrderHistoryTable />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Convert" key="3">
+        <Tabs.TabPane tab="Convert" key="4">
           <BSConvertOrderHistoryTable />
         </Tabs.TabPane>
       </Tabs>

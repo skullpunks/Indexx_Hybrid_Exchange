@@ -389,7 +389,6 @@ const Assets = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState('Asset Wallet');
-  const [selectedCategory, setSelectedCategory] = useState(0);
   const [searchParams] = useSearchParams();
   const selectedValueFromUrl = searchParams.get('selectedValue');
   const [selectedListValue, setSelectedListValue] = useState(
@@ -652,6 +651,19 @@ const Assets = () => {
       return false;
     }
   };
+  const navigationMenu = [
+    { name: 'Overview', path: '/wallet/overview' },
+    { name: 'Cryptos', path: '/wallet/crypto' },
+    {
+      name: 'Crypto Treasury',
+      path: '/wallet/smart-crypto',
+      children: [
+        { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+        { name: 'Smart APY', path: '/wallet/iusd+' },
+      ],
+    },
+    { name: 'Fiat / Cash', path: '/wallet/fiat' },
+  ];
 
   return (
     <div className={classes.container}>
@@ -695,8 +707,9 @@ const Assets = () => {
               className={classes.maxWidthContainer}
             >
               <CategoryIconicHeader
-                selectedTab={selectedCategory}
-                setSelectedTab={setSelectedCategory}
+                navigationMenu={navigationMenu}
+                selectedListValue={selectedListValue}
+                handleListClick={handleListClick}
               />
             </div>
           )}

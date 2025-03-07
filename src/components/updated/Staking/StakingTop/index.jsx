@@ -189,7 +189,7 @@ const StakingTop = ({ onStakeSuccess }) => {
   const [allWallets, setAllWallets] = useState();
   const [tokenType, setTokenType] = useState('Tokens');
   const [calcAmt, setcalcAmt] = useState('');
-  const [amt, setAmt] = useState(0);
+  const [amt, setAmt] = useState();
   const [type, setType] = useState('Short');
   const [isVisible, setIsVisible] = useState(true);
   const [initialTokens, setInitialTokens] = useState(tokensList); // Start with all tokens, but this will change
@@ -428,6 +428,86 @@ const StakingTop = ({ onStakeSuccess }) => {
     }
   };
 
+  const handleInputChange = async (e) => {
+    let inputAmt = e.target.value.trim();
+
+    // Allow empty input for backspace
+    if (inputAmt === '') {
+      setAmt('');
+      setError('');
+      return;
+    }
+
+    // Ensure input is numeric and valid
+    if (!/^\d*\.?\d*$/.test(inputAmt)) {
+      setError('Invalid input. Please enter a valid number.');
+      return;
+    }
+
+    let parsedAmt = parseFloat(inputAmt);
+    if (isNaN(parsedAmt) || parsedAmt <= 0) {
+      setError('Please enter a valid staking amount.');
+      return;
+    }
+
+    setAmt(inputAmt); // Store the raw input value to allow backspacing
+
+    let minimumRequired = 50;
+    try {
+      // Check if the token is one of the listed cryptocurrencies
+      if (['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(selectedToken?.title)) {
+        minimumRequired = 0.01;
+      }
+
+      if (parsedAmt < minimumRequired) {
+        setError(`Minimum staking amount must be at least ${minimumRequired}.`);
+        return;
+      } else if (parsedAmt > selectedTokenBalance) {
+        setError(
+          `Insufficient balance available to stake. Please buy ${selectedToken?.title} or deposit ${selectedToken?.title}.`
+        );
+        return;
+      }
+
+      // Clear errors if all checks pass
+      setError('');
+
+      let result;
+      if (type === 'Long') {
+        result = await calculateStakeReward(
+          parsedAmt,
+          selectedToken?.title,
+          'Long',
+          selectedToken?.stakingPercentage1year
+        );
+        setRewards(result?.data?.finalAmount ?? 0);
+        setFinalAmount(
+          parsedAmt * (1 + (selectedToken?.stakingPercentage1year / 100 || 0))
+        );
+      } else if (type === 'Short') {
+        result = await calculateStakeReward(
+          parsedAmt,
+          selectedToken?.title,
+          'Short',
+          selectedToken?.stakingPercentage6months
+        );
+        setRewards(result?.data?.finalAmount ?? 0);
+        setFinalAmount(
+          parsedAmt * (1 + (selectedToken?.stakingPercentage6months / 100 || 0))
+        );
+      }
+    } catch (err) {
+      console.error('Error calculating stake rewards:', err);
+    }
+  };
+
+  const handleBeforeInput = (e) => {
+    const inputChar = e.data;
+    if (inputChar && !/^\d*\.?\d*$/.test(inputChar)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.item}>
@@ -451,67 +531,12 @@ const StakingTop = ({ onStakeSuccess }) => {
           </label>
           <InputField
             label=""
-            type="text"
+            type="number"
             placeholder="Enter Amount"
             value={amt}
-            onChange={async (e) => {
-              const inputAmt = e.target.value;
-              console.log('I am here', inputAmt);
-              setAmt(inputAmt);
-              let minimumRequired = 50;
-              try {
-                // Check if the token is among BTC, LTC, ETH, BCH, or BNB
-                if (
-                  ['BTC', 'LTC', 'ETH', 'BCH', 'BNB'].includes(
-                    selectedToken.title
-                  )
-                ) {
-                  minimumRequired = 0.01;
-                }
-
-                if (inputAmt < minimumRequired) {
-                  console.log('I am heere in mumum');
-                  setError(
-                    `Minimum staking amount must be at least ${minimumRequired}.`
-                  );
-                } else if (inputAmt > selectedTokenBalance) {
-                  console.log('I am heere in Insufficient');
-                  setError(
-                    `Insufficient balance available to stake. Please buy ${selectedToken.title} or deposit ${selectedToken.title}.`
-                  );
-                } else {
-                  setError('');
-                  console.log('type', type);
-                  if (type === 'Long') {
-                    let result = await calculateStakeReward(
-                      inputAmt,
-                      selectedToken.title,
-                      'Long',
-                      selectedToken.stakingPercentage6months
-                    );
-                    setRewards(result?.data?.finalAmount ?? 0);
-                    setFinalAmount(
-                      inputAmt *
-                        (1 + selectedToken?.stakingPercentage1year / 100 ?? 0)
-                    );
-                  } else if (type === 'Short') {
-                    let result = await calculateStakeReward(
-                      inputAmt,
-                      selectedToken.title,
-                      'Short',
-                      selectedToken.stakingPercentage6months
-                    );
-                    setRewards(result?.data?.finalAmount ?? 0);
-                    setFinalAmount(
-                      inputAmt *
-                        (1 + selectedToken?.stakingPercentage6months / 100 ?? 0)
-                    );
-                  }
-                }
-              } catch (err) {
-                console.log('err', err);
-              }
-            }}
+            // ////////////////////////////////////////////////////////////////////////////////////////////
+            onChange={handleInputChange}
+            onBeforeInput={handleBeforeInput}
             endAdornment={
               <InputAdornment position="end">
                 <div className={classes.dropDownIconContainer}>

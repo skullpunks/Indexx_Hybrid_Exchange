@@ -34,8 +34,8 @@ import GenericButton from '../updated/shared/Button';
 const S3_BUCKET = 'indexx-exchange';
 const REGION = 'ap-northeast-1';
 AWS.config.update({
-  accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-  secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+  accessKeyId: process?.env?.REACT_APP_ACCESS_KEY_ID,
+  secretAccessKey: process?.env?.REACT_APP_SECRET_ACCESS_KEY,
   region: REGION,
 });
 var s3 = new AWS.S3();

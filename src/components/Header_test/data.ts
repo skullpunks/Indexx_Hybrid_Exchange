@@ -514,7 +514,7 @@ const header_data = [
         links: [
           {
             name: 'Government Certificates',
-            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
+            href: 'https://staging.cex.indexx.ai/indexx-exchange/coming-soon',
           },
           {
             name: 'Legal docs',
@@ -522,11 +522,11 @@ const header_data = [
           },
           {
             name: 'Patent documents',
-            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
+            href: 'https://staging.cex.indexx.ai/indexx-exchange/coming-soon',
           },
           {
             name: 'Whitepapers',
-            href: 'https://cex.indexx.ai/indexx-exchange/coming-soon',
+            href: 'https://staging.cex.indexx.ai/indexx-exchange/coming-soon',
           },
         ],
       },

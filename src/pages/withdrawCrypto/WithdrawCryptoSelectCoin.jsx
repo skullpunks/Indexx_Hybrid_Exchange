@@ -21,7 +21,6 @@ import { Typography } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import ShortenText from '../../utils/ShortenText';
 import { Table } from 'antd';
-import * as bitcoin from 'bitcoinjs-lib';
 import Web3 from 'web3';
 import GeneralPopup from '../../components/updated/BuySell/Popup';
 const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
@@ -208,14 +207,12 @@ const WithdrawCryptoSelectCoin = () => {
     let isValid = false;
 
     if (currency === 'BTC') {
-      try {
-        bitcoin.address.toOutputScript(address, bitcoin.networks.testnet);
-        isValid = true;
-      } catch (error) {
-        isValid = false;
-      }
+      // Regex for Bitcoin addresses (both legacy & SegWit formats)
+      const btcRegex = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/;
+      isValid = btcRegex.test(address);
     } else {
-      isValid = web3.utils.checkAddressChecksum(address);
+      // Validate Ethereum address
+      isValid = web3.utils.isAddress(address);
     }
 
     setIsWalletAddrValid(isValid);

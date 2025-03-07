@@ -40,10 +40,20 @@ const countryFormats = {
   },
 };
 
-const IdentificationInput = () => {
-  const [selectedCountry, setSelectedCountry] = useState('US');
-  const [inputValue, setInputValue] = useState('');
+const IdentificationInput = ({
+  initialCountry,
+  initialPersonalId,
+  setLoading,
+}) => {
   const theme = useTheme();
+
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
+  const [inputValue, setInputValue] = useState(initialPersonalId);
+
+  useEffect(() => {
+    setSelectedCountry(initialCountry);
+    setInputValue(initialPersonalId);
+  }, [initialCountry, initialPersonalId]);
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
@@ -67,6 +77,7 @@ const IdentificationInput = () => {
     };
 
     try {
+      setLoading(true); // Start loading
       // Make the POST request
       const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -86,6 +97,8 @@ const IdentificationInput = () => {
       }
     } catch (error) {
       console.error('Network Error:', error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -107,7 +120,7 @@ const IdentificationInput = () => {
 
       <label htmlFor="idNumber">{currentFormat.label}:</label>
       <InputMask
-        mask={currentFormat.mask}
+        mask={countryFormats[selectedCountry].mask}
         value={inputValue}
         className="inputmaskfield"
         onChange={(e) => setInputValue(e.target.value)}

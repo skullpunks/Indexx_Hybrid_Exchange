@@ -27,16 +27,10 @@ import React from 'react';
 import Web3 from 'web3';
 import useCopyToClipboard from '../../utils/useCopyToClipboard';
 import ShortenText from '../../utils/ShortenText';
-import * as bitcoin from 'bitcoinjs-lib';
 import { useTheme } from '@mui/material';
 
 const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
 const { Text } = Typography;
-
-const networks = {
-  BTC: bitcoin.networks.testnet, // mainnet
-  //'BTC': bitcoin.networks.mainnet // testnet
-};
 
 export const BSWithdarwCryptoContent = () => {
   const navigate = useNavigate();
@@ -268,24 +262,20 @@ export const BSWithdarwCryptoContent = () => {
 
   const checkWalletAddress = async (address: string, currency: string) => {
     let isValid = false;
-
+  
     if (currency === 'BTC') {
-      // Determine network based on the currency
-      const network = networks[currency];
-      try {
-        // Validate Bitcoin address using the specified network
-        bitcoin.address.toOutputScript(address, network);
-        isValid = true;
-      } catch (error) {
-        isValid = false;
-      }
+      // Regex for Bitcoin addresses (both legacy & SegWit formats)
+      const btcRegex = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/;
+      isValid = btcRegex.test(address);
     } else {
       // Validate Ethereum address
-      isValid = web3.utils.checkAddressChecksum(address);
+      isValid = web3.utils.isAddress(address);
     }
-
+  
     setIsWalletAddrValid(isValid);
   };
+  
+
 
   const onChangeReceiveAmt = (e: any) => {
     // if (e.currentTarget.value) {
