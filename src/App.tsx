@@ -163,6 +163,7 @@ import SmartAPYPage from './pages/SmartAPY';
 import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
 import SmartApyCalPage from './pages/SmartApyCal';
 import CryptoTreasuryPage from './pages/CryptoTreasury';
+import PerformancePage from './pages/PerformancePage';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -283,6 +284,7 @@ function App() {
               element={<HowItWorksSmartAPY />}
             />
             <Route element={<PrivateRoutes />}>
+              <Route path="/performance" element={<PerformancePage />} />
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/wallet/crypto" element={<AssetsPage />} />
               <Route path="/wallet/fiat" element={<AssetsPage />} />

@@ -28,6 +28,8 @@ import dummy from '../../assets/hive-dashboard/dummy.png';
 import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 
+import { useNavigate } from 'react-router-dom';
+
 import {
   baseURL,
   baseCEXURL,
@@ -106,6 +108,7 @@ const HeaderTest = () => {
   const [loginUserType, setLoginUserType] = useState<any>();
   const [haspowerpack, setHaspowerpack] = useState(false);
   const [authHeader, setAuthHeader] = useState(header_data);
+  const navigate = useNavigate();
   console.log(haspowerpack, 'has pack');
 
   useEffect(() => {
@@ -928,14 +931,13 @@ const HeaderTest = () => {
                               </div>
                             </div>
                           )}
-                          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
                           <div
                             style={{
                               display: 'flex',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                                alignItems: 'left',
+                              justifyContent: 'center',
+                              flexDirection: 'column',
+                              alignItems: 'left',
                             }}
                           >
                             <div
@@ -968,24 +970,86 @@ const HeaderTest = () => {
                                   ? userEmail
                                   : element.mainTextDesktop}
                               </label>
+                              {honeyBeeData &&
+                                (honeyBeeData?.isKYCPass ? (
+                                  <>
+                                    <p
+                                      className="desktop-item"
+                                      style={{
+                                        fontSize: '12px',
+                                        marginTop: '4px',
+                                        background: 'rgb(17, 190, 106)',
+                                        padding: '3px',
+                                        borderRadius: '5px',
+                                        width: '40%',
+                                        textAlign: 'center',
+                                        cursor: 'default',
+                                      }}
+                                    >
+                                      Verified
+                                    </p>
+
+                                    <p
+                                      className="mobile-item"
+                                      style={{
+                                        fontSize: '12px',
+                                        marginLeft: '20px',
+                                        marginTop: '4px',
+                                        background: 'rgb(17, 190, 106)',
+                                        padding: '3px',
+                                        borderRadius: '5px',
+                                        width: '30%',
+                                        textAlign: 'center',
+                                        cursor: 'default',
+                                      }}
+                                    >
+                                      Verified
+                                    </p>
+                                  </>
+                                ) : (
+                                  <>
+                                    <p
+                                      className="desktop-item"
+                                      onClick={() =>
+                                        navigate('/indexx-exchange/account')
+                                      }
+                                      style={{
+                                        fontSize: '12px',
+                                        marginTop: '4px',
+                                        background: 'rgb(236, 44, 22)',
+                                        padding: '3px',
+                                        borderRadius: '5px',
+                                        width: '50%',
+                                        textAlign: 'center',
+                                        cursor: 'pointer',
+                                      }}
+                                    >
+                                      Unverified
+                                    </p>
+
+                                    <p
+                                      className="mobile-item"
+                                      onClick={() =>
+                                        navigate('/indexx-exchange/account')
+                                      }
+                                      style={{
+                                        fontSize: '12px',
+                                        marginLeft: '20px',
+                                        marginTop: '4px',
+                                        background: 'rgb(236, 44, 22)',
+                                        padding: '3px',
+                                        borderRadius: '5px',
+                                        width: '30%',
+                                        textAlign: 'center',
+                                        textDecoration: 'none',
+                                        cursor: 'pointer',
+                                      }}
+                                    >
+                                      Unverified
+                                    </p>
+                                  </>
+                                ))}
                             </div>
-                            <a
-                              className="desktop-item"
-                              style={{
-                              lineHeight: '1',
-                              width: '50%',
-                              background: '#007bff',
-                              padding: '3px',
-                                margin: '5px 0',
-                              color: 'white',
-                              borderRadius: '5px',
-                              textAlign: 'center',
-                              textDecoration: 'none',
-                              display: 'inline-block',
-                              }}
-                            >
-                              verified
-                            </a>
                           </div>
 
                           {element.hasMegaDrop ? (
