@@ -382,6 +382,49 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '16px',
     },
   },
+  disclaimerContainer: {
+    maxWidth: '1500px',
+    margin: 'auto',
+    padding: '20px',
+    marginTop: '100px',
+  },
+  heading: {
+    fontSize: '12px',
+    marginBottom: '10px',
+    maxWidth: '900px',
+    color: theme.palette.text.secondary,
+  },
+  subheading: {
+    fontSize: '11px',
+    marginBottom: '12px',
+    maxWidth: '900px',
+    color: theme.palette.text.secondary,
+  },
+  text: {
+    fontSize: '10px',
+    lineHeight: '1.5',
+    marginBottom: '16px',
+    maxWidth: '900px',
+    color: theme.palette.text.secondary,
+  },
+  list: {
+    paddingLeft: '20px',
+    marginBottom: '10px',
+    maxWidth: '900px',
+    color: theme.palette.text.secondary,
+  },
+  listItem: {
+    fontSize: '10px',
+    lineHeight: '1.5',
+    marginBottom: '6px',
+    maxWidth: '900px',
+    color: theme.palette.text.secondary,
+  },
+
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const Assets = () => {
@@ -713,7 +756,6 @@ const Assets = () => {
               />
             </div>
           )}
-
           <div className={classes.tableContainer}>
             {!tab && (
               <div
@@ -825,7 +867,6 @@ const Assets = () => {
                 </List>
               </div>
             )}
-
             <div className={classes.maxWidthContainer}>
               <BalanceOverview
                 selectedValue={selectedListValue}
@@ -865,6 +906,130 @@ const Assets = () => {
                 />
               </div>
             </div>
+          </div>
+          <div className={classes.disclaimerContainer}>
+            <h1 className={classes.heading}>DISCLAIMER</h1>
+            <p className={classes.text}>
+              This Asset Wallet Disclaimer (the "Disclaimer") is issued by
+              Indexx.ai (the "Company") and applies to all users (“User” or
+              "You") holding assets within the Company’s platform. By using the
+              Company’s asset wallet and participating in staking or Smart
+              Crypto Packages, you agree to the terms outlined in this
+              Disclaimer.
+            </p>
+
+            <h2 className={classes.subheading}>1. Staking Restrictions</h2>
+            <h3 className={classes.subheading}>1.1 Locked Staking Funds</h3>
+            <p className={classes.text}>
+              Any funds staked on the Company’s platform at an annual interest
+              rate of 15% are subject to a lock-in period until the Company’s
+              Initial Coin Offering (ICO) or public launch. Staked funds cannot
+              be withdrawn, sold, exchanged, or otherwise converted before this
+              event.
+            </p>
+
+            <h3 className={classes.subheading}>1.2 Interest Accrual</h3>
+            <p className={classes.text}>
+              Staked funds will accrue a fixed annual interest rate of 15%,
+              calculated based on the staking duration, and interest will be
+              credited in INEX tokens.
+            </p>
+
+            <h3 className={classes.subheading}>1.3 Acknowledgment of Risk</h3>
+            <ul className={classes.list}>
+              <li className={classes.listItem}>Regulatory changes</li>
+              <li className={classes.listItem}>Market volatility</li>
+              <li className={classes.listItem}>
+                Company-related operational risks
+              </li>
+            </ul>
+
+            <h2 className={classes.subheading}>
+              2. Smart Crypto Package Management
+            </h2>
+            <h3 className={classes.subheading}>
+              2.1 Estimated Balance Representation
+            </h3>
+            <p className={classes.text}>
+              The estimated balance shown in your asset wallet for the Smart
+              Crypto Package reflects the current market value of the underlying
+              assets managed by the Company. This balance is an estimate and may
+              fluctuate based on market conditions.
+            </p>
+
+            <h3 className={classes.subheading}>2.2 Portfolio Management</h3>
+            <p className={classes.text}>
+              The Smart Crypto Package is a managed investment product created
+              and adjusted by the Company’s team of experts. The Company
+              reserves the right to shift tokens and rebalance the portfolio as
+              market conditions require without prior notice to the User.
+            </p>
+            <h3 className={classes.subheading}>
+              2.3 Restrictions on Buying and Selling
+            </h3>
+            <p className={classes.text}>
+              Users cannot independently buy, sell, add, or remove individual
+              tokens from the Smart Crypto Package. All changes to the package
+              are managed solely by the Company.
+            </p>
+            <h3 className={classes.subheading}>
+              2.4 Package Liquidation Requests
+            </h3>
+            <p className={classes.text}>
+              If a User wishes to liquidate their Smart Crypto Package, they
+              must submit a formal request to the Company. The Company will
+              execute the transaction on the User’s behalf in accordance with
+              Company policies and market conditions at the time of the request.
+            </p>
+
+            <h2 className={classes.subheading}>3. Limitation of Liability</h2>
+            <h3 className={classes.subheading}>3.1 No Guarantee of Value</h3>
+            <p className={classes.text}>
+              The Company does not guarantee any specific valuation or future
+              performance of the staked funds or Smart Crypto Package.
+            </p>
+
+            <h3 className={classes.subheading}>
+              3.2 Security and Account Responsibility
+            </h3>
+            <p className={classes.text}>
+              Users are responsible for maintaining the security of their
+              accounts. The Company is not liable for any: <br />
+              Unauthorized access
+              <br />
+              Hacking incidents <br />
+              Losses due to User negligence
+            </p>
+
+            <h2 className={classes.subheading}>
+              4. Governing Law & Dispute Resolution
+            </h2>
+            <p className={classes.text}>
+              This Disclaimer shall be governed by the laws of the State of
+              California, United States. Any disputes arising from this
+              Disclaimer shall be resolved through arbitration in California.
+              Users waive the right to participate in class-action lawsuits.
+            </p>
+
+            <h2 className={classes.subheading}>5. Contact Information</h2>
+            <p className={classes.text}>
+              For any inquiries regarding staking or Smart Crypto Packages,
+              please contact us at:
+            </p>
+            <p className={classes.text}>
+              <strong>📧 support@indexx.ai</strong>
+            </p>
+            <p className={classes.text}>
+              🌐{' '}
+              <a
+                href="https://indexx.ai"
+                className={classes.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Indexx.ai
+              </a>
+            </p>
           </div>
         </div>
       ) : (
