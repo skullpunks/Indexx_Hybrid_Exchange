@@ -313,6 +313,7 @@ export default function EnhancedTable({
             item.notes.startsWith('Smart Crypto Ripple') ||
             item.notes.startsWith('Smart Crypto Wave') ||
             item.notes.startsWith('xBitcoin Blooming') ||
+            item.notes.startsWith('xBitcoin Federal Reserve') ||
             item.notes.startsWith('xBitcoin Rush') ||
             item.notes.startsWith('xBitcoin Bitcoin') ||
             item.notes.startsWith('xBBitcoin Bitcoin2') ||
@@ -331,6 +332,7 @@ export default function EnhancedTable({
               item.notes.startsWith('Smart Crypto Ripple') ||
               item.notes.startsWith('Smart Crypto Wave') ||
               item.notes.startsWith('xBitcoin Blooming') ||
+              item.notes.startsWith('xBitcoin Federal Reserve') ||
               item.notes.startsWith('xBitcoin Rush') ||
               item.notes.startsWith('xBitcoin Bitcoin') ||
               item.notes.startsWith('xBBitcoin Bitcoin2') ||
@@ -444,6 +446,7 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Ripple') ||
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
+          row.notes.includes('xBitcoin Federal Reserve') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') ||
           row.notes.includes('xBBitcoin Bitcoin2') ||
@@ -459,6 +462,7 @@ export default function EnhancedTable({
           row.notes.includes('Smart Crypto Ripple') ||
           row.notes.includes('Smart Crypto Wave') ||
           row.notes.includes('xBitcoin Blooming') ||
+          row.notes.includes('xBitcoin Federal Reserve') ||
           row.notes.includes('xBitcoin Rush') ||
           row.notes.includes('xBitcoin Bitcoin') ||
           row.notes.includes('xBBitcoin Bitcoin2') ||
@@ -539,6 +543,8 @@ export default function EnhancedTable({
       const applicableCategories = [];
       if (notes.startsWith('xBitcoin Blooming'))
         applicableCategories.push('Smart Crypto x-Bitcoin Blooming');
+      if (notes.startsWith('xBitcoin Federal Reserve'))
+        applicableCategories.push('Smart Crypto x-Bitcoin Federal Reserve');
       if (notes.startsWith('xBitcoin Rush'))
         applicableCategories.push('Smart Crypto x-Bitcoin Rush');
       if (notes.startsWith('xBitcoin Bull-Run'))
@@ -609,6 +615,7 @@ export default function EnhancedTable({
     const categoryPriority = [
       'Other Coins',
       'Smart Crypto x-Bitcoin Blooming',
+      'Smart Crypto x-Bitcoin Federal Reserve',
       'Smart Crypto x-Bitcoin Rush',
       'Smart Crypto x-Bitcoin Bull-Run',
       'Smart Crypto x-Bitcoin Bull-Run($10,000 Investment + $10,000 Commission)',
@@ -653,6 +660,7 @@ export default function EnhancedTable({
       'Bull-Run',
       'Bitcoin',
       'Blooming',
+      'Federal Reserve',
       'Rush',
       'Ripple',
       'Wave',
@@ -694,6 +702,7 @@ export default function EnhancedTable({
       'Bull-Run',
       'Bitcoin',
       'Blooming',
+      'Federal Reserve',
       'Rush',
       'Ripple',
       'Wave',
@@ -717,6 +726,7 @@ export default function EnhancedTable({
     if (planName.includes('Bull-Run')) return bullrun;
     if (planName.includes('Rush')) return rush;
     if (planName.includes('Bitcoin')) return xBitcoin;
+    if (planName.includes('Federal Reserve')) return xBitcoin;
     //return xBitcoin; // Fallback in case no match is found
   };
 
