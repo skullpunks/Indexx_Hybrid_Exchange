@@ -98,7 +98,7 @@ const HeaderTest = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [staticsData, setStaticsData] = useState();
-  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState<any>();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -971,7 +971,7 @@ const HeaderTest = () => {
                                   : element.mainTextDesktop}
                               </label>
                               {honeyBeeData &&
-                                (honeyBeeData?.isKYCPass ? (
+                                (honeyBeeData && honeyBeeData.isKYCPass ? (
                                   <>
                                     <p
                                       className="desktop-item"
