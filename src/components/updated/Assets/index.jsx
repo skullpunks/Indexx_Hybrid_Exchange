@@ -911,7 +911,7 @@ const Assets = () => {
             <h1 className={classes.heading}>DISCLAIMER</h1>
             <p className={classes.text}>
               This Asset Wallet Disclaimer (the "Disclaimer") is issued by
-              Indexx.ai (the "Company") and applies to all users (“User” or
+              Indexx.ai (the "Company") and applies to all users ("User" or
               "You") holding assets within the Company’s platform. By using the
               Company’s asset wallet and participating in staking or Smart
               Crypto Packages, you agree to the terms outlined in this
@@ -924,15 +924,18 @@ const Assets = () => {
               Any funds staked on the Company’s platform at an annual interest
               rate of 15% are subject to a lock-in period until the Company’s
               Initial Coin Offering (ICO) or public launch. Staked funds cannot
-              be withdrawn, sold, exchanged, or otherwise converted before this
-              event.
+              be withdrawn, sold, exchanged, or otherwise converted into any
+              form of fiat, cryptocurrency, or any xToken (any token created by
+              Indexx) before this event.
             </p>
 
             <h3 className={classes.subheading}>1.2 Interest Accrual</h3>
             <p className={classes.text}>
               Staked funds will accrue a fixed annual interest rate of 15%,
               calculated based on the staking duration, and interest will be
-              credited in INEX tokens.
+              credited in xTokens (any token created by Indexx). These xTokens
+              are also subject to the lock-in period and cannot be withdrawn or
+              converted until the ICO or public launch.
             </p>
 
             <h3 className={classes.subheading}>1.3 Acknowledgment of Risk</h3>
@@ -982,15 +985,58 @@ const Assets = () => {
               Company policies and market conditions at the time of the request.
             </p>
 
-            <h2 className={classes.subheading}>3. Limitation of Liability</h2>
-            <h3 className={classes.subheading}>3.1 No Guarantee of Value</h3>
+            <h3 className={classes.subheading}>
+              3. Smart APY Program Disclaimer
+            </h3>
+
+            <h3 className={classes.subheading}>
+              3.1 No Guarantee of Fiat Value Stability
+            </h3>
+            <p className={classes.text}>
+              While IUSD+ is a stablecoin designed to maintain a 1:1 value with
+              the US Dollar, market conditions and external factors could affect
+              its value.
+            </p>
+
+            <h3 className={classes.subheading}>3.2 Regulatory Risk</h3>
+            <p className={classes.text}>
+              Cryptocurrency and digital assets are subject to evolving
+              regulatory environments, which may impact the availability,
+              security, or performance of Smart APY.
+            </p>
+
+            <h3 className={classes.subheading}>3.3 Platform Risk:</h3>
+            <p className={classes.text}>
+              Indexx.ai ensures best practices in security and management;
+              however, technical issues, maintenance, and external attacks may
+              temporarily impact access to funds.
+            </p>
+
+            <h3 className={classes.subheading}>
+              3.4 Non-Reversible Transactions:
+            </h3>
+            <p className={classes.text}>
+              Once funds are converted to IUSD+ and staked through Smart APY,
+              they are locked for the chosen period (6, 12, or 18 months) and
+              cannot be withdrawn early.
+            </p>
+
+            <h3 className={classes.subheading}>3.5 Yield Payment</h3>
+            <p className={classes.text}>
+              Yield is paid in IUSD+ and credited to your Indexx.ai wallet. At
+              the end of the lock-in period, users may choose to convert their
+              IUSD+ back to USD or use it for further investments.
+            </p>
+
+            <h2 className={classes.subheading}>4. Limitation of Liability</h2>
+            <h3 className={classes.subheading}>4.1 No Guarantee of Value</h3>
             <p className={classes.text}>
               The Company does not guarantee any specific valuation or future
               performance of the staked funds or Smart Crypto Package.
             </p>
 
             <h3 className={classes.subheading}>
-              3.2 Security and Account Responsibility
+              4.2 Security and Account Responsibility
             </h3>
             <p className={classes.text}>
               Users are responsible for maintaining the security of their
@@ -1002,7 +1048,7 @@ const Assets = () => {
             </p>
 
             <h2 className={classes.subheading}>
-              4. Governing Law & Dispute Resolution
+              5. Governing Law & Dispute Resolution
             </h2>
             <p className={classes.text}>
               This Disclaimer shall be governed by the laws of the State of
@@ -1011,7 +1057,7 @@ const Assets = () => {
               Users waive the right to participate in class-action lawsuits.
             </p>
 
-            <h2 className={classes.subheading}>5. Contact Information</h2>
+            <h2 className={classes.subheading}>6. Contact Information</h2>
             <p className={classes.text}>
               For any inquiries regarding staking or Smart Crypto Packages,
               please contact us at:

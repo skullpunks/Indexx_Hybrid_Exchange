@@ -122,7 +122,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: '20px',
     flexDirection: 'column',
-
     '& img': {
       height: '80px',
       marginBottom: 0,
