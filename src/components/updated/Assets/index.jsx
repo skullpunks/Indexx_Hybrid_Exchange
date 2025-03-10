@@ -923,10 +923,10 @@ const Assets = () => {
             <p className={classes.text}>
               Any funds staked on the Company’s platform at an annual interest
               rate of 15% are subject to a lock-in period until the Company’s
-              Initial Coin Offering (ICO) or public launch. Staked funds cannot
-              be withdrawn, sold, exchanged, or otherwise converted into any
-              form of fiat, cryptocurrency, or any xToken (any token created by
-              Indexx) before this event.
+              Initial Coin Offering (ICO) or public launch (IPO). Staked funds
+              cannot be withdrawn, sold, exchanged, or otherwise converted into
+              any form of fiat, cryptocurrency, or any xToken (any token created
+              by Indexx) before this event.
             </p>
 
             <h3 className={classes.subheading}>1.2 Interest Accrual</h3>
@@ -935,7 +935,7 @@ const Assets = () => {
               calculated based on the staking duration, and interest will be
               credited in xTokens (any token created by Indexx). These xTokens
               are also subject to the lock-in period and cannot be withdrawn or
-              converted until the ICO or public launch.
+              converted until the ICO or public launch (IPO).
             </p>
 
             <h3 className={classes.subheading}>1.3 Acknowledgment of Risk</h3>
