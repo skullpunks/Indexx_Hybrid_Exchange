@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DemoInvestmentPopup = ({ onClose, category }) => {
+const DemoInvestmentPopup = ({ onClose, category, isWebinarUser  }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (

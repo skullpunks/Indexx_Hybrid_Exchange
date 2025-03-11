@@ -58,15 +58,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DemoPopup = ({ onClose, text }) => {
+const DemoPopup = ({ onClose, text, plan }) => {
+  console.log('plan', plan);
   const classes = useStyles();
   const theme = useTheme();
   const [isFeeAcknowledged, setIsFeeAcknowledged] = useState(false);
   const navigate = useNavigate();
-  const handleSubmitSellPlan = () => {
-    navigate('/smart-crypto');
+  const planRoutes = {
+    'Smart Crypto Surge': '/smart-crypto/plan-detail/surge',
+    'Smart Crypto Ripple': '/smart-crypto/plan-detail/ripple',
+    'Smart Crypto Wave': '/smart-crypto/plan-detail/wave',
+    'Smart Crypto x-Bitcoin Blooming': '/smart-crypto/plan-detail/blooming',
+    'Smart Crypto x-Bitcoin Rush': '/smart-crypto/plan-detail/rush',
+    'Smart Crypto x-Bitcoin Bull-Run': '/smart-crypto/plan-detail/bull-run',
   };
 
+  const handleNavigate = () => {
+    const path = planRoutes[plan]
+      ? `${planRoutes[plan]}?isFreeTrialUpgrade=true`
+      : '/wallet/smart-crypto?isFreeTrialUpgrade=true';
+    navigate(path);
+    onClose();
+  };
   return (
     <div className={classes.bnMask}>
       <div className={classes.bnModal}>
@@ -90,7 +103,7 @@ const DemoPopup = ({ onClose, text }) => {
             className={
               isFeeAcknowledged ? classes.blueButton : classes.yellowButton
             }
-            onClick={handleSubmitSellPlan}
+            onClick={handleNavigate}
           />
         </div>
       </div>

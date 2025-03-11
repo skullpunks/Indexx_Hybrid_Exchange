@@ -832,6 +832,7 @@ const CreateOwnPlan = ({ onClose, category, filteredTokens }) => {
               className={classes.greyButton}
               text="Cancel"
               onClick={onClose}
+              disabled={loadings}
             />
 
             <GenericButton

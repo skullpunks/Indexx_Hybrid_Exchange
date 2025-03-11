@@ -197,24 +197,41 @@ const SellConfirmationPopup = ({
   };
 
   function extractPlanDetails(inputString) {
-    // Regular expressions
+    let planName = null;
+    let managedBy = null;
+
+    // First attempt: Using the original regex
     const planNameRegex = /^(.*?)\s\$/; // Matches "Smart Crypto Wave" before the "$"
     const managedByRegex = /-\s*(\w+)/; // Matches "Omkar" or "Issa" after the "-"
 
-    // Extract the plan name
     const planNameMatch = inputString.match(planNameRegex);
-    const planName = planNameMatch ? planNameMatch[1].trim() : null;
-
-    // Extract the managed by name
     const managedByMatch = inputString.match(managedByRegex);
-    const managedBy = managedByMatch ? managedByMatch[1].trim() : null;
 
-    // Return the result
+    if (planNameMatch) {
+      planName = planNameMatch[1].trim();
+    }
+
+    if (managedByMatch) {
+      managedBy = managedByMatch[1].trim();
+    }
+
+    // Fallback if first attempt fails
+    if (!planName || !managedBy) {
+      const fallbackRegex = /^(.*?)(?:\s\d+\.\d+)?\s*Package-(\w+)/;
+      const fallbackMatch = inputString.match(fallbackRegex);
+
+      if (fallbackMatch) {
+        planName = fallbackMatch[1].trim();
+        managedBy = fallbackMatch[2].trim();
+      }
+    }
+
     return { planName, managedBy };
   }
 
   useEffect(() => {
     let plan = extractPlanDetails(packageName);
+    console.log('packageName', packageName);
     let reformedPlan = reformPlanName(plan.planName, plan.managedBy);
     console.log('reformedPlan', reformedPlan);
     setUserPlanNameReformed(reformedPlan);
@@ -289,8 +306,13 @@ const SellConfirmationPopup = ({
             <div style={{ fontSize: '20px', fontWeight: '600' }}></div>
 
             <div
-              onClick={onClose}
-              style={{ cursor: 'pointer', padding: '18px' }}
+              onClick={!loadings ? onClose : undefined} // Prevent function execution
+              style={{
+                cursor: loadings ? 'not-allowed' : 'pointer',
+                padding: '18px',
+                pointerEvents: loadings ? 'none' : 'auto', // Disable click events
+                opacity: loadings ? 0.5 : 1, // Visual indication
+              }}
             >
               <CloseIcon className={classes.closeBtn} />
             </div>
@@ -330,6 +352,7 @@ const SellConfirmationPopup = ({
               text={'Cancel'}
               className={classes.greyButton}
               onClick={onClose}
+              disabled={loadings}
             />
 
             <GenericButton

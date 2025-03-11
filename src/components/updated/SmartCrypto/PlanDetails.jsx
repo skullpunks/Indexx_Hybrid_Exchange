@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import xBitcoinIcon from '../../../assets/updated/smartCrypto/x-bitcoin.png';
 import xBlueIcon from '../../../assets/updated/smartCrypto/x-blue.png';
-
+import { useSearchParams } from 'react-router-dom';
 import bloomingIcon from '../../../assets/updated/smartCrypto/blomming.png';
 import rushIcon from '../../../assets/updated/smartCrypto/rush.png';
 import bullRunIcon from '../../../assets/updated/smartCrypto/bullrun.png';
@@ -27,6 +27,7 @@ import DetailPopup from './DetailPopup';
 import xBlueBg from '../../../assets/updated/smartCrypto/x-bluebg.png';
 import xBitcoinBg from '../../../assets/updated/smartCrypto/x-Bitcoinbg.png';
 import PlanIconicHeader from '../Assets/PlanIconicHeader';
+import DemoInvestmentPopup2 from './DemoInvestmentPopup2';
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: '1280px',
@@ -392,6 +393,16 @@ const PlanDetails = () => {
   const [selectedPlanTab, setSelectedPlanTab] = useState(
     names === 'ripple' || names === 'surge' || names === 'wave' ? 0 : 1
   );
+  const [searchParams] = useSearchParams();
+  const isWebinarUser = searchParams.get('isWebinarUser') === 'true';
+  const isFreeTrialUpgrade = searchParams.get('isFreeTrialUpgrade') === 'true';
+  const [showDemoPopup2, setShowDemoPopup2] = useState(false);
+
+  useEffect(() => {
+    if (isWebinarUser) {
+      console.log('Webinar user detected! Apply webinar-specific logic here.');
+    }
+  }, [isWebinarUser]);
   const [name, setName] = useState(names);
 
   const xBluePlan = [
@@ -584,7 +595,8 @@ const PlanDetails = () => {
     }
 
     setSelectedAllocation(allocationData);
-    setCreateAPlanPopup(true);
+    if (isWebinarUser) setShowDemoPopup2(true);
+    else setCreateAPlanPopup(true);
     // const params = new URLSearchParams(search);
     // params.set('plan_id', allocationData._id);
     // navigate({ search: params.toString() }, { replace: true });
@@ -840,6 +852,15 @@ const PlanDetails = () => {
         </div>
       </div>
 
+      {showDemoPopup2 && isWebinarUser && (
+        <DemoInvestmentPopup2
+          isWebinarUser={isWebinarUser}
+          onClose={() => {
+            setShowDemoPopup2(false);
+            setCreateAPlanPopup(true);
+          }}
+        />
+      )}
       {/* <div className={classes.exploreContainer}>
         <h3>Explore {category}</h3>
         <div className={classes.absoluteImg}>
@@ -978,6 +999,8 @@ const PlanDetails = () => {
           onClose={() => setCreateAPlanPopup(false)}
           category={category}
           allocationData={selectedAllocation}
+          isWebinarUser={isWebinarUser}
+          isFreeTrialUpgrade={isFreeTrialUpgrade}
         />
       )}
       {createOwnPlan && (

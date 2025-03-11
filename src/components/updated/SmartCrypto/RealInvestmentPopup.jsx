@@ -192,7 +192,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DemoInvestmentPopup3 = ({ onClose, category }) => {
+const RealInvestmentPopup = ({ onClose, category }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
@@ -219,23 +219,21 @@ const DemoInvestmentPopup3 = ({ onClose, category }) => {
           </div>
           <div className={classes.header}>
             <img src={step3Image} />
-            <h2>Step 3</h2>
-            <h3>Check Demo Wallet</h3>
+            <h3>Check Real Investment</h3>
           </div>
 
           <div className={classes.planDetails}>
             <p>
-              To verify your Smart Crypto investment, go to the asset wallet and
-              track your growth.
+              You have successfully moved from demo to real investment. Go to your asset wallet to track your real investment growth.
             </p>
           </div>
 
           <div className={classes.btnContainer}>
             <GenericButton
-              text={'Demo Wallet'}
+              text={'Go to Asset Wallet'}
               onClick={() => {
                 onClose();
-                navigate('/wallet/demo-smart-crypto');
+                navigate('/wallet/smart-crypto');
               }}
             />
           </div>
@@ -245,4 +243,4 @@ const DemoInvestmentPopup3 = ({ onClose, category }) => {
   );
 };
 
-export default DemoInvestmentPopup3;
+export default RealInvestmentPopup;

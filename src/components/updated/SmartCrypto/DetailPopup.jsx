@@ -225,31 +225,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DetailPopup = ({ onClose, category, planName }) => {
+const DetailPopup = ({
+  onClose,
+  category,
+  planName,
+  isWebinarUser,
+  isFreeTrialUpgrade,
+}) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
+  const queryParams = [];
+  if (isWebinarUser) queryParams.push('isWebinarUser=true');
+  if (isFreeTrialUpgrade) queryParams.push('isFreeTrialUpgrade=true');
+  const queryString = queryParams.length > 0 ? `?${queryParams.join('&')}` : '';
+
   const xBlueplanDetails = [
     {
       image: ripple,
       name: 'Ripple',
       description: 'Designed for stability and stable returns',
-      path: '/smart-crypto/plan-detail/ripple',
-      id: 'ripple',
+      path: `/smart-crypto/plan-detail/ripple${queryString}`,
     },
     {
       image: surge,
       name: 'Surge',
       description: 'Moderate volatility, consistent returns.',
-      path: '/smart-crypto/plan-detail/surge',
-      id: 'surge',
+      path: `/smart-crypto/plan-detail/surge${queryString}`,
     },
     {
       image: wave,
       name: 'Wave',
-      description: ' High volatility, high rewards.',
-      path: '/smart-crypto/plan-detail/wave',
-      id: 'wave',
+      description: 'High volatility, high rewards.',
+      path: `/smart-crypto/plan-detail/wave${queryString}`,
     },
   ];
 
@@ -258,22 +266,19 @@ const DetailPopup = ({ onClose, category, planName }) => {
       image: bloomingIcon,
       name: 'Blooming',
       description: 'Optimized for low volatility and steady performance.',
-      path: '/smart-crypto/plan-detail/blooming',
-      id: 'blooming',
+      path: `/smart-crypto/plan-detail/blooming${queryString}`,
     },
     {
       image: rushIcon,
       name: 'Rush',
       description: 'Moderate volatility, consistent returns',
-      path: '/smart-crypto/plan-detail/rush',
-      id: 'rush',
+      path: `/smart-crypto/plan-detail/rush${queryString}`,
     },
     {
       image: bullRunIcon,
       name: 'Bull-Run',
       description: 'High volatility, high potential returns.',
-      path: '/smart-crypto/plan-detail/bull-run',
-      id: 'bull-run',
+      path: `/smart-crypto/plan-detail/bull-run${queryString}`,
     },
   ];
 

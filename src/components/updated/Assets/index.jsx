@@ -35,7 +35,7 @@ import PlainsPopup from './PlainsPopup';
 import AllocationPopup from '../SmartCrypto/AllocationPopup';
 import CreateAPlanPopup from '../SmartCrypto/CreateAPlan';
 import CongratulationsPopup from './Congratulations';
-import { getSmartCryptoPackages } from '../../../services/api';
+import { decodeJWT, getSmartCryptoPackages, getUserShortToken } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import initialTokens from '../../../utils/Tokens.json';
 import CreateOwnPlan from '../SmartCrypto/CreateOwnPlan';
@@ -651,19 +651,46 @@ const Assets = () => {
       return false;
     }
   };
-  const navigationMenu = [
-    { name: 'Overview', path: '/wallet/overview' },
-    { name: 'Cryptos', path: '/wallet/crypto' },
-    {
-      name: 'Crypto Treasury',
-      path: '/wallet/smart-crypto',
-      children: [
-        { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
-        { name: 'Smart APY', path: '/wallet/iusd+' },
-      ],
-    },
-    { name: 'Fiat / Cash', path: '/wallet/fiat' },
-  ];
+  const [navigationMenu, setNavigationMenu] = useState([]);
+
+  useEffect(() => {
+    const updateNavigationMenu = async () => {
+      const accessToken = localStorage.getItem('access_token');
+  
+      if (accessToken) {
+        const decodedUser = decodeJWT(accessToken) || {};
+        let shortToken = await getUserShortToken(decodedUser?.email);
+        const decodeShortToken = decodeJWT(shortToken.data);
+        const isWebinarUser = decodeShortToken?.isWebinarUser || false;
+        const isTestFundActive = decodeShortToken?.isTestFundActive || false;
+        const freeTrialEnd = decodeShortToken?.isFreeTrailEnded || false;
+        console.log('Decoded User:', decodeShortToken); // Debugging
+  
+        // ✅ Conditionally Add "Demo Investment" Only If Conditions are Met
+        let updatedMenu = [
+          { name: 'Overview', path: '/wallet/overview' },
+          { name: 'Cryptos', path: '/wallet/crypto' },
+          {
+            name: 'Crypto Treasury',
+            path: '/wallet/smart-crypto',
+            children: [
+              { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
+              { name: 'Smart APY', path: '/wallet/iusd+' },
+            ],
+          },
+          { name: 'Fiat / Cash', path: '/wallet/fiat' },
+        ];
+  
+        if (isWebinarUser && isTestFundActive && !freeTrialEnd) {
+          updatedMenu.push({ name: 'Demo Investment', path: '/wallet/demo-smart-crypto' });
+        }
+  
+        setNavigationMenu(updatedMenu);
+      }
+    };
+  
+    updateNavigationMenu();
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -726,23 +753,7 @@ const Assets = () => {
                 }}
               >
                 <List sx={{ position: 'sticky', top: 100 }}>
-                  {[
-                    { name: 'Overview', path: '/wallet/overview' },
-                    { name: 'Cryptos', path: '/wallet/crypto' },
-                    {
-                      name: 'Crypto Treasury',
-                      path: '/wallet/smart-crypto',
-                      children: [
-                        { name: 'Smart Crypto', path: '/wallet/smart-crypto' },
-                        { name: 'Smart APY', path: '/wallet/iusd+' },
-                      ],
-                    },
-                    { name: 'Fiat / Cash', path: '/wallet/fiat' },
-                    // {
-                    //   name: 'Demo Investment',
-                    //   path: '/wallet/demo-smart-crypto',
-                    // },
-                  ].map((el, index) => (
+                  {navigationMenu.map((el, index) => (
                     <React.Fragment key={el.path}>
                       <ListItem
                         disablePadding

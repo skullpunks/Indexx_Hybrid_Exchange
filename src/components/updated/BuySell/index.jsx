@@ -156,6 +156,16 @@ const BuySell = () => {
         localStorage.setItem('refresh_token', res.data.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('redirected', 'true'); // Set flag
+        // Check if the user meets the SmartCrypto redirection criteria
+        if (
+          resObj?.isWebinarUser === true &&
+          resObj?.isTestFundActive === false
+        ) {
+          navigate('/smart-crypto', {
+            state: { isWebinarUser: true, isTestFundActive: false },
+          });
+          return;
+        }
         if (resObj?.userType === 'CaptainBee') {
           let resObj2 = await getCaptainBeeByEmail(String(resObj?.email));
           console.log(resObj2);

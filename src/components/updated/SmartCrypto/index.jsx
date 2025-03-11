@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import IconicHeader from '../shared/IconicHeader';
 import { makeStyles } from '@mui/styles';
 import SmartCryptoTabs from './IconicHeader';
-
 import ripple from '../../../assets/updated/smartCrypto/ripple.png';
 import surge from '../../../assets/updated/smartCrypto/surge.png';
 import wave from '../../../assets/updated/smartCrypto/Wave.png';
@@ -13,6 +12,7 @@ import {
   decodeJWT,
   getOrderDetails,
   getSmartCryptoPackages,
+  getUserShortToken,
 } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import AllocationPopup from './AllocationPopup';
@@ -415,6 +415,63 @@ const SmartCrypto = () => {
     setSelectedTab(newValue);
   };
 
+  // Extract user info from JWT token
+  const [isWebinarUser, setIsWebinarUser] = useState(false);
+  const [demoPopupOpen, setDemoPopupOpen] = useState(false);
+  const [demoPopupOpen1, setDemoPopupOpen1] = useState(false);
+  const [demoPopupOpen3, setDemoPopupOpen3] = useState(false);
+  const [isClosingPopup, setIsClosingPopup] = useState(false); // Flag to ensure transition
+  const location = useLocation();
+  // Step 1: Ensure the first popup closes completely before opening the second one
+  useEffect(() => {
+    if (isClosingPopup && !demoPopupOpen) {
+      setTimeout(() => {
+        setDemoPopupOpen1(true);
+        setIsClosingPopup(false); // Reset flag
+      }, 500); // Ensure state updates first before showing the next popup
+    }
+  }, [demoPopupOpen, isClosingPopup]);
+
+  const [isFreeTrialUpgrade, setIsFreeTrialUpgrade] = useState(false);
+  useEffect(() => {
+    console.log(location.pathname);
+    setIsFreeTrialUpgrade(location?.state?.isFreeTrialUpgrade ? true : false);
+  }, [location]);
+
+  const isManuallyClosed = useRef(false);
+
+  // Function to close the first demo popup and open the next one after delay
+  const closeDemoPopup = () => {
+    isManuallyClosed.current = true;
+    setDemoPopupOpen(false);
+    setTimeout(() => setDemoPopupOpen1(true), 500);
+  };
+  // Effect to check user type and open the appropriate popups
+  useEffect(() => {
+    const fetchData = async () => {
+      let access_token = localStorage.getItem('access_token');
+      if (access_token) {
+        const decodedToken = decodeJWT(access_token);
+        let shortToken = await getUserShortToken(decodedToken?.email);
+
+        // Check if the user is a webinar user with inactive test funds
+        const decodeShortToken = decodeJWT(shortToken.data);
+        console.log('decodeShortToken', decodeShortToken);
+        const isWebinarUser = decodeShortToken?.isWebinarUser || false;
+        const isTestFundActive = decodeShortToken?.isTestFundActive || false;
+
+        if (isWebinarUser && !isTestFundActive) {
+          setIsWebinarUser(true);
+          if (!isManuallyClosed.current) {
+            setDemoPopupOpen(true);
+          }
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
   useEffect(() => {
     let getRequiredCoin = initialTokens.filter(
       (x) => x.commonToken === true && x.isStock === false && x.isETF === false
@@ -476,19 +533,25 @@ const SmartCrypto = () => {
   const [success] = useSearchParams();
 
   useEffect(() => {
+    if (!demoPopupOpen && isWebinarUser) {
+      console.log('DemoInvestmentPopup closed, opening DemoInvestmentPopup1');
+      setDemoPopupOpen1(true);
+    }
+  }, [demoPopupOpen]);
+
+  useEffect(() => {
     const orderIdParam = orderId.get('orderId');
     const successParam = success.get('success');
+
+    // Prevent opening DemoInvestmentPopup if orderId and success are present
+    if (!orderId || !success) {
+      setDemoPopupOpen(false);
+    }
 
     // Ensure both orderId and success are available
     if (orderIdParam && successParam) {
       setOrderId(String(orderIdParam));
       console.log('success', successParam);
-
-      if (successParam === 'true') {
-        setCongratulationsPopup(true);
-      } else {
-        setFailedPopup(true);
-      }
 
       if (orderIdParam !== undefined) {
         let access_token = String(localStorage.getItem('access_token'));
@@ -506,6 +569,17 @@ const SmartCrypto = () => {
           if (res.status === 200) {
             console.log('orderData', orderData);
             setOrderData(orderData.data);
+
+            // Check the orderType and success status
+            if (successParam === 'true') {
+              if (orderData.data.orderType === 'FreeTrailOrder') {
+                setDemoPopupOpen3(true); // Show Free Trail Order Popup
+              } else {
+                setCongratulationsPopup(true); // Show Normal Confirmation Popup
+              }
+            } else {
+              setFailedPopup(true);
+            }
           }
         });
       }
@@ -625,13 +699,37 @@ const SmartCrypto = () => {
   };
   const handleBlueCard = (planName = 'ripple') => {
     setSelectedCategory('x-Blue');
-    setPlanDetailPopupOpen(true);
+    if (isWebinarUser) {
+      setDemoPopupOpen1(false);
+      setPlanDetailPopupOpen(true);
+      // ✅ Scroll to "Get to know Smart Crypto" section
+      setTimeout(() => {
+        const section = document.getElementById('get-to-know');
+        if (section) {
+          section.scrollIntoView();
+        }
+      }, 300);
+    } else {
+      setPlanDetailPopupOpen(true);
+    }
     setSelectedPlanName(planName);
   };
 
   const handleYellowCard = (planName = 'blooming') => {
     setSelectedCategory('x-Bitcoin');
-    setPlanDetailPopupOpen(true);
+    if (isWebinarUser) {
+      setDemoPopupOpen1(false);
+      setPlanDetailPopupOpen(true);
+      // ✅ Scroll to "Get to know Smart Crypto" section
+      setTimeout(() => {
+        const section = document.getElementById('get-to-know');
+        if (section) {
+          section.scrollIntoView();
+        }
+      }, 300);
+    } else {
+      setPlanDetailPopupOpen(true);
+    }
     setSelectedPlanName(planName);
   };
 
@@ -770,7 +868,6 @@ const SmartCrypto = () => {
             </div>
           </div>
         </div>
-
         <div className={classes.testimonialRoot}>
           <h3 id="get-to-know">Hear it from the investors</h3>
           <p>
@@ -865,16 +962,16 @@ const SmartCrypto = () => {
             your goals and maximizes your potential.
           </p>
         </div>
-
         {planDetailPopupOpen && (
           <DetailPopup
             category={selectedCategory}
             onClose={() => setPlanDetailPopupOpen(false)}
             planName={selectedPlanName}
+            isWebinarUser={isWebinarUser}
+            isFreeTrialUpgrade={isFreeTrialUpgrade}
           />
         )}
-
-        {congratulationsPopup && (
+        {congratulationsPopup && !demoPopupOpen3 && (
           <CongratulationsPopup
             onClose={() => setCongratulationsPopup(false)}
             category={'x-Bitcoin'}
@@ -889,10 +986,32 @@ const SmartCrypto = () => {
             category={'x-Bitcoin'}
           />
         )}
-        {/* {<DemoInvestmentPopup />} */}
-        {/* {<DemoInvestmentPopup1 />} */}
-        {/* {<DemoInvestmentPopup2 />} */}
-        {/* {<DemoInvestmentPopup3 />} */}
+        {/* Show DemoInvestmentPopup only for Webinar Users */}
+        {isWebinarUser && demoPopupOpen && (
+          <DemoInvestmentPopup
+            onClose={closeDemoPopup}
+            isWebinarUser={isWebinarUser}
+          />
+        )}
+
+        {/* You can enable other demo popups similarly */}
+        {/* Show DemoInvestmentPopup1 when first popup closes */}
+        {isWebinarUser && demoPopupOpen1 && (
+          <DemoInvestmentPopup1
+            onClose={() => {
+              setDemoPopupOpen1(false);
+              setDemoPopupOpen(false);
+            }}
+            isWebinarUser={isWebinarUser}
+          />
+        )}
+
+        {demoPopupOpen3 && (
+          <DemoInvestmentPopup3
+            isWebinarUser={isWebinarUser}
+            onClose={() => setDemoPopupOpen3(false)}
+          />
+        )}
         {/* <PlanDetails /> */}
       </div>
     </>

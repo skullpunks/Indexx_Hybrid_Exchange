@@ -9,6 +9,9 @@ import {
   decodeJWT,
   baseURL,
   getUserInvestments,
+  getUserDemoWallets,
+  getDemoUserInvestments,
+  getUserShortToken,
 } from '../../../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -145,13 +148,20 @@ const BalanceOverview = ({
           navigate('/auth/login');
           return;
         }
-
-        const userWallets = await getUserWallets(email);
+        let getInvestments, userWallets;
+        let userCurrentPath = window.location.pathname;
+        if (userCurrentPath === '/wallet/demo-smart-crypto') {
+          getInvestments = await getDemoUserInvestments(email);
+          userWallets = await getUserDemoWallets(email);
+        } else {
+          getInvestments = await getUserInvestments(email);
+          userWallets = await getUserWallets(email);
+        }
         const usersWallet = userWallets.data;
         let totalBalInUSD = 0;
         let totalPrevBalInUSD = 0;
         let totalStakedBalInUSD = 0; // Variable for staked balance
-        const getInvestments = await getUserInvestments(email);
+
         let totalInvestment = getInvestments.data; // Variable for staked balance
         setTotalInvestment(totalInvestment);
         const processedSymbols = new Set(); // To track already processed INEX and WIBS
@@ -246,7 +256,7 @@ const BalanceOverview = ({
       }
     };
     fetchUserWallets();
-  }, [navigate, searchParams]);
+  }, [navigate, searchParams, ]);
 
   return (
     <Box className={classes.container}>
