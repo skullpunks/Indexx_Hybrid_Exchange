@@ -325,7 +325,7 @@ const HeaderTest = () => {
       localStorage.getItem('userType') !== undefined
         ? String(localStorage.getItem('userType'))
         : undefined;
-    
+
     // Remove specific authentication items instead of clearing everything
     const itemsToRemove = [
       'user',
@@ -335,14 +335,14 @@ const HeaderTest = () => {
       'username',
       'userlogged',
       'redirected',
-      'email'
+      'email',
     ];
-    
+
     // Remove each item individually
-    itemsToRemove.forEach(item => localStorage.removeItem(item));
-    
+    itemsToRemove.forEach((item) => localStorage.removeItem(item));
+
     // Redirect without the action=Logout parameter
-    window.location.href = `${baseURL}/auth/login`;
+    window.location.href = `${baseURL}/auth/login?action=Logout`;
   };
 
   const [isAssetWallet, setIsAssetWallet] = useState(false);
