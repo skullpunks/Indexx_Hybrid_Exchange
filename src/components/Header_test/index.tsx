@@ -11,6 +11,7 @@ import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 import { auth_header_data, auth_header_data_asset_wallet } from './data';
 import header_data from './data';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -935,9 +936,9 @@ const HeaderTest = () => {
                           <div
                             style={{
                               display: 'flex',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                                alignItems: 'left',
+                              justifyContent: 'center',
+                              flexDirection: 'column',
+                              alignItems: 'left',
                             }}
                           >
                             <div
@@ -971,84 +972,115 @@ const HeaderTest = () => {
                                   : element.mainTextDesktop}
                               </label>
                               {honeyBeeData &&
-                                (honeyBeeData as any).isKYCPass ? (
-                                  <>
-                                    <p
-                              className="desktop-item"
-                              style={{
-                                        fontSize: '12px',
-                                        marginTop: '4px',
-                                        background: 'rgb(17, 190, 106)',
-                                        padding: '3px',
-                                        borderRadius: '5px',
-                                        width: '40%',
-                                        textAlign: 'center',
-                                        cursor: 'default',
+                              (honeyBeeData as any).isKYCPass ? (
+                                <>
+                                  <p
+                                    className="desktop-item"
+                                    style={{
+                                      fontSize: '12px',
+                                      marginTop: '4px',
+                                      padding: '3px 0',
+                                      width: '40%',
+                                      cursor: 'default',
+                                      color: 'rgb(6, 93, 206)',
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '4px',
                                       }}
                                     >
-                                      Verified
-                                    </p>
+                                      <CheckCircleIcon sx={{ fontSize: 14 }} />
+                                      <span>Verified</span>
+                                    </span>
+                                  </p>
 
-                                    <p
-                                      className="mobile-item"
+                                  <p
+                                    className="mobile-item"
+                                    style={{
+                                      fontSize: '12px',
+                                      marginLeft: '20px',
+                                      marginTop: '4px',
+                                      padding: '3px 0',
+                                      width: '30%',
+                                      cursor: 'default',
+                                      color: 'rgb(6, 93, 206)',
+                                    }}
+                                  >
+                                    <span
                                       style={{
-                                        fontSize: '12px',
-                                        marginLeft: '20px',
-                                        marginTop: '4px',
-                                        background: 'rgb(17, 190, 106)',
-                                        padding: '3px',
-                                        borderRadius: '5px',
-                                        width: '30%',
-                                        textAlign: 'center',
-                                        cursor: 'default',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '4px',
                                       }}
                                     >
-                                      Verified
-                                    </p>
-                                  </>
-                                ) : (
-                                  <>
-                                    <p
-                                      className="desktop-item"
-                                      onClick={() =>
-                                        navigate('/indexx-exchange/account')
-                                      }
+                                      <CheckCircleIcon sx={{ fontSize: 14 }} />
+                                      <span>Verified</span>
+                                    </span>
+                                  </p>
+                                </>
+                              ) : (
+                                <>
+                                  <p
+                                    className="desktop-item"
+                                    onClick={() =>
+                                      navigate('/indexx-exchange/account')
+                                    }
+                                    style={{
+                                      fontSize: '12px',
+                                      marginTop: '4px',
+                                      padding: '3px 0',
+                                      width: '50%',
+                                      cursor: 'pointer',
+                                      color: 'rgb(104, 103, 102)',
+                                    }}
+                                  >
+                                    <span
                                       style={{
-                                        fontSize: '12px',
-                                        marginTop: '4px',
-                                        background: 'rgb(236, 44, 22)',
-                                        padding: '3px',
-                                        borderRadius: '5px',
-                              width: '50%',
-                                        textAlign: 'center',
-                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '4px',
                                       }}
                                     >
-                                      Unverified
-                                    </p>
+                                      <CheckCircleIcon sx={{ fontSize: 14 }} />
+                                      <span>Unverified</span>
+                                    </span>
+                                  </p>
 
-                                    <p
-                                      className="mobile-item"
-                                      onClick={() =>
-                                        navigate('/indexx-exchange/account')
-                                      }
+                                  <p
+                                    className="mobile-item"
+                                    onClick={() =>
+                                      navigate('/indexx-exchange/account')
+                                    }
+                                    style={{
+                                      fontSize: '12px',
+                                      marginLeft: '20px',
+                                      marginTop: '4px',
+                                      padding: '3px 0',
+                                      width: '30%',
+                                      cursor: 'pointer',
+                                      color: 'rgb(104, 103, 102)',
+                                    }}
+                                  >
+                                    <span
                                       style={{
-                                        fontSize: '12px',
-                                        marginLeft: '20px',
-                                        marginTop: '4px',
-                                        background: 'rgb(236, 44, 22)',
-                              padding: '3px',
-                              borderRadius: '5px',
-                                        width: '30%',
-                              textAlign: 'center',
-                              textDecoration: 'none',
-                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '4px',
                                       }}
                                     >
-                                      Unverified
-                                    </p>
-                                  </>
-                                )}
+                                      <CheckCircleIcon sx={{ fontSize: 14 }} />
+                                      <span>Unverified</span>
+                                    </span>
+                                  </p>
+                                </>
+                              )}
                             </div>
                           </div>
 
