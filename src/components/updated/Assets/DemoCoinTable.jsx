@@ -15,7 +15,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { baseURL, decodeJWT, getUserWallets } from '../../../services/api';
+import {
+  baseURL,
+  decodeJWT,
+  getUserDemoWallets,
+  getUserWallets,
+} from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import in500 from '../../../assets/token-icons/IN500_logo.png';
 import inxc from '../../../assets/token-icons/INXC_logo.png';
@@ -200,7 +205,7 @@ export default function DemoCoinTable({
       setUserType(user);
     }
   }, []);
-
+  const [demoPopup, setDemoPopup] = useState({ open: false, text: '', plan: '' });
   const [planName, setPlanName] = useState('');
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
@@ -255,7 +260,7 @@ export default function DemoCoinTable({
           }
         }
 
-        const userWallets = await getUserWallets(email);
+        const userWallets = await getUserDemoWallets(email);
         const formattedData = userWallets.data.map((item) => {
           const coinBalance = Number(item.coinBalance);
           const coinPrice = Number(item.coinPrice);
@@ -699,6 +704,36 @@ export default function DemoCoinTable({
     );
 
     return cryptoType || 'Unknown Crypto';
+  };
+
+  const handleSellPlan = (group) => {
+    console.log("group", group)
+    const totalValue = calculateTotal(group.rows);
+    console.log("totalValue", totalValue)
+    if (totalValue.totalAmount < 500) {
+      setDemoPopup({
+        open: true,
+        text: 'You need at least $500.00 in Estimated Balance to sell your plan.',
+        plan: group.category
+      });
+      return;
+    }
+    setSellConfirmationPopup(true);
+  };
+
+  const handleSwitchPlan = (group) => {
+    console.log("group", group)
+    const totalValue = calculateTotal(group.rows);
+    console.log("totalValue", totalValue)
+    if (totalValue.totalAmount < 500) {
+      setDemoPopup({
+        open: true,
+        text: 'You need at least $500.00 in Estimated Balance to switch your plan.',
+        plan: group.category
+      });
+      return;
+    }
+    setupdatePlanMode(true);
   };
 
   const getPlanImage = (planName) => {
@@ -1248,9 +1283,7 @@ export default function DemoCoinTable({
                                       background: 'none',
                                     },
                                   }}
-                                  onClick={() => {
-                                    setupdatePlanMode(true);
-                                  }}
+                                  onClick={() => handleSwitchPlan(group)}
                                 >
                                   Switch Plan
                                 </Button>
@@ -1273,9 +1306,7 @@ export default function DemoCoinTable({
                                       background: 'none',
                                     },
                                   }}
-                                  onClick={() => {
-                                    setSellConfirmationPopup(true);
-                                  }}
+                                  onClick={() => handleSellPlan(group)}
                                 >
                                   Sell Plan
                                 </Button>
@@ -1352,20 +1383,14 @@ export default function DemoCoinTable({
           }}
         />
       )}
-      {/* {
+
+      {demoPopup.open && (
         <DemoPopup
-          onClose={() => {}}
-          text={'You need to invest in a real plan before you can sell it.'}
+          onClose={() => setDemoPopup({ open: false, text: '', plan: '' })}
+          text={demoPopup.text}
+          plan={demoPopup.plan}
         />
-      } */}
-      {/* {
-        <DemoPopup
-          onClose={() => {}}
-          text={
-            'You need to invest in a real plan before you can switch to another plan.'
-          }
-        />
-      } */}
+      )}
 
       {CongratulationsPopup && (
         <SellCongratulations

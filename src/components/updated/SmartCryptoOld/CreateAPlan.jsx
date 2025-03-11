@@ -669,6 +669,7 @@ const CreateAPlanPopup = ({ onClose, category, allocationData }) => {
               className={classes.greyButton}
               text="Cancel"
               onClick={onClose}
+              disabled={loadings}
             />
 
             <GenericButton

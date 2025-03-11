@@ -215,15 +215,6 @@ const CongratulationsPopup = ({
     if (planName.includes('Rush')) return rushIcon;
   };
 
-  const getFormatedPlanName = (planName) => {
-    if (planName.includes('Surge')) return 'x-Blue Surge(Issa)';
-    if (planName.includes('Wave')) return 'x-Blue Wave(Issa)';
-    if (planName.includes('Ripple')) return 'x-Blue Rippe(Issa)';
-    if (planName.includes('Blooming')) return 'x-Bitcoin Blooming(Omkar)';
-    if (planName.includes('Bull-Run')) return 'x-Bitcoin Bull-Run(Omkar)';
-    if (planName.includes('Rush')) return 'x-Bitcoin Rush(Omkar)';
-  };
-
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}

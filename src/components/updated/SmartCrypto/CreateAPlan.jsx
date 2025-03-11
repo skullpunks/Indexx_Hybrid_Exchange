@@ -12,11 +12,16 @@ import {
   getUserWallets,
   switchPlanSmartCryptoPlan,
   validateUserEmail,
+  createFreeTrailOrder,
+  createOrderForSmartCryptoFreeTrailUpdation,
 } from '../../../services/api';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import GeneralPopup from '../BuySell/Popup';
 import PaymentMethodSelection from './SelectPaymentMethod';
 import Popup from './PaymentPopup';
+import DemoInvestmentPopup3 from './DemoInvestmentPopup3';
+import RealInvestmentPopup from './RealInvestmentPopup';
+import CongratulationsPopup from './Congratulations';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -237,11 +242,13 @@ const CreateAPlanPopup = ({
   currentPlanName,
   buttonTextName = 'Start Plan',
   confirmSwitch,
+  isWebinarUser = false,
+  isFreeTrialUpgrade = false,
 }) => {
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [email, setEmail] = useState('');
-  const [usdAmount, setUsdAmount] = useState();
+  const [usdAmount, setUsdAmount] = useState(isWebinarUser ? '100' : '');
   const [planName, setPlanName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -264,8 +271,12 @@ const CreateAPlanPopup = ({
   const [currentPlanWithManagedBy, setCurrentPlanWithManagedBy] = useState('');
   const [currentNewPlanName, setCurrentNewPlanName] = useState('');
   const [popupOpen, setPopupOpen] = useState(false);
+  const [demoPopupOpen3, setDemoPopupOpen3] = useState(false);
+  const [demoPopupOpen, setDemoPopupOpen] = useState(false);
+  const [orderData, setOrderData] = useState('');
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState('Credit Card');
+  const [congratulationsPopup, setCongratulationsPopup] = useState(false);
 
   const handleCheckboxChange = (e) => {
     setIsFeeAcknowledged(e.target.checked);
@@ -289,11 +300,16 @@ const CreateAPlanPopup = ({
   const handleAmountChange = (e) => {
     const value = e.target.value;
 
-    // Reset and validate amount dynamically
-    if (isNaN(value) || value < 500) {
-      setUsdAmountError(true); // Set error for invalid or less than $500
+    // If webinar user, enforce $100
+    if (isWebinarUser) {
+      value = 100; // Force amount to be exactly 100 USD
     } else {
-      setUsdAmountError(false); // Clear error if valid
+      // Reset and validate amount dynamically
+      if (isNaN(value) || value < 500) {
+        setUsdAmountError(true); // Set error for invalid or less than $500
+      } else {
+        setUsdAmountError(false); // Clear error if valid
+      }
     }
 
     setUsdAmount(value); // Update state regardless
@@ -445,10 +461,15 @@ const CreateAPlanPopup = ({
 
     let hasError = false;
 
-    // Validate amount (minimum is 500 USD)
-    if (!usdAmount || isNaN(usdAmount) || usdAmount < 500) {
-      setUsdAmountError(true);
-      hasError = true;
+    // If webinar user, enforce $100
+    if (isWebinarUser) {
+      //
+    } else {
+      // Validate amount (minimum is 500 USD)
+      if (!usdAmount || isNaN(usdAmount) || usdAmount < 500) {
+        setUsdAmountError(true);
+        hasError = true;
+      }
     }
 
     // Validate payment method
@@ -551,9 +572,16 @@ const CreateAPlanPopup = ({
   const createNewBuyOrder = async (paymentMethod) => {
     setLoadings(true);
     let res;
+
+    // Determine which API to call
+    const orderFunction = isFreeTrialUpgrade
+      ? createOrderForSmartCryptoFreeTrailUpdation
+      : isWebinarUser
+      ? createFreeTrailOrder
+      : createBuyOrderForSmartCrypto;
+
     if (id) {
       if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
         setGeneralMessage(
           'As Hive Captain, Please apply for buy approval from Hive Member'
         );
@@ -561,7 +589,8 @@ const CreateAPlanPopup = ({
         setLoadings(false);
         return;
       }
-      res = await createBuyOrderForSmartCrypto(
+
+      res = await orderFunction(
         planName,
         planManagedBy,
         usdAmount,
@@ -571,7 +600,7 @@ const CreateAPlanPopup = ({
         paymentMethod
       );
     } else {
-      res = await createBuyOrderForSmartCrypto(
+      res = await orderFunction(
         planName,
         planManagedBy,
         usdAmount,
@@ -581,14 +610,15 @@ const CreateAPlanPopup = ({
         paymentMethod
       );
     }
+
+    console.log('Res', res);
     if (res.status === 200) {
+      setOrderData(res.data);
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
         setLoadings(false);
-        //--Below code is to enable paypal Order---
         let payPalPaymentLink = '';
         for (let i = 0; i < res.data.links.length; i++) {
           if (res.data.links[i].rel.includes('approve')) {
-            //window.location.href = res.data.links[i].href;
             payPalPaymentLink = res.data.links[i].href;
             break;
           }
@@ -596,13 +626,33 @@ const CreateAPlanPopup = ({
         navigate('/paypal-partnership-with-indexx', {
           state: { payPalPaymentLink },
         });
-      } else {
+      } else if (
+        paymentMethod === 'USD' &&
+        res.data.orderType === 'FreeTrailOrder'
+      ) {
+        setPopupOpen(false);
+        setDemoPopupOpen3(true);
         setLoadings(false);
+      } else if (
+        paymentMethod === 'USD' &&
+        res.data.orderType === 'SmartCryptoFreeTrialConvert'
+      ) {
+        setPopupOpen(false);
+        setDemoPopupOpen(true);
+        setLoadings(false);
+      } else if (
+        paymentMethod === 'USD' &&
+        res.data.orderType === 'SmartCryptoBuy'
+      ) {
+        setPopupOpen(false);
+        setCongratulationsPopup(true);
+        setLoadings(false);
+      } else {
         console.log('res.data', res.data);
+        setLoadings(false);
         setIsModalOpen(true);
         setGeneralMessage('Order Completed');
       }
-      //getStripePaymentIntent(res.data.orderId, res.data.user.email);
     } else {
       setLoadings(false);
       setIsModalOpen(true);
@@ -729,12 +779,23 @@ const CreateAPlanPopup = ({
             <div style={{ fontSize: '20px', fontWeight: '600' }}>
               Plan Details
             </div>
-            <div onClick={onClose} style={{ cursor: 'pointer' }}>
+            <div
+              onClick={() => {
+                if (!loadings) onClose(); // Prevent function execution
+              }}
+              style={{
+                cursor: loadings ? 'not-allowed' : 'pointer',
+                pointerEvents: loadings ? 'none' : 'auto', // Disable click events
+                opacity: loadings ? 0.5 : 1, // Reduce opacity for visual indication
+              }}
+            >
               <CloseIcon
                 color={theme.palette.text.secondary}
                 sx={{
                   '&:hover': {
-                    color: theme.palette.text.primary,
+                    color: loadings
+                      ? theme.palette.text.secondary
+                      : theme.palette.text.primary, // Prevent hover color change
                   },
                 }}
               />
@@ -773,15 +834,20 @@ const CreateAPlanPopup = ({
                 <div className={classes.enterAmountContainer}>
                   <label>Amount Per Period</label>
                   <InputField
-                    placeholder="The minimum amount is 500 USD"
+                    placeholder={`The minimum amount is  ${
+                      isFreeTrialUpgrade ? '2500' : '500'
+                    } USD`}
                     type="text"
                     style={{ marginTop: '0px', marginBottom: '10px' }}
                     value={usdAmount}
                     onChange={handleAmountChange}
+                    disabled={isWebinarUser} // Disable for webinar users
                     error={usdAmountError} // Highlight error
                     helperText={
                       usdAmountError &&
-                      'Please enter a valid amount of at least 500 USD'
+                      `Please enter a valid amount of at least ${
+                        isFreeTrialUpgrade ? '2500' : '500'
+                      } USD`
                     }
                     yellowBorders={category !== 'x-Blue'}
                     blueBorders={category === 'x-Blue'}
@@ -892,6 +958,7 @@ const CreateAPlanPopup = ({
               className={classes.greyButton}
               text="Cancel"
               onClick={onClose}
+              disabled={loadings}
             />
 
             <GenericButton
@@ -910,7 +977,8 @@ const CreateAPlanPopup = ({
                 buttonTextName === 'Switch Plan'
                   ? !isFeeAcknowledged
                   : !usdAmount ||
-                    usdAmount < 500 ||
+                    usdAmount <
+                      (isWebinarUser ? 100 : isFreeTrialUpgrade ? 2500 : 500) ||
                     !paymentMethod ||
                     !selectedPaymentMethod
               } // Disable if invalid
@@ -937,6 +1005,33 @@ const CreateAPlanPopup = ({
           spendToken={'wibs'}
           category={category}
         />
+      </div>
+
+      <div>
+        {demoPopupOpen3 && (
+          <DemoInvestmentPopup3
+            isWebinarUser={isWebinarUser}
+            onClose={() => setDemoPopupOpen3(false)}
+          />
+        )}
+      </div>
+      <div>
+        {demoPopupOpen && (
+          <RealInvestmentPopup
+            isWebinarUser={isWebinarUser}
+            onClose={() => setDemoPopupOpen(false)}
+          />
+        )}
+      </div>
+
+      <div>
+        {congratulationsPopup && (
+          <CongratulationsPopup
+            onClose={() => setCongratulationsPopup(false)}
+            category={'x-Blue'}
+            orderData={orderData}
+          />
+        )}
       </div>
     </div>
   );

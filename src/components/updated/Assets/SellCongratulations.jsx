@@ -252,7 +252,12 @@ const SellCongratulations = ({
                   : classes.blueButton
               }
               onClick={() => {
-                navigate('/wallet/overview');
+                onClose();
+                if (window.location.pathname === '/wallet/overview') {
+                  window.location.reload(); // Force reload if already on the same page
+                } else {
+                  navigate('/wallet/overview');
+                }
               }}
             />
           </div>

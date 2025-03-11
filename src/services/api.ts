@@ -751,6 +751,18 @@ export const getUserWallets = async (email: string) => {
   }
 };
 
+export const getUserDemoWallets = async (email: string) => {
+  try {
+    const result = await API.post(`/api/v1/inex/user/getUserDemoWallets/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (getUserDemoWallets)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
 export const getSmartCryptoPackages = async () => {
   try {
     const result = await API.get(`/api/v1/inex/basic/getsmartpackages`);
@@ -767,6 +779,18 @@ export const getUserInvestments = async (email: string) => {
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (totalInvestment)');
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const getDemoUserInvestments = async (email: string) => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/totalDemoInvestment/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (totalDemoInvestment)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
@@ -1428,6 +1452,74 @@ export const createBuyOrderForSmartCrypto = async (
   } catch (e: any) {
     console.log(
       'FAILED: unable to perform API request (createOrderForSmartCrypto)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createFreeTrailOrder = async (
+  planName: string,
+  planManagedBy: string,
+  amount: number,
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false,
+  paymentType: string = 'paypal'
+) => {
+  try {
+    const result = await API.post(
+      '/api/v1/inex/order/createFreeTrailOrder',
+      {
+        planName: planName,
+        planManagedBy: planManagedBy,
+        amount: amount,
+        price: price,
+        orderType: 'SmartCryptoBuy',
+        email: email ? email : localStorage.getItem('user'),
+        isHoneyBeeOrder: isHoneyBeeOrder,
+        paymentType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (createFreeTrailOrder)'
+    );
+    console.log(e);
+    console.log(e.response.data);
+    return e.response.data;
+  }
+};
+
+export const createOrderForSmartCryptoFreeTrailUpdation = async (
+  planName: string,
+  planManagedBy: string,
+  amount: number,
+  price?: number,
+  email?: string,
+  isHoneyBeeOrder: boolean = false,
+  paymentType: string = 'paypal'
+) => {
+  try {
+    const result = await API.post(
+      '/api/v1/inex/order/createOrderForSmartCryptoFreeTrailUpdation',
+      {
+        planName: planName,
+        planManagedBy: planManagedBy,
+        amount: amount,
+        price: price,
+        orderType: 'SmartCryptoFreeTrialConvert',
+        email: email ? email : localStorage.getItem('user'),
+        isHoneyBeeOrder: isHoneyBeeOrder,
+        paymentType,
+      }
+    );
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (createOrderForSmartCryptoFreeTrailUpdation)'
     );
     console.log(e);
     console.log(e.response.data);
