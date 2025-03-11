@@ -98,7 +98,7 @@ const HeaderTest = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [staticsData, setStaticsData] = useState();
-  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState<Record<string, any>>();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -935,9 +935,9 @@ const HeaderTest = () => {
                           <div
                             style={{
                               display: 'flex',
-                              justifyContent: 'center',
-                              flexDirection: 'column',
-                              alignItems: 'left',
+                                justifyContent: 'center',
+                                flexDirection: 'column',
+                                alignItems: 'left',
                             }}
                           >
                             <div
@@ -971,11 +971,11 @@ const HeaderTest = () => {
                                   : element.mainTextDesktop}
                               </label>
                               {honeyBeeData &&
-                                (honeyBeeData?.isKYCPass ? (
+                                (honeyBeeData as any).isKYCPass ? (
                                   <>
                                     <p
-                                      className="desktop-item"
-                                      style={{
+                              className="desktop-item"
+                              style={{
                                         fontSize: '12px',
                                         marginTop: '4px',
                                         background: 'rgb(17, 190, 106)',
@@ -1019,7 +1019,7 @@ const HeaderTest = () => {
                                         background: 'rgb(236, 44, 22)',
                                         padding: '3px',
                                         borderRadius: '5px',
-                                        width: '50%',
+                              width: '50%',
                                         textAlign: 'center',
                                         cursor: 'pointer',
                                       }}
@@ -1037,18 +1037,18 @@ const HeaderTest = () => {
                                         marginLeft: '20px',
                                         marginTop: '4px',
                                         background: 'rgb(236, 44, 22)',
-                                        padding: '3px',
-                                        borderRadius: '5px',
+                              padding: '3px',
+                              borderRadius: '5px',
                                         width: '30%',
-                                        textAlign: 'center',
-                                        textDecoration: 'none',
+                              textAlign: 'center',
+                              textDecoration: 'none',
                                         cursor: 'pointer',
                                       }}
                                     >
                                       Unverified
                                     </p>
                                   </>
-                                ))}
+                                )}
                             </div>
                           </div>
 

@@ -284,7 +284,6 @@ function App() {
               element={<HowItWorksSmartAPY />}
             />
             <Route element={<PrivateRoutes />}>
-              <Route path="/performance" element={<PerformancePage />} />
               <Route path="/wallet/overview" element={<AssetsPage />} />
               <Route path="/wallet/crypto" element={<AssetsPage />} />
               <Route path="/wallet/fiat" element={<AssetsPage />} />
@@ -623,6 +622,11 @@ function App() {
               path="/indexx-exchange/buy-sell/deposit-fiat/*"
               element={<BSDepositFiatLayout />}
             />
+            <Route
+              path="//indexx-exchange/buy-sell/performance-history"
+              element={<PerformancePage />}
+            />
+
             <Route
               path="/indexx-exchange/buy-sell/transaction-history/*"
               element={<BSTransactionHistoryLayout />}
