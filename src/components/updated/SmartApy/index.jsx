@@ -194,6 +194,49 @@ const useStyles = makeStyles((theme) => ({
       fontStyle: 'italic',
     },
   },
+  disclaimerContainer: {
+    maxWidth: '1500px',
+    margin: 'auto',
+    padding: '20px',
+    marginTop: '100px',
+  },
+  heading: {
+    fontSize: '12px',
+    marginBottom: '10px',
+    maxWidth: '1200px',
+    color: theme.palette.text.secondary,
+  },
+  subheading: {
+    fontSize: '11px',
+    marginBottom: '12px',
+    maxWidth: '1200px',
+    color: theme.palette.text.secondary,
+  },
+  text: {
+    fontSize: '10px',
+    lineHeight: '1.5',
+    marginBottom: '16px',
+    maxWidth: '1200px',
+    color: theme.palette.text.secondary,
+  },
+  list: {
+    paddingLeft: '20px',
+    marginBottom: '10px',
+    maxWidth: '1200px',
+    color: theme.palette.text.secondary,
+  },
+  listItem: {
+    fontSize: '10px',
+    lineHeight: '1.5',
+    marginBottom: '6px',
+    maxWidth: '1200px',
+    color: theme.palette.text.secondary,
+  },
+
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const SmartAPY = () => {
@@ -417,7 +460,7 @@ const SmartAPY = () => {
         >
           <img src={disclaimerImage} alt="" />
         </div>
-        <p>
+        {/* <p>
           Disclaimer
           <br />
           <br />
@@ -457,7 +500,112 @@ const SmartAPY = () => {
             <li>Withdrawals before 6 months: 10% penalty.</li>
             <li>Withdrawals before 12 months: 5% penalty.</li>
           </ul>
-        </p>
+        </p> */}
+
+        <div className={classes.disclaimerContainer}>
+          <h1 className={classes.heading}>DISCLAIMER</h1>
+          <p className={classes.text}>
+            Smart APY is a financial product offered by Indexx.ai, designed to
+            provide high-yield returns on your investment through the staking of
+            IUSD+, a stablecoin pegged to the US Dollar. While the yields
+            offered are fixed and guaranteed for the duration of the lock-in
+            period, all participants must understand the following:
+          </p>
+
+          <h2 className={classes.subheading}>
+            No Guarantee of Fiat Value Stability
+          </h2>
+
+          <p className={classes.text}>
+            While IUSD+ is a stablecoin designed to maintain a 1:1 value with
+            the US Dollar, market conditions and external factors could affect
+            its value.
+          </p>
+
+          <h3 className={classes.subheading}>Regulatory Risk:</h3>
+          <p className={classes.text}>
+            Cryptocurrency and digital assets are subject to evolving regulatory
+            environments, which may impact the availability, security, or
+            performance of Smart APY. Platform Risk: Indexx.ai ensures best
+            practices in security and management; however, technical issues,
+            maintenance, and external attacks may temporarily impact access to
+            funds.
+          </p>
+
+          <h3 className={classes.subheading}>Non-Reversible Transactions</h3>
+          <p className={classes.text}>
+            Once funds are converted to IUSD+ and staked through Smart APY, they
+            are locked for the chosen period (6, 12, or 18 months) and cannot be
+            withdrawn early.
+          </p>
+
+          <h3 className={classes.subheading}>Yield Payment:</h3>
+          <p className={classes.text}>
+            Yield is paid in IUSD+ and credited to your Indexx.ai wallet. At the
+            end of the lock-in period, users may choose to convert their IUSD+
+            back to USD or use it for further investments.
+          </p>
+
+          <h2 className={classes.subheading}>Terms & Conditions:</h2>
+          <p>
+            By participating in the Smart APY program, you agree to the
+            following:
+          </p>
+          <h3 className={classes.subheading}>Eligibility</h3>
+          <p className={classes.text}>
+            Participants must be 18 years or older and comply with their local
+            laws regarding digital asset investments.
+          </p>
+          <h3 className={classes.subheading}>Account Verification:</h3>
+          <p className={classes.text}>
+            Users must complete necessary KYC (Know Your Customer) and AML
+            (Anti-Money Laundering) processes before participating.
+          </p>
+          <h3 className={classes.subheading}>Investment and Lock-in Period:</h3>
+
+          <p className={classes.text}>
+            By choosing a lock-in period of 6, 12, or 18 months, you agree to
+            keep your funds staked for the duration without early withdrawal.
+          </p>
+
+          <h3 className={classes.subheading}>Yield Rates:</h3>
+
+          <p className={classes.text}>
+            Yield rates are fixed at: <br />
+            6 months: 20% APY <br />
+            12 months: 30% APY <br />
+            18 months: 40% APY <br />
+            <br />{' '}
+          </p>
+          <h3 className={classes.subheading}>Yield Distribution:</h3>
+          <p className={classes.text}>
+            Yields are calculated on the staked amount and paid in IUSD+ at the
+            end of the lock-in period.
+          </p>
+
+          <h3 className={classes.subheading}>No Financial Advice</h3>
+          <p className={classes.text}>
+            Smart APY is not financial or investment advice. Please consult a
+            financial advisor before investing.
+          </p>
+
+          <h3 className={classes.subheading}>Tax Responsibility:</h3>
+          <p className={classes.text}>
+            Users are responsible for reporting and paying any taxes associated
+            with their earnings from Smart APY.
+          </p>
+
+          <h3 className={classes.subheading}>Termination or Modification:</h3>
+          <p className={classes.text}>
+            Indexx.ai reserves the right to modify or terminate the Smart APY
+            program with prior notice.
+          </p>
+
+          <p className={classes.text}>
+            By proceeding with Smart APY, you acknowledge and agree to these
+            terms and conditions.
+          </p>
+        </div>
       </div>
       {/* <SmartApyWithdrawPopup /> */}
       {/* <SuccessfullWithdrawPopup /> */}
