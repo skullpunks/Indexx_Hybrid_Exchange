@@ -38,6 +38,7 @@ import SellCongratulations from './SellCongratulations';
 import smartCryptoIcon from '../../../assets/updated/asset_wallet/smartCryptoAssetWallet.svg';
 import xBlueIcon from '../../../assets/updated/asset_wallet/x-blueAssetWallet.svg';
 import xBitcoinIcon from '../../../assets/updated/asset_wallet/x-bitcoinAssetWallet.svg';
+import ContactAccountManagerPopup from './ContactPopup';
 // Define the makeStyles hook
 const useStyles = makeStyles((theme) => ({
   greenText: {
@@ -187,6 +188,8 @@ export default function EnhancedTable({
   const [error, setError] = useState(null);
   const [dense, setDense] = useState(false);
   const [sellConfirmationPopup, setSellConfirmationPopup] = useState(false);
+  const [contactPopup, setContactPopup] = useState(false);
+  const [type, setType] = useState('');
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [userType, setUserType] = useState('Indexx Exchange');
   const [userSellPlanReformed, setUserPlanNameReformed] = useState('');
@@ -421,8 +424,9 @@ export default function EnhancedTable({
         row.id.toLowerCase().includes(searchQuery.toLowerCase());
       console.log('matchesSearchQuery', row);
       if (!hideAssets && row.amount > 0) return matchesSearchQuery;
-      
-      const passesHideAssets = row.amount * row.coin_price >= 1 || row.staking_balance > 0;
+
+      const passesHideAssets =
+        row.amount * row.coin_price >= 1 || row.staking_balance > 0;
       return matchesSearchQuery && passesHideAssets;
     });
 
@@ -1266,13 +1270,15 @@ export default function EnhancedTable({
                                     },
                                   }}
                                   onClick={() => {
-                                    setupdatePlanMode(true);
+                                    //setupdatePlanMode(true);
+                                    setContactPopup(true);
+                                    setType('Switch');
                                     console.log(
                                       'group.categorygroup.category',
                                       group.category,
                                       group.rows[0].notes
                                     );
-                                    onPlanChange(group.rows[0].notes, group);
+                                    //onPlanChange(group.rows[0].notes, group);
                                   }}
                                 >
                                   Switch Plan
@@ -1297,7 +1303,9 @@ export default function EnhancedTable({
                                     },
                                   }}
                                   onClick={() => {
-                                    setSellConfirmationPopup(true);
+                                    //setSellConfirmationPopup(true);
+                                    setContactPopup(true);
+                                    setType('Sell');
                                     setPlanName(group.rows[0].notes);
                                     localStorage.setItem(
                                       'SellPlanCurrencies',
@@ -1420,6 +1428,13 @@ export default function EnhancedTable({
           category={'x-Blue'}
           userSellPlanReformed={userSellPlanReformed}
           userSellPlan={userSellPlan}
+        />
+      )}
+
+      {contactPopup && (
+        <ContactAccountManagerPopup
+          onClose={() => setContactPopup(false)}
+          type={type}
         />
       )}
     </Box>
