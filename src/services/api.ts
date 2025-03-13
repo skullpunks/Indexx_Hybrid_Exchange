@@ -2613,53 +2613,9 @@ export interface PerformanceData {
 // Add with other API endpoints
 export const getPerformanceData = async (email: string): Promise<PerformanceData> => {
   try {
-    const result = await API.get(`/api/v1/inex/user/performance/${email}`);
+    const result = await API.get(`/api/v1/wallet/getUserPerformance/${email}`);
     return result.data;
   } catch (e: any) {
-    console.log('FAILED: unable to fetch performance data');
-    console.log(e);
-    console.log(e.response?.data);
-    
-    // Return default values if API fails
-    return {
-      balances: {
-        estimatedBalance: 0,
-        stakedBalance: 0,
-        totalBalance: 0,
-        investmentAmount: 0
-      },
-      pnl: {
-        today: {
-          value: 0,
-          percentage: 0
-        },
-        portfolio: {
-          value: 0,
-          percentage: 0
-        }
-      },
-      chartData: {
-        '1D': {
-          labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
-          data: Array.from({ length: 24 }, () => 0)
-        },
-        '1W': {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          data: Array.from({ length: 7 }, () => 0)
-        },
-        '1M': {
-          labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
-          data: Array.from({ length: 30 }, () => 0)
-        },
-        '3M': {
-          labels: Array.from({ length: 12 }, (_, i) => `Week ${i + 1}`),
-          data: Array.from({ length: 12 }, () => 0)
-        },
-        '6M': {
-          labels: Array.from({ length: 24 }, (_, i) => `Week ${i + 1}`),
-          data: Array.from({ length: 24 }, () => 0)
-        }
-      }
-    };
+    throw new Error('Failed to fetch performance data');
   }
 };

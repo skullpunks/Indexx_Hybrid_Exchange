@@ -116,7 +116,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
       return (
         <div className="col-lg-5 advanced_verification bs_main">
           <h1
-            className="font_18x margin-b-3x d-block font_weight_800 padding-l-24px"
+            className="font_18x margin-b-3x d-block font_weight_800"
             style={{ color: theme.palette.text.primary }}
           >
             Advanced Functions
@@ -348,7 +348,7 @@ const BasicInfo = ({ theme }: { theme: any }) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-2"></div>
+            <div className="col-lg-2 mt-4"></div>
             {renderVerificationStep()}
           </div>
         </div>

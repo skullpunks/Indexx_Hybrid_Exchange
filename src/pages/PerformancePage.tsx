@@ -18,6 +18,7 @@ import {
 } from 'chart.js';
 import { Theme } from '@mui/material/styles';
 import { getPerformanceData, type PerformanceData } from '../services/api';
+import OpenNotification from '../components/OpenNotification/OpenNotification';
 
 ChartJS.register(
   CategoryScale,
@@ -343,6 +344,7 @@ const PerformancePage = () => {
         setPerformanceData(data);
       } catch (error) {
         console.error('Failed to fetch performance data:', error);
+        OpenNotification('error', 'Failed to fetch performance data');
         // Set default values on error
         setPerformanceData({
           balances: {
