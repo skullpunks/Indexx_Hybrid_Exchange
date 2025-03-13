@@ -2582,3 +2582,84 @@ export function encrypt(text: string) {
 //   decrypted += decipher.final('utf8');
 //   return decrypted;
 // }
+
+// Add near other interfaces
+export interface PerformanceData {
+  balances: {
+    estimatedBalance: number;
+    stakedBalance: number;
+    totalBalance: number;
+    investmentAmount: number;
+  };
+  pnl: {
+    today: {
+      value: number;
+      percentage: number;
+    };
+    portfolio: {
+      value: number;
+      percentage: number;
+    };
+  };
+  chartData: {
+    '1D': { labels: string[]; data: number[] };
+    '1W': { labels: string[]; data: number[] };
+    '1M': { labels: string[]; data: number[] };
+    '3M': { labels: string[]; data: number[] };
+    '6M': { labels: string[]; data: number[] };
+  };
+}
+
+// Add with other API endpoints
+export const getPerformanceData = async (email: string): Promise<PerformanceData> => {
+  try {
+    const result = await API.get(`/api/v1/inex/user/performance/${email}`);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to fetch performance data');
+    console.log(e);
+    console.log(e.response?.data);
+    
+    // Return default values if API fails
+    return {
+      balances: {
+        estimatedBalance: 0,
+        stakedBalance: 0,
+        totalBalance: 0,
+        investmentAmount: 0
+      },
+      pnl: {
+        today: {
+          value: 0,
+          percentage: 0
+        },
+        portfolio: {
+          value: 0,
+          percentage: 0
+        }
+      },
+      chartData: {
+        '1D': {
+          labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+          data: Array.from({ length: 24 }, () => 0)
+        },
+        '1W': {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: Array.from({ length: 7 }, () => 0)
+        },
+        '1M': {
+          labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+          data: Array.from({ length: 30 }, () => 0)
+        },
+        '3M': {
+          labels: Array.from({ length: 12 }, (_, i) => `Week ${i + 1}`),
+          data: Array.from({ length: 12 }, () => 0)
+        },
+        '6M': {
+          labels: Array.from({ length: 24 }, (_, i) => `Week ${i + 1}`),
+          data: Array.from({ length: 24 }, () => 0)
+        }
+      }
+    };
+  }
+};

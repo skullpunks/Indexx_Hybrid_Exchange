@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Typography, IconButton } from '@mui/material';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
 import { makeStyles, useTheme } from '@mui/styles';
 import { Line } from 'react-chartjs-2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -15,6 +16,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { Theme } from '@mui/material/styles';
+import { getPerformanceData, type PerformanceData } from '../services/api';
 
 ChartJS.register(
   CategoryScale,
@@ -26,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     padding: '24px 32px',
     background: 'transparent',
@@ -272,36 +275,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const timeframeData = {
-  '1D': {
-    labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
-    data: Array.from({ length: 24 }, () => Math.random() * 1000 + 26000),
+const TIMEFRAMES = ['1D', '1W', '1M', '3M', '6M'] as const;
+type TimeframeKey = (typeof TIMEFRAMES)[number];
+
+const HIDDEN_BALANCE = '***********';
+
+const createChartOptions = (theme: Theme) => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: theme.palette.background.paper,
+      titleColor: theme.palette.text.primary,
+      bodyColor: theme.palette.text.primary,
+      padding: 12,
+      displayColors: false,
+      borderColor: theme.palette.divider,
+      borderWidth: 1,
+    },
   },
-  '1W': {
-    labels: Array.from(
-      { length: 7 },
-      (_, i) => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i]
-    ),
-    data: Array.from({ length: 7 }, () => Math.random() * 2000 + 25500),
+  scales: {
+    x: {
+      grid: { display: false },
+      ticks: { color: theme.palette.text.secondary },
+    },
+    y: {
+      grid: {
+        color: theme.palette.divider,
+        drawBorder: false,
+      },
+      ticks: {
+        color: theme.palette.text.secondary,
+        callback: (value: number) => `$${value.toLocaleString()}`,
+      },
+    },
   },
-  '1M': {
-    labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
-    data: Array.from({ length: 30 }, () => Math.random() * 3000 + 25000),
+  interaction: {
+    intersect: false,
+    mode: 'index',
   },
-  '3M': {
-    labels: Array.from({ length: 12 }, (_, i) => `Week ${i + 1}`),
-    data: Array.from({ length: 12 }, () => Math.random() * 4000 + 24500),
-  },
-  '6M': {
-    labels: Array.from({ length: 24 }, (_, i) => `Week ${i + 1}`),
-    data: Array.from({ length: 24 }, () => Math.random() * 5000 + 24000),
-  },
-};
+});
 
 const PerformancePage = () => {
-  const theme = useTheme();
+  const navigate = useNavigate();
+  const theme = useTheme() as Theme;
   const classes = useStyles();
-  const [timeframe, setTimeframe] = useState('1D');
+
+  const [performanceData, setPerformanceData] =
+    useState<PerformanceData | null>(null);
+  const [timeframe, setTimeframe] = useState<TimeframeKey>('1D');
   const [visibleStats, setVisibleStats] = useState({
     estimatedBalance: true,
     stakedBalance: true,
@@ -309,80 +332,119 @@ const PerformancePage = () => {
     investmentAmount: true,
   });
 
-  const toggleVisibility = (stat: keyof typeof visibleStats) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = localStorage.getItem('email');
+        if (!email) {
+          throw new Error('No email found');
+        }
+        const data = await getPerformanceData(email);
+        setPerformanceData(data);
+      } catch (error) {
+        console.error('Failed to fetch performance data:', error);
+        // Set default values on error
+        setPerformanceData({
+          balances: {
+            estimatedBalance: 0,
+            stakedBalance: 0,
+            totalBalance: 0,
+            investmentAmount: 0,
+          },
+          pnl: {
+            today: { value: 0, percentage: 0 },
+            portfolio: { value: 0, percentage: 0 },
+          },
+          chartData: {
+            '1D': {
+              labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+              data: Array.from({ length: 24 }, () => 0),
+            },
+            '1W': {
+              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+              data: Array.from({ length: 7 }, () => 0),
+            },
+            '1M': {
+              labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+              data: Array.from({ length: 30 }, () => 0),
+            },
+            '3M': {
+              labels: Array.from({ length: 12 }, (_, i) => `Week ${i + 1}`),
+              data: Array.from({ length: 12 }, () => 0),
+            },
+            '6M': {
+              labels: Array.from({ length: 24 }, (_, i) => `Week ${i + 1}`),
+              data: Array.from({ length: 24 }, () => 0),
+            },
+          },
+        });
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const chartOptions = useMemo(() => createChartOptions(theme), [theme]);
+
+  const chartData = useMemo(
+    () =>
+      performanceData
+        ? {
+            labels: performanceData.chartData[timeframe].labels,
+            datasets: [
+              {
+                data: performanceData.chartData[timeframe].data,
+                borderColor: '#FFB300',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: {
+                  target: 'origin',
+                  above: 'rgba(255, 179, 0, 0.1)',
+                },
+                pointRadius: 0,
+                pointHoverRadius: 6,
+              },
+            ],
+          }
+        : null,
+    [timeframe, performanceData]
+  );
+
+  const handleTimeframeChange = useCallback((tf: TimeframeKey) => {
+    setTimeframe(tf);
+  }, []);
+
+  const handleGoBack = useCallback(() => {
+    window.history.back();
+  }, []);
+
+  const toggleVisibility = useCallback((stat: keyof typeof visibleStats) => {
     setVisibleStats((prev) => ({
       ...prev,
       [stat]: !prev[stat],
     }));
-  };
+  }, []);
 
-  const formatValue = (value: keyof typeof visibleStats) => {
-    return visibleStats[value] ? '$26,368,964.19' : '***********';
-  };
-
-  const getChartData = (period: string) => ({
-    labels: timeframeData[period].labels,
-    datasets: [
-      {
-        data: timeframeData[period].data,
-        borderColor: '#FFB300',
-        borderWidth: 2,
-        tension: 0.4,
-        fill: {
-          target: 'origin',
-          above: 'rgba(255, 179, 0, 0.1)',
-        },
-        pointRadius: 0,
-        pointHoverRadius: 6,
-      },
-    ],
-  });
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: theme.palette.background.paper,
-        titleColor: theme.palette.text.primary,
-        bodyColor: theme.palette.text.primary,
-        padding: 12,
-        displayColors: false,
-        borderColor: theme.palette.divider,
-        borderWidth: 1,
-      },
+  const formatValue = useCallback(
+    (key: keyof typeof visibleStats) => {
+      if (!performanceData) return HIDDEN_BALANCE;
+      return visibleStats[key]
+        ? `$${performanceData.balances[key].toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`
+        : HIDDEN_BALANCE;
     },
-    scales: {
-      x: {
-        grid: { display: false },
-        ticks: { color: theme.palette.text.secondary },
-      },
-      y: {
-        grid: {
-          color: theme.palette.divider,
-          drawBorder: false,
-        },
-        ticks: {
-          color: theme.palette.text.secondary,
-          callback: (value: number) => `$${value.toLocaleString()}`,
-        },
-      },
-    },
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
-  };
+    [visibleStats, performanceData]
+  );
 
-  const getPnLClasses = (value: number) => {
-    return value >= 0 ? 'positive' : 'negative';
-  };
+  const getPnLClasses = (value: number) =>
+    value >= 0 ? 'positive' : 'negative';
 
   return (
     <Box className={classes.container} style={{ marginTop: '80px' }}>
       <Box className={classes.header}>
-        <a className="goBack" onClick={() => window.history.back()}>
+        <a className="goBack" onClick={handleGoBack}>
           <ArrowBackIcon /> Go Back
         </a>
         <h1>Performance History</h1>
@@ -460,47 +522,74 @@ const PerformancePage = () => {
             <Box className={classes.pnlSection}>
               <div className={classes.pnlItem}>
                 <div className="label">Today's PnL:</div>
-                <div className={`value ${getPnLClasses(364920.15)}`}>
+                <div
+                  className={`value ${getPnLClasses(
+                    performanceData?.pnl.today.value ?? 0
+                  )}`}
+                >
                   $
-                  {Math.abs(364920.15).toLocaleString('en-US', {
+                  {Math.abs(
+                    performanceData?.pnl.today.value ?? 0
+                  ).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
                 </div>
-                <div className={`percentage ${getPnLClasses(5.64)}`}>
-                  ({Math.abs(5.64)}%)
+                <div
+                  className={`percentage ${getPnLClasses(
+                    performanceData?.pnl.today.percentage ?? 0
+                  )}`}
+                >
+                  ({Math.abs(performanceData?.pnl.today.percentage ?? 0)}%)
                 </div>
               </div>
+
               <div className={classes.pnlItem}>
                 <div className="label">Portfolio PnL:</div>
-                <div className={`value ${getPnLClasses(-26488904.35)}`}>
+                <div
+                  className={`value ${getPnLClasses(
+                    performanceData?.pnl.portfolio.value ?? 0
+                  )}`}
+                >
                   $
-                  {Math.abs(26488904.35).toLocaleString('en-US', {
+                  {Math.abs(
+                    performanceData?.pnl.portfolio.value ?? 0
+                  ).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
                 </div>
-                <div className={`percentage ${getPnLClasses(-584732.36)}`}>
-                  ({Math.abs(584732.36)}%)
+                <div
+                  className={`percentage ${getPnLClasses(
+                    performanceData?.pnl.portfolio.percentage ?? 0
+                  )}`}
+                >
+                  ({Math.abs(performanceData?.pnl.portfolio.percentage ?? 0)}%)
                 </div>
               </div>
             </Box>
           </Box>
 
           <Box className={classes.actionButtons}>
-            <button>Deposit</button>
-            <button>Withdraw</button>
-            <button>Transfer</button>
+            <button onClick={() => navigate('/deposit-crypto-select-coin')}>
+              Deposit
+            </button>
+            <button onClick={() => navigate('/withdraw-crypto-select-coin')}>
+              Withdraw
+            </button>
+            <button onClick={() => navigate('/indexx-exchange/send')}>
+              Transfer
+            </button>
           </Box>
         </Box>
 
         <Box className={classes.chartSection}>
           <Box className={classes.timeButtons}>
-            {['1D', '1W', '1M', '3M', '6M'].map((tf) => (
+            {TIMEFRAMES.map((tf) => (
               <button
                 key={tf}
                 className={timeframe === tf ? 'active' : ''}
-                onClick={() => setTimeframe(tf)}
+                onClick={() => handleTimeframeChange(tf)}
               >
                 {tf}
               </button>
@@ -508,7 +597,9 @@ const PerformancePage = () => {
           </Box>
 
           <Box height={400}>
-            <Line data={getChartData(timeframe)} options={chartOptions} />
+            {chartData && (
+              <Line data={chartData} options={chartOptions as any} />
+            )}
           </Box>
         </Box>
       </Box>
