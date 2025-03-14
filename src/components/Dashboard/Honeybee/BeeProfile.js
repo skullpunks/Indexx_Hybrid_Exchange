@@ -9,18 +9,10 @@ import {
   getHoneyUserDetails,
   updateHoneyBeeProfile,
 } from '../../../services/api';
-import AWS from 'aws-sdk';
 import { notification } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import OpenNotification from '../../OpenNotification/OpenNotification';
-const S3_BUCKET = 'indexx-exchange';
-const REGION = 'ap-northeast-1';
-AWS.config.update({
-  accessKeyId: process?.env?.REACT_APP_ACCESS_KEY_ID,
-  secretAccessKey: process?.env?.REACT_APP_SECRET_ACCESS_KEY,
-  region: REGION,
-});
-var s3 = new AWS.S3();
+import { uploadToS3 } from '../../../utils/s3';
 
 const BeeProfile = () => {
   const [profilePic, setPhoto] = useState(dummy);
@@ -35,26 +27,16 @@ const BeeProfile = () => {
 
   const handlePhotoChange = (event) => {
     const file = event.target.files[0];
-    uploadToS3(file, 'photoId');
+    uploadToS3Handler(file);
   };
 
-  const uploadToS3 = async (file, fileType) => {
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: file.name,
-      Body: file,
-      ContentType: file.type,
-    };
-
+  const uploadToS3Handler = async (file) => {
     try {
-      await s3.putObject(params).promise();
-      // Construct and set the file URL
-      const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-
+      const url = await uploadToS3(file);
       setPhoto(url);
     } catch (error) {
-      console.log('Error here', error);
-      alert('Error uploading file:', error);
+      console.log('Error uploading file:', error);
+      OpenNotification('error', 'Error uploading file: ' + error.message);
     }
   };
 

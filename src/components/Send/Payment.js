@@ -27,18 +27,10 @@ import {
   decodeJWT,
   getOrderDetails,
 } from '../../services/api';
-import AWS from 'aws-sdk';
 import { useTheme } from '@mui/material';
 import GenericButton from '../updated/shared/Button';
+import { uploadToS3 } from '../../utils/s3';
 
-const S3_BUCKET = 'indexx-exchange';
-const REGION = 'ap-northeast-1';
-AWS.config.update({
-  accessKeyId: process?.env?.REACT_APP_ACCESS_KEY_ID,
-  secretAccessKey: process?.env?.REACT_APP_SECRET_ACCESS_KEY,
-  region: REGION,
-});
-var s3 = new AWS.S3();
 const Final = ({
   orderData,
   fromDetails,
@@ -275,7 +267,6 @@ const FileComponent2 = ({
       // Check file size
       if (file.size > 10 * 1024 * 1024) {
         OpenNotification('error', 'File size should be less than 10MB');
-
         return;
       }
 
@@ -290,28 +281,19 @@ const FileComponent2 = ({
 
       setPhotoIdFile(file);
       setPhotoIdFileerror('');
-      uploadToS3(file, 'Receipt');
+      uploadToS3Handler(file, 'Receipt');
     }
   };
 
-  const uploadToS3 = async (file, fileType) => {
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: file.name,
-      Body: file,
-      ContentType: file.type,
-    };
-
+  const uploadToS3Handler = async (file, fileType) => {
     try {
-      await s3.putObject(params).promise();
-      // Construct and set the file URL
-      const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-
+      const url = await uploadToS3(file);
       console.log('url', url);
       setPhotoIdUrl(url);
       onPhotoIdUrlChange(url);
     } catch (error) {
-      console.log('Error here', error);
+      console.log('Error uploading file:', error);
+      OpenNotification('error', 'Error uploading file: ' + error.message);
     }
   };
 

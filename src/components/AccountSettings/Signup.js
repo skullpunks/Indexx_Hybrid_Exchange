@@ -17,7 +17,6 @@ import loadingGif from '../../assets/beeloade.gif';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import { baseAPIURL, decodeJWT, getAllAffiliateUser } from '../../services/api';
-import AWS from 'aws-sdk';
 import { Country, State } from 'country-state-city';
 import { useTheme } from '@emotion/react';
 
@@ -33,14 +32,7 @@ import OpenNotification from '../OpenNotification/OpenNotification';
 import InputField from '../updated/shared/TextField';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomSelectBox from './CustomSelect';
-const S3_BUCKET = 'indexx-exchange';
-const REGION = 'ap-northeast-1';
-AWS.config.update({
-  accessKeyId: process?.env?.REACT_APP_ACCESS_KEY_ID,
-  secretAccessKey: process?.env?.REACT_APP_SECRET_ACCESS_KEY,
-  region: REGION,
-});
-var s3 = new AWS.S3();
+import { uploadToS3 } from '../../utils/s3';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -165,6 +157,25 @@ const Signup = () => {
     }
   }, [refcode, captainbees]);
 
+  const uploadToS3Handler = async (file, fileType) => {
+    try {
+      // Use the utility function to upload the file and get the URL
+      const url = await uploadToS3(file);
+      
+      // Set the URL based on file type
+      if (fileType === 'front') {
+        setFrontFileurl(url);
+      } else if (fileType === 'back') {
+        setBackFileurl(url);
+      } else {
+        setPhotoIdFileurl(url);
+      }
+    } catch (error) {
+      console.log('Error uploading file:', error);
+      OpenNotification('error', 'Error uploading file: ' + error.message);
+    }
+  };
+
   const handleDropFront = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -172,7 +183,6 @@ const Signup = () => {
       // Check file size
       if (file.size > 10 * 1024 * 1024) {
         OpenNotification('error', 'File size should be less than 10MB');
-
         return;
       }
 
@@ -186,12 +196,8 @@ const Signup = () => {
       }
 
       setFrontFile(file);
-      uploadToS3(file, 'front');
+      uploadToS3Handler(file, 'front');
     }
-  };
-
-  const preventDefault = (e) => {
-    e.preventDefault();
   };
 
   const handleDropBack = (e) => {
@@ -201,7 +207,6 @@ const Signup = () => {
       // Check file size
       if (file.size > 10 * 1024 * 1024) {
         OpenNotification('error', 'File size should be less than 10MB');
-
         return;
       }
 
@@ -215,7 +220,7 @@ const Signup = () => {
       }
 
       setBackFile(file);
-      uploadToS3(file, 'back');
+      uploadToS3Handler(file, 'back');
     }
   };
 
@@ -226,7 +231,6 @@ const Signup = () => {
       // Check file size
       if (file.size > 10 * 1024 * 1024) {
         OpenNotification('error', 'File size should be less than 10MB');
-
         return;
       }
 
@@ -240,7 +244,7 @@ const Signup = () => {
       }
 
       setPhotoIdFile(file);
-      uploadToS3(file, 'photoId');
+      uploadToS3Handler(file, 'photoId');
     }
   };
 
@@ -335,31 +339,6 @@ const Signup = () => {
       setStates(countryStates);
     }
   }, [country, countries]);
-
-  const uploadToS3 = async (file, fileType) => {
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: file.name,
-      Body: file,
-      ContentType: file.type,
-    };
-
-    try {
-      await s3.putObject(params).promise();
-      // Construct and set the file URL
-      const url = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
-      if (fileType === 'front') {
-        setFrontFileurl(url);
-      } else if (fileType === 'back') {
-        setBackFileurl(url);
-      } else {
-        setPhotoIdFileurl(url);
-      }
-    } catch (error) {
-      console.log('Error here', error);
-      alert('Error uploading file:', error);
-    }
-  };
 
   const resetForm = () => {
     setFirstname('');
@@ -750,7 +729,7 @@ const Signup = () => {
               Account Display Name
             </Typography>
             <InputField
-              placeholder="Brian’s HoneyComb"
+              placeholder="Brian's HoneyComb"
               sx={{ mb: 2 }}
               size="small" // Make the input box smaller
               value={accname}
