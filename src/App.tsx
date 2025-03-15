@@ -163,6 +163,7 @@ import SmartAPYPage from './pages/SmartAPY';
 import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
 import SmartApyCalPage from './pages/SmartApyCal';
 import CryptoTreasuryPage from './pages/CryptoTreasury';
+import PerformancePage from './pages/PerformancePage';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -621,6 +622,11 @@ function App() {
               path="/indexx-exchange/buy-sell/deposit-fiat/*"
               element={<BSDepositFiatLayout />}
             />
+            <Route
+              path="//indexx-exchange/buy-sell/performance-history"
+              element={<PerformancePage />}
+            />
+
             <Route
               path="/indexx-exchange/buy-sell/transaction-history/*"
               element={<BSTransactionHistoryLayout />}

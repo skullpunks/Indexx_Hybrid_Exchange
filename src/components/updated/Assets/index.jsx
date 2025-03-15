@@ -886,6 +886,13 @@ const Assets = () => {
               {currentPath !== '/wallet/demo-smart-crypto' && (
                 <Box className={`${classes.buttonContainer}`}>
                   <GenericButton
+                    text={'Performance History'}
+                    className={classes.button}
+                    onClick={() =>
+                      navigate('/indexx-exchange/buy-sell/performance-history')
+                    }
+                  />
+                  <GenericButton
                     text={'Transaction History'}
                     className={classes.button}
                     onClick={() =>
