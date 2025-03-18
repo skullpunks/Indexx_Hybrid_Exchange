@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
 import GeneralPopup from '../Popup';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import {
   baseURL,
@@ -26,6 +27,8 @@ import exchangeLight from '../../../../assets/updated/buySell/Exchange for Light
 import exchangeDark from '../../../../assets/updated/buySell/exchange for Dark mode.svg';
 import NonIndexxFailPopup from './NonIndexxFailPopup';
 import OrderProcessedSuccessfullyPopup from './OrderProcessedSuccessfullyPopup';
+import VideoPopup from '../../VideoPopup';
+
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
@@ -209,6 +212,8 @@ const BuySellTabs = ({
     useState(false);
   const [minAmountError, setMinAmountError] = useState(false);
   const [searchParams] = useSearchParams();
+  const [infoPopupOpen, setInfoPopupOpen] = useState(false);
+
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
@@ -752,11 +757,19 @@ const BuySellTabs = ({
         <span>
           <img
             src={theme.palette.mode === 'dark' ? exchangeDark : exchangeLight}
+            alt=""
           />
         </span>
         <h3 className={classes.heading} style={{ marginBottom: '0px' }}>
           {' '}
           Exchange
+          <InfoOutlinedIcon
+            onClick={() => {
+              console.log('Info icon clicked');
+              setInfoPopupOpen(true);
+            }}
+            style={{ cursor: 'pointer', marginLeft: '5px' }}
+          />
         </h3>
       </div>
       <Box className={classes.card}>
@@ -985,6 +998,14 @@ const BuySellTabs = ({
 
       {isIndexxTokenSell && (
         <NonIndexxFailPopup onClose={() => setIsIndexxTokenSell(false)} />
+      )}
+
+      {infoPopupOpen && (
+        <VideoPopup
+          title={'Learn how to use Indexx Exchange'}
+          videoLink={'/video/BuySteps.mp4'}
+          onClose={() => setInfoPopupOpen(false)}
+        />
       )}
 
       {orderProcessedSuccessfullyPopup && (
