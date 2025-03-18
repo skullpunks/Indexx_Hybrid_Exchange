@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import CustomSelectBox from './CustomSelectBox';
 import { useTheme } from '@mui/material';
+import GenericButton from '../updated/shared/Button';
+import OpenNotification from '../OpenNotification/OpenNotification';
+
 import './Signup.css';
 const countryFormats = {
   US: { label: 'SSN', mask: '999-99-9999', regex: /^\d{3}-\d{2}-\d{4}$/ },
@@ -49,6 +52,8 @@ const IdentificationInput = ({
 
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [inputValue, setInputValue] = useState(initialPersonalId);
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setSelectedCountry(initialCountry);
@@ -57,28 +62,43 @@ const IdentificationInput = ({
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
-    setInputValue(''); // Clear input when country changes
+    setInputValue('');
+    setError('');
   };
 
-  const validateInput = async () => {
+  const validateInput = () => {
     const { regex, label } = countryFormats[selectedCountry];
+    if (!inputValue.trim()) {
+      setError(`${label} is required`);
+      return false;
+    }
     if (!regex.test(inputValue)) {
+      setError(`Please enter a valid ${label}`);
+      return false;
+    }
+    setError('');
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateInput()) {
+      OpenNotification('error', error);
       return;
     }
 
-    let email = String(localStorage.getItem('email'));
-    // Define the API endpoint and request payload
+    setIsSubmitting(true);
+    setLoading(true);
+
+    const email = String(localStorage.getItem('email'));
     const apiEndpoint =
       'https://api.indexx.ai/api/v1/inex/user/addpersonalinfo';
     const requestData = {
-      email: email, // Replace with dynamic email if needed
+      email,
       country: selectedCountry,
       personalIdNumber: inputValue,
     };
 
     try {
-      setLoading(true); // Start loading
-      // Make the POST request
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -87,22 +107,28 @@ const IdentificationInput = ({
         body: JSON.stringify(requestData),
       });
 
-      // Parse the response
+      const data = await response.json();
+
       if (response.ok) {
-        const responseData = await response.json();
-        console.log('API Response:', responseData);
+        OpenNotification('success', 'SSN verification submitted successfully');
+        // You might want to trigger a refresh of the parent component here
       } else {
-        const errorData = await response.json();
-        console.error('Error Response:', errorData);
+        OpenNotification(
+          'error',
+          data.message || 'Failed to submit SSN verification'
+        );
       }
     } catch (error) {
+      OpenNotification('error', 'Network error occurred');
       console.error('Network Error:', error);
     } finally {
-      setLoading(false); // Stop loading
+      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
   const currentFormat = countryFormats[selectedCountry];
+
   return (
     <div>
       <label htmlFor="country">Select Country:</label>
@@ -123,8 +149,10 @@ const IdentificationInput = ({
         mask={countryFormats[selectedCountry].mask}
         value={inputValue}
         className="inputmaskfield"
-        onChange={(e) => setInputValue(e.target.value)}
-        onBlur={validateInput} // Validate on blur
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          setError('');
+        }}
         placeholder={`Enter your ${currentFormat.label}`}
         id="idNumber"
         style={{
@@ -132,11 +160,34 @@ const IdentificationInput = ({
           margin: '10px 0 30px 0',
           padding: '10px',
           width: '100%',
-          border: `1px solid ${theme.palette.divider}`,
+          border: `1px solid ${error ? '#ff4d4f' : theme.palette.divider}`,
           borderRadius: '8px',
           background: 'none',
+          color: theme.palette.text.primary,
         }}
       />
+      {error && (
+        <div
+          style={{
+            color: '#ff4d4f',
+            marginTop: '-20px',
+            marginBottom: '20px',
+            fontSize: '12px',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      <div style={{ marginTop: '24px', textAlign: 'center' }}>
+        <GenericButton
+          text="Submit SSN Verification"
+          onClick={handleSubmit}
+          loading={isSubmitting}
+          disabled={isSubmitting}
+          
+        />
+      </div>
     </div>
   );
 };

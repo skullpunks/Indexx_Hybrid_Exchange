@@ -88,6 +88,17 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  cardTop: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems : 'center',
+    marginRight: '20px',
+  },
+  duration: {
+    fontWeight: 300,
+    fontSize: '12px',
+    color: '#A9A9A9',
+  },
   listContainer: {
     '&.MuiListItemButton-root': {
       padding: '10px 18px',
@@ -259,14 +270,17 @@ const CryptoStats = ({ tokenType, onTokenSelect }) => {
         <img src={paypal} alt="" />
       </div>
       <Box className={classes.card}>
-        <h4 className={classes.cardHeading}>
-          Hot{' '}
-          {tokenType === 'Tokens'
-            ? 'Crypto'
-            : tokenType === 'Stock Tokens'
-            ? 'Stock Tokens'
-            : 'ETF Tokens'}
-        </h4>
+        <Box className={classes.cardTop}>
+          <h4 className={classes.cardHeading}>
+            Hot{' '}
+            {tokenType === 'Tokens'
+              ? 'Crypto'
+              : tokenType === 'Stock Tokens'
+              ? 'Stock Tokens'
+              : 'ETF Tokens'}
+          </h4>
+          <p className={classes.duration}>24h chg%</p>
+        </Box>
         {loading ? (
           <div className={classes.loader}>
             <CircularProgress />

@@ -11,6 +11,7 @@ import token from '../../assets/BSheader/tokens icon 1.svg';
 import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 import { auth_header_data, auth_header_data_asset_wallet } from './data';
 import header_data from './data';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -27,6 +28,8 @@ import beeframe from '../../assets/updated/header/normal.png';
 import dummy from '../../assets/hive-dashboard/dummy.png';
 import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
+
+import { useNavigate } from 'react-router-dom';
 
 import {
   baseURL,
@@ -48,6 +51,7 @@ import {
 } from '../../services/api';
 
 import DarkMode from '../DarkMode/DarkMode';
+import { Button } from 'react-bootstrap';
 
 const Links = [
   { label: 'Exchange', value: 'buy-sell', url: '/indexx-exchange/buy-sell' },
@@ -95,7 +99,7 @@ const HeaderTest = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [staticsData, setStaticsData] = useState();
-  const [honeyBeeData, setHoneyBeeData] = useState();
+  const [honeyBeeData, setHoneyBeeData] = useState<Record<string, any>>();
   const [honeybeeCreateDate, setHoneybeeCreateDate] = useState();
   const [isCaptain, setisCaptain] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -105,6 +109,7 @@ const HeaderTest = () => {
   const [loginUserType, setLoginUserType] = useState<any>();
   const [haspowerpack, setHaspowerpack] = useState(false);
   const [authHeader, setAuthHeader] = useState(header_data);
+  const navigate = useNavigate();
   console.log(haspowerpack, 'has pack');
 
   useEffect(() => {
@@ -927,25 +932,161 @@ const HeaderTest = () => {
                               </div>
                             </div>
                           )}
-                          <a
-                            href={element.href}
-                            className={`desktop-item ${
-                              element.active ? 'link_active' : ''
-                            }`}
+
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              flexDirection: 'column',
+                              alignItems: 'left',
+                            }}
                           >
-                            {isAuthenticated
-                              ? userEmail
-                              : element.mainTextDesktop}
-                          </a>
-                          <input type="checkbox" id={element.mainTextDesktop} />
-                          <label
-                            htmlFor={element.mainTextDesktop}
-                            className="mobile-item"
-                          >
-                            {isAuthenticated
-                              ? userEmail
-                              : element.mainTextDesktop}
-                          </label>
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                lineHeight: '1',
+                              }}
+                            >
+                              <a
+                                href={element.href}
+                                className={`desktop-item ${
+                                  element.active ? 'link_active' : ''
+                                }`}
+                              >
+                                {isAuthenticated
+                                  ? userEmail
+                                  : element.mainTextDesktop}
+                              </a>
+
+                              <input
+                                type="checkbox"
+                                id={element.mainTextDesktop}
+                              />
+                              <label
+                                htmlFor={element.mainTextDesktop}
+                                className="mobile-item"
+                              >
+                                {isAuthenticated
+                                  ? userEmail
+                                  : element.mainTextDesktop}
+                              </label>
+                              {honeyBeeData ? (
+                                (honeyBeeData as any)?.isKYCPass ? (
+                                  <>
+                                    <p
+                                      className="desktop-item"
+                                      style={{
+                                        fontSize: '12px',
+                                        marginTop: '4px',
+                                        padding: '3px 0',
+                                        width: '40%',
+                                        cursor: 'default',
+                                        color: 'rgb(6, 93, 206)',
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '4px',
+                                        }}
+                                      >
+                                        <CheckCircleIcon
+                                          sx={{ fontSize: 14 }}
+                                        />
+                                        <span>Verified</span>
+                                      </span>
+                                    </p>
+
+                                    <p
+                                      className="mobile-item"
+                                      style={{
+                                        fontSize: '12px',
+                                        marginLeft: '20px',
+                                        marginTop: '4px',
+                                        padding: '3px 0',
+                                        width: '30%',
+                                        cursor: 'default',
+                                        color: 'rgb(6, 93, 206)',
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '4px',
+                                        }}
+                                      >
+                                        <CheckCircleIcon
+                                          sx={{ fontSize: 14 }}
+                                        />
+                                        <span>Verified</span>
+                                      </span>
+                                    </p>
+                                  </>
+                                ) : (
+                                  <>
+                                    <p
+                                      className="desktop-item"
+                                      onClick={() =>
+                                        navigate('/indexx-exchange/account')
+                                      }
+                                      style={{
+                                        fontSize: '12px',
+                                        marginTop: '4px',
+                                        padding: '3px 0',
+                                        width: '50%',
+                                        cursor: 'pointer',
+                                        color: 'rgb(104, 103, 102)',
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '4px',
+                                        }}
+                                      >
+                                        <span>Unverified</span>
+                                      </span>
+                                    </p>
+
+                                    <p
+                                      className="mobile-item"
+                                      onClick={() =>
+                                        navigate('/indexx-exchange/account')
+                                      }
+                                      style={{
+                                        fontSize: '12px',
+                                        marginLeft: '20px',
+                                        marginTop: '4px',
+                                        padding: '3px 0',
+                                        width: '30%',
+                                        cursor: 'pointer',
+                                        color: 'rgb(104, 103, 102)',
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '4px',
+                                        }}
+                                      >
+                                        <span>Unverified</span>
+                                      </span>
+                                    </p>
+                                  </>
+                                )
+                              ) : null}
+                            </div>
+                          </div>
+
                           {element.hasMegaDrop ? (
                             <div
                               className="mega-box"

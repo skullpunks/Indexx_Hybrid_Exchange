@@ -30,6 +30,8 @@ import PreviewConversionpopup from './PreviewConversionpopup';
 import SuccessPopup from './SuccessfulConvertPopup';
 import GeneralPopup from '../BuySell/Popup';
 import IconicHeader from '../shared/IconicHeader';
+import VideoPopup from '../VideoPopup';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -111,6 +113,10 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(1.2)',
     },
   },
+  infoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
 const ConvertCrypto = () => {
@@ -141,6 +147,7 @@ const ConvertCrypto = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Convert');
   const defaultSignInToken = searchParams.get('signInToken');
+  const [infoPopupOpen, setInfoPopupOpen] = useState(false);
 
   let appSettingArr = [];
 
@@ -533,7 +540,16 @@ const ConvertCrypto = () => {
       </div> */}
       <div className={classes.contentContent}>
         <div className={classes.rightContainer}>
-          <h2 className={classes.mainHeading}>Convert</h2>
+          <div className={classes.infoContainer}>
+            <h2 className={classes.mainHeading}>Convert </h2>
+            <InfoOutlinedIcon
+              onClick={() => {
+                console.log('Info icon clicked');
+                setInfoPopupOpen(true);
+              }}
+              style={{ cursor: 'pointer', margin: '0 0 10px 5px'}}
+            />
+          </div>
           <IconicHeaders />
 
           <div className={classes.rightContentContainer}>
@@ -652,6 +668,13 @@ const ConvertCrypto = () => {
           message={popupMessage}
           onClose={handlePopupClose}
           width={popupMessage.length > 100 ? '600px' : '360px'}
+        />
+      )}
+      {infoPopupOpen && (
+        <VideoPopup
+          title={'Learn how to convert on Indexx Exchange'}
+          videoLink={'/video/Convert.mp4'}
+          onClose={() => setInfoPopupOpen(false)}
         />
       )}
     </div>

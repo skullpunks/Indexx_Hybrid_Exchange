@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Inex from '../../../assets/updated/buySell/INEX.svg'; // Fallback image
+import GenericButton from '../shared/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomSelectBox({
   items,
@@ -16,6 +18,7 @@ export default function CustomSelectBox({
   onCurrencyChange,
   isGiftCard,
 }) {
+  const navigate = useNavigate();
   const theme = useTheme();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -147,49 +150,81 @@ export default function CustomSelectBox({
         <MenuItem disabled value="">
           <em>{type}</em>
         </MenuItem>
-        {isGiftCard
-          ? items?.map((card) => (
+        {isGiftCard ? (
+          items.length > 0 ? (
+            items?.map((card) => (
               <MenuItem
                 key={card.voucher}
                 value={card.voucher}
                 disabled={card.isUsed}
               >
-                {`${card.voucher} - ${card.amount} ${card.type}(Amount in USD: ${card.type === 'USD' ? card.amount: Number(card.amount * card.price).toFixed(2)}, email:${card?.assignedToUser ? card?.assignedToUser : 'NA'})`}
+                {`${card.voucher} - ${card.amount} ${
+                  card.type
+                }(Amount in USD: ${
+                  card.type === 'USD'
+                    ? card.amount
+                    : Number(card.amount * card.price).toFixed(2)
+                }, email:${
+                  card?.assignedToUser ? card?.assignedToUser : 'NA'
+                })`}
               </MenuItem>
             ))
-          : !isCurrency
-          ? items?.map(({ name, value, image }) => (
-              <MenuItem key={name} value={value}>
-                {type === 'Coin' && (
-                  <img
-                    src={getImage(image)}
-                    alt={name}
-                    style={{
-                      width: '24px',
-                      height: '24px',
-                      marginRight: '10px',
-                    }}
-                  />
-                )}
-                {name}
-              </MenuItem>
-            ))
-          : items?.map(({ title, address, image }) => (
-              <MenuItem key={title} value={address}>
-                {type === 'Coin' && (
-                  <img
-                    src={getImage(image)}
-                    alt={title}
-                    style={{
-                      width: '24px',
-                      height: '24px',
-                      marginRight: '10px',
-                    }}
-                  />
-                )}
-                {title}
-              </MenuItem>
-            ))}
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '0px 16px',
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: '16px',
+                }}
+              >
+                No Gift Card Found
+              </h4>
+              <GenericButton
+                text={'Create Gift Card'}
+                onClick={() => navigate('/redeem/create-card')}
+              />
+            </div>
+          )
+        ) : !isCurrency ? (
+          items?.map(({ name, value, image }) => (
+            <MenuItem key={name} value={value}>
+              {type === 'Coin' && (
+                <img
+                  src={getImage(image)}
+                  alt={name}
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    marginRight: '10px',
+                  }}
+                />
+              )}
+              {name}
+            </MenuItem>
+          ))
+        ) : (
+          items?.map(({ title, address, image }) => (
+            <MenuItem key={title} value={address}>
+              {type === 'Coin' && (
+                <img
+                  src={getImage(image)}
+                  alt={title}
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    marginRight: '10px',
+                  }}
+                />
+              )}
+              {title}
+            </MenuItem>
+          ))
+        )}
       </Select>
     </FormControl>
   );

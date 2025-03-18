@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     height: '100%',
     overflowY: 'auto',
-    padding: '0px 12px',
+    padding: '12px 24px',
 
     '&::-webkit-scrollbar': {
       width: '7px',
@@ -64,7 +64,7 @@ const ChartDetail = ({ chartData }) => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           gap: '16px',
         }}
       >

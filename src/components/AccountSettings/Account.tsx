@@ -39,6 +39,16 @@ const CustomTab = styled(Tab)(({ theme }) => ({
   alignItems: 'center',
   position: 'relative',
   background: 'transparent !important',
+  height: 'auto',
+  '& .MuiTab-iconWrapper': {
+    height: 'auto',
+    marginBottom: '0 !important',
+  },
+  '& img': {
+    maxHeight: '65px',
+    width: 'auto',
+    marginBottom: '8px',
+  },
   '&.active': {
     color: theme.palette.primary.light,
     '&::after': {
@@ -198,16 +208,29 @@ const Account = () => {
           {tabsData.map((tab, index) => (
             <CustomTab
               key={tab.key}
-              label={tab.label}
-              disableRipple
-              className={selectedTab === index ? 'active' : ''}
               icon={
                 <img
                   src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
-                  style={{ height: '25px', marginBottom: '0px' }}
+                  style={{ height: '65px', marginBottom: '0px' }}
                 />
               }
+              iconPosition="top"
+              label={tab.label}
+              disableRipple
+              className={selectedTab === index ? 'active' : ''}
             />
+            // <CustomTab
+            //   key={tab.key}
+            //   label={tab.label}
+            //   disableRipple
+            //   className={selectedTab === index ? 'active' : ''}
+            //   icon={
+            //     <img
+            //       src={theme.palette.mode === 'dark' ? tab.dark : tab.light}
+            //       style={{ height: '40px', marginBottom: '0px' }}
+            //     />
+            //   }
+            // />
           ))}
         </Tabs>
       </Box>

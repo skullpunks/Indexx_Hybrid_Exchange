@@ -64,7 +64,7 @@ const CaptainBeeBridge = ({ handleCaptainBee }) => {
           <img src={hiveLogo} alt="Logo 1" className={classes.logo} />
           <GenericButton
             text="Learn More"
-            onClick={() => navigate('https://hive.indexx.ai/')}
+            onClick={() => window.open('https://hive.indexx.ai/', '_blank')}
             className={classes.customButton}
           />
         </div>

@@ -191,227 +191,179 @@ const DownloadReportPopup = ({ onClose }) => {
 
   const generatePDF = (data) => {
     const doc = new jsPDF({
-      orientation: 'l', // Landscape orientation
+      orientation: 'l',
       unit: 'mm',
-      format: [297, 210], // Custom page size with increased width
+      format: [297, 210],
     });
 
-    // Container with padding
     const padding = 10;
-    doc.setFontSize(10);
-    doc.text('', padding, padding);
 
-    // Logo image using SVG
+    // Compress the logo image before adding it
     const logo = new Image();
     logo.src = indexxLogo;
 
     logo.onload = () => {
-      doc.addImage(logo, 'PNG', padding, padding, 55, 20);
+      // Calculate scaled dimensions while maintaining aspect ratio
+      const maxWidth = 55;
+      const maxHeight = 20;
+      const ratio = Math.min(maxWidth / logo.width, maxHeight / logo.height);
+      const width = logo.width * ratio;
+      const height = logo.height * ratio;
 
-      // Bold heading
+      // Add image with compression
+      doc.addImage(logo, 'PNG', padding, padding, width, height, '', 'FAST');
+
+      // Rest of the header content
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text('Transaction History Report', padding, 40);
 
-      // Paragraph with reduced font size
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        'This is the transaction history report for the selected period.',
-        padding,
-        50
-      );
-
-      // First column
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Date', padding, 65);
+      // Add metadata
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.text(`Date: ${data.date}`, padding, 70);
+      doc.text(`Generated on: ${new Date().toLocaleString()}`, padding, 45);
+      doc.text(`Email: ${data.customerEmail}`, padding, 50);
+      doc.text(`Period: ${data.date}`, padding, 55);
+      doc.text(`Asset Type: ${assetType}`, padding, 60);
+      doc.text(`Transaction Type: ${transactionType}`, padding, 65);
 
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Filter', padding + 60, 65);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Type: ${transactionType}`, padding + 60, 70);
-      doc.text(`Asset: ${assetType}`, padding + 60, 75);
+      // Portfolio Summary Table
+      if (data.portfolioSummary && data.portfolioSummary.length > 0) {
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Portfolio Summary', padding, 80);
 
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Customer', padding + 120, 65);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Email: ${data.customerEmail}`, padding + 120, 70);
+        const portfolioSummary = [
+          ['Asset', 'Quantity', 'Market Price', 'Market Value'],
+          ...data.portfolioSummary.map((item) => [
+            item.asset,
+            item.quantity,
+            item.marketPrice,
+            item.marketValue,
+          ]),
+        ];
 
-      // Portfolio Summary
-      doc.setFontSize(11);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Portfolio Summary', padding, 90);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        `Portfolio summary balances are as of ${data.toDate} 23:59:59 UTC`,
-        padding,
-        95
-      );
+        doc.autoTable({
+          startY: 85,
+          head: [portfolioSummary[0]],
+          body: portfolioSummary.slice(1),
+          styles: { fontSize: 8 },
+          headStyles: {
+            fillColor: [211, 211, 211],
+            textColor: 0,
+            fontStyle: 'bold',
+          },
+          margin: { left: padding, right: padding },
+        });
+      }
 
-      const portfolioSummary = [
-        ['Asset', 'Quantity', 'Market Price', 'Market Value'],
-        ...data.portfolioSummary.map((item) => [
-          item.asset,
-          item.quantity,
-          item.marketPrice,
-          item.marketValue,
-        ]),
-      ];
+      // Transaction History Table
+      if (data.transactionHistory && data.transactionHistory.length > 0) {
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.text(
+          'Transaction History',
+          padding,
+          doc.autoTable.previous.finalY + 15
+        );
 
-      doc.autoTable({
-        startY: 100,
-        head: [portfolioSummary[0]],
-        body: portfolioSummary.slice(1),
-        styles: {
-          fontSize: 8, // Reduced column text size
-        },
-        headStyles: {
-          fillColor: [211, 211, 211], // Light grey color
-          textColor: 0,
-          fontStyle: 'bold',
-        },
-        margin: { left: padding, right: padding }, // Align table with the content
-      });
+        const transactionHistory = [
+          [
+            'Date',
+            'Type',
+            'Asset',
+            'Amount',
+            'Price',
+            'Total',
+            'Status',
+          ],
+          ...data.transactionHistory.map((item) => [
+            new Date(item.timestamp).toLocaleString(),
+            item.transactionType,
+            item.asset,
+            item.quantityTransacted,
+            `$${Number(item.priceAtTransaction).toFixed(2)}`,
+            `$${Number(item.total).toFixed(2)}`,
+            'Completed',
+          ]),
+        ];
 
-      // Transaction History
-      doc.setFontSize(11);
-      doc.setFont('helvetica', 'bold');
-      doc.text(
-        'Transaction History',
-        padding,
-        doc.autoTable.previous.finalY + 10
-      );
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        `Transaction history data for ${data.date}`,
-        padding,
-        doc.autoTable.previous.finalY + 15
-      );
+        doc.autoTable({
+          startY: doc.autoTable.previous.finalY + 20,
+          head: [transactionHistory[0]],
+          body: transactionHistory.slice(1),
+          styles: { fontSize: 8 },
+          headStyles: {
+            fillColor: [211, 211, 211],
+            textColor: 0,
+            fontStyle: 'bold',
+          },
+          margin: { left: padding, right: padding },
+        });
+      }
 
-      const transactionHistory = [
-        [
-          'Timestamp',
-          'Transaction Type',
-          'Asset',
-          'Quantity Transacted',
-          'Price at Transaction',
-          'Subtotal',
-          'Total',
-          'Notes',
-        ],
-        ...data.transactionHistory.map((item) => [
-          item.timestamp,
-          item.transactionType,
-          item.asset,
-          item.quantityTransacted,
-          item.priceAtTransaction,
-          item.subtotal,
-          item.total,
-          item.notes,
-        ]),
-      ];
-
-      doc.autoTable({
-        startY: doc.autoTable.previous.finalY + 20,
-        head: [transactionHistory[0]],
-        body: transactionHistory.slice(1),
-        styles: {
-          fontSize: 8, // Reduced column text size
-        },
-        headStyles: {
-          fillColor: [211, 211, 211], // Light grey color
-          textColor: 0,
-          fontStyle: 'bold',
-        },
-        margin: { left: padding, right: padding }, // Align table with the content
-      });
-
-      doc.save('Transaction_History_Report.pdf');
+      // Save with compression
+      doc.save('Transaction_History_Report.pdf', { compress: true });
     };
   };
   const fetchData = async () => {
     setLoading(true);
 
     try {
-      let email = String(localStorage.getItem('email'));
+      const email = String(localStorage.getItem('email'));
 
+      // Get portfolio data
       const userWallets = await getUserWallets(email);
-      const portfolioSummaryData = userWallets.data.map((item) => {
-        const coinBalance = Number(item.coinBalance);
-        const coinPrice = Number(item.coinPrice);
+      const portfolioSummaryData = userWallets.data
+        .map((item) => {
+          const coinBalance = Number(item.coinBalance);
+          const coinPrice = Number(item.coinPrice);
+          return {
+            asset: item.coinName,
+            quantity: coinBalance.toFixed(8),
+            marketPrice: `$${coinPrice.toFixed(2)}`,
+            marketValue: `$${(coinBalance * coinPrice).toFixed(2)}`,
+          };
+        })
+        .filter(item => Number(item.quantity) > 0); // Only include non-zero balances
 
-        return {
-          asset: item.coinName, // Assuming coinName represents the full name of the coin like 'Bitcoin'
-          quantity: coinBalance.toString(),
-          marketPrice: `$${coinPrice.toFixed(2)}`, // Format the price as a string with a dollar sign
-          marketValue: `$${(coinBalance * coinPrice).toFixed(2)}`, // Calculate market value
-        };
-      });
-
-      // Ensure unique rows by asset name
-      const uniquePortfolioSummaryData = portfolioSummaryData.filter(
-        (value, index, self) =>
-          index === self.findIndex((t) => t.asset === value.asset)
-      );
-      setPortfolioSummaryData(uniquePortfolioSummaryData);
-      let fromDate,
-        toDate = undefined;
+      // Get date range if needed
+      let fromDate, toDate;
       if (dateFilter !== 'All time') {
         ({ fromDate, toDate } = getDateRange(dateFilter));
-      } else {
-        fromDate = undefined;
-        toDate = undefined;
       }
-      const transactionTypeParamenter =
-        transactionType === 'All Transactions' ? 'Buy' : transactionType;
-      const currency = assetType === 'All Asset' ? undefined : assetType;
 
-      // Fetch Transaction History Data
+      // Get transaction history
       const { data: transactionHistoryData } = await getUserTransactionHistory(
         email,
         fromDate,
         toDate,
-        transactionTypeParamenter,
-        currency
+        transactionType === 'All Transactions' ? undefined : transactionType,
+        assetType === 'All Asset' ? undefined : assetType
       );
+
       const transactionHistory = transactionHistoryData
         .filter((el) => el.status.toLowerCase() === 'completed')
         .map((item) => ({
           timestamp: item?.orderCompletedOn,
           transactionType: item?.orderType,
           asset: item?.orderRate?.currency,
-          quantityTransacted: item?.breakdown?.outAmount?.toFixed(2),
+          quantityTransacted: item?.breakdown?.outAmount?.toFixed(8),
           priceAtTransaction: item?.orderRate?.rate,
-          subtotal: (
-            item?.breakdown?.outAmount * item?.orderRate?.rate
-          ).toFixed(2),
-          total: (item?.breakdown?.outAmount * item?.orderRate?.rate).toFixed(
-            2
-          ),
-          notes: item.notes,
+          total: (item?.breakdown?.outAmount * item?.orderRate?.rate).toFixed(2),
         }));
-      setTransactionHistoryData(transactionHistory);
-      const data = {
+
+      // Generate PDF with correct data
+      generatePDF({
         date: dateFilter,
-        customerEmail: 'customer@example.com',
-        portfolioSummary: portfilioSumamryData?.filter(
-          (el) => el.quantity !== '0'
-        ),
+        customerEmail: email, // Use actual email
+        portfolioSummary: portfolioSummaryData,
         transactionHistory: transactionHistory,
-      };
-      generatePDF(data);
+        toDate: toDate || new Date().toISOString().split('T')[0],
+      });
     } catch (error) {
-      console.log(error);
+      console.error('Error generating report:', error);
+      // Add error handling/notification here
     } finally {
       setLoading(false);
     }
