@@ -246,6 +246,12 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/dashboard',
     });
   }
+  tabsData.push({
+    label: 'Support',
+    light: userType === 'Indexx Exchange' ? stakingLight : stakingHive,
+    dark: userType === 'Indexx Exchange' ? stakingDark : stakingHive,
+    path: '/support-center',
+  });
 
   const getSelectedTab = () => {
     const currentPath = location.pathname;
@@ -289,7 +295,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   let maxWidthTabContainer;
   if (isLoggedIn && userType === 'Indexx Exchange') {
-    maxWidthTabContainer = '1260px';
+    maxWidthTabContainer = '1360px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1400px';
   } else {

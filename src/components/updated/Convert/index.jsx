@@ -32,6 +32,7 @@ import GeneralPopup from '../BuySell/Popup';
 import IconicHeader from '../shared/IconicHeader';
 import VideoPopup from '../VideoPopup';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoButton from '../InfoButton';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -104,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     fontWeight: '600px',
     color: theme.palette.text.primary,
+    marginBottom: '3px',
   },
   swapIconHover: {
     transition: 'all .2s linear',
@@ -147,7 +149,6 @@ const ConvertCrypto = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Convert');
   const defaultSignInToken = searchParams.get('signInToken');
-  const [infoPopupOpen, setInfoPopupOpen] = useState(false);
 
   let appSettingArr = [];
 
@@ -542,13 +543,7 @@ const ConvertCrypto = () => {
         <div className={classes.rightContainer}>
           <div className={classes.infoContainer}>
             <h2 className={classes.mainHeading}>Convert </h2>
-            <InfoOutlinedIcon
-              onClick={() => {
-                console.log('Info icon clicked');
-                setInfoPopupOpen(true);
-              }}
-              style={{ cursor: 'pointer', margin: '0 0 10px 5px'}}
-            />
+            <InfoButton page={'Convert'} />
           </div>
           <IconicHeaders />
 
@@ -668,13 +663,6 @@ const ConvertCrypto = () => {
           message={popupMessage}
           onClose={handlePopupClose}
           width={popupMessage.length > 100 ? '600px' : '360px'}
-        />
-      )}
-      {infoPopupOpen && (
-        <VideoPopup
-          title={'Learn how to convert on Indexx Exchange'}
-          videoLink={'/video/Convert.mp4'}
-          onClose={() => setInfoPopupOpen(false)}
         />
       )}
     </div>

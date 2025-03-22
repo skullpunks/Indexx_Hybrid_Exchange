@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
-    opacity: '1 !important',
+    opacity: '1 !important', 
     visibility: 'visible !important',
     '& .bnModalWrap': {
       transform: 'scale(1) !important',
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 3px 6px rgba(0,0,0,.04)',
     maxWidth: '90vw',
     maxHeight: '90vh',
-    overflow: 'hidden',
+    overflowY: 'auto',
     position: 'relative',
     transform: 'scale(.9)',
     transitionDuration: '250ms',
@@ -46,8 +46,29 @@ const useStyles = makeStyles((theme) => ({
     padding: '24px',
     textAlign: 'center',
     color: `${theme.palette.text.primary} !important`,
+    overflowY: 'auto',
+    maxHeight: '90vh',
     '@media (max-width: 600px)': {
       padding: '12px',
+    },
+    '&::-webkit-scrollbar': {
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#5f6673 !important'
+          : '#b7bdc6 !important',
+      borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+      display: 'none !important',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? '#484f59 !important'
+          : '#a0a6af !important',
     },
   },
   closeButton: {
@@ -68,13 +89,46 @@ const useStyles = makeStyles((theme) => ({
   },
   video: {
     width: '100%',
-    height: 'auto',
+    height: '450px',
+    maxHeight: '450px',
+    marginBottom: '10px',
+    aspectRatio: '16 / 9',
+    '@media (max-width: 600px)': {
+      height: '300px',
+    },
   },
 }));
 
-const VideoPopup = ({ title, videoLink, onClose }) => {
+const VideoPopup = ({ page, onClose }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const videoData = {
+    BuySell: {
+      titles: ['How to Buy Crypto', 'How to Sell Crypto'],
+      videoLinks: [
+        'https://www.youtube.com/embed/LLKmL5YU52E',
+        'https://www.youtube.com/embed/Gl-rvCGtsY0',
+      ],
+    },
+    Convert: {
+      titles: ['How to convert'],
+      videoLinks: ['https://www.youtube.com/embed/reDfKZkLwbU'],
+    },
+    SmartCrypto: {
+      titles: ['How to Invest in Smart Crypto'],
+      videoLinks: ['https://www.youtube.com/embed/reDfKZkLwbU'],
+    },
+    Staking: {
+      titles: ['How to stake coins at Indexx'],
+      videoLinks: ['https://www.youtube.com/embed/yIBnRB5lDpQ'],
+    },
+  };
+
+  const { titles, videoLinks } = videoData[page] || {
+    titles: ['Video not available'],
+    videoLinks: [''],
+  };
 
   return (
     <div className={`${classes.bnMask}`}>
@@ -85,10 +139,23 @@ const VideoPopup = ({ title, videoLink, onClose }) => {
           fontSize="large"
         />
         <div className={classes.contentContainer}>
-          <h3>{title}</h3>
-          <video className={classes.video} controls autoPlay muted>
-            <source src={videoLink} type="video/mp4" />
-          </video>
+          {titles.map((title, index) => (
+            <div key={index}>
+              <h3 style={{ margin: '10px' }}>{title}</h3>
+              {videoLinks[index] ? (
+                <iframe
+                  className={classes.video}
+                  src={videoLinks[index]}
+                  title="YouTube video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <p>This video is not available for the current page.</p>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

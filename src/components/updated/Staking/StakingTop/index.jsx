@@ -423,7 +423,7 @@ const StakingTop = ({ onStakeSuccess }) => {
         type === 'Short'
           ? selectedToken.stakingPercentage6months
           : selectedToken.stakingPercentage1year;
-        
+
       let res = await stakeCoin(
         email,
         stakeAmount, // Use the parsed float value
@@ -490,7 +490,7 @@ const StakingTop = ({ onStakeSuccess }) => {
 
       // Convert both values to numbers for comparison
       const balanceNum = parseFloat(selectedTokenBalance);
-      
+
       if (parsedAmt < minimumRequired) {
         setError(`Minimum staking amount must be at least ${minimumRequired}.`);
         return;
@@ -559,7 +559,8 @@ const StakingTop = ({ onStakeSuccess }) => {
         </div>
         <div className={classes.balanceContainer}>
           <label className={classes.label}>
-            Balance: {isBalanceLoading ? (
+            Balance:{' '}
+            {isBalanceLoading ? (
               <span style={{ fontSize: '24px' }}>Loading...</span>
             ) : (
               formatPrice(selectedTokenBalance)

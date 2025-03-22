@@ -37,6 +37,7 @@ import plusIcon from '../../../assets/updated/smartCrypto/plusIcon.svg';
 import DetailPopup from './DetailPopup';
 import CongratulationsPopup from './Congratulations';
 import ProcessingFailedPopup from './ProcessingFailedPopup';
+import InfoButton from '../InfoButton';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -647,6 +648,7 @@ const SmartCrypto = () => {
             <div>
               <h3 style={{ fontStyle: 'italic' }}>
                 <span style={{ color: '#FBAF01 ' }}>Smart Crypto</span>
+                <InfoButton page={'SmartCrypto'} />
               </h3>
               <p>Autopilot, hands-off investment vehicle</p>
             </div>

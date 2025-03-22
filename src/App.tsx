@@ -164,6 +164,7 @@ import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
 import SmartApyCalPage from './pages/SmartApyCal';
 import CryptoTreasuryPage from './pages/CryptoTreasury';
 import PerformancePage from './pages/PerformancePage';
+import SupportCenter from './pages/SupportCenter';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -269,6 +270,7 @@ function App() {
               element={<SendCardSuccessfulPage />}
             />
             <Route path="/smart-crypto" element={<SmartCryptoPage />} />
+            <Route path="/support-center" element={<SupportCenter />} />
             <Route
               path="/smart-crypto/plan-detail/:name"
               element={<PlanDetails />}

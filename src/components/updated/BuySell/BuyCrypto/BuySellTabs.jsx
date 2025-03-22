@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
 import GeneralPopup from '../Popup';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoButton from '../../InfoButton';
 
 import {
   baseURL,
@@ -212,7 +212,6 @@ const BuySellTabs = ({
     useState(false);
   const [minAmountError, setMinAmountError] = useState(false);
   const [searchParams] = useSearchParams();
-  const [infoPopupOpen, setInfoPopupOpen] = useState(false);
 
   useEffect(() => {
     const email = localStorage.getItem('email');
@@ -763,13 +762,7 @@ const BuySellTabs = ({
         <h3 className={classes.heading} style={{ marginBottom: '0px' }}>
           {' '}
           Exchange
-          <InfoOutlinedIcon
-            onClick={() => {
-              console.log('Info icon clicked');
-              setInfoPopupOpen(true);
-            }}
-            style={{ cursor: 'pointer', marginLeft: '5px' }}
-          />
+          <InfoButton page={'BuySell'} />
         </h3>
       </div>
       <Box className={classes.card}>
@@ -998,14 +991,6 @@ const BuySellTabs = ({
 
       {isIndexxTokenSell && (
         <NonIndexxFailPopup onClose={() => setIsIndexxTokenSell(false)} />
-      )}
-
-      {infoPopupOpen && (
-        <VideoPopup
-          title={'Learn how to use Indexx Exchange'}
-          videoLink={'/video/BuySteps.mp4'}
-          onClose={() => setInfoPopupOpen(false)}
-        />
       )}
 
       {orderProcessedSuccessfullyPopup && (
