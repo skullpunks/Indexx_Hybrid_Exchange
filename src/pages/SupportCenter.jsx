@@ -38,6 +38,9 @@ import resetPassYellowIcon from '../assets/updated/support_center/Yellow icons/r
 import verifyAccYellowIcon from '../assets/updated/support_center/Yellow icons/verify account icon.png';
 import viewAllYellowIcon from '../assets/updated/support_center/Yellow icons/view all icon.png';
 
+// Import icons...
+import faqIcon from '../assets/updated/support_center/white icons/asset lock.png'; // Import a single FAQ icon
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: '1400px',
@@ -52,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   subheading: {
     marginBottom: '20px',
+    marginTop: '40px',
     fontSize: '24px !important',
     fontWeight: '500 !important',
     color: theme.palette.text.secondary,
@@ -75,9 +79,38 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '70px',
     marginBottom: '10px',
   },
-  linkText: {
+  serviceText: {
     color: theme.palette.text.primary,
+    textAlign: 'center',
+    width: '100%',
+  },
+  faqCard: {
+    padding: '5px 16px',
+    textAlign: 'left',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    transition: 'color 0.3s',
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+    cursor: 'pointer',
+  },
+  faqText: {
+    color: theme.palette.text.secondary,
     textDecoration: 'none',
+    textAlign: 'left',
+    fontSize: '18px',
+    width: '100%',
+    transition: 'color 0.3s',
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
+  faqIcon: {
+    maxWidth: '30px',
+    maxHeight: '30px',
+    marginRight: '10px',
   },
 }));
 
@@ -184,11 +217,38 @@ const SupportCenter = () => {
     },
   ];
 
+  const faqs = [
+    {
+      title: 'How to verify my account?',
+      link: '/faq/verify-account',
+    },
+    {
+      title: 'How to reset my password?',
+      link: '/faq/reset-password',
+    },
+    {
+      title: 'How to change my email address?',
+      link: '/faq/change-email',
+    },
+    {
+      title: 'How to contact support?',
+      link: '/faq/contact-support',
+    },
+    {
+      title: 'What to do if I forget my password?',
+      link: '/faq/forgot-password',
+    },
+    {
+      title: 'How to enable two-factor authentication?',
+      link: '/faq/two-factor-authentication',
+    },
+  ];
+
   return (
     <Box className={classes.container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <h1 className={classes.title}>How we can help you?</h1>
-
+      <h2 className={classes.subheading}>Self-Services</h2>
       <Grid container spacing={2}>
         {services.map((service, index) => (
           <Grid item xs={6} sm={4} md={2.4} lg={2.4} key={index}>
@@ -199,9 +259,21 @@ const SupportCenter = () => {
                   alt={service.title}
                   className={classes.icon}
                 />
-                <Typography variant="body1" className={classes.linkText}>
-                  {service.title}
-                </Typography>
+                <div className={classes.serviceText}>{service.title}</div>
+              </div>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+
+      <h2 className={classes.subheading}>FAQs</h2>
+      <Grid container spacing={1}>
+        {faqs.map((faq, index) => (
+          <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+            <Link to={faq.link} style={{ textDecoration: 'none' }}>
+              <div className={classes.faqCard}>
+                <img src={faqIcon} alt="FAQ Icon" className={classes.faqIcon} />
+                <div className={classes.faqText}>{faq.title}</div>
               </div>
             </Link>
           </Grid>
