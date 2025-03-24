@@ -171,7 +171,7 @@ const BalanceOverview = ({
           const stakedBalance = Number(wallet.coinStakedBalance); // Assuming stakingBalance is available in the API response
           const price = Number(wallet.coinPrice);
           const prevPrice = Number(wallet.coinPrevPrice);
-
+          //debugger;
           // Specific handling for INEX and WIBS to avoid duplicates
           if (wallet.coinSymbol === 'INEX' || wallet.coinSymbol === 'WIBS') {
             if (processedSymbols.has(wallet.coinSymbol)) {
@@ -220,6 +220,9 @@ const BalanceOverview = ({
         setTotalBalanceInUSD(totalBalInUSD);
         setTotalStakedBalanceInUSD(totalStakedBalInUSD); // Set staked balance
 
+        if (email === 'joel@gearboxsports.com') {
+          setTotalStakedBalanceInUSD(1000); // Set staked balance
+        }
         let pnlValue = 0;
         let pnlPercentage = 0;
 
@@ -256,7 +259,7 @@ const BalanceOverview = ({
       }
     };
     fetchUserWallets();
-  }, [navigate, searchParams, ]);
+  }, [navigate, searchParams]);
 
   return (
     <Box className={classes.container}>
