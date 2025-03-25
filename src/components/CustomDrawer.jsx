@@ -1,10 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Box, List, ListItem, ListItemText } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, List, ListItem, ListItemIcon } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+const useStyles = makeStyles((theme) => ({
+  listItemText: {
+    fontSize: '16px',
+    fontWeight: 500,
+    margin: '0',
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 2),
+  },
+  goBackIcon: {
+    color: theme.palette.text.primary,
+    cursor: 'pointer',
+    fontSize: '26px',
+    marginLeft: '24px',
+    '&:hover': {
+      color: theme.palette.text.primary,
+    },
+  },
+}));
 
 const CustomDrawer = ({ faqs, activeId }) => {
   const theme = useTheme();
+  const classes = useStyles();
   const navigate = useNavigate();
   const [currentActiveId, setCurrentActiveId] = useState(activeId);
 
@@ -29,6 +54,12 @@ const CustomDrawer = ({ faqs, activeId }) => {
         marginLeft: '5px',
       }}
     >
+      <a
+        className={classes.goBackIcon}
+        onClick={() => navigate('/support-center')}
+      >
+        <ArrowBackIcon />
+      </a>
       <List>
         {faqs.map((faq) => (
           <ListItem
@@ -36,6 +67,7 @@ const CustomDrawer = ({ faqs, activeId }) => {
             key={faq.id}
             onClick={() => handleSelect(faq.id)}
             sx={{
+              marginBottom: '8px',
               '&:hover': {
                 backgroundColor: theme.palette.action.hover,
                 borderRadius: '8px',
@@ -45,9 +77,17 @@ const CustomDrawer = ({ faqs, activeId }) => {
                   ? theme.palette.action.selected
                   : 'transparent',
               borderRadius: currentActiveId === faq.id ? '8px' : '0px',
+              padding: '12px 24px',
             }}
           >
-            <ListItemText primary={faq.title} />
+            <ListItemIcon sx={{ minWidth: '28px' }}>
+              <img
+                src={faq.icon}
+                alt={faq.title}
+                style={{ width: '24px', height: '24px' }}
+              />
+            </ListItemIcon>
+            <h3 className={classes.listItemText}>{faq.title}</h3>
           </ListItem>
         ))}
       </List>

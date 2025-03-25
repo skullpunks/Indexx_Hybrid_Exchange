@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import IconicHeader from '../components/updated/shared/IconicHeader';
 import { useTheme } from '@mui/material/styles';
 
+import { FAQS } from './FaqsPage';
+
 // icons dark
 import assetLockDarkIcon from '../assets/updated/support_center/white icons/asset lock.png';
 import cryptoDepositDarkIcon from '../assets/updated/support_center/white icons/crypto deposit.png';
@@ -38,9 +40,6 @@ import resetPassYellowIcon from '../assets/updated/support_center/Yellow icons/r
 import verifyAccYellowIcon from '../assets/updated/support_center/Yellow icons/verify account icon.png';
 import viewAllYellowIcon from '../assets/updated/support_center/Yellow icons/view all icon.png';
 
-// Import icons...
-import faqIcon from '../assets/updated/support_center/white icons/asset lock.png'; // Import a single FAQ icon
-
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: '1400px',
@@ -50,18 +49,19 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginBottom: '30px',
+    marginTop: '150px',
     fontSize: '40px !important',
     fontWeight: '600 !important',
   },
   subheading: {
     marginBottom: '20px',
     marginTop: '40px',
-    fontSize: '24px !important',
-    fontWeight: '500 !important',
+    fontSize: '40px !important',
+    fontWeight: '600 !important',
     color: theme.palette.text.secondary,
   },
   card: {
-    padding: '16px',
+    padding: '24px',
     height: '150px',
     textAlign: 'center',
     display: 'flex',
@@ -75,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    maxWidth: '70px',
-    maxHeight: '70px',
+    maxWidth: '48px',
+    maxHeight: '48px',
     marginBottom: '10px',
   },
   serviceText: {
@@ -85,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   faqCard: {
-    padding: '5px 16px',
     textAlign: 'left',
     display: 'flex',
     alignItems: 'center',
@@ -100,7 +99,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     textDecoration: 'none',
     textAlign: 'left',
-    fontSize: '18px',
+    fontSize: '16px',
+    fontWeight: '500',
     width: '100%',
     transition: 'color 0.3s',
     '&:hover': {
@@ -217,65 +217,46 @@ const SupportCenter = () => {
     },
   ];
 
-  const faqs = [
-    {
-      title: 'How to verify my account?',
-      link: '/faq/verify-account',
-    },
-    {
-      title: 'How to reset my password?',
-      link: '/faq/reset-password',
-    },
-    {
-      title: 'How to change my email address?',
-      link: '/faq/change-email',
-    },
-    {
-      title: 'How to contact support?',
-      link: '/faq/contact-support',
-    },
-    {
-      title: 'What to do if I forget my password?',
-      link: '/faq/forgot-password',
-    },
-    {
-      title: 'How to enable two-factor authentication?',
-      link: '/faq/two-factor-authentication',
-    },
-  ];
-
   return (
     <Box className={classes.container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <h1 className={classes.title}>How we can help you?</h1>
       <h2 className={classes.subheading}>Self-Services</h2>
-      <Grid container spacing={2}>
+      <Grid container spacing={4}>
         {services.map((service, index) => (
-          <Grid item xs={6} sm={4} md={2.4} lg={2.4} key={index}>
-            <Link to={service.link} style={{ textDecoration: 'none' }}>
-              <div className={classes.card}>
-                <img
-                  src={service.icon}
-                  alt={service.title}
-                  className={classes.icon}
-                />
-                <div className={classes.serviceText}>{service.title}</div>
-              </div>
-            </Link>
+          <Grid item xs={6} sm={4} key={index}>
+            <Box mb={4}>
+              <Link to={service.link} style={{ textDecoration: 'none' }}>
+                <div className={classes.card}>
+                  <img
+                    src={service.icon}
+                    alt={service.title}
+                    className={classes.icon}
+                  />
+                  <div className={classes.serviceText}>{service.title}</div>
+                </div>
+              </Link>
+            </Box>
           </Grid>
         ))}
       </Grid>
 
-      <h2 className={classes.subheading}>FAQs</h2>
-      <Grid container spacing={1}>
-        {faqs.map((faq, index) => (
+      <h2 className={classes.subheading}>FAQ</h2>
+      <Grid container spacing={2}>
+        {FAQS?.map((faq, index) => (
           <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-            <Link to={faq.link} style={{ textDecoration: 'none' }}>
-              <div className={classes.faqCard}>
-                <img src={faqIcon} alt="FAQ Icon" className={classes.faqIcon} />
-                <div className={classes.faqText}>{faq.title}</div>
-              </div>
-            </Link>
+            <Box mb={1}>
+              <Link to={faq.link} style={{ textDecoration: 'none' }}>
+                <div className={classes.faqCard}>
+                  <img
+                    src={faq.icon}
+                    alt="FAQ Icon"
+                    className={classes.faqIcon}
+                  />
+                  <div className={classes.faqText}>{faq.title}</div>
+                </div>
+              </Link>
+            </Box>
           </Grid>
         ))}
       </Grid>
