@@ -208,7 +208,7 @@ export default function EnhancedTable({
   const [planName, setPlanName] = useState('');
   const preferredOrder = ['INEX', 'INXC', 'IN500', 'DaCrazy', 'IUSD+', 'WIBS'];
   const [smartCryptoCoins, setSmartCryptoCoins] = useState([]);
-
+  const [userEmail, setUserEmail] = useState('');
   const calculateTodayPNL = (item) => {
     const fixedTokens = ['INEX', 'IUSD+', 'INXC', 'IN500', 'WIBS', 'DaCrazy'];
     if (fixedTokens.includes(item.coinSymbol)) {
@@ -247,7 +247,7 @@ export default function EnhancedTable({
       setError(null);
       try {
         let email = String(localStorage.getItem('email'));
-
+        setUserEmail(email);
         if (!email) {
           const signInToken = searchParams.get('signInToken');
           if (signInToken) {
@@ -1250,71 +1250,82 @@ export default function EnhancedTable({
                                   width: '100%',
                                 }}
                               >
-                                <Button
-                                  sx={{
-                                    maxWidth: '150px',
-                                    width: '100%',
-                                    color:
-                                      userType === 'Indexx Exchange'
-                                        ? theme.palette.primary.main
-                                        : '#FFA500',
-                                    borderColor: 'none',
-                                    '&:hover': {
+                                {![
+                                  'donpanchos4me@gmail.com',
+                                  'donpanchos4mr@gmail.com',
+                                  'dpar4fam@hotmail.com',
+                                ].includes(userEmail) && (
+                                  <Button
+                                    sx={{
+                                      maxWidth: '150px',
+                                      width: '100%',
                                       color:
                                         userType === 'Indexx Exchange'
                                           ? theme.palette.primary.main
                                           : '#FFA500',
                                       borderColor: 'none',
-                                      opacity: '.7',
-                                      background: 'none',
-                                    },
-                                  }}
-                                  onClick={() => {
-                                    //setupdatePlanMode(true);
-                                    setContactPopup(true);
-                                    setType('Switch');
-                                    console.log(
-                                      'group.categorygroup.category',
-                                      group.category,
-                                      group.rows[0].notes
-                                    );
-                                    //onPlanChange(group.rows[0].notes, group);
-                                  }}
-                                >
-                                  Switch Plan
-                                </Button>
-                                <Button
-                                  sx={{
-                                    maxWidth: '150px',
-                                    width: '100%',
-                                    color:
-                                      userType === 'Indexx Exchange'
-                                        ? theme.palette.primary.main
-                                        : '#FFA500',
-                                    borderColor: 'none',
-                                    '&:hover': {
+                                      '&:hover': {
+                                        color:
+                                          userType === 'Indexx Exchange'
+                                            ? theme.palette.primary.main
+                                            : '#FFA500',
+                                        borderColor: 'none',
+                                        opacity: '.7',
+                                        background: 'none',
+                                      },
+                                    }}
+                                    onClick={() => {
+                                      //setupdatePlanMode(true);
+                                      setContactPopup(true);
+                                      setType('Switch');
+                                      console.log(
+                                        'group.categorygroup.category',
+                                        group.category,
+                                        group.rows[0].notes
+                                      );
+                                      //onPlanChange(group.rows[0].notes, group);
+                                    }}
+                                  >
+                                    Switch Plan
+                                  </Button>
+                                )}
+                                {![
+                                  'donpanchos4me@gmail.com',
+                                  'donpanchos4mr@gmail.com',
+                                  'dpar4fam@hotmail.com',
+                                ].includes(userEmail) && (
+                                  <Button
+                                    sx={{
+                                      maxWidth: '150px',
+                                      width: '100%',
                                       color:
                                         userType === 'Indexx Exchange'
                                           ? theme.palette.primary.main
                                           : '#FFA500',
                                       borderColor: 'none',
-                                      opacity: '.7',
-                                      background: 'none',
-                                    },
-                                  }}
-                                  onClick={() => {
-                                    //setSellConfirmationPopup(true);
-                                    setContactPopup(true);
-                                    setType('Sell');
-                                    setPlanName(group.rows[0].notes);
-                                    localStorage.setItem(
-                                      'SellPlanCurrencies',
-                                      JSON.stringify(group)
-                                    );
-                                  }}
-                                >
-                                  Sell Plan
-                                </Button>
+                                      '&:hover': {
+                                        color:
+                                          userType === 'Indexx Exchange'
+                                            ? theme.palette.primary.main
+                                            : '#FFA500',
+                                        borderColor: 'none',
+                                        opacity: '.7',
+                                        background: 'none',
+                                      },
+                                    }}
+                                    onClick={() => {
+                                      setContactPopup(true);
+                                      setType('Sell');
+                                      setPlanName(group.rows[0].notes);
+                                      localStorage.setItem(
+                                        'SellPlanCurrencies',
+                                        JSON.stringify(group)
+                                      );
+                                    }}
+                                  >
+                                    Sell Plan
+                                  </Button>
+                                )}
                               </div>
                               <div className={classes.orderFirstOnTab}>
                                 <Button
