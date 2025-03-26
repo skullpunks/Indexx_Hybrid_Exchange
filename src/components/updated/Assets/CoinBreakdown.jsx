@@ -170,14 +170,20 @@ const CoinBreakdown = ({
         {selectedValue === 'Smart APY' ? (
           ''
         ) : (
-          <Box className={classes.leftDiv}>
-            {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
-          <Box className={classes.underline}></Box> */}
+          <Box
+            className={classes.leftDiv}
+            style={{ flexDirection: 'row', gap: '10px' }}
+          >
             <img
               src={currentPath === '/wallet/fiat' ? fiatImg : cryptosImg}
               alt={currentPath === '/wallet/fiat' ? 'fiatImg' : 'cryptosImg'}
-              style={{ height: '50px' }}
+              style={{ height: '50px', width: '30%', objectFit: 'contain' }}
             />
+            {currentPath === '/wallet/fiat' && (
+              <Typography variant="h6" style={{ alignSelf: 'center' }}>
+                Fiat
+              </Typography>
+            )}
           </Box>
         )}
       </Box>
