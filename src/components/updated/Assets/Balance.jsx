@@ -403,19 +403,6 @@ const BalanceOverview = ({
           {`$${profit.value} (${profit.percentage}%)`}
         </span>
       </Typography>
-
-      {[
-        'donpanchos4me@gmail.com',
-        'donpanchos4mr@gmail.com',
-        'dpar4fam@hotmail.com',
-      ].includes(email) && (
-        <Typography
-          className={classes.pnlText}
-          style={{ fontWeight: 600, color: 'red' }}
-        >
-          This account is already closed or paid
-        </Typography>
-      )}
     </Box>
   );
 };

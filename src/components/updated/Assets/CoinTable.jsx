@@ -1326,6 +1326,19 @@ export default function EnhancedTable({
                                     Sell Plan
                                   </Button>
                                 )}
+
+                                {[
+                                  'donpanchos4me@gmail.com',
+                                  'donpanchos4mr@gmail.com',
+                                  'dpar4fam@hotmail.com',
+                                ].includes(email) && (
+                                  <Typography
+                                    className={classes.pnlText}
+                                    style={{ fontWeight: 800, color: 'red' }}
+                                  >
+                                    This account is already closed or paid
+                                  </Typography>
+                                )}
                               </div>
                               <div className={classes.orderFirstOnTab}>
                                 <Button
