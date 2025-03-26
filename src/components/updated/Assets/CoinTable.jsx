@@ -30,7 +30,7 @@ import rush from '../../../assets/updated/smartCrypto/rush.png';
 import xBitcoin from '../../../assets/updated/smartCrypto/x-bitcoin.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import SellConfirmationPopup from './SellConfirmationPopup';
 import { useTheme } from '@mui/material/styles';
 import CongratulationsPopup from './Congratulations';

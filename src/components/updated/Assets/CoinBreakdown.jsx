@@ -13,6 +13,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchComponent from './SearchInput';
 import EnhancedTable from './CoinTable';
 import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
+import fiatImg from '../../../assets/updated/asset_wallet/fiat-logo.png';
+
 import CoinTableAPY from './CoinTableAPY';
 import DemoCoinTable from './DemoCoinTable';
 // Define the makeStyles hook
@@ -171,7 +173,11 @@ const CoinBreakdown = ({
           <Box className={classes.leftDiv}>
             {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
           <Box className={classes.underline}></Box> */}
-            <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
+            <img
+              src={currentPath === '/wallet/fiat' ? fiatImg : cryptosImg}
+              alt={currentPath === '/wallet/fiat' ? 'fiatImg' : 'cryptosImg'}
+              style={{ height: '50px' }}
+            />
           </Box>
         )}
       </Box>
