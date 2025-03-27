@@ -814,9 +814,27 @@ export default function EnhancedTable({
             {(() => {
               let hasRenderedXBitcoin = false;
               let hasRenderedXBlue = false;
-
+              let hasRenderedSmartCryptoSeparator = false;
               return organizedRows.map((group, groupIndex) => (
                 <React.Fragment key={groupIndex}>
+                  {group.category.includes('Smart Crypto') &&
+                    selectedValue === 'Overview' &&
+                    !hasRenderedSmartCryptoSeparator && (
+                      <>
+                        <TableRow>
+                          <TableCell
+                            colSpan={isMobile ? 3 : 5}
+                            sx={{
+                              borderBottom: '1px solid #FFA500',
+                              fontWeight: 'bold',
+                              textAlign: 'right',
+                            }}
+                          ></TableCell>
+                        </TableRow>
+                        {(hasRenderedSmartCryptoSeparator = true)}
+                      </>
+                    )}
+
                   {/* Render xBitcoin Heading */}
                   {group.category.includes('x-Bitcoin') &&
                     !hasRenderedXBitcoin && (
@@ -1445,16 +1463,18 @@ export default function EnhancedTable({
                         </TableRow>
                       </>
                     )}
-                  <TableRow>
-                    <TableCell
-                      colSpan={isMobile ? 3 : 5}
-                      sx={{
-                        borderBottom: '1px solid #FFA500',
-                        fontWeight: 'bold',
-                        textAlign: 'right',
-                      }}
-                    ></TableCell>
-                  </TableRow>
+                  {group.category.includes('Smart Crypto') && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={isMobile ? 3 : 5}
+                        sx={{
+                          borderBottom: '1px solid #FFA500',
+                          fontWeight: 'bold',
+                          textAlign: 'right',
+                        }}
+                      ></TableCell>
+                    </TableRow>
+                  )}
                 </React.Fragment>
               ));
             })()}

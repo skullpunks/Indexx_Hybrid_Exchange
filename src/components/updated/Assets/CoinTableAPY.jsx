@@ -21,7 +21,7 @@ import {
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
 import SuccessfullWithdrawPopup from '../SmartApy/SuccessfullWithdrawPopup';
 import SmartApyWithdrawPopup from '../SmartApy/SmartApyWithdrawPopup';
-
+import smartApyLogo from '../../../assets/updated/SmartApy/smartApyLogo.svg';
 const headCells = [
   {
     id: 'coin',
@@ -186,6 +186,35 @@ export default function CoinTableAPY({ refresh }) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+      {txList.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '12px',
+            marginTop: '20px',
+            marginBottom: '10px',
+          }}
+        >
+          <img
+            src={smartApyLogo}
+            alt="Smart APY Logo"
+            style={{ maxHeight: '50px', width: 'auto', objectFit: 'contain' }}
+          />
+          <Box
+            sx={{
+              fontSize: '22px',
+              color: 'white',
+              fontWeight: 600,
+              marginTop: '8px',
+              fontStyle: 'italic',
+            }}
+          >
+            Smart APY
+          </Box>
+        </Box>
+      )}
       <Paper
         sx={{
           width: '100%',
