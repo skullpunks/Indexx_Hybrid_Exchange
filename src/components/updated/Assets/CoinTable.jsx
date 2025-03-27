@@ -405,12 +405,30 @@ export default function EnhancedTable({
 
   const filteredRows = useMemo(() => {
     // Add a priority rank to each row based on the preferred order array
-    const rowsWithPriority = sortedRows.map((row) => ({
-      ...row,
-      priority: preferredOrder.includes(row.coin)
-        ? preferredOrder.indexOf(row.coin)
-        : preferredOrder.length,
-    }));
+    const rowsWithPriority = sortedRows.map((row) => {
+      // Inject sold coin balances for donpanchos4me@gmail.com
+      if (userEmail === 'donpanchos4me@gmail.com') {
+        const soldBalances = {
+          BTC: 0.1682002461,
+          SOL: 8.747821792,
+          ETH: 0.5441778415,
+          LINK: 40.10608826,
+          DOT: 95.36857271,
+          BNB: 1.245786036,
+          XRP: 454.2118918,
+        };
+        const overrideAmount = soldBalances[row.coin];
+        if (overrideAmount) {
+          row.amount = overrideAmount;
+        }
+      }
+      return {
+        ...row,
+        priority: preferredOrder.includes(row.coin)
+          ? preferredOrder.indexOf(row.coin)
+          : preferredOrder.length,
+      };
+    });
 
     // Sort by priority first, then by the selected order and orderBy
     const sortedByPriority = stableSort(
@@ -913,10 +931,19 @@ export default function EnhancedTable({
                             textAlign: 'center',
                           }}
                         >
-                          {group.category}{' '}
-                          {group.rows.length > 0 &&
-                            // Display formatted category names once per group
-                            getFormattedCategory(group.rows[0].notes)}
+                          <>
+                            {group.category}{' '}
+                            {group.rows.length > 0 &&
+                              getFormattedCategory(group.rows[0].notes)}
+                            {userEmail === 'donpanchos4me@gmail.com' && (
+                              <Typography
+                                className={classes.pnlText}
+                                style={{ fontWeight: 800, color: 'red' }}
+                              >
+                                This package was sold by owner on 12th March
+                              </Typography>
+                            )}
+                          </>
                         </TableCell>
                       </TableRow>
 
@@ -951,68 +978,71 @@ export default function EnhancedTable({
                       </TableRow> */}
                     </>
                   )}
-                  {!group.category.includes('Coins') && (
-                    <TableRow sx={{ borderBottom: 'none !important' }}>
-                      <TableCell
-                        colSpan={isMobile ? 1 : 2}
-                        sx={{
-                          fontSize: '22px',
-                          borderBottom: 'none !important',
-                        }}
-                      >
-                        Estimated Value: $
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        }).format(
-                          group.rows.reduce(
-                            (total, row) => total + row.amount * row.coin_price,
-                            0
-                          )
-                        )}
-                      </TableCell>
-                      <TableCell
-                        colSpan={isMobile ? 2 : 2}
-                        sx={{
-                          fontSize: '22px',
-                          borderBottom: 'none !important',
-                        }}
-                      >
-                        Invested Amount: $
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        }).format(
-                          group.rows.reduce(
-                            (total, row) => total + row.amountInvested,
-                            0
-                          )
-                        )}
-                      </TableCell>
-                      <TableCell
-                        colSpan={isMobile ? 0 : 2}
-                        sx={{
-                          fontSize: '22px',
-                          borderBottom: 'none !important',
-                          display: isMobile ? 'none' : 'flex',
-                        }}
-                      >
-                        Total Value: $
-                        {new Intl.NumberFormat('en-US', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        }).format(
-                          group.rows.reduce(
-                            (total, row) =>
-                              total +
-                              row.amount * row.coin_price +
-                              row?.staking_balance * row?.coin_price,
-                            0
-                          )
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  )}
+                  {userEmail === 'donpanchos4me@gmail.com'
+                    ? ''
+                    : !group.category.includes('Coins') && (
+                        <TableRow sx={{ borderBottom: 'none !important' }}>
+                          <TableCell
+                            colSpan={isMobile ? 1 : 2}
+                            sx={{
+                              fontSize: '22px',
+                              borderBottom: 'none !important',
+                            }}
+                          >
+                            Estimated Value: $
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(
+                              group.rows.reduce(
+                                (total, row) =>
+                                  total + row.amount * row.coin_price,
+                                0
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell
+                            colSpan={isMobile ? 2 : 2}
+                            sx={{
+                              fontSize: '22px',
+                              borderBottom: 'none !important',
+                            }}
+                          >
+                            Invested Amount: $
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(
+                              group.rows.reduce(
+                                (total, row) => total + row.amountInvested,
+                                0
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell
+                            colSpan={isMobile ? 0 : 2}
+                            sx={{
+                              fontSize: '22px',
+                              borderBottom: 'none !important',
+                              display: isMobile ? 'none' : 'flex',
+                            }}
+                          >
+                            Total Value: $
+                            {new Intl.NumberFormat('en-US', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(
+                              group.rows.reduce(
+                                (total, row) =>
+                                  total +
+                                  row.amount * row.coin_price +
+                                  row?.staking_balance * row?.coin_price,
+                                0
+                              )
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      )}
 
                   {/* Rows for each category */}
                   {group.category.includes('Coins') ? (
