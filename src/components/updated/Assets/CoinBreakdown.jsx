@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     color: '#8BB376',
     fontSize: '20px !important',
-  },  
+  },
   checkboxLabel: {
     marginLeft: '16px',
     '& .Mui-checked': {
@@ -182,7 +182,11 @@ const CoinBreakdown = ({
             <img
               src={currentPath === '/wallet/fiat' ? fiatImg : cryptosImg}
               alt={currentPath === '/wallet/fiat' ? 'fiatImg' : 'cryptosImg'}
-              style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+              style={{
+                height: currentPath === '/wallet/fiat' ? '60px' : '40px',
+                width: 'auto',
+                objectFit: 'contain',
+              }}
             />
             {currentPath === '/wallet/fiat' && (
               <Typography
@@ -191,6 +195,7 @@ const CoinBreakdown = ({
                   fontWeight: 'bold',
                   color: '#8BB376 !important',
                   fontSize: '20px',
+                  fontStyle: 'italic',
                 }}
               >
                 Fiat
