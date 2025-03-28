@@ -58,13 +58,13 @@ const headCells = [
     label: 'Lock-up Period',
     minWidth: 200, // Wider to accommodate the longer heading
   },
-  {
-    id: 'divident',
-    numeric: false,
-    disablePadding: false,
-    label: 'Divident 5%',
-    minWidth: 180,
-  },
+  // {
+  //   id: 'divident',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: 'Divident 5%',
+  //   minWidth: 180,
+  // },
   {
     id: 'APYYield',
     numeric: false,
