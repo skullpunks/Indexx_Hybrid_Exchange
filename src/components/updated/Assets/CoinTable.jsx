@@ -1020,7 +1020,17 @@ export default function EnhancedTable({
                   )}
                 </>
               )}
-
+              {/* Horizontal divider after Crypto section */}
+              <TableRow>
+                <TableCell
+                  colSpan={isMobile ? 3 : 5}
+                  sx={{
+                    borderBottom: '1px solid #079639 !important',
+                    height: '1px',
+                    padding: 0,
+                  }}
+                />
+              </TableRow>
               {/* Smart Crypto Section */}
               <TableRow>
                 <TableCell
@@ -1913,6 +1923,18 @@ export default function EnhancedTable({
                     </>
                   )}
 
+                  {/* Horizontal divider after Smart Crypto section */}
+                  <TableRow>
+                    <TableCell
+                      colSpan={isMobile ? 3 : 5}
+                      sx={{
+                        borderBottom: '1px solid #B28314 !important',
+                        height: '1px',
+                        padding: 0,
+                      }}
+                    />
+                  </TableRow>
+
                   {/* Smart APY Section */}
                   <>
                     <TableRow>
@@ -2048,7 +2070,17 @@ export default function EnhancedTable({
                   )}
                 </>
               )}
-
+              {/* Horizontal divider after Smart Crypto section */}
+              <TableRow>
+                <TableCell
+                  colSpan={isMobile ? 3 : 5}
+                  sx={{
+                    borderBottom: '1px solid #B28314 !important',
+                    height: '1px',
+                    padding: 0,
+                  }}
+                />
+              </TableRow>
               {/* Fiat Section - Always shown */}
               <TableRow>
                 <TableCell
@@ -2171,6 +2203,17 @@ export default function EnhancedTable({
                   )}
                 </>
               )}
+              {/* Horizontal divider after Fiat section */}
+              <TableRow>
+                <TableCell
+                  colSpan={isMobile ? 3 : 5}
+                  sx={{
+                    borderBottom: '1px solid #7D996B !important',
+                    height: '1px',
+                    padding: 0,
+                  }}
+                />
+              </TableRow>
             </TableBody>
           ) : (
             <>
