@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import PaymentMethodSelection from './PaymentMethodSelection';
 import Popup from './PaymentPopup';
 import GeneralPopup from '../Popup';
+import InfoButton from '../../InfoButton';
 
 import {
   baseURL,
@@ -26,6 +27,8 @@ import exchangeLight from '../../../../assets/updated/buySell/Exchange for Light
 import exchangeDark from '../../../../assets/updated/buySell/exchange for Dark mode.svg';
 import NonIndexxFailPopup from './NonIndexxFailPopup';
 import OrderProcessedSuccessfullyPopup from './OrderProcessedSuccessfullyPopup';
+import VideoPopup from '../../VideoPopup';
+
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
@@ -209,6 +212,7 @@ const BuySellTabs = ({
     useState(false);
   const [minAmountError, setMinAmountError] = useState(false);
   const [searchParams] = useSearchParams();
+
   useEffect(() => {
     const email = localStorage.getItem('email');
     const user = localStorage.getItem('user');
@@ -752,11 +756,13 @@ const BuySellTabs = ({
         <span>
           <img
             src={theme.palette.mode === 'dark' ? exchangeDark : exchangeLight}
+            alt=""
           />
         </span>
         <h3 className={classes.heading} style={{ marginBottom: '0px' }}>
           {' '}
           Exchange
+          <InfoButton page={'BuySell'} />
         </h3>
       </div>
       <Box className={classes.card}>

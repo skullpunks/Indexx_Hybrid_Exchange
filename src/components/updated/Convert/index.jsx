@@ -30,6 +30,9 @@ import PreviewConversionpopup from './PreviewConversionpopup';
 import SuccessPopup from './SuccessfulConvertPopup';
 import GeneralPopup from '../BuySell/Popup';
 import IconicHeader from '../shared/IconicHeader';
+import VideoPopup from '../VideoPopup';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoButton from '../InfoButton';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -102,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     fontWeight: '600px',
     color: theme.palette.text.primary,
+    marginBottom: '3px',
   },
   swapIconHover: {
     transition: 'all .2s linear',
@@ -110,6 +114,10 @@ const useStyles = makeStyles((theme) => ({
 
       transform: 'scale(1.2)',
     },
+  },
+  infoContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
@@ -533,7 +541,10 @@ const ConvertCrypto = () => {
       </div> */}
       <div className={classes.contentContent}>
         <div className={classes.rightContainer}>
-          <h2 className={classes.mainHeading}>Convert</h2>
+          <div className={classes.infoContainer}>
+            <h2 className={classes.mainHeading}>Convert </h2>
+            <InfoButton page={'Convert'} />
+          </div>
           <IconicHeaders />
 
           <div className={classes.rightContentContainer}>

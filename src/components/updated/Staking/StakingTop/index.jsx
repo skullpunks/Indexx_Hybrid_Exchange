@@ -209,6 +209,7 @@ const StakingTop = ({ onStakeSuccess }) => {
   const [searchParams] = useSearchParams();
   const [activeButton, setActiveButton] = useState('6 Months');
   const defaultSignInToken = searchParams.get('signInToken');
+  const [isBalanceLoading, setIsBalanceLoading] = useState(true);
 
   const handleButtonClick = async (button) => {
     setActiveButton(button);
@@ -239,75 +240,80 @@ const StakingTop = ({ onStakeSuccess }) => {
   };
 
   const handleTokenSelect = async (token) => {
-    console.log('I am here', token);
-    if (
-      token === 'Stock Tokens' ||
-      token === 'Tokens' ||
-      token === 'ETF Tokens'
-    ) {
-      setTokenType(token);
-    } else {
-      const findToken = initialTokens.find((x) => x.title === token);
-      console.log(findToken);
-      setSelectedToken(findToken);
-      const findTokenBal = allWallets.find((x) => {
-        if (
-          token === 'INEX' ||
-          token === 'INEX-POLYGON' ||
-          token === 'INEX-ETHEREUM'
-        ) {
-          return (
-            x.coinSymbol === findToken.image &&
-            x.coinNetwork === findToken.chain
-          );
-        }
-        return x.coinSymbol === token;
-      });
-      console.log('findTokenBal', findTokenBal);
-      if (findTokenBal) {
-        setSelectedTokenBalance(findTokenBal.coinBalance);
-        // Check for insufficient balance after token change
-        if (amt > findTokenBal.coinBalance) {
+    setIsBalanceLoading(true);
+    try {
+      if (
+        token === 'Stock Tokens' ||
+        token === 'Tokens' ||
+        token === 'ETF Tokens'
+      ) {
+        setTokenType(token);
+      } else {
+        const findToken = initialTokens.find((x) => x.title === token);
+        setSelectedToken(findToken);
+        const findTokenBal = allWallets.find((x) => {
+          if (
+            token === 'INEX' ||
+            token === 'INEX-POLYGON' ||
+            token === 'INEX-ETHEREUM'
+          ) {
+            return (
+              x.coinSymbol === findToken.image &&
+              x.coinNetwork === findToken.chain
+            );
+          }
+          return x.coinSymbol === token;
+        });
+
+        if (findTokenBal) {
+          setSelectedTokenBalance(findTokenBal.coinBalance);
+          // Check for insufficient balance after token change
+          if (amt > findTokenBal.coinBalance) {
+            setError(
+              `Insufficient balance available to stake. Please buy ${findToken.title} or deposit ${findToken.title}.`
+            );
+          } else {
+            setError(''); // Clear error if balance is sufficient
+          }
+          console.log('type', type, findToken.title);
+          console.log('long', type, findToken.stakingPercentage1year);
+          console.log('short', type, findToken.stakingPercentage6months);
+          if (type === '1 Year' || type === 'Long') {
+            let result = await calculateStakeReward(
+              amt ?? 0,
+              findToken.title,
+              'Long',
+              findToken.stakingPercentage6months
+            );
+            console.log('result', result);
+            setRewards(result?.data?.finalAmount ?? 0);
+            setFinalAmount(
+              amt * (1 + selectedToken.stakingPercentage1year / 100)
+            );
+          } else if (type === '6 Months' || type === 'Short') {
+            let result = await calculateStakeReward(
+              amt ?? 0,
+              findToken.title,
+              'Short',
+              findToken.stakingPercentage6months
+            );
+            console.log('result', result);
+            setRewards(result?.data?.finalAmount ?? 0);
+            setFinalAmount(
+              amt * (1 + selectedToken.stakingPercentage6months / 100)
+            );
+          }
+        } else {
+          setSelectedTokenBalance(0);
           setError(
             `Insufficient balance available to stake. Please buy ${findToken.title} or deposit ${findToken.title}.`
           );
-        } else {
-          setError(''); // Clear error if balance is sufficient
         }
-        console.log('type', type, findToken.title);
-        console.log('long', type, findToken.stakingPercentage1year);
-        console.log('short', type, findToken.stakingPercentage6months);
-        if (type === '1 Year' || type === 'Long') {
-          let result = await calculateStakeReward(
-            amt ?? 0,
-            findToken.title,
-            'Long',
-            findToken.stakingPercentage6months
-          );
-          console.log('result', result);
-          setRewards(result?.data?.finalAmount ?? 0);
-          setFinalAmount(
-            amt * (1 + selectedToken.stakingPercentage1year / 100)
-          );
-        } else if (type === '6 Months' || type === 'Short') {
-          let result = await calculateStakeReward(
-            amt ?? 0,
-            findToken.title,
-            'Short',
-            findToken.stakingPercentage6months
-          );
-          console.log('result', result);
-          setRewards(result?.data?.finalAmount ?? 0);
-          setFinalAmount(
-            amt * (1 + selectedToken.stakingPercentage6months / 100)
-          );
-        }
-      } else {
-        setSelectedTokenBalance(0); // or any default value you prefer
-        setError(
-          `Insufficient balance available to stake. Please buy ${findToken.title} or deposit ${findToken.title}.`
-        );
       }
+    } catch (error) {
+      console.error('Error in handleTokenSelect:', error);
+    } finally {
+      setIsBalanceLoading(false);
     }
   };
 
@@ -350,6 +356,7 @@ const StakingTop = ({ onStakeSuccess }) => {
 
   const getAllUserWallet = async () => {
     try {
+      setIsBalanceLoading(true);
       let email = String(localStorage.getItem('email'));
       const userWallets = await getUserWallets(email);
       const usersWallet = userWallets.data;
@@ -357,9 +364,11 @@ const StakingTop = ({ onStakeSuccess }) => {
       const findTokenBal = usersWallet.find(
         (x) => x.coinSymbol === selectedToken.title
       );
-      setSelectedTokenBalance(findTokenBal.coinBalance);
+      setSelectedTokenBalance(findTokenBal?.coinBalance || 0);
     } catch (err) {
       console.error('Error in getAllUserWallet', err);
+    } finally {
+      setIsBalanceLoading(false);
     }
   };
 
@@ -392,23 +401,40 @@ const StakingTop = ({ onStakeSuccess }) => {
 
   const submitStake = async () => {
     try {
+      // Validate balance before staking
+      const balanceNum = parseFloat(selectedTokenBalance);
+      const stakeAmount = parseFloat(amt);
+
+      if (isNaN(stakeAmount) || stakeAmount <= 0) {
+        setError('Please enter a valid amount to stake.');
+        return;
+      }
+
+      if (stakeAmount > balanceNum) {
+        setError(
+          `Insufficient balance available to stake. Please buy ${selectedToken?.title} or deposit ${selectedToken?.title}.`
+        );
+        return;
+      }
+
       setLoadings(true);
       const email = localStorage.getItem('email');
       let percentage =
         type === 'Short'
           ? selectedToken.stakingPercentage6months
           : selectedToken.stakingPercentage1year;
+
       let res = await stakeCoin(
         email,
-        amt,
+        stakeAmount, // Use the parsed float value
         selectedToken.title,
         type,
         percentage
       );
-      console.log(res);
+
       if (res.status === 200) {
         setLoadings(false);
-        setShowSuccessPopup(true); // Show success popup
+        setShowSuccessPopup(true);
         onStakeSuccess();
         setAmt('');
         setRewards(0);
@@ -416,15 +442,18 @@ const StakingTop = ({ onStakeSuccess }) => {
         await getAllUserWallet();
       } else {
         setLoadings(false);
-        setShowErrorPopup(true); // Show success popup
-        setErrorMessage(res.message);
+        setShowErrorPopup(true);
+        setErrorMessage(res.message || 'Failed to stake. Please try again.');
         setAmt('');
         setRewards(0);
-        // Re-fetch the updated wallet balances after staking
+        // Re-fetch the updated wallet balances after failed attempt
         await getAllUserWallet();
       }
     } catch (err) {
       setLoadings(false);
+      setShowErrorPopup(true);
+      setErrorMessage('An error occurred while staking. Please try again.');
+      console.error('Error in submitStake:', err);
     }
   };
 
@@ -450,7 +479,7 @@ const StakingTop = ({ onStakeSuccess }) => {
       return;
     }
 
-    setAmt(inputAmt); // Store the raw input value to allow backspacing
+    setAmt(parsedAmt); // Store the parsed float value instead of raw input
 
     let minimumRequired = 50;
     try {
@@ -459,10 +488,13 @@ const StakingTop = ({ onStakeSuccess }) => {
         minimumRequired = 0.01;
       }
 
+      // Convert both values to numbers for comparison
+      const balanceNum = parseFloat(selectedTokenBalance);
+
       if (parsedAmt < minimumRequired) {
         setError(`Minimum staking amount must be at least ${minimumRequired}.`);
         return;
-      } else if (parsedAmt > selectedTokenBalance) {
+      } else if (parsedAmt > balanceNum) {
         setError(
           `Insufficient balance available to stake. Please buy ${selectedToken?.title} or deposit ${selectedToken?.title}.`
         );
@@ -527,7 +559,12 @@ const StakingTop = ({ onStakeSuccess }) => {
         </div>
         <div className={classes.balanceContainer}>
           <label className={classes.label}>
-            Balance: {formatPrice(selectedTokenBalance)}
+            Balance:{' '}
+            {isBalanceLoading ? (
+              <span style={{ fontSize: '24px' }}>Loading...</span>
+            ) : (
+              formatPrice(selectedTokenBalance)
+            )}
           </label>
           <InputField
             label=""

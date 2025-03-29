@@ -2674,3 +2674,40 @@ export function encrypt(text: string) {
 //   decrypted += decipher.final('utf8');
 //   return decrypted;
 // }
+
+// Add near other interfaces
+export interface PerformanceData {
+  balances: {
+    estimatedBalance: number;
+    stakedBalance: number;
+    totalBalance: number;
+    investmentAmount: number;
+  };
+  pnl: {
+    today: {
+      value: number;
+      percentage: number;
+    };
+    portfolio: {
+      value: number;
+      percentage: number;
+    };
+  };
+  chartData: {
+    '1D': { labels: string[]; data: number[] };
+    '1W': { labels: string[]; data: number[] };
+    '1M': { labels: string[]; data: number[] };
+    '3M': { labels: string[]; data: number[] };
+    '6M': { labels: string[]; data: number[] };
+  };
+}
+
+// Add with other API endpoints
+export const getPerformanceData = async (email: string): Promise<PerformanceData> => {
+  try {
+    const result = await API.get(`/api/v1/wallet/getUserPerformance/${email}`);
+    return result.data;
+  } catch (e: any) {
+    throw new Error('Failed to fetch performance data');
+  }
+};

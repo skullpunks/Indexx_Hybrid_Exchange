@@ -46,6 +46,10 @@ import apyYellow from '../../../../assets/updated/SmartApy/APY yellow.png';
 import apyDarkMode from '../../../../assets/updated/SmartApy/APY Dark mode.png';
 import apyLightMode from '../../../../assets/updated/SmartApy/APY Light mode.png';
 
+import supportYellow from '../../../../assets/updated/iconicHeader/support_icon.svg';
+import supportDark from '../../../../assets/updated/iconicHeader/support_dark_mode.svg';
+import supportLight from '../../../../assets/updated/iconicHeader/support_light_mode.svg';
+
 import { checkByemail } from '../../../../services/api';
 
 const CustomTab = styled(Tab)(({ theme }) => ({
@@ -246,6 +250,12 @@ export default function IconicHeader({ selectedTab, onChange }) {
       path: '/indexx-exchange/dashboard',
     });
   }
+  tabsData.push({
+    label: 'Support',
+    light: userType === 'Indexx Exchange' ? supportLight : supportYellow,
+    dark: userType === 'Indexx Exchange' ? supportDark : supportYellow,
+    path: '/support-center',
+  });
 
   const getSelectedTab = () => {
     const currentPath = location.pathname;
@@ -289,7 +299,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
 
   let maxWidthTabContainer;
   if (isLoggedIn && userType === 'Indexx Exchange') {
-    maxWidthTabContainer = '1260px';
+    maxWidthTabContainer = '1360px';
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1400px';
   } else {

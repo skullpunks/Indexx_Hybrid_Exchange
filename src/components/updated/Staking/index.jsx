@@ -4,6 +4,7 @@ import GenericButton from '../shared/Button';
 import IconicHeader from '../shared/IconicHeader';
 import StakingBottom from './StakingBottom';
 import StakingTop from './StakingTop';
+import InfoButton from '../InfoButton';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -53,6 +54,10 @@ const Staking = () => {
       <div className={classes.container}>
         <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
         <div style={{ maxWidth: '1280px', width: '100%', margin: 'auto' }}>
+          <h2 style={{ marginLeft: '20px' }}>
+            Staking
+            <InfoButton page={'Staking'} />
+          </h2>
           <StakingTop onStakeSuccess={handleRefresh} />
           <StakingBottom refresh={refresh} />
         </div>

@@ -163,6 +163,9 @@ import SmartAPYPage from './pages/SmartAPY';
 import HowItWorksSmartAPY from './pages/HowItWorksSmartAPY';
 import SmartApyCalPage from './pages/SmartApyCal';
 import CryptoTreasuryPage from './pages/CryptoTreasury';
+import PerformancePage from './pages/PerformancePage';
+import SupportCenter from './pages/SupportCenter';
+import FaqsPage from './pages/FaqsPage';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {
@@ -268,6 +271,8 @@ function App() {
               element={<SendCardSuccessfulPage />}
             />
             <Route path="/smart-crypto" element={<SmartCryptoPage />} />
+            <Route path="/support-center" element={<SupportCenter />} />
+            <Route path="/faqs/:id" element={<FaqsPage />} />
             <Route
               path="/smart-crypto/plan-detail/:name"
               element={<PlanDetails />}
@@ -621,6 +626,11 @@ function App() {
               path="/indexx-exchange/buy-sell/deposit-fiat/*"
               element={<BSDepositFiatLayout />}
             />
+            <Route
+              path="//indexx-exchange/buy-sell/performance-history"
+              element={<PerformancePage />}
+            />
+
             <Route
               path="/indexx-exchange/buy-sell/transaction-history/*"
               element={<BSTransactionHistoryLayout />}

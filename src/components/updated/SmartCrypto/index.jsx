@@ -749,6 +749,7 @@ const SmartCrypto = () => {
             <div>
               <h3 style={{ fontStyle: 'italic' }}>
                 <span style={{ color: '#FBAF01 ' }}>Smart Crypto</span>
+                <InfoButton page={'SmartCrypto'} />
               </h3>
               <p>Autopilot, hands-off investment vehicle</p>
             </div>
