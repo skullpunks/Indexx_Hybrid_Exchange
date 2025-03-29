@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import CustomSelectBox from './CustomSelectBox';
 import {
@@ -21,6 +21,7 @@ import {
 import iusdp from '../../../assets/token-icons/IUSDP_logo.png';
 import SuccessfullWithdrawPopup from '../SmartApy/SuccessfullWithdrawPopup';
 import SmartApyWithdrawPopup from '../SmartApy/SmartApyWithdrawPopup';
+import smartApyLogo from '../../../assets/updated/SmartApy/smartApyLogo.svg';
 
 const headCells = [
   {
@@ -42,28 +43,21 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Maturity Date',
-    minWidth: 150, // Wider to accommodate the longer heading
+    minWidth: 150,
   },
   {
     id: 'stakedAmount',
     numeric: true,
     disablePadding: false,
     label: 'Staked Amount',
-    minWidth: 190, // Wider to accommodate the longer heading
+    minWidth: 190,
   },
   {
     id: 'lockupPeriod',
     numeric: false,
     disablePadding: false,
     label: 'Lock-up Period',
-    minWidth: 200, // Wider to accommodate the longer heading
-  },
-  {
-    id: 'divident',
-    numeric: false,
-    disablePadding: false,
-    label: 'Divident 5%',
-    minWidth: 180,
+    minWidth: 200,
   },
   {
     id: 'APYYield',
@@ -84,7 +78,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Days to Maturity',
-    minWidth: 220, // Wider to accommodate the longer heading
+    minWidth: 220,
   },
   {
     id: 'action',
@@ -104,7 +98,7 @@ export default function CoinTableAPY({ refresh }) {
   const [withdrawPopup, setWithdrawPopup] = useState(false);
   const [selectedWithdraw, setSelectedWithdraw] = useState(null);
   const theme = useTheme();
-
+  const isMobile = useMediaQuery('(max-width: 768px)');
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const decodedToken = decodeJWT(String(token));
@@ -186,40 +180,78 @@ export default function CoinTableAPY({ refresh }) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-      <Paper
+      {/* Smart APY Header - Always shown */}
+      <Box
         sx={{
-          width: '100%',
-          overflow: 'hidden',
-          '&.MuiPaper-root': {
-            background: 'none',
-          },
-          '&::-webkit-scrollbar': {
-            width: '7px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor:
-              theme.palette.mode === 'dark'
-                ? '#5f6673 !important'
-                : '#b7bdc6 !important',
-            borderRadius: '4px',
-          },
-          '&::-webkit-scrollbar-track': {
-            display: 'none !important', // Hide the scrollbar track
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor:
-              theme.palette.mode === 'dark'
-                ? '#484f59 !important' // Darker color for dark mode
-                : '#a0a6af !important', // Darker color for light mode
-          },
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '12px',
+          marginTop: '20px',
+          marginBottom: '10px',
         }}
       >
-        <TableContainer
+        <img
+          src={smartApyLogo}
+          alt="Smart APY Logo"
+          style={{ maxHeight: '50px', width: 'auto', objectFit: 'contain' }}
+        />
+        <Box
           sx={{
-            maxWidth: '100%',
-            overflowX: 'auto',
+            fontSize: '22px',
+            color: 'white',
+            fontWeight: 600,
+            marginTop: '8px',
+            fontStyle: 'italic',
+          }}
+        >
+          Smart APY
+        </Box>
+      </Box>
+
+      {/* No Assets Message - Only shown when empty */}
+      {txList.length === 0 && (
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              background: 'none',
+              boxShadow: 'none',
+              width: 'auto',
+            }}
+          >
+            <Table sx={{ borderCollapse: 'collapse' }}>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    colSpan={headCells.length}
+                    sx={{
+                      textAlign: 'center',
+                      border: 'none',
+                      padding: '40px 16px',
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    No Smart APY assets available
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
+      
+      {/* Table - Only shown when there are records */}
+      {txList.length > 0 && (
+        <Paper
+          sx={{
+            width: '100%',
+            overflow: 'hidden',
+            '&.MuiPaper-root': {
+              background: 'none',
+            },
             '&::-webkit-scrollbar': {
-              width: '2px',
+              width: '7px',
             },
             '&::-webkit-scrollbar-thumb': {
               backgroundColor:
@@ -229,113 +261,141 @@ export default function CoinTableAPY({ refresh }) {
               borderRadius: '4px',
             },
             '&::-webkit-scrollbar-track': {
-              display: 'none !important', // Hide the scrollbar track
+              display: 'none !important',
             },
             '&::-webkit-scrollbar-thumb:hover': {
               backgroundColor:
                 theme.palette.mode === 'dark'
-                  ? '#484f59 !important' // Darker color for dark mode
-                  : '#a0a6af !important', // Darker color for light mode
+                  ? '#484f59 !important'
+                  : '#a0a6af !important',
             },
           }}
         >
-          <Table sx={{ minWidth: 1000 }} aria-labelledby="tableTitle">
-            <TableHead>
-              <TableRow>
-                {headCells.map((headCell) => (
-                  <TableCell
-                    key={headCell.id}
-                    sx={{ minWidth: headCell.minWidth }}
-                  >
-                    <TableSortLabel
-                      active={orderBy === headCell.id}
-                      direction={orderBy === headCell.id ? order : 'asc'}
-                      onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}
-                    >
-                      {headCell.label}
-                      {orderBy === headCell.id ? (
-                        <Box component="span" sx={visuallyHidden}>
-                          {order === 'desc'
-                            ? 'sorted descending'
-                            : 'sorted ascending'}
-                        </Box>
-                      ) : null}
-                    </TableSortLabel>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {txList.map((row) => {
-                const daysBeforeEndDate = Math.floor(
-                  (new Date(row.endDate) - new Date()) / (1000 * 60 * 60 * 24)
-                );
-                const isReinvestEnabled =
-                  daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7;
-                return (
-                  <TableRow key={row.smartApyId}>
+          <TableContainer
+            sx={{
+              maxWidth: '100%',
+              overflowX: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '2px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor:
+                  theme.palette.mode === 'dark'
+                    ? '#5f6673 !important'
+                    : '#b7bdc6 !important',
+                borderRadius: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                display: 'none !important',
+              },
+              '&::-webkit-scrollbar-thumb:hover': {
+                backgroundColor:
+                  theme.palette.mode === 'dark'
+                    ? '#484f59 !important'
+                    : '#a0a6af !important',
+              },
+            }}
+          >
+            <Table sx={{ minWidth: 1000 }} aria-labelledby="tableTitle">
+              <TableHead>
+                <TableRow>
+                  {headCells.map((headCell) => (
                     <TableCell
-                      component="th"
-                      scope="row"
-                      padding="none"
-                      sx={{ border: 'none !important' }}
+                      key={headCell.id}
+                      sx={{ minWidth: headCell.minWidth }}
                     >
-                      <img
-                        src={getImage(row?.coin)}
-                        style={{ width: '20px', height: '20px' }}
-                      />{' '}
-                      {row.coin}
+                      <TableSortLabel
+                        active={orderBy === headCell.id}
+                        direction={orderBy === headCell.id ? order : 'asc'}
+                        onClick={() =>
+                          setOrder(order === 'asc' ? 'desc' : 'asc')
+                        }
+                      >
+                        {headCell.label}
+                        {orderBy === headCell.id ? (
+                          <Box component="span" sx={visuallyHidden}>
+                            {order === 'desc'
+                              ? 'sorted descending'
+                              : 'sorted ascending'}
+                          </Box>
+                        ) : null}
+                      </TableSortLabel>
                     </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {new Date(row.startDate).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {new Date(row.endDate).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {row.stakedAmount}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {row.duration}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {(row.percentage * 100).toFixed(2)}%
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {row.finalAmount}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      {daysBeforeEndDate}
-                    </TableCell>
-                    <TableCell sx={{ border: 'none !important' }}>
-                      <CustomSelectBox
-                        items={[
-                          { name: 'Select Action', value: 'Select Action' },
-                          {
-                            name: 'Withdraw',
-                            value: 'Withdraw',
-                            disabled: !row.isActive,
-                          },
-                          {
-                            name: 'Reinvest',
-                            value: 'Reinvest',
-                            disabled: !(
-                              daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7
-                            ),
-                          },
-                        ]}
-                        value={'Select Action'}
-                        onChange={(event) => handleChange(event, row)}
-                        hasborder
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {txList.map((row) => {
+                  const daysBeforeEndDate = Math.floor(
+                    (new Date(row.endDate) - new Date()) / (1000 * 60 * 60 * 24)
+                  );
+                  const isReinvestEnabled =
+                    daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7;
+                  return (
+                    <TableRow key={row.smartApyId}>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="none"
+                        sx={{ border: 'none !important' }}
+                      >
+                        <img
+                          src={getImage(row?.coin)}
+                          style={{ width: '20px', height: '20px' }}
+                        />{' '}
+                        {row.coin}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {new Date(row.startDate).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {new Date(row.endDate).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {row.stakedAmount}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {row.duration}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {(row.percentage * 100).toFixed(2)}%
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {row.finalAmount}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        {daysBeforeEndDate}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none !important' }}>
+                        <CustomSelectBox
+                          items={[
+                            { name: 'Select Action', value: 'Select Action' },
+                            {
+                              name: 'Withdraw',
+                              value: 'Withdraw',
+                              disabled: !row.isActive,
+                            },
+                            {
+                              name: 'Reinvest',
+                              value: 'Reinvest',
+                              disabled: !(
+                                daysBeforeEndDate >= 1 && daysBeforeEndDate <= 7
+                              ),
+                            },
+                          ]}
+                          value={'Select Action'}
+                          onChange={(event) => handleChange(event, row)}
+                          hasborder
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      )}
 
       {successPopup && (
         <SuccessfullWithdrawPopup onClose={() => setSuccessPopup(false)} />

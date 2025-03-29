@@ -13,6 +13,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchComponent from './SearchInput';
 import EnhancedTable from './CoinTable';
 import cryptosImg from '../../../assets/updated/asset_wallet/crypto-04.png';
+import cryptoTreasuryImg from '../../../assets/updated/asset_wallet/crypto-treasury.png';
+import fiatImg from '../../../assets/updated/asset_wallet/fiat-logo.png';
+
 import CoinTableAPY from './CoinTableAPY';
 import DemoCoinTable from './DemoCoinTable';
 // Define the makeStyles hook
@@ -49,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
   },
   leftDiv: {
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '30px',
+    gap: '20px',
+    marginBottom: '20px',
   },
   leftHeading: {
     fontSize: '16px !important',
@@ -93,6 +96,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       order: 1,
     },
+  },
+  fiatText: {
+    fontWeight: 'bold',
+    color: '#8BB376',
+    fontSize: '20px !important',
   },
   checkboxLabel: {
     marginLeft: '16px',
@@ -165,13 +173,64 @@ const CoinBreakdown = ({
         </Box>
       </Box>
       <Box>
-        {selectedValue === 'Smart APY' ? (
+        {selectedValue === 'Overview' ? (
           ''
         ) : (
-          <Box className={classes.leftDiv}>
-            {/* <Typography className={classes.leftHeading}>Cryptos</Typography>
-          <Box className={classes.underline}></Box> */}
-            <img src={cryptosImg} alt="cryptosImg" style={{ height: '50px' }} />
+          <Box
+            className={classes.leftDiv}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: '10px' }}
+          >
+            <img
+              src={
+                currentPath === '/wallet/fiat'
+                  ? fiatImg
+                  : currentPath === '/wallet/smart-crypto' ||
+                    currentPath === '/wallet/iusd+'
+                  ? cryptoTreasuryImg // <-- your new crypto treasury image
+                  : cryptosImg
+              }
+              alt={
+                currentPath === '/wallet/fiat'
+                  ? 'fiatImg'
+                  : currentPath === '/wallet/smart-crypto' ||
+                    currentPath === '/wallet/iusd+'
+                  ? 'cryptoTreasuryImg'
+                  : 'cryptosImg'
+              }
+              style={{
+                height: currentPath === '/wallet/fiat' ? '60px' : '40px',
+                width: 'auto',
+                objectFit: 'contain',
+              }}
+            />
+            {currentPath === '/wallet/fiat' && (
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 'bold',
+                  color: '#8BB376 !important',
+                  fontSize: '20px',
+                  fontStyle: 'italic',
+                }}
+              >
+                Fiat / Cash
+              </Typography>
+            )}
+
+            {(currentPath === '/wallet/smart-crypto' ||
+              currentPath === '/wallet/iusd+') && (
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 'bold',
+                  color: '#F3AF0E !important',
+                  fontSize: '20px',
+                  fontStyle: 'italic',
+                }}
+              >
+                Crypto Treasury
+              </Typography>
+            )}
           </Box>
         )}
       </Box>

@@ -184,7 +184,7 @@ const BSTransactionHistoryTable: React.FC = () => {
       // responsive: ["sm"],
     },
     {
-      title: 'Transaction Hash',
+      title: 'Payment Receipt',
       key: 'txId',
       render: (_, record) => (
         <span>
