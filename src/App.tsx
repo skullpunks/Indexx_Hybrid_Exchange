@@ -167,6 +167,8 @@ import PerformancePage from './pages/PerformancePage';
 import SupportCenter from './pages/SupportCenter';
 import FaqsPage from './pages/FaqsPage';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
+import SendCardNewPage from './pages/Redeem/SendCardNew';
+import PaymentMethodSelectionPage from './pages/Redeem/PaymentMethodSelection';
 
 const TradingViewPage = () => {
   const { coin } = useParams<{ coin: string }>(); // extract the coin parameter from the URL
@@ -266,9 +268,14 @@ function App() {
               element={<HowToCreateBuySellPage />}
             />
             <Route path="/redeem/send-card" element={<SendCardPage />} />
+            <Route path="/redeem/send-card-new" element={<SendCardNewPage />} />
             <Route
               path="/redeem/send-card-successful"
               element={<SendCardSuccessfulPage />}
+            />
+            <Route
+              path="/redeem/select-payment-method"
+              element={<PaymentMethodSelectionPage />}
             />
             <Route path="/smart-crypto" element={<SmartCryptoPage />} />
             <Route path="/support-center" element={<SupportCenter />} />

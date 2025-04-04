@@ -166,7 +166,7 @@ const CardCreatedPopup = ({
             <GenericButton
               text="Send Now"
               onClick={() =>
-                navigate('/redeem/send-card', {
+                navigate('/redeem/send-card-new', {
                   state: {
                     selectedImg,
                     giftCardData,
