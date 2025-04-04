@@ -165,7 +165,7 @@ import SmartApyCalPage from './pages/SmartApyCal';
 import CryptoTreasuryPage from './pages/CryptoTreasury';
 import PerformancePage from './pages/PerformancePage';
 import SupportCenter from './pages/SupportCenter';
-import FaqsPage from './pages/FaqsPage';
+import FaqsPage from './pages/Faqs';
 // import BuySellAllLogin from "./components/BuySell/BuySellAllLogin";
 
 const TradingViewPage = () => {

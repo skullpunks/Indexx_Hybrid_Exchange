@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
   goBackIcon: {
     color: theme.palette.text.primary,
     cursor: 'pointer',
-    fontSize: '26px',
+    fontSize: '32px',
     marginLeft: '24px',
+    marginBottom: '30px',
     '&:hover': {
       color: theme.palette.text.primary,
     },
@@ -54,12 +55,15 @@ const CustomDrawer = ({ faqs, activeId }) => {
         marginLeft: '5px',
       }}
     >
-      <a
-        className={classes.goBackIcon}
-        onClick={() => navigate('/support-center')}
-      >
-        <ArrowBackIcon />
-      </a>
+      <Box sx={{ marginTop: '14px' , marginBottom:'20px'}}>
+        <a
+          className={classes.goBackIcon}
+          onClick={() => navigate('/support-center')}
+        >
+          <ArrowBackIcon fontSize='32px'/>
+        </a>
+      </Box>
+
       <List>
         {faqs.map((faq) => (
           <ListItem

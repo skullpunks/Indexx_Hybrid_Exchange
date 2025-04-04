@@ -303,7 +303,7 @@ export default function IconicHeader({ selectedTab, onChange }) {
   } else if (isLoggedIn && userType !== 'Indexx Exchange') {
     maxWidthTabContainer = '1400px';
   } else {
-    maxWidthTabContainer = '870px';
+    maxWidthTabContainer = '1000px';
   }
 
   console.log();

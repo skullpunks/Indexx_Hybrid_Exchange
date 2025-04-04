@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
 import GenericButton from '../../../shared/Button';
@@ -14,7 +14,12 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useGoogleLogin } from '@react-oauth/google';
-import { baseURL, checkEmail, signupWithGoogle } from '../../../../../services/api';
+import {
+  baseURL,
+  checkEmail,
+  signupWithGoogle,
+} from '../../../../../services/api';
+import PhoneInputField from '../../PhoneInputField';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -86,8 +91,32 @@ const SignUpEmail = () => {
   const classes = useStyles();
   const theme = useTheme();
   const navigate = useNavigate();
-  const [loadings, setLoadings] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [loadings, setLoadings] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [countryCode, setCountryCode] = useState('+1');
+
+  const handleEmailChange = (e) => {
+    setErrorMessage('');
+    const value = e.target.value;
+    setEmail(value);
+
+    formik.setFieldValue('email', value);
+  };
+
+  const handlePhoneNoChange = (e) => {
+    if (!/^\d*$/.test(e)) {
+      return;
+    }
+    setPhoneNo(e);
+    formik.setFieldValue('phoneNo', e);
+  };
+
+  const handleCountryCodeChange = (e) => {
+    setCountryCode(e);
+    formik.setFieldValue('countryCode', e);
+  };
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -98,6 +127,8 @@ const SignUpEmail = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
+      countryCode: '+1',
+      phoneNo: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -123,9 +154,12 @@ const SignUpEmail = () => {
 
   const handleGoogleSuccess = async (tokenResponse) => {
     console.log('Google signup tokenResponse received:', tokenResponse);
-    
+
     try {
-      console.log('Sending Google token to backend for signup:', tokenResponse?.access_token);
+      console.log(
+        'Sending Google token to backend for signup:',
+        tokenResponse?.access_token
+      );
       const res = await signupWithGoogle(tokenResponse?.access_token);
       console.log('Backend response for Google signup:', res);
 
@@ -162,14 +196,27 @@ const SignUpEmail = () => {
 
       <h3 className={classes.loginText}>Welcome to Indexx Exchange</h3>
       <div style={{ margin: '15px auto' }}>
-        <InputField
-          label={'Email'}
-          type="text"
-          {...formik.getFieldProps('email')}
-          error={formik.touched.email && formik.errors.email}
-          helperText={formik.errors.email}
+        <PhoneInputField
+          label={'Phone'}
+          country={'us'}
+          value={formik.values.phoneNo}
+          onChange={handlePhoneNoChange}
+          countryCode={formik.values.countryCode}
+          setCountryCode={handleCountryCodeChange}
         />
-        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
+
+        <div style={{ marginTop: '10px' }}>
+          <InputField
+            label={'Email'}
+            type="text"
+            value={formik.values.email}
+            onChange={handleEmailChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && formik.errors.email}
+            helperText={formik.errors.email}
+          />
+          {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
+        </div>
       </div>
       <p className={classes.termsAndCondition}>
         By creating an account, I agree to Indexx's{' '}

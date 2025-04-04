@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import IconicHeader from '../components/updated/shared/IconicHeader';
 import { useTheme } from '@mui/material/styles';
 
-import { FAQS } from './FaqsPage';
+import { FAQS } from './Faqs';
 
 // icons dark
 import assetLockDarkIcon from '../assets/updated/support_center/white icons/asset lock.png';
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   subheading: {
     marginBottom: '20px',
-    marginTop: '40px',
+    marginTop: '150px',
     fontSize: '40px !important',
     fontWeight: '600 !important',
     color: theme.palette.text.secondary,
@@ -83,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     textAlign: 'center',
     width: '100%',
+  },
+  faqContainer: {
+    marginTop: '40px !important',
   },
   faqCard: {
     textAlign: 'left',
@@ -112,6 +115,13 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '30px',
     marginRight: '10px',
   },
+  paragraph: {
+    width: '55%',
+    marginBottom: '120px',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
 }));
 
 const SupportCenter = () => {
@@ -133,7 +143,7 @@ const SupportCenter = () => {
             ? verifyAccDarkIcon
             : verifyAccLightIcon
           : verifyAccYellowIcon,
-      link: '/verify-account',
+      link: '/indexx-exchange/account',
     },
     {
       title: 'Reset Password',
@@ -143,7 +153,7 @@ const SupportCenter = () => {
             ? resetPassDarkIcon
             : resetPassLightIcon
           : resetPassYellowIcon,
-      link: '/reset-password',
+      link: '/indexx-exchange/change-password',
     },
     {
       title: 'Reset Phone Security Verification',
@@ -153,7 +163,7 @@ const SupportCenter = () => {
             ? mobileSecurityDarkIcon
             : mobileSecurityLightIcon
           : mobileSecurityYellowIcon,
-      link: '/reset-phone-security',
+      link: '/',
     },
     {
       title: 'Change Email Address',
@@ -163,7 +173,7 @@ const SupportCenter = () => {
             ? emailDarkIcon
             : emailLightIcon
           : emailYellowIcon,
-      link: '/change-email',
+      link: '/',
     },
     {
       title: 'Reset Google Authenticator',
@@ -173,7 +183,7 @@ const SupportCenter = () => {
             ? googleAuthDarkIcon
             : googleAuthLightIcon
           : googleAuthYellowIcon,
-      link: '/reset-google-authenticator',
+      link: '/',
     },
     {
       title: 'Crypto Deposit Not Credited',
@@ -183,7 +193,7 @@ const SupportCenter = () => {
             ? cryptoDepositDarkIcon
             : cryptoDepositLightIcon
           : cryptoDepositYellowIcon,
-      link: '/crypto-deposit-not-credited',
+      link: '/',
     },
     {
       title: 'Appeal P2P Performance Metrics',
@@ -193,7 +203,7 @@ const SupportCenter = () => {
             ? performanceDarkIcon
             : performanceLightIcon
           : performanceYellowIcon,
-      link: '/appeal-p2p-performance',
+      link: '/',
     },
     {
       title: 'Assets Frozen Due to P2P Dispute',
@@ -203,7 +213,7 @@ const SupportCenter = () => {
             ? assetLockDarkIcon
             : assetLockLightIcon
           : assetLockYellowIcon,
-      link: '/assets-frozen',
+      link: '/',
     },
     {
       title: 'View All Self Service Tools',
@@ -213,7 +223,7 @@ const SupportCenter = () => {
             ? viewAllDarkIcon
             : viewAllLightIcon
           : viewAllYellowIcon,
-      link: '/self-service-tools',
+      link: '/',
     },
   ];
 
@@ -221,7 +231,20 @@ const SupportCenter = () => {
     <Box className={classes.container}>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
       <h1 className={classes.title}>How we can help you?</h1>
+      <p className={classes.paragraph}>
+        Welcome to our Indexx Technical Supoort page! This section is desigred
+        to assist you witn any questions or issues you may encounter while using
+        our services. Whether you need troubleshooting help, guidance on
+        features, or so utions for technical chalenges, we're here to provide
+        quick and effective support.
+      </p>
       <h2 className={classes.subheading}>Self-Services</h2>
+      <p className={classes.paragraph}>
+        Quickly find solutions to common technical issues without needing to
+        wait for assistarce. Our self- service tools and resources are desigred
+        to helo you troubleshoot problems, access FAQS, and leam how to use
+        Indexx products efficiently.
+      </p>
       <Grid container spacing={4}>
         {services.map((service, index) => (
           <Grid item xs={6} sm={4} key={index}>
@@ -241,8 +264,8 @@ const SupportCenter = () => {
         ))}
       </Grid>
 
-      <h2 className={classes.subheading}>FAQ</h2>
-      <Grid container spacing={2}>
+      <h2 className={classes.subheading}>FAQs</h2>
+      <Grid container spacing={2} className={classes.faqContainer}>
         {FAQS?.map((faq, index) => (
           <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
             <Box mb={1}>

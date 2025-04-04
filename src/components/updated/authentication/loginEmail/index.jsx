@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import InputField from '../../shared/TextField';
@@ -19,6 +19,9 @@ import {
   decodeJWT,
   loginWithGoogle,
 } from '../../../../services/api';
+
+import PhoneInputField from '../PhoneInputField';
+
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
@@ -67,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     marginTop: '8px',
   },
+  countryCode: {
+    marginBottom: '10px',
+  },
 }));
 
 const LoginComponent = () => {
@@ -76,17 +82,23 @@ const LoginComponent = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [loadings, setLoadings] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isMobileNo, setIsMobileNo] = useState(false);
+  const [countryCode, setCountryCode] = useState('+1');
 
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setErrorMessage('');
-    console.log('e', e.target.value);
-    const value = e.target.value;
+    console.log('e.target', e);
+    const value = isMobileNo ? e : e.target.value;
     setEmail(value);
+
+    setIsMobileNo(/^\d+$/.test(value) && value.length > 2);
+
     formik.setFieldValue('email', value);
     console.log('validateEmail(value)', validateEmail(value));
-    setIsEmailValid(validateEmail(value));
+    setIsEmailValid(value);
+    // setIsEmailValid(validateEmail(value));
   };
 
   const validateEmail = (email) => {
@@ -94,21 +106,29 @@ const LoginComponent = () => {
     return emailRegex.test(email);
   };
 
+  // const handleNextClick = async () => {
+  //   if (isEmailValid) {
+  //     setLoadings(true);
+  //     localStorage.setItem('email', email);
+  //     const res = await checkEmail(String(email).toLowerCase());
+  //     console.log(res);
+  //     if (res.status === 200 && !res.success) {
+  //       setLoadings(false);
+  //       navigate('/auth/login-password', { state: { email } });
+  //     } else {
+  //       setLoadings(false);
+  //       setErrorMessage('Account not found');
+  //       console.log('res', res.status);
+  //     }
+  //   }
+  // };
+
   const handleNextClick = async () => {
-    if (isEmailValid) {
-      setLoadings(true);
-      localStorage.setItem('email', email);
-      const res = await checkEmail(String(email).toLowerCase());
-      console.log(res);
-      if (res.status === 200 && !res.success) {
-        setLoadings(false);
-        navigate('/auth/login-password', { state: { email } });
-      } else {
-        setLoadings(false);
-        setErrorMessage('Account not found');
-        console.log('res', res.status);
-      }
-    }
+    setLoadings(true);
+    localStorage.setItem('email', email);
+
+    setLoadings(false);
+    navigate('/auth/login-password', { state: { email } });
   };
 
   const validationSchema = Yup.object({
@@ -132,10 +152,13 @@ const LoginComponent = () => {
 
   const handleGoogleSuccess = async (tokenResponse) => {
     console.log('Google tokenResponse received:', tokenResponse);
-    
+
     try {
       // Add more detailed logging
-      console.log('Sending tokenResponse to backend:', tokenResponse?.access_token);
+      console.log(
+        'Sending tokenResponse to backend:',
+        tokenResponse?.access_token
+      );
       const res = await loginWithGoogle(tokenResponse?.access_token);
       console.log('Backend response for Google login:', res);
 
@@ -143,7 +166,7 @@ const LoginComponent = () => {
         try {
           let resObj = await decodeJWT(res.data.access_token);
           console.log('Decoded JWT token:', resObj);
-          
+
           // Store authentication data in localStorage
           localStorage.setItem('user', resObj?.email);
           localStorage.setItem('email', resObj?.email);
@@ -217,16 +240,33 @@ const LoginComponent = () => {
 
       <h3 className={classes.loginText}>Log in</h3>
       <div style={{ margin: '15px auto' }}>
-        <InputField
-          label={'Email'}
-          type="text"
-          value={formik.values.email}
-          onChange={handleEmailChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && formik.errors.email}
-          helperText={formik.errors.email}
-        />
-        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
+        {isMobileNo ? (
+          <>
+            <PhoneInputField
+              label={'Email/Phone'}
+              country={'us'}
+              value={formik.values.email}
+              onChange={handleEmailChange}
+              countryCode={countryCode}
+              setCountryCode={setCountryCode}
+            />
+          </>
+        ) : (
+          <>
+            <InputField
+              label={'Email/Phone'}
+              type="text"
+              value={formik.values.email}
+              onChange={handleEmailChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && formik.errors.email}
+              helperText={formik.errors.email}
+            />
+            {errorMessage && (
+              <p className={classes.errorText}>{errorMessage}</p>
+            )}
+          </>
+        )}
       </div>
       <GenericButton
         text={'Next'}

@@ -1,0 +1,47 @@
+.faqs-page h3 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.faqs-page ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 48px ;
+}
+
+.faqs-page li ,p{
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.faqs-page a{
+    color: rgb(17, 190, 106);
+}
+
+.faqs-page h4 , li::marker{
+    font-size: 18px;
+    margin-top: 16px;
+    font-weight: 700;
+}
+
+.faqs-page ol {
+    padding-left: 20px;
+}
+
+.faqs-page .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 20px 0px;
+}
+
+.faqs-page .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

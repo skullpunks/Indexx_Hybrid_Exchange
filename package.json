@@ -33,6 +33,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
     "chart.js": "3.9.1",
+    "country-codes-flags-phone-codes": "^1.1.1",
     "country-state-city": "^3.2.1",
     "cryptr": "^6.3.0",
     "currency-codes": "^2.1.0",
@@ -79,7 +80,7 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
