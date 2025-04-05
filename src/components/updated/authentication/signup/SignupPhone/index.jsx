@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import InputField from '../../../shared/TextField';
 import GenericButton from '../../../shared/Button';
@@ -19,7 +19,7 @@ import {
   checkEmail,
   signupWithGoogle,
 } from '../../../../../services/api';
-import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import PhoneInputField from '../../PhoneInputField';
 
 const useStyles = makeStyles((theme) => ({
   Container: {
@@ -87,44 +87,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpEmail = () => {
+const SignupPhone = () => {
   const classes = useStyles();
   const theme = useTheme();
   const navigate = useNavigate();
-  const [loadings, setLoadings] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [loadings, setLoadings] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [countryCode, setCountryCode] = useState('+1');
+
+  const handlePhoneNoChange = (e) => {
+    if (!/^\d*$/.test(e)) {
+      return;
+    }
+    setPhoneNo(e);
+    formik.setFieldValue('phoneNo', e);
+  };
+
+  const handleCountryCodeChange = (e) => {
+    setCountryCode(e);
+    formik.setFieldValue('countryCode', e);
+  };
 
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('Enter a valid email')
-      .required('Email is required'),
+    phoneNo: Yup.number('Enter a valid phone number').required(
+      'Phone Number is required'
+    ),
   });
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      countryCode: '+1',
+      phoneNo: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setLoadings(true);
-      await checkEmailIfRegister(values.email);
+      navigate('/auth/signup-email-verification', {
+        state: { email: values.phoneNo },
+      });
+      // await checkEmailIfRegister(values.email);
     },
   });
-
-  const checkEmailIfRegister = async (emailid) => {
-    const res = await checkEmail(String(emailid).toLowerCase());
-    console.log(res);
-    if (res.status === 200 && !res.success) {
-      setErrorMessage('This account already exists. please log in.');
-      setLoadings(false);
-      return;
-    }
-    setLoadings(false);
-    console.log('res', res.status);
-    navigate('/auth/signup-email-verification', {
-      state: { email: emailid },
-    });
-  };
 
   const handleGoogleSuccess = async (tokenResponse) => {
     console.log('Google signup tokenResponse received:', tokenResponse);
@@ -134,7 +138,6 @@ const SignUpEmail = () => {
         'Sending Google token to backend for signup:',
         tokenResponse?.access_token
       );
-
       const res = await signupWithGoogle(tokenResponse?.access_token);
       console.log('Backend response for Google signup:', res);
 
@@ -171,14 +174,14 @@ const SignUpEmail = () => {
 
       <h3 className={classes.loginText}>Welcome to Indexx Exchange</h3>
       <div style={{ margin: '15px auto' }}>
-        <InputField
-          label={'Email'}
-          type="text"
-          {...formik.getFieldProps('email')}
-          error={formik.touched.email && formik.errors.email}
-          helperText={formik.errors.email}
+        <PhoneInputField
+          label={'Phone'}
+          country={'us'}
+          value={formik.values.phoneNo}
+          onChange={handlePhoneNoChange}
+          countryCode={formik.values.countryCode}
+          setCountryCode={handleCountryCodeChange}
         />
-        {errorMessage && <p className={classes.errorText}>{errorMessage}</p>}
       </div>
       <p className={classes.termsAndCondition}>
         By creating an account, I agree to Indexx's{' '}
@@ -203,18 +206,6 @@ const SignUpEmail = () => {
         }
         onClick={() => login()}
       />
-      <GenericButton
-        text={'Continue with Phone'}
-        className={classes.socialButton}
-        IconComponent={
-          <PhoneAndroidIcon
-            style={{
-              marginTop: '-10px',
-            }}
-          />
-        }
-        onClick={() => navigate('/auth/signup-phone')}
-      />
       <div style={{ margin: '20px auto' }}></div>
 
       <p className={classes.alreadyAccount}>
@@ -224,4 +215,4 @@ const SignUpEmail = () => {
   );
 };
 
-export default SignUpEmail;
+export default SignupPhone;

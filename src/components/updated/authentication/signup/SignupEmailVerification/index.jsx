@@ -84,6 +84,8 @@ const SignUpEmailVerification = ({ email }) => {
   const [message, setMessage] = useState('');
   const isEffectRun = useRef(false);
 
+  const isPhoneNo = email.match(/^\d+$/);
+
   const validationSchema = Yup.object({
     verificationCode: Yup.number()
       .test(
@@ -122,15 +124,19 @@ const SignUpEmailVerification = ({ email }) => {
   }, [email]);
 
   async function validateOtpCode(code, email) {
+    navigate('/auth/signup-create-password', { state: { email } });
+    return;
     try {
       setLoadings(true);
       let res = await validateOtp(email, code);
       if (res.status === 200) {
-        setMessage('Email verified successfully.');
+        setMessage(
+          `${isPhoneNo ? 'Phone Number' : 'email'} verified successfully.`
+        );
         setLoadings(false);
         navigate('/auth/signup-create-password', { state: { email } });
       } else {
-        setMessage('Failed to verify email.');
+        setMessage(`Failed to verify ${isPhoneNo ? 'Phone' : 'Email'}.`);
         setLoadings(false);
       }
     } catch (err) {
@@ -166,7 +172,9 @@ const SignUpEmailVerification = ({ email }) => {
         <h2 className={classes.logoText}>Indexx Exchange</h2>
       </div>
 
-      <h3 className={classes.loginText}>Verify your email</h3>
+      <h3 className={classes.loginText}>
+        Verify your {isPhoneNo ? <>Phone Number</> : <>email</>}
+      </h3>
       <h4>
         Please enter the 6-digit verification code that was sent to {email}. The
         code is valid for 30 minutes.

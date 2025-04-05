@@ -123,6 +123,7 @@ import Login from './pages/auth/LoginEmail/index';
 import LoginPassword from './pages/auth/LoginPassword';
 import ResetPass from './pages/auth/ResetPassword';
 import SignUpEmailPage from './pages/auth/Signup/EmailOrPhone';
+import SignUpPhonePage from './pages/auth/Signup/SigupPhonePage';
 import SignUpEmailVerificationPage from './pages/auth/Signup/EmailVerification';
 import CreatePasswordPage from './pages/auth/Signup/CreatePassword';
 import RefferalPage from './pages/auth/Signup/Refferal';
@@ -457,6 +458,7 @@ function App() {
             <Route path="/auth/login-password" element={<LoginPassword />} />
             <Route path="/auth/reset-password" element={<ResetPass />} />
             <Route path="/auth/signup-email" element={<SignUpEmailPage />} />
+            <Route path="/auth/signup-phone" element={<SignUpPhonePage />} />
             <Route
               path="/auth/signup-email-verification"
               element={<SignUpEmailVerificationPage />}

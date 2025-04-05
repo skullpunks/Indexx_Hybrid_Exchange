@@ -81,8 +81,17 @@ const Refferal = () => {
   const [message, setMessage] = useState('');
   const { email, password } = location.state || '';
 
+  const isPhoneNo = /^\d+$/.test(email);
+
   const validationSchema = Yup.object().shape({
     referralId: Yup.string().optional(),
+    emailId: Yup.string()
+      .email('Invalid email address')
+      .when('isPhoneNo', {
+        is: (isPhoneNo) => !isPhoneNo,
+        then: (schema) => schema.required('Email is required'),
+        otherwise: (schema) => schema.notRequired(),
+      }),
     marketingUpdates: Yup.boolean().required(
       'You must accept marketing updates to proceed'
     ),
@@ -91,6 +100,7 @@ const Refferal = () => {
   const formik = useFormik({
     initialValues: {
       referralId: '',
+      emailId: '',
       marketingUpdates: false,
     },
     validationSchema: validationSchema,
@@ -123,6 +133,19 @@ const Refferal = () => {
 
       <h3 className={classes.loginText}>Set up your account</h3>
       <h4>Your account has been created successfully. Set it up now</h4>
+
+      {isPhoneNo && (
+        <div style={{ margin: '0px auto 15px auto' }}>
+          <InputField
+            label={'Email ID '}
+            type="text"
+            {...formik.getFieldProps('emailId')}
+            error={formik.touched.emailId && Boolean(formik.errors.emailId)}
+            helperText={formik.touched.emailId && formik.errors.emailId}
+          />
+        </div>
+      )}
+
       <div style={{ margin: '0px auto 15px auto' }}>
         <InputField
           label={'Referral ID (Optional)'}
