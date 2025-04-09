@@ -1,6 +1,7 @@
 // import token from '../../assets/BSheader/tokens icon 1.svg';
 // import token_white from '../../assets/BSheader/tokens icon  white (1).svg';
 
+import { HeartFilled } from '@ant-design/icons';
 import {
   baseCEXURL,
   baseURL,
@@ -47,6 +48,24 @@ const getAuthenticatedUrl = async (url: any) => {
 };
 
 const header_data = [
+  {
+    mainTextDesktop: "Bitcoin-YAY",
+    mainTextMob: "Bitcoin-YAY",
+    href: 'https://bitcoinyay.com/',
+    hasMegaDrop: false,
+    dropDownContent: [
+      {
+        heading: '',
+        mainList: true,
+        links: [
+          {
+            name: '',
+            href: '',
+          },
+        ],
+      },
+    ],
+  },
   {
     mainTextDesktop: 'Exchange / Buy Crypto',
     mainTextMob: 'Buy Crypto',

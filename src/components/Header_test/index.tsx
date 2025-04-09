@@ -400,7 +400,7 @@ const HeaderTest = () => {
           ></div>
 
           <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-            <div className="logo" style={{ marginRight: '30px' }}>
+            <div className="logo" style={{ marginRight: '50px' }}>
               <a href="https://indexx.ai">
                 <img src={logo} />
               </a>
