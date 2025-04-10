@@ -12,7 +12,6 @@ import {
   decodeJWT,
   getAllGiftCards,
   getCoinPriceByName,
-  sendGiftcard,
 } from '../../../services/api';
 import EditCardDetailsPopup from './EditCardDetailsPopup.jsx';
 import CustomizedSteppers from './CustomizedStepper';

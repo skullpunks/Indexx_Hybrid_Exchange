@@ -106,6 +106,10 @@ const CardCreatedPopup = ({
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
+  
+  // Check if giftCardData is an array (multiple cards) or a single object
+  const isMultipleCards = Array.isArray(giftCardData);
+  
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -134,33 +138,67 @@ const CardCreatedPopup = ({
           </div>
           <img src={greenCheck} height="100px" />
           <h3>Created Successfully</h3>
-          <img src={selectedImg} width={'100%'} />
-          <div
-            style={{
-              textAlign: 'left',
-              marginTop: '15px',
-              width: '100%',
-            }}
-          >
-            {/* <p>Quantity: {1}</p> */}
-            <p>
-              Token Amount:{' '}
-              {new Intl.NumberFormat('en-US', {
-                style: 'decimal',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              }).format(giftCardData.amount)}{' '} {giftCardData?.type}
-            </p>
-            <p>
-              Amount in USD: $
-              {new Intl.NumberFormat('en-US', {
-                style: 'decimal',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              }).format(amountInUsd)}
-            </p>
-            <p>Gift Card Number: {giftCardData.voucher}</p>
-          </div>
+          
+          {isMultipleCards ? (
+            <>
+              <h4>{giftCardData.length} Gift Cards Created</h4>
+              
+              {giftCardData.map((card, index) => (
+                <div 
+                  key={index}
+                  style={{
+                    textAlign: 'left',
+                    marginTop: '15px',
+                    width: '100%',
+                    padding: '10px',
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: '8px',
+                    marginBottom: '10px'
+                  }}
+                >
+                  <p style={{ fontWeight: 'bold' }}>Card {index + 1}</p>
+                  <p>
+                    Token Amount:{' '}
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 6,
+                    }).format(card.amount)}{' '} {card.type}
+                  </p>
+                  <p>Gift Card Number: {card.voucher}</p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              <img src={selectedImg} width={'100%'} />
+              <div
+                style={{
+                  textAlign: 'left',
+                  marginTop: '15px',
+                  width: '100%',
+                }}
+              >
+                <p>
+                  Token Amount:{' '}
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  }).format(giftCardData.amount)}{' '} {giftCardData?.type}
+                </p>
+                <p>
+                  Amount in USD: $
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  }).format(amountInUsd)}
+                </p>
+                <p>Gift Card Number: {giftCardData.voucher}</p>
+              </div>
+            </>
+          )}
 
           <div className={classes.btnContainer}>
             <GenericButton

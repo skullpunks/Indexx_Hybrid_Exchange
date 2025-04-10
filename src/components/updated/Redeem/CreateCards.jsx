@@ -67,7 +67,6 @@ const CreateCards = ({ onSendCard }) => {
   ]);
 
   const [value, setValue] = useState(type ?? 'Crypto Gift Card');
-  const [openPopup, setOpenPopup] = useState(false);
   const [selectedCard, setSelectedCards] = useState(
     value === 'Crypto Gift Card' ? giftArr : greetingArr
   );
@@ -144,14 +143,16 @@ const CreateCards = ({ onSendCard }) => {
   const [singleWallet, setSingleWallet] = useState(null);
   const [allWallets, setAllWallets] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  const [openInsufficientPopup, setOpenInsufficientPopup] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [selectedValue, setSelectedValue] = useState('Pay with USD');
   const [giftDetails, setGiftDetails] = useState([
     {
       id: 0,
       name: 'Crypto Gift Card',
-    },
+      value: 'Crypto Gift Card',
+      currency: initialTokens[0]?.title,
+      amountInUsd: '',
+      amount: 0,
+      selectedImg: null
+    }
   ]);
   const closePopup = () => {
     setShowPopup(false);
@@ -168,29 +169,6 @@ const CreateCards = ({ onSendCard }) => {
       setNonSelectedCards(value !== 'Crypto Gift Card' ? giftArr : greetingArr);
     }
   }, [value]);
-
-  useEffect(() => {
-    async function fetchPrice() {
-      if (amount && singleWallet) {
-        if (parseFloat(amount) > parseFloat(singleWallet.coinBalance)) {
-          setBalanceError('Insufficient balance');
-          setOpenInsufficientPopup(true);
-        } else {
-          setBalanceError('');
-          setOpenInsufficientPopup(false);
-        }
-      }
-
-      // setAmountInUsd(priceData * Number(amount));
-    }
-    fetchPrice();
-  }, [amount, singleWallet]);
-
-  const handleImgClick = (data) => {
-    setSelectedImg(data.img);
-    setValue(data.type);
-    setSelectedImgUrl(data.imgUrl);
-  };
 
   // Fetch all wallets once and store them in state
   useEffect(() => {
@@ -226,12 +204,6 @@ const CreateCards = ({ onSendCard }) => {
     fetchPrice();
   }, [currency, allWallets]);
 
-  const isFormValid = amount && currency;
-
-  const redirect = async () => {
-    navigate('/redeem');
-  };
-
   const closeConfirmPopup = () => {
     setShowConfirmPopup(false);
   };
@@ -246,11 +218,6 @@ const CreateCards = ({ onSendCard }) => {
       fetchPrice();
     } catch (err) {}
   }, [amountInUsd]);
-
-  const handlePaymentChange = (event) => {
-    setSelectedValue(event.target.value);
-    console.log('Selected Payment Method:', event.target.value);
-  };
 
   const SamplePrevArrow = (props) => {
     const { onClick } = props;
@@ -302,6 +269,76 @@ const CreateCards = ({ onSendCard }) => {
     prevArrow: <SamplePrevArrow />, // Use custom Previous arrow
   };
 
+  // Update the slider to use the correct images based on card type
+  const getImagesForCardType = (cardType) => {
+    if (cardType === 'Crypto Gift Card') return giftArr;
+    if (cardType === 'Crypto Birthday Card') return greetingArr;
+    if (cardType === 'Seasonal Greeting Card') return christmanArr;
+    return giftArr; // Default fallback
+  };
+
+  // Handle individual card type change
+  const handleCardTypeChange = (id, newValue) => {
+    setGiftDetails(giftDetails.map(card => {
+      if (card.id === id) {
+        return {
+          ...card,
+          value: newValue,
+          selectedImg: newValue === 'Crypto Gift Card' 
+            ? gift1 
+            : newValue === 'Crypto Birthday Card' 
+              ? greeting1 
+              : christman1
+        };
+      }
+      return card;
+    }));
+  };
+
+  // Handle individual currency change
+  const handleCurrencyChange = (id, newCurrency) => {
+    setGiftDetails(giftDetails.map(card => {
+      if (card.id === id) {
+        return { ...card, currency: newCurrency };
+      }
+      return card;
+    }));
+  };
+
+  // Handle individual amount change
+  const handleAmountChange = (id, newAmount) => {
+    setGiftDetails(giftDetails.map(card => {
+      if (card.id === id) {
+        return { ...card, amountInUsd: newAmount };
+      }
+      return card;
+    }));
+  };
+
+  // Calculate token amount based on USD for a specific card
+  useEffect(() => {
+    async function updateCardAmounts() {
+      try {
+        for (const card of giftDetails) {
+          if (card.currency && card.amountInUsd) {
+            const res = await getCoinPriceByName(String(card.currency));
+            let priceData = res.data.results.data;
+            
+            setGiftDetails(prev => prev.map(c => {
+              if (c.id === card.id) {
+                return { ...c, amount: c.amountInUsd / priceData };
+              }
+              return c;
+            }));
+          }
+        }
+      } catch (err) {
+        console.error("Error calculating token amounts:", err);
+      }
+    }
+    updateCardAmounts();
+  }, [giftDetails.map(card => `${card.id}-${card.currency}-${card.amountInUsd}`).join(',')]);
+
   return (
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
@@ -321,26 +358,22 @@ const CreateCards = ({ onSendCard }) => {
         </p>
       </div>
       {/* Redeem form */}
-      {giftDetails.map((el, i) => (
-        <div className={classes.redeemRoot}>
-          <div style={{ flex: '30%' }}>
-            <div style={{ maxWidth: '550px' }}>
+      {giftDetails.map((card, i) => (
+        <div className={classes.redeemRoot} key={card.id}>
+          <div >
+            <div style={{ maxWidth: '432px' }}>
               <Slider {...sliderSettings}>
-                {value === 'Crypto Gift Card' &&
-                  giftArr.map((curr, i) => (
-                    <div key={i}>
-                      <img
-                        src={curr.img}
-                        alt={`Slide ${i}`}
-                        style={{ width: '100%', height: 'auto' }}
-                      />
-                    </div>
-                  ))}
+                {getImagesForCardType(card.value).map((curr, i) => (
+                  <div key={i}>
+                    <img
+                      src={curr.img}
+                      alt={`Slide ${i}`}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                ))}
               </Slider>
             </div>
-            {/* Add a slider here that show one image only and if the select card type is crypto gift card updated slider data to use giftArr , if the select card tyep is crypto birthday card use the greetingArr and if select card type if seasonal crypto greeting card use the christmasArr */}
-
-            {/* <img src={selectedImg} alt="" style={{ width: '100%' }} /> */}
           </div>
           <div className={classes.redeemLeft}>
             <div className={classes.selectTypeContainer}>
@@ -358,7 +391,7 @@ const CreateCards = ({ onSendCard }) => {
                     className={classes.btnWithNoBg}
                     onClick={() =>
                       setGiftDetails(
-                        giftDetails.filter((cur) => cur.id !== el.id)
+                        giftDetails.filter((cur) => cur.id !== card.id)
                       )
                     }
                   />
@@ -371,14 +404,13 @@ const CreateCards = ({ onSendCard }) => {
                     name: 'Crypto Birthday Card',
                     value: 'Crypto Birthday Card',
                   },
-
                   {
                     name: 'Seasonal Crypto Greeting Card',
                     value: 'Seasonal Greeting Card',
                   },
                 ]}
-                value={value}
-                onChange={handleChange}
+                value={card.value}
+                onChange={(e) => handleCardTypeChange(card.id, e.target.value)}
                 hasborder
               />
             </div>
@@ -392,9 +424,9 @@ const CreateCards = ({ onSendCard }) => {
                   image: token.image,
                 }))}
                 type={'Coin'}
-                value={currency}
-                onCurrencyChange={(value) => setCurrency(value)}
-                onChange={handleChange}
+                value={card.currency}
+                onCurrencyChange={(value) => handleCurrencyChange(card.id, value)}
+                onChange={(e) => handleCurrencyChange(card.id, e.target.value)}
                 hasborder={true}
               />
             </div>
@@ -404,33 +436,36 @@ const CreateCards = ({ onSendCard }) => {
                 label={'Enter Amount in USD'}
                 type="number"
                 placeholder={'Min. Amount is 5 USD'}
-                value={amountInUsd}
-                onChange={(e) => setAmountInUsd(e.target.value)}
+                value={card.amountInUsd}
+                onChange={(e) => handleAmountChange(card.id, e.target.value)}
               />
             </div>
-            {singleWallet && (
+            
+            {allWallets.length > 0 && (
               <div className={classes.balanceDisplay}>
                 <span>
-                  {currency} Balance:{' '}
+                  {card.currency} Balance:{' '}
                   {new Intl.NumberFormat('en-US', {
                     style: 'decimal',
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
-                  }).format(singleWallet.coinBalance)}{' '}
-                  {currency}
+                  }).format(
+                    allWallets.find(w => w.coinSymbol === card.currency)?.coinBalance || 0
+                  )}{' '}
+                  {card.currency}
                 </span>
               </div>
             )}
             <br />
             <p style={{ flex: '70%' }}>
-              Calculated {currency} Quantity:{' '}
+              Calculated {card.currency} Quantity:{' '}
               {new Intl.NumberFormat('en-US', {
                 style: 'decimal',
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 4,
-              }).format(amount)}{' '}
-              {}
+              }).format(card.amount)}{' '}
             </p>
+            
             {i === giftDetails.length - 1 && (
               <div className={classes.btnContainer}>
                 <GenericButton
@@ -441,7 +476,12 @@ const CreateCards = ({ onSendCard }) => {
                       ...giftDetails,
                       {
                         id: giftDetails.length,
-                        name: 'Crypto Greeting Card',
+                        name: 'Crypto Gift Card',
+                        value: 'Crypto Gift Card',
+                        currency: initialTokens[0]?.title,
+                        amountInUsd: '',
+                        amount: 0,
+                        selectedImg: gift1
                       },
                     ]);
                   }}
@@ -451,11 +491,11 @@ const CreateCards = ({ onSendCard }) => {
                   loading={loading}
                   styles={{ flex: 1 }}
                   onClick={() => setShowConfirmPopup(true)}
-                  // disabled={
-                  //   !isFormValid ||
-                  //   balanceError ||
-                  //   singleWallet?.coinBalance === undefined
-                  // }
+                  disabled={giftDetails.some(card => 
+                    !card.currency || 
+                    !card.amountInUsd || 
+                    parseFloat(card.amountInUsd) < 5
+                  )}
                 />
               </div>
             )}
@@ -464,32 +504,34 @@ const CreateCards = ({ onSendCard }) => {
           </div>
         </div>
       ))}
+      
       {showPopup && (
         <CardCreatedPopup
           onClose={closePopup}
           giftCardData={giftCardData}
-          selectedImg={selectedImg}
+          selectedImg={giftDetails[0].selectedImg || selectedImg}
           selectedImgUrl={selectedImgUrl}
           email={email}
-          amountInUsd={amountInUsd}
+          amountInUsd={giftDetails[0].amountInUsd}
         />
       )}
+      
       {showConfirmPopup && (
         <CardCreatedConfirmPopup
           onClose={closeConfirmPopup}
-          giftCardData={giftCardData}
-          selectedImg={selectedImg}
+          selectedImg={giftDetails[0].selectedImg || selectedImg}
           selectedImgUrl={selectedImgUrl}
-          amount={amount}
+          amount={giftDetails[0].amount}
           email={email}
-          currency={currency}
+          currency={giftDetails[0].currency}
           setGiftCardData={setGiftCardData}
           setShowConfirmPopup={setShowConfirmPopup}
           setShowPopup={setShowPopup}
           isLoading={isLoading}
           currentUserEmail={currentUserEmail}
-          cardType={value}
-          amountInUsd={amountInUsd}
+          cardType={giftDetails[0].value}
+          amountInUsd={giftDetails[0].amountInUsd}
+          allCards={giftDetails}
         />
       )}
     </div>

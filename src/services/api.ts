@@ -273,33 +273,31 @@ export const validateForgotOtp = async (email: string, code: string) => {
   }
 };
 
+// NEW
 export const createGiftcard = async (
-  amount: number,
-  email: string,
-  currency: string,
-  giftCardUrl: string,
-  cardType: string,
-  recevierEmail: string
+  giftcards: Array<{
+    amount: number;
+    email: string;
+    currency: string;
+    giftCardUrl: string;
+    cardType: string;
+    recevierEmail: string;
+  }>
 ) => {
   try {
-    const result = await API.post('/api/v1/inex/user/createGiftcard', {
-      email,
-      amount,
-      currency,
-      giftCardUrl,
-      cardType,
-      recevierEmail,
-    });
+    const result = await API.post(
+      '/api/v1/inex/user/createGiftcard',
+      giftcards
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (createGiftcard)');
     console.log(e);
-    console.log(e.response.data);
-    return e.response.data;
+    console.log(e.response.data.giftCardDetails);
+    return e.response.data.giftCardDetails;
   }
 };
 
-// NEW
 export const createGiftCardOrder = async (
   email: string,
   giftCardArr: Array<{

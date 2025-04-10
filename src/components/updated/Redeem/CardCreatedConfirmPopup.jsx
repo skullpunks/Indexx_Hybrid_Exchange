@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
       width: '360px',
-      marginTop : '60px',
+      marginTop: '60px',
       '&::-webkit-scrollbar': {
         display: 'none',
       },
@@ -119,9 +119,9 @@ const CardCreatedConfirmPopup = ({
   cardType,
   cardSubType,
   amountInUsd,
+  allCards,
 }) => {
   const theme = useTheme();
-
   const navigate = useNavigate();
   const classes = useStyles();
   const [error, setError] = useState('');
@@ -129,40 +129,37 @@ const CardCreatedConfirmPopup = ({
   const handleCreateGiftcard = async () => {
     setShowConfirmPopup(false);
     isLoading(true);
-    if (!amount || !currency) {
-      setError('All fields are required.');
-      return;
+
+    try {
+      // Format the cards data for the API
+      const giftcardsPayload = allCards.map((card) => ({
+        amount: Number(card.amount),
+        email: currentUserEmail,
+        currency: card.currency,
+        giftCardUrl: card.selectedImgUrl || selectedImgUrl,
+        cardType:
+          card.value === 'Seasonal Greeting Card'
+            ? `${card.value} - ${cardSubType || ''}`
+            : card.value,
+        recevierEmail: email || '',
+      }));
+
+      // Call the API with the array of gift cards
+      const result = await createGiftcard(giftcardsPayload);
+
+      if (result && result.status === 200) {
+        // Store all created cards data
+        setGiftCardData(result.data.giftCardDetails);
+        setShowPopup(true);
+      } else {
+        console.error('Failed to create gift cards', result);
+        setError('Failed to create gift cards');
+      }
+    } catch (error) {
+      console.error('Error creating gift cards:', error);
+      setError('An error occurred while creating gift cards');
     }
-    setError(''); // Clear any previous error messages
-    console.log(' cardType,ardSubType,', cardType, cardSubType);
-    let formatedCardType =
-      cardType === 'Seasonal Greeting Card'
-        ? `${cardType} - ${cardSubType}`
-        : cardType;
-    console.log(
-      Number(amount),
-      currentUserEmail,
-      currency,
-      selectedImgUrl,
-      formatedCardType,
-      email
-    );
-    const result = await createGiftcard(
-      Number(amount),
-      currentUserEmail,
-      currency,
-      selectedImgUrl,
-      formatedCardType,
-      email
-    );
-    console.log(result);
-    if (result && result.status === 200) {
-      setGiftCardData(result.data.giftCardDetails); // Store the API response data
-      setShowPopup(true);
-    } else {
-      console.error('Failed to create gift card', result);
-      setError('Failed to create gift card');
-    }
+
     isLoading(false);
   };
 
@@ -202,34 +199,61 @@ const CardCreatedConfirmPopup = ({
           </div>
           <img src={greenCheck} height="100px" />
           <h3>Confirm Details</h3>
-          <img src={selectedImg} width={'100%'} />
-          <div
-            style={{
-              textAlign: 'left',
-              marginTop: '15px',
-              width: '100%',
-            }}
-          >
-            {/* <p>Quantity: {1}</p> */}
-            <p>
-              Token Amount:{' '}
-              {new Intl.NumberFormat('en-US', {
-                style: 'decimal',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              }).format(amount)}{' '}
-              {currency} <Avatar alt={`${currency}`} src={getImage(currency)} />
-            </p>
-            <p>
-              Amount in USD: $
-              {new Intl.NumberFormat('en-US', {
-                style: 'decimal',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              }).format(amountInUsd)}
-            </p>
-            {/* <p>Gift Card Number: {giftCardData.voucher}</p> */}
-          </div>
+
+          {/* Display summary of all cards */}
+          <h4>
+            You are about to create {allCards.length} gift card
+            {allCards.length > 1 ? 's' : ''}
+          </h4>
+
+          {allCards.map((card, index) => (
+            <div
+              key={index}
+              style={{
+                textAlign: 'left',
+                marginTop: '15px',
+                width: '100%',
+                padding: '10px',
+                border: `1px solid ${theme.palette.divider}`,
+                borderRadius: '8px',
+                marginBottom: '10px',
+              }}
+            >
+              <p style={{ fontWeight: 'bold' }}>
+                Card {index + 1}: {card.value}
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '5px',
+                }}
+              >
+                <Avatar
+                  alt={`${card.currency}`}
+                  src={getImage(card.currency)}
+                  style={{ marginRight: '8px' }}
+                />
+                <p>
+                  Token Amount:{' '}
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  }).format(card.amount)}{' '}
+                  {card.currency}
+                </p>
+              </div>
+              <p>
+                Amount in USD: $
+                {new Intl.NumberFormat('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 6,
+                }).format(card.amountInUsd)}
+              </p>
+            </div>
+          ))}
 
           <div className={classes.btnContainer}>
             <GenericButton
@@ -238,6 +262,8 @@ const CardCreatedConfirmPopup = ({
             />
             <GenericButton text="Cancel" onClick={onClose} />
           </div>
+
+          {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
         </div>
       </div>
     </div>
