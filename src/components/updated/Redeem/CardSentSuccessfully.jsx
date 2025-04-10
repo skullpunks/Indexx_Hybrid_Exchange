@@ -5,6 +5,7 @@ import greenCheck from '../../../assets/redeem/check green 6.svg';
 import gift1 from '../../../assets/redeem/gift1.svg';
 import IconicHeader from '../shared/RedeemIconicHeader';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCardContext } from './CardContext';
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {

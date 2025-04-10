@@ -13,6 +13,11 @@ import initialTokens from '../../../utils/Tokens.json';
 import GenericButton from '../shared/Button';
 import SelectPaymentMethod from './SelectPaymentMethod';
 import Popup from './PaymentPopup';
+import { useCardStore } from './CardContext';
+import { sendGiftcard } from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
+import { PayGiftCardWithBalance } from '../../../services/api';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '20px',
@@ -54,11 +59,22 @@ const PaymentMethodSelection = () => {
   const [paymentMethodError, setPaymentMethodError] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [popupOpen, setPopupOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const {
+    cardDetails,
+    selectedImgUrl,
+    selectedImg,
+    amountInUsd: storeAmountInUsd,
+  } = useCardStore();
+
+  console.log(cardDetails);
+
   const handlePaymentChange = (event) => {
     setSelectedValue(event.target.value);
     console.log('Selected Payment Method:', event.target.value);
   };
-
   const classes = useStyles();
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -76,6 +92,74 @@ const PaymentMethodSelection = () => {
     setSelectedPaymentMethod(method);
     setPaymentMethod(method);
     handleNewPopupClose();
+  };
+
+  const handleSendGiftcard = async () => {
+    setLoading(true);
+
+    console.log(cardDetails);
+
+    try {
+      // Send all cards
+      const results = await Promise.all(
+        cardDetails.map(async (card) => {
+          return await sendGiftcard(
+            card.selectedGiftCard,
+            card.senderEmail,
+            card.recipientEmail,
+            card.message,
+            card.senderName,
+            card.selectedImgUrl
+          );
+        })
+      );
+
+      // Check if all cards were sent successfully
+      const allSuccessful = results.every((result) => result.status === 200);
+
+      if (allSuccessful) {
+        navigate('/redeem/send-card-successful', {
+          state: {
+            selectedImg: cardDetails[0].selectedImgUrl,
+            giftCardData: cardDetails[0],
+            amountInUsd: storeAmountInUsd,
+            cardCount: cardDetails.length,
+          },
+        });
+      } else {
+        console.error('Failed to send gift/greeting cards:', results);
+        alert('Failed to send one or more gift/greeting cards.');
+      }
+    } catch (error) {
+      console.error('Error sending gift cards:', error);
+      alert('An error occurred while sending gift cards.');
+    }
+
+    setLoading(false);
+  };
+
+  const handlePayGiftCardWithBalance = async () => {
+    setLoading(true);
+
+    try {
+      const results = await PayGiftCardWithBalance(
+        cardDetails[0].selectedGiftCard,
+        cardDetails[0].senderEmail,
+        currency
+      );
+
+      if (results.status === 200) {
+        handleSendGiftcard();
+      } else {
+        console.error('Failed to pay gift card with balance:', results);
+        alert('Failed to pay gift card with balance.');
+      }
+    } catch (error) {
+      console.error('Error paying gift card with balance:', error);
+      alert('An error occurred while paying gift card with balance.');
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -156,7 +240,12 @@ const PaymentMethodSelection = () => {
         </div>
       )}
       <div style={{ marginTop: '40px' }}></div>
-      <GenericButton className={classes.button} text={'Proceed'} />
+      <GenericButton
+        onClick={handlePayGiftCardWithBalance}
+        className={classes.button}
+        text={'Proceed'}
+        loading={loading}
+      />
 
       <div>
         <Popup

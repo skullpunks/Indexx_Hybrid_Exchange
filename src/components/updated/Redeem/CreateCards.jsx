@@ -34,7 +34,7 @@ import {
 } from '../../../services/api';
 import initialTokens from '../../../utils/Tokens.json';
 import CardCreatedConfirmPopup from './CardCreatedConfirmPopup';
-import InsufficientBalancePopup from './InsufficientBalancePopup';
+// import InsufficientBalancePopup from './InsufficientBalancePopup';
 import { giftArr, greetingArr, christmanArr } from './Data';
 import CustomizedSteppers from './CustomizedStepper';
 
@@ -306,7 +306,6 @@ const CreateCards = ({ onSendCard }) => {
     <div className={classes.root}>
       <div style={{ margin: '100px' }}></div>
       <IconicHeader selectedTab={selectedTab} onChange={handleTabChange} />
-
       <CustomizedSteppers step={1} />
       {/* Top Section */}
       <div className={classes.sendCryptoRoot}>
@@ -322,7 +321,6 @@ const CreateCards = ({ onSendCard }) => {
         </p>
       </div>
       {/* Redeem form */}
-
       {giftDetails.map((el, i) => (
         <div className={classes.redeemRoot}>
           <div style={{ flex: '30%' }}>
@@ -466,7 +464,6 @@ const CreateCards = ({ onSendCard }) => {
           </div>
         </div>
       ))}
-
       {showPopup && (
         <CardCreatedPopup
           onClose={closePopup}
@@ -493,12 +490,6 @@ const CreateCards = ({ onSendCard }) => {
           currentUserEmail={currentUserEmail}
           cardType={value}
           amountInUsd={amountInUsd}
-        />
-      )}
-      {openInsufficientPopup && (
-        <InsufficientBalancePopup
-          currency={currency}
-          onClose={() => setOpenInsufficientPopup(false)}
         />
       )}
     </div>

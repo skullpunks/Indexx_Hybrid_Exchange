@@ -23,8 +23,8 @@ const keySize = 32;
 const algorithm = 'aes-256-cbc';
 const salt = crypto.createHash('sha1').update(secret).digest('hex');
 export let baseAcademyUrl = '';
- if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
-  baseAPIURL = 'https://api.indexx.ai';
+if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
+  baseAPIURL = 'http://localhost:5000';
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
   baseURL = 'https://indexx.ai';
@@ -42,7 +42,7 @@ export let baseAcademyUrl = '';
 } else {
   baseCEXURL = 'https://cex.indexx.ai';
   baseDEXURL = 'https://dex.indexx.ai';
-  baseAPIURL = 'https://api.indexx.ai';
+  baseAPIURL = 'http://localhost:5000';
   baseURL = 'https://indexx.ai';
   baseHiveURL = 'https://hive.indexx.ai';
   baseWSURL = 'https://wallstreet.indexx.ai';
@@ -298,6 +298,58 @@ export const createGiftcard = async (
     return e.response.data;
   }
 };
+
+// NEW
+export const createGiftCardOrder = async (
+  email: string,
+  giftCardArr: Array<{
+    amount: number;
+    currency?: string;
+    giftCardUrl?: string;
+    cardType?: string;
+    recevierEmail?: string;
+  }>,
+  paymentType: string,
+  isHoneyBeeOrder: boolean = false
+) => {
+  try {
+    const result = await API.post('api/v1/inex/order/createOrderForGift', {
+      email,
+      giftCardArr,
+      paymentType,
+      isHoneyBeeOrder,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (createGiftCardOrder)');
+    console.log(e);
+    console.log(e.response?.data);
+    return e.response?.data;
+  }
+};
+
+export async function PayGiftCardWithBalance(
+  voucher: string,
+  email: string,
+  currency: string
+) {
+  try {
+    const result = await API.post('/api/v1/inex/user/payGiftCardWithBalance', {
+      voucher,
+      email,
+      currency,
+    });
+    return result.data;
+  } catch (e: any) {
+    console.log(
+      'FAILED: unable to perform API request (PayGiftCardWithBalance)'
+    );
+    console.log(e);
+    console.log(e.response?.data);
+    return e.response?.data;
+  }
+}
+// NEW
 
 export const sendGiftcard = async (
   giftcardVoucher: string,
@@ -753,7 +805,9 @@ export const getUserWallets = async (email: string) => {
 
 export const getUserDemoWallets = async (email: string) => {
   try {
-    const result = await API.post(`/api/v1/inex/user/getUserDemoWallets/${email}`);
+    const result = await API.post(
+      `/api/v1/inex/user/getUserDemoWallets/${email}`
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (getUserDemoWallets)');
@@ -787,7 +841,9 @@ export const getUserInvestments = async (email: string) => {
 
 export const getDemoUserInvestments = async (email: string) => {
   try {
-    const result = await API.get(`/api/v1/inex/user/totalDemoInvestment/${email}`);
+    const result = await API.get(
+      `/api/v1/inex/user/totalDemoInvestment/${email}`
+    );
     return result.data;
   } catch (e: any) {
     console.log('FAILED: unable to perform API request (totalDemoInvestment)');
@@ -1469,24 +1525,19 @@ export const createFreeTrailOrder = async (
   paymentType: string = 'paypal'
 ) => {
   try {
-    const result = await API.post(
-      '/api/v1/inex/order/createFreeTrailOrder',
-      {
-        planName: planName,
-        planManagedBy: planManagedBy,
-        amount: amount,
-        price: price,
-        orderType: 'SmartCryptoBuy',
-        email: email ? email : localStorage.getItem('user'),
-        isHoneyBeeOrder: isHoneyBeeOrder,
-        paymentType,
-      }
-    );
+    const result = await API.post('/api/v1/inex/order/createFreeTrailOrder', {
+      planName: planName,
+      planManagedBy: planManagedBy,
+      amount: amount,
+      price: price,
+      orderType: 'SmartCryptoBuy',
+      email: email ? email : localStorage.getItem('user'),
+      isHoneyBeeOrder: isHoneyBeeOrder,
+      paymentType,
+    });
     return result.data;
   } catch (e: any) {
-    console.log(
-      'FAILED: unable to perform API request (createFreeTrailOrder)'
-    );
+    console.log('FAILED: unable to perform API request (createFreeTrailOrder)');
     console.log(e);
     console.log(e.response.data);
     return e.response.data;
@@ -2703,7 +2754,9 @@ export interface PerformanceData {
 }
 
 // Add with other API endpoints
-export const getPerformanceData = async (email: string): Promise<PerformanceData> => {
+export const getPerformanceData = async (
+  email: string
+): Promise<PerformanceData> => {
   try {
     const result = await API.get(`/api/v1/wallet/getUserPerformance/${email}`);
     return result.data;

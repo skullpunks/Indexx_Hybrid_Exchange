@@ -16,6 +16,7 @@ import {
 } from '../../../services/api';
 import EditCardDetailsPopup from './EditCardDetailsPopup.jsx';
 import CustomizedSteppers from './CustomizedStepper';
+import { useCardStore } from './CardContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -195,45 +196,63 @@ const SendCard = () => {
   const location = useLocation();
   const { giftCardData, selectedImg, selectedImgUrl, email, amountInUsd } =
     location.state || {}; // Extracting giftCardData from location state
-  console.log(location.state);
-  const [recipientEmail, setRecipientEmail] = useState(email);
-  const [senderName, setSenderName] = useState('');
-  const [amountInUsdValue, setAmountInUsd] = useState(0);
-  const [sendCardDetails, setSendCardDetails] = useState([
-    {
-      id: 0,
-      recipientEmail: email || '',
-      senderName: '',
-      message: `Hey [Receiver's Name],
 
-This is [Your Name], and I'm excited to gift you something truly special - a Crypto Gift Card!
+  // Use the Zustand store
+  const {
+    cardDetails,
+    addCard,
+    removeCard,
+    updateCardDetail,
+    setAmountInUsd,
+    setSelectedImg,
+    setSelectedImgUrl,
+    amountInUsd: storeAmountInUsd,
+  } = useCardStore();
 
-Consider it the gift of the future and an investment in what's to come. Redeem it now to kickstart your crypto journey.
-
-Enjoy and happy investing!`,
-      selectedGiftCard: giftCardData?.voucher,
-    },
-  ]);
-  const [message, setMessage] = useState(`Hey [Receiver's Name],
-
-This is [Your Name], and I'm excited to gift you something truly special - a Crypto Gift Card!
-
-Consider it the gift of the future and an investment in what's to come. Redeem it now to kickstart your crypto journey.
-
-Enjoy and happy investing!`);
   const [loading, setLoading] = useState(false);
   const [giftCards, setGiftCards] = useState([]);
   const [selectedGiftCard, setSelectedGiftCard] = useState(
     giftCardData?.voucher
   );
+  const [userEmail, setUserEmail] = useState('');
+
+  // Initialize store with location state data if available
+  useEffect(() => {
+    if (email && cardDetails[0].recipientEmail === '') {
+      updateCardDetail(0, 'recipientEmail', email);
+    }
+
+    if (giftCardData?.voucher && cardDetails[0].selectedGiftCard === null) {
+      updateCardDetail(0, 'selectedGiftCard', giftCardData.voucher);
+    }
+
+    if (selectedImg) {
+      setSelectedImg(selectedImg);
+    }
+
+    if (selectedImgUrl) {
+      setSelectedImgUrl(selectedImgUrl);
+    }
+
+    if (amountInUsd) {
+      setAmountInUsd(amountInUsd);
+    }
+  }, [email, giftCardData, selectedImg, selectedImgUrl, amountInUsd]);
 
   useEffect(() => {
     async function fetchGiftCard() {
       const token = localStorage.getItem('access_token');
       const decodedToken = decodeJWT(String(token));
+      if (decodedToken?.email) {
+        setUserEmail(decodedToken.email);
+        
+        // Set sender email for all cards automatically
+        cardDetails.forEach((_, index) => {
+          updateCardDetail(index, 'senderEmail', decodedToken.email);
+        });
+      }
       let res = await getAllGiftCards(decodedToken?.email);
       setGiftCards(res.data);
-      console.log(res);
     }
     fetchGiftCard();
   }, []);
@@ -241,8 +260,8 @@ Enjoy and happy investing!`);
   const handleSendGiftcard = async () => {
     setLoading(true);
 
-    // Validate all cards have required fields
-    const missingFields = sendCardDetails.some(
+    // Validate all cards have required fields - don't check senderEmail as it's set automatically
+    const missingFields = cardDetails.some(
       (card) => !card.recipientEmail || !card.senderName
     );
     if (missingFields) {
@@ -251,105 +270,22 @@ Enjoy and happy investing!`);
       return;
     }
 
-    try {
-      // Send all cards
-      const results = await Promise.all(
-        sendCardDetails.map(async (card) => {
-          const cardData = giftCards.find(
-            (gc) => gc.voucher === card.selectedGiftCard
-          );
-          return await sendGiftcard(
-            card.selectedGiftCard,
-            cardData?.createdBy,
-            card.recipientEmail,
-            card.message,
-            card.senderName,
-            selectedImgUrl
-          );
-        })
-      );
-
-      // Check if all cards were sent successfully
-      const allSuccessful = results.every((result) => result.status === 200);
-
-      if (allSuccessful) {
-        navigate('/redeem/send-card-successful', {
-          state: {
-            selectedImg: selectedImg
-              ? selectedImg
-              : giftCards?.find(
-                  (card) => card.voucher === sendCardDetails[0].selectedGiftCard
-                )?.giftCardImgUrl,
-            giftCardData: giftCardData
-              ? giftCardData
-              : giftCards?.find(
-                  (card) => card.voucher === sendCardDetails[0].selectedGiftCard
-                ),
-            amountInUsd,
-            cardCount: sendCardDetails.length,
-          },
-        });
-      } else {
-        console.error('Failed to send gift/greeting cards:', results);
-        alert('Failed to send one or more gift/greeting cards.');
+    navigate('/redeem/select-payment-method', {
+      state: {
+        cardDetails: cardDetails,
+        selectedImg: selectedImg,
+        selectedImgUrl: selectedImgUrl,
+        amountInUsd: storeAmountInUsd
       }
-    } catch (error) {
-      console.error('Error sending gift cards:', error);
-      alert('An error occurred while sending gift cards.');
-    }
-
+    });
     setLoading(false);
-  };
-
-  // Handle changes to individual card details
-  const handleCardDetailChange = (index, field, value) => {
-    const updatedDetails = [...sendCardDetails];
-    updatedDetails[index][field] = value;
-    setSendCardDetails(updatedDetails);
-  };
-
-  // Add a new card to send
-  const addMoreCard = () => {
-    setSendCardDetails([
-      ...sendCardDetails,
-      {
-        id: sendCardDetails.length,
-        recipientEmail: '',
-        senderName: '',
-        message: message,
-        selectedGiftCard: null,
-      },
-    ]);
-  };
-
-  // Remove a card
-  const removeCard = (indexToRemove) => {
-    if (sendCardDetails.length > 1) {
-      setSendCardDetails(
-        sendCardDetails.filter((_, index) => index !== indexToRemove)
-      );
-    }
-  };
-
-  const [selectedTab, setSelectedTab] = useState('Send');
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
-
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const theme = useTheme();
-
-  const redirect = async () => {
-    navigate('/redeem');
   };
 
   const handleGiftCardChange = async (e, index) => {
     const voucherValue = e.target.value;
 
-    // Update the selected gift card in the sendCardDetails array
-    const updatedDetails = [...sendCardDetails];
-    updatedDetails[index].selectedGiftCard = voucherValue;
-    setSendCardDetails(updatedDetails);
+    // Update the selected gift card in the cardDetails array
+    updateCardDetail(index, 'selectedGiftCard', voucherValue);
 
     // If this is the first card or no index passed, also update the main state
     if (index === 0 || index === undefined) {
@@ -360,12 +296,37 @@ Enjoy and happy investing!`);
       (card) => card.voucher === voucherValue
     );
 
-    if (requiredGiftCard?.type) {
-      const result = await getCoinPriceByName(String(requiredGiftCard?.type));
-      let priceData = result.data.results.data;
-      setAmountInUsd(priceData * Number(requiredGiftCard?.amount));
+    if (requiredGiftCard) {
+      // Update image and image URL if available in the selected gift card
+      if (requiredGiftCard.giftCardImgUrl) {
+        setSelectedImgUrl(requiredGiftCard.giftCardImgUrl);
+        updateCardDetail(index, 'selectedImgUrl', requiredGiftCard.giftCardImgUrl);
+      }
+      
+      if (requiredGiftCard.giftCardImg) {
+        setSelectedImg(requiredGiftCard.giftCardImg);
+        updateCardDetail(index, 'selectedImg', requiredGiftCard.giftCardImg);
+      }
+
+      // Update amount in USD if type is available
+      if (requiredGiftCard.type) {
+        const result = await getCoinPriceByName(String(requiredGiftCard.type));
+        let priceData = result.data.results.data;
+        const calculatedAmount = priceData * Number(requiredGiftCard.amount);
+        
+        setAmountInUsd(calculatedAmount);
+        updateCardDetail(index, 'amountInUsd', calculatedAmount);
+      }
     }
   };
+
+  const [selectedTab, setSelectedTab] = useState('Send');
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const theme = useTheme();
 
   return (
     <div className={classes.root}>
@@ -388,8 +349,8 @@ Enjoy and happy investing!`);
         </p>
       </div>
 
-      {/* Map through each card in sendCardDetails */}
-      {sendCardDetails.map((cardDetail, index) => (
+      {/* Map through each card in cardDetails */}
+      {cardDetails.map((cardDetail, index) => (
         <div className={classes.redeemRoot} key={cardDetail.id || index}>
           <div style={{ flex: '30%' }}>
             <img src={gift1} alt="" style={{ width: '100%' }} />
@@ -420,7 +381,7 @@ Enjoy and happy investing!`);
                 }}
               >
                 <label>Select previously created gift cards here:</label>
-                {sendCardDetails.length > 1 && (
+                {cardDetails.length > 1 && (
                   <GenericButton
                     text={'Remove'}
                     className={classes.smallRemoveBtn}
@@ -466,11 +427,7 @@ ${new Intl.NumberFormat('en-US', {
   style: 'decimal',
   minimumFractionDigits: 2,
   maximumFractionDigits: 6,
-}).format(
-  isNaN(amountInUsd) || amountInUsd === null || amountInUsd === undefined
-    ? amountInUsdValue
-    : amountInUsd
-)}`}
+}).format(storeAmountInUsd)}`}
                 </p>
               </div>
             )}
@@ -481,11 +438,7 @@ ${new Intl.NumberFormat('en-US', {
                 placeholder="abc@xyz.com"
                 value={cardDetail.recipientEmail}
                 onChange={(e) =>
-                  handleCardDetailChange(
-                    index,
-                    'recipientEmail',
-                    e.target.value
-                  )
+                  updateCardDetail(index, 'recipientEmail', e.target.value)
                 }
               />
             </div>
@@ -496,7 +449,7 @@ ${new Intl.NumberFormat('en-US', {
                 placeholder="Enter sender's name"
                 value={cardDetail.senderName}
                 onChange={(e) =>
-                  handleCardDetailChange(index, 'senderName', e.target.value)
+                  updateCardDetail(index, 'senderName', e.target.value)
                 }
               />
             </div>
@@ -507,14 +460,14 @@ ${new Intl.NumberFormat('en-US', {
                 placeholder="Write a message for your friend and your family"
                 value={cardDetail.message}
                 onChange={(e) =>
-                  handleCardDetailChange(index, 'message', e.target.value)
+                  updateCardDetail(index, 'message', e.target.value)
                 }
               />
             </div>
 
-            {index === sendCardDetails.length - 1 && (
+            {index === cardDetails.length - 1 && (
               <div className={classes.btnContainer}>
-                <GenericButton text={'+ Add More Card'} onClick={addMoreCard} />
+                <GenericButton text={'+ Add More Card'} onClick={addCard} />
                 <GenericButton
                   text={'Edit Details'}
                   onClick={() => setShowEditPopup(true)}
