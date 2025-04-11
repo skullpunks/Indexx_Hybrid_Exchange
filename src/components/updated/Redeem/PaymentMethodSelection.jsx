@@ -62,12 +62,7 @@ const PaymentMethodSelection = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const {
-    cardDetails,
-    selectedImgUrl,
-    selectedImg,
-    amountInUsd: storeAmountInUsd,
-  } = useCardStore();
+  const { cardDetails } = useCardStore();
 
   console.log(cardDetails);
 
@@ -91,7 +86,6 @@ const PaymentMethodSelection = () => {
   const handlePaymentMethodSelect = (method) => {
     setSelectedPaymentMethod(method);
     setPaymentMethod(method);
-    handleNewPopupClose();
   };
 
   const handleSendGiftcard = async () => {
@@ -122,7 +116,7 @@ const PaymentMethodSelection = () => {
           state: {
             selectedImg: cardDetails[0].selectedImgUrl,
             giftCardData: cardDetails[0],
-            amountInUsd: storeAmountInUsd,
+            amountInUsd: cardDetails[0].amountInUsd,
             cardCount: cardDetails.length,
           },
         });
@@ -241,7 +235,11 @@ const PaymentMethodSelection = () => {
       )}
       <div style={{ marginTop: '40px' }}></div>
       <GenericButton
-        onClick={handlePayGiftCardWithBalance}
+        onClick={
+          selectedValue === 'Pay with USD'
+            ? handlePaymentMethodClick
+            : handlePayGiftCardWithBalance
+        }
         className={classes.button}
         text={'Proceed'}
         loading={loading}
@@ -253,9 +251,9 @@ const PaymentMethodSelection = () => {
           onClose={handleNewPopupClose}
           amount={''}
           onSelectPaymentMethod={handlePaymentMethodSelect}
-          type={`${'Buy'}`}
-          token={'inex'}
-          spendToken={'wibs'}
+          type={`${'Gift Card'}`}
+          token={selectedValue === 'Pay with USD' ? 'inex' : currency}
+          spendToken={selectedValue === 'Pay with USD' ? 'inex' : currency}
         />
       </div>
     </div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../shared/Button/index';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import transactionIcon from '../../../assets/updated/buySell/transactionMethod.svg';
 import { Box, useTheme } from '@mui/material';
 
@@ -16,13 +15,14 @@ import zelle from '../../../assets/updated/popup/zelle.svg';
 import tygpay from '../../../assets/updated/tyga_icon.png';
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  createBuyOrder,
+  createGiftCardOrder,
   decodeJWT,
   getHoneyBeeDataByUsername,
   getUserWallets,
 } from '../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
-// import GeneralPopup from '../Popup';
+import { useCardStore } from './CardContext';
+
 const useStyles = makeStyles((theme) => ({
   dataShow: {
     opacity: '1 !important',
@@ -187,10 +187,8 @@ const Popup = ({
   spendToken,
   category,
 }) => {
-  console.log(
-    spendToken,
-    '=======================spendtoken====================='
-  );
+  const { cardDetails } = useCardStore();
+
   const classes = useStyles();
   const theme = useTheme();
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -198,16 +196,11 @@ const Popup = ({
   const [honeyBeeId, setHoneyBeeId] = useState('');
   const [userData, setUserData] = useState();
   const [honeyBeeEmail, setHoneyBeeEmail] = useState('');
-  const [adminFee, setAdminFees] = useState('');
-  const [totalAmountToPay, setTotalAmountToPay] = useState(0);
-  const [isTransferModalVisible, setIsTransferModalVisible] = useState(false);
-  const [clientSecret, setClientSecret] = useState('');
-  const [rateData, setRateData] = useState();
-  const [taskCenterDetails, setTaskCenterDetails] = useState();
   const [permissionData, setPermissionData] = useState();
   const [loadings, setLoadings] = useState(false);
   const [message, setMessage] = useState();
   const [showMessagePopup, setShowMessagePopup] = useState(false);
+  const [isHoneyBeeOrder, setIsHoneyBeeOrder] = useState(false);
   const navigate = useNavigate();
   const [usdBalance, setUsdBalance] = useState('0.00'); // State to store USD balance
   const [usersWallets, setUsersWallets] = useState([]); // Store the user wallets
@@ -269,39 +262,17 @@ const Popup = ({
   // Create an order and PaymentIntent as soon as the confirm purchase button is clicked
   const createNewBuyOrder = async (paymentMethod) => {
     setLoadings(true);
-    let basecoin = token.title;
-    let quotecoin = 'USD';
-    let outAmount = Math.floor(amount * 1000000) / 1000000;
     let res;
-    if (id) {
-      if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
-        setMessage(
-          'As Hive Captain, Please apply for buy approval from Hive Member'
-        );
-        setLoadings(false);
-        setShowMessagePopup(true);
-        return;
-      }
-      res = await createBuyOrder(
-        basecoin,
-        quotecoin,
-        amount,
-        outAmount,
-        0,
-        honeyBeeEmail,
-        true,
-        paymentMethod
-      );
-    } else {
-      res = await createBuyOrder(
-        basecoin,
-        quotecoin,
-        amount,
-        outAmount,
-        paymentMethod
-      );
-    }
+
+    res = await createGiftCardOrder(
+      cardDetails[0].senderEmail,
+      cardDetails,
+      paymentMethod,
+      isHoneyBeeOrder
+    );
+
+    console.log('res', res);
+
     if (res.status === 200) {
       setLoadings(false);
       //--Below code is to enable paypal Order---
@@ -325,44 +296,17 @@ const Popup = ({
 
   const createBuyOrderForZelleAndWire = async (paymentMethod) => {
     setLoadings(true);
-    setLoadings(true);
-    let basecoin = token.title;
-    let quotecoin = 'USD';
-    let outAmount = Math.floor(amount * 1000000) / 1000000;
-    let res;
     console.log('paymentMethod', paymentMethod);
-    if (id) {
-      if (!permissionData?.permissions?.buy) {
-        // OpenNotification('error', "As Hive Captain, Please apply for buy approval from Hive Member");
-        setMessage(
-          'As Hive Captain, Please apply for buy approval from Hive Member'
-        );
-        setLoadings(false);
-        setShowMessagePopup(true);
-        return;
-      }
-      res = await createBuyOrder(
-        basecoin,
-        quotecoin,
-        amount,
-        outAmount,
-        0,
-        honeyBeeEmail,
-        true,
-        paymentMethod
-      );
-    } else {
-      res = await createBuyOrder(
-        basecoin,
-        quotecoin,
-        amount,
-        outAmount,
-        0,
-        '',
-        false,
-        paymentMethod
-      );
-    }
+    let res;
+
+    res = await createGiftCardOrder(
+      cardDetails[0].senderEmail,
+      cardDetails,
+      paymentMethod,
+      isHoneyBeeOrder
+    );
+
+    console.log('res', res);
     if (res.status === 200) {
       // Return the order ID for Zelle and Wire
       return res.data.orderId;
@@ -377,7 +321,7 @@ const Popup = ({
   const confirmPayment = async () => {
     try {
       if (paymentMethod === 'Paypal' || paymentMethod === 'Credit Card') {
-        await createNewBuyOrder();
+        await createNewBuyOrder(paymentMethod);
       } else if (
         paymentMethod === 'Zelle' ||
         paymentMethod === 'Wire' ||
@@ -407,8 +351,6 @@ const Popup = ({
     );
     setPaymentMethod(method);
     onSelectPaymentMethod(method);
-
-    onClose();
   };
 
   return (
@@ -555,7 +497,11 @@ const Popup = ({
               )}
             </Box>
             <div className={classes.btnContainer}>
-              <GenericButton text="Confirm" onClick={onClose} />
+              <GenericButton
+                text="Confirm"
+                onClick={confirmPayment}
+                loading={loadings}
+              />
             </div>
           </div>
         </div>
