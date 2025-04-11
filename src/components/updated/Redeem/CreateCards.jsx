@@ -151,8 +151,8 @@ const CreateCards = ({ onSendCard }) => {
       currency: initialTokens[0]?.title,
       amountInUsd: '',
       amount: 0,
-      selectedImg: null
-    }
+      selectedImg: null,
+    },
   ]);
   const closePopup = () => {
     setShowPopup(false);
@@ -279,40 +279,47 @@ const CreateCards = ({ onSendCard }) => {
 
   // Handle individual card type change
   const handleCardTypeChange = (id, newValue) => {
-    setGiftDetails(giftDetails.map(card => {
-      if (card.id === id) {
-        return {
-          ...card,
-          value: newValue,
-          selectedImg: newValue === 'Crypto Gift Card' 
-            ? gift1 
-            : newValue === 'Crypto Birthday Card' 
-              ? greeting1 
-              : christman1
-        };
-      }
-      return card;
-    }));
+    setGiftDetails(
+      giftDetails.map((card) => {
+        if (card.id === id) {
+          return {
+            ...card,
+            value: newValue,
+            selectedImg:
+              newValue === 'Crypto Gift Card'
+                ? gift1
+                : newValue === 'Crypto Birthday Card'
+                ? greeting1
+                : christman1,
+          };
+        }
+        return card;
+      })
+    );
   };
 
   // Handle individual currency change
   const handleCurrencyChange = (id, newCurrency) => {
-    setGiftDetails(giftDetails.map(card => {
-      if (card.id === id) {
-        return { ...card, currency: newCurrency };
-      }
-      return card;
-    }));
+    setGiftDetails(
+      giftDetails.map((card) => {
+        if (card.id === id) {
+          return { ...card, currency: newCurrency };
+        }
+        return card;
+      })
+    );
   };
 
   // Handle individual amount change
   const handleAmountChange = (id, newAmount) => {
-    setGiftDetails(giftDetails.map(card => {
-      if (card.id === id) {
-        return { ...card, amountInUsd: newAmount };
-      }
-      return card;
-    }));
+    setGiftDetails(
+      giftDetails.map((card) => {
+        if (card.id === id) {
+          return { ...card, amountInUsd: newAmount };
+        }
+        return card;
+      })
+    );
   };
 
   // Calculate token amount based on USD for a specific card
@@ -323,21 +330,27 @@ const CreateCards = ({ onSendCard }) => {
           if (card.currency && card.amountInUsd) {
             const res = await getCoinPriceByName(String(card.currency));
             let priceData = res.data.results.data;
-            
-            setGiftDetails(prev => prev.map(c => {
-              if (c.id === card.id) {
-                return { ...c, amount: c.amountInUsd / priceData };
-              }
-              return c;
-            }));
+
+            setGiftDetails((prev) =>
+              prev.map((c) => {
+                if (c.id === card.id) {
+                  return { ...c, amount: c.amountInUsd / priceData };
+                }
+                return c;
+              })
+            );
           }
         }
       } catch (err) {
-        console.error("Error calculating token amounts:", err);
+        console.error('Error calculating token amounts:', err);
       }
     }
     updateCardAmounts();
-  }, [giftDetails.map(card => `${card.id}-${card.currency}-${card.amountInUsd}`).join(',')]);
+  }, [
+    giftDetails
+      .map((card) => `${card.id}-${card.currency}-${card.amountInUsd}`)
+      .join(','),
+  ]);
 
   return (
     <div className={classes.root}>
@@ -360,9 +373,30 @@ const CreateCards = ({ onSendCard }) => {
       {/* Redeem form */}
       {giftDetails.map((card, i) => (
         <div className={classes.redeemRoot} key={card.id}>
-          <div >
+          <div>
             <div style={{ maxWidth: '432px' }}>
-              <Slider {...sliderSettings}>
+              <Slider
+                {...sliderSettings}
+                onChange={(value) => {
+                  console.log('value', value);
+                }}
+                afterChange={(index) => {
+                  const images = getImagesForCardType(card.value);
+                  setGiftDetails(
+                    giftDetails.map((c) => {
+                      if (c.id === card.id) {
+                        return {
+                          ...c,
+                          selectedImg: images[index].img,
+                          selectedImgUrl:
+                            images[index].img || images[index].imgUrl,
+                        };
+                      }
+                      return c;
+                    })
+                  );
+                }}
+              >
                 {getImagesForCardType(card.value).map((curr, i) => (
                   <div key={i}>
                     <img
@@ -425,7 +459,9 @@ const CreateCards = ({ onSendCard }) => {
                 }))}
                 type={'Coin'}
                 value={card.currency}
-                onCurrencyChange={(value) => handleCurrencyChange(card.id, value)}
+                onCurrencyChange={(value) =>
+                  handleCurrencyChange(card.id, value)
+                }
                 onChange={(e) => handleCurrencyChange(card.id, e.target.value)}
                 hasborder={true}
               />
@@ -440,7 +476,7 @@ const CreateCards = ({ onSendCard }) => {
                 onChange={(e) => handleAmountChange(card.id, e.target.value)}
               />
             </div>
-            
+
             {allWallets.length > 0 && (
               <div className={classes.balanceDisplay}>
                 <span>
@@ -450,7 +486,8 @@ const CreateCards = ({ onSendCard }) => {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
                   }).format(
-                    allWallets.find(w => w.coinSymbol === card.currency)?.coinBalance || 0
+                    allWallets.find((w) => w.coinSymbol === card.currency)
+                      ?.coinBalance || 0
                   )}{' '}
                   {card.currency}
                 </span>
@@ -465,7 +502,7 @@ const CreateCards = ({ onSendCard }) => {
                 maximumFractionDigits: 4,
               }).format(card.amount)}{' '}
             </p>
-            
+
             {i === giftDetails.length - 1 && (
               <div className={classes.btnContainer}>
                 <GenericButton
@@ -481,7 +518,7 @@ const CreateCards = ({ onSendCard }) => {
                         currency: initialTokens[0]?.title,
                         amountInUsd: '',
                         amount: 0,
-                        selectedImg: gift1
+                        selectedImg: gift1,
                       },
                     ]);
                   }}
@@ -491,10 +528,11 @@ const CreateCards = ({ onSendCard }) => {
                   loading={loading}
                   styles={{ flex: 1 }}
                   onClick={() => setShowConfirmPopup(true)}
-                  disabled={giftDetails.some(card => 
-                    !card.currency || 
-                    !card.amountInUsd || 
-                    parseFloat(card.amountInUsd) < 5
+                  disabled={giftDetails.some(
+                    (card) =>
+                      !card.currency ||
+                      !card.amountInUsd ||
+                      parseFloat(card.amountInUsd) < 5
                   )}
                 />
               </div>
@@ -504,7 +542,7 @@ const CreateCards = ({ onSendCard }) => {
           </div>
         </div>
       ))}
-      
+
       {showPopup && (
         <CardCreatedPopup
           onClose={closePopup}
@@ -515,7 +553,7 @@ const CreateCards = ({ onSendCard }) => {
           amountInUsd={giftDetails[0].amountInUsd}
         />
       )}
-      
+
       {showConfirmPopup && (
         <CardCreatedConfirmPopup
           onClose={closeConfirmPopup}

@@ -244,7 +244,7 @@ const SendCard = () => {
       const decodedToken = decodeJWT(String(token));
       if (decodedToken?.email) {
         setUserEmail(decodedToken.email);
-        
+
         // Set sender email for all cards automatically
         cardDetails.forEach((_, index) => {
           updateCardDetail(index, 'senderEmail', decodedToken.email);
@@ -274,8 +274,8 @@ const SendCard = () => {
         cardDetails: cardDetails,
         selectedImg: selectedImg,
         selectedImgUrl: selectedImgUrl,
-        amountInUsd: storeAmountInUsd
-      }
+        amountInUsd: storeAmountInUsd,
+      },
     });
     setLoading(false);
   };
@@ -299,9 +299,13 @@ const SendCard = () => {
       // Update image and image URL if available in the selected gift card
       if (requiredGiftCard.giftCardImgUrl) {
         setSelectedImgUrl(requiredGiftCard.giftCardImgUrl);
-        updateCardDetail(index, 'selectedImgUrl', requiredGiftCard.giftCardImgUrl);
+        updateCardDetail(
+          index,
+          'selectedImgUrl',
+          requiredGiftCard.giftCardImgUrl
+        );
       }
-      
+
       if (requiredGiftCard.giftCardImg) {
         setSelectedImg(requiredGiftCard.giftCardImg);
         updateCardDetail(index, 'selectedImg', requiredGiftCard.giftCardImg);
@@ -312,7 +316,7 @@ const SendCard = () => {
         const result = await getCoinPriceByName(String(requiredGiftCard.type));
         let priceData = result.data.results.data;
         const calculatedAmount = priceData * Number(requiredGiftCard.amount);
-        
+
         setAmountInUsd(calculatedAmount);
         updateCardDetail(index, 'amountInUsd', calculatedAmount);
       }
@@ -324,6 +328,7 @@ const SendCard = () => {
     setSelectedTab(newValue);
   };
 
+  console.log(cardDetails);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const theme = useTheme();
 
@@ -351,23 +356,17 @@ const SendCard = () => {
       {/* Map through each card in cardDetails */}
       {cardDetails.map((cardDetail, index) => (
         <div className={classes.redeemRoot} key={cardDetail.id || index}>
-          <div style={{ flex: '30%' }}>
-            <img src={gift1} alt="" style={{ width: '100%' }} />
-          </div>
-          {cardDetail.selectedGiftCard && (
+          {cardDetail.selectedGiftCard ? (
             <div style={{ flex: '30%' }}>
               <img
-                src={
-                  gift1 ||
-                  giftCards?.find(
-                    (card) => card.voucher === cardDetail.selectedGiftCard
-                  )?.giftCardImgUrl ||
-                  selectedImg ||
-                  gift1
-                }
+                src={cardDetail.selectedImgUrl || gift1}
                 alt=""
                 style={{ width: '100%' }}
               />
+            </div>
+          ) : (
+            <div style={{ flex: '30%' }}>
+              <img src={gift1} alt="" style={{ width: '100%' }} />
             </div>
           )}
           <div className={classes.redeemLeft}>
@@ -467,10 +466,10 @@ ${new Intl.NumberFormat('en-US', {
             {index === cardDetails.length - 1 && (
               <div className={classes.btnContainer}>
                 <GenericButton text={'+ Add More Card'} onClick={addCard} />
-                <GenericButton
+                {/* <GenericButton
                   text={'Edit Details'}
                   onClick={() => setShowEditPopup(true)}
-                />
+                /> */}
                 <GenericButton
                   text={'Send'}
                   loading={loading}

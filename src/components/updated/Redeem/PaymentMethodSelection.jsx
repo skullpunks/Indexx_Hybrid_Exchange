@@ -88,30 +88,74 @@ const PaymentMethodSelection = () => {
     setPaymentMethod(method);
   };
 
-  const handleSendGiftcard = async () => {
-    setLoading(true);
-
-    console.log(cardDetails);
-
+  const handleSendGiftcard = async (index) => {
     try {
-      // Send all cards
-      const results = await Promise.all(
-        cardDetails.map(async (card) => {
-          return await sendGiftcard(
-            card.selectedGiftCard,
-            card.senderEmail,
-            card.recipientEmail,
-            card.message,
-            card.senderName,
-            card.selectedImgUrl
-          );
-        })
+      // Send individual card
+      const result = await sendGiftcard(
+        cardDetails[index].selectedGiftCard,
+        cardDetails[index].senderEmail,
+        cardDetails[index].recipientEmail,
+        cardDetails[index].message,
+        cardDetails[index].senderName,
+        cardDetails[index].selectedImgUrl
       );
 
-      // Check if all cards were sent successfully
-      const allSuccessful = results.every((result) => result.status === 200);
+      if (result.status === 200) {
+        console.log(`Card ${index + 1} sent successfully`);
+        return true;
+      } else {
+        console.error(`Failed to send card ${index + 1}:`, result);
+        throw new Error(result.message || 'Failed to send gift card');
+      }
+    } catch (error) {
+      console.error(`Error sending gift card ${index + 1}:`, error);
+      throw error;
+    }
+  };
 
-      if (allSuccessful) {
+  const handlePayGiftCardWithBalance = async () => {
+    setLoading(true);
+
+    // Track successful transactions
+    const successfulCards = [];
+    const failedCards = [];
+
+    try {
+      // Process each card
+      for (let index = 0; index < cardDetails.length; index++) {
+        const card = cardDetails[index];
+
+        try {
+          // Step 1: Process payment
+          const paymentResult = await PayGiftCardWithBalance(
+            card.selectedGiftCard,
+            card.senderEmail,
+            currency
+          );
+
+          if (paymentResult.status !== 200) {
+            throw new Error(
+              paymentResult.message || 'Payment processing failed'
+            );
+          }
+
+          // Step 2: Send gift card
+          await handleSendGiftcard(index);
+
+          // Track successful card
+          successfulCards.push(index);
+        } catch (error) {
+          failedCards.push({
+            index,
+            error: error.message || 'Unknown error occurred',
+          });
+          console.error(`Failed to process card ${index + 1}:`, error);
+        }
+      }
+
+      // Show appropriate feedback based on results
+      if (successfulCards.length === cardDetails.length) {
+        // All cards processed successfully
         navigate('/redeem/send-card-successful', {
           state: {
             selectedImg: cardDetails[0].selectedImgUrl,
@@ -120,40 +164,32 @@ const PaymentMethodSelection = () => {
             cardCount: cardDetails.length,
           },
         });
+      } else if (successfulCards.length > 0) {
+        navigate('/redeem/send-card-successful', {
+          state: {
+            selectedImg: cardDetails[successfulCards[0]].selectedImgUrl,
+            giftCardData: cardDetails[successfulCards[0]],
+            amountInUsd: cardDetails[successfulCards[0]].amountInUsd,
+            cardCount: successfulCards.length,
+          },
+        });
       } else {
-        console.error('Failed to send gift/greeting cards:', results);
-        alert('Failed to send one or more gift/greeting cards.');
+        const errorMessages = failedCards
+          .map((card) => `Card ${card.index + 1}: ${card.error}`)
+          .join('\n');
+
+        console.log(
+          `Failed to process gift cards. Please try again later.\n\nErrors:\n${errorMessages}`
+        );
       }
     } catch (error) {
-      console.error('Error sending gift cards:', error);
-      alert('An error occurred while sending gift cards.');
-    }
-
-    setLoading(false);
-  };
-
-  const handlePayGiftCardWithBalance = async () => {
-    setLoading(true);
-
-    try {
-      const results = await PayGiftCardWithBalance(
-        cardDetails[0].selectedGiftCard,
-        cardDetails[0].senderEmail,
-        currency
+      console.error('Error in gift card payment process:', error);
+      console.log(
+        'An unexpected error occurred while processing your gift cards. Please try again later.'
       );
-
-      if (results.status === 200) {
-        handleSendGiftcard();
-      } else {
-        console.error('Failed to pay gift card with balance:', results);
-        alert('Failed to pay gift card with balance.');
-      }
-    } catch (error) {
-      console.error('Error paying gift card with balance:', error);
-      alert('An error occurred while paying gift card with balance.');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
