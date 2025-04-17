@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material';
 import { createGiftcard } from '../../../services/api';
 import Inex from '../../../assets/updated/buySell/INEX.svg';
 import { Avatar } from 'antd';
+import { useCardStore } from './CardContext';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -125,6 +126,7 @@ const CardCreatedConfirmPopup = ({
   const navigate = useNavigate();
   const classes = useStyles();
   const [error, setError] = useState('');
+  const { setCardDetails } = useCardStore();
 
   const handleCreateGiftcard = async () => {
     setShowConfirmPopup(false);
@@ -150,6 +152,7 @@ const CardCreatedConfirmPopup = ({
       if (result && result.status === 200) {
         // Store all created cards data
         setGiftCardData(result.data.giftCardDetails);
+        setCardDetails(result.data.giftCardDetails);
         setShowPopup(true);
       } else {
         console.error('Failed to create gift cards', result);

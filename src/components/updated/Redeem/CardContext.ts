@@ -29,6 +29,7 @@ interface CardState {
   setAmountInUsd: (amount: number) => void;
   setSelectedImg: (img: string | null) => void;
   setSelectedImgUrl: (url: string | null) => void;
+  setCardDetails: (details: any[]) => void;
 }
 
 const defaultMessage = `Hey [Receiver's Name],
@@ -113,4 +114,25 @@ export const useCardStore = create<CardState>((set) => ({
   setAmountInUsd: (amount) => set({ amountInUsd: amount }),
   setSelectedImg: (img) => set({ selectedImg: img }),
   setSelectedImgUrl: (url) => set({ selectedImgUrl: url }),
+  
+  setCardDetails: (details) => {
+    if (!details || details.length === 0) return;
+    
+    const firstCard = details[0];
+    
+    set((state) => ({
+      cardDetails: [
+        {
+          ...state.cardDetails[0],
+          selectedGiftCard: firstCard.voucher || null,
+          amountInUsd: firstCard.amountInUsd || 0,
+          selectedImg: firstCard.giftCardImg || null,
+          selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
+        },
+      ],
+      amountInUsd: firstCard.amountInUsd || 0,
+      selectedImg: firstCard.giftCardImg || null,
+      selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
+    }));
+  },
 }));

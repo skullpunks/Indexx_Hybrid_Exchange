@@ -37,6 +37,7 @@ import CardCreatedConfirmPopup from './CardCreatedConfirmPopup';
 // import InsufficientBalancePopup from './InsufficientBalancePopup';
 import { giftArr, greetingArr, christmanArr } from './Data';
 import CustomizedSteppers from './CustomizedStepper';
+import { useCardStore } from './CardContext';
 
 const CreateCards = ({ onSendCard }) => {
   const classes = useStyles();
@@ -154,6 +155,7 @@ const CreateCards = ({ onSendCard }) => {
       selectedImg: null,
     },
   ]);
+  const { setCardDetails } = useCardStore();
   const closePopup = () => {
     setShowPopup(false);
   };
