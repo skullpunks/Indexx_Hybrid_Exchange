@@ -189,7 +189,7 @@ const CryptoStats = ({ tokenType, onTokenSelect }) => {
         let combinedData;
         let otherTokens;
         if (tokenType === 'Tokens') {
-          const importantTokens = ['INEX', 'WIBS', 'DaCrazy', 'BTC', 'ETH'];
+          const importantTokens = ['BTCY', 'INEX', 'WIBS', 'DaCrazy', 'BTC'];
           const filteredTokens = importantTokens
             ?.map((symbol) =>
               data.data.find((crypto) => crypto.Symbol === symbol)
