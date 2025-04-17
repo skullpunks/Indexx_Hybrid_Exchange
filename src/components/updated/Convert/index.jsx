@@ -168,6 +168,7 @@ const ConvertCrypto = () => {
       'SNP500',
       'TSLA',
       'TOB',
+      'BTCY'
     ];
     return indexxTokens.includes(tokenTitle);
   };
