@@ -123,23 +123,31 @@ export const useCardStore = create<CardState>((set) => ({
   setCardDetails: (details) => {
     if (!details || details.length === 0) return;
     
-    const firstCard = details[0];
-    
-    set((state) => ({
-      cardDetails: [
-        {
-          ...state.cardDetails[0],
-          selectedGiftCard: firstCard.voucher || null,
-          amountInUsd: firstCard.amountInUsd || 0,
-          selectedImg: firstCard.giftCardImg || null,
-          selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
-          cardType: firstCard.cardType || null,
-        },
-      ],
-      amountInUsd: firstCard.amountInUsd || 0,
-      selectedImg: firstCard.giftCardImg || null,
-      selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
-    }));
+    set((state) => {
+      // Map all cards in the details array to the cardDetails format
+      const mappedCardDetails = details.map((card, index) => ({
+        id: index,
+        recipientEmail: card.recevierEmail || '',
+        senderName: '',
+        senderEmail: card.email || '',
+        message: defaultMessage,
+        selectedGiftCard: card.voucher || null,
+        amountInUsd: card.amountInUsd || 0,
+        selectedImg: card.giftCardImg || null,
+        selectedImgUrl: card.giftCardUrl || card.giftCardImgUrl || null,
+        cardType: card.cardType || null,
+      }));
+      
+      // Use first card's data for global state values
+      const firstCard = details[0];
+      
+      return {
+        cardDetails: mappedCardDetails,
+        amountInUsd: firstCard.amountInUsd || 0,
+        selectedImg: firstCard.giftCardImg || null,
+        selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
+      };
+    });
   },
   
   // New function to update gift card details after editing

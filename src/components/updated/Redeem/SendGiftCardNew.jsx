@@ -208,6 +208,8 @@ const SendCard = () => {
     amountInUsd: storeAmountInUsd,
   } = useCardStore();
 
+  console.log(cardDetails);
+
   const [loading, setLoading] = useState(false);
   const [giftCards, setGiftCards] = useState([]);
   const [selectedGiftCard, setSelectedGiftCard] = useState(
@@ -297,12 +299,13 @@ const SendCard = () => {
 
     if (requiredGiftCard) {
       console.log('Selected gift card:', requiredGiftCard);
-      
+
       // Update image URL - check all possible image URL fields
-      const imageUrl = requiredGiftCard.giftCardUrl || 
-                      requiredGiftCard.giftCardImgUrl || 
-                      requiredGiftCard.selectedImgUrl;
-      
+      const imageUrl =
+        requiredGiftCard.giftCardUrl ||
+        requiredGiftCard.giftCardImgUrl ||
+        requiredGiftCard.selectedImgUrl;
+
       if (imageUrl) {
         console.log('Setting image URL to:', imageUrl);
         setSelectedImgUrl(imageUrl);
@@ -310,9 +313,9 @@ const SendCard = () => {
       }
 
       // Update image if available
-      const image = requiredGiftCard.giftCardImg || 
-                   requiredGiftCard.selectedImg;
-      
+      const image =
+        requiredGiftCard.giftCardImg || requiredGiftCard.selectedImg;
+
       if (image) {
         console.log('Setting image to:', image);
         setSelectedImg(image);
@@ -327,7 +330,9 @@ const SendCard = () => {
       // Update amount in USD if type is available
       if (requiredGiftCard.type) {
         try {
-          const result = await getCoinPriceByName(String(requiredGiftCard.type));
+          const result = await getCoinPriceByName(
+            String(requiredGiftCard.type)
+          );
           let priceData = result.data.results.data;
           const calculatedAmount = priceData * Number(requiredGiftCard.amount);
 
@@ -349,7 +354,8 @@ const SendCard = () => {
     setSelectedTab(newValue);
   };
 
-  console.log(cardDetails);
+  console.log('All card details from store:', cardDetails);
+
   const [showEditPopup, setShowEditPopup] = useState(false);
   const theme = useTheme();
 
@@ -374,26 +380,35 @@ const SendCard = () => {
         </p>
       </div>
 
+      {/* Card Counter */}
+      <div
+        style={{ marginBottom: '20px', color: theme.palette.text.secondary }}
+      >
+        <p>Total Gift Cards: {cardDetails.length}</p>
+      </div>
+
       {/* Map through each card in cardDetails */}
       {cardDetails.map((cardDetail, index) => (
         <div className={classes.redeemRoot} key={cardDetail.id || index}>
-          {cardDetail.selectedGiftCard ? (
-            <div style={{ flex: '30%' }}>
-              <img
-                src={cardDetail.selectedImgUrl || gift1}
-                alt=""
-                style={{ width: '100%' }}
-                onError={(e) => {
-                  console.log('Image failed to load, using default');
-                  e.target.src = gift1; // Fallback to default image on error
-                }}
-              />
-            </div>
-          ) : (
-            <div style={{ flex: '30%' }}>
-              <img src={gift1} alt="" style={{ width: '100%' }} />
-            </div>
-          )}
+          <div style={{ flex: '30%' }}>
+            <h4
+              style={{
+                marginBottom: '10px',
+                color: theme.palette.text.primary,
+              }}
+            >
+              Gift Card #{index + 1}
+            </h4>
+            <img
+              src={cardDetail.selectedImgUrl || gift1}
+              alt=""
+              style={{ width: '100%' }}
+              onError={(e) => {
+                console.log('Image failed to load, using default');
+                e.target.src = gift1; // Fallback to default image on error
+              }}
+            />
+          </div>
           <div className={classes.redeemLeft}>
             <div className={classes.selectTypeContainer}>
               <div
@@ -425,32 +440,26 @@ const SendCard = () => {
               <div className={classes.giftCardDetails}>
                 <p>
                   Type:{' '}
-                  {
-                    giftCards?.find(
-                      (card) => card.voucher === cardDetail.selectedGiftCard
-                    )?.cardType
-                  }
+                  {giftCards?.find(
+                    (card) => card.voucher === cardDetail.selectedGiftCard
+                  )?.cardType || 'Unknown'}
                 </p>
                 <p>
                   Token Amount:{' '}
-                  {
-                    giftCards?.find(
-                      (card) => card.voucher === cardDetail.selectedGiftCard
-                    )?.amount
-                  }{' '}
-                  {
-                    giftCards?.find(
-                      (card) => card.voucher === cardDetail.selectedGiftCard
-                    )?.type
-                  }
+                  {giftCards?.find(
+                    (card) => card.voucher === cardDetail.selectedGiftCard
+                  )?.amount || '0'}{' '}
+                  {giftCards?.find(
+                    (card) => card.voucher === cardDetail.selectedGiftCard
+                  )?.type || ''}
                 </p>
                 <p>
-                  {`Amount in USD: ${' '}
+                  {`Amount in USD: $${' '}
 ${new Intl.NumberFormat('en-US', {
   style: 'decimal',
   minimumFractionDigits: 2,
   maximumFractionDigits: 6,
-}).format(storeAmountInUsd)}`}
+}).format(cardDetail.amountInUsd || storeAmountInUsd || 0)}`}
                 </p>
               </div>
             )}
@@ -488,6 +497,18 @@ ${new Intl.NumberFormat('en-US', {
               />
             </div>
 
+            {/* Divider between cards if not the last one */}
+            {index !== cardDetails.length - 1 && (
+              <div
+                style={{
+                  borderBottom: `1px solid ${theme.palette.divider}`,
+                  margin: '20px 0',
+                  paddingBottom: '10px',
+                }}
+              ></div>
+            )}
+
+            {/* Add buttons only to the last card */}
             {index === cardDetails.length - 1 && (
               <div className={classes.btnContainer}>
                 <GenericButton text={'+ Add More Card'} onClick={addCard} />

@@ -196,13 +196,24 @@ Enjoy and happy investing!`);
     giftCardData?.voucher
   );
 
+  // Check if giftCardData is an array
+  const isMultipleCards = Array.isArray(giftCardData);
+
   useEffect(() => {
     async function fetchGiftCard() {
       const token = localStorage.getItem('access_token');
       const decodedToken = decodeJWT(String(token));
       let res = await getAllGiftCards(decodedToken?.email);
       setGiftCards(res.data);
-      console.log(res);
+
+      // If we have multiple cards in giftCardData, set the first one as selected by default
+      if (isMultipleCards && giftCardData.length > 0) {
+        setSelectedGiftCard(giftCardData[0].voucher);
+        // You may also want to set the amount in USD for the first card
+        if (giftCardData[0].amountInUsd) {
+          setAmountInUsd(giftCardData[0].amountInUsd);
+        }
+      }
     }
     fetchGiftCard();
   }, []);
@@ -288,8 +299,12 @@ Enjoy and happy investing!`);
           <div style={{ flex: '30%' }}>
             <img
               src={
-                giftCards?.find((card) => card.voucher === selectedGiftCard)
-                  ?.giftCardImgUrl || selectedImg
+                isMultipleCards
+                  ? giftCardData.find(
+                      (card) => card.voucher === selectedGiftCard
+                    )?.giftCardImgUrl || selectedImg
+                  : giftCards?.find((card) => card.voucher === selectedGiftCard)
+                      ?.giftCardImgUrl || selectedImg
               }
               alt=""
               style={{ width: '100%' }}
@@ -300,7 +315,7 @@ Enjoy and happy investing!`);
           <div className={classes.selectTypeContainer}>
             <label>Select previously created gift cards here:</label>
             <CustomSelectBox
-              items={giftCards}
+              items={isMultipleCards ? giftCardData : giftCards}
               type="Gift Card"
               value={selectedGiftCard}
               onChange={handleGiftCardChange}
@@ -346,7 +361,7 @@ Enjoy and happy investing!`);
           )}
           <div className={classes.enterAmountContainer}>
             <InputField
-              label={'Recipient’s Email'}
+              label={"Recipient's Email"}
               type="text"
               placeholder="abc@xyz.com"
               value={recipientEmail}

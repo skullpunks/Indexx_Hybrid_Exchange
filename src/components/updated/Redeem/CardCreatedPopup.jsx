@@ -2,10 +2,12 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import GenericButton from '../../updated/shared/Button';
 import greenCheck from '../../../assets/redeem/check green 6.svg';
-import gift1 from '../../../assets/redeem/gift1.svg';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -42,14 +44,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#1e2329',
       borderRadius: '16px',
       boxShadow: '0px 3px 6px rgba(0,0,0,.04)',
-      maxWidth: '80vw',
+      maxWidth: '90vw',
       overflow: 'hidden',
       position: 'relative',
       transform: 'scale(.9)',
       transitionDuration: '250ms',
       transitionProperty: 'all',
       transitionTimingFunction: 'ease-in-out',
-      width: '360px',
+      width: '500px',
     },
   },
   contentContainer: {
@@ -79,6 +81,21 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 500,
       lineHeight: '22px',
     },
+    '& .slick-slider': {
+        width: '100%',
+        marginTop: '15px',
+    },
+    '& .slick-dots li button:before': {
+        color: theme.palette.text.secondary,
+        opacity: 0.75,
+    },
+    '& .slick-dots li.slick-active button:before': {
+        color: theme.palette.primary.main,
+        opacity: 1,
+    },
+    '& .slick-prev:before, & .slick-next:before': {
+        color: theme.palette.text.primary,
+    }
   },
   btnContainer: {
     display: 'flex',
@@ -92,6 +109,21 @@ const useStyles = makeStyles((theme) => ({
         ? '#EAECEF !important'
         : '#2B3139 !important',
     color: `${theme.palette.text.primary} !important`,
+  },
+  cardSlide: {
+    textAlign: 'left',
+    width: '100%',
+    padding: '15px',
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: '8px',
+    marginBottom: '10px',
+    boxSizing: 'border-box',
+    '& img': {
+        width: '100%',
+        borderRadius: '4px',
+        marginBottom: '10px',
+        display: 'block',
+    }
   },
 }));
 
@@ -110,6 +142,16 @@ const CardCreatedPopup = ({
   // Check if giftCardData is an array (multiple cards) or a single object
   const isMultipleCards = Array.isArray(giftCardData);
   
+  // Slider settings
+  const sliderSettings = {
+    dots: true,
+    infinite: giftCardData?.length > 1,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: giftCardData?.length > 1,
+  };
+
   return (
     <div
       className={`${classes.bnTrans} ${classes.dataShow} ${classes.bnMask} ${classes.bnModal}  ${classes.bidsFullModal}`}
@@ -136,42 +178,37 @@ const CardCreatedPopup = ({
               />
             </div>
           </div>
-          <img src={greenCheck} height="100px" />
+          <img src={greenCheck} height="100px" alt="Success Checkmark"/>
           <h3>Created Successfully</h3>
           
           {isMultipleCards ? (
             <>
               <h4>{giftCardData.length} Gift Cards Created</h4>
-              
-              {giftCardData.map((card, index) => (
-                <div 
-                  key={index}
-                  style={{
-                    textAlign: 'left',
-                    marginTop: '15px',
-                    width: '100%',
-                    padding: '10px',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: '8px',
-                    marginBottom: '10px'
-                  }}
-                >
-                  <p style={{ fontWeight: 'bold' }}>Card {index + 1}</p>
-                  <p>
-                    Token Amount:{' '}
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'decimal',
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 6,
-                    }).format(card.amount)}{' '} {card.type}
-                  </p>
-                  <p>Gift Card Number: {card.voucher}</p>
-                </div>
-              ))}
+              <Slider {...sliderSettings}>
+                {giftCardData.map((card, index) => (
+                  <div key={index}>
+                    <div
+                      className={classes.cardSlide}
+                    >
+                      {selectedImg && <img src={selectedImg} alt="Gift Card Preview"/>}
+                      <p style={{ fontWeight: 'bold' }}>Card {index + 1} of {giftCardData.length}</p>
+                      <p>
+                        Token Amount:{' '}
+                        {new Intl.NumberFormat('en-US', {
+                          style: 'decimal',
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 6,
+                        }).format(card.amount)}{' '} {card.type}
+                      </p>
+                      <p>Gift Card Number: {card.voucher}</p>
+                    </div>
+                  </div>
+                ))}
+              </Slider>
             </>
           ) : (
             <>
-              <img src={selectedImg} width={'100%'} />
+              {selectedImg && <img src={selectedImg} width={'100%'} alt="Gift Card Preview"/>}
               <div
                 style={{
                   textAlign: 'left',
@@ -185,17 +222,19 @@ const CardCreatedPopup = ({
                     style: 'decimal',
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 6,
-                  }).format(giftCardData.amount)}{' '} {giftCardData?.type}
+                  }).format(giftCardData?.amount)}{' '} {giftCardData?.type}
                 </p>
-                <p>
-                  Amount in USD: $
-                  {new Intl.NumberFormat('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6,
-                  }).format(amountInUsd)}
-                </p>
-                <p>Gift Card Number: {giftCardData.voucher}</p>
+                {amountInUsd !== undefined && amountInUsd !== null && (
+                    <p>
+                    Amount in USD: $
+                    {new Intl.NumberFormat('en-US', {
+                        style: 'decimal',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 6,
+                    }).format(amountInUsd)}
+                    </p>
+                )}
+                <p>Gift Card Number: {giftCardData?.voucher}</p>
               </div>
             </>
           )}
