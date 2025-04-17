@@ -119,19 +119,19 @@ const CardCreatedPopup = ({
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'flex-end',
               width: '100%',
+              marginBottom: '10px',
             }}
           >
-            <div></div>
-
             <div onClick={onClose} style={{ cursor: 'pointer' }}>
               <CloseIcon
-                color={theme.palette.text.secondary}
                 sx={{
+                  color: theme.palette.text.secondary,
                   '&:hover': {
                     color: theme.palette.text.primary,
                   },
+                  fontSize: '24px'
                 }}
               />
             </div>

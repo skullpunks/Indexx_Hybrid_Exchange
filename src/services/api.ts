@@ -347,6 +347,26 @@ export async function PayGiftCardWithBalance(
     return e.response?.data;
   }
 }
+
+export const editGiftcard = async (
+  giftcards: Array<{
+    voucher: string;
+    amount: string;
+    giftCardUrl: string;
+    cardType: string;
+    active: string;
+  }>
+) => {
+  try {
+    const result = await API.post('/api/v1/inex/user/editGiftcard', giftcards);
+    return result.data;
+  } catch (e: any) {
+    console.log('FAILED: unable to perform API request (editGiftcard)');
+    console.log(e);
+    console.log(e.response?.data?.giftCardDetails);
+    return e.response?.data?.giftCardDetails;
+  }
+};
 // NEW
 
 export const sendGiftcard = async (

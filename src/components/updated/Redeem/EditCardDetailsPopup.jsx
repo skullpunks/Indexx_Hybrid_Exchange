@@ -11,12 +11,13 @@ import { useTheme } from '@mui/material';
 import CustomSelectBox from './CustomSelect';
 import { giftArr, greetingArr, christmanArr } from './Data';
 import defaultImage from '../../../assets/redeem/defaultImg.png';
-import { decodeJWT, getUserWallets } from '../../../services/api';
+import { decodeJWT, getUserWallets, editGiftcard } from '../../../services/api';
 import initialTokens from '../../../utils/Tokens.json';
 import InputField from '../shared/TextField';
 import Slider from 'react-slick';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useCardStore } from './CardContext';
 
 const useStyles = makeStyles((theme) => ({
   dataShow: {
@@ -134,7 +135,6 @@ const useStyles = makeStyles((theme) => ({
   redeemRoot: {
     display: 'flex',
     justifyContent: 'space-between',
-
     gap: '40px',
     marginBottom: '80px',
     marginTop: '50px',
@@ -206,7 +206,6 @@ const useStyles = makeStyles((theme) => ({
     right: '-30px', // Position to the right of the slider
     [theme.breakpoints.down('md')]: {
       display: 'none',
-
       right: '0px',
     },
   },
@@ -244,27 +243,31 @@ const EditCardDetailsPopup = ({ onClose }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles();
-  const [giftDetails, setGiftDetails] = useState([
-    {
-      id: 0,
-      name: 'Crypto Gift Card',
-    },
-    {
-      id: 1,
-      name: 'Crypto Greeting Card',
-    },
-  ]);
+
+  // Get card details from the store
+  const {
+    cardDetails,
+    updateGiftCardDetails,
+    setAmountInUsd,
+    setSelectedImg,
+    setSelectedImgUrl,
+  } = useCardStore();
+
+  const [giftDetails, setGiftDetails] = useState([]);
   const [allWallets, setAllWallets] = useState([]);
   const [value, setValue] = useState('Crypto Gift Card');
   const [currency, setCurrency] = useState(initialTokens[0]?.title);
-  const [amountInUsd, setAmountInUsd] = useState('');
+  const [amountInUsd, setLocalAmountInUsd] = useState('');
   const [amount, setAmount] = useState();
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [selectedImgUrl, setSelectedImgUrl] = useState(
+  const [selectedImgUrl, setLocalSelectedImgUrl] = useState(
     value === 'Crypto Gift Card' ? giftArr[0].img : greetingArr[0].img
   );
   const [singleWallet, setSingleWallet] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(selectedImgUrl);
+  const [selectedImg, setLocalSelectedImg] = useState(selectedImgUrl);
   const [contentArr, setContentArr] = useState([
     {
       id: 0,
@@ -285,6 +288,52 @@ const EditCardDetailsPopup = ({ onClose }) => {
 
   const [currentUserEmail, setCurrentUserEmail] = useState('');
 
+  // Initialize giftDetails from cardDetails
+  useEffect(() => {
+    if (cardDetails && cardDetails.length > 0) {
+      const initialGiftDetails = cardDetails
+        .filter((card) => card.selectedGiftCard)
+        .map((card, index) => ({
+          id: index,
+          name: card.cardType || 'Crypto Gift Card',
+          voucher: card.selectedGiftCard,
+          amount: card.amountInUsd || 0,
+          giftCardUrl: card.selectedImgUrl || '',
+          cardType: card.cardType || 'Crypto Gift Card',
+          active: 'false',
+        }));
+
+      if (initialGiftDetails.length > 0) {
+        setGiftDetails(initialGiftDetails);
+
+        // Set initial values from the first card
+        if (initialGiftDetails[0]) {
+          setValue(initialGiftDetails[0].cardType || 'Crypto Gift Card');
+          setLocalAmountInUsd(String(initialGiftDetails[0].amount || ''));
+          setLocalSelectedImgUrl(
+            initialGiftDetails[0].giftCardUrl || giftArr[0].img
+          );
+          setLocalSelectedImg(
+            initialGiftDetails[0].giftCardUrl || giftArr[0].img
+          );
+        }
+      } else {
+        // If no cards with selectedGiftCard, create a default one
+        setGiftDetails([
+          {
+            id: 0,
+            name: 'Crypto Gift Card',
+            voucher: '',
+            amount: '',
+            giftCardUrl: giftArr[0].img,
+            cardType: 'Crypto Gift Card',
+            active: 'true',
+          },
+        ]);
+      }
+    }
+  }, [cardDetails]);
+
   const handleChange = (event) => {
     if (
       event.target.value === 'Crypto Gift Card' ||
@@ -292,20 +341,33 @@ const EditCardDetailsPopup = ({ onClose }) => {
       event.target.value === 'Seasonal Greeting Card'
     ) {
       setValue(event.target.value);
-      setSelectedImg(
+      setLocalSelectedImg(
         event.target.value === 'Crypto Gift Card'
           ? gift1
           : event.target.value === 'Crypto Birthday Card'
           ? greeting1
           : christman1
       );
-      setSelectedImgUrl(
+      setLocalSelectedImgUrl(
         event.target.value === 'Crypto Gift Card'
           ? giftArr[0].imgUrl
           : event.target.value === 'Crypto Birthday Card'
           ? greetingArr[0].imgUrl
           : christmanArr[0].imgUrl
       );
+
+      // Update the card type in giftDetails
+      const updatedGiftDetails = [...giftDetails];
+      if (updatedGiftDetails[0]) {
+        updatedGiftDetails[0].cardType = event.target.value;
+        updatedGiftDetails[0].giftCardUrl =
+          event.target.value === 'Crypto Gift Card'
+            ? giftArr[0].imgUrl
+            : event.target.value === 'Crypto Birthday Card'
+            ? greetingArr[0].imgUrl
+            : christmanArr[0].imgUrl;
+        setGiftDetails(updatedGiftDetails);
+      }
 
       if (event.target.value === 'Crypto Gift Card') {
         const reorderedArray = [
@@ -333,6 +395,15 @@ const EditCardDetailsPopup = ({ onClose }) => {
       );
       console.log('userWallet', userWallet);
       setSingleWallet(userWallet);
+
+      // Update the currency in giftDetails
+      const updatedGiftDetails = [...giftDetails];
+      if (updatedGiftDetails[0]) {
+        updatedGiftDetails[0].type = event.target.value;
+        setGiftDetails(updatedGiftDetails);
+      }
+
+      setCurrency(event.target.value);
     }
   };
 
@@ -352,6 +423,100 @@ const EditCardDetailsPopup = ({ onClose }) => {
     }
     fetchWallet();
   }, []);
+
+  // Update amount when amountInUsd changes
+  useEffect(() => {
+    // Calculate token amount based on USD value
+    // This is a simplified calculation - you might need to use an API for real exchange rates
+    if (amountInUsd && currency) {
+      // For demo purposes, using a simple conversion rate
+      // In a real app, you would get the current exchange rate
+      const conversionRate = 0.00005; // Example rate: 1 USD = 0.00005 BTC
+      setAmount(Number(amountInUsd) * conversionRate);
+
+      // Update the amount in giftDetails
+      const updatedGiftDetails = [...giftDetails];
+      if (updatedGiftDetails[0]) {
+        updatedGiftDetails[0].amount = amountInUsd;
+        setGiftDetails(updatedGiftDetails);
+      }
+    }
+  }, [amountInUsd, currency]);
+
+  const handleAmountChange = (e) => {
+    setLocalAmountInUsd(e.target.value);
+
+    // Update the amount in giftDetails
+    const updatedGiftDetails = [...giftDetails];
+    if (updatedGiftDetails[0]) {
+      updatedGiftDetails[0].amount = e.target.value;
+      setGiftDetails(updatedGiftDetails);
+    }
+  };
+
+  const handleImageSelect = (imgUrl, index) => {
+    setLocalSelectedImgUrl(imgUrl);
+    setLocalSelectedImg(imgUrl);
+
+    // Update the image URL in giftDetails
+    const updatedGiftDetails = [...giftDetails];
+    if (updatedGiftDetails[index]) {
+      updatedGiftDetails[index].giftCardUrl = imgUrl;
+      setGiftDetails(updatedGiftDetails);
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      setLoading(true);
+      setErrorMessage('');
+
+      // Validate the data
+      if (
+        giftDetails.some((card) => !card.amount || Number(card.amount) <= 0)
+      ) {
+        setErrorMessage('Please enter a valid amount for all cards');
+        setLoading(false);
+        return;
+      }
+
+      // Format the data for the API
+      const formattedGiftCards = giftDetails.map((card) => ({
+        voucher: card.voucher,
+        amount: String(card.amount),
+        giftCardUrl: card.giftCardUrl,
+        cardType: card.cardType,
+        active: card.active || 'false',
+      }));
+
+      // Call the API
+      const result = await editGiftcard(formattedGiftCards);
+
+      if (result) {
+        // Update the card store with the edited details
+        updateGiftCardDetails(formattedGiftCards);
+
+        // Update global state for the first card
+        if (formattedGiftCards[0]) {
+          setAmountInUsd(Number(formattedGiftCards[0].amount));
+          setSelectedImgUrl(formattedGiftCards[0].giftCardUrl);
+          setSelectedImg(formattedGiftCards[0].giftCardUrl);
+        }
+
+        setSuccessMessage('Gift cards updated successfully!');
+
+        // Close the popup after a short delay
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      }
+    } catch (error) {
+      console.error('Error updating gift cards:', error);
+      setErrorMessage('Failed to update gift cards. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const SamplePrevArrow = (props) => {
     const { onClick } = props;
@@ -394,13 +559,25 @@ const EditCardDetailsPopup = ({ onClose }) => {
   const sliderSettings = {
     dots: false, // Show dots (pagination)
     infinite: true, // Infinite scrolling
-
     speed: 500, // Transition speed
     slidesToShow: 1, // Number of slides visible at once
     slidesToScroll: 1, // Number of slides to scroll at a time
     arrows: true, // Show navigation arrows
     nextArrow: <SampleNextArrow />, // Use custom Next arrow
     prevArrow: <SamplePrevArrow />, // Use custom Previous arrow
+    afterChange: (current) => {
+      // Update selected image when slide changes
+      const currentArray =
+        value === 'Crypto Gift Card'
+          ? giftArr
+          : value === 'Crypto Birthday Card'
+          ? greetingArr
+          : christmanArr;
+
+      if (currentArray[current]) {
+        handleImageSelect(currentArray[current].img, 0);
+      }
+    },
   };
 
   return (
@@ -435,14 +612,50 @@ const EditCardDetailsPopup = ({ onClose }) => {
             Update or modify your information easily with the edit details
             option
           </p>
+
+          {successMessage && (
+            <div style={{ color: 'green', margin: '10px 0' }}>
+              {successMessage}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div style={{ color: 'red', margin: '10px 0' }}>{errorMessage}</div>
+          )}
+
           <div className={classes.overflowAuto}>
             {giftDetails.map((el, i) => (
-              <div className={classes.redeemRoot}>
-                <div style={{ flex: '30%' }}>
-                  <div style={{ maxWidth: '450px' }}>
+              <div className={classes.redeemRoot} key={i}>
+                <div
+                  style={{
+                    flex: '30%',
+                    marginRight: '24px',
+                  }}
+                >
+                  <div style={{ maxWidth: '432px' }}>
                     <Slider {...sliderSettings}>
                       {value === 'Crypto Gift Card' &&
+                        giftArr.map((curr, i) => (
+                          <div key={i}>
+                            <img
+                              src={curr.img}
+                              alt={`Slide ${i}`}
+                              style={{ width: '400px', height: 'auto' }}
+                            />
+                          </div>
+                        ))}
+                      {value === 'Crypto Birthday Card' &&
                         greetingArr.map((curr, i) => (
+                          <div key={i}>
+                            <img
+                              src={curr.img}
+                              alt={`Slide ${i}`}
+                              style={{ width: '100%', height: 'auto' }}
+                            />
+                          </div>
+                        ))}
+                      {value === 'Seasonal Greeting Card' &&
+                        christmanArr.map((curr, i) => (
                           <div key={i}>
                             <img
                               src={curr.img}
@@ -453,7 +666,6 @@ const EditCardDetailsPopup = ({ onClose }) => {
                         ))}
                     </Slider>
                   </div>
-                  {/* <img src={gift1} alt="" style={{ width: '100%' }} /> */}
                 </div>
                 <div className={classes.redeemLeft}>
                   <div className={classes.selectTypeContainer}>
@@ -485,7 +697,6 @@ const EditCardDetailsPopup = ({ onClose }) => {
                           name: 'Crypto Birthday Card',
                           value: 'Crypto Birthday Card',
                         },
-
                         {
                           name: 'Seasonal Crypto Greeting Card',
                           value: 'Seasonal Greeting Card',
@@ -519,7 +730,7 @@ const EditCardDetailsPopup = ({ onClose }) => {
                       type="number"
                       placeholder={'Min. Amount is 5 USD'}
                       value={amountInUsd}
-                      onChange={(e) => setAmountInUsd(e.target.value)}
+                      onChange={handleAmountChange}
                     />
                   </div>
                   {singleWallet && (
@@ -547,7 +758,7 @@ const EditCardDetailsPopup = ({ onClose }) => {
                   </p>
                   {i === giftDetails.length - 1 && (
                     <div className={classes.btnContainer}>
-                      <GenericButton
+                      {/* <GenericButton
                         text={'+ Add More Card'}
                         styles={{ flex: 1 }}
                         onClick={() => {
@@ -556,20 +767,20 @@ const EditCardDetailsPopup = ({ onClose }) => {
                             {
                               id: giftDetails.length,
                               name: 'Crypto Greeting Card',
+                              voucher: '',
+                              amount: '',
+                              giftCardUrl: greetingArr[0].img,
+                              cardType: 'Crypto Greeting Card',
+                              active: 'false',
                             },
                           ]);
                         }}
-                      />
+                      /> */}
                       <GenericButton
-                        text={'Proceed'}
-                        //   loading={loading}
+                        text={'Save Changes'}
+                        loading={loading}
                         styles={{ flex: 1 }}
-                        //   onClick={() => setShowConfirmPopup(true)}
-                        // disabled={
-                        //   !isFormValid ||
-                        //   balanceError ||
-                        //   singleWallet?.coinBalance === undefined
-                        // }
+                        onClick={handleSaveChanges}
                       />
                     </div>
                   )}

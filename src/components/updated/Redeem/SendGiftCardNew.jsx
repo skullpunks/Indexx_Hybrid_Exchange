@@ -296,29 +296,50 @@ const SendCard = () => {
     );
 
     if (requiredGiftCard) {
-      // Update image and image URL if available in the selected gift card
-      if (requiredGiftCard.giftCardImgUrl) {
-        setSelectedImgUrl(requiredGiftCard.giftCardImgUrl);
-        updateCardDetail(
-          index,
-          'selectedImgUrl',
-          requiredGiftCard.giftCardImgUrl
-        );
+      console.log('Selected gift card:', requiredGiftCard);
+      
+      // Update image URL - check all possible image URL fields
+      const imageUrl = requiredGiftCard.giftCardUrl || 
+                      requiredGiftCard.giftCardImgUrl || 
+                      requiredGiftCard.selectedImgUrl;
+      
+      if (imageUrl) {
+        console.log('Setting image URL to:', imageUrl);
+        setSelectedImgUrl(imageUrl);
+        updateCardDetail(index, 'selectedImgUrl', imageUrl);
       }
 
-      if (requiredGiftCard.giftCardImg) {
-        setSelectedImg(requiredGiftCard.giftCardImg);
-        updateCardDetail(index, 'selectedImg', requiredGiftCard.giftCardImg);
+      // Update image if available
+      const image = requiredGiftCard.giftCardImg || 
+                   requiredGiftCard.selectedImg;
+      
+      if (image) {
+        console.log('Setting image to:', image);
+        setSelectedImg(image);
+        updateCardDetail(index, 'selectedImg', image);
+      }
+
+      // Update card type if available
+      if (requiredGiftCard.cardType) {
+        updateCardDetail(index, 'cardType', requiredGiftCard.cardType);
       }
 
       // Update amount in USD if type is available
       if (requiredGiftCard.type) {
-        const result = await getCoinPriceByName(String(requiredGiftCard.type));
-        let priceData = result.data.results.data;
-        const calculatedAmount = priceData * Number(requiredGiftCard.amount);
+        try {
+          const result = await getCoinPriceByName(String(requiredGiftCard.type));
+          let priceData = result.data.results.data;
+          const calculatedAmount = priceData * Number(requiredGiftCard.amount);
 
-        setAmountInUsd(calculatedAmount);
-        updateCardDetail(index, 'amountInUsd', calculatedAmount);
+          setAmountInUsd(calculatedAmount);
+          updateCardDetail(index, 'amountInUsd', calculatedAmount);
+        } catch (error) {
+          console.error('Error fetching coin price:', error);
+        }
+      } else if (requiredGiftCard.amount) {
+        // If no type but amount exists, use it directly
+        setAmountInUsd(Number(requiredGiftCard.amount));
+        updateCardDetail(index, 'amountInUsd', Number(requiredGiftCard.amount));
       }
     }
   };
@@ -362,6 +383,10 @@ const SendCard = () => {
                 src={cardDetail.selectedImgUrl || gift1}
                 alt=""
                 style={{ width: '100%' }}
+                onError={(e) => {
+                  console.log('Image failed to load, using default');
+                  e.target.src = gift1; // Fallback to default image on error
+                }}
               />
             </div>
           ) : (
@@ -466,10 +491,10 @@ ${new Intl.NumberFormat('en-US', {
             {index === cardDetails.length - 1 && (
               <div className={classes.btnContainer}>
                 <GenericButton text={'+ Add More Card'} onClick={addCard} />
-                {/* <GenericButton
+                <GenericButton
                   text={'Edit Details'}
                   onClick={() => setShowEditPopup(true)}
-                /> */}
+                />
                 <GenericButton
                   text={'Send'}
                   loading={loading}

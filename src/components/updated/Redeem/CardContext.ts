@@ -10,6 +10,7 @@ interface CardDetail {
   amountInUsd?: number;
   selectedImg?: string | null;
   selectedImgUrl?: string | null;
+  cardType?: string | null;
 }
 
 interface CardState {
@@ -30,6 +31,7 @@ interface CardState {
   setSelectedImg: (img: string | null) => void;
   setSelectedImgUrl: (url: string | null) => void;
   setCardDetails: (details: any[]) => void;
+  updateGiftCardDetails: (updatedCards: any[]) => void;
 }
 
 const defaultMessage = `Hey [Receiver's Name],
@@ -52,6 +54,7 @@ export const useCardStore = create<CardState>((set) => ({
       amountInUsd: 0,
       selectedImg: null,
       selectedImgUrl: null,
+      cardType: null,
     },
   ],
   amountInUsd: 0,
@@ -72,6 +75,7 @@ export const useCardStore = create<CardState>((set) => ({
           amountInUsd: 0,
           selectedImg: null,
           selectedImgUrl: null,
+          cardType: null,
         },
       ],
     })),
@@ -104,6 +108,7 @@ export const useCardStore = create<CardState>((set) => ({
           amountInUsd: 0,
           selectedImg: null,
           selectedImgUrl: null,
+          cardType: null,
         },
       ],
       amountInUsd: 0,
@@ -128,11 +133,55 @@ export const useCardStore = create<CardState>((set) => ({
           amountInUsd: firstCard.amountInUsd || 0,
           selectedImg: firstCard.giftCardImg || null,
           selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
+          cardType: firstCard.cardType || null,
         },
       ],
       amountInUsd: firstCard.amountInUsd || 0,
       selectedImg: firstCard.giftCardImg || null,
       selectedImgUrl: firstCard.giftCardUrl || firstCard.giftCardImgUrl || null,
     }));
+  },
+  
+  // New function to update gift card details after editing
+  updateGiftCardDetails: (updatedCards) => {
+    if (!updatedCards || updatedCards.length === 0) return;
+    
+    set((state) => {
+      const newCardDetails = [...state.cardDetails];
+      let globalAmountInUsd = state.amountInUsd;
+      let globalSelectedImg = state.selectedImg;
+      let globalSelectedImgUrl = state.selectedImgUrl;
+      
+      // Update each card in cardDetails that matches a voucher in updatedCards
+      updatedCards.forEach(updatedCard => {
+        const cardIndex = newCardDetails.findIndex(
+          card => card.selectedGiftCard === updatedCard.voucher
+        );
+        
+        if (cardIndex !== -1) {
+          // Update the card details
+          newCardDetails[cardIndex] = {
+            ...newCardDetails[cardIndex],
+            selectedImgUrl: updatedCard.giftCardUrl || newCardDetails[cardIndex].selectedImgUrl,
+            cardType: updatedCard.cardType || newCardDetails[cardIndex].cardType,
+            amountInUsd: updatedCard.amount ? Number(updatedCard.amount) : newCardDetails[cardIndex].amountInUsd,
+          };
+          
+          // If this is the first card, also update the global state
+          if (cardIndex === 0) {
+            globalAmountInUsd = updatedCard.amount ? Number(updatedCard.amount) : globalAmountInUsd;
+            globalSelectedImgUrl = updatedCard.giftCardUrl || globalSelectedImgUrl;
+            globalSelectedImg = updatedCard.giftCardUrl || globalSelectedImg;
+          }
+        }
+      });
+      
+      return { 
+        cardDetails: newCardDetails,
+        amountInUsd: globalAmountInUsd,
+        selectedImg: globalSelectedImg,
+        selectedImgUrl: globalSelectedImgUrl
+      };
+    });
   },
 }));
