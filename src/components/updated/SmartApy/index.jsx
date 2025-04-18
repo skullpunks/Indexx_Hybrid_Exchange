@@ -248,9 +248,9 @@ const SmartAPY = () => {
   };
 
   const rows = [
-    { duration: '6 months', growth: '20%', action: 'Invest' },
-    { duration: '12 months', growth: '30%', action: 'Invest' },
-    { duration: '18 months', growth: '40%', action: 'Invest' },
+    { duration: '6 months', growth: '15%', action: 'Invest' },
+    { duration: '12 months', growth: '20%', action: 'Invest' },
+    { duration: '18 months', growth: '25%', action: 'Invest' },
   ];
 
   return (
@@ -572,9 +572,9 @@ const SmartAPY = () => {
 
           <p className={classes.text}>
             Yield rates are fixed at: <br />
-            6 months: 20% APY <br />
-            12 months: 30% APY <br />
-            18 months: 40% APY <br />
+            6 months: 15% APY <br />
+            12 months: 20% APY <br />
+            18 months: 25% APY <br />
             <br />{' '}
           </p>
           <h3 className={classes.subheading}>Yield Distribution:</h3>

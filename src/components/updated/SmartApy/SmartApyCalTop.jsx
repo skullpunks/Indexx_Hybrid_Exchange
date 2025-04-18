@@ -372,7 +372,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
     try {
       const res = await loginWithToken(defaultSignInToken);
       console.log('Login response:', res);
-      
+
       if (res.status === 200) {
         let resObj = await decodeJWT(res.data.access_token);
 
@@ -383,7 +383,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
         localStorage.setItem('refresh_token', resObj?.refresh_token);
         localStorage.setItem('userType', resObj?.userType);
         localStorage.setItem('redirected', 'true');
-        
+
         // Use window.location.reload() to refresh the page with new auth state
         window.location.reload();
       } else {
@@ -627,9 +627,9 @@ const SmartApyTop = ({ onStakeSuccess }) => {
     setLoadings(true);
     const email = localStorage.getItem('email');
     const percentage =
-      activeButton === '6 Months (20%)'
+      activeButton === '6 Months (15%)'
         ? selectedToken.stakingPercentage6months
-        : activeButton === '12 months (30%)'
+        : activeButton === '12 months (20%)'
         ? selectedToken.stakingPercentage1year
         : selectedToken.stakingPercentage18months;
     let res;
@@ -738,7 +738,7 @@ const SmartApyTop = ({ onStakeSuccess }) => {
             <div className="lockup-container">
               <div className={classes.lockUpHeading}>Lock-up Period</div>
               <div className={classes.buttonTabContainer}>
-                {['6 Months (20%)', '12 months (30%)', '18 months (40%)'].map(
+                {['6 Months (15%)', '12 months (20%)', '18 months (25%)'].map(
                   (period) => (
                     <GenericButton
                       key={period}
