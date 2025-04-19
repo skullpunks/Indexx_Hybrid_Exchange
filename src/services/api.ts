@@ -2614,7 +2614,7 @@ export interface PerformanceData {
 export const getPerformanceData = async (email: string): Promise<PerformanceData> => {
   try {
     const result = await API.get(`/api/v1/wallet/getUserPerformance/${email}`);
-    return result.data;
+    return result?.data?.data;
   } catch (e: any) {
     throw new Error('Failed to fetch performance data');
   }
